@@ -6,7 +6,7 @@ class Runtime(Base):
     __tablename__ = 'Runtime'
     id = Column(Integer, primary_key=True)
     runtime_datetime = Column(DateTime)
-    
+
     def __init__(self):
         self.runtime_datetime = datetime.utcnow()
 
@@ -30,6 +30,9 @@ class Package(Base):
 
     def __repr__(self):
         return self.source_url+u", "+self.id
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 # Tests - at activity or file level.
 class Result(Base):
@@ -96,7 +99,7 @@ class InfoResult(Base):
         return self.source_url, self.id
 
 # InfoType
-# 
+#
 
 class InfoType(Base):
     __tablename__ = 'InfoType'

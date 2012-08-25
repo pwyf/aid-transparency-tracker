@@ -1,12 +1,26 @@
-from flask import Flask
+from flask import Flask, abort
 import json
-app = Flask(__name__)
+import models
+import database
 
-@app.route('/organisation/<package_id>')
-def organisation(package_id):
-    organisation = {"package_id": package_id }
-    return json.dumps(organisation)
+app = Flask(__name__)
+app.config.from_pyfile('config.py')
+
+@app.route("/packages/")
+def packages():
+    packages = database.db_session.query(models.Package).all()
+    package_links = map(lambda package: "/packages/" + package.package_name, packages)
+    return json.dumps(package_links)
+
+@app.route('/packages/<package_name>')
+def package(package_name):
+    package = database.db_session.query(models.Package).filter(models.Package.package_name == package_name).first()
+    if package == None:
+        abort(404)
+    else:
+        return json.dumps(package.as_dict())
 
 if __name__ == '__main__':
     app.debug = True
+    database.init_db()
     app.run()
