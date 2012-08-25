@@ -59,6 +59,8 @@ class Test(Base):
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)
     description = Column(UnicodeText)
+    code = Column(UnicodeText)
+    xpath = Column(Integer)
 
     def __init__(self, man_auto, source_url):
         self.man_auto = man_auto
