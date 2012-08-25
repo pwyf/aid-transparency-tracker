@@ -39,14 +39,15 @@ class Result(Base):
     result_data = Column(UnicodeText)
     # result_level can be file or activity
     result_level = Column(UnicodeText)
-    comments = Column(UnicodeText)
+    result_identifier = Column(UnicodeText)
 
-    def __init__(self, runtime_id, package_id, test_id, result_data, comments):
+    def __init__(self, runtime_id, package_id, test_id, result_data, result_level, result_identifier=None):
         self.runtime_id = runtime_id
         self.package_id = package_id
         self.test_id = test_id
         self.result_data = result_data
-        self.comments = comments
+        self.result_level = result_level
+	    self.result_identifier = result_identifier
 
     def __repr__(self):
         return self.source_url, self.id
