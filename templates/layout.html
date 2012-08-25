@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='jquery.tmpl.min.js') }}"></script>
+  <title>IATI Spreadsheet Converter</title>
+  </head>
+<link href="{{ url_for('static', filename='style.css') }}" media="screen" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='jquery-ui.css') }}" media="screen" rel="stylesheet" type="text/css" />
+<body>
+<div id="page-wrapper">
+<!--<div id="beta">Still in very early development. Please report bugs.</div>-->
+<div id="content">
+<h1 class="title"><span>IATI Data Quality checker</span></h1>
+<hr class="title" />
+{% if logged_in %}
+<div class="nav">
+<ul>
+	<li>Hello, {{user_name}}.</li>
+	<li><a href="{{url_for('runtests')}}">Dashboard</a></li>
+</ul>
+</div>
+<div class="clearer">&nbsp;</div>
+{% endif %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for category, message in messages %}
+      <li class="{{category}}">{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block body %}{% endblock %}
+<div id="clearer">&nbsp;</div>
+</div>
+<div id="credits"><a href="https://github.com/markbrough/CSV-IATI-Converter.modeleditor">Source code</a>. License: <a href="http://www.gnu.org/licenses/agpl-3.0.html">Affero GPL v3</a>.</div>
+</div>
+<script type="text/javascript">
+$('.flashes li').fadeIn('slow');
+$('.flashes li').not('.flashes li.persist').delay(1500).fadeOut('slow');
+</script>
+</body>
+</html>

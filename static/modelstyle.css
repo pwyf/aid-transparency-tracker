@@ -1,0 +1,265 @@
+body {
+/*  font-family: Helvetica, sans-serif;
+  font-size: 90%;*/
+}
+
+legend + * {
+  margin-top: 0;
+}
+
+code {
+  background-color:#eeeeee;
+  padding:0px 2px 0px 2px;
+}
+fieldset code {
+  background-color:#ffffff;
+}
+table {
+  border-collapse: collapse;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+}
+
+table thead tr {
+  border: none;
+}
+
+table td {
+  padding: 3px;
+  border-left: 1px solid #ccc;
+}
+
+table td:first-child {
+  border: none;
+}
+#right_pane_container {
+  display:none;
+}
+#columns ul li, #iatifields ul li {
+  list-style-type:none;
+  margin:1px;
+}
+#columns ul li code, #iatifields ul li code {
+  text-decoration:none;
+  padding:1px 3px 1px 3px;
+  cursor:default;
+}
+#columns ul.hideunavailable .unavailable {
+  display:none;
+}
+#iatifields ul.hideunavailable .unavailable {
+  display:none;
+}
+#columns .available, #iatifields .available {
+  background-color:green;
+  color:#ffffff;
+}
+#columns .unavailable, #iatifields .unavailable {
+  background-color:red;
+  color:#ffffff;
+}
+#iatifields {
+  margin-bottom:5px;
+}
+.modeleditor {
+  *display: inline-block;
+  width: 100%;
+  border: 1px solid #ccc;
+  background: transparent url(../img/dlbg.png) repeat-y 15em top;
+}
+
+.modeleditor:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+#right_pane {
+  max-height:50%;
+  overflow:auto;
+}
+
+.modeleditor .steps {
+  position:fixed;
+  width: 15em;
+  max-height:50%;
+  overflow:auto;
+}
+.modeleditor .modeltoggle {
+  width: 13em;
+  font-style:italic;
+}
+
+.modeleditor .steps ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.modeleditor .steps ul li ul {
+  display:none;
+}
+.modeleditor .steps ul li.active ul {
+  display:block;
+}
+
+.modeleditor .steps ul li, .modeltoggle a {
+  cursor: pointer;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.modeleditor .steps ul li.active {
+  font-weight: bold;
+  background-color:#365e93;
+  color:#ffffff;
+}
+
+.modeleditor .steps ul li a:hover, .modeltoggle a:hover {
+  background-color:#365e93;
+  color:#ffffff;
+}
+
+.modeleditor .steps ul li a, .modeltoggle a {
+  display: inline-block;
+  color: inherit;
+  text-decoration: inherit;
+  padding: 0.5em;
+}
+
+.modeleditor .steps ul li span {
+/*  color: #aaa;*/
+}
+
+.modeleditor .steps ul li ul li {
+  text-align: left;
+  border-bottom: none;
+  border-top: 1px dashed #ccc;
+}
+
+.modeleditor .steps ul li.active ul li {
+  font-weight: normal;
+  color:#ffffff;
+}
+
+.modeleditor .steps ul li ul li a {
+  text-align: left;
+  padding: 0.25em 0.25em 0.25em 2em;
+}
+
+.modeleditor .forms {
+  margin-left: 15em;
+}
+
+.modeleditor .forms div.formpart {
+  margin: 1em;
+}
+
+.modeleditor .forms .unique_keys_widget span {
+  cursor: pointer;
+}
+
+.modeleditor .forms .unique_keys_widget span.active {
+  font-weight: bold;
+  color: #fff;
+  background: #33a;
+  padding: 3px 0 3px 3px;
+  margin: 0 3px 0 0;
+}
+
+.modeleditor .forms .unique_keys_widget span:last-of-type.active {
+  padding: 3px;
+}
+.forms {
+  min-height:400px;
+}
+#columns ul, #iatifields ul {
+  max-height:100px;
+  overflow:auto;
+  margin:0;
+  padding:0;
+}
+a.fieldsbuttons {
+  text-decoration:none;
+  background-color:#000000;
+  color:#ffffff;
+  border:1px solid #dddddd;
+  padding:0px 2px 0px 2px;
+  font-size:12px;
+}
+a.fieldsbuttons:hover, a.fieldsbuttons-selected {
+  background-color:#ffffff;
+  color:#000000;
+  border:1px solid #dddddd;
+}
+.testing {
+  height:200px;
+  width:200px;
+  background-color:#ff0000;
+}
+.banner h1 {
+  float:left;
+}
+#model_csv_info {
+    float:right;
+}
+h1 #model_title a {
+  border:1px solid #ffffff;
+}
+h1 #model_title a:hover {
+  background-color:inherit;
+  color:inherit;
+  border:1px solid #dddddd;
+}
+h1 #model_title input {
+  color:#365e93;
+  font-size:28px;
+  font-weight:bold;
+  width:200px;
+  padding:4px;
+  margin:0px;
+}
+.save_model_spacer {
+  width:100%;
+  display:inline-block;
+  line-height:2px;
+}
+.save_model span {
+  width:15em;
+  display:block;
+}
+.save_model a {
+  background-color:#365e93;
+  font-weight:bold;
+  color:#ffffff;
+  width:100%;
+  display:inline-block;
+  padding:4px 0px 4px 0px;
+  cursor:pointer;
+  text-align:center;
+}
+.save_model a:hover {
+  background-color:#000000;
+}
+.model_convert_button {
+  margin:20px;
+  font-size:18px;
+}
+.model_convert_button a {
+  background-color:#365e93;
+  border:1px solid #eeeeee;
+  padding:10px;
+  color:#ffffff;
+  cursor:default;
+  text-decoration:none;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.model_convert_button a:hover {
+  background-color:#000000;
+  color:#ffffff;
+}
