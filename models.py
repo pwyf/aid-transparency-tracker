@@ -1,5 +1,6 @@
 from sqlalchemy import *
 from database import Base
+from datetime import datetime
 
 class Runtime(Base):
     __tablename__ = 'runtime'
@@ -49,8 +50,6 @@ class Result(Base):
 
     def __repr__(self):
         return self.source_url, self.id
-
-
 
 class Tests(Base):
     __tablename__ = 'tests'
