@@ -37,7 +37,7 @@ class Result(Base):
     id = Column(Integer, primary_key=True)
     runtime_id = Column(Integer, ForeignKey('Runtime.id'))
     package_id = Column(Integer, ForeignKey('Package.id'))
-    package_id = Column(Integer, ForeignKey('Test.id'))
+    test_id = Column(Integer, ForeignKey('Test.id'))
     result_data = Column(UnicodeText)
     # result_level can be file or activity
     result_level = Column(UnicodeText)

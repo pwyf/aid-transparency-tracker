@@ -48,38 +48,44 @@ def index():
     output = "Hi"
     return render_template('dashboard.html', results=results)
 
-@app.route("/result/<task_id>")
-def get_result(task_id):
-    retval = load_file.AsyncResult(task_id).get(timeout=1.0)
-    return retval
 
+# Has the test completed?
 @app.route("/resultcheck/<task_id>")
 def check_result(task_id):
     retval = load_file.AsyncResult(task_id).status
     return retval
 
-def do_activity_tests(activity, context, file_name):
-    # send XML file to tests
-    # return results
-    # do this for each file and commit to DB
-    # but do it asynchronously
-    # return a super-massive array
+def run_a_test(thedata,thexpath):
+    try:
+        test_result = thedata.xpath(thexpath)
+    except Exception, e:
+        pass
 
-    tests = [ 'check_date', 'title', 'title_size' ]
-    result_data = []
+    if (test_result is None):
+	    return False
+    else:
+        return True
+
+def check_file():
+    result_identifier = 'FAKE_ACTIVITY_ID' # FAKE
+    runtime_id = '1' # FAKE
+    package_id = '1' # FAKE
+    res = test_activity.apply_async((filename, None, runtime))
+
+# run XPATH tests, stored in the database against each activity
+@celery.task(name="myapp.test_activity", callback=None)
+def do_activity_tests(runtime_id, package_id, result_level, result_identifier):
+
+    result_level = '1' # activity
+
+    tests = Test.query.all()
     for test in tests:
-    	result = getattr(IATIActivityTests, 'test_' + test)(activity)
-	result_data.append({'test': test, 'result': result})
-    return result_data
-
-
-def do_file_tests(filedata, context, file_name):
-    tests = [ 'unique_identifiers' ]
-    result_data = []
-    for test in tests:
-    	result = getattr(IATIFileTests, 'test_' + test)(filedata)
-	result_data.append({'test': test, 'result': result})
-    return result_data
+        if (test.xpath == 1):
+        # if it's XPATH, run tests using that
+            the_result = run_a_test(data, test.code)
+            newresult = Result(runtime_id, package_id, test_id, the_result, result_level, result_identifier)
+            database.db_session.add(newresult)
+    database.db_session.commit()
 
 @celery.task(name="myapp.load_file", callback=None)
 def load_file(file_name, context=None, runtime=None):
@@ -127,6 +133,8 @@ def load_file(file_name, context=None, runtime=None):
     output = output + "Written to database."
 
     return output
+
+
 
 def load_package(runtime):
     output = ""
