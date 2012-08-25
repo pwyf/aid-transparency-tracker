@@ -41,7 +41,7 @@ class Result(Base):
     runtime_id = Column(Integer, ForeignKey('Runtime.id'))
     package_id = Column(Integer, ForeignKey('Package.id'))
     test_id = Column(Integer, ForeignKey('Test.id'))
-    result_data = Column(UnicodeText)
+    result_data = Column(Integer)
     # result_level can be file or activity
     result_level = Column(UnicodeText)
     result_identifier = Column(UnicodeText)

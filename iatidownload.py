@@ -1,6 +1,6 @@
 import sys
 import ckan    
-import urllib
+import urllib2
 from datetime import date
 import os
 import models
@@ -10,15 +10,29 @@ import sys
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-def metadata_to_db(pkg):
-    pp.pprint(pkg)
-    package = models.Package()
-    package.man_auto = 'auto'
-    package.source_url = pkg['resources'][0]['url']
-    package.package_ckan_id = pkg['id']
-    package.package_name = pkg['name']
-    package.package_title = pkg['title']
-    database.db_session.add(package)
+runtime = models.Runtime()
+database.db_session.add(runtime)
+database.db_session.commit()
+
+def metadata_to_db(pkg, file):
+    result = models.Result()
+    result.package_id = pkg['name']
+    result.test_id = -2
+    result.runtime_id = runtime.id
+    result.result_level = u'file'
+    if file:
+        package = models.Package()
+        package.man_auto = 'auto'
+        package.source_url = pkg['resources'][0]['url']
+        package.package_ckan_id = pkg['id']
+        package.package_name = pkg['name']
+        package.package_title = pkg['title']
+        database.db_session.add(package)
+        database.db_session.commit()
+        result.result_data = 1
+    else:
+        result.result_data = 0 
+    database.db_session.add(result)
     database.db_session.commit()
 
 def run(directory):
@@ -28,20 +42,22 @@ def run(directory):
     startnow = False
     for pkg_name in registry.package_register_get():
             pkg = registry.package_entity_get(pkg_name)
-            metadata_to_db(pkg)
             for resource in pkg.get('resources', []):
-                print resource.get('url')
+                # This logic is flawed if this loop runs more than once
+                # But this should not happen for IATI data
                 try:
-                    save_file(pkg_name, resource.get('url'), dir)
-                except Exception, e:
-                    print "Failed:", e
-                    print "Couldn't find directory"
+                    save_file(pkg_name, resource['url'], dir)
+                    file = resource['url']
+                except urllib2.URLError, e:
+                    file = False
+            metadata_to_db(pkg, file)
+            print resource.get('url')
 
 def save_file(pkg_name, url, dir):
-	webFile = urllib.urlopen(url)
-	localFile = open(dir + '/' + pkg_name + '.xml', 'w')
-	localFile.write(webFile.read())
-	webFile.close()
+    localFile = open(dir + '/' + pkg_name + '.xml', 'w')
+    webFile = urllib2.urlopen(url)
+    localFile.write(webFile.read())
+    webFile.close()
 
 if __name__ == '__main__':
     import sys
