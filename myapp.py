@@ -8,8 +8,7 @@ from iati_dq import file_tests as IATIFileTests
 import models
 import sys, os
 from lxml import etree
-from datetime import datetime
-from database import init_db
+import database
 
 def create_app():
     return Flask("myapp")
@@ -27,7 +26,7 @@ def add(x, y):
 def aggregate_results(runtime):
     # get each of the test ids
 
-    test_ids = result.query.filter_by(runtime_id=runtime).group_by('test_id').distinct()
+    test_ids = models.Result.query.filter_by(runtime_id=runtime).group_by('test_id').distinct()
     test_data = []
 
     for test in test_ids:
@@ -42,7 +41,7 @@ def aggregate_results(runtime):
 
 @app.route("/")
 def index():
-    runtimes = runtime.query.order_by('id DESC').first()
+    runtimes = models.Runtime.query.order_by('id DESC').first()
     #results = result.query.filter_by(runtime_id=runtimes.id).group_by('test_id')
     results = aggregate_results(runtimes.id)    
     return str(results)
@@ -105,7 +104,7 @@ def load_file(file_name, context=None, runtime=None):
         aresult = file_tests["result"]
 
         newresult = result(runtime, package_id, atest, aresult, "")
-        db.session.add(newresult)
+        database.db_session.add(newresult)
 
     # Activity-level tests
     for activity in doc.findall("iati-activity"):
@@ -118,12 +117,12 @@ def load_file(file_name, context=None, runtime=None):
             aresult = activity_tests["result"]
 
             newresult = result(runtime, package_id, atest, aresult, "")
-            db.session.add(newresult)
+            database.db_session.add(newresult)
 
 
     output = output + "Writing to database..."
 
-    db.session.commit()
+    database.db_session.commit()
     
     output = output + "Written to database."
 
@@ -161,9 +160,9 @@ def load_package(runtime):
 @app.route("/runtests/")
 def runtests():
 
-    newrun = runtime()
-    db.session.add(newrun)
-    db.session.commit()
+    newrun = models.Runtime()
+    database.db_session.add(newrun)
+    database.db_session.commit()
 
     output = ""
     output = load_package(newrun.id)
@@ -171,5 +170,5 @@ def runtests():
     return str(output)
 
 if __name__ == "__main__":
-    init_db()
+    database.init_db()
     app.run(debug=True)

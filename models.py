@@ -1,7 +1,8 @@
 from sqlalchemy import *
 from database import Base
+from datetime import datetime
 
-class runtime(Base):
+class Runtime(Base):
     __tablename__ = 'runtime'
     id = Column(Integer, primary_key=True)
     runtime_datetime = Column(DateTime)
@@ -12,7 +13,7 @@ class runtime(Base):
     def __repr__(self):
         return self.runtime_datetime, self.id
 
-class package(Base):
+class Package(Base):
     __tablename__ = 'package'
     id = Column(Integer, primary_key=True)
     man_auto = Column(UnicodeText)
@@ -28,7 +29,7 @@ class package(Base):
     def __repr__(self):
         return self.source_url, self.id
 
-class result(Base):
+class Result(Base):
     __tablename__ = 'result'
     id = Column(Integer, primary_key=True)
     runtime_id = Column(UnicodeText)
@@ -47,7 +48,7 @@ class result(Base):
     def __repr__(self):
         return self.source_url, self.id
 
-class tests(Base):
+class Tests(Base):
     __tablename__ = 'tests'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)
