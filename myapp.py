@@ -17,38 +17,6 @@ app = create_app()
 app.config.from_pyfile('config.py')
 celery = Celery(app)
 
-
-@celery.task(name="myapp.add", callback=None)
-def add(x, y):
-    return x + y
-    return result
-
-def aggregate_results(runtime):
-    # get each of the test ids
-
-    test_ids = models.Result.query.filter_by(runtime_id=runtime).group_by('test_id').distinct()
-    test_data = []
-
-    for test in test_ids:
-        # Get average
-        #average = result.query(func.avg(result.result_data).label('average')).filter_by(runtime_id=runtime, test_id=test.test_id)
-
-        # Get maximum for percentage
-        score = '1'
-        thistest = { 'test': test.test_id, 'score': score }
-        test_data.append(thistest)
-    return test_data
-
-@app.route("/")
-def index():
-    runtimes = models.Runtime.query.order_by('id DESC').first()
-    #results = result.query.filter_by(runtime_id=runtimes.id).group_by('test_id')
-    results = aggregate_results(runtimes.id)    
-    return str(results)
-    output = "Hi"
-    return render_template('dashboard.html', results=results)
-
-
 # Has the test completed?
 @app.route("/resultcheck/<task_id>")
 def check_result(task_id):
@@ -56,112 +24,79 @@ def check_result(task_id):
     return retval
 
 def run_a_test(thedata,thexpath):
+    test_result = False
     try:
         test_result = thedata.xpath(thexpath)
     except Exception, e:
         pass
 
-    if (test_result is None):
-	    return False
-    else:
+    if (test_result):
         return True
-
-def check_file():
-    result_identifier = 'FAKE_ACTIVITY_ID' # FAKE
-    runtime_id = '1' # FAKE
-    package_id = '1' # FAKE
-    res = test_activity.apply_async((filename, None, runtime))
+    else:
+        return False
 
 # run XPATH tests, stored in the database against each activity
 @celery.task(name="myapp.test_activity", callback=None)
-def do_activity_tests(runtime_id, package_id, result_level, result_identifier):
+def test_activity(runtime_id, package_id, result_level, result_identifier, data):
 
+    xmldata = etree.fromstring(data)
     result_level = '1' # activity
 
-    tests = Test.query.all()
+    tests = models.Test.query.all()
     for test in tests:
         if (test.xpath == 1):
         # if it's XPATH, run tests using that
-            the_result = run_a_test(data, test.code)
-            newresult = Result(runtime_id, package_id, test_id, the_result, result_level, result_identifier)
+            the_result = run_a_test(xmldata, test.code)
+            newresult = models.Result()
+            newresult.runtime_id = runtime_id
+            newresult.package_id = package_id
+            newresult.test_id=test_id
+            newresult.result_data = the_result
+            newresult.result_level = result_level
+            newresult.result_identifier = result_identifier
             database.db_session.add(newresult)
+            database.db_session.add(newresult)
+    # test that it's working, just add some random data...
+    examplecode = """//title/text()"""
+    the_result = run_a_test(xmldata, examplecode)
+    test_id = '-100'
+    newresult = models.Result()
+    newresult.runtime_id = runtime_id
+    newresult.package_id = package_id
+    newresult.test_id=test_id
+    newresult.result_data = the_result
+    newresult.result_level = result_level
+    newresult.result_identifier = result_identifier
+    database.db_session.add(newresult)
     database.db_session.commit()
 
-@celery.task(name="myapp.load_file", callback=None)
-def load_file(file_name, context=None, runtime=None):
-    # Need to reference package ID in future, but for now, just fix it...
-    package_id = file_name
-    output = []
-    doc = etree.parse(file_name)
-    context = {}
-    context['source_file'] = file_name
-
-    output = str(runtime)
-
-    # File-level tests
-    output_data = []
-    file_tests_data = do_file_tests(doc, context.copy(), file_name)
-    
-    for file_tests in file_tests_data:
-        atest = ""
-        aresult = ""
-
-        atest = file_tests["test"]
-        aresult = file_tests["result"]
-
-        newresult = result(runtime, package_id, atest, aresult, "")
-        database.db_session.add(newresult)
-
-    # Activity-level tests
-    for activity in doc.findall("iati-activity"):
-        activity_tests_data = do_activity_tests(activity, context.copy(), file_name)
-        for activity_tests in activity_tests_data:
-            atest = ""
-            aresult = ""
-
-            atest = activity_tests["test"]
-            aresult = activity_tests["result"]
-
-            newresult = result(runtime, package_id, atest, aresult, "")
-            database.db_session.add(newresult)
-
-
-    output = output + "Writing to database..."
-
-    database.db_session.commit()
-    
-    output = output + "Written to database."
-
-    return output
-
-
+def check_file(file_name, runtime_id, package_id, context=None):
+    result_identifier = 'FAKE_ACTIVITY_ID' # FAKE
+    result_level = '1' # ACTIVITY
+    data = etree.parse(file_name)
+    for activity in data.findall('iati-activity'):
+        activity_data = etree.tostring(data)
+        res = test_activity.apply_async((runtime_id, package_id, result_level, result_identifier, activity_data))
+        # remove this line when it's working
+        break
 
 def load_package(runtime):
     output = ""
-    if (len(sys.argv) > 1):
-        packagedir = sys.argv[1]
-    else:
-        packagedir = ""
     
-    path = 'data/' + packagedir
-    listing = os.listdir(path)
-    totalfiles = len(listing)
-    output = output + "Found" + str(totalfiles) + "files."
-    filecount = 1
-    for infile in listing:
+    path = 'data/'
+    for package in models.Package.query.all():
         try:            
             output = output + ""
-            output = output + "Loading file" + str(filecount) + "of" + str(totalfiles) + "(" + str(round(((float(filecount)/float(totalfiles))*100),2)) + "%)"
-            filecount = filecount +1
+            output = output + "Loading file"
+            
+            filename = path + '/' + package.package_name + '.xml'
 
-            filename = path + '/' + infile
 	        # run tests on file
-            res = load_file.apply_async((filename, None, runtime))
-
+            res = check_file(filename, runtime, package.id, None)
             # res.task_id is the id of the task
-            output = output + '<br />Task ID: <a href="/result/' + res.task_id + '">' + res.task_id + '</a> <a href="/resultcheck/' + res.task_id + '">(check)</a> <br />'
+            output = output + 'Ran that'
         except Exception, e:
-            output = output + "Error in file: " + infile + " - " + str(e) + "\n"
+            output = output + "Error in file: " + package.package_name + " - " + str(e) + "\n"
 	    pass
     return output
 
