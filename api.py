@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort
 import json
 import models
 import database
@@ -15,7 +15,10 @@ def packages():
 @app.route('/packages/<package_name>')
 def package(package_name):
     package = database.db_session.query(models.Package).filter(models.Package.package_name == package_name).first()
-    return json.dumps(package.as_dict())
+    if package == None:
+        abort(404)
+    else:
+        return json.dumps(package.as_dict())
 
 if __name__ == '__main__':
     app.debug = True
