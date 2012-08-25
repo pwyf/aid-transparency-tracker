@@ -1,4 +1,4 @@
 pyenv
 build
 *.pyc
-*.py
+*.py~
