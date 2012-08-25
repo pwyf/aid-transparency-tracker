@@ -1,4 +1,4 @@
-from flask import Flask, abort
+from flask import Flask, abort, url_for
 import json
 import models
 import database
@@ -9,7 +9,9 @@ app.config.from_pyfile('config.py')
 @app.route("/packages/")
 def packages():
     packages = database.db_session.query(models.Package).all()
-    package_links = map(lambda package: "/packages/" + package.package_name, packages)
+    package_links = map(
+        lambda package: {"link": url_for( "packages", package_name=package.package_name)},
+        packages)
     return json.dumps(package_links)
 
 @app.route('/packages/<package_name>')
