@@ -22,9 +22,11 @@ class Package(Base):
     package_name = Column(UnicodeText)
     package_title = Column(UnicodeText)
 
-    def __init__(self, man_auto, source_url):
-        self.man_auto = man_auto
-        self.source_url = source_url
+    def __init__(self, man_auto=None, source_url=None):
+        if man_auto is not None:
+            self.man_auto = man_auto
+        if source_url is not None:
+            self.source_url = source_url
 
     def __repr__(self):
         return self.source_url, self.id
