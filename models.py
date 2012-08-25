@@ -1,7 +1,7 @@
 from sqlalchemy import *
 from database import Base
 
-class runtime(Base):
+class Runtime(Base):
     __tablename__ = 'runtime'
     id = Column(Integer, primary_key=True)
     runtime_datetime = Column(DateTime)
@@ -12,7 +12,7 @@ class runtime(Base):
     def __repr__(self):
         return self.runtime_datetime, self.id
 
-class package(Base):
+class Package(Base):
     __tablename__ = 'package'
     id = Column(Integer, primary_key=True)
     man_auto = Column(UnicodeText)
@@ -28,13 +28,16 @@ class package(Base):
     def __repr__(self):
         return self.source_url, self.id
 
-class result(Base):
+# Tests - at activity or file level.
+class Result(Base):
     __tablename__ = 'result'
     id = Column(Integer, primary_key=True)
     runtime_id = Column(UnicodeText)
     package_id = Column(UnicodeText)
     test_id = Column(UnicodeText)
     result_data = Column(UnicodeText)
+    # result_level can be file or activity
+    result_level = Column(UnicodeText)
     comments = Column(UnicodeText)
 
     def __init__(self, runtime_id, package_id, test_id, result_data, comments):
@@ -47,7 +50,9 @@ class result(Base):
     def __repr__(self):
         return self.source_url, self.id
 
-class tests(Base):
+
+
+class Tests(Base):
     __tablename__ = 'tests'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)

@@ -2,3 +2,6 @@ pyenv
 build
 *.pyc
 *.py~
+*.txt~
+*.md~
+*.sqlite

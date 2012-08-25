@@ -10,3 +10,8 @@ Activate the virtualenv:
 source ./pyenv/bin/activate
 
 pip install -r requirements.txt
+
+Run the celery script:
+======================
+
+python manage.py celeryd
