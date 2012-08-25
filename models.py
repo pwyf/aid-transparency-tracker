@@ -1,6 +1,10 @@
-class runtime(db.Model):
-    id = db.Column(Integer, primary_key=True)
-    runtime_datetime = db.Column(DateTime)
+from sqlalchemy import *
+from database import Base
+
+class runtime(Base):
+    __tablename__ = 'runtime'
+    id = Column(Integer, primary_key=True)
+    runtime_datetime = Column(DateTime)
     
     def __init__(self):
         self.runtime_datetime = datetime.utcnow()
@@ -8,13 +12,14 @@ class runtime(db.Model):
     def __repr__(self):
         return self.runtime_datetime, self.id
 
-class package(db.Model):
-    id = db.Column(Integer, primary_key=True)
-    man_auto = db.Column(UnicodeText)
-    source_url = db.Column(UnicodeText)
-    package_ckan_id = db.Column(UnicodeText)
-    package_name = db.Column(UnicodeText)
-    package_title = db.Column(UnicodeText)
+class package(Base):
+    __tablename__ = 'package'
+    id = Column(Integer, primary_key=True)
+    man_auto = Column(UnicodeText)
+    source_url = Column(UnicodeText)
+    package_ckan_id = Column(UnicodeText)
+    package_name = Column(UnicodeText)
+    package_title = Column(UnicodeText)
 
     def __init__(self, man_auto, source_url):
         self.man_auto = man_auto
@@ -23,13 +28,14 @@ class package(db.Model):
     def __repr__(self):
         return self.source_url, self.id
 
-class result(db.Model):
-    id = db.Column(Integer, primary_key=True)
-    runtime_id = db.Column(UnicodeText)
-    package_id = db.Column(UnicodeText)
-    test_id = db.Column(UnicodeText)
-    result_data = db.Column(UnicodeText)
-    comments = db.Column(UnicodeText)
+class result(Base):
+    __tablename__ = 'result'
+    id = Column(Integer, primary_key=True)
+    runtime_id = Column(UnicodeText)
+    package_id = Column(UnicodeText)
+    test_id = Column(UnicodeText)
+    result_data = Column(UnicodeText)
+    comments = Column(UnicodeText)
 
     def __init__(self, runtime_id, package_id, test_id, result_data, comments):
         self.runtime_id = runtime_id
@@ -41,10 +47,11 @@ class result(db.Model):
     def __repr__(self):
         return self.source_url, self.id
 
-class tests(db.Model):
-    id = db.Column(Integer, primary_key=True)
-    name = db.Column(UnicodeText)
-    description = db.Column(UnicodeText)
+class tests(Base):
+    __tablename__ = 'tests'
+    id = Column(Integer, primary_key=True)
+    name = Column(UnicodeText)
+    description = Column(UnicodeText)
 
     def __init__(self, man_auto, source_url):
         self.man_auto = man_auto

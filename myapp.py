@@ -9,6 +9,7 @@ import models
 import sys, os
 from lxml import etree
 from datetime import datetime
+from database import init_db
 
 def create_app():
     return Flask("myapp")
@@ -17,9 +18,6 @@ app = create_app()
 app.config.from_pyfile('config.py')
 celery = Celery(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dataquality.sqlite'
-db = SQLAlchemy(app)
-db.create_all()
 
 @celery.task(name="myapp.add", callback=None)
 def add(x, y):
@@ -173,5 +171,5 @@ def runtests():
     return str(output)
 
 if __name__ == "__main__":
-    db.create_all()
+    init_db()
     app.run(debug=True)
