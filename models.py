@@ -29,7 +29,7 @@ class Package(Base):
             self.source_url = source_url
 
     def __repr__(self):
-        return self.source_url, self.id
+        return self.source_url+u", "+self.id
 
 # Tests - at activity or file level.
 class Result(Base):
@@ -37,19 +37,25 @@ class Result(Base):
     id = Column(Integer, primary_key=True)
     runtime_id = Column(Integer, ForeignKey('Runtime.id'))
     package_id = Column(Integer, ForeignKey('Package.id'))
-    package_id = Column(Integer, ForeignKey('Test.id'))
+    test_id = Column(Integer, ForeignKey('Test.id'))
     result_data = Column(UnicodeText)
     # result_level can be file or activity
     result_level = Column(UnicodeText)
     result_identifier = Column(UnicodeText)
 
-    def __init__(self, runtime_id, package_id, test_id, result_data, result_level, result_identifier=None):
-        self.runtime_id = runtime_id
-        self.package_id = package_id
-        self.test_id = test_id
-        self.result_data = result_data
-        self.result_level = result_level
-        self.result_identifier = result_identifier
+    def __init__(self, runtime_id=None, package_id=None, test_id=None, result_data=None, result_level=None, result_identifier=None):
+        if self.runtime_id is not None: 
+            self.runtime_id = runtime_id
+        if self.package_id is not None: 
+            self.package_id = package_id
+        if self.test_id is not None: 
+            self.test_id = test_id
+        if self.result_data is not None: 
+            self.result_data = result_data
+        if self.result_level is not None: 
+            self.result_level = result_level
+        if self.result_identifier is not None: 
+            self.result_identifier = result_identifier
 
     def __repr__(self):
         return self.source_url, self.id
