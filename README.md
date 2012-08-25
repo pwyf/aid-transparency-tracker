@@ -4,7 +4,7 @@ IATI-Data-Quality
 IATI Data Quality measurement
 
 Set up a virtualenv:
-virtualenv --no-site-packages ./pyenv
+virtualenv ./pyenv
 
 Activate the virtualenv:
 source ./pyenv/bin/activate
