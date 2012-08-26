@@ -42,13 +42,16 @@ class AggregatedTestResults:
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
-def test_results():
+def package_test_results():
     session = database.db_session
     data = session.query(func.count(models.Result.id),
                 models.Result.result_data,
                 models.Result.package_id
             ).group_by(models.Result.package_id
             ).group_by(models.Result.result_data).all()
+    return test_percentages(data)
+
+def test_percentages(data):
     packages = set(map(lambda x: x[2], data))
     d = dict(map(lambda x: ((x[2],x[1]),x[0]), data))
     out = {}
@@ -57,11 +60,11 @@ def test_results():
         except: fail = 0
         try: success = d[(p,1)]
         except: success = 0
-        out[p] =  float(success)/fail+success
+        out[p] =  (float(success)/(fail+success)) * 100
     return out
 
 def aggregated_test_results():
-    return AggregatedTestResults(10, test_results()).create_report()
+    return AggregatedTestResults(10, package_test_results()).create_report()
 
 def fake_result_for_org (package):
    total = random.randint(0, 158)
@@ -70,6 +73,23 @@ def fake_result_for_org (package):
 
 def results_by_org(packages):
     return map(fake_result_for_org, packages)
+
+@app.route("/tests/")
+def tests():
+    session = database.db_session
+    data = session.query(func.count(models.Result.id),
+                models.Result.result_data,
+                models.Result.test_id
+            ).group_by(models.Result.test_id
+            ).group_by(models.Result.result_data).all()
+    percentage_passed = test_percentages(data)
+
+    tests = map(lambda x: x.as_dict(),
+                session.query(models.Test).all()
+            )
+    for test in tests:
+        test["percentage_passed"] = percentage_passed[test['id']] 
+    return jsonify({"tests": tests})
 
 @app.route("/packages/")
 @support_jsonp
@@ -97,6 +117,5 @@ if __name__ == '__main__':
 
     print
     print
-    print test_results()
     app.run()
 

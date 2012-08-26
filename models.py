@@ -70,7 +70,7 @@ class Test(Base):
     file = Column(UnicodeText)
 
     def __repr__(self):
-        return self.name, self.id
+        return self.name+u', '+unicode(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
