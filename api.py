@@ -10,7 +10,7 @@ app.config.from_pyfile('config.py')
 def packages():
     packages = database.db_session.query(models.Package).all()
     package_links = map(
-        lambda package: {"link": url_for( "packages", package_name=package.package_name)},
+        lambda package: {"link": url_for( "package", package_name=package.package_name)},
         packages)
     return json.dumps(package_links)
 
