@@ -51,6 +51,10 @@ def check_file(file_name, runtime_id, package_id, context=None):
     result_level = '1' # ACTIVITY
     data = etree.parse(file_name)
     for activity in data.findall('iati-activity'):
+        try:
+            result_identifier = activity.find('iati-identifier').text()
+        except Exception, e:
+            result_identifier = ""
         activity_data = etree.tostring(data)
         res = test_activity(runtime_id, package_id, result_level, result_identifier, activity_data)
         # remove this line when it's working
