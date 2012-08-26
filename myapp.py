@@ -21,7 +21,7 @@ def check_result(task_id):
     return retval
 
 # run XPATH tests, stored in the database against each activity
-@celery.task(name="myapp.test_activity", callback=None)
+#@celery.task(name="myapp.test_activity", callback=None)
 def test_activity(runtime_id, package_id, result_level, result_identifier, data):
 
     xmldata = etree.fromstring(data)
@@ -30,12 +30,16 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
     tests = models.Test.query.all()
     for test in tests:
         module = __import__('tests.'+test.file)
-        the_result = getattr(module, test.name)()
+        submodule = getattr(module, test.file)
+        try:
+            the_result = getattr(submodule, test.name)(xmldata)
+        except Exception:
+            the_result = False
 
         newresult = models.Result()
         newresult.runtime_id = runtime_id
         newresult.package_id = package_id
-        newresult.test_id=test_id
+        newresult.test_id = test.id
         newresult.result_data = the_result
         newresult.result_level = result_level
         newresult.result_identifier = result_identifier
@@ -44,12 +48,11 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
     database.db_session.commit()
 
 def check_file(file_name, runtime_id, package_id, context=None):
-    result_identifier = 'FAKE_ACTIVITY_ID' # FAKE
     result_level = '1' # ACTIVITY
     data = etree.parse(file_name)
     for activity in data.findall('iati-activity'):
         activity_data = etree.tostring(data)
-        res = test_activity.apply_async((runtime_id, package_id, result_level, result_identifier, activity_data))
+        res = test_activity(runtime_id, package_id, result_level, result_identifier, activity_data)
         # remove this line when it's working
         break
 
