@@ -50,7 +50,7 @@ def only_one_activity_status(activity):
     Group: activity-status
     """
     thestatus = activity.findall('activity-status')
-    if ((thestatus is not None) and (len(thestatus)<=1)):
+    if ((thestatus is not None) and (count(thestatus)<=1)):
 	    return True
     else:
         return False
@@ -73,12 +73,12 @@ def activity_date_iso_date_exists(activity):
     """
     # Should also check whether it's in the format YYYY-MM-DD
     thedates = activity.findall('activity-date')
-    checker = True
+    check = True
     for date in thedates:
         thedate = date.get('iso-date')
         if (thedate is None):
-            checker = False
-    return checker
+            check = False
+    return check
 
 def activity_date_start_planned_exists(activity):
     """
@@ -182,7 +182,7 @@ def recipient_region_or_country_exists(activity):
 
 def recipient_region_and_country_exists(activity):
     """
-    Description: Recipient country must not be used if recipient region is used, and vice-versa.
+    Description: Recipient country is not used if recipient region is used, and vice-versa.
     Group: recipient-country-region
     """
     thecountry = activity.find('recipient-country')
@@ -195,5 +195,105 @@ def recipient_region_and_country_exists(activity):
         else:
             return True
 
+def recipient_country_percentages_are_valid(activity):
+    """
+    Description: Recipient country percentages are integers.
+    Group: recipient-country-region
+    """
+    countries = activity.findall('recipient-country')
+    check = True
+    for country in countries:
+        if (country.get('percentage')):
+            try:
+                int(country.get('percentage'))
+                check = True
+            except Exception, e:
+                check = False
+        else:
+            check = True
+    return check
+
+def recipient_country_percentages_add_up_to_100(activity):
+    """
+    Description: Recipient country percentages add up to 100%, if they exist.
+    Group: recipient-country-region
+    """
+    countries = activity.findall('recipient-country')
+    percentages_exist = False
+    check = True
+    amount = 0
+    for country in countries:
+        if (country.get('percentage')):
+            percentages_exist = True
+            try:
+                amount = amount + int(country.get('percentage'))
+            # there's some other weird problem, e.g. not integers, so not possible to add up to 100
+            except Exception, e:
+                check = False
+    if ((percentages_exist) and (amount!=100)):
+        check = False
+    return check
+
+def recipient_region_percentages_are_valid(activity):
+    """
+    Description: Recipient region percentages are integers.
+    Group: recipient-country-region
+    """
+    regions = activity.findall('recipient-region')
+    check = True
+    for region in regions:
+        if (region.get('percentage')):
+            try:
+                int(region.get('percentage'))
+                check = True
+            except Exception, e:
+                check = False
+        else:
+            check = True
+    return check
+
+def recipient_region_percentages_add_up_to_100(activity):
+    """
+    Description: Recipient region percentages add up to 100%, if they exist.
+    Group: recipient-country-region
+    """
+    regions = activity.findall('recipient-region')
+    percentages_exist = False
+    check = True
+    amount = 0
+    for region in regions:
+        if (region.get('percentage')):
+            percentages_exist = True
+            try:
+                amount = amount + int(region.get('percentage'))
+            # there's some other weird problem, e.g. not integers, so not possible to add up to 100
+            except Exception, e:
+                check = False
+    if ((percentages_exist) and (amount!=100)):
+        check = False
+    return check
+
+def sector_exists(activity):
+    """
+    Description: At least one sector exists
+    Group: sector
+    """
+    thesector = activity.find('sector')
+    if (thesector is None):
+        return False
+    else:
+        return True
+
+def sector_exists(activity):
+    """
+    Description: At least one sector exists
+    Group: sector
+    """
+    thesector = activity.find('sector')
+    if (thesector is None):
+        return False
+    else:
+        return True
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    print "Ran OK"
