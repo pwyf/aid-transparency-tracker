@@ -4,6 +4,8 @@ import json
 import models
 import database
 import random
+from sqlalchemy import func
+import math
 
 def support_jsonp(func):
     """Wraps JSONified output for JSONP requests."""
@@ -20,25 +22,46 @@ def support_jsonp(func):
     return decorated_function
 
 class AggregatedTestResults:
-   def make_division(self,i):
-       return [i* self.divisions, (i+1) * self.divisions]
-   def x_axis(self):
-     return map(self.make_division, range(self.n))
-   def __init__(self, n):
-    self.n = n
-    self.divisions = 100.0/n
-   def fake_data(self):
-       return map (lambda i: random.randint(10, 200), range(self.n))
-   def create_report(self):
-    return {"data" : self.fake_data(), "x_axis": self.x_axis()}
+    def make_division(self,i):
+        return [i* self.divisions, (i+1) * self.divisions]
+    def x_axis(self):
+        return map(self.make_division, range(self.n))
+    def __init__(self, n, data):
+        self.n = n
+        self.data = data
+        self.divisions = 100.0/n
+    def aggregate_data(self):
+        out = [0] * self.n
+        for value in self.data.values():
+            out[ int(math.floor(value/(100.0/self.n))) ] += 1
+        return out
+    def create_report(self):
+        return {"data" : self.aggregate_data(), "x_axis": self.x_axis()}
 
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
+def test_results():
+    session = database.db_session
+    data = session.query(func.count(models.Result.id),
+                models.Result.result_data,
+                models.Result.package_id
+            ).group_by(models.Result.package_id
+            ).group_by(models.Result.result_data).all()
+    packages = set(map(lambda x: x[2], data))
+    d = dict(map(lambda x: ((x[2],x[1]),x[0]), data))
+    out = {}
+    for p in packages:
+        try: fail = d[(p,0)]
+        except: fail = 0
+        try: success = d[(p,1)]
+        except: success = 0
+        out[p] =  float(success)/fail+success
+    return out
 
 def aggregated_test_results():
-    return AggregatedTestResults(10).create_report()
+    return AggregatedTestResults(10, test_results()).create_report()
 
 @app.route("/packages/")
 @support_jsonp
@@ -63,4 +86,9 @@ def package(package_name):
 if __name__ == '__main__':
     app.debug = True
     database.init_db()
+
+    print
+    print
+    print test_results()
     app.run()
+
