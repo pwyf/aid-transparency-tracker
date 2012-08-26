@@ -1,3 +1,5 @@
+from datetime import time
+
 # provide variables from xpath API
 
 def title_exists(activity):
@@ -78,6 +80,8 @@ def activity_date_iso_date_exists(activity):
         thedate = date.get('iso-date')
         if (thedate is None):
             check = False
+        else:
+            time.strptime(thedate, "%Y-%m-%d")
     return check
 
 def activity_date_start_planned_exists(activity):
@@ -283,6 +287,17 @@ def sector_exists(activity):
         return False
     else:
         return True
+
+def multiple_sectors_exist(activity):
+    """
+    Description: Multiple sectors exist
+    Group: sector
+    """
+    thesector = activity.findall('sector')
+    if (count(thesector)>1):
+        return True
+    else:
+        return False
 
 if __name__ == "__main__":
     print "Ran OK"

@@ -63,6 +63,14 @@ def test_results():
 def aggregated_test_results():
     return AggregatedTestResults(10, test_results()).create_report()
 
+def fake_result_for_org (package):
+   total = random.randint(0, 158)
+   passed = random.randint(total/3, total)
+   return {"name": package.package_name, "total": total, "passed": passed}
+
+def results_by_org(packages):
+    return map(fake_result_for_org, packages)
+
 @app.route("/packages/")
 @support_jsonp
 def packages():
@@ -72,7 +80,7 @@ def packages():
         packages)
 
     return jsonify(packages=package_links,
-                   aggregated_test_results= aggregated_test_results())
+                   aggregated_test_results= aggregated_test_results(), results_by_org=results_by_org(packages))
 
 @app.route('/packages/<package_name>')
 @support_jsonp
