@@ -31,10 +31,10 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
     for test in tests:
         module = __import__('tests.'+test.file)
         submodule = getattr(module, test.file)
-        try:
-            the_result = getattr(submodule, test.name)(xmldata)
-        except Exception:
-            the_result = False
+        #try:
+        the_result = getattr(submodule, test.name)(xmldata)
+        #except Exception:
+        #    the_result = False
 
         newresult = models.Result()
         newresult.runtime_id = runtime_id
@@ -51,7 +51,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
     data = etree.parse(file_name)
     for activity in data.findall('iati-activity'):
         result_identifier = activity.find('iati-identifier').text
-        activity_data = etree.tostring(data)
+        activity_data = etree.tostring(activity)
         res = test_activity(runtime_id, package_id, result_level, result_identifier, activity_data)
         # remove this line when it's working
         break
@@ -61,19 +61,15 @@ def load_package(runtime):
     
     path = 'data/'
     for package in models.Package.query.all():
-        try:            
-            output = output + ""
-            output = output + "Loading file"
-            
-            filename = path + '/' + package.package_name + '.xml'
+        output = output + ""
+        output = output + "Loading file"
+        
+        filename = path + '/' + package.package_name + '.xml'
 
-	        # run tests on file
-            res = check_file(filename, runtime, package.id, None)
-            # res.task_id is the id of the task
-            output = output + 'Ran that'
-        except Exception, e:
-            output = output + "Error in file: " + package.package_name + " - " + str(e) + "\n"
-	    pass
+        # run tests on file
+        res = check_file(filename, runtime, package.id, None)
+        # res.task_id is the id of the task
+        output = output + 'Ran that'
     return output
 
 @app.route("/runtests/")

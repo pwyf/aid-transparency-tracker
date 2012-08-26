@@ -1,4 +1,4 @@
-from datetime import time
+from datetime import datetime 
 
 # provide variables from xpath API
 
@@ -7,6 +7,7 @@ def title_exists(activity):
     Description: Title exists
     Group: title
     """
+    print activity
     thetitle = activity.find('title').text
     if (thetitle is None):
         return False
@@ -52,7 +53,7 @@ def only_one_activity_status(activity):
     Group: activity-status
     """
     thestatus = activity.findall('activity-status')
-    if ((thestatus is not None) and (count(thestatus)<=1)):
+    if ((thestatus is not None) and (len(thestatus)<=1)):
 	    return True
     else:
         return False
@@ -81,7 +82,9 @@ def activity_date_iso_date_exists(activity):
         if (thedate is None):
             check = False
         else:
-            time.strptime(thedate, "%Y-%m-%d")
+            #FIXME
+            #datetime.strptime(thedate, "%Y-%m-%d")
+            pass
     return check
 
 def activity_date_start_planned_exists(activity):
