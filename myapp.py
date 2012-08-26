@@ -11,10 +11,11 @@ from lxml import etree
 import database
 
 def create_app():
-    return Flask("myapp")
+    app = Flask("myapp")
+    app.config.from_pyfile('config.py')
+    return app 
 
 app = create_app()
-app.config.from_pyfile('config.py')
 celery = Celery(app)
 
 # Has the test completed?
