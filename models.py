@@ -3,7 +3,7 @@ from database import Base
 from datetime import datetime
 
 class Runtime(Base):
-    __tablename__ = 'Runtime'
+    __tablename__ = 'runtime'
     id = Column(Integer, primary_key=True)
     runtime_datetime = Column(DateTime)
 
@@ -14,7 +14,7 @@ class Runtime(Base):
         return self.runtime_datetime, self.id
 
 class Package(Base):
-    __tablename__ = 'Package'
+    __tablename__ = 'package'
     id = Column(Integer, primary_key=True)
     man_auto = Column(UnicodeText)
     source_url = Column(UnicodeText)
@@ -36,11 +36,11 @@ class Package(Base):
 
 # Tests - at activity or file level.
 class Result(Base):
-    __tablename__ = 'Result'
+    __tablename__ = 'result'
     id = Column(Integer, primary_key=True)
-    runtime_id = Column(Integer, ForeignKey('Runtime.id'))
-    package_id = Column(Integer, ForeignKey('Package.id'))
-    test_id = Column(Integer, ForeignKey('Test.id'))
+    runtime_id = Column(Integer, ForeignKey('runtime.id'))
+    package_id = Column(Integer, ForeignKey('package.id'))
+    test_id = Column(Integer, ForeignKey('test.id'))
     result_data = Column(Integer)
     # result_level can be file or activity
     result_level = Column(UnicodeText)
@@ -64,19 +64,15 @@ class Result(Base):
         return self.source_url, self.id
 
 class Test(Base):
-    __tablename__ = 'Test'
+    __tablename__ = 'test'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)
     description = Column(UnicodeText)
-    code = Column(UnicodeText)
-    xpath = Column(Integer)
-
-    def __init__(self, man_auto, source_url):
-        self.man_auto = man_auto
-        self.source_url = source_url
+    test_group = Column(UnicodeText)
 
     def __repr__(self):
         return self.source_url, self.id
+
 
 # InfoResult
 # ==> total amount of disbursements in this package
@@ -84,11 +80,11 @@ class Test(Base):
 
 
 class InfoResult(Base):
-    __tablename__ = 'InfoResult'
+    __tablename__ = 'info_result'
     id = Column(Integer, primary_key=True)
-    runtime_id = Column(Integer, ForeignKey('Runtime.id'))
-    package_id = Column(Integer, ForeignKey('Package.id'))
-    info_id = Column(Integer, ForeignKey('InfoType.id'))
+    runtime_id = Column(Integer, ForeignKey('runtime.id'))
+    package_id = Column(Integer, ForeignKey('package.id'))
+    info_id = Column(Integer, ForeignKey('info_type.id'))
     result_data = Column(UnicodeText)
 
     def __init__(self, man_auto, source_url):
@@ -102,7 +98,7 @@ class InfoResult(Base):
 #
 
 class InfoType(Base):
-    __tablename__ = 'InfoType'
+    __tablename__ = 'info_type'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)
     description = Column(UnicodeText)
