@@ -135,6 +135,17 @@ def funding_organisation_exists(activity):
     else:
         return True
 
+def accountable_organisation_exists(activity):
+    """
+    Description: Accountable organisation exists
+    Group: participating-org
+    """
+    theorg = activity.xpath("//participating-org[@role='accountable']")
+    if (theorg is None):
+        return False
+    else:
+        return True
+
 def extending_organisation_exists(activity):
     """
     Description: Extending organisation exists
@@ -156,6 +167,33 @@ def implementing_organisation_exists(activity):
         return False
     else:
         return True
+
+def recipient_region_or_country_exists(activity):
+    """
+    Description: Either a recipient region or country exists
+    Group: recipient-country-region
+    """
+    thecountry = activity.find('recipient-country')
+    theregion = activity.find('recipient-region')
+    if (thecountry or theregion):
+        return False
+    else:
+        return True
+
+def recipient_region_and_country_exists(activity):
+    """
+    Description: Recipient country must not be used if recipient region is used, and vice-versa.
+    Group: recipient-country-region
+    """
+    thecountry = activity.find('recipient-country')
+    theregion = activity.find('recipient-region')
+    if ((thecountry is None) and (theregion is None)):
+        return True
+    else:
+        if (thecountry and theregion):
+            return False
+        else:
+            return True
 
 if __name__ == "__main__":
     app.run(debug=True)
