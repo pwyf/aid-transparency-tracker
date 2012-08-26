@@ -63,14 +63,14 @@ def load_package(runtime):
     path = 'data/'
     for package in models.Package.query.all():
         output = output + ""
-        output = output + "Loading file"
+        output = output + "Loading file " + package.package_name + "...<br />"
         
         filename = path + '/' + package.package_name + '.xml'
 
         # run tests on file
         res = check_file(filename, runtime, package.id, None)
         # res.task_id is the id of the task
-        output = output + 'Ran that'
+        output = output + 'Finished processing.<br />'
     return output
 
 @app.route("/runtests/")

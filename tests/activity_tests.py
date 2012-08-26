@@ -7,7 +7,6 @@ def title_exists(activity):
     Description: Title exists
     Group: title
     """
-    print activity
     thetitle = activity.find('title').text
     if (thetitle is None):
         return False
@@ -297,7 +296,7 @@ def multiple_sectors_exist(activity):
     Group: sector
     """
     thesector = activity.findall('sector')
-    if (count(thesector)>1):
+    if (len(thesector)>1):
         return True
     else:
         return False
@@ -413,7 +412,7 @@ def transaction_commitment_exists(activity):
     Description: At least one commitment transaction exists
     Group: transaction
     """
-    transaction_commitment = activity.xpath("//transaction/transaction-type/[@code='C']")
+    transaction_commitment = activity.xpath("//transaction/transaction-type/@code='C'")
     if (transaction_commitment is None):
         return False
     else:
@@ -424,8 +423,63 @@ def transaction_disbursement_exists(activity):
     Description: At least one disbursement transaction exists
     Group: transaction
     """
-    transaction_disbursement = activity.xpath("//transaction/transaction-type/[@code='D']")
+    transaction_disbursement = activity.xpath("//transaction/transaction-type/@code='D'")
     if (transaction_disbursement is None):
+        return False
+    else:
+        return True
+
+def results_data_exists(activity):
+    """
+    Description: At least some results data exists
+    Group: results
+    """
+    result = activity.find('result')
+    if (result is None):
+        return False
+    else:
+        return True
+
+def conditions_data_exists(activity):
+    """
+    Description: It is stated whether conditions exist
+    Group: results
+    """
+    conditions = activity.find('conditions')
+    if (conditions is None):
+        return False
+    else:
+        return True
+
+def sub_national_geographic_location_data_exists(activity):
+    """
+    Description: Sub-national geographic location data exists
+    Group: location
+    """
+    location = activity.find('location')
+    if (location is None):
+        return False
+    else:
+        return True
+
+def documents_exist(activity):
+    """
+    Description: Documents related to the activity are published
+    Group: document
+    """
+    document = activity.find('document-link')
+    if (document is None):
+        return False
+    else:
+        return True
+
+def document_categories_exist(activity):
+    """
+    Description: Document categories are stated within documents
+    Group: document
+    """
+    document = activity.xpath("//document-link/category")
+    if (document is None):
         return False
     else:
         return True
