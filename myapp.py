@@ -31,10 +31,13 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
     for test in tests:
         module = __import__('tests.'+test.file)
         submodule = getattr(module, test.file)
-        #try:
-        the_result = getattr(submodule, test.name)(xmldata)
-        #except Exception:
-        #    the_result = False
+        try:
+            if getattr(submodule, test.name)(xmldata):
+                the_result = 1
+            else:
+                the_result = 0
+        except Exception:
+            the_result = 0
 
         newresult = models.Result()
         newresult.runtime_id = runtime_id
@@ -53,8 +56,6 @@ def check_file(file_name, runtime_id, package_id, context=None):
         result_identifier = activity.find('iati-identifier').text
         activity_data = etree.tostring(activity)
         res = test_activity(runtime_id, package_id, result_level, result_identifier, activity_data)
-        # remove this line when it's working
-        break
 
 def load_package(runtime):
     output = ""

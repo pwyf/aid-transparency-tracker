@@ -33,7 +33,8 @@ class AggregatedTestResults:
     def aggregate_data(self):
         out = [0] * self.n
         for value in self.data.values():
-            out[ int(math.floor(value/(100.0/self.n))) ] += 1
+            if value == 100.0: out[-1] += 1
+            else: out[ int(math.floor(value/(100.0/self.n))) ] += 1
         return out
     def create_report(self):
         return {"data" : self.aggregate_data(), "x_axis": self.x_axis()}
@@ -41,15 +42,6 @@ class AggregatedTestResults:
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
-
-def package_test_results():
-    session = database.db_session
-    data = session.query(func.count(models.Result.id),
-                models.Result.result_data,
-                models.Result.package_id
-            ).group_by(models.Result.package_id
-            ).group_by(models.Result.result_data).all()
-    return test_percentages(data)
 
 def test_percentages(data):
     packages = set(map(lambda x: x[2], data))
@@ -63,16 +55,32 @@ def test_percentages(data):
         out[p] =  (float(success)/(fail+success)) * 100
     return out
 
-def aggregated_test_results():
-    return AggregatedTestResults(10, package_test_results()).create_report()
+def test_tuples(data):
+    packages = set(map(lambda x: x[2], data))
+    d = dict(map(lambda x: ((x[2],x[1]),x[0]), data))
+    out = {}
+    for p in packages:
+        try: fail = d[(p,0)]
+        except: fail = 0
+        try: success = d[(p,1)]
+        except: success = 0
+        out[p] = (success, fail+success) 
+    return out
 
-def fake_result_for_org (package):
-   total = random.randint(0, 158)
-   passed = random.randint(total/3, total)
-   return {"name": package.package_name, "total": total, "passed": passed}
+def aggregated_test_results(data):
+    return AggregatedTestResults(10, test_percentages(data)).create_report()
 
-def results_by_org(packages):
-    return map(fake_result_for_org, packages)
+def results_by_org(data, packages):
+    tests = test_tuples(data)
+    package_dict = map(lambda x: x.as_dict(), packages)
+    for package in package_dict:
+        try:
+            package['passed'] = tests[package['id']][0]
+            package['total'] = tests[package['id']][1]
+        except KeyError:
+            package['passed'] = 0
+            package['total'] = 0
+    return package_dict 
 
 @app.route("/tests/")
 def tests():
@@ -95,12 +103,16 @@ def tests():
 @support_jsonp
 def packages():
     packages = database.db_session.query(models.Package).all()
-    package_links = map(
-        lambda package: {"link": url_for( "package", package_name=package.package_name)},
-        packages)
 
-    return jsonify(packages=package_links,
-                   aggregated_test_results= aggregated_test_results(), results_by_org=results_by_org(packages))
+    session = database.db_session
+    data = session.query(func.count(models.Result.id),
+                models.Result.result_data,
+                models.Result.package_id
+            ).group_by(models.Result.package_id
+            ).group_by(models.Result.result_data).all()
+
+    return jsonify(
+                   aggregated_test_results= aggregated_test_results(data), results_by_org=results_by_org(data, packages))
 
 @app.route('/packages/<package_name>')
 @support_jsonp
