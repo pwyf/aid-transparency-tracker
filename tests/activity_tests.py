@@ -299,5 +299,133 @@ def multiple_sectors_exist(activity):
     else:
         return False
 
+def sector_percentages_are_valid(activity):
+    """
+    Description: Sector percentages are integers
+    Group: sector
+    """
+    sectors = activity.findall('sector')
+    check = True
+    for sector in sectors:
+        if (sector.get('percentage')):
+            try:
+                int(sector.get('percentage'))
+                check = True
+            except Exception, e:
+                check = False
+        else:
+            check = True
+    return check
+
+def collaboration_type_exists(activity):
+    """
+    Description: Collaboration type exists
+    Group: collaboration-type
+    """
+    collaborationtype = activity.find('collaboration-type')
+    if (collaborationtype is None):
+        return False
+    else:
+        return True
+
+def flow_type_exists(activity):
+    """
+    Description: Flow type exists
+    Group: flow-type
+    """
+    flowtype = activity.find('default-flow-type')
+    if (flowtype is None):
+        return False
+    else:
+        return True
+
+def finance_type_exists(activity):
+    """
+    Description: Finance type exists
+    Group: finance-type
+    """
+    financetype = activity.find('default-finance-type')
+    if (financetype is None):
+        return False
+    else:
+        return True
+
+def aid_type_exists(activity):
+    """
+    Description: Aid type exists
+    Group: aid-type
+    """
+    aidtype = activity.find('default-aid-type')
+    if (aidtype is None):
+        return False
+    else:
+        return True
+
+def tied_aid_status_exists(activity):
+    """
+    Description: Tied aid status exists
+    Group: aid-type
+    """
+    tiedstatus = activity.find('default-tied-status')
+    if (tiedstatus is None):
+        return False
+    else:
+        return True
+
+def budget_exists(activity):
+    """
+    Description: Budget exists
+    Group: budget
+    """
+    budget = activity.find('budget')
+    if (budget is None):
+        return False
+    else:
+        return True
+
+def planned_disbursement_exists(activity):
+    """
+    Description: Planned disbursement exists
+    Group: planned-disbursement
+    """
+    planneddisbursement = activity.find('planned-disbursement')
+    if (planneddisbursement is None):
+        return False
+    else:
+        return True
+
+def transaction_exists(activity):
+    """
+    Description: At least one transaction exists
+    Group: transaction
+    """
+    transaction = activity.find('transaction')
+    if (transaction is None):
+        return False
+    else:
+        return True
+
+def transaction_commitment_exists(activity):
+    """
+    Description: At least one commitment transaction exists
+    Group: transaction
+    """
+    transaction_commitment = activity.xpath("//transaction/transaction-type/[@code='C']")
+    if (transaction_commitment is None):
+        return False
+    else:
+        return True
+
+def transaction_disbursement_exists(activity):
+    """
+    Description: At least one disbursement transaction exists
+    Group: transaction
+    """
+    transaction_disbursement = activity.xpath("//transaction/transaction-type/[@code='D']")
+    if (transaction_disbursement is None):
+        return False
+    else:
+        return True
+
 if __name__ == "__main__":
     print "Ran OK"

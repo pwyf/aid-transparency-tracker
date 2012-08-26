@@ -44,7 +44,6 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
         newresult.result_level = result_level
         newresult.result_identifier = result_identifier
         database.db_session.add(newresult)
-        database.db_session.add(newresult)
     database.db_session.commit()
 
 def check_file(file_name, runtime_id, package_id, context=None):
