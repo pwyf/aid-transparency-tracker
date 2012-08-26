@@ -1,8 +1,23 @@
-from flask import Flask, abort, url_for, jsonify
+from flask import Flask, abort, url_for, jsonify, redirect, request, current_app
+from functools import wraps
 import json
 import models
 import database
 import random
+
+def support_jsonp(func):
+    """Wraps JSONified output for JSONP requests."""
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            data = str(func(*args, **kwargs).data)
+            content = str(callback) + '(' + data + ')'
+            mimetype = 'application/javascript'
+            return current_app.response_class(content, mimetype=mimetype)
+        else:
+            return func(*args, **kwargs)
+    return decorated_function
 
 class AggregatedTestResults:
    def make_division(self,i):
@@ -26,6 +41,7 @@ def aggregated_test_results():
     return AggregatedTestResults(10).create_report()
 
 @app.route("/packages/")
+@support_jsonp
 def packages():
     packages = database.db_session.query(models.Package).all()
     package_links = map(
@@ -33,9 +49,10 @@ def packages():
         packages)
 
     return jsonify(packages=package_links,
-                   aggreated_test_results= aggregated_test_results())
+                   aggregated_test_results= aggregated_test_results())
 
 @app.route('/packages/<package_name>')
+@support_jsonp
 def package(package_name):
     package = database.db_session.query(models.Package).filter(models.Package.package_name == package_name).first()
     if package == None:
