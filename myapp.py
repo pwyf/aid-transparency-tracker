@@ -54,7 +54,6 @@ def check_file(file_name, runtime_id, package_id, context=None):
         activity_data = etree.tostring(activity)
         res = test_activity(runtime_id, package_id, result_level, result_identifier, activity_data)
         # remove this line when it's working
-        break
 
 def load_package(runtime):
     output = ""
