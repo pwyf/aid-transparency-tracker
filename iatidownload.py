@@ -29,11 +29,9 @@ def metadata_to_db(pkg, file):
         database.db_session.add(package)
         database.db_session.commit()
         result.result_data = 1
-        # FIXME
         result.package_id = package.id
-        #database.db_session.add(result)
-        # FIXME
-        #database.db_session.commit()
+        database.db_session.add(result)
+        database.db_session.commit()
     else:
         result.result_data = 0 
 
@@ -60,6 +58,7 @@ def save_file(pkg_name, url, dir):
     webFile = urllib2.urlopen(url)
     localFile.write(webFile.read())
     webFile.close()
+    localFile.close()
 
 if __name__ == '__main__':
     import sys
