@@ -72,8 +72,10 @@ class Test(Base):
     file = Column(UnicodeText)
 
     def __repr__(self):
-        return self.source_url, self.id
+        return self.name, self.id
 
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 # InfoResult
 # ==> total amount of disbursements in this package
