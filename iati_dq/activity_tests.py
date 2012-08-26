@@ -1,6 +1,6 @@
 # provide variables from xpath API
 
-def activity_date_exists(activity):
+def activity_date_iso_date_exists(activity):
     """
     Activity Date ISO date exists
     """
