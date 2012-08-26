@@ -124,5 +124,38 @@ def activity_date_end_actual_exists(activity):
     else:
         return True
 
+def funding_organisation_exists(activity):
+    """
+    Description: Funding organisation exists
+    Group: participating-org
+    """
+    theorg = activity.xpath("//participating-org[@role='funding']")
+    if (theorg is None):
+        return False
+    else:
+        return True
+
+def extending_organisation_exists(activity):
+    """
+    Description: Extending organisation exists
+    Group: participating-org
+    """
+    theorg = activity.xpath("//participating-org[@role='extending']")
+    if (theorg is None):
+        return False
+    else:
+        return True
+
+def implementing_organisation_exists(activity):
+    """
+    Description: Implementing organisation exists
+    Group: participating-org
+    """
+    theorg = activity.xpath("//participating-org[@role='implementing']")
+    if (theorg is None):
+        return False
+    else:
+        return True
+
 if __name__ == "__main__":
     app.run(debug=True)
