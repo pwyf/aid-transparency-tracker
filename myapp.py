@@ -3,19 +3,15 @@ from flask.ext.celery import Celery
 from celery.task.sets import TaskSet
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, UnicodeText, Date, DateTime, Float, Boolean, func
-from iati_dq import activity_tests as IATIActivityTests
-from iati_dq import file_tests as IATIFileTests
 import models
 import sys, os
 from lxml import etree
 import database
 
-def create_app():
-    app = Flask("myapp")
-    app.config.from_pyfile('config.py')
-    return app 
+from flask.ext.script import Manager
+from flask.ext.celery import install_commands as install_celery_commands
 
-app = create_app()
+app = database.create_app()
 celery = Celery(app)
 
 # Has the test completed?
@@ -23,18 +19,6 @@ celery = Celery(app)
 def check_result(task_id):
     retval = load_file.AsyncResult(task_id).status
     return retval
-
-def run_a_test(thedata,thexpath):
-    test_result = False
-    try:
-        test_result = thedata.xpath(thexpath)
-    except Exception, e:
-        pass
-
-    if (test_result):
-        return True
-    else:
-        return False
 
 # run XPATH tests, stored in the database against each activity
 @celery.task(name="myapp.test_activity", callback=None)
@@ -45,30 +29,18 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
 
     tests = models.Test.query.all()
     for test in tests:
-        if (test.xpath == 1):
-        # if it's XPATH, run tests using that
-            the_result = run_a_test(xmldata, test.code)
-            newresult = models.Result()
-            newresult.runtime_id = runtime_id
-            newresult.package_id = package_id
-            newresult.test_id=test_id
-            newresult.result_data = the_result
-            newresult.result_level = result_level
-            newresult.result_identifier = result_identifier
-            database.db_session.add(newresult)
-            database.db_session.add(newresult)
-    # test that it's working, just add some random data...
-    examplecode = """//title/text()"""
-    the_result = run_a_test(xmldata, examplecode)
-    test_id = '-100'
-    newresult = models.Result()
-    newresult.runtime_id = runtime_id
-    newresult.package_id = package_id
-    newresult.test_id=test_id
-    newresult.result_data = the_result
-    newresult.result_level = result_level
-    newresult.result_identifier = result_identifier
-    database.db_session.add(newresult)
+        module = __import__('tests.'+test.file)
+        the_result = getattr(module, test.name)()
+
+        newresult = models.Result()
+        newresult.runtime_id = runtime_id
+        newresult.package_id = package_id
+        newresult.test_id=test_id
+        newresult.result_data = the_result
+        newresult.result_level = result_level
+        newresult.result_identifier = result_identifier
+        database.db_session.add(newresult)
+        database.db_session.add(newresult)
     database.db_session.commit()
 
 def check_file(file_name, runtime_id, package_id, context=None):
@@ -103,7 +75,6 @@ def load_package(runtime):
 
 @app.route("/runtests/")
 def runtests():
-
     newrun = models.Runtime()
     database.db_session.add(newrun)
     database.db_session.commit()
@@ -115,4 +86,9 @@ def runtests():
 
 if __name__ == "__main__":
     database.init_db()
-    app.run(debug=True)
+
+    manager = Manager(app)
+    install_celery_commands(manager)
+
+    if __name__ == "__main__":
+        manager.run()

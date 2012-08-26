@@ -1,6 +1,6 @@
 from sqlalchemy import *
-from database import Base
 from datetime import datetime
+from database import Base
 
 class Runtime(Base):
     __tablename__ = 'runtime'
@@ -69,6 +69,7 @@ class Test(Base):
     name = Column(UnicodeText)
     description = Column(UnicodeText)
     test_group = Column(UnicodeText)
+    file = Column(UnicodeText)
 
     def __repr__(self):
         return self.source_url, self.id

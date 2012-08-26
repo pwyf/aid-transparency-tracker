@@ -16,12 +16,11 @@ database.db_session.commit()
 
 def metadata_to_db(pkg, file):
     result = models.Result()
-    result.package_id = pkg['name']
     result.test_id = -2
     result.runtime_id = runtime.id
     result.result_level = u'file'
+    package = models.Package()
     if file:
-        package = models.Package()
         package.man_auto = 'auto'
         package.source_url = pkg['resources'][0]['url']
         package.package_ckan_id = pkg['id']
@@ -30,10 +29,13 @@ def metadata_to_db(pkg, file):
         database.db_session.add(package)
         database.db_session.commit()
         result.result_data = 1
+        # FIXME
+        result.package_id = package.id
+        #database.db_session.add(result)
+        # FIXME
+        #database.db_session.commit()
     else:
         result.result_data = 0 
-    database.db_session.add(result)
-    database.db_session.commit()
 
 def run(directory):
     url = 'http://iatiregistry.org/api'

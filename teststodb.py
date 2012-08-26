@@ -2,11 +2,13 @@ import models
 import database
 
 import ast
-M = ast.parse(open('iati_dq/activity_tests.py').read())
+filename = 'activity_tests' 
+M = ast.parse(open('tests/'+filename+'.py').read())
 for f in M.body:
     if isinstance(f, ast.FunctionDef):
         test = models.Test()
         test.name = f.name
+        test.file = filename
         text =  ast.get_docstring(f)
         for line in text.split('\n'):
             key,value = line.split(':')
