@@ -7,7 +7,6 @@ def title_exists(activity):
     Description: Title exists
     Group: title
     """
-    print activity
     thetitle = activity.find('title').text
     if (thetitle is None):
         return False
