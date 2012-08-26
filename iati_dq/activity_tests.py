@@ -31,5 +31,25 @@ def title_greater_than_10_characters(activity):
     else:
         return False
 
+def description_exists(activity):
+    """
+    Description exists
+    """
+    thedescription = activity.find('description').text
+    if (thedescription is None):
+        return False
+    else:
+        return True
+
+def description_greater_than_40_characters(activity):
+    """
+    Description is greater than 40 characters
+    """
+    thedescription = activity.find('description').text
+    if ((thedescription is not None) and (len(thedescription)>40)):
+	    return True
+    else:
+        return False
+
 if __name__ == "__main__":
     app.run(debug=True)
