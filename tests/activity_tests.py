@@ -284,16 +284,5 @@ def sector_exists(activity):
     else:
         return True
 
-def sector_exists(activity):
-    """
-    Description: At least one sector exists
-    Group: sector
-    """
-    thesector = activity.find('sector')
-    if (thesector is None):
-        return False
-    else:
-        return True
-
 if __name__ == "__main__":
     print "Ran OK"
