@@ -1,6 +1,7 @@
 from sqlalchemy import *
 from iatidataquality import app
 from iatidataquality import db
+from datetime import datetime
 
 class Runtime(db.Model):
     __tablename__ = 'runtime'
