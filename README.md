@@ -18,9 +18,9 @@ cp config.py.tmpl config.py
 Run the celery script:
 ======================
 
-python myapp.py celeryd
+python manage.py celeryd
 
 Run the server:
 ===============
 
-python myapp.py runserver
+python manage.py runserver
