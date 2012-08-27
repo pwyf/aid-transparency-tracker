@@ -3,16 +3,15 @@ import ckan
 import urllib2
 from datetime import date
 import os
-import models
-import database
+from iatidataquality import models, db
 
 import sys
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
 runtime = models.Runtime()
-database.db_session.add(runtime)
-database.db_session.commit()
+db.session.add(runtime)
+db.session.commit()
 
 def metadata_to_db(pkg, file):
     result = models.Result()
@@ -26,12 +25,12 @@ def metadata_to_db(pkg, file):
         package.package_ckan_id = pkg['id']
         package.package_name = pkg['name']
         package.package_title = pkg['title']
-        database.db_session.add(package)
-        database.db_session.commit()
+        db.session.add(package)
+        db.session.commit()
         result.result_data = 1
         result.package_id = package.id
-        database.db_session.add(result)
-        database.db_session.commit()
+        db.session.add(result)
+        db.session.commit()
     else:
         result.result_data = 0 
 
@@ -51,7 +50,7 @@ def run(directory):
                 except urllib2.URLError, e:
                     file = False
             metadata_to_db(pkg, file)
-            print resource.get('url')
+            print resource['url']
 
 def save_file(pkg_name, url, dir):
     localFile = open(dir + '/' + pkg_name + '.xml', 'w')

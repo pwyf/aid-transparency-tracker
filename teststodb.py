@@ -1,5 +1,4 @@
-import models
-import database
+from iatidataquality import models, db
 
 test = models.Test()
 
@@ -14,8 +13,8 @@ for hardcoded_test in hardcoded_tests:
     test.id = hardcoded_test[0]
     test.name = hardcoded_test[1]
     test.description =  hardcoded_test[2]
-    database.db_session.add(test)
-    database.db_session.commit()
+    db.session.add(test)
+    db.session.commit()
 
 import ast
 filename = 'activity_tests' 
@@ -32,7 +31,7 @@ for f in M.body:
                 test.description = value
             elif key == 'Group':
                 test.test_group = value
-        database.db_session.add(test)
-        database.db_session.commit()
+        db.session.add(test)
+        db.session.commit()
 
 
