@@ -50,7 +50,11 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
 
 def check_file(file_name, runtime_id, package_id, context=None):
     result_level = '1' # ACTIVITY
-    data = etree.parse(file_name)
+    try:
+        data = etree.parse(file_name)
+    except etree.XMLSyntaxError:
+        # FIXME Report this as an actual result
+        return "Bad file"
     for activity in data.findall('iati-activity'):
         result_identifier = activity.find('iati-identifier').text
         activity_data = etree.tostring(activity)
@@ -61,6 +65,9 @@ def load_package(runtime):
     
     path = 'data/'
     for package in models.Package.query.all():
+        if package.id < 68:
+            continue
+        print package.id
         output = output + ""
         output = output + "Loading file " + package.package_name + "...<br />"
         
