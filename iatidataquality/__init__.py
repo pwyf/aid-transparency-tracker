@@ -1,18 +1,17 @@
 from flask import Flask, render_template, flash, request, Markup, session, redirect, url_for, escape, Response
 from flask.ext.celery import Celery
-from celery.task.sets import TaskSet
-from flask.ext.sqlalchemy import SQLAlchemy
-from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey, UnicodeText, Date, DateTime, Float, Boolean, func
-import models
+#from celery.task.sets import TaskSet # Is this going to be used?
 import sys, os
 from lxml import etree
-import database
+from flask.ext.sqlalchemy import SQLAlchemy
 
-from flask.ext.script import Manager
-from flask.ext.celery import install_commands as install_celery_commands
 
-app = database.create_app()
+app = Flask(__name__)
+app.config.from_pyfile('../config.py')
 celery = Celery(app)
+db = SQLAlchemy(app)
+import models
+import api
 
 # Has the test completed?
 @app.route("/resultcheck/<task_id>")
@@ -46,8 +45,8 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
         newresult.result_data = the_result
         newresult.result_level = result_level
         newresult.result_identifier = result_identifier
-        database.db_session.add(newresult)
-    database.db_session.commit()
+        db.session.add(newresult)
+    db.session.commit()
 
 def check_file(file_name, runtime_id, package_id, context=None):
     result_level = '1' # ACTIVITY
@@ -73,22 +72,18 @@ def load_package(runtime):
         output = output + 'Finished processing.<br />'
     return output
 
+@app.route("/")
+def home():
+    return "Some home page"
+
 @app.route("/runtests/")
 def runtests():
     newrun = models.Runtime()
-    database.db_session.add(newrun)
-    database.db_session.commit()
+    db.session.add(newrun)
+    db.session.commit()
 
     output = ""
     output = load_package(newrun.id)
     output = str(output) + "<br />Runtime is <br />" + str(newrun.id)
     return str(output)
 
-if __name__ == "__main__":
-    database.init_db()
-
-    manager = Manager(app)
-    install_celery_commands(manager)
-
-    if __name__ == "__main__":
-        manager.run()

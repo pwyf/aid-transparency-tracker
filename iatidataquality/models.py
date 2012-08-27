@@ -1,8 +1,8 @@
 from sqlalchemy import *
-from datetime import datetime
-from database import Base
+from iatidataquality import app
+from iatidataquality import db
 
-class Runtime(Base):
+class Runtime(db.Model):
     __tablename__ = 'runtime'
     id = Column(Integer, primary_key=True)
     runtime_datetime = Column(DateTime)
@@ -13,7 +13,7 @@ class Runtime(Base):
     def __repr__(self):
         return self.runtime_datetime, self.id
 
-class Package(Base):
+class Package(db.Model):
     __tablename__ = 'package'
     id = Column(Integer, primary_key=True)
     man_auto = Column(UnicodeText)
@@ -35,7 +35,7 @@ class Package(Base):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 # Tests - at activity or file level.
-class Result(Base):
+class Result(db.Model):
     __tablename__ = 'result'
     id = Column(Integer, primary_key=True)
     runtime_id = Column(Integer, ForeignKey('runtime.id'))
@@ -61,7 +61,7 @@ class Result(Base):
             self.result_identifier = result_identifier
 
 
-class Test(Base):
+class Test(db.Model):
     __tablename__ = 'test'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)
@@ -80,7 +80,7 @@ class Test(Base):
 # e.g. 1 = total disbursements
 
 
-class InfoResult(Base):
+class InfoResult(db.Model):
     __tablename__ = 'info_result'
     id = Column(Integer, primary_key=True)
     runtime_id = Column(Integer, ForeignKey('runtime.id'))
@@ -92,7 +92,7 @@ class InfoResult(Base):
 # InfoType
 #
 
-class InfoType(Base):
+class InfoType(db.Model):
     __tablename__ = 'info_type'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)

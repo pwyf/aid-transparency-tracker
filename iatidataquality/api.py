@@ -2,10 +2,11 @@ from flask import Flask, abort, url_for, jsonify, redirect, request, current_app
 from functools import wraps
 import json
 import models
-import database
 import random
 from sqlalchemy import func
 import math
+
+from iatidataquality import app, db
 
 def support_jsonp(func):
     """Wraps JSONified output for JSONP requests."""
@@ -38,10 +39,6 @@ class AggregatedTestResults:
         return out
     def create_report(self):
         return {"data" : self.aggregate_data(), "x_axis": self.x_axis()}
-
-
-app = Flask(__name__)
-app.config.from_pyfile('config.py')
 
 def test_percentages(data):
     packages = set(map(lambda x: x[2], data))
@@ -82,13 +79,13 @@ def results_by_org(data, packages):
             package['total'] = 0
     return package_dict 
 
-@app.route("/")
+@app.route("/api/")
 def index():
     return jsonify({"packages": url_for("packages"), "tests":url_for("tests")})
 
-@app.route("/tests/")
+@app.route("/api/tests/")
 def tests():
-    session = database.db_session
+    session = db.session
     data = session.query(func.count(models.Result.id),
                 models.Result.result_data,
                 models.Result.test_id
@@ -103,12 +100,12 @@ def tests():
         test["percentage_passed"] = percentage_passed[test['id']] 
     return jsonify({"tests": tests})
 
-@app.route("/packages/")
+@app.route("/api/packages/")
 @support_jsonp
 def packages():
-    packages = database.db_session.query(models.Package).all()
+    packages = db.session.query(models.Package).all()
 
-    session = database.db_session
+    session = db.session
     data = session.query(func.count(models.Result.id),
                 models.Result.result_data,
                 models.Result.package_id
@@ -118,20 +115,12 @@ def packages():
     return jsonify(
                    aggregated_test_results= aggregated_test_results(data), results_by_org=results_by_org(data, packages))
 
-@app.route('/packages/<package_name>')
+@app.route('/api/packages/<package_name>')
 @support_jsonp
 def package(package_name):
-    package = database.db_session.query(models.Package).filter(models.Package.package_name == package_name).first()
+    package = db.session.query(models.Package).filter(models.Package.package_name == package_name).first()
     if package == None:
         abort(404)
     else:
         return jsonify(package.as_dict())
-
-if __name__ == '__main__':
-    app.debug = True
-    database.init_db()
-
-    print
-    print
-    app.run(host='0.0.0.0')
 
