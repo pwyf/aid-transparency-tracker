@@ -28,6 +28,9 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
 
     tests = models.Test.query.all()
     for test in tests:
+        # Skip tests that aren't from a file
+        if not test.file: continue
+
         module = __import__('tests.'+test.file)
         submodule = getattr(module, test.file)
         try:
@@ -65,8 +68,6 @@ def load_package(runtime):
     
     path = 'data/'
     for package in models.Package.query.all():
-        if package.id < 68:
-            continue
         print package.id
         output = output + ""
         output = output + "Loading file " + package.package_name + "...<br />"
