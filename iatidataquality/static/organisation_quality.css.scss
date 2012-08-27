@@ -1,0 +1,15 @@
+// Place all the styles related to the OrganisationQuality controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#organisation_quality circle{
+  opacity: 0.3;
+}
+
+#organisation_quality circle.inner{
+  opacity: 1.0;
+}
+
+  text.title {
+    font: 300 40px Helvetica Neue;
+    fill: #666;
+  }

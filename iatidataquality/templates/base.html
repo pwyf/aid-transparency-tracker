@@ -1,0 +1,34 @@
+<head>
+  <title>IATI Data Quality</title>
+  <link href="/static/bootstrap-responsive.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <link href="/static/bootstrap-responsive.min.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <link href="/static/bootstrap.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <link href="/static/bootstrap.min.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <link href="/static/home.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <link href="/static/organisation_quality.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <link href="/static/scaffolds.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <link href="/static/test_summaries.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <link href="/static/application.css?body=1" media="all" rel="stylesheet" type="text/css" />
+  <script src="/static/jquery.js?body=1" type="text/javascript"></script>
+  <script src="/static/bootstrap.js?body=1" type="text/javascript"></script>
+  <script src="/static/bootstrap.min.js?body=1" type="text/javascript"></script>
+  <script src="/static/d3.v2.min.js?body=1" type="text/javascript"></script>
+  <script src="/static/home.js?body=1" type="text/javascript"></script>
+  <script src="/static/organisation_quality.js?body=1" type="text/javascript"></script>
+  <script src="/static/test_summaries.js?body=1" type="text/javascript"></script>
+  <script src="/static/application.js?body=1" type="text/javascript"></script>
+</head>
+<body>
+  <div class='container-fluid'>
+    <div class='row-fluid'>
+      <div class='span1'></div>
+      <div class='span10'>
+        <script>
+          endpoint_url= "/api/packages/"
+        </script>
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</body>

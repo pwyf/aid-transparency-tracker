@@ -1,0 +1,34 @@
+// Place all the styles related to the test_summaries controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#test_summaries {
+
+  svg {
+    font: 10px sans-serif;
+  }
+
+  text.title {
+    font: 300 40px Helvetica Neue;
+    fill: #666;
+  }
+
+  .rule line {
+    stroke: #fff;
+    stroke-opacity: .2;
+    shape-rendering: crispEdges;
+  }
+
+  .rule:first-child line {
+    stroke: #000;
+    stroke-opacity: 1;
+  }
+
+  rect {
+    fill-opacity: .6;
+   
+  }
+
+  rect:first-child {
+    
+  }
+}

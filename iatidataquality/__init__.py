@@ -4,7 +4,7 @@ from flask.ext.celery import Celery
 import sys, os
 from lxml import etree
 from flask.ext.sqlalchemy import SQLAlchemy
-
+from flask import render_template
 
 app = Flask(__name__)
 app.config.from_pyfile('../config.py')
@@ -81,7 +81,15 @@ def load_package(runtime):
 
 @app.route("/")
 def home():
-    return "Some home page"
+    return redirect("/test_summaries")
+
+@app.route("/test_summaries")
+def test_summaries():
+    return render_template("test_summaries.html")
+
+@app.route("/organisation_quality")
+def organisation_quality():
+    return render_template("organisation_quality.html")
 
 @app.route("/runtests/")
 def runtests():
