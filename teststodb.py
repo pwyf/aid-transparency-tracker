@@ -11,7 +11,7 @@ for f in M.body:
         test.file = filename
         text =  ast.get_docstring(f)
         for line in text.split('\n'):
-            key,value = line.split(':')
+            key,value = line.split(': ')
             if key == 'Description':
                 test.description = value
             elif key == 'Group':

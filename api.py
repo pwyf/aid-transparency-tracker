@@ -82,6 +82,10 @@ def results_by_org(data, packages):
             package['total'] = 0
     return package_dict 
 
+@app.route("/")
+def index():
+    return jsonify({"packages": url_for("packages"), "tests":url_for("tests")})
+
 @app.route("/tests/")
 def tests():
     session = database.db_session
