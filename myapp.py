@@ -31,10 +31,10 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
     for test in tests:
         module = __import__('tests.'+test.file)
         submodule = getattr(module, test.file)
-        #try:
-        the_result = getattr(submodule, test.name)(xmldata)
-        #except Exception:
-        #    the_result = False
+        try:
+            the_result = getattr(submodule, test.name)(xmldata)
+        except Exception:
+            the_result = False
 
         newresult = models.Result()
         newresult.runtime_id = runtime_id
