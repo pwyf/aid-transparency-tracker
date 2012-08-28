@@ -97,7 +97,10 @@ def tests():
                 session.query(models.Test).all()
             )
     for test in tests:
-        test["percentage_passed"] = percentage_passed[test['id']] 
+        try:
+            test["percentage_passed"] = percentage_passed[test['id']] 
+        except KeyError:
+            test["percentage_passed"] = ""
     return jsonify({"tests": tests})
 
 @app.route("/api/packages/")
