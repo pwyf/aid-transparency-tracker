@@ -1,0 +1,37 @@
+title should have text
+description should have text
+description should have text with more than 40 characters
+activity-status should exist once
+activity-date should exist # THIS IS WRONG
+activity-iso-date should be an iso date 
+activity-date should exist
+activity-date with start-actual should exist
+activity-date with type end-actual should exist
+participating-org with role accountable should exist
+participating-org with role extending should exist
+participating-org with role implementing should exist
+recipient-region or recipient-country should exist
+only one of recipient-region or recipient-country should exist
+recipient-country attribute percentage should be an integer
+recipient-country attribute percentage should sum to 100
+recipient-region attribute percentage should be an integer
+recipient-region attribute percentage should sum to 100
+sector should exist
+sector should exist once
+sector attribute percentage should be an integer
+collaboration-type should exist
+flow-type should exist
+finance-type should exist
+default-aid-type should exist
+default-aid-status should exist
+budget should exist
+planned-disbursement should exist
+transaction should exist
+transaction should have a transaction-type with code C
+transaction should have a transaction-type with code D
+result should exist
+conditions should exist
+location should exist
+document-link should exist
+document-link should have a category
+
