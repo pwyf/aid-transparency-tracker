@@ -22,6 +22,18 @@ class Package(db.Model):
     package_ckan_id = Column(UnicodeText)
     package_name = Column(UnicodeText)
     package_title = Column(UnicodeText)
+    package_license_id = Column(UnicodeText)
+    package_license = Column(UnicodeText)
+    package_metadata_created = Column(DateTime)
+    package_metadata_modified = Column(DateTime)
+    package_group = Column(UnicodeText)
+    package_activity_from = Column(DateTime)
+    package_activity_to = Column(DateTime)
+    package_activity_count = Column(UnicodeText)
+    package_country = Column(UnicodeText)
+    package_archive_file = Column(UnicodeText)   
+    package_verified = Column(UnicodeText)  
+    package_filetype = Column(UnicodeText)  
 
     def __init__(self, man_auto=None, source_url=None):
         if man_auto is not None:
