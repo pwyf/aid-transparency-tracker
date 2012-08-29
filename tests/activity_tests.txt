@@ -2,9 +2,8 @@ title should have text
 description should have text
 description should have text with more than 40 characters
 activity-status should exist once
-activity-date should exist # THIS IS WRONG
-activity-iso-date should be an iso date 
 activity-date should exist
+activity-date attribute iso-date should be an iso date 
 activity-date with start-actual should exist
 activity-date with type end-actual should exist
 participating-org with role accountable should exist
