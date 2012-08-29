@@ -21,35 +21,31 @@ Copyright (C) 2012
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+Installation
+============
 
 Set up a virtualenv:
-virtualenv ./pyenv
+
+    virtualenv ./pyenv
 
 Activate the virtualenv:
-source ./pyenv/bin/activate
+
+    source ./pyenv/bin/activate
 
 Install the requirements:
-pip install -r requirements.txt
+
+    pip install -r requirements.txt
 
 Copy and edit the config.py.tmpl:
-cp config.py.tmpl config.py
+
+    cp config.py.tmpl config.py
 
 Run the celery script:
-======================
 
-python manage.py celeryd
+    python manage.py celeryd
 
 Run the server:
-===============
 
-python manage.py runserver
+    python manage.py runserver
 
-In a production environment:
-============================
-
-Run fcgi.py
-
-... or for testing:
-===================
-
-Run testrun.py
+In a production environment, run `fcgi.py`
