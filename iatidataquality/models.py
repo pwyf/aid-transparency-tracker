@@ -12,7 +12,7 @@ class Runtime(db.Model):
         self.runtime_datetime = datetime.utcnow()
 
     def __repr__(self):
-        return self.runtime_datetime, self.id
+        return unicode(self.runtime_datetime)+u' '+unicode(self.id)
 
 class Package(db.Model):
     __tablename__ = 'package'

@@ -5,6 +5,7 @@ import sys, os
 from lxml import etree
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import render_template
+from sqlalchemy import func
 
 app = Flask(__name__)
 app.config.from_pyfile('../config.py')
@@ -91,6 +92,41 @@ def test_summaries():
 @app.route("/organisation_quality")
 def organisation_quality():
     return render_template("organisation_quality.html")
+
+@app.route("/table/")
+def table_select():
+    rows = db.session.query(func.count(models.Result.id),
+                models.Runtime
+            ).join(models.Runtime).group_by(models.Runtime).all()
+    return render_template("table_select.html", rows=rows) 
+
+@app.route("/table/<int:runtime_id>")
+def table(runtime_id):
+    results = db.session.query(models.Result.package_id, models.Result.test_id, func.sum(models.Result.result_data), func.count(models.Result.id)
+                ).filter_by(runtime_id=runtime_id
+                ).group_by(models.Result.package_id, models.Result.test_id, models.Result.runtime_id
+                ).order_by(models.Result.package_id, models.Result.test_id).all()
+    tests = models.Test.query.order_by(models.Test.id).all()
+    packages = models.Package.query.order_by(models.Package.id).all()
+    package_ids = map(lambda x: x.id, packages)
+    test_ids = map(lambda x: x.id, tests)
+    print results
+    def result_generator():
+        pos = 0
+        for pid in package_ids: 
+            def row_generator():
+                yield pid
+                for tid in test_ids:
+                    if results:
+                        if results[0][0] == pid and results[0][1] == tid:
+                            yield (results[0][2], results[0][3])
+                            results.pop(0)
+                        else:
+                            yield ""
+                    else:
+                        yield ""
+            yield row_generator()
+    return render_template("table.html", results=result_generator(), tests=tests)
 
 @app.route("/runtests/")
 def runtests():

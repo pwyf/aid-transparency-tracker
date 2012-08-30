@@ -1,0 +1,26 @@
+<table>
+    <tr>
+        <th>Results</th>
+        <th>Runtime ID</th>
+        <th>Datetime</th>
+    </tr>
+    {% for row in rows %}
+        <tr>
+            <td>
+                <a href="{{row[1].id}}">
+                    {{row[0]}}
+                </a>
+            </td>
+            <td>
+                <a href="{{row[1].id}}">
+                    {{row[1].id}}
+                </a>
+            </td>
+            <td>
+                <a href="{{row[1].id}}">
+                    {{row[1].runtime_datetime}}
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
