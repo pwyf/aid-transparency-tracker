@@ -36,11 +36,13 @@ def metadata_to_db(pkg, file, update_package):
     except Exception, e:
         pass
     try:
-        package.package_activity_from = pkg['extras']['activity_period-from']
+        if pkg['extras']['activity_period-from']:
+            package.package_activity_from = pkg['extras']['activity_period-from']
     except Exception, e:
         pass
     try:
-        package.package_activity_to = pkg['extras']['activity_period-to']
+        if pkg['extras']['activity_period-to']:
+            package.package_activity_to = pkg['extras']['activity_period-to']
     except Exception, e:
         pass
     try:
@@ -82,7 +84,7 @@ def run(directory):
             check_package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
             if (check_package):
             # found a package
-                if ((check_package.package_metadata_modified) != (datetime.strptime(pkg['metadata_modified'][:-7], "%Y-%m-%dT%H:%M:%S"))):
+                if ((check_package.package_metadata_modified) != (datetime.strptime(pkg['metadata_modified'], "%Y-%m-%dT%H:%M:%S.%f"))):
                     # if the package has been updated, then download it and update the package data
                     update_package = True
                     print "Updating package"
