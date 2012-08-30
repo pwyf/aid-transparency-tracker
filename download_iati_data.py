@@ -3,7 +3,7 @@ import ckan
 import urllib2
 from datetime import date, datetime
 import os
-from iatidataquality import models, db
+from iatidataquality import models, db, add_hardcoded_result
 
 import sys
 import pprint
@@ -14,10 +14,6 @@ db.session.add(runtime)
 db.session.commit()
 
 def metadata_to_db(pkg, file, update_package):
-    result = models.Result()
-    result.test_id = -2
-    result.runtime_id = runtime.id
-    result.result_level = u'file'
     if (update_package):
         package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
     else:
@@ -63,12 +59,7 @@ def metadata_to_db(pkg, file, update_package):
         pass
     db.session.add(package)
     db.session.commit()
-    result.package_id = package.id
-    if file:
-        result.result_data = 1
-    else:
-        result.result_data = 0 
-    db.session.add(result)
+    add_hardcoded_result(-2, runtime.id, package.id, file)
 
 
 def run(directory):

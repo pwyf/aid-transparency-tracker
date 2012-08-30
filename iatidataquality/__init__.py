@@ -11,6 +11,17 @@ app = Flask(__name__)
 app.config.from_pyfile('../config.py')
 celery = Celery(app)
 db = SQLAlchemy(app)
+def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
+    result = models.Result()
+    result.test_id = test_id 
+    result.runtime_id = runtime_id
+    result.result_level = u'file'
+    result.package_id = package_id
+    if result_data:
+        result.result_data = 1
+    else:
+        result.result_data = 0 
+    db.session.add(result)
 import models
 import api
 
@@ -56,8 +67,9 @@ def check_file(file_name, runtime_id, package_id, context=None):
     try:
         data = etree.parse(file_name)
     except etree.XMLSyntaxError:
-        # FIXME Report this as an actual result
-        return "Bad file"
+        add_hardcoded_result(-3, runtime_id, package_id, False)
+        return
+    add_hardcoded_result(-3, runtime_id, package_id, True)
     for activity in data.findall('iati-activity'):
         result_identifier = activity.find('iati-identifier').text
         activity_data = etree.tostring(activity)
@@ -67,7 +79,7 @@ def load_package(runtime):
     output = ""
     
     path = 'data/'
-    for package in models.Package.query.all():
+    for package in models.Package.query.order_by(models.Package.id).all():
         print package.id
         output = output + ""
         output = output + "Loading file " + package.package_name + "...<br />"
@@ -121,9 +133,9 @@ def table(runtime_id):
                             yield (results[0][2], results[0][3])
                             results.pop(0)
                         else:
-                            yield ""
+                            yield "/"
                     else:
-                        yield ""
+                        yield "/"
             yield row_generator()
     return render_template("table.html", results=result_generator(), tests=tests)
 
