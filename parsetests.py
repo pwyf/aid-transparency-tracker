@@ -20,69 +20,72 @@ def add_partial(regex):
         return fn
     return append_to_mappings
 
-@add_partial('(\S*) should have an? (\S*) with (\S*) (\S*)')
-def subelement_with_attribute_exists(activity, groups):
-    return bool(activity.xpath("//{}/{}/@{}='{}'".format(*groups)))
+@add('(\S*) is an? (.*)\?')
+def is_an(groups):
+    if groups[1] == 'iso date':
+        return None
+    elif groups[1] == 'integer':
+        def int_check(x):
+            try:
+                int(x)
+                return True
+            except ValueError:
+                return False
+        def is_an_integer(activity):
+            return reduce(lambda x,y: x and y,
+                        map(lambda x: int_check(x),
+                            activity.xpath(groups[0])))
+        return is_an_integer
 
-@add_partial('(\S*) should have an? (\S*)')
-def subelement_exists(activity, groups):
-    return bool(activity.xpath("//{}/{}".format(*groups)))
-
-@add_partial('(\S*) should have text with more than (\S*) characters')
+@add_partial('(\S*) has more than (\S*) characters\?')
 def text_chars(activity, groups):
-    return ((thetitle is not None) and (len(thetitle)>10))
+    return bool(reduce(lambda x,y: x or y,
+                    map(lambda x: len(x)>int(group[1]),
+                        activity.xpath(groups[0]))))
 
-@add_partial('(\S*) should have text')
-def text(activity, groups):
-    return bool(activity.find(groups[0]).text)
+def rm_blank(alist):
+    return filter(lambda x: x!='', alist)
 
-@add_partial('(\S*) attribute (\S*) should sum to (.*)')
-def attribute_sum(activity, groups):
-    return bool(
-        reduce(lambda x,y:x+int(y.get('percentage')),
-        activity.findall(groups[0]), 0)
-                == 100)
+@add_partial('(\S*) sum to (\S*)\?')
+def sum(activity, groups):
+    return (reduce(lambda x,y: float(x)+float(y),
+                       rm_blank(activity.xpath(groups[0])))
+               == float(groups[1]))
 
-@add_partial('(\S*) attribute (\S*) should be an? (.*)')
-def thisisbroke(activity, groups):
-    return False
-    #for element in activity.findall(group[0]):
-#IMPLEMENTME
-# try: int(activi)
-
-@add_partial('(\S*) should exist (\S*)')
+@add_partial('(\S*) exists (\S*) times?\?')
 def exist_times(activity, groups):
-    if groups[1] == "once":
-        return False
-#IMPLEMENTME
+    return len(rm_blank(activity.xpath(groups[0]))) == int(groups[1])
 
+def exist_check(activity, xpath):
+    return bool(rm_blank(activity.xpath(xpath)))
 
-@add_partial('only one of (\S*) or (\S*) should exist')
+@add_partial('only one of (\S*) or (\S*) exists\?')
 def exist_xor(activity, groups):
-    return (bool(activity.find(element).text) != 
-            bool(activity.find(element2).text))
+    return (exist_check(activity, groups[0]) != exist_check(activity, groups[1]))
 
-@add_partial('(\S*) or (\S*) should exist')
+@add_partial('(\S*) or (\S*) exists\?')
 def exist_or(activity, groups):
-    return (bool(activity.find(element).text) or
-            bool(activity.find(element2).text))
+    return (exist_check(activity, groups[0]) or exist_check(activity, groups[1]))
 
-@add_partial('(\S*) should exist')
+@add_partial('(\S*) exists\?') 
 def exist(activity, groups):
-    return bool(activity.find(groups[0]).text)
+    return exist_check(activity, groups[0]) 
 
-@add_partial('(.*)')
+@add('(.*)')
 def fail(line):
-    print 'Fail '+line
+    return None
 
 
-
+comment = re.compile('#')
 for line in open('tests/activity_tests.txt'):
+    if comment.match(line):
+        continue
     for mapping in mappings:
         m = mapping[0].match(line)
         if m:
-            try:
-                print mapping[1]
-            except TypeError:
-                pass 
+            f = mapping[1](m.groups())
+            if f == None:
+                print line
+            else:
+                print f
             break
