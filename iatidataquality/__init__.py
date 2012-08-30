@@ -31,15 +31,14 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
 
     tests = models.Test.query.all()
     for test in tests:
-        # Skip tests that aren't from a file
-        #if not test.file: continue
+        if not test.line:
+            continue
+        if not test.line in test_functions:
+            continue
 
-        try:
-            if test_functions[test.line](xmldata):
-                the_result = 1
-            else:
-                the_result = 0
-        except Exception:
+        if test_functions[test.line](xmldata):
+            the_result = 1
+        else:
             the_result = 0
 
         newresult = models.Result()
@@ -97,7 +96,8 @@ def organisation_quality():
 def table_select():
     rows = db.session.query(func.count(models.Result.id),
                 models.Runtime
-            ).join(models.Runtime).group_by(models.Runtime).all()
+                ).join(models.Runtime).group_by(models.Runtime
+                ).order_by(models.Runtime.id).all()
     return render_template("table_select.html", rows=rows) 
 
 @app.route("/table/<int:runtime_id>")
@@ -110,7 +110,6 @@ def table(runtime_id):
     packages = models.Package.query.order_by(models.Package.id).all()
     package_ids = map(lambda x: x.id, packages)
     test_ids = map(lambda x: x.id, tests)
-    print results
     def result_generator():
         pos = 0
         for pid in package_ids: 
