@@ -112,12 +112,12 @@ def table(runtime_id):
     test_ids = map(lambda x: x.id, tests)
     def result_generator():
         pos = 0
-        for pid in package_ids: 
+        for package in packages: 
             def row_generator():
-                yield pid
+                yield package.package_name
                 for tid in test_ids:
                     if results:
-                        if results[0][0] == pid and results[0][1] == tid:
+                        if results[0][0] == package.id and results[0][1] == tid:
                             yield (results[0][2], results[0][3])
                             results.pop(0)
                         else:

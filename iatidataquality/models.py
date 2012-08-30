@@ -57,6 +57,8 @@ class Result(db.Model):
     result_data = Column(Integer)
     # result_level can be file or activity
     result_level = Column(UnicodeText)
+    # The identifier for the element associated with this result
+    # E.g. the releavnt activity identifier
     result_identifier = Column(UnicodeText)
 
     def __init__(self, runtime_id=None, package_id=None, test_id=None, result_data=None, result_level=None, result_identifier=None):

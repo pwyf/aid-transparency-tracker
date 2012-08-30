@@ -1,4 +1,4 @@
-from flask import Flask, abort, url_for, jsonify, redirect, request, current_app
+from flask import Flask, abort, url_for, redirect, request, current_app
 from functools import wraps
 import json
 import models
@@ -7,6 +7,18 @@ from sqlalchemy import func
 import math
 
 from iatidataquality import app, db
+
+import datetime
+class JSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        return json.JSONEncoder.default(self, obj)
+
+def jsonify(*args, **kwargs):
+    return current_app.response_class(json.dumps(dict(*args, **kwargs),
+            indent=None if request.is_xhr else 2, cls=JSONEncoder),
+        mimetype='application/json')
 
 def support_jsonp(func):
     """Wraps JSONified output for JSONP requests."""
@@ -102,6 +114,14 @@ def tests():
         except KeyError:
             test["percentage_passed"] = ""
     return jsonify({"tests": tests})
+
+@app.route("/api/tests/<test_id>")
+def test(test_id):
+    test = db.session.query(models.Test).filter(models.Test.id == test_id).first()
+    if test == None:
+        abort(404)
+    else:
+        return jsonify(test.as_dict())
 
 @app.route("/api/packages/")
 @support_jsonp
