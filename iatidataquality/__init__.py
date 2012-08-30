@@ -13,28 +13,28 @@ db = SQLAlchemy(app)
 import models
 import api
 
+from parsetests import test_functions
+
 # Has the test completed?
 @app.route("/resultcheck/<task_id>")
 def check_result(task_id):
     retval = load_file.AsyncResult(task_id).status
     return retval
 
+
 # run XPATH tests, stored in the database against each activity
 #@celery.task(name="myapp.test_activity", callback=None)
 def test_activity(runtime_id, package_id, result_level, result_identifier, data):
-
     xmldata = etree.fromstring(data)
     result_level = '1' # activity
 
     tests = models.Test.query.all()
     for test in tests:
         # Skip tests that aren't from a file
-        if not test.file: continue
+        #if not test.file: continue
 
-        module = __import__('tests.'+test.file)
-        submodule = getattr(module, test.file)
         try:
-            if getattr(submodule, test.name)(xmldata):
+            if test_functions[test.line](xmldata):
                 the_result = 1
             else:
                 the_result = 0

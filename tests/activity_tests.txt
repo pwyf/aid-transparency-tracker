@@ -1,13 +1,18 @@
+## For a string existance, means also not being the empty string
+
 #iati-activity
-## For string existance means not being the empty string
 title/text() exists?
+title/text() has more than 10 characters?
 description/text() exists?
 description/text() has more than 40 characters?
-activity-status exists?s 1 time?
-activity-date exists?
+activity-status exists 1 time?
+activity-date/@iso-date exists?
 activity-date/@iso-date is an iso date?
+activity-date[@type='start-planned'] exists?
+activity-date[@type='end-planned'] exists?
 activity-date[@type='start-actual'] exists?
 activity-date[@type='end-actual'] exists?
+participating-org[@role='funding'] exists?
 participating-org[@role='accountable'] exists?
 participating-org[@role='extending'] exists?
 participating-org[@role='implementing'] exists?
@@ -18,11 +23,10 @@ recipient-country/@percentage sum to 100?
 recipient-region/@percentage is an integer?
 recipient-region/@percentage sum to 100?
 sector exists?
-sector exists 1 time?
+sector exists more than 1 time?
 sector/@percentage is an integer?
 collaboration-type exists?
-flow-type exists?
-finance-type exists?
+default-flow-type exists?
 default-aid-type exists?
 default-aid-status exists?
 budget exists?

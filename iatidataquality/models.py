@@ -81,6 +81,7 @@ class Test(db.Model):
     description = Column(UnicodeText)
     test_group = Column(UnicodeText)
     file = Column(UnicodeText)
+    line = Column(Integer)
 
     def __repr__(self):
         return self.name+u', '+unicode(self.id)

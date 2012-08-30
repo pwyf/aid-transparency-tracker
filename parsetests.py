@@ -56,6 +56,10 @@ def sum(activity, groups):
 def exist_times(activity, groups):
     return len(rm_blank(activity.xpath(groups[0]))) == int(groups[1])
 
+@add_partial('(\S*) exists more than (\S*) times?\?')
+def exist_times(activity, groups):
+    return len(rm_blank(activity.xpath(groups[0]))) > int(groups[1])
+
 def exist_check(activity, xpath):
     return bool(rm_blank(activity.xpath(xpath)))
 
@@ -75,17 +79,20 @@ def exist(activity, groups):
 def fail(line):
     return None
 
-
+test_functions = {}
 comment = re.compile('#')
-for line in open('tests/activity_tests.txt'):
-    if comment.match(line):
+blank = re.compile('^$')
+for n, line in enumerate(open('tests/activity_tests.txt')):
+    if comment.match(line) or blank.match(line):
         continue
     for mapping in mappings:
         m = mapping[0].match(line)
         if m:
             f = mapping[1](m.groups())
             if f == None:
+                print "Not implemented:"
                 print line
             else:
-                print f
+                test_functions[n+1] = f
             break
+

@@ -1,8 +1,6 @@
 from iatidataquality import models, db
+import re
 
-test = models.Test()
-
-import sys
 hardcoded_tests = [
     (-2, 'url_exists', "Check that the xml file actually exists."),
     (-3, 'valid_xml', "Check that xml is valid"),
@@ -16,22 +14,19 @@ for hardcoded_test in hardcoded_tests:
     db.session.add(test)
     db.session.commit()
 
-import ast
-filename = 'activity_tests' 
-M = ast.parse(open('tests/'+filename+'.py').read())
-for f in M.body:
-    if isinstance(f, ast.FunctionDef):
-        test = models.Test()
-        test.name = f.name
-        test.file = filename
-        text =  ast.get_docstring(f)
-        for line in text.split('\n'):
-            key,value = line.split(': ')
-            if key == 'Description':
-                test.description = value
-            elif key == 'Group':
-                test.test_group = value
-        db.session.add(test)
-        db.session.commit()
+comment = re.compile('#')
+blank = re.compile('^$')
+filename = 'activity_tests.txt' 
+for n, line in enumerate(open('tests/'+filename)):
+    if comment.match(line) or blank.match(line):
+        continue
+    test = models.Test()
+    test.name = line.strip('\n')
+    test.file = filename
+    test.line = n+1
+    #test.description = value
+    #test.test_group = value
+    db.session.add(test)
+    db.session.commit()
 
 
