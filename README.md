@@ -40,7 +40,7 @@ Copy and edit the config.py.tmpl:
 
     cp config.py.tmpl config.py
 
-Run the celery script:
+Run the celery script: (NB: Currently not in use)
 
     python manage.py celeryd
 
@@ -48,4 +48,18 @@ Run the server:
 
     python manage.py runserver
 
-In a production environment, run `fcgi.py`
+In a production environment, edit and run `fcgi.py`
+
+Import Scripts
+==============
+
+These steps must be followed in this order, and you must have created the database tables (`manage.py runserver` does this automatically).
+
+Import the tests to the database:
+
+    python teststodb.py
+
+Download the IATI data: 
+
+    python download_iati_data.py
+
