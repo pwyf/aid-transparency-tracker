@@ -106,11 +106,37 @@ def organisation_quality():
 
 @app.route("/table/")
 def table_select():
-    rows = db.session.query(func.count(models.Result.id),
-                models.Runtime
-                ).join(models.Runtime).group_by(models.Runtime
-                ).order_by(models.Runtime.id).all()
-    return render_template("table_select.html", rows=rows) 
+    rows = db.session.query(func.count(models.Result.result_data), 
+		models.Runtime, 
+		models.Result.result_data
+		).group_by(models.Result.result_data
+		).group_by(models.Runtime
+		).join(models.Runtime
+		).order_by(models.Runtime.id).all() 
+        
+    runtimes = set(map(lambda x: x[1].id, rows))
+    data = []
+    for runtime in runtimes:
+        datadata = {}
+        datadata['runtime_id'] = runtime
+        for row in rows:
+            # it's the same runtime
+            if (row[1].id == runtime):
+                datadata[row[2]] = row[0]
+                datadata['runtime_datetime'] = row[1].runtime_datetime
+        if (datadata.has_key(0) and datadata.has_key(1)):
+            datadata['total_tests'] = datadata[0] + datadata[1]
+            datadata['percent_passed'] = round(float(datadata[0])/float(datadata['total_tests'])*100, 2)
+        elif (datadata.has_key(0)):
+            datadata['percent_passed'] = float(0)
+            datadata['total_tests'] = datadata[0]
+        elif (datadata.has_key(1)):
+            datadata['percent_passed'] = float(1)*100
+            datadata['total_tests'] = datadata[1]
+        data.append(datadata)
+    print data
+
+    return render_template("table_select.html", rows=rows, data=data, runtimes=runtimes) 
 
 @app.route("/table/<int:runtime_id>")
 def table(runtime_id):

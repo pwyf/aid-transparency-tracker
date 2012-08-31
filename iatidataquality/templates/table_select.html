@@ -1,24 +1,30 @@
 <table>
     <tr>
-        <th>Results</th>
         <th>Runtime ID</th>
+        <th>Pass rate</th>
+        <th>Total tests</th>
         <th>Datetime</th>
     </tr>
-    {% for row in rows %}
+    {% for d in data %}
         <tr>
             <td>
-                <a href="{{row[1].id}}">
-                    {{row[0]}}
+                <a href="{{d.runtime_id}}">
+                    {{d.runtime_id}}
                 </a>
             </td>
             <td>
-                <a href="{{row[1].id}}">
-                    {{row[1].id}}
+                <a href="{{d.runtime_id}}">
+                    {{d.percent_passed}}
                 </a>
             </td>
             <td>
-                <a href="{{row[1].id}}">
-                    {{row[1].runtime_datetime}}
+                <a href="{{d.runtime_id}}">
+                    {{d.total_tests}}
+                </a>
+            </td>
+            <td>
+                <a href="{{d.runtime_id}}">
+                    {{d.runtime_datetime}}
                 </a>
             </td>
         </tr>
