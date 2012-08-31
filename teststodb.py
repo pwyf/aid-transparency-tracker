@@ -11,6 +11,8 @@ for hardcoded_test in hardcoded_tests:
     test.id = hardcoded_test[0]
     test.name = hardcoded_test[1]
     test.description =  hardcoded_test[2]
+    test.test_level = 2 # File
+    test.active = True
     db.session.add(test)
     db.session.commit()
 
@@ -24,6 +26,8 @@ for n, line in enumerate(open('tests/'+filename)):
     test.name = line.strip('\n')
     test.file = filename
     test.line = n+1
+    test.test_level = 1 # Activity
+    test.active = True
     #test.description = value
     #test.test_group = value
     db.session.add(test)

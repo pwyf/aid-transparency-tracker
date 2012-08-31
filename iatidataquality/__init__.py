@@ -15,7 +15,6 @@ def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
     result = models.Result()
     result.test_id = test_id 
     result.runtime_id = runtime_id
-    result.result_level = u'file'
     result.package_id = package_id
     if result_data:
         result.result_data = 1
@@ -36,9 +35,8 @@ def check_result(task_id):
 
 # run XPATH tests, stored in the database against each activity
 #@celery.task(name="myapp.test_activity", callback=None)
-def test_activity(runtime_id, package_id, result_level, result_identifier, data):
+def test_activity(runtime_id, package_id, result_identifier, data):
     xmldata = etree.fromstring(data)
-    result_level = '1' # activity
 
     tests = models.Test.query.all()
     for test in tests:
@@ -57,13 +55,11 @@ def test_activity(runtime_id, package_id, result_level, result_identifier, data)
         newresult.package_id = package_id
         newresult.test_id = test.id
         newresult.result_data = the_result
-        newresult.result_level = result_level
         newresult.result_identifier = result_identifier
         db.session.add(newresult)
     db.session.commit()
 
 def check_file(file_name, runtime_id, package_id, context=None):
-    result_level = '1' # ACTIVITY
     try:
         data = etree.parse(file_name)
     except etree.XMLSyntaxError:
@@ -73,7 +69,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
     for activity in data.findall('iati-activity'):
         result_identifier = activity.find('iati-identifier').text
         activity_data = etree.tostring(activity)
-        res = test_activity(runtime_id, package_id, result_level, result_identifier, activity_data)
+        res = test_activity(runtime_id, package_id, result_identifier, activity_data)
 
 def load_package(runtime):
     output = ""

@@ -55,25 +55,10 @@ class Result(db.Model):
     package_id = Column(Integer, ForeignKey('package.id'))
     test_id = Column(Integer, ForeignKey('test.id'))
     result_data = Column(Integer)
-    # result_level can be file or activity
-    result_level = Column(UnicodeText)
+    # result_identifier can be file or activity
     # The identifier for the element associated with this result
     # E.g. the releavnt activity identifier
     result_identifier = Column(UnicodeText)
-
-    def __init__(self, runtime_id=None, package_id=None, test_id=None, result_data=None, result_level=None, result_identifier=None):
-        if self.runtime_id is not None: 
-            self.runtime_id = runtime_id
-        if self.package_id is not None: 
-            self.package_id = package_id
-        if self.test_id is not None: 
-            self.test_id = test_id
-        if self.result_data is not None: 
-            self.result_data = result_data
-        if self.result_level is not None: 
-            self.result_level = result_level
-        if self.result_identifier is not None: 
-            self.result_identifier = result_identifier
 
 
 class Test(db.Model):
@@ -84,6 +69,8 @@ class Test(db.Model):
     test_group = Column(UnicodeText)
     file = Column(UnicodeText)
     line = Column(Integer)
+    test_level = Column(UnicodeText)
+    active = Column(Boolean)
 
     def __repr__(self):
         return self.name+u', '+unicode(self.id)
