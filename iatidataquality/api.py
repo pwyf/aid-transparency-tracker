@@ -2,7 +2,6 @@ from flask import Flask, abort, url_for, redirect, request, current_app
 from functools import wraps
 import json
 import models
-import random
 from sqlalchemy import func
 import math
 

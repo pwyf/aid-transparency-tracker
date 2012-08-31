@@ -113,8 +113,8 @@ def table_select():
 		).group_by(models.Runtime
 		).join(models.Runtime
 		).order_by(models.Runtime.id).all() 
-        
-    runtimes = set(map(lambda x: x[1].id, rows))
+    
+    runtimes = sorted(set(map(lambda x: x[1].id, rows)))
     data = []
     for runtime in runtimes:
         datadata = {}
@@ -134,7 +134,6 @@ def table_select():
             datadata['percent_passed'] = float(1)*100
             datadata['total_tests'] = datadata[1]
         data.append(datadata)
-    print data
 
     return render_template("table_select.html", rows=rows, data=data, runtimes=runtimes) 
 
