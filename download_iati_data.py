@@ -13,6 +13,106 @@ runtime = models.Runtime()
 db.session.add(runtime)
 db.session.commit()
 
+def create_package_group(group):
+    pg = models.PackageGroup()
+    pg.name = group
+    pg.man_auto="auto"
+    
+    # Query CKAN
+    url = 'http://iatiregistry.org/api'
+    import ckanclient
+    registry = ckanclient.CkanClient(base_location=url)
+    startnow = False
+    ckangroup = registry.group_entity_get(group)
+    pg.title = ckangroup['title']
+    pg.ckan_id = ckangroup['id']
+    pg.revision_id = ckangroup['revision_id']
+    pg.created_date = ckangroup['created']
+    try:
+        pg.state = ckangroup['state']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_iati_id = ckangroup['extras']['publisher_iati_id']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_segmentation = ckangroup['extras']['publisher_segmentation']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_type = ckangroup['extras']['publisher_type']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_ui = ckangroup['extras']['publisher_ui']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_organization_type = ckangroup['extras']['publisher_organization_type']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_frequency = ckangroup['extras']['publisher_frequency']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_thresholds = ckangroup['extras']['publisher_thresholds']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_units = ckangroup['extras']['publisher_units']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_contact = ckangroup['extras']['publisher_contact']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_agencies = ckangroup['extras']['publisher_agencies']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_field_exclusions = ckangroup['extras']['publisher_field_exclusions']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_description = ckangroup['extras']['publisher_description']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_record_exclusions = ckangroup['extras']['publisher_record_exclusions']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_timeliness = ckangroup['extras']['publisher_timeliness']
+    except Exception, e:
+        pass
+    try:
+        pg.license_id = ckangroup['extras']['publisher_license_id']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_country = ckangroup['extras']['publisher_country']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_refs = ckangroup['extras']['publisher_refs']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_constraints = ckangroup['extras']['publisher_constraints']
+    except Exception, e:
+        pass
+    try:
+        pg.publisher_data_quality = ckangroup['extras']['publisher_data_quality']
+    except Exception, e:
+        pass
+
+    db.session.add(pg)
+    db.session.commit()
+    return pg
+
 def metadata_to_db(pkg, file, update_package):
     if (update_package):
         package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
@@ -28,7 +128,14 @@ def metadata_to_db(pkg, file, update_package):
     package.package_metadata_created = pkg['metadata_created']
     package.package_metadata_modified = pkg['metadata_modified']
     try:
-        package.package_group = pkg['groups'][0]
+        # there is a group, so use that group ID, or create one
+        group = pkg['groups'][0]
+        try:
+            pg = models.PackageGroup.query.filter_by(name=group).first()
+            package.package_group = pg.id
+        except Exception, e:
+            pg = create_package_group(group)
+            package.package_group = pg.id                
     except Exception, e:
         pass
     try:
@@ -57,6 +164,10 @@ def metadata_to_db(pkg, file, update_package):
         package.package_verified = pkg['extras']['verified']
     except Exception, e:
         pass
+    try:
+        package.package_revision_id = pkg['revision_id']
+    except Exception, e:
+        pass
     db.session.add(package)
     db.session.commit()
     add_hardcoded_result(-2, runtime.id, package.id, file)
@@ -75,7 +186,7 @@ def run(directory):
             check_package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
             if (check_package):
             # found a package
-                if ((check_package.package_metadata_modified) != (datetime.strptime(pkg['metadata_modified'], "%Y-%m-%dT%H:%M:%S.%f"))):
+                if ((check_package.package_revision_id) != (pkg['revision_id'])):
                     # if the package has been updated, then download it and update the package data
                     update_package = True
                     print "Updating package"
