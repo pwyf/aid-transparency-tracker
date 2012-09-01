@@ -12,10 +12,10 @@ activity-date[@type='start-planned'] exists?
 activity-date[@type='end-planned'] exists?
 activity-date[@type='start-actual'] exists?
 activity-date[@type='end-actual'] exists?
-participating-org[@role='funding'] exists?
-participating-org[@role='accountable'] exists?
-participating-org[@role='extending'] exists?
-participating-org[@role='implementing'] exists?
+participating-org[@role='funding'] or participating-org[@role='Funding'] exists?
+participating-org[@role='accountable'] or participating-org[@role='Accountable'] exists?
+participating-org[@role='extending'] or participating-org[@role='Extending'] exists?
+participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?
 recipient-region or recipient-country exists?
 only one of recipient-region or recipient-country exists?
 recipient-country/@percentage is an integer?
@@ -28,15 +28,15 @@ sector/@percentage is an integer?
 collaboration-type exists?
 default-flow-type exists?
 default-aid-type exists?
-default-aid-status exists?
+default-finance-type exists?
+default-tied-status exists?
 budget exists?
 planned-disbursement exists?
 transaction exists?
-transaction/transaction-type[@code='C'] exists?
-transaction/transaction-type[@code='D'] exists?
+transaction/transaction-type[@code='C'] or transaction/transaction-type[@code='c'] exists?
+transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='d'] exists?
 result exists?
 conditions exists?
 location exists?
 document-link exists?
 document-link/@category exists?
-
