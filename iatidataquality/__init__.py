@@ -37,8 +37,7 @@ def check_result(task_id):
 def test_activity(runtime_id, package_id, result_identifier, data, test_functions):
     xmldata = etree.fromstring(data)
 
-    tests = models.Test.query.all()
-    print test_functions
+    tests = models.Test.query.filter(models.Test.active == True).all()
     for test in tests:
         if not test.id in test_functions:
             continue

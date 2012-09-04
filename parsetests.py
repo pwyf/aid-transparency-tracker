@@ -83,7 +83,7 @@ def exist(activity, groups):
 def fail(line):
     return None
 
-tests = models.Test.query.all()
+tests = models.Test.query.filter(models.Test.active == True).all()
 test_functions = {}
 comment = re.compile('#')
 blank = re.compile('^$')

@@ -7,6 +7,8 @@ hardcoded_tests = [
     (-4, 'schema_conformance', "Check that xml conforms to schema")
 ]
 for hardcoded_test in hardcoded_tests:
+    if models.Test.query.filter(models.Test.id==hardcoded_test[0]).first():
+        continue
     test = models.Test()
     test.id = hardcoded_test[0]
     test.name = hardcoded_test[1]
@@ -19,11 +21,15 @@ for hardcoded_test in hardcoded_tests:
 comment = re.compile('#')
 blank = re.compile('^$')
 filename = 'activity_tests.txt' 
+models.Test.query.filter(models.Test.test_level==1).update({models.Test.active: False})
 for n, line in enumerate(open('tests/'+filename)):
     if comment.match(line) or blank.match(line):
         continue
-    test = models.Test()
-    test.name = line.strip('\n')
+    testtext = line.strip('\n')
+    test = models.Test.query.filter(models.Test.name==testtext).first()
+    if not test:
+        test = models.Test()
+    test.name = testtext
     test.file = filename
     test.line = n+1
     test.test_level = 1 # Activity
