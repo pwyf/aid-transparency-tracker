@@ -24,7 +24,6 @@ def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
 import models
 import api
 
-from parsetests import test_functions
 
 # Has the test completed?
 @app.route("/resultcheck/<task_id>")
@@ -35,17 +34,16 @@ def check_result(task_id):
 
 # run XPATH tests, stored in the database against each activity
 #@celery.task(name="myapp.test_activity", callback=None)
-def test_activity(runtime_id, package_id, result_identifier, data):
+def test_activity(runtime_id, package_id, result_identifier, data, test_functions):
     xmldata = etree.fromstring(data)
 
     tests = models.Test.query.all()
+    print test_functions
     for test in tests:
-        if not test.line:
-            continue
-        if not test.line in test_functions:
+        if not test.id in test_functions:
             continue
 
-        if test_functions[test.line](xmldata):
+        if test_functions[test.id](xmldata):
             the_result = 1
         else:
             the_result = 0
@@ -66,10 +64,11 @@ def check_file(file_name, runtime_id, package_id, context=None):
         add_hardcoded_result(-3, runtime_id, package_id, False)
         return
     add_hardcoded_result(-3, runtime_id, package_id, True)
+    from parsetests import test_functions
     for activity in data.findall('iati-activity'):
         result_identifier = activity.find('iati-identifier').text
         activity_data = etree.tostring(activity)
-        res = test_activity(runtime_id, package_id, result_identifier, activity_data)
+        res = test_activity(runtime_id, package_id, result_identifier, activity_data, test_functions)
 
 def load_package(runtime):
     output = ""

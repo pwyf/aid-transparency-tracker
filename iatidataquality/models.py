@@ -112,7 +112,7 @@ class Test(db.Model):
     test_group = Column(UnicodeText)
     file = Column(UnicodeText)
     line = Column(Integer)
-    test_level = Column(UnicodeText)
+    test_level = Column(Integer)
     active = Column(Boolean)
 
     def __repr__(self):

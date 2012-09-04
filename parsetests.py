@@ -1,6 +1,7 @@
 import re
 import sys
 from functools import partial
+import iatidataquality.models as models
 
 mappings = []
 
@@ -82,20 +83,26 @@ def exist(activity, groups):
 def fail(line):
     return None
 
+tests = models.Test.query.all()
 test_functions = {}
 comment = re.compile('#')
 blank = re.compile('^$')
-for n, line in enumerate(open('tests/activity_tests.txt')):
-    if comment.match(line) or blank.match(line):
-        continue
-    for mapping in mappings:
-        m = mapping[0].match(line)
-        if m:
-            f = mapping[1](m.groups())
-            if f == None:
-                print "Not implemented:"
-                print line
-            else:
-                test_functions[n+1] = f
-            break
+for test in tests:
+    if test.test_level == 1:
+        line = test.name
+        print line
+        if comment.match(line) or blank.match(line):
+            continue
+        for mapping in mappings:
+            m = mapping[0].match(line)
+            if m:
+                f = mapping[1](m.groups())
+                if f == None:
+                    print "Not implemented:"
+                    print line
+                else:
+                    test_functions[test.id] = f
+                break
 
+if __name__ == '__main__':
+    print test_functions
