@@ -90,7 +90,7 @@ def load_package(runtime):
 
 @app.route("/")
 def home():
-    return redirect("/test_summaries")
+    return redirect("/publishers")
 
 
 @app.route("/tests")
@@ -121,7 +121,8 @@ def publisher(id=None):
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs)
 
 @app.route("/packages/<id>")
-def packages(id=None):
+@app.route("/packages/<id>/<options>")
+def packages(id=None, options=None):
     p = db.session.query(models.Package,
         models.PackageGroup
 		).filter(models.Package.id == id
@@ -138,14 +139,58 @@ def packages(id=None):
         ).join(models.Result
         ).order_by(models.Runtime.id.desc()
         ).first()
-
-    results = db.session.query(models.Result,
-                               models.Test
-        ).filter(models.Result.package_id==id, models.Result.runtime_id==latest_runtime.id
-        ).join(models.Test
-        ).all()
     
-    return render_template("package.html", p=p, runtimes=runtimes, results=results, latest_runtime=latest_runtime)
+    if (options == 'all_results'):
+        results = db.session.query(models.Result,
+                                       models.Test
+                ).filter(models.Result.package_id==id, models.Result.runtime_id==latest_runtime.id
+                ).join(models.Test
+                ).all()
+    else:
+
+        data = db.session.query(models.Test,
+                models.Result.result_data,
+                func.count(models.Result.id)
+        ).filter(models.Result.package_id==id, models.Result.runtime_id==latest_runtime.id
+        ).join(models.Result
+        ).group_by(models.Test, models.Result.result_data
+        ).all()
+
+        results = data
+        niceresults = pkg_test_percentages(data)
+    
+        """results = db.session.query(models.Test,
+                models.Result.result_data,
+                func.sum(models.Result.result_data)
+        ).group_by(models.Result.result_data
+        ).filter(models.Result.package_id==id, models.Result.runtime_id==latest_runtime.id
+        ).join(models.Result
+        ).all()"""
+    
+    return render_template("package.html", p=p, runtimes=runtimes, results=niceresults, latest_runtime=latest_runtime)
+
+def pkg_test_percentages(data):
+    #0: test
+    #1: pass/fail (0 or 1)
+    #2: number
+    tests = set(map(lambda x: (x[0].id, x[0].name), data))
+    
+    d = dict(map(lambda x: ((x[0].id,x[1]),x[2]), data))
+    out = []
+    for t in tests:
+        try: fail = d[(t[0],0)]
+        except: fail = 0
+        try: success = d[(t[0],1)]
+        except: success = 0
+        data = {}
+        data = {
+            "id": t[0],
+            "name": t[1],
+            "percentage": int((float(success)/(fail+success)) * 100)
+        }
+        out.append(data)
+    return out
+
 
 @app.route("/test_summaries")
 def test_summaries():

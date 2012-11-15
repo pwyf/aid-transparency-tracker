@@ -11,12 +11,12 @@
 	<h1>Select a publisher</h1>
     <table class="table" id="publishers">
     <thead>
-    <th>Registry ID</th><th>Name</th><!--<th>Compliance</th>-->
+    <th>Registry ID</th><th>Name</th><th>Registry URL</th>
     </thead>
     <tbody>
 	{% for p in p_groups %}
     <tr>
-	<td><a href="{{url_for('publisher', id=p.id)}}">{{ p.name }}</a></td><td>{{ p.title }}</td><!--<td></td>-->
+	<td><a href="{{url_for('publisher', id=p.id)}}">{{ p.name }}</a></td><td>{{ p.title }}</td><td><a href="http://iatiregistry.org/publisher/{{p.name}}">http://iatiregistry.org/publisher/{{p.name}}</td>
     </tr>
 	{% endfor %}
     </tbody>
