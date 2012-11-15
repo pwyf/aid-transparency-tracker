@@ -131,6 +131,11 @@ def packages(id=None, options=None):
 		).filter(models.Package.id == id
         ).join(models.PackageGroup).first()
 
+    if (p is None):
+        p = db.session.query(models.Package
+		).filter(models.Package.id == id
+        ).first()
+
     runtimes = db.session.query(models.Runtime
         ).filter(models.Result.package_id ==id
         ).all()
