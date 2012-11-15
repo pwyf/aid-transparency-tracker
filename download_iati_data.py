@@ -3,7 +3,7 @@ import ckan
 import urllib2
 from datetime import date, datetime
 import os
-from iatidataquality import models, db, add_hardcoded_result
+from iatidataquality import models, db, add_hardcoded_result, DATA_STORAGE_DIR
 
 import sys
 import pprint
@@ -221,7 +221,7 @@ def save_file(pkg_name, url, dir):
 if __name__ == '__main__':
     import sys
     thetransactions = []
-    dir = 'data'
+    dir = DATA_STORAGE_DIR()
     if not os.path.exists(dir):
         try:
             os.makedirs(dir)

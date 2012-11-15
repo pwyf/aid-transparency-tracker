@@ -11,7 +11,10 @@ app = Flask(__name__)
 app.config.from_pyfile('../config.py')
 celery = Celery(app)
 db = SQLAlchemy(app)
-DATA_STORAGE_DIR = app.config["DATA_STORAGE_DIR"]
+
+
+def DATA_STORAGE_DIR():
+    return app.config["DATA_STORAGE_DIR"]
 
 def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
     result = models.Result()
@@ -74,7 +77,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
 def load_package(runtime):
     output = ""
     
-    path = DATA_STORAGE_DIR
+    path = DATA_STORAGE_DIR()
     for package in models.Package.query.order_by(models.Package.id).all():
         print package.id
         output = output + ""
