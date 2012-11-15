@@ -11,3 +11,4 @@ build
 .gitignore
 .gitignore~
 data/*
+config.py
