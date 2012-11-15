@@ -91,11 +91,11 @@ def results_by_org(data, packages):
     return package_dict 
 
 @app.route("/api/")
-def index():
-    return jsonify({"packages": url_for("packages"), "tests":url_for("tests")})
+def api_index():
+    return jsonify({"packages": url_for("api_packages"), "tests":url_for("tests")})
 
 @app.route("/api/tests/")
-def tests():
+def api_tests():
     session = db.session
     data = session.query(func.count(models.Result.id),
                 models.Result.result_data,
@@ -115,7 +115,7 @@ def tests():
     return jsonify({"tests": tests})
 
 @app.route("/api/tests/<test_id>")
-def test(test_id):
+def api_test(test_id):
     test = db.session.query(models.Test).filter(models.Test.id == test_id).first()
     if test == None:
         abort(404)
@@ -124,7 +124,7 @@ def test(test_id):
 
 @app.route("/api/packages/")
 @support_jsonp
-def packages():
+def api_packages():
     packages = db.session.query(models.Package).all()
 
     session = db.session
@@ -139,7 +139,7 @@ def packages():
 
 @app.route('/api/packages/<package_name>')
 @support_jsonp
-def package(package_name):
+def api_package(package_name):
     package = db.session.query(models.Package).filter(models.Package.package_name == package_name).first()
     if package == None:
         abort(404)

@@ -1,0 +1,23 @@
+{% set active_page='tests'%}{% extends "layout.html" %}
+{% block content %}
+   <script src="static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#tests").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+	<h1>Select a test</h1>
+    <table class="table" id="tests">
+    <thead>
+    <th>ID</th><th>Name</th><th>Description</th>
+    </thead>
+    <tbody>
+	{% for t in tests %}
+    <tr>
+	<td><a href="{{url_for('tests', id=t.id)}}">{{ t.id }}</a></td><td>{{ t.name }}</td><td>{{t.description}}</td>
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

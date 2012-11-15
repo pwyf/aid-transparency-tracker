@@ -1,0 +1,39 @@
+{% set active_page='publishers'%}{% extends "layout.html" %}
+{% block content %}
+   <script src="static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#packages").tablesorter({ sortList: [[0,0]] });
+    $("table#publishers").tablesorter({ sortList: [[0,0]] });
+    });
+
+    </script>
+	<h1>Select a publisher</h1>
+    <table class="table" id="publishers">
+    <thead>
+    <th>Registry ID</th><th>Name</th><!--<th>Compliance</th>-->
+    </thead>
+    <tbody>
+	{% for p in p_groups %}
+    <tr>
+	<td><a href="{{url_for('publisher', id=p.id)}}">{{ p.name }}</a></td><td>{{ p.title }}</td><!--<td></td>-->
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+
+    	<h1>Select a package</h1>
+    <table class="table" id="packages">
+    <thead>
+    <th>Registry ID</th><th>Name</th><th>Country</th><th>License</th>
+    </thead>
+    <tbody>
+	{% for pk in pkgs %}
+    <tr>
+	<td><a href="{{url_for('packages', id=pk.id)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td>{{ pk.package_country }}</td><td>{{ pk.package_license }}</td><!--<td></td>-->
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% set active_page='tests'%}{% extends "layout.html" %}
+{% block content %}
+   <script src="static/jquery.tablesorter.min.js"></script>
+
+	<h1>Test {{test.id}}</h1>
+    <table class="table" id="tests">
+    <tbody>
+    <tr>
+	<td>ID</td><td>{{test.id}}</td>
+    </tr>
+    <tr>
+	<td>Name</td><td>{{test.name}}</td>
+    </tr>
+    <tr>
+	<td>Description</td><td>{{test.description}}</td>
+    </tr>
+    <tr>
+	<td>Level</td><td>{{test.test_level}}</td>
+    </tr>
+    <tr>
+	<td>Active</td><td>{{test.active}}</td>
+    </tr>
+    </tbody>
+    </table>
+
+{% endblock %}

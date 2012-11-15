@@ -1,0 +1,44 @@
+.pct:after
+{
+content:"%";
+} 
+table .header{cursor:pointer;}table .header:after{content:"";float:right;margin-top:7px;border-width:0 4px 4px;border-style:solid;border-color:#000 transparent;visibility:hidden;}
+table .headerSortUp,table .headerSortDown{background-color:rgba(141, 192, 219, 0.25);text-shadow:0 1px 1px rgba(255, 255, 255, 0.75);}
+table .header:hover:after{visibility:visible;}
+table .headerSortDown:after,table .headerSortDown:hover:after{visibility:visible;filter:alpha(opacity=60);-khtml-opacity:0.6;-moz-opacity:0.6;opacity:0.6;}
+table .headerSortUp:after{border-bottom:none;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #000;visibility:visible;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;filter:alpha(opacity=60);-khtml-opacity:0.6;-moz-opacity:0.6;opacity:0.6;}
+table .blue{color:#049cdb;border-bottom-color:#049cdb;}
+table .headerSortUp.blue,table .headerSortDown.blue{background-color:#ade6fe;}
+table .green{color:#46a546;border-bottom-color:#46a546;}
+table .headerSortUp.green,table .headerSortDown.green{background-color:#cdeacd;}
+table .red{color:#9d261d;border-bottom-color:#9d261d;}
+table .headerSortUp.red,table .headerSortDown.red{background-color:#f4c8c5;}
+table .yellow{color:#ffc40d;border-bottom-color:#ffc40d;}
+table .headerSortUp.yellow,table .headerSortDown.yellow{background-color:#fff6d9;}
+table .orange{color:#f89406;border-bottom-color:#f89406;}
+table .headerSortUp.orange,table .headerSortDown.orange{background-color:#fee9cc;}
+table .purple{color:#7a43b6;border-bottom-color:#7a43b6;}
+table .headerSortUp.purple,table .headerSortDown.purple{background-color:#e2d5f0;}
+
+footer {
+    background-color: #F5F5F5;
+    border-top: 1px solid #E5E5E5;
+    margin-top: 70px;
+    padding: 70px 0;
+}
+
+.navbar-inverse .navbar-inner {
+    background-color: #365E93;
+    background-image: linear-gradient(to bottom, #365E93, #365E80);
+    border-color: #252525;
+}
+
+body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      .navbar-inverse .brand, .navbar-inverse .nav > li > a {
+        color:#ffffff;
+      }
+.recline-data-explorer .header {
+    display: none;
+}

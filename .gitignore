@@ -5,4 +5,9 @@ build
 *.txt~
 *.md~
 *.sqlite
+*.html~
+*.css~
+*.js~
+.gitignore
+.gitignore~
 data/*

@@ -11,6 +11,8 @@ app = Flask(__name__)
 app.config.from_pyfile('../config.py')
 celery = Celery(app)
 db = SQLAlchemy(app)
+
+
 def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
     result = models.Result()
     result.test_id = test_id 
@@ -89,6 +91,61 @@ def load_package(runtime):
 @app.route("/")
 def home():
     return redirect("/test_summaries")
+
+
+@app.route("/tests")
+@app.route("/tests/<id>")
+def tests(id=None):
+    if (id is not None):
+        test = models.Test.query.filter_by(id=id).first()
+        return render_template("test.html", test=test)
+    else:
+        tests = models.Test.query.order_by(models.Test.id).all()
+        return render_template("tests.html", tests=tests)
+
+@app.route("/publishers")
+@app.route("/packages")
+def publishers(id=None):
+    p_groups = models.PackageGroup.query.order_by(models.PackageGroup.name).all()
+
+    pkgs = models.Package.query.order_by(models.Package.package_name).all()
+    return render_template("publishers.html", p_groups=p_groups, pkgs=pkgs)
+
+@app.route("/publishers/<id>")
+def publisher(id=None):
+    p_group = models.PackageGroup.query.filter_by(id=id).first()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Package.package_group == id
+            ).order_by(models.Package.package_name).all()
+    return render_template("publisher.html", p_group=p_group, pkgs=pkgs)
+
+@app.route("/packages/<id>")
+def packages(id=None):
+    p = db.session.query(models.Package,
+        models.PackageGroup
+		).filter(models.Package.id == id
+        ).join(models.PackageGroup).first()
+
+    runtimes = db.session.query(models.Runtime
+        ).filter(models.Result.package_id ==id
+        ).all()
+
+    # select the highest runtime; then get data for that one
+
+    latest_runtime = db.session.query(models.Runtime
+        ).filter(models.Result.package_id==id
+        ).join(models.Result
+        ).order_by(models.Runtime.id.desc()
+        ).first()
+
+    results = db.session.query(models.Result,
+                               models.Test
+        ).filter(models.Result.package_id==id, models.Result.runtime_id==latest_runtime.id
+        ).join(models.Test
+        ).all()
+    
+    return render_template("package.html", p=p, runtimes=runtimes, results=results, latest_runtime=latest_runtime)
 
 @app.route("/test_summaries")
 def test_summaries():

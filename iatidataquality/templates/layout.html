@@ -1,0 +1,74 @@
+{% set active_page = active_page|default('index') -%}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>IATI Data Quality Browser</title>
+    <link href="/static/bootstrap-responsive.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="/static/vendor/jquery/1.7.1/jquery.js" type="text/javascript"></script>
+    <script src="/static/bootstrap.js?body=1" type="text/javascript"></script>
+    <script src="/static/bootstrap.min.js?body=1" type="text/javascript"></script>
+    <script src="/static/d3.v2.min.js?body=1" type="text/javascript"></script>
+    <script src="/static/home.js?body=1" type="text/javascript"></script>
+    <script src="/static/application.js?body=1" type="text/javascript"></script>
+    <link href="/static/style.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">IATI Data Quality Browser</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li{% if active_page == "index" %} class="active"{%endif%}><a href="/">Home</a></li>
+              <li{% if active_page == "publishers" %} class="active"{%endif%}><a href="{{url_for('publishers')}}">Publishers</a></li>
+              <li{% if active_page == "tests" %} class="active"{%endif%}><a href="{{url_for('tests')}}">Tests</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+  <div class="container">
+    
+    <div class="alert alert-error alert-block"><h4>Watch out!</h4>
+    <p>This site is in beta; the content should not be relied on. The data is probably all wrong anyway.</p>
+    </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+                  <div class="alert alert-{{category}}">
+                    <p>{{message}}</p>
+                    </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}
+        {% endblock %}
+  </div>
+    <footer class="footer">
+    <div class="container">
+    <div class="pull-left">
+        <p>Released under the <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL v3.0 License</a>.</p>
+        <p><a href="https://github.com/markbrough/IATI-Implementation-Schedules">Source code on Github</a></p>
+    </div>
+    <div class="pull-right">
+        <p><a href="http://aidtransparency.net">IATI</a> <a href="http://aidtransparency.net/implementation">Implementation Schedules</a></p>
+        <p><a href="http://twitter.github.com/bootstrap">Bootstrap from Twitter</a></p>
+        <p><a href="http://tablesorter.com/docs/">JQuery TableSorter</a></p>
+    </div>
+    </div></footer>
+</body>
+</html>
