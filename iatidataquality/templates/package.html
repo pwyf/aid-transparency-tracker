@@ -9,23 +9,31 @@
     });
 
     </script>
-	<h1>{{p[0].package_title}}<code>{{p[0].package_name}}</code></h1> 
+    {% if p[0] %}
+    {% set grp = p[1] %}
+    {% set pkg = p[0] %}
+    {% else %}
+    {% set pkg = p %}
+    {% endif %}
+	<h1>{{pkg.package_title}}<code>{{pkg.package_name}}</code></h1> 
     <table class="table" id="publishers">
     <tbody>
     <tr>
-	<td>Package name</td><td>{{ p[0].package_name }}</td>
+	<td>Package name</td><td>{{ pkg.package_name }}</td>
     </tr>
     <tr>
-    <td>Package title</td><td>{{ p[0].package_title }}</td>
+    <td>Package title</td><td>{{ pkg.package_title }}</td>
     </tr>
     <tr>
-    <td>Package country</td><td>{{ p[0].package_country }}</td>
+    <td>Package country</td><td>{{ pkg.package_country }}</td>
     </tr>
+    {% if grp is defined %}
     <tr>
-    <td>Package group</td><td><a href="{{url_for('publisher', id=p[1].id)}}">{{ p[1].name }}</a></td>
+    <td>Package group</td><td><a href="{{url_for('publisher', id=grp.id)}}">{{ grp.name }}</a></td>
     </tr>
+    {% endif %}
     <tr>
-    <td>Link</td><td><a href="http://iatiregistry.org/dataset/{{p[0].package_name}}">http://iatiregistry.org/dataset/{{ p[0].package_name }}</a></td>
+    <td>Link</td><td><a href="http://iatiregistry.org/dataset/{{pkg.package_name}}">http://iatiregistry.org/dataset/{{ pkg.package_name }}</a></td>
     </tr>
     </tbody>
     </table>
