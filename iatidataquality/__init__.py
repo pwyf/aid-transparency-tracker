@@ -6,6 +6,7 @@ from lxml import etree
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import render_template
 from sqlalchemy import func
+from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_pyfile('../config.py')
@@ -33,9 +34,15 @@ import api
 # Has the test completed?
 @app.route("/resultcheck/<task_id>")
 def check_result(task_id):
-    retval = load_file.AsyncResult(task_id).status
+    retval = load_package.AsyncResult(task_id).status
     return retval
 
+@app.route("/pending_tasks")
+def pending_tasks():
+    i = celery.control.inspect()
+    output = "Active: " + str(i.active()) + "<br />"
+    output = output + "Reserved: " + str(i.reserved()) + "<br />"
+    return output
 
 # run XPATH tests, stored in the database against each activity
 #@celery.task(name="myapp.test_activity", callback=None)
@@ -59,7 +66,7 @@ def test_activity(runtime_id, package_id, result_identifier, data, test_function
         newresult.result_data = the_result
         newresult.result_identifier = result_identifier
         db.session.add(newresult)
-    db.session.commit()
+    return "Success"
 
 def check_file(file_name, runtime_id, package_id, context=None):
     try:
@@ -74,6 +81,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
         activity_data = etree.tostring(activity)
         res = test_activity(runtime_id, package_id, result_identifier, activity_data, test_functions)
 
+@celery.task(name="iatidataquality.load_package", track_started=True)
 def load_package(runtime):
     output = ""
     
@@ -88,13 +96,15 @@ def load_package(runtime):
         # run tests on file
         res = check_file(filename, runtime, package.id, None)
         # res.task_id is the id of the task
-        output = output + 'Finished processing.<br />'
+        output = output + 'Finished adding task </a>.<br />'
+
+    db.session.commit()
     return output
+
 
 @app.route("/")
 def home():
     return redirect("/publishers")
-
 
 @app.route("/tests")
 @app.route("/tests/<id>")
@@ -126,6 +136,7 @@ def publisher(id=None):
 @app.route("/packages/<id>")
 @app.route("/packages/<id>/<options>")
 def packages(id=None, options=None):
+    generated = "Started at " + str(datetime.now()) + "<br />"
     p = db.session.query(models.Package,
         models.PackageGroup
 		).filter(models.Package.id == id
@@ -136,8 +147,11 @@ def packages(id=None, options=None):
 		).filter(models.Package.id == id
         ).first()
 
-    runtimes = db.session.query(models.Runtime
+    runtimes = db.session.query(models.Result.runtime_id,
+                                models.Runtime.runtime_datetime
         ).filter(models.Result.package_id ==id
+        ).distinct(
+        ).join(models.Runtime
         ).all()
 
     # select the highest runtime; then get data for that one
@@ -166,16 +180,8 @@ def packages(id=None, options=None):
 
         results = data
         niceresults = pkg_test_percentages(data)
-    
-        """results = db.session.query(models.Test,
-                models.Result.result_data,
-                func.sum(models.Result.result_data)
-        ).group_by(models.Result.result_data
-        ).filter(models.Result.package_id==id, models.Result.runtime_id==latest_runtime.id
-        ).join(models.Result
-        ).all()"""
-    
-    return render_template("package.html", p=p, runtimes=runtimes, results=niceresults, latest_runtime=latest_runtime)
+ 
+    return render_template("package.html", p=p, runtimes=runtimes, results=niceresults, latest_runtime=latest_runtime, generated=generated)
 
 def pkg_test_percentages(data):
     #0: test
@@ -275,7 +281,8 @@ def runtests():
     db.session.commit()
 
     output = ""
-    output = load_package(newrun.id)
-    output = str(output) + "<br />Runtime is <br />" + str(newrun.id)
+    res = load_package.delay(newrun.id)
+    output = str(res) + "<br />Runtime is <br />" + str(newrun.id)
+    output = output + '<a href="/resultcheck/' + res.task_id + '">' + res.task_id + '</a><br />'
     return str(output)
 

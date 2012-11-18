@@ -40,7 +40,7 @@ Copy and edit the config.py.tmpl:
 
     cp config.py.tmpl config.py
 
-Run the celery script: (NB: Currently not in use)
+Run the celery script:
 
     python manage.py celeryd
 

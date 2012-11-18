@@ -2,6 +2,7 @@ pyenv
 build
 *.pyc
 *.py~
+*.py.tmpl~
 *.txt~
 *.md~
 *.sqlite
