@@ -200,7 +200,8 @@ def pkg_test_percentages(data):
         data = {
             "id": t[0],
             "name": t[1],
-            "percentage": int((float(success)/(fail+success)) * 100)
+            "percentage": int((float(success)/(fail+success)) * 100),
+            "total_results": fail+success
         }
         out.append(data)
     return out
