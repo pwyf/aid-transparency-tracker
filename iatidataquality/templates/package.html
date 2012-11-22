@@ -54,14 +54,15 @@
     <h1>Latest results <code>{{latest_runtime.runtime_datetime}}</code></h1>
     <table class="table" id="results">
     <thead>
-    <th>Test</th><th>% Passed</th><th>Total results</th>
+    <th>Test</th><th>% Passed</th><th>Total results</th><th>Details</th>
     </thead>
     <tbody>
     {% for result in results %}
     <tr id="tr{{result.id}}">
-	<td><a href="{{url_for('tests', id=result.id)}}">{{ result.name }}</a> <a href="#" class="showResult" id="result{{result.id}}"><i class="icon-chevron-down"></i></a></td>
+	<td><a href="{{url_for('tests', id=result.id)}}">{{ result.name }}</a></td>
     <td class="pct">{{result.percentage}}</td>
     <td>{{result.total_results}}</td>
+    <td><a href="#" class="showResult" id="result{{result.id}}"><i class="icon-chevron-down"></i></a></td>
     </tr>
     {% endfor %}
     </tbody>
@@ -79,7 +80,7 @@
             e.preventDefault();
             pattern=/result/g;
             result_id = this.id.replace(pattern,"");
-            $("#tr"+result_id).after('<tr class="hidden-results-tr" id="tr-result-' + result_id + '"><td colspan="3"></td></tr>');
+            $("#tr"+result_id).after('<tr class="hidden-results-tr" id="tr-result-' + result_id + '"><td colspan="4"></td></tr>');
             $.getJSON("/api/packages/{{pkg.package_name}}/tests/" + result_id + "/activities", function(data){
                 var items = [];
                 $.each(data, function(key, val){
