@@ -60,7 +60,7 @@
     {% for result in results %}
     <tr id="tr{{result.id}}">
 	<td><a href="{{url_for('tests', id=result.id)}}">{{ result.name }}</a> <a href="#" class="showResult" id="result{{result.id}}"><i class="icon-chevron-down"></i></a></td>
-    <td>{{result.percentage}}</td>
+    <td class="pct">{{result.percentage}}</td>
     <td>{{result.total_results}}</td>
     </tr>
     {% endfor %}
