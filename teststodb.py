@@ -4,7 +4,7 @@ import re
 hardcoded_tests = [
     (-2, 'url_exists', "Check that the xml file actually exists."),
     (-3, 'valid_xml', "Check that xml is valid"),
-    (-4, 'schema_conformance', "Check that xml conforms to schema")
+    (-4, 'schema_conformance', "Check that xml conforms to schyema")
 ]
 for hardcoded_test in hardcoded_tests:
     if models.Test.query.filter(models.Test.id==hardcoded_test[0]).first():
@@ -19,11 +19,16 @@ for hardcoded_test in hardcoded_tests:
     db.session.commit()
 
 comment = re.compile('#')
+conditions = re.compile('##C')
 blank = re.compile('^$')
 filename = 'activity_tests.txt' 
 models.Test.query.filter(models.Test.test_level==1).update({models.Test.active: False})
 for n, line in enumerate(open('tests/'+filename)):
+    if conditions.match(line):
+        print "broken"
+        break
     if comment.match(line) or blank.match(line):
+        print "found"
         continue
     testtext = line.strip('\n')
     test = models.Test.query.filter(models.Test.name==testtext).first()

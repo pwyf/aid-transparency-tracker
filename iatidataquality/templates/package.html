@@ -7,7 +7,6 @@
     $("table#publishers").tablesorter({ sortList: [[0,0]] });
     $("table#results").tablesorter({ sortList: [[0,0]] });
     });
-
     </script>
     {% if p[0] %}
     {% set grp = p[1] %}
@@ -59,11 +58,48 @@
     </thead>
     <tbody>
     {% for result in results %}
-    <tr>
-	<td><a href="{{url_for('tests', id=result.id)}}">{{ result.name }}</a></td><td>{{result.percentage}}</td>
+    <tr id="tr{{result.id}}">
+	<td><a href="{{url_for('tests', id=result.id)}}">{{ result.name }}</a> <a href="#" class="showResult" id="result{{result.id}}"><i class="icon-chevron-down"></i></a></td><td>{{result.percentage}}</td>
     </tr>
     {% endfor %}
     </tbody>
     </table>
+<script>
+
+    $(".showResult").click(function(e){
+        if ($(this).hasClass("visible")) {
+            e.preventDefault();
+            pattern=/result/g;
+            result_id = this.id.replace(pattern,"");
+            $(this).removeClass("visible").html('<i class="icon-chevron-down"></i>');
+            $("#tr"+result_id).next().slideUp('slow').delay(5000).remove();
+        } else {
+            e.preventDefault();
+            pattern=/result/g;
+            result_id = this.id.replace(pattern,"");
+            $("#tr"+result_id).after('<tr class="hidden-results-tr" id="tr-result-' + result_id + '"><td colspan="2"></td></tr>');
+            $.getJSON("/api/packages/{{pkg.package_name}}/tests/" + result_id + "/activities", function(data){
+                var items = [];
+                $.each(data, function(key, val){
+                    if (val == '1') {
+                        var status="PASS";
+                        var statusclass="success";
+                    } else {
+                        var status="FAIL";
+                        var statusclass="error";
+                    }
+                    items.push('<tr id="' + val + '" class="' + statusclass + '"><td>' + key + '</td><td>' + status + '</td></tr>');
+                });
+                $('<table/>', {
+                    html: items.join('')
+                  }).appendTo("#tr-result-"+result_id+" td");
+                $("#tr-result-"+result_id).slideDown("slow");
+            });
+            $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
+    }
+    });
+
+
+</script>
 
 {% endblock %}

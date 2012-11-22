@@ -40,3 +40,7 @@ conditions exists?
 location exists?
 document-link exists?
 document-link/@category exists?
+
+## CONDITIONS ##
+1. something
+2. nothing

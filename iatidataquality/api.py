@@ -146,3 +146,24 @@ def api_package(package_name):
     else:
         return jsonify(package.as_dict())
 
+@app.route('/api/packages/<package_name>/tests/<test_id>/activities')
+@support_jsonp
+def api_package_activities(package_name, test_id):
+    package = db.session.query(models.Package).filter(models.Package.package_name == package_name).first()
+    latest_runtime = db.session.query(models.Runtime
+        ).filter(models.Result.package_id==package.id
+        ).join(models.Result
+        ).order_by(models.Runtime.id.desc()
+        ).first()
+    test_results = db.session.query(models.Result.result_identifier, 
+                                    models.Result.result_data
+        ).filter(models.Package.package_name == package_name, 
+                 models.Result.runtime_id==latest_runtime.id, 
+                 models.Result.test_id==test_id
+        ).join(models.Package
+        ).all()
+    if ((package == None) or (test_results==None)):
+        abort(404)
+    else:
+        return jsonify(test_results)
+

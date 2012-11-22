@@ -103,6 +103,8 @@ class Result(db.Model):
     # E.g. the releavnt activity identifier
     result_identifier = Column(UnicodeText)
 
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class Test(db.Model):
     __tablename__ = 'test'

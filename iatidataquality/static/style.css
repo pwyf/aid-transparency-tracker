@@ -42,3 +42,6 @@ body {
 .recline-data-explorer .header {
     display: none;
 }
+.hidden-results-tr {
+    display:none;
+}
