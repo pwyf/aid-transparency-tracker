@@ -1,3 +1,7 @@
+.navbar-fixed-top {
+    min-width: 700px;
+    overflow:none;
+}
 .pct:after
 {
 content:"%";
@@ -27,7 +31,7 @@ footer {
     padding: 70px 0;
 }
 
-.navbar-inverse .navbar-inner {
+.navbar-fixed-top .navbar-inner {
     background-color: #365E93;
     background-image: linear-gradient(to bottom, #365E93, #365E80);
     border-color: #252525;

@@ -146,6 +146,23 @@ def api_package(package_name):
     else:
         return jsonify(package.as_dict())
 
+@app.route('/api/publishers/<publisher_id>')
+@support_jsonp
+def api_publisher_data(publisher_id):
+
+    import urllib2
+    url = "http://staging.publishwhatyoufund.org/api/publishers/" + publisher_id
+
+    req = urllib2.Request(url)
+    try:
+        response = urllib2.urlopen(req)
+        the_page = response.read()
+        rv = app.make_response(the_page)
+        rv.mimetype = 'application/json'
+        return rv
+    except urllib2.HTTPError, e:
+        return jsonify(e)
+
 @app.route('/api/packages/<package_name>/tests/<test_id>/activities')
 @support_jsonp
 def api_package_activities(package_name, test_id):

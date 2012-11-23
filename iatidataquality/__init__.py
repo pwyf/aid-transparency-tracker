@@ -116,6 +116,28 @@ def tests(id=None):
         tests = models.Test.query.order_by(models.Test.id).all()
         return render_template("tests.html", tests=tests)
 
+@app.route("/tests/<id>/edit", methods=['GET', 'POST'])
+def tests_editor(id=None):
+    if (request.method == 'POST'):
+        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+            test = models.Test.query.filter_by(id=id).first()
+            test.name = request.form['name']
+            test.description = request.form['description']
+            test.test_level = request.form['test_level']
+            test.active = request.form['active']
+            test.test_group = request.form['test_group']
+            db.session.add(test)
+            db.session.commit()
+            flash('Updated', "success")
+            return render_template("test_editor.html", test=test)
+        else:
+            flash('Incorrect password', "error")
+            test = models.Test.query.filter_by(id=id).first()
+            return render_template("test_editor.html", test=test)
+    else:
+        test = models.Test.query.filter_by(id=id).first()
+        return render_template("test_editor.html", test=test)
+
 @app.route("/publishers")
 @app.route("/packages")
 def publishers(id=None):
@@ -187,7 +209,7 @@ def pkg_test_percentages(data):
     #0: test
     #1: pass/fail (0 or 1)
     #2: number
-    tests = set(map(lambda x: (x[0].id, x[0].name), data))
+    tests = set(map(lambda x: (x[0].id, x[0].name, x[0].test_group), data))
     
     d = dict(map(lambda x: ((x[0].id,x[1]),x[2]), data))
     out = []
@@ -201,7 +223,8 @@ def pkg_test_percentages(data):
             "id": t[0],
             "name": t[1],
             "percentage": int((float(success)/(fail+success)) * 100),
-            "total_results": fail+success
+            "total_results": fail+success,
+            "group": t[2]
         }
         out.append(data)
     return out
