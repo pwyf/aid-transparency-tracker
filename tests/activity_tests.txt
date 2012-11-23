@@ -1,46 +1,42 @@
-## For a string existance, means also not being the empty string
+# For a string existance, means also not being the empty string
 
 #iati-activity
-title/text() exists?
-title/text() has more than 10 characters?
-description/text() exists?
-description/text() has more than 40 characters?
-activity-status exists 1 time?
-activity-date/@iso-date exists?
-activity-date/@iso-date is an iso date?
-activity-date[@type='start-planned'] exists?
-activity-date[@type='end-planned'] exists?
-activity-date[@type='start-actual'] exists?
-activity-date[@type='end-actual'] exists?
-participating-org[@role='funding'] or participating-org[@role='Funding'] exists?
-participating-org[@role='accountable'] or participating-org[@role='Accountable'] exists?
-participating-org[@role='extending'] or participating-org[@role='Extending'] exists?
-participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?
-recipient-region or recipient-country exists?
-only one of recipient-region or recipient-country exists?
-recipient-country/@percentage is an integer?
-recipient-country/@percentage sum to 100?
-recipient-region/@percentage is an integer?
-recipient-region/@percentage sum to 100?
-sector exists?
-sector exists more than 1 time?
-sector/@percentage is an integer?
-collaboration-type exists?
-default-flow-type exists?
-default-aid-type exists?
-default-finance-type exists?
-default-tied-status exists?
-budget exists?
-planned-disbursement exists?
-transaction exists?
-transaction/transaction-type[@code='C'] or transaction/transaction-type[@code='c'] exists?
-transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='d'] exists?
-result exists?
-conditions exists?
-location exists?
-document-link exists?
-document-link/@category exists?
-
-## CONDITIONS ##
-1. something
-2. nothing
+title/text() exists? # Is there a title?
+title/text() has more than 10 characters? # Does the title have more than 10 characters?
+description/text() exists? # Is there a description?
+description/text() has more than 40 characters? # Does the description have more than 40 characters?
+activity-status exists 1 time? # Does an activity status exist once, and only once?
+activity-date/@iso-date exists? # Does the activity date have an ISO-date attribute?
+activity-date/@iso-date is an iso date? # Is the ISO-date attribute on the activity date properly formatted?
+activity-date[@type='start-planned'] exists? # Does the planned start date exist?
+activity-date[@type='end-planned'] exists? # Does the planned end date exist?
+activity-date[@type='start-actual'] exists? # Does the actual start date exist?
+activity-date[@type='end-actual'] exists? # Does the actual end date exist?
+participating-org[@role='funding'] or participating-org[@role='Funding'] exists? # Does a funding organisation exist?
+participating-org[@role='accountable'] or participating-org[@role='Accountable'] exists? # Does an accountable organisation exist?
+participating-org[@role='extending'] or participating-org[@role='Extending'] exists? # Does an extending organisation exist?
+participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists? # Does an implementing organisation exist?
+recipient-region or recipient-country exists? # Does a recipient region or a recipient country exist?
+only one of recipient-region or recipient-country exists? # Does only one of recipient region or recipient country exist?
+recipient-country/@percentage is an integer? # Is the recipient country percentage attribute properly formatted?
+recipient-country/@percentage sum to 100? # Do the recipient country percentage attributes sum to 100%?
+recipient-region/@percentage is an integer? # Is the recipient region percentage attribute properly formatted?
+recipient-region/@percentage sum to 100? # Do the recipient region percentage attributes sum to 100%?
+sector exists? # Does a sector exist?
+sector exists more than 1 time? # Do multiple sectors exist?
+sector/@percentage is an integer? # Is the sector percentage attribute properly formatted?
+collaboration-type exists? # Does the collaboration type exist?
+default-flow-type exists? # Does the flow type exist?
+default-aid-type exists? # Does the aid type exist?
+default-finance-type exists? # Does the finance type exist?
+default-tied-status exists? # Does the tied aid status exist?
+budget exists? # Does a budget exist?
+planned-disbursement exists? # Does a planned disbursement exist?
+transaction exists? # Does a transaction exist?
+transaction/transaction-type[@code='C'] or transaction/transaction-type[@code='c'] exists? # Does a commitment exist?
+transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='d'] exists? # Does a disbursement exist?
+result exists? # Does results data exist?
+conditions exists? # Do conditions exist?
+location exists? # Does the sub-national geographic location exist?
+document-link exists? # Do project documents exist?
+document-link/@category exists? # Do certain types of documents exist? (tbd...)

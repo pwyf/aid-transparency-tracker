@@ -18,23 +18,30 @@ for hardcoded_test in hardcoded_tests:
     db.session.add(test)
     db.session.commit()
 
-comment = re.compile('#')
-conditions = re.compile('##C')
+comment = re.compile('^#')
 blank = re.compile('^$')
 filename = 'activity_tests.txt' 
 models.Test.query.filter(models.Test.test_level==1).update({models.Test.active: False})
 for n, line in enumerate(open('tests/'+filename)):
-    if conditions.match(line):
-        print "broken"
-        break
     if comment.match(line) or blank.match(line):
-        print "found"
         continue
     testtext = line.strip('\n')
-    test = models.Test.query.filter(models.Test.name==testtext).first()
+    try:
+        result = re.split(" # ", testtext)
+        testtext = result.group(0)
+    except:
+        pass
+    if result:
+        test_text = result[0]
+        try:
+            description = result[1]
+        except IndexError:
+            description = result[0]   
+    test = models.Test.query.filter(models.Test.name==test_text).first()
     if not test:
         test = models.Test()
-    test.name = testtext
+    test.name = test_text
+    test.description = description
     test.file = filename
     test.line = n+1
     test.test_level = 1 # Activity

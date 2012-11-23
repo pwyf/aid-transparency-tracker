@@ -209,7 +209,7 @@ def pkg_test_percentages(data):
     #0: test
     #1: pass/fail (0 or 1)
     #2: number
-    tests = set(map(lambda x: (x[0].id, x[0].name, x[0].test_group), data))
+    tests = set(map(lambda x: (x[0].id, x[0].description, x[0].test_group), data))
     
     d = dict(map(lambda x: ((x[0].id,x[1]),x[2]), data))
     out = []
