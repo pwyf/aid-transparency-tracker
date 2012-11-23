@@ -106,7 +106,13 @@
                 var items = [];
                 $.each(data["data"], function(key, val){
                     element = val["element"]
-                    $(".group-" + element + " td.schedule").html('<span title="' + val["publication_date"] + ': ' + val["notes"] + '">' + val["status"] + '</span>');
+                    if (val["status"] =='fp') { status = '<i class="icon-wrench" title="Future publication"></i>'; }
+                    if (val["status"] =='uc') { status = '<i class="icon-remove" title="Uncompliant"></i>'; }
+                    if (val["status"] =='fc') { status = '<i class="icon-ok" title="Fully compliant"></i>'; }
+                    if (val["status"] =='up') { status = '<i class="icon-remove" title="Unable to publish"></i>'; }
+                    if (val["status"] =='pc') { status = '<i class="icon-flag" title="Partially compliant"></i>'; }
+
+                    $(".group-" + element + " td.schedule").html('<span title="' + val["publication_date"] + ': ' + val["notes"] + '">' + status + '</span>');
                 });
     });
 
