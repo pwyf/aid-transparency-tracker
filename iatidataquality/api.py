@@ -163,22 +163,35 @@ def api_publisher_data(publisher_id):
     except urllib2.HTTPError, e:
         return jsonify(e)
 
+@app.route('/api/packages/<package_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
 @app.route('/api/packages/<package_name>/tests/<test_id>/activities')
 @support_jsonp
-def api_package_activities(package_name, test_id):
+def api_package_activities(package_name, test_id, hierarchy_id=None):
     package = db.session.query(models.Package).filter(models.Package.package_name == package_name).first()
     latest_runtime = db.session.query(models.Runtime
         ).filter(models.Result.package_id==package.id
         ).join(models.Result
         ).order_by(models.Runtime.id.desc()
         ).first()
-    test_results = db.session.query(models.Result.result_identifier, 
-                                    models.Result.result_data
-        ).filter(models.Package.package_name == package_name, 
-                 models.Result.runtime_id==latest_runtime.id, 
-                 models.Result.test_id==test_id
-        ).join(models.Package
-        ).all()
+
+    if (hierarchy_id):
+        if (hierarchy_id=="None"): hierarchy_id=None
+        test_results = db.session.query(models.Result.result_identifier, 
+                                        models.Result.result_data
+            ).filter(models.Package.package_name == package_name, 
+                     models.Result.runtime_id==latest_runtime.id, 
+                     models.Result.test_id==test_id,
+                     models.Result.result_hierarchy==hierarchy_id
+            ).join(models.Package
+            ).all()
+    else:
+        test_results = db.session.query(models.Result.result_identifier, 
+                                        models.Result.result_data
+            ).filter(models.Package.package_name == package_name, 
+                     models.Result.runtime_id==latest_runtime.id, 
+                     models.Result.test_id==test_id
+            ).join(models.Package
+            ).all()
     if ((package == None) or (test_results==None)):
         abort(404)
     else:

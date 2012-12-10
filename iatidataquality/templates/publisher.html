@@ -17,10 +17,30 @@
     <tbody>
 	{% for pk in pkgs %}
     <tr>
-	<td><a href="{{url_for('packages', id=pk.id)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td>{{ pk.package_country }}</td><td>{{ pk.package_license }}</td><!--<td></td>-->
+	<td><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td>{{ pk.package_country }}</td><td>{{ pk.package_license }}</td><!--<td></td>-->
     </tr>
 	{% endfor %}
     </tbody>
     </table>
+
+    <h1>Latest results <code>{{runtime.runtime_datetime}}</code></h1>
+    {% for h, values in results.items() %}
+    <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
+    <table class="table" id="results">
+    <thead>
+    <th>Test</th><th>% Passed</th><th>Total results</th>
+    </thead>
+    <tbody>
+    {% for test, result in values.items() %}
+    <tr id="tr{{result.test_id}}h{{h}}" class="group-{% if result.group %}{{result.group}}{% else %}unknown{%endif%}">
+	<td><a href="{{url_for('tests', id=result.test_id)}}">{{ result.test_description }}</a></td>
+    <td class="pct">{{result.percentage|round|int}}</td>
+    <td>{{result.total_num}}</td>
+    </tr>
+    {% endfor%}
+    </tbody>
+    </table>
+    </fieldset>
+    {% endfor %}
 
 {% endblock %}

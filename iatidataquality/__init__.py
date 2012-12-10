@@ -13,46 +13,32 @@ app.config.from_pyfile('../config.py')
 celery = Celery(app)
 db = SQLAlchemy(app)
 
+import models
+import api
+import dqfunctions
+import dqprocessing
 
 def DATA_STORAGE_DIR():
     return app.config["DATA_STORAGE_DIR"]
 
-def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
-    result = models.Result()
-    result.test_id = test_id 
-    result.runtime_id = runtime_id
-    result.package_id = package_id
-    if result_data:
-        result.result_data = 1
-    else:
-        result.result_data = 0 
-    db.session.add(result)
-import models
-import api
+@app.route("/aggregate_results/<runtime>/")
+@app.route("/aggregate_results/<runtime>/<commit>/")
+def aggregate_results(runtime, commit=False):
+    return dqprocessing.aggregate_results(runtime, commit)
 
-
-# Has the test completed?
-@app.route("/resultcheck/<task_id>")
-def check_result(task_id):
-    retval = load_package.AsyncResult(task_id).status
-    return retval
-
-@app.route("/pending_tasks")
-def pending_tasks():
-    i = celery.control.inspect()
-    output = "Active: " + str(i.active()) + "<br />"
-    output = output + "Reserved: " + str(i.reserved()) + "<br />"
-    return output
-
-# run XPATH tests, stored in the database against each activity
-#@celery.task(name="myapp.test_activity", callback=None)
-def test_activity(runtime_id, package_id, result_identifier, data, test_functions):
+def test_activity(runtime_id, package_id, result_identifier, data, test_functions, condition_functions, result_hierarchy):
     xmldata = etree.fromstring(data)
 
     tests = models.Test.query.filter(models.Test.active == True).all()
+    conditions = models.TestCondition.query.filter(models.TestCondition.active == True).all()
+    
     for test in tests:
         if not test.id in test_functions:
             continue
+        
+        if (condition_functions.has_key(test.id)):
+            if condition_functions[test.id](xmldata):
+                continue
 
         if test_functions[test.id](xmldata):
             the_result = 1
@@ -65,6 +51,7 @@ def test_activity(runtime_id, package_id, result_identifier, data, test_function
         newresult.test_id = test.id
         newresult.result_data = the_result
         newresult.result_identifier = result_identifier
+        newresult.result_hierarchy = result_hierarchy
         db.session.add(newresult)
     return "Success"
 
@@ -72,14 +59,18 @@ def check_file(file_name, runtime_id, package_id, context=None):
     try:
         data = etree.parse(file_name)
     except etree.XMLSyntaxError:
-        add_hardcoded_result(-3, runtime_id, package_id, False)
+        dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, False)
         return
-    add_hardcoded_result(-3, runtime_id, package_id, True)
-    from parsetests import test_functions
+    dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, True)
+    from parsetests import test_functions, condition_functions
     for activity in data.findall('iati-activity'):
+        try:
+            result_hierarchy = activity.get('hierarchy')
+        except KeyError:
+            result_hierarchy = None
         result_identifier = activity.find('iati-identifier').text
         activity_data = etree.tostring(activity)
-        res = test_activity(runtime_id, package_id, result_identifier, activity_data, test_functions)
+        res = test_activity(runtime_id, package_id, result_identifier, activity_data, test_functions, condition_functions, result_hierarchy)
 
 @celery.task(name="iatidataquality.load_package", track_started=True)
 def load_package(runtime):
@@ -95,19 +86,20 @@ def load_package(runtime):
 
         # run tests on file
         res = check_file(filename, runtime, package.id, None)
-        # res.task_id is the id of the task
-        output = output + 'Finished adding task </a>.<br />'
 
+        output = output + 'Finished adding task </a>.<br />'
+    db.session.commit()
+    aggregate_results(runtime)
     db.session.commit()
     return output
 
 
 @app.route("/")
 def home():
-    return redirect("/publishers")
+    return redirect(url_for('publishers'))
 
-@app.route("/tests")
-@app.route("/tests/<id>")
+@app.route("/tests/")
+@app.route("/tests/<id>/")
 def tests(id=None):
     if (id is not None):
         test = models.Test.query.filter_by(id=id).first()
@@ -116,7 +108,7 @@ def tests(id=None):
         tests = models.Test.query.order_by(models.Test.id).all()
         return render_template("tests.html", tests=tests)
 
-@app.route("/tests/<id>/edit", methods=['GET', 'POST'])
+@app.route("/tests/<id>/edit/", methods=['GET', 'POST'])
 def tests_editor(id=None):
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
@@ -138,175 +130,118 @@ def tests_editor(id=None):
         test = models.Test.query.filter_by(id=id).first()
         return render_template("test_editor.html", test=test)
 
-@app.route("/publishers")
-@app.route("/packages")
+@app.route("/publishers/")
+@app.route("/packages/")
 def publishers(id=None):
     p_groups = models.PackageGroup.query.order_by(models.PackageGroup.name).all()
 
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
     return render_template("publishers.html", p_groups=p_groups, pkgs=pkgs)
 
-@app.route("/publishers/<id>")
+@app.route("/publishers/<id>/")
 def publisher(id=None):
-    p_group = models.PackageGroup.query.filter_by(id=id).first()
+    p_group = models.PackageGroup.query.filter_by(name=id).first()
 
     pkgs = db.session.query(models.Package
-            ).filter(models.Package.package_group == id
+            ).filter(models.Package.package_group == p_group.id
             ).order_by(models.Package.package_name).all()
-    return render_template("publisher.html", p_group=p_group, pkgs=pkgs)
 
-@app.route("/packages/<id>")
-@app.route("/packages/<id>/<options>")
-def packages(id=None, options=None):
-    generated = "Started at " + str(datetime.now()) + "<br />"
+    latest_runtime = db.session.query(models.Runtime
+        ).filter(models.PackageGroup.id==p_group.id
+        ).join(models.Result,
+               models.Package,
+               models.PackageGroup,
+        ).order_by(models.Runtime.id.desc()
+        ).first()
+
+    aggregate_results = db.session.query(models.Test,
+                                         models.AggregateResult.results_data,
+                                         models.AggregateResult.results_num,
+                                         models.AggregateResult.result_hierarchy,
+                                         models.AggregateResult.package_id
+            ).filter(models.Package.package_group==p_group.id,
+                     models.AggregateResult.runtime_id==latest_runtime.id
+            ).group_by(models.AggregateResult.result_hierarchy, models.Test.id, models.AggregateResult.package_id
+            ).join(models.AggregateResult,
+                   models.Package
+            ).all()
+
+    aggregate_results = dqfunctions.agr_publisher_results(aggregate_results)
+
+    return render_template("publisher.html", p_group=p_group, pkgs=pkgs, results=aggregate_results, runtime=latest_runtime)
+
+@app.route("/packages/<id>/")
+@app.route("/packages/<id>/runtimes/<runtime_id>/")
+def packages(id=None, runtime_id=None):
+
+    # Get package data
     p = db.session.query(models.Package,
         models.PackageGroup
-		).filter(models.Package.id == id
+		).filter(models.Package.package_name == id
         ).join(models.PackageGroup).first()
 
     if (p is None):
         p = db.session.query(models.Package
-		).filter(models.Package.id == id
+		).filter(models.Package.package_name == id
         ).first()
 
+    # Get list of runtimes
     runtimes = db.session.query(models.Result.runtime_id,
                                 models.Runtime.runtime_datetime
-        ).filter(models.Result.package_id ==id
+        ).filter(models.Result.package_id ==p[0].id
         ).distinct(
         ).join(models.Runtime
         ).all()
 
-    # select the highest runtime; then get data for that one
+    if (runtime_id):
+        # If a runtime is specified in the request, get the data
 
-    latest_runtime = db.session.query(models.Runtime
-        ).filter(models.Result.package_id==id
-        ).join(models.Result
-        ).order_by(models.Runtime.id.desc()
-        ).first()
-    
-    if (options == 'all_results'):
-        results = db.session.query(models.Result,
-                                       models.Test
-                ).filter(models.Result.package_id==id, models.Result.runtime_id==latest_runtime.id
-                ).join(models.Test
-                ).all()
+        latest_runtime = db.session.query(models.Runtime
+            ).filter(models.Runtime.id==runtime_id
+            ).first()
+        latest = False
     else:
+        # Select the highest runtime; then get data for that one
 
-        data = db.session.query(models.Test,
-                models.Result.result_data,
-                func.count(models.Result.id)
-        ).filter(models.Result.package_id==id, models.Result.runtime_id==latest_runtime.id
-        ).join(models.Result
-        ).group_by(models.Test, models.Result.result_data
-        ).all()
+        latest_runtime = db.session.query(models.Runtime
+            ).filter(models.Result.package_id==p[0].id
+            ).join(models.Result
+            ).order_by(models.Runtime.id.desc()
+            ).first()
+        latest = True
 
-        results = data
-        niceresults = pkg_test_percentages(data)
+    aggregate_results = db.session.query(models.Test,
+                                         models.AggregateResult.results_data,
+                                         models.AggregateResult.results_num,
+                                         models.AggregateResult.result_hierarchy
+            ).filter(models.AggregateResult.package_id==p[0].id,
+                     models.AggregateResult.runtime_id==latest_runtime.id
+            ).group_by(models.AggregateResult.result_hierarchy, models.Test
+            ).join(models.AggregateResult
+            ).all()
+
+    aggregate_results = dqfunctions.agr_results(aggregate_results)
  
-    return render_template("package.html", p=p, runtimes=runtimes, results=niceresults, latest_runtime=latest_runtime, generated=generated)
+    return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest)
 
-def pkg_test_percentages(data):
-    #0: test
-    #1: pass/fail (0 or 1)
-    #2: number
-    tests = set(map(lambda x: (x[0].id, x[0].description, x[0].test_group), data))
-    
-    d = dict(map(lambda x: ((x[0].id,x[1]),x[2]), data))
-    out = []
-    for t in tests:
-        try: fail = d[(t[0],0)]
-        except: fail = 0
-        try: success = d[(t[0],1)]
-        except: success = 0
-        data = {}
-        data = {
-            "id": t[0],
-            "name": t[1],
-            "percentage": int((float(success)/(fail+success)) * 100),
-            "total_results": fail+success,
-            "group": t[2]
-        }
-        out.append(data)
-    return out
-
-
-@app.route("/test_summaries")
-def test_summaries():
-    return render_template("test_summaries.html")
-
-@app.route("/organisation_quality")
-def organisation_quality():
-    return render_template("organisation_quality.html")
-
-@app.route("/table/")
-def table_select():
-    rows = db.session.query(func.count(models.Result.result_data), 
-		models.Runtime, 
-		models.Result.result_data
-		).group_by(models.Result.result_data
-		).group_by(models.Runtime
-		).join(models.Runtime
-		).order_by(models.Runtime.id).all() 
-    
-    runtimes = sorted(set(map(lambda x: x[1].id, rows)))
-    data = []
-    for runtime in runtimes:
-        datadata = {}
-        datadata['runtime_id'] = runtime
-        for row in rows:
-            # it's the same runtime
-            if (row[1].id == runtime):
-                datadata[row[2]] = row[0]
-                datadata['runtime_datetime'] = row[1].runtime_datetime
-        if (datadata.has_key(0) and datadata.has_key(1)):
-            datadata['total_tests'] = datadata[0] + datadata[1]
-            datadata['percent_passed'] = round(float(datadata[0])/float(datadata['total_tests'])*100, 2)
-        elif (datadata.has_key(0)):
-            datadata['percent_passed'] = float(0)
-            datadata['total_tests'] = datadata[0]
-        elif (datadata.has_key(1)):
-            datadata['percent_passed'] = float(1)*100
-            datadata['total_tests'] = datadata[1]
-        data.append(datadata)
-
-    return render_template("table_select.html", rows=rows, data=data, runtimes=runtimes) 
-
-@app.route("/table/<int:runtime_id>")
-def table(runtime_id):
-    results = db.session.query(models.Result.package_id, models.Result.test_id, func.sum(models.Result.result_data), func.count(models.Result.id)
-                ).filter_by(runtime_id=runtime_id
-                ).group_by(models.Result.package_id, models.Result.test_id, models.Result.runtime_id
-                ).order_by(models.Result.package_id, models.Result.test_id).all()
-    tests = models.Test.query.order_by(models.Test.id).all()
-    packages = models.Package.query.order_by(models.Package.id).all()
-    package_ids = map(lambda x: x.id, packages)
-    test_ids = map(lambda x: x.id, tests)
-    def result_generator():
-        pos = 0
-        for package in packages: 
-            def row_generator():
-                yield package.package_name
-                for tid in test_ids:
-                    if results:
-                        if results[0][0] == package.id and results[0][1] == tid:
-                            yield (results[0][2], results[0][3])
-                            results.pop(0)
-                        else:
-                            yield "/"
-                    else:
-                        yield "/"
-            yield row_generator()
-    return render_template("table.html", results=result_generator(), tests=tests)
-
-@app.route("/runtests/")
-def runtests():
+@app.route("/runtests/new/")
+def run_new_tests():
     newrun = models.Runtime()
     db.session.add(newrun)
     db.session.commit()
-
-    output = ""
     res = load_package.delay(newrun.id)
-    output = str(res) + "<br />Runtime is <br />" + str(newrun.id)
-    output = output + '<a href="/resultcheck/' + res.task_id + '">' + res.task_id + '</a><br />'
-    return str(output)
+    
+    flash('Running tests; this may take some time. Runtime ID is ' + str(newrun.id), "success")
+    return render_template("runtests.html", task=res,runtime=newrun)
 
+@app.route("/runtests/")
+@app.route("/runtests/<id>/")
+def check_tests(id=None):
+    if (id):
+        task = load_package.AsyncResult(id)
+        return render_template("checktest.html", task=task)
+    else: 
+        i = celery.control.inspect()
+        active_tasks = i.active()
+        registered_tasks = i.reserved()
+        return render_template("checktests.html", active_tasks=active_tasks, registered_tasks=registered_tasks)

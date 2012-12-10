@@ -102,6 +102,20 @@ class Result(db.Model):
     # The identifier for the element associated with this result
     # E.g. the releavnt activity identifier
     result_identifier = Column(UnicodeText)
+    result_hierarchy = Column(Integer)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class AggregateResult(db.Model):
+    __tablename__='aggregateresult'
+    id = Column(Integer,primary_key=True)
+    runtime_id=Column(Integer, ForeignKey('runtime.id'))
+    package_id = Column(Integer, ForeignKey('package.id'))
+    test_id = Column(Integer, ForeignKey('test.id'))
+    result_hierarchy = Column(Integer)
+    results_data = Column(Float)
+    results_num = Column(Integer)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -119,6 +133,22 @@ class Test(db.Model):
 
     def __repr__(self):
         return self.name+u', '+unicode(self.id)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class TestCondition(db.Model):
+    __tablename__ = 'testcondition'
+    id = Column(Integer, primary_key=True)
+    condition = Column(UnicodeText)
+    description = Column(UnicodeText)
+    file = Column(UnicodeText)
+    line = Column(UnicodeText)
+    test_level = Column(UnicodeText)
+    active = Column(Boolean)
+
+    def __repr__(self):
+        return self.condition+u', '+unicode(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

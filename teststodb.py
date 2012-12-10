@@ -3,7 +3,7 @@ import re
 
 hardcoded_tests = [
     (-2, 'url_exists', "Check that the xml file actually exists."),
-    (-3, 'valid_xml', "Check that xml is valid"),
+    (-3, 'valid_xml', "Check that xml is well structured"),
     (-4, 'schema_conformance', "Check that xml conforms to schyema")
 ]
 for hardcoded_test in hardcoded_tests:

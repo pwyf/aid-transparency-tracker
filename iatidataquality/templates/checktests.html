@@ -1,0 +1,36 @@
+{% set active_page='runtests'%}{% extends "layout.html" %}
+{% block content %}
+   <h1>Tasks</h1>
+   <a class="btn btn-success pull-right" href="{{url_for('run_new_tests')}}">Run now</a>
+   <h3>Currently running tasks</h3>
+   <table class="table">
+   <thead>
+   <th>ID</th>
+   </thead>
+   <tbody>
+   {% for host, tasks in active_tasks.items() %}
+   {% for task in tasks %}
+   <tr><td><a href="{{url_for('check_tests', id=task.id)}}">{{task.id}}</a></td></tr>
+   {% else %}
+   <tr><td>No currently running tasks</td></tr>
+   {% endfor %}
+   {% endfor %}
+   </tbody>
+   </table>
+   <h3>Pending tasks</h3>
+   <table class="table">
+   <thead>
+   <th>ID</th>
+   </thead>
+   <tbody>
+   {% for host, tasks in registered_tasks.items() %}
+   {% for task in tasks %}
+   <tr><td><a href="{{url_for('check_tests', id=task.id)}}">{{task.id}}</a></td></tr>
+   {% else %}
+   <tr><td>No pending tasks</td></tr>
+   {% endfor %}
+   {% endfor %}
+   </tbody>
+   </table>
+
+{% endblock %}

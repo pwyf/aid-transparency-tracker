@@ -3,7 +3,8 @@ import ckan
 import urllib2
 from datetime import date, datetime
 import os
-from iatidataquality import models, db, add_hardcoded_result, DATA_STORAGE_DIR
+from iatidataquality import models, db,  DATA_STORAGE_DIR
+from iatidataquality.dqprocessing import add_hardcoded_result
 
 import sys
 import pprint

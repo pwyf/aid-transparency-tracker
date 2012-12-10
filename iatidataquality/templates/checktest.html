@@ -1,0 +1,7 @@
+{% set active_page='runtests'%}{% extends "layout.html" %}
+{% block content %}
+   <h1>Task {{task.task_id}}</h1>
+   <h3>{{task.status}}</h3>
+   <p>{{task.result}}</p>
+
+{% endblock %}

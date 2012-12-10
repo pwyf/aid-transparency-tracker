@@ -16,7 +16,7 @@
     <tbody>
 	{% for p in p_groups %}
     <tr>
-	<td><a href="{{url_for('publisher', id=p.id)}}">{{ p.name }}</a></td><td>{{ p.title }}</td><td><a href="http://iatiregistry.org/publisher/{{p.name}}">http://iatiregistry.org/publisher/{{p.name}}</td>
+	<td><a href="{{url_for('publisher', id=p.name)}}">{{ p.name }}</a></td><td>{{ p.title }}</td><td><a href="http://iatiregistry.org/publisher/{{p.name}}">http://iatiregistry.org/publisher/{{p.name}}</td>
     </tr>
 	{% endfor %}
     </tbody>
@@ -30,7 +30,7 @@
     <tbody>
 	{% for pk in pkgs %}
     <tr>
-	<td><a href="{{url_for('packages', id=pk.id)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td>{{ pk.package_country }}</td><td>{{ pk.package_license }}</td><!--<td></td>-->
+	<td><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td>{{ pk.package_country }}</td><td>{{ pk.package_license }}</td><!--<td></td>-->
     </tr>
 	{% endfor %}
     </tbody>

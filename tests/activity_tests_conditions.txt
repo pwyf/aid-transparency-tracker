@@ -1,0 +1,2 @@
+#iati-activity
+Do not run test 22 if reporting-org[@ref='GB-1'] and iati-activity[@hierarchy='1'] # Don't run sector exist test if it's a DFID first-level activity.

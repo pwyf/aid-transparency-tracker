@@ -49,3 +49,6 @@ body {
 .hidden-results-tr {
     display:none;
 }
+.zeroresults {
+    display:none;
+}
