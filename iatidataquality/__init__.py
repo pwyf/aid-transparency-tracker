@@ -130,6 +130,70 @@ def tests_editor(id=None):
         test = models.Test.query.filter_by(id=id).first()
         return render_template("test_editor.html", test=test)
 
+@app.route("/publisher_conditions/")
+@app.route("/publisher_conditions/<id>/")
+def publisher_conditions(id=None):
+    if (id is not None):
+        pc = models.PublisherCondition.query.filter_by(id=id).first()
+        return render_template("publisher_condition.html", pc=pc)
+    else:
+        pcs = models.PublisherCondition.query.order_by(models.PublisherCondition.id).all()
+        return render_template("publisher_conditions.html", pcs=pcs)
+
+@app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
+def publisher_conditions_editor(id=None):
+    publishers = models.PackageGroup.query.order_by(models.PackageGroup.id).all()
+    tests = models.Test.query.order_by(models.Test.id).all()
+    if (request.method == 'POST'):
+        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+            pc = models.PublisherCondition.query.filter_by(id=id).first()
+            pc.description = request.form['description']
+            pc.publisher_id = int(request.form['publisher_id'])
+            pc.test_id = int(request.form['test_id'])
+            pc.operation = int(request.form['operation'])
+            pc.condition = request.form['condition']
+            pc.condition_value = request.form['condition_value']
+            pc.file = request.form['file']
+            pc.line = int(request.form['line'])
+            pc.active = int(request.form['active'])
+            db.session.add(pc)
+            db.session.commit()
+            flash('Updated', "success")
+            return redirect(url_for('publisher_conditions_editor', id=pc.id))
+        else:
+            flash('Incorrect password', "error")
+            pc = models.PublisherCondition.query.filter_by(id=id).first()
+            return render_template("publisher_condition_editor.html", pc=pc, publishers=publishers, tests=tests)
+    else:
+        pc = models.PublisherCondition.query.filter_by(id=id).first()
+        return render_template("publisher_condition_editor.html", pc=pc, publishers=publishers, tests=tests)
+
+@app.route("/publisher_conditions/new/", methods=['GET', 'POST'])
+def publisher_conditions_new(id=None):
+    publishers = models.PackageGroup.query.order_by(models.PackageGroup.id).all()
+    tests = models.Test.query.order_by(models.Test.id).all()
+    if (request.method == 'POST'):
+        pc = models.PublisherCondition()
+        pc.description = request.form['description']
+        pc.publisher_id = int(request.form['publisher_id'])
+        pc.test_id = int(request.form['test_id'])
+        pc.operation = int(request.form['operation'])
+        pc.condition = request.form['condition']
+        pc.condition_value = request.form['condition_value']
+        pc.file = request.form['file']
+        pc.line = int(request.form['line'])
+        pc.active = int(request.form['active'])
+        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+            db.session.add(pc)
+            db.session.commit()
+            flash('Created new condition', "success")
+            return redirect(url_for('publisher_conditions_editor', id=pc.id))
+        else:
+            flash('Incorrect password', "error")
+            return render_template("publisher_condition_editor.html", pc=pc, publishers=publishers, tests=tests)
+    else:
+        return render_template("publisher_condition_editor.html", pc={}, publishers=publishers, tests=tests)
+
 @app.route("/publishers/")
 @app.route("/packages/")
 def publishers(id=None):
@@ -184,11 +248,16 @@ def packages(id=None, runtime_id=None):
         p = db.session.query(models.Package
 		).filter(models.Package.package_name == id
         ).first()
+        pconditions = {}
+    else:
+        # Get publisher-specific conditions.
+        # TO DO: add them to dqfunctions.agr_results, so that they will be wrapped into that whole thing.
+        pconditions = models.PublisherCondition.query.filter_by(publisher_id=p[1].id).all()
 
     # Get list of runtimes
     runtimes = db.session.query(models.Result.runtime_id,
                                 models.Runtime.runtime_datetime
-        ).filter(models.Result.package_id ==p[0].id
+        ).filter(models.Result.package_id==p[0].id
         ).distinct(
         ).join(models.Runtime
         ).all()
@@ -222,7 +291,7 @@ def packages(id=None, runtime_id=None):
 
     aggregate_results = dqfunctions.agr_results(aggregate_results)
  
-    return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest)
+    return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest, pconditions=pconditions)
 
 @app.route("/runtests/new/")
 def run_new_tests():

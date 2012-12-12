@@ -137,6 +137,22 @@ class Test(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+class PublisherCondition(db.Model):
+    __tablename__ = 'publishercondition'
+    id = Column(Integer, primary_key=True)
+    publisher_id = Column(Integer, ForeignKey('packagegroup.id'))
+    test_id = Column(Integer, ForeignKey('test.id'))
+    operation = Column(Integer) # show (1) or don't show (0) result
+    condition = Column(UnicodeText) # activity level, hierarchy 2
+    condition_value = Column(UnicodeText) # True, 2, etc.
+    description = Column(UnicodeText)
+    file = Column(UnicodeText)
+    line = Column(Integer)
+    active = Column(Boolean)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class TestCondition(db.Model):
     __tablename__ = 'testcondition'
     id = Column(Integer, primary_key=True)

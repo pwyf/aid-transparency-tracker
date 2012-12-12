@@ -4,16 +4,6 @@ from functools import partial
 import iatidataquality.models as models
 
 mappings = []
-condition_mappings = []
-
-def add_condition(regex):
-    def append_to_mappings(fn):
-        global condition_mappings
-        def partial_fn(groups):
-            return partial(fn, groups=groups)
-        condition_mappings.append((re.compile(regex), partial_fn))
-        return fn
-    return append_to_mappings      
 
 def add(regex):
     def append_to_mappings(fn):
@@ -93,22 +83,9 @@ def exist(activity, groups):
 def fail(line):
     return None
 
-
-def formatConditions(conditions):
-    """ make into testid => run / don't run
-                         => condition
-    """
-    conditions = map(lambda x: {"condition": str(x.condition),
-                       "description": str(x.description)}, conditions)
-    return conditions
-
 tests = models.Test.query.filter(models.Test.active == True).all()
-conditions = models.TestCondition.query.filter(models.TestCondition.active==True).all()
-conditions = formatConditions(conditions)
-print "the conditions are: ....... " + str(conditions)
 
 test_functions = {}
-condition_functions = {}
 comment = re.compile('#')
 blank = re.compile('^$')
 for test in tests:

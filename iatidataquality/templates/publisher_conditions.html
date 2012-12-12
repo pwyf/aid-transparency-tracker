@@ -1,0 +1,26 @@
+{% set active_page='pc'%}{% extends "layout.html" %}
+{% block content %}
+   <script src="static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#pcs").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+	<h1>Select a condition</h1>
+    <table class="table" id="pcs">
+    <thead>
+    <th>ID</th><th>Description</th>
+    </thead>
+    <tbody>
+	{% for pc in pcs %}
+    <tr>
+	<td><a href="{{url_for('publisher_conditions', id=pc.id)}}">{{ pc.id }}</a></td><td>{{pc.description}}</td>
+    </tr>
+	{% endfor %}
+    <tr>
+	<td colspan="2"><a class="btn btn-success" href="{{url_for('publisher_conditions_new')}}"><i class="icon-plus icon-white"></i> New</a></td>
+    </tr>
+    </tbody>
+    </table>
+
+{% endblock %}

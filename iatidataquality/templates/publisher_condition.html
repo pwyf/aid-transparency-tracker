@@ -1,0 +1,20 @@
+{% set active_page='pc'%}{% extends "layout.html" %}
+{% block content %}
+   <script src="static/jquery.tablesorter.min.js"></script>
+
+	<h1>Condition {{pc.id}}</h1>
+    <table class="table" id="pc">
+    <tbody>
+    <tr>
+	<td>ID</td><td>{{pc.id}}</td>
+    </tr>
+    <tr>
+	<td>Description</td><td>{{pc.description}}</td>
+    </tr>    
+    <tr>
+	<td colspan="2"><a class="btn" href="{{url_for('publisher_conditions_editor', id=pc.id)}}">Edit</a></td>
+    </tr>
+    </tbody>
+    </table>
+
+{% endblock %}

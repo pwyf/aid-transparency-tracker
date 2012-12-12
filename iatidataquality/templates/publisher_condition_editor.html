@@ -1,0 +1,74 @@
+{% set active_page='pc'%}{% extends "layout.html" %}
+{% block content %}
+    <form action="" method="post">
+    <h1>{% if pc.id %}Edit publisher condition {{pc.id}}{% else %}Create a new publisher condition{%endif%}</h1>
+    <table class="table">
+    <thead>
+        <th>Item</th>
+        <th>Value</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Description</td>
+        <td><input type="text" value="{{pc.description}}" name="description" /></td>
+    </tr>
+    <tr>
+        <td>Publisher ID</td>
+        <td>
+        <select name="publisher_id">
+        {% for publisher in publishers %}
+        <option value="{{publisher.id}}"{% if pc.publisher_id == publisher.id %} selected{%endif%}>{{publisher.name}}</option>
+        {%endfor%}
+        </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Test ID</td>
+        <td>
+        <select name="test_id">
+        {% for test in tests %}
+        <option value="{{test.id}}"{% if pc.test_id == test.id %} selected{%endif%}>{{test.description}}</option>
+        {%endfor%}
+        </select></td>
+    </tr>
+    <tr>
+        <td>Operation</td>
+        <td>
+        <select name="operation">
+        <option value="1"{% if pc.operation == 1 %} selected{%endif%}>Show</option>
+        <option value="0"{% if pc.operation == 0 %} selected{%endif%}>Don't show</option>
+        </select></td>
+    </tr>
+    <tr>
+        <td>condition</td>
+        <td><input type="text" value="{{pc.condition}}" name="condition" /></td>
+    </tr>
+    <tr>
+        <td>condition_value</td>
+        <td><input type="text" value="{{pc.condition_value}}" name="condition_value" /></td>
+    </tr>
+    <tr>
+        <td>file</td>
+        <td><input type="text" value="{{pc.file}}" name="file" /></td>
+    </tr>
+    <tr>
+        <td>line</td>
+        <td><input type="text" value="{{pc.line}}" name="line" /></td>
+    </tr>
+    <tr>
+        <td>active</td>
+        <td><input type="checkbox" value="1" name="active"{% if pc.active%} checked{%endif%} /></td>
+    </tr>
+    <tr>
+        <td>Secret password</td>
+        <td><input type="password" value="" name="password" /></td>
+    </tr>
+    <tr>
+    <td colspan="2">
+    <input type="submit" value="Update" class="btn" />
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </form>
+{% endblock %}
