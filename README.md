@@ -55,9 +55,11 @@ Import Scripts
 
 These steps must be followed in this order, and you must have created the database tables (`manage.py runserver` does this automatically).
 
-Import the tests to the database:
+Import the tests to the database, run the server and go to (e.g.):
 
-    python teststodb.py
+    http://127.0.0.1:5000/tests/import/
+
+Provide the password and click "Import local tests"
 
 Download the IATI data: 
 

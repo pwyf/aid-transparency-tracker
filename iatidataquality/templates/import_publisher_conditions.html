@@ -1,0 +1,32 @@
+{% set active_page='import_conditions'%}{% extends "layout.html" %}
+{% block title %}Import tests{% endblock %}
+{% block content %}
+    {% if results %}
+    <table class="table">
+    <thead>
+        <th>Import?</th><th>Publisher</th><th>Test</th><th>Operation</th><th>Condition</th><th>Condition value</th>
+    </thead>
+    <tbody>
+        {% for result in results %}
+            {% for test in result.tests %}
+            <tr><td><input type="checkbox" name="include" checked /></td><td><a href="{{url_for('publisher', id=result.publisher.id)}}">{{result.publisher.name}}</a></td><td><a href="{{url_for('tests', id=test.id)}}">{{test.name}}</a></td><td>{{result.operation}}</td><td>{{result.condition}}</td><td>{{result.condition_value}}</td></tr>
+            {% endfor%}
+        {%endfor%}
+    </tbody>
+    </table>
+    {%endif%}
+    
+    <form action="" method="post">
+    <fieldset>
+        <legend>Local conditions</legend>
+        <p><input type="submit" value="Import local conditions" class="btn" name="local" /></p>
+    </fieldset>
+    <fieldset>
+        <legend>Remote conditions</legend>
+        <p><label for="url">URL:</label><input type="text" value="http://raw.github.com/markbrough/IATI-Data-Quality/master/tests/publisher_structures.txt" name="url" /></p>
+
+        <p><label for="password">Password:</label><input type="passowrd" value="" name="password" /></p>
+        <p><input type="submit" value="Import remote tests" class="btn" name="remote" /></p>
+    </fieldset>
+    </form>
+{% endblock %}

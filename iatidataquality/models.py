@@ -1,6 +1,5 @@
 from sqlalchemy import *
-from iatidataquality import app
-from iatidataquality import db
+from db import app, db
 from datetime import datetime
 
 class Runtime(db.Model):
@@ -49,9 +48,6 @@ class PackageGroup(db.Model):
             self.man_auto = man_auto
         if name is not None:
             self.name = name
-
-    def __repr__(self):
-        return self.name+u", "+self.id
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}

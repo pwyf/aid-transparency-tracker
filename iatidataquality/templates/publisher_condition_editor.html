@@ -1,4 +1,5 @@
 {% set active_page='pc'%}{% extends "layout.html" %}
+{% block title %}{%if pc.id%}{{pc.id}}{%else%}New{%endif%} &raquo; Publisher Conditions{% endblock %}
 {% block content %}
     <form action="" method="post">
     <h1>{% if pc.id %}Edit publisher condition {{pc.id}}{% else %}Create a new publisher condition{%endif%}</h1>

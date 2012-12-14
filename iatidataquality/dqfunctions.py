@@ -64,70 +64,97 @@ def pkg_test_percentages(data):
             out[h][t] = data
     return out
 
-def agr_results(data):
+def agr_results(data, conditions=None, mode=None):
+    """
+        data variable looks like this:
+            models.Test,
+            models.AggregateResult.results_data,
+            models.AggregateResult.results_num,
+            models.AggregateResult.result_hierarchy
+
+        conditions variable looks like this:
+            models.PublisherCondition.query.filter_by(publisher_id=p[1].id).all()
+
+            ======================================
+            id = Column(Integer, primary_key=True)
+            publisher_id = Column(Integer, ForeignKey('packagegroup.id'))
+            test_id = Column(Integer, ForeignKey('test.id'))
+            operation = Column(Integer) # show (1) or don't show (0) result
+            condition = Column(UnicodeText) # activity level, hierarchy 2
+            condition_value = Column(UnicodeText) # True, 2, etc.
+            description = Column(UnicodeText)
+            file = Column(UnicodeText)
+            line = Column(Integer)
+            active = Column(Boolean)
+            ======================================
+        mode can be:
+            None = package-specific
+            "publisher" = aggregate results for a whole publisher
+
+        TODO:
+            in publisher mode, allow weighting of data by package rather than number of activities.
+    """
+
     hierarchies = set(map(lambda x: (x[3]), data))
     tests = set(map(lambda x: (x[0].id), data))
+
+    if conditions:
+        cdtns = dict(map(lambda x: ((x.test_id, x.condition, x.condition_value, x.operation),(x.description)), conditions))
     
-    d = dict(map(lambda x: ((x[3], x[0].id),(x)), data))
+    if (mode=="publisher"):
+        packages = set(map(lambda x: (x[4]), data))
+        d = dict(map(lambda x: ((x[3], x[0].id, x[4]),(x)), data))
+    else:
+        d = dict(map(lambda x: ((x[3], x[0].id),(x)), data))
+
     out = {}
     for h in hierarchies:
         for t in tests:
+            if (mode=="publisher"):
+                # aggregate data across multiple packages for a single publisher
+                total_pct = 0
+                total_activities = 0
+                test_id = ""
+                test_name = ""
+                test_description = ""
+                total_packages = len(packages)
+                for p in packages:
+                    try:
+                        total_pct = total_pct + d[(h, t, p)][1]
+                        total_activities = total_activities + d[(h, t, p)][2]
+                        test_id = d[(h, t, p)][0].id
+                        test_name = d[(h, t, p)][0].name
+                        test_description = d[(h, t, p)][0].description
+                    except KeyError:
+                        pass
+                if (total_activities>0):
+                    tdata = {
+                            'percentage': int(float(total_pct)/(total_packages)),
+                            'total_num': total_activities,
+                            'test_id': test_id,
+                            'test_name': test_name,
+                            'test_description': test_description
+                           }
+            else:
+                # return data for this single package
+                try:
+                    tdata = d[(h, t)]
+                except KeyError:
+                    pass
             try: out[h]
             except KeyError: out[h] = {}
             try: out[h][t]
             except KeyError: out[h][t] = {}
-            try: out[h][t] = d[(h, t)]
-            except KeyError: del out[h][t]
-    return out
-
-def agr_publisher_results(data, activities=None):
-    # TO DO: activities = True, aggregates percentage by number of activities in each file
-    
-    """
-       data variable looks like this:
-         models.Test,
-         models.AggregateResult.results_data,
-         models.AggregateResult.results_num,
-         models.AggregateResult.result_hierarchy,
-         models.AggregateResult.package_id
-    """
-    packages = set(map(lambda x: (x[4]), data))
-    hierarchies = set(map(lambda x: (x[3]), data))
-    tests = set(map(lambda x: (x[0].id), data))
-    
-    d = dict(map(lambda x: ((x[3], x[0].id, x[4]),(x)), data))
-    out = {}
-    for h in hierarchies:
-        for t in tests:
-            total_pct = 0
-            total_activities = 0
-            test_id = ""
-            test_name = ""
-            test_description = ""
-            total_packages = len(packages)
-            for p in packages:
+            try: 
+                out[h][t]["test"] = tdata
                 try:
-                    total_pct = total_pct + d[(h, t, p)][1]
-                    total_activities = total_activities + d[(h, t, p)][2]
-                    test_id = d[(h, t, p)][0].id
-                    test_name = d[(h, t, p)][0].name
-                    test_description = d[(h, t, p)][0].description
+                    out[h][t]["condition"] = cdtns[(t,'activity hierarchy', str(h), 0)]
                 except KeyError:
+                    # cdtns[...] doesn't exist
                     pass
-            if (total_activities>0):
-                tdata = {
-                        'percentage': int(float(total_pct)/(total_packages)),
-                        'total_num': total_activities,
-                        'test_id': test_id,
-                        'test_name': test_name,
-                        'test_description': test_description
-                       }
-
-                try: out[h]
-                except KeyError: out[h] = {}
-                try: out[h][t]
-                except KeyError: out[h][t] = {}
-                try: out[h][t] = tdata
-                except KeyError: del out[h][t]
-                if (out[h][t] == {}): del out[h][t]
+                except UnboundLocalError:
+                    # cdtns doesn't exist
+                    pass
+            except KeyError: del out[h][t]
+            except UnboundLocalError: del out[h][t]
     return out

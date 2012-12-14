@@ -1,0 +1,39 @@
+{% set active_page='index'%}{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+    <h1>IATI Data Quality browser</h1>
+    <p class="lead">This is a testing site for a forthcoming IATI Data Quality tool. It's under active development, so you shouldn't rely on any of the information contained in here.</p>
+    <!--<p>
+    <a class="btn btn-success btn-large">
+    Learn more
+    </a>
+    </p>-->
+    </div>
+    <div class="row">
+        <div class="span6">
+            <h1>Publishers</h1>
+            <p>See data from organisations that have published to IATI already</p>
+            <p>
+            <a class="btn" href="{{url_for('publishers')}}">Publishers »</a>
+            </p>
+        </div>
+        <div class="span6">
+            <h1>Packages</h1>
+            <p>See data from a specific package published to IATI</p>
+            <p>
+            <a class="btn" href="{{url_for('packages')}}">Packages »</a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <h1>Tests</h1>
+            <p>See currently active tests, and add your own</p>
+            <p>
+            <a class="btn" href="{{url_for('tests')}}">Tests »</a>
+            </p>
+        </div>
+    </div>
+
+{% endblock %}

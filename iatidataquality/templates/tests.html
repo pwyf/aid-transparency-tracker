@@ -1,6 +1,7 @@
 {% set active_page='tests'%}{% extends "layout.html" %}
+{% block title %}Tests{% endblock %}
 {% block content %}
-   <script src="static/jquery.tablesorter.min.js"></script>
+   <script src="/static/jquery.tablesorter.min.js"></script>
     <script >
     $(function() {
     $("table#tests").tablesorter({ sortList: [[0,0]] });

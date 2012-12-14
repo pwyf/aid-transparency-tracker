@@ -1,108 +1,31 @@
-from flask import Flask, render_template, flash, request, Markup, session, redirect, url_for, escape, Response
+from flask import Flask, render_template, flash, request, Markup, session, redirect, url_for, escape, Response, abort
 from flask.ext.celery import Celery
-#from celery.task.sets import TaskSet # Is this going to be used?
-import sys, os
-from lxml import etree
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask import render_template
+#from celery.task.sets import TaskSet # Need to improve later
+
 from sqlalchemy import func
 from datetime import datetime
 
-app = Flask(__name__)
-app.config.from_pyfile('../config.py')
-celery = Celery(app)
-db = SQLAlchemy(app)
+from db import *
 
 import models
 import api
 import dqfunctions
 import dqprocessing
+import dqruntests
 
 def DATA_STORAGE_DIR():
     return app.config["DATA_STORAGE_DIR"]
 
-@app.route("/aggregate_results/<runtime>/")
-@app.route("/aggregate_results/<runtime>/<commit>/")
-def aggregate_results(runtime, commit=False):
-    return dqprocessing.aggregate_results(runtime, commit)
-
-def test_activity(runtime_id, package_id, result_identifier, data, test_functions, condition_functions, result_hierarchy):
-    xmldata = etree.fromstring(data)
-
-    tests = models.Test.query.filter(models.Test.active == True).all()
-    conditions = models.TestCondition.query.filter(models.TestCondition.active == True).all()
-    
-    for test in tests:
-        if not test.id in test_functions:
-            continue
-        
-        if (condition_functions.has_key(test.id)):
-            if condition_functions[test.id](xmldata):
-                continue
-
-        if test_functions[test.id](xmldata):
-            the_result = 1
-        else:
-            the_result = 0
-
-        newresult = models.Result()
-        newresult.runtime_id = runtime_id
-        newresult.package_id = package_id
-        newresult.test_id = test.id
-        newresult.result_data = the_result
-        newresult.result_identifier = result_identifier
-        newresult.result_hierarchy = result_hierarchy
-        db.session.add(newresult)
-    return "Success"
-
-def check_file(file_name, runtime_id, package_id, context=None):
-    try:
-        data = etree.parse(file_name)
-    except etree.XMLSyntaxError:
-        dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, False)
-        return
-    dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, True)
-    from parsetests import test_functions, condition_functions
-    for activity in data.findall('iati-activity'):
-        try:
-            result_hierarchy = activity.get('hierarchy')
-        except KeyError:
-            result_hierarchy = None
-        result_identifier = activity.find('iati-identifier').text
-        activity_data = etree.tostring(activity)
-        res = test_activity(runtime_id, package_id, result_identifier, activity_data, test_functions, condition_functions, result_hierarchy)
-
-@celery.task(name="iatidataquality.load_package", track_started=True)
-def load_package(runtime):
-    output = ""
-    
-    path = DATA_STORAGE_DIR()
-    for package in models.Package.query.order_by(models.Package.id).all():
-        print package.id
-        output = output + ""
-        output = output + "Loading file " + package.package_name + "...<br />"
-        
-        filename = path + '/' + package.package_name + '.xml'
-
-        # run tests on file
-        res = check_file(filename, runtime, package.id, None)
-
-        output = output + 'Finished adding task </a>.<br />'
-    db.session.commit()
-    aggregate_results(runtime)
-    db.session.commit()
-    return output
-
-
 @app.route("/")
 def home():
-    return redirect(url_for('publishers'))
+    return render_template("dashboard.html")
 
 @app.route("/tests/")
 @app.route("/tests/<id>/")
 def tests(id=None):
     if (id is not None):
-        test = models.Test.query.filter_by(id=id).first()
+        test = models.Test.query.filter_by(id=id).first_or_404()
         return render_template("test.html", test=test)
     else:
         tests = models.Test.query.order_by(models.Test.id).all()
@@ -112,7 +35,7 @@ def tests(id=None):
 def tests_editor(id=None):
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            test = models.Test.query.filter_by(id=id).first()
+            test = models.Test.query.filter_by(id=id).first_or_404()
             test.name = request.form['name']
             test.description = request.form['description']
             test.test_level = request.form['test_level']
@@ -124,17 +47,17 @@ def tests_editor(id=None):
             return render_template("test_editor.html", test=test)
         else:
             flash('Incorrect password', "error")
-            test = models.Test.query.filter_by(id=id).first()
+            test = models.Test.query.filter_by(id=id).first_or_404()
             return render_template("test_editor.html", test=test)
     else:
-        test = models.Test.query.filter_by(id=id).first()
+        test = models.Test.query.filter_by(id=id).first_or_404()
         return render_template("test_editor.html", test=test)
 
 @app.route("/publisher_conditions/")
 @app.route("/publisher_conditions/<id>/")
 def publisher_conditions(id=None):
     if (id is not None):
-        pc = models.PublisherCondition.query.filter_by(id=id).first()
+        pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
         return render_template("publisher_condition.html", pc=pc)
     else:
         pcs = models.PublisherCondition.query.order_by(models.PublisherCondition.id).all()
@@ -146,7 +69,7 @@ def publisher_conditions_editor(id=None):
     tests = models.Test.query.order_by(models.Test.id).all()
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            pc = models.PublisherCondition.query.filter_by(id=id).first()
+            pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
             pc.description = request.form['description']
             pc.publisher_id = int(request.form['publisher_id'])
             pc.test_id = int(request.form['test_id'])
@@ -162,10 +85,10 @@ def publisher_conditions_editor(id=None):
             return redirect(url_for('publisher_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
-            pc = models.PublisherCondition.query.filter_by(id=id).first()
+            pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
             return render_template("publisher_condition_editor.html", pc=pc, publishers=publishers, tests=tests)
     else:
-        pc = models.PublisherCondition.query.filter_by(id=id).first()
+        pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
         return render_template("publisher_condition_editor.html", pc=pc, publishers=publishers, tests=tests)
 
 @app.route("/publisher_conditions/new/", methods=['GET', 'POST'])
@@ -195,8 +118,7 @@ def publisher_conditions_new(id=None):
         return render_template("publisher_condition_editor.html", pc={}, publishers=publishers, tests=tests)
 
 @app.route("/publishers/")
-@app.route("/packages/")
-def publishers(id=None):
+def publishers():
     p_groups = models.PackageGroup.query.order_by(models.PackageGroup.name).all()
 
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
@@ -204,7 +126,7 @@ def publishers(id=None):
 
 @app.route("/publishers/<id>/")
 def publisher(id=None):
-    p_group = models.PackageGroup.query.filter_by(name=id).first()
+    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
 
     pkgs = db.session.query(models.Package
             ).filter(models.Package.package_group == p_group.id
@@ -230,13 +152,19 @@ def publisher(id=None):
                    models.Package
             ).all()
 
-    aggregate_results = dqfunctions.agr_publisher_results(aggregate_results)
+    pconditions = models.PublisherCondition.query.filter_by(publisher_id=p_group.id).all()
+
+    aggregate_results = dqfunctions.agr_results(aggregate_results, conditions=pconditions, mode="publisher")
 
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs, results=aggregate_results, runtime=latest_runtime)
 
+@app.route("/packages/")
 @app.route("/packages/<id>/")
 @app.route("/packages/<id>/runtimes/<runtime_id>/")
 def packages(id=None, runtime_id=None):
+    if (id is None):
+        pkgs = models.Package.query.order_by(models.Package.package_name).all()
+        return render_template("packages.html", pkgs=pkgs)
 
     # Get package data
     p = db.session.query(models.Package,
@@ -251,16 +179,19 @@ def packages(id=None, runtime_id=None):
         pconditions = {}
     else:
         # Get publisher-specific conditions.
-        # TO DO: add them to dqfunctions.agr_results, so that they will be wrapped into that whole thing.
+
         pconditions = models.PublisherCondition.query.filter_by(publisher_id=p[1].id).all()
 
     # Get list of runtimes
-    runtimes = db.session.query(models.Result.runtime_id,
-                                models.Runtime.runtime_datetime
-        ).filter(models.Result.package_id==p[0].id
-        ).distinct(
-        ).join(models.Runtime
-        ).all()
+    try:
+        runtimes = db.session.query(models.Result.runtime_id,
+                                    models.Runtime.runtime_datetime
+            ).filter(models.Result.package_id==p[0].id
+            ).distinct(
+            ).join(models.Runtime
+            ).all()
+    except Exception:
+        return abort(404)
 
     if (runtime_id):
         # If a runtime is specified in the request, get the data
@@ -289,7 +220,7 @@ def packages(id=None, runtime_id=None):
             ).join(models.AggregateResult
             ).all()
 
-    aggregate_results = dqfunctions.agr_results(aggregate_results)
+    aggregate_results = dqfunctions.agr_results(aggregate_results, pconditions)
  
     return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest, pconditions=pconditions)
 
@@ -298,7 +229,7 @@ def run_new_tests():
     newrun = models.Runtime()
     db.session.add(newrun)
     db.session.commit()
-    res = load_package.delay(newrun.id)
+    res = dqruntests.load_package.delay(newrun.id)
     
     flash('Running tests; this may take some time. Runtime ID is ' + str(newrun.id), "success")
     return render_template("runtests.html", task=res,runtime=newrun)
@@ -307,10 +238,71 @@ def run_new_tests():
 @app.route("/runtests/<id>/")
 def check_tests(id=None):
     if (id):
-        task = load_package.AsyncResult(id)
+        task = dqruntests.load_package.AsyncResult(id)
         return render_template("checktest.html", task=task)
     else: 
         i = celery.control.inspect()
         active_tasks = i.active()
         registered_tasks = i.reserved()
         return render_template("checktests.html", active_tasks=active_tasks, registered_tasks=registered_tasks)
+
+@app.route("/tests/import/", methods=['GET', 'POST'])
+def import_tests():
+    if (request.method == 'POST'):
+        import dqimporttests
+        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+            if (request.form.get('local')):
+                result = dqimporttests.importTests()
+            else:
+                url = request.form['url']
+                level = int(request.form['level'])
+                result = dqimporttests.importTests(url, level, False)
+            if (result==True):
+                flash('Imported tests', "success")
+            else:
+                flash('There was an error importing your tests', "error")
+        else:
+            flash('Wrong password', "error")
+        return render_template("import_tests.html")
+    else:
+        return render_template("import_tests.html")
+
+@app.route("/publisher_conditions/import/", methods=['GET', 'POST'])
+def import_publisher_conditions():
+    if (request.method == 'POST'):
+        import dqimportpublisherconditions
+        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+            """if (request.form.get('local')):"""
+            results = dqimportpublisherconditions.importPCs()
+            """else:
+                url = request.form['url']
+                level = int(request.form['level'])
+                result = dqimporttests.importTests(url, level, False)
+            """
+            if (results):
+                flash('Parsed tests', "success")
+            else:
+                results = None
+                flash('There was an error importing your tests', "error")
+        else:
+            flash('Wrong password', "error")
+            results = None
+        return render_template("import_publisher_conditions.html", results=results)
+    else:
+        return render_template("import_publisher_conditions.html")
+
+@app.route("/publisher_conditions/export/")
+def export_publisher_conditions():
+    conditions = db.session.query(models.PublisherCondition.description).all()
+    conditionstext = ""
+    for i, condition in enumerate(conditions):
+        if (i != 0):
+            conditionstext = conditionstext + "\n"
+        conditionstext = conditionstext + condition.description
+    rv = app.make_response(conditionstext)
+    rv.mimetype = 'text'
+    return rv
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404

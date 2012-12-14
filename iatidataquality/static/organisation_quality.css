@@ -1,9 +1,0 @@
-#organisation_quality circle {
-  opacity: 0.3; }
-
-#organisation_quality circle.inner {
-  opacity: 1.0; }
-
-text.title {
-  font: 300 40px Helvetica Neue;
-  fill: #666; }
