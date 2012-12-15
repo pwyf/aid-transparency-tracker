@@ -3,11 +3,7 @@
 {% block content %}
     <form action="" method="post">
     <fieldset>
-        <legend>Local tests</legend>
-        <p><input type="submit" value="Import local tests" class="btn" name="local" /></p>
-    </fieldset>
-    <fieldset>
-        <legend>Remote tests</legend>
+        <legend>Import tests</legend>
         <p><label for="url">URL:</label><input type="text" value="http://raw.github.com/markbrough/IATI-Data-Quality/master/tests/activity_tests.csv" name="url" /></p>
         <p><label for="level">Level:</label>
             <select name="level">
@@ -18,7 +14,7 @@
         </p>
 
         <p><label for="password">Password:</label><input type="passowrd" value="" name="password" /></p>
-        <p><input type="submit" value="Import remote tests" class="btn" name="remote" /></p>
+        <p><input type="submit" value="Import tests" class="btn" name="remote" /></p>
     </fieldset>
     </form>
 {% endblock %}

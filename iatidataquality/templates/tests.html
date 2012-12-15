@@ -8,6 +8,10 @@
     });
     </script>
 	<h1>Select a test</h1>
+    <div class="pull-right">
+    <a href="{{url_for('tests_new')}}" class="btn btn-success"><i class="icon-plus icon-white"></i>New</a>
+    <a href="{{url_for('import_tests')}}" class="btn">Import tests</a>
+    </div>
     <table class="table" id="tests">
     <thead>
     <th>ID</th><th>Name</th><th>Description</th>

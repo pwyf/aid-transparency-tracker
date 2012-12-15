@@ -1,4 +1,5 @@
-from flask import Flask, render_template, flash, request, Markup, session, redirect, url_for, escape, Response, abort
+from flask import Flask, render_template, flash, request, Markup, session, redirect, url_for, escape, Response, abort, send_file
+import StringIO
 from flask.ext.celery import Celery
 from flask.ext.sqlalchemy import SQLAlchemy
 #from celery.task.sets import TaskSet # Need to improve later
@@ -53,14 +54,56 @@ def tests_editor(id=None):
         test = models.Test.query.filter_by(id=id).first_or_404()
         return render_template("test_editor.html", test=test)
 
+@app.route("/tests/new/", methods=['GET', 'POST'])
+def tests_new(id=None):
+    if (request.method == 'POST'):
+        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+            test = models.Test()
+            test.name = request.form['name']
+            test.description = request.form['description']
+            test.test_level = request.form['test_level']
+            test.active = request.form['active']
+            test.test_group = request.form['test_group']
+            db.session.add(test)
+            db.session.commit()
+            flash('Updated', "success")
+            return render_template("test_editor.html", test=test)
+        else:
+            flash('Incorrect password', "error")
+            return render_template("test_editor.html", test={})
+    else:
+        return render_template("test_editor.html", test={})
+
+
+
 @app.route("/publisher_conditions/")
 @app.route("/publisher_conditions/<id>/")
 def publisher_conditions(id=None):
     if (id is not None):
-        pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
+        pc = db.session.query(models.PublisherCondition.id,
+                               models.PublisherCondition.description,
+                               models.PublisherCondition.operation,
+                               models.PublisherCondition.condition,
+                               models.PublisherCondition.condition_value,
+                               models.PackageGroup.title.label("packagegroup_name"),
+                               models.PackageGroup.id.label("packagegroup_id"),
+                               models.Test.name.label("test_name"),    
+                               models.Test.description.label("test_description"),
+                               models.Test.id.label("test_id")
+                            ).filter_by(id=id
+                            ).join(models.PackageGroup, models.Test).first()
         return render_template("publisher_condition.html", pc=pc)
     else:
-        pcs = models.PublisherCondition.query.order_by(models.PublisherCondition.id).all()
+        pcs = db.session.query(models.PublisherCondition.id,
+                               models.PublisherCondition.description,
+                               models.PackageGroup.title.label("packagegroup_name"),
+                               models.PackageGroup.id.label("packagegroup_id"),
+                               models.Test.name.label("test_name"),    
+                               models.Test.description.label("test_description"),
+                               models.Test.id.label("test_id")
+                            ).order_by(models.PublisherCondition.id
+                            ).join(models.PackageGroup, models.Test
+                            ).all()
         return render_template("publisher_conditions.html", pcs=pcs)
 
 @app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
@@ -220,9 +263,11 @@ def packages(id=None, runtime_id=None):
             ).join(models.AggregateResult
             ).all()
 
+    flat_results = aggregate_results
+
     aggregate_results = dqfunctions.agr_results(aggregate_results, pconditions)
  
-    return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest, pconditions=pconditions)
+    return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest, pconditions=pconditions, flat_results=flat_results)
 
 @app.route("/runtests/new/")
 def run_new_tests():
@@ -267,27 +312,51 @@ def import_tests():
     else:
         return render_template("import_tests.html")
 
+@app.route("/publisher_conditions/import/step<step>", methods=['GET', 'POST'])
 @app.route("/publisher_conditions/import/", methods=['GET', 'POST'])
-def import_publisher_conditions():
-    if (request.method == 'POST'):
-        import dqimportpublisherconditions
-        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            """if (request.form.get('local')):"""
-            results = dqimportpublisherconditions.importPCs()
-            """else:
-                url = request.form['url']
-                level = int(request.form['level'])
-                result = dqimporttests.importTests(url, level, False)
-            """
-            if (results):
-                flash('Parsed tests', "success")
+def import_publisher_conditions(step=None):
+    # Step=1: form; submit to step2
+    # 
+    if (step == '2'):
+        if (request.method == 'POST'):
+            import dqimportpublisherconditions
+            if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+                if (request.form.get('local')):
+                    results = dqimportpublisherconditions.importPCs()
+                else:
+                    url = request.form['url']
+                    results = dqimportpublisherconditions.importPCs(url, False)
+                if (results):
+                    flash('Parsed tests', "success")
+                    return render_template("import_publisher_conditions_step2.html", results=results, step=step)
+                else:
+                    results = None
+                    flash('There was an error importing your tests', "error")
+                    return redirect(url_for('import_publisher_conditions'))
             else:
-                results = None
-                flash('There was an error importing your tests', "error")
-        else:
-            flash('Wrong password', "error")
-            results = None
-        return render_template("import_publisher_conditions.html", results=results)
+                flash('Wrong password', "error")
+                return render_template("import_publisher_conditions.html")
+    elif (step=='3'):
+        out = []
+        for row in request.form.getlist('include'):
+            publisher_id = request.form['pc['+row+'][publisher_id]']
+            test_id = request.form['pc['+row+'][test_id]']
+            operation = request.form['pc['+row+'][operation]']
+            condition = request.form['pc['+row+'][condition]']
+            condition_value = request.form['pc['+row+'][condition_value]']
+            pc = models.PublisherCondition.query.filter_by(publisher_id=publisher_id, test_id=test_id, operation=operation, condition=condition, condition_value=condition_value).first()
+            if (pc is None):
+                pc = models.PublisherCondition()
+            pc.publisher_id=publisher_id
+            pc.test_id=test_id
+            pc.operation = operation
+            pc.condition = condition
+            pc.condition_value = condition_value
+            pc.description = request.form['pc['+row+'][description]']
+            db.session.add(pc)
+        db.session.commit()
+        flash('Successfully updated publisher conditions', 'success')
+        return redirect(url_for('publisher_conditions'))
     else:
         return render_template("import_publisher_conditions.html")
 
@@ -299,9 +368,13 @@ def export_publisher_conditions():
         if (i != 0):
             conditionstext = conditionstext + "\n"
         conditionstext = conditionstext + condition.description
-    rv = app.make_response(conditionstext)
-    rv.mimetype = 'text'
-    return rv
+
+    strIO = StringIO.StringIO()
+    strIO.write(str(conditionstext))
+    strIO.seek(0)
+    return send_file(strIO,
+                     attachment_filename="publisher_structures.txt",
+                     as_attachment=True)
 
 @app.errorhandler(404)
 def page_not_found(error):

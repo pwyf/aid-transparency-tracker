@@ -1,3 +1,7 @@
 dfid does not use transaction at activity hierarchy 1
 dfid does not use description at activity hierarchy 2
 dfid does not use document-link at activity hierarchy 2
+dfid does not use sector at activity hierarchy 1
+dfid does not use transaction at activity hierarchy 1
+dfid does not use recipient-country at activity hierarchy 1
+dfid does not use recipient-region at activity hierarchy 1

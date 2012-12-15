@@ -108,6 +108,8 @@ def agr_results(data, conditions=None, mode=None):
         d = dict(map(lambda x: ((x[3], x[0].id),(x)), data))
 
     out = {}
+
+ 
     for h in hierarchies:
         for t in tests:
             if (mode=="publisher"):
@@ -140,13 +142,14 @@ def agr_results(data, conditions=None, mode=None):
                 try:
                     tdata = d[(h, t)]
                 except KeyError:
-                    pass
+                    tdata = None
             try: out[h]
             except KeyError: out[h] = {}
             try: out[h][t]
             except KeyError: out[h][t] = {}
             try: 
-                out[h][t]["test"] = tdata
+                if tdata:
+                    out[h][t]["test"] = tdata
                 try:
                     out[h][t]["condition"] = cdtns[(t,'activity hierarchy', str(h), 0)]
                 except KeyError:
@@ -157,4 +160,5 @@ def agr_results(data, conditions=None, mode=None):
                     pass
             except KeyError: del out[h][t]
             except UnboundLocalError: del out[h][t]
+            if (out[h][t] == {}): del out[h][t]
     return out

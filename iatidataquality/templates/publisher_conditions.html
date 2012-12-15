@@ -8,6 +8,11 @@
     });
     </script>
 	<h1>Select a condition</h1>
+    <div class="pull-right">
+    <a href="{{url_for('publisher_conditions_new')}}" class="btn btn-success"><i class="icon-plus icon-white"></i> New</a>
+    <a href="{{url_for('import_publisher_conditions')}}" class="btn">Import data</a>
+    <a href="{{url_for('export_publisher_conditions')}}" class="btn">Export data</a>
+    </div>
     <table class="table" id="pcs">
     <thead>
     <th>ID</th><th>Description</th>
@@ -15,11 +20,9 @@
     <tbody>
 	{% for pc in pcs %}
     <tr>
-	<td><a href="{{url_for('publisher_conditions', id=pc.id)}}">{{ pc.id }}</a></td><td>{{pc.description}}</td>
+	<td><a href="{{url_for('publisher_conditions', id=pc.id)}}">{{ pc.id }}</a></td><td>{{pc.description}}</td><td><a href="{{url_for('publisher', id=pc.packagegroup_id)}}">{{pc.packagegroup_name}}</td><td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_description}}</a></td>
     </tr>
 	{% endfor %}
-    <tr>
-	<td colspan="2"><a class="btn btn-success" href="{{url_for('publisher_conditions_new')}}"><i class="icon-plus icon-white"></i> New</a></td>
     </tr>
     </tbody>
     </table>
