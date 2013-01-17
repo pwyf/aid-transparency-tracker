@@ -1,7 +1,4 @@
 test,description,group
-schema_conformance,Check that xml conforms to schema,
-valid_xml,Check that xml is well structured,
-url_exists,Check that the xml file actually exists.,
 title/text() exists?,Title,title
 title/text() has more than 10 characters?,Title has more than 10 characters,title
 description/text() exists?,Description,description
