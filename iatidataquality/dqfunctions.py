@@ -160,5 +160,8 @@ def agr_results(data, conditions=None, mode=None):
                     pass
             except KeyError: del out[h][t]
             except UnboundLocalError: del out[h][t]
-            if (out[h][t] == {}): del out[h][t]
+            try:
+                if (out[h][t] == {}): del out[h][t]
+            except KeyError:
+                pass
     return out

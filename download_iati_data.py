@@ -14,6 +14,11 @@ runtime = models.Runtime()
 db.session.add(runtime)
 db.session.commit()
 
+def fixURL(url):
+    # helper function to replace spaces with %20 (otherwise fails with some servers, e.g. US)
+    url = url.replace(" ", "%20")
+    return url
+
 def create_package_group(group):
     pg = models.PackageGroup()
     pg.name = group
@@ -203,10 +208,11 @@ def run(directory):
                     # But this should not happen for IATI data
 
                     try:
-                        save_file(pkg_name, resource['url'], dir)
+                        save_file(pkg_name, fixURL(resource['url']), dir)
                         file = resource['url']
                     except urllib2.URLError, e:
                         file = False
+                        print "couldn't get file"
                 metadata_to_db(pkg, file, update_package)
                 print resource['url']
             else:
