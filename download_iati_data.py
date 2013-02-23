@@ -197,17 +197,20 @@ def get_package(pkg, pkg_name):
             update_package = False
 
     if (update_package or new_package):
-                # Download the file
-        for resource in pkg.get('resources', []):
-                    # This logic is flawed if this loop runs more than once
-                    # But this should not happen for IATI data
+        # Download the file
 
-            try:
-                save_file(pkg_name, fixURL(resource['url']), dir)
-                file = resource['url']
-            except urllib2.URLError, e:
-                file = False
-                print "couldn't get file"
+        resources = pkg.get('resources', [])
+        assert len(resources) <= 1
+        if resources == []:
+            return
+
+        resource = resources[0]
+        try:
+            save_file(pkg_name, fixURL(resource['url']), dir)
+            file = resource['url']
+        except urllib2.URLError, e:
+            file = False
+            print "couldn't get file"
         metadata_to_db(pkg, file, update_package)
         print resource['url']
     else:
