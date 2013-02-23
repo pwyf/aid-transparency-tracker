@@ -16,6 +16,9 @@ runtime = models.Runtime()
 db.session.add(runtime)
 db.session.commit()
 
+download_queue = 'iati_download_queue'
+import pika
+
 def fixURL(url):
     # helper function to replace spaces with %20 (otherwise fails with some servers, e.g. US)
     url = url.replace(" ", "%20")
@@ -206,9 +209,11 @@ def get_package(pkg, pkg_name):
             return
 
         resource = resources[0]
+        save_file = enqueue_download
         save_file(pkg_name, dir,
                   resource['url'], pkg, update_package)
     else:
+        print update_package, new_package
         print "Already have package", pkg["name"]
 
 def run(directory):
@@ -220,6 +225,19 @@ def run(directory):
             pkg = registry.package_entity_get(pkg_name) 
 
             get_package(pkg, pkg_name)
+
+def enqueue(args):
+    body = json.dumps(args)
+    
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host='localhost'))
+    channel = connection.channel()
+    channel.queue_declare(queue=download_queue, durable=True)
+    channel.basic_publish(exchange='',
+                          routing_key=download_queue,
+                          body=body,
+                          properties=pika.BasicProperties(delivery_mode=2))
+    connection.close()
 
 def enqueue_download(pkg_name, dir, file, pkg, update_package):
     args = {
