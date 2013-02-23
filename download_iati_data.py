@@ -205,14 +205,8 @@ def get_package(pkg, pkg_name):
             return
 
         resource = resources[0]
-        try:
-            save_file(pkg_name, fixURL(resource['url']), dir)
-            file = resource['url']
-        except urllib2.URLError, e:
-            file = False
-            print "couldn't get file"
-        metadata_to_db(pkg, file, update_package)
-        print resource['url']
+        save_file(pkg_name, fixURL(resource['url']), dir,
+                  resource['url'], pkg, update_package)
     else:
         print "Already have package", pkg["name"]
 
@@ -226,12 +220,18 @@ def run(directory):
 
             get_package(pkg, pkg_name)
 
-def save_file(pkg_name, url, dir):
-    localFile = open(dir + '/' + pkg_name + '.xml', 'w')
-    webFile = urllib2.urlopen(url)
-    localFile.write(webFile.read())
-    webFile.close()
-    localFile.close()
+def save_file(pkg_name, url, dir, file, pkg, update_package):
+    try:
+        localFile = open(dir + '/' + pkg_name + '.xml', 'w')
+        webFile = urllib2.urlopen(url)
+        localFile.write(webFile.read())
+        webFile.close()
+        localFile.close()
+    except urllib2.URLError, e:
+        file = False
+        print "couldn't get file"
+    metadata_to_db(pkg, file, update_package)
+    print file
 
 if __name__ == '__main__':
     import sys
