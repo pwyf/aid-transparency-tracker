@@ -180,44 +180,48 @@ def metadata_to_db(pkg, file, update_package):
     add_hardcoded_result(-2, runtime.id, package.id, file)
 
 
+def get_package(pkg, pkg_name):
+    new_package = False
+    update_package = False
+            # Check if package already exists; if it has not been updated more recently than the database, then download it again
+    check_package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
+    if (check_package):
+        # found a package
+        if ((check_package.package_revision_id) != (pkg['revision_id'])):
+            # if the package has been updated, then download it and update the package data
+            update_package = True
+            print "Updating package"
+        else:
+            # package not already downloaded
+            new_package = True
+            update_package = False
+
+    if (update_package or new_package):
+                # Download the file
+        for resource in pkg.get('resources', []):
+                    # This logic is flawed if this loop runs more than once
+                    # But this should not happen for IATI data
+
+            try:
+                save_file(pkg_name, fixURL(resource['url']), dir)
+                file = resource['url']
+            except urllib2.URLError, e:
+                file = False
+                print "couldn't get file"
+        metadata_to_db(pkg, file, update_package)
+        print resource['url']
+    else:
+        print "Already have package", pkg["name"]
+
 def run(directory):
     url = 'http://iatiregistry.org/api'
     import ckanclient
     registry = ckanclient.CkanClient(base_location=url)
-    startnow = False
+
     for pkg_name in registry.package_register_get():
             pkg = registry.package_entity_get(pkg_name) 
-            new_package = False
-            update_package = False
-            # Check if package already exists; if it has not been updated more recently than the database, then download it again
-            check_package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
-            if (check_package):
-            # found a package
-                if ((check_package.package_revision_id) != (pkg['revision_id'])):
-                    # if the package has been updated, then download it and update the package data
-                    update_package = True
-                    print "Updating package"
-            else:
-                # package not already downloaded
-                new_package = True
-                update_package = False
 
-            if (update_package or new_package):
-                # Download the file
-                for resource in pkg.get('resources', []):
-                    # This logic is flawed if this loop runs more than once
-                    # But this should not happen for IATI data
-
-                    try:
-                        save_file(pkg_name, fixURL(resource['url']), dir)
-                        file = resource['url']
-                    except urllib2.URLError, e:
-                        file = False
-                        print "couldn't get file"
-                metadata_to_db(pkg, file, update_package)
-                print resource['url']
-            else:
-                print "Already have package", pkg["name"]
+            get_package(pkg, pkg_name)
 
 def save_file(pkg_name, url, dir):
     localFile = open(dir + '/' + pkg_name + '.xml', 'w')
