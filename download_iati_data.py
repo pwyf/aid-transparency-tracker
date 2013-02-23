@@ -6,6 +6,7 @@ from datetime import date, datetime
 import os
 from iatidataquality import models, db,  DATA_STORAGE_DIR
 from iatidataquality.dqprocessing import add_hardcoded_result
+import json
 
 import sys
 import pprint
@@ -205,7 +206,7 @@ def get_package(pkg, pkg_name):
             return
 
         resource = resources[0]
-        save_file(pkg_name, fixURL(resource['url']), dir,
+        save_file(pkg_name, dir,
                   resource['url'], pkg, update_package)
     else:
         print "Already have package", pkg["name"]
@@ -220,7 +221,18 @@ def run(directory):
 
             get_package(pkg, pkg_name)
 
-def save_file(pkg_name, url, dir, file, pkg, update_package):
+def enqueue_download(pkg_name, dir, file, pkg, update_package):
+    args = {
+        'pkg_name': pkg_name,
+        'dir': dir,
+        'file': file,
+        'pkg': pkg,
+        'update_package': update_package
+        }
+    enqueue(args)
+
+def save_file(pkg_name, dir, file, pkg, update_package):
+    url = fixURL(file)
     try:
         localFile = open(dir + '/' + pkg_name + '.xml', 'w')
         webFile = urllib2.urlopen(url)
@@ -232,6 +244,15 @@ def save_file(pkg_name, url, dir, file, pkg, update_package):
         print "couldn't get file"
     metadata_to_db(pkg, file, update_package)
     print file
+
+def dequeue_download(body):
+    args = json.loads(body)
+    save_file(args['pkg_name'],
+              args['dir'],
+              args['file'],
+              args['pkg'],
+              args['update_package'])
+    # notify queue that we finished properly
 
 if __name__ == '__main__':
     import sys
