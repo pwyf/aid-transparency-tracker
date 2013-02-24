@@ -71,10 +71,10 @@ def enqueue(args):
                           properties=pika.BasicProperties(delivery_mode=2))
     connection.close()
 
-def enqueue_download(pkg_name, file, pkg, update_package):
+def enqueue_download(pkg_name, filename, pkg, update_package):
     args = {
         'pkg_name': pkg_name,
-        'file': file,
+        'file': filename,
         'pkg': pkg,
         'update_package': update_package
         }
