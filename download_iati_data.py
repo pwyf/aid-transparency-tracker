@@ -48,7 +48,7 @@ def get_package(pkg, pkg_name):
         print update_package, new_package
         print "Already have package", pkg["name"]
 
-def run(directory):
+def run():
     url = 'http://iatiregistry.org/api'
     import ckanclient
     registry = ckanclient.CkanClient(base_location=url)
@@ -90,4 +90,4 @@ if __name__ == '__main__':
         except Exception, e:
             print "Failed:", e
             print "Couldn't create directory"
-    run(dir)
+    run()
