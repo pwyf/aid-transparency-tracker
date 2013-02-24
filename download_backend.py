@@ -254,15 +254,16 @@ def save_file(pkg_name, filename, pkg, update_package):
     directory = DATA_STORAGE_DIR()
     url = fixURL(filename)
     try:
-        localFile = open(directory + '/' + pkg_name + '.xml', 'w')
+        path = os.path.join(directory, pkg_name + '.xml')
+        localFile = open(path, 'w')
         webFile = urllib2.urlopen(url)
         localFile.write(webFile.read())
         webFile.close()
         localFile.close()
     except urllib2.URLError, e:
-        file = False
+        filename = False
         print "couldn't get file"
-    metadata_to_db(pkg, file, update_package)
+    metadata_to_db(pkg, filename, update_package)
     print file
 
 def dequeue_download(body):
