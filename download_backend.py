@@ -250,10 +250,11 @@ def enqueue_download(pkg_name, dir, file, pkg, update_package):
         }
     enqueue(args)
 
-def save_file(pkg_name, dir, file, pkg, update_package):
+def save_file(pkg_name, file, pkg, update_package):
+    directory = DATA_STORAGE_DIR()
     url = fixURL(file)
     try:
-        localFile = open(dir + '/' + pkg_name + '.xml', 'w')
+        localFile = open(directory + '/' + pkg_name + '.xml', 'w')
         webFile = urllib2.urlopen(url)
         localFile.write(webFile.read())
         webFile.close()
@@ -267,7 +268,6 @@ def save_file(pkg_name, dir, file, pkg, update_package):
 def dequeue_download(body):
     args = json.loads(body)
     save_file(args['pkg_name'],
-              args['dir'],
               args['file'],
               args['pkg'],
               args['update_package'])
@@ -306,8 +306,14 @@ def callback_fn(ch, method, properties, body):
     ch.basic_ack(delivery_tag = method.delivery_tag)
 
 if __name__ == '__main__':
-#    with daemon.DaemonContext(files_preserve=files_preserve):
-        while True:
-            handle_queue(download_queue, callback_fn)
-
+    directory = DATA_STORAGE_DIR()
+    if not os.path.exists(directory):
+        try:
+            os.makedirs(directory)
+        except Exception, e:
+            print "Failed:", e
+            print "Couldn't create directory"
+#   with daemon.DaemonContext(files_preserve=files_preserve):
+    while True:
+        handle_queue(download_queue, callback_fn)
 
