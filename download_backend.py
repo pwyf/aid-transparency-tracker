@@ -77,13 +77,20 @@ def metadata_to_db(pkg, success, update_package):
         package = models.Package()
     package.man_auto = 'auto'
     package.source_url = pkg['resources'][0]['url']
-    package.package_ckan_id = pkg['id']
-    package.package_name = pkg['name']
-    package.package_title = pkg['title']
-    package.package_license_id = pkg['license_id']
-    package.package_license = pkg['license']
-    package.package_metadata_created = pkg['metadata_created']
-    package.package_metadata_modified = pkg['metadata_modified']
+
+    mapping = [
+        ("package_ckan_id", "id"),
+        ("package_name", "name"),
+        ("package_title", "title"),
+        ("package_license_id", "license_id"),
+        ("package_license", "license"),
+        ("package_metadata_created", "metadata_created"),
+        ("package_metadata_modified", "metadata_modified")
+        ]
+
+    for attr, key in mapping:
+        setattr(package, attr, pkg[key])
+
     try:
         # there is a group, so use that group ID, or create one
         group = pkg['groups'][0]
