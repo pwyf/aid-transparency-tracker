@@ -36,14 +36,20 @@ def create_package_group(group):
     registry = ckanclient.CkanClient(base_location=url)
     startnow = False
     ckangroup = registry.group_entity_get(group)
-    pg.title = ckangroup['title']
-    pg.ckan_id = ckangroup['id']
-    pg.revision_id = ckangroup['revision_id']
-    pg.created_date = ckangroup['created']
-    try:
-        pg.state = ckangroup['state']
-    except Exception, e:
-        pass
+
+    mapping = [
+        ("title", "title"),
+        ("ckan_id", "id"),
+        ("revision_id", "revision_id"),
+        ("created_date", "created"),
+        ("state", "state")
+        ]
+    for attr, key in mapping:
+        try:
+            setattr(pg, attr, ckangroup[key])
+        except Exception, e:
+            pass
+
     try:
         pg.license_id = ckangroup['extras']['publisher_license_id']
     except Exception, e:
@@ -97,10 +103,10 @@ def metadata_to_db(pkg, success, update_package):
         group = pkg['groups'][0]
         try:
             pg = models.PackageGroup.query.filter_by(name=group).first()
-            package.package_group = pg.id
         except Exception, e:
             pg = create_package_group(group)
-            package.package_group = pg.id                
+        finally:
+            package.package_group = pg.id
     except Exception, e:
         pass
 
