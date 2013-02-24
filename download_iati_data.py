@@ -42,7 +42,7 @@ def get_package(pkg, pkg_name):
             return
 
         resource = resources[0]
-        enqueue_download(pkg_name, dir,
+        enqueue_download(pkg_name,
                          resource['url'], pkg, update_package)
     else:
         print update_package, new_package
@@ -71,10 +71,9 @@ def enqueue(args):
                           properties=pika.BasicProperties(delivery_mode=2))
     connection.close()
 
-def enqueue_download(pkg_name, dir, file, pkg, update_package):
+def enqueue_download(pkg_name, file, pkg, update_package):
     args = {
         'pkg_name': pkg_name,
-        'dir': dir,
         'file': file,
         'pkg': pkg,
         'update_package': update_package
@@ -83,10 +82,10 @@ def enqueue_download(pkg_name, dir, file, pkg, update_package):
 
 if __name__ == '__main__':
     import sys
-    dir = DATA_STORAGE_DIR()
-    if not os.path.exists(dir):
+    directory = DATA_STORAGE_DIR()
+    if not os.path.exists(directory):
         try:
-            os.makedirs(dir)
+            os.makedirs(directory)
         except Exception, e:
             print "Failed:", e
             print "Couldn't create directory"
