@@ -186,6 +186,7 @@ def metadata_to_db(pkg, file, update_package):
 
 
 def save_file(pkg_name, filename, pkg, update_package):
+    success = False
     directory = DATA_STORAGE_DIR()
     url = fixURL(filename)
     try:
@@ -195,10 +196,11 @@ def save_file(pkg_name, filename, pkg, update_package):
         localFile.write(webFile.read())
         webFile.close()
         localFile.close()
+        success = True
     except urllib2.URLError, e:
-        filename = False
+        success = False
         print "couldn't get file"
-    metadata_to_db(pkg, filename, update_package)
+    metadata_to_db(pkg, success, update_package)
     print filename
 
 def dequeue_download(body):
