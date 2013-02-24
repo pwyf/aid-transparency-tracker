@@ -125,7 +125,7 @@ def create_package_group(group):
     db.session.commit()
     return pg
 
-def metadata_to_db(pkg, file, update_package):
+def metadata_to_db(pkg, success, update_package):
     if (update_package):
         package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
     else:
@@ -182,7 +182,7 @@ def metadata_to_db(pkg, file, update_package):
         pass
     db.session.add(package)
     db.session.commit()
-    add_hardcoded_result(-2, runtime.id, package.id, file)
+    add_hardcoded_result(-2, runtime.id, package.id, success)
 
 
 def save_file(pkg_name, filename, pkg, update_package):
