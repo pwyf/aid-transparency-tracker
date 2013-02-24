@@ -150,22 +150,14 @@ def metadata_to_db(pkg, success, update_package):
             package.package_group = pg.id                
     except Exception, e:
         pass
-    try:
-        if pkg['extras']['activity_period-from']:
-            package.package_activity_from = pkg['extras']['activity_period-from']
-    except Exception, e:
-        pass
-    try:
-        if pkg['extras']['activity_period-to']:
-            package.package_activity_to = pkg['extras']['activity_period-to']
-    except Exception, e:
-        pass
 
-
-    fields = [ "activity_count", "country", "filetype", "verified" ]
+    fields = [ 
+        "activity_period-from", "activity_period-to",
+        "activity_count", "country", "filetype", "verified" 
+        ]
     for field in fields:
         try:
-            field_name = "package_" + field
+            field_name = "package_" + field.replace("-", "_")
             setattr(package, field_name, pkg["extras"][field])
         except Exception, e:
             pass
