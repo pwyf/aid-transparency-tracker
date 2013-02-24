@@ -85,7 +85,8 @@ def metadata_to_db(pkg, success, update_package):
         ("package_license_id", "license_id"),
         ("package_license", "license"),
         ("package_metadata_created", "metadata_created"),
-        ("package_metadata_modified", "metadata_modified")
+        ("package_metadata_modified", "metadata_modified"),
+        ("package_revision_id", "revision_id")
         ]
 
     for attr, key in mapping:
@@ -114,10 +115,6 @@ def metadata_to_db(pkg, success, update_package):
         except Exception, e:
             pass
 
-    try:
-        package.package_revision_id = pkg['revision_id']
-    except Exception, e:
-        pass
     db.session.add(package)
     db.session.commit()
     add_hardcoded_result(-2, runtime.id, package.id, success)
