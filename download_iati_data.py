@@ -81,12 +81,4 @@ def enqueue_download(pkg_name, file, pkg, update_package):
     enqueue(args)
 
 if __name__ == '__main__':
-    import sys
-    directory = DATA_STORAGE_DIR()
-    if not os.path.exists(directory):
-        try:
-            os.makedirs(directory)
-        except Exception, e:
-            print "Failed:", e
-            print "Couldn't create directory"
     run()
