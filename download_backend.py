@@ -139,8 +139,6 @@ def dequeue_download(body):
               args['file'],
               args['pkg'],
               args['update_package'])
-    # notify queue that we finished properly
-
 
 def get_connection(host):
     count = 0.4
