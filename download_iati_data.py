@@ -81,20 +81,6 @@ def enqueue_download(pkg_name, dir, file, pkg, update_package):
         }
     enqueue(args)
 
-def save_file(pkg_name, dir, file, pkg, update_package):
-    url = fixURL(file)
-    try:
-        localFile = open(dir + '/' + pkg_name + '.xml', 'w')
-        webFile = urllib2.urlopen(url)
-        localFile.write(webFile.read())
-        webFile.close()
-        localFile.close()
-    except urllib2.URLError, e:
-        file = False
-        print "couldn't get file"
-    metadata_to_db(pkg, file, update_package)
-    print file
-
 if __name__ == '__main__':
     import sys
     thetransactions = []
