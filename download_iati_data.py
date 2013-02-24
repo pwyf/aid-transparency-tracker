@@ -20,12 +20,15 @@ import pika
 def get_package(pkg, pkg_name):
     new_package = False
     update_package = False
-            # Check if package already exists; if it has not been updated more recently than the database, then download it again
-    check_package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
+    # Check if package already exists; if it has not been updated more 
+    # recently than the database, then download it again
+    check_package = models.Package.query.filter_by(package_ckan_id = 
+                                                   pkg['id']).first()
     if (check_package):
         # found a package
         if ((check_package.package_revision_id) != (pkg['revision_id'])):
-            # if the package has been updated, then download it and update the package data
+            # if the package has been updated, 
+            # then download it and update the package data
             update_package = True
             print "Updating package"
         else:
