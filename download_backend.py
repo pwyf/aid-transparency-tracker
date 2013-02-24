@@ -160,22 +160,16 @@ def metadata_to_db(pkg, success, update_package):
             package.package_activity_to = pkg['extras']['activity_period-to']
     except Exception, e:
         pass
-    try:
-        package.package_activity_count = pkg['extras']['activity_count']
-    except Exception, e:
-        pass
-    try:
-        package.package_country = pkg['extras']['country']
-    except Exception, e:
-        pass
-    try:
-        package.package_filetype = pkg['extras']['filetype']
-    except Exception, e:
-        pass
-    try:
-        package.package_verified = pkg['extras']['verified']
-    except Exception, e:
-        pass
+
+
+    fields = [ "activity_count", "country", "filetype", "verified" ]
+    for field in fields:
+        try:
+            field_name = "package_" + field
+            setattr(package, field_name, pkg["extras"][field])
+        except Exception, e:
+            pass
+
     try:
         package.package_revision_id = pkg['revision_id']
     except Exception, e:
