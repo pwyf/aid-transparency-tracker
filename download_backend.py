@@ -250,9 +250,9 @@ def enqueue_download(pkg_name, dir, file, pkg, update_package):
         }
     enqueue(args)
 
-def save_file(pkg_name, file, pkg, update_package):
+def save_file(pkg_name, filename, pkg, update_package):
     directory = DATA_STORAGE_DIR()
-    url = fixURL(file)
+    url = fixURL(filename)
     try:
         localFile = open(directory + '/' + pkg_name + '.xml', 'w')
         webFile = urllib2.urlopen(url)
