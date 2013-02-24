@@ -209,9 +209,8 @@ def get_package(pkg, pkg_name):
             return
 
         resource = resources[0]
-        save_file = enqueue_download
-        save_file(pkg_name, dir,
-                  resource['url'], pkg, update_package)
+        enqueue_download(pkg_name, dir,
+                         resource['url'], pkg, update_package)
     else:
         print update_package, new_package
         print "Already have package", pkg["name"]
