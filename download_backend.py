@@ -191,12 +191,11 @@ def save_file(pkg_name, filename, pkg, update_package):
     url = fixURL(filename)
     try:
         path = os.path.join(directory, pkg_name + '.xml')
-        localFile = file(path, 'w')
-        webFile = urllib2.urlopen(url)
-        localFile.write(webFile.read())
-        webFile.close()
-        localFile.close()
-        success = True
+        with file(path, 'w') as localFile:
+            webFile = urllib2.urlopen(url)
+            localFile.write(webFile.read())
+            webFile.close()
+            success = True
     except urllib2.URLError, e:
         success = False
         print "couldn't get file"
