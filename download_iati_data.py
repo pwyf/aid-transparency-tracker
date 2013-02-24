@@ -83,7 +83,6 @@ def enqueue_download(pkg_name, dir, file, pkg, update_package):
 
 if __name__ == '__main__':
     import sys
-    thetransactions = []
     dir = DATA_STORAGE_DIR()
     if not os.path.exists(dir):
         try:
