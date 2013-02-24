@@ -199,7 +199,7 @@ def save_file(pkg_name, filename, pkg, update_package):
         filename = False
         print "couldn't get file"
     metadata_to_db(pkg, filename, update_package)
-    print file
+    print filename
 
 def dequeue_download(body):
     args = json.loads(body)
