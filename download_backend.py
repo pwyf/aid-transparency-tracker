@@ -45,81 +45,26 @@ def create_package_group(group):
     except Exception, e:
         pass
     try:
-        pg.publisher_iati_id = ckangroup['extras']['publisher_iati_id']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_segmentation = ckangroup['extras']['publisher_segmentation']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_type = ckangroup['extras']['publisher_type']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_ui = ckangroup['extras']['publisher_ui']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_organization_type = ckangroup['extras']['publisher_organization_type']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_frequency = ckangroup['extras']['publisher_frequency']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_thresholds = ckangroup['extras']['publisher_thresholds']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_units = ckangroup['extras']['publisher_units']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_contact = ckangroup['extras']['publisher_contact']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_agencies = ckangroup['extras']['publisher_agencies']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_field_exclusions = ckangroup['extras']['publisher_field_exclusions']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_description = ckangroup['extras']['publisher_description']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_record_exclusions = ckangroup['extras']['publisher_record_exclusions']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_timeliness = ckangroup['extras']['publisher_timeliness']
-    except Exception, e:
-        pass
-    try:
         pg.license_id = ckangroup['extras']['publisher_license_id']
     except Exception, e:
         pass
-    try:
-        pg.publisher_country = ckangroup['extras']['publisher_country']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_refs = ckangroup['extras']['publisher_refs']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_constraints = ckangroup['extras']['publisher_constraints']
-    except Exception, e:
-        pass
-    try:
-        pg.publisher_data_quality = ckangroup['extras']['publisher_data_quality']
-    except Exception, e:
-        pass
+
+    fields = [
+        'publisher_iati_id', 'publisher_segmentation', 'publisher_type', 
+        'publisher_ui', 'publisher_organization_type', 
+        'publisher_frequency', 'publisher_thresholds', 'publisher_units', 
+        'publisher_contact', 'publisher_agencies', 
+        'publisher_field_exclusions', 'publisher_description', 
+        'publisher_record_exclusions', 'publisher_timeliness', 
+        'publisher_country', 'publisher_refs', 
+        'publisher_constraints', 'publisher_data_quality'
+        ]
+
+    for field in fields:
+        try:
+            setattr(pg, field, ckangroup['extras'][field])
+        except Exception, e:
+            pass
 
     db.session.add(pg)
     db.session.commit()
