@@ -31,10 +31,10 @@ def get_package(pkg, pkg_name):
             # then download it and update the package data
             update_package = True
             print "Updating package"
-        else:
-            # package not already downloaded
-            new_package = True
-            update_package = False
+    else:
+        # package not already downloaded
+        new_package = True
+        update_package = False
 
     if (update_package or new_package):
         # Download the file

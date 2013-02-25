@@ -34,7 +34,6 @@ def create_package_group(group):
     url = 'http://iatiregistry.org/api'
     import ckanclient
     registry = ckanclient.CkanClient(base_location=url)
-    startnow = False
     ckangroup = registry.group_entity_get(group)
 
     mapping = [
@@ -103,9 +102,9 @@ def metadata_to_db(pkg, success, update_package):
         group = pkg['groups'][0]
         try:
             pg = models.PackageGroup.query.filter_by(name=group).first()
+            package.package_group = pg.id
         except Exception, e:
             pg = create_package_group(group)
-        finally:
             package.package_group = pg.id
     except Exception, e:
         pass
