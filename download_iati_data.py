@@ -3,13 +3,15 @@ import sys
 import ckan    
 from datetime import date, datetime
 import os
-from iatidataquality import models, db,  DATA_STORAGE_DIR
+from iatidataquality import models
+from iatidataquality import db, DATA_STORAGE_DIR
 import json
 
 import sys
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
+db.create_all()
 runtime = models.Runtime()
 db.session.add(runtime)
 db.session.commit()
