@@ -64,9 +64,9 @@ Download IATI data
 
 Currently moving out of using Celery. The new process will be:
 
-1) Refresh all Packages from IATI Registry (via a nice UI + background process)
-2) Set "active" to True for some packages (via a nice UI)
-3) Check for all Packages where CKAN's revision_id is different from the Package's package_revision_id.
+1. Refresh all Packages from IATI Registry (via a nice UI + background process)
+2. Set "active" to True for some packages (via a nice UI)
+3. Check for all Packages where CKAN's revision_id is different from the Package's package_revision_id.
 
 You can do 1) and 2) automatically by running:
 
@@ -85,11 +85,11 @@ Run tests
 
 There are two ways to run tests (remember, you need Celery running via `python manage.py celeryd`):
 
-1) via the browser
+1. via the browser
 
     http://127.0.0.1:5000/runtests
 
-2) via the command line
+2. via the command line
 
     cd iatidataquality
     python dqruntests.py
