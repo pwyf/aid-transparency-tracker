@@ -48,8 +48,6 @@ Run the server:
 
     python manage.py runserver
 
-In a production environment, edit and run `fcgi.py`
-
 Import Scripts
 ==============
 
@@ -59,9 +57,39 @@ Import the tests to the database, run the server and go to (e.g.):
 
     http://127.0.0.1:5000/tests/import/
 
-Provide the password and click "Import local tests"
+Provide the password and click "Import tests"
 
-Download the IATI data: 
+Download IATI data
+==================
+
+Currently moving out of using Celery. The new process will be:
+
+1) Refresh all Packages from IATI Registry (via a nice UI + background process)
+2) Set "active" to True for some packages (via a nice UI)
+3) Check for all Packages where CKAN's revision_id is different from the Package's package_revision_id.
+
+You can do 1) and 2) automatically by running:
+
+    python quickstart.py
+
+Then run 3) to update all CKAN metadata and download the file:
 
     python download_iati_data.py
 
+In order for 3) to work, you need to have RabbitMQ running on your system (if you have Celery you should be fine) and then run:
+
+    python download_backend.py
+
+Run tests
+=========
+
+There are two ways to run tests (remember, you need Celery running via `python manage.py celeryd`):
+
+1) via the browser
+
+    http://127.0.0.1/tests/runtests
+
+2) via the command line
+
+    cd iatidataquality
+    python dqruntests.py
