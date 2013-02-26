@@ -19,24 +19,20 @@ db.session.commit()
 download_queue = 'iati_download_queue'
 import pika
 
-def get_package(pkg, pkg_name):
+def get_package(pkg, package):
+
+    pkg_name = package.package_name
     new_package = False
     update_package = False
     # Check if package already exists; if it has not been updated more 
     # recently than the database, then download it again
-    check_package = models.Package.query.filter_by(package_ckan_id = 
-                                                   pkg['id']).first()
-    if (check_package):
-        # found a package
-        if ((check_package.package_revision_id) != (pkg['revision_id'])):
-            # if the package has been updated, 
-            # then download it and update the package data
-            update_package = True
-            print "Updating package"
-    else:
-        # package not already downloaded
-        new_package = True
-        update_package = False
+    check_package = package
+
+    if ((package.package_revision_id) != (pkg['revision_id'])):
+        # if the package has been updated, 
+        # then download it and update the package data
+        update_package = True
+        print "Updating package"
 
     if (update_package or new_package):
         # Download the file
@@ -54,14 +50,17 @@ def get_package(pkg, pkg_name):
         print "Already have package", pkg["name"]
 
 def run():
+    # Get list of packages from DB
+
     url = 'http://iatiregistry.org/api'
     import ckanclient
     registry = ckanclient.CkanClient(base_location=url)
 
-    for pkg_name in registry.package_register_get():
-            pkg = registry.package_entity_get(pkg_name) 
+    packages = models.Package.query.filter_by(active=True).all()
 
-            get_package(pkg, pkg_name)
+    for package in packages:
+        pkg = registry.package_entity_get(package.package_name)
+        get_package(pkg, package)
 
 def enqueue(args):
     body = json.dumps(args)
@@ -86,4 +85,5 @@ def enqueue_download(pkg_name, filename, pkg, update_package):
     enqueue(args)
 
 if __name__ == '__main__':
+    print "NB, you need to run iatidataquality/quickstart.py before running this script in order to populate the list of packages"
     run()

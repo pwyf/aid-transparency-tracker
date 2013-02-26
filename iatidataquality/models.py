@@ -73,6 +73,7 @@ class Package(db.Model):
     package_verified = Column(UnicodeText)  
     package_filetype = Column(UnicodeText)  
     package_revision_id = Column(UnicodeText)    
+    active = Column(Boolean)    
 
     def __init__(self, man_auto=None, source_url=None):
         if man_auto is not None:
