@@ -271,13 +271,10 @@ def packages(id=None, runtime_id=None):
 
 @app.route("/runtests/new/")
 def run_new_tests():
-    newrun = models.Runtime()
-    db.session.add(newrun)
-    db.session.commit()
-    res = dqruntests.load_package.delay(newrun.id)
+    res = dqruntests.start_testing()
     
-    flash('Running tests; this may take some time. Runtime ID is ' + str(newrun.id), "success")
-    return render_template("runtests.html", task=res,runtime=newrun)
+    flash('Running tests; this may take some time.', "success")
+    return render_template("runtests.html", task=res)
 
 @app.route("/runtests/")
 @app.route("/runtests/<id>/")

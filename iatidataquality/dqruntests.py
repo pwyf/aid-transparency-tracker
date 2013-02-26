@@ -73,3 +73,9 @@ def load_package(runtime):
     aggregate_results(runtime)
     db.session.commit()
     return output
+
+def start_testing():
+    newrun = models.Runtime()
+    db.session.add(newrun)
+    db.session.commit()
+    return load_package.delay(newrun.id)
