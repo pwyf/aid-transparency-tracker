@@ -87,7 +87,7 @@ There are two ways to run tests (remember, you need Celery running via `python m
 
 1) via the browser
 
-    http://127.0.0.1/tests/runtests
+    http://127.0.0.1:5000/runtests
 
 2) via the command line
 
