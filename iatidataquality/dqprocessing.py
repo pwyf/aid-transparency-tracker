@@ -13,7 +13,7 @@ def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
         result.result_data = 0 
     db.session.add(result)
 
-def aggregate_results(runtime, commit=False):
+def aggregate_results(runtime):
         # for each package, get results for this runtime
         # compute % pass for each hierarchy and test
         # write to db
@@ -37,7 +37,8 @@ def aggregate_results(runtime, commit=False):
         ).all()
 
         aresults = dqfunctions.aggregate_percentages(data)
-
+        
+        result_number = 0
         for aresult in aresults:
             a = models.AggregateResult()
             a.runtime_id = runtime
@@ -47,7 +48,6 @@ def aggregate_results(runtime, commit=False):
             a.results_data = aresult["percentage_passed"]
             a.results_num = aresult["total_results"]
             db.session.add(a)
-        if (commit):
             db.session.commit()
     
     return api.jsonify({"status": status, "data": aresults})

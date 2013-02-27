@@ -7,8 +7,8 @@ def DATA_STORAGE_DIR():
 
 @app.route("/aggregate_results/<runtime>/")
 @app.route("/aggregate_results/<runtime>/<commit>/")
-def aggregate_results(runtime, commit=False):
-    return dqprocessing.aggregate_results(runtime, commit)
+def aggregate_results(runtime):
+    return dqprocessing.aggregate_results(runtime)
 
 def test_activity(runtime_id, package_id, result_identifier, data, test_functions, result_hierarchy):
     xmldata = etree.fromstring(data)
@@ -19,11 +19,15 @@ def test_activity(runtime_id, package_id, result_identifier, data, test_function
     for test in tests:
         if not test.id in test_functions:
             continue
-
-        if test_functions[test.id](xmldata):
-            the_result = 1
-        else:
-            the_result = 0
+        try:
+            if test_functions[test.id](xmldata):
+                the_result = 1
+            else:
+                the_result = 0
+        # If an exception is not caught in test functions,
+        # it should not count against the published
+        except Exception:
+            continue
 
         newresult = models.Result()
         newresult.runtime_id = runtime_id
@@ -52,6 +56,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
         result_identifier = activity.find('iati-identifier').text
         activity_data = etree.tostring(activity)
         res = test_activity(runtime_id, package_id, result_identifier, activity_data, test_functions, result_hierarchy)
+    db.session.commit()
 
 @celery.task(name="iatidataquality.load_package", track_started=True)
 def load_package(runtime):

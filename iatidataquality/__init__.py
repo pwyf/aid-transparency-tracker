@@ -258,7 +258,7 @@ def packages(id=None, runtime_id=None):
     if (runtime_id):
         # If a runtime is specified in the request, get the data
 
-        latest_runtime = db.session.query(models.Runtime
+        latest_runtime = db.session.query(models.Runtime,
             ).filter(models.Runtime.id==runtime_id
             ).first()
         latest = False
