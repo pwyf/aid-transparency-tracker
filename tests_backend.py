@@ -60,6 +60,11 @@ def check_file(file_name, runtime_id, package_id, context=None):
         db.session.commit()
         dqprocessing.aggregate_results(runtime_id, package_id)
         db.session.commit()
+        pstatus = models.PackageStatus()
+        pstatus.package_id = package_id
+        pstatus.status = 3
+        db.session.add(pstatus)
+        db.session.commit()
     except Exception, e:
         print "Exception in check_file ", e
 

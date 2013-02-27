@@ -15,7 +15,8 @@
     $("table#results").tablesorter({ sortList: [[0,0]] });
     });
     </script>
-	<h1>{{pkg.package_title}}<code>{{pkg.package_name}}</code></h1> 
+	<h1>{{pkg.package_title}}<code>{{pkg.package_name}}</code></h1>
+    <div class="status pull-right alert alert-info"><a href="#" class="checkStatusRefresh"><i class="icon-refresh"></i></a><span class="status_text">Checking status... </span></div>
     <table class="table" id="publishers">
     <tbody>
     <tr>
@@ -96,7 +97,7 @@
     </fieldset>
     {% endfor %}
 <script>
-
+    
     $(".showResult").click(function(e){
         if ($(this).hasClass("visible")) {
             e.preventDefault();
@@ -151,6 +152,27 @@
 
                     $(".group-" + element + " td.schedule").html('<span title="' + val["publication_date"] + ': ' + val["notes"] + '">' + status + '</span>');
                 });
+    });
+    function checkStatus(){
+        $(".status_text").html("Checking...");
+        $.getJSON("/api/packages/status/{{pkg.id}}/", function(data){
+            status = data["status"];
+            if (status == 1) {
+                statustext = 'Now downloading (started at ' + data["runtime_datetime"] + ")";
+            }
+            if (status == 2) {
+                statustext = 'Currently testing (started at ' + data["runtime_datetime"] + ")";
+            }
+            if (status == 3) {
+                statustext = 'Last run at ' + data["runtime_datetime"];
+            }
+            $(".status_text").html(statustext);
+        });
+    }
+    checkStatus();
+    $(".checkStatusRefresh").click(function(e){
+        e.preventDefault();
+        checkStatus();
     });
     var showAllTests;
     $("#showAllTests").click(function(e){

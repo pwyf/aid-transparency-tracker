@@ -2,6 +2,22 @@ from sqlalchemy import *
 from db import app, db
 from datetime import datetime
 
+class PackageStatus(db.Model):
+    __tablename__ = 'packagestatus'
+    id = Column(Integer, primary_key=True)
+    package_id = Column(Integer, ForeignKey('package.id'))
+    status = Column(Integer)
+    runtime_datetime = Column(DateTime)
+
+    def __init__(self):
+        self.runtime_datetime = datetime.utcnow()
+
+    def __repr__(self):
+        return unicode(self.runtime_datetime)+u' '+unicode(self.id)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class Runtime(db.Model):
     __tablename__ = 'runtime'
     id = Column(Integer, primary_key=True)

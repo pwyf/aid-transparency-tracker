@@ -137,6 +137,11 @@ def api_packages():
     return jsonify(
                    aggregated_test_results= aggregated_test_results(data), results_by_org=results_by_org(data, packages))
 
+@app.route("/api/packages/status/<package_id>/")
+def api_package_status(package_id):
+    status = models.PackageStatus.query.filter_by(package_id=package_id).order_by("runtime_datetime desc").first_or_404()
+    return jsonify(status.as_dict())
+
 @app.route('/api/packages/<package_name>')
 @support_jsonp
 def api_package(package_name):

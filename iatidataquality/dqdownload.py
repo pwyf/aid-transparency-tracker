@@ -13,7 +13,6 @@ download_queue = 'iati_download_queue'
 
 def get_package(pkg, package, runtime_id):
 
-    pkg_name = package.package_name
     new_package = False
     update_package = False
     # Check if package already exists; if it has not been updated more 
@@ -27,15 +26,14 @@ def get_package(pkg, package, runtime_id):
         print "Updating package", pkg['name']
 
     if (update_package or new_package):
-
         resources = pkg.get('resources', [])
         assert len(resources) <= 1
         if resources == []:
             return
 
         resource = resources[0]
-        enqueue_download(pkg_name,
-                         resource['url'], pkg, update_package, runtime_id)
+        enqueue_download(package, pkg, 
+                         resource['url'], update_package, runtime_id)
     else:
         print "Package", pkg["name"], "is already the latest version"
 
@@ -54,6 +52,11 @@ def run():
     # This might be too slow for web UI, because it makes one query 
     # per package to the Registry to check whether it's been updated
     for package in packages:
+        pstatus = models.PackageStatus()
+        pstatus.package_id = package.id
+        pstatus.status = 1
+        db.session.add(pstatus)
+        db.session.commit()
         pkg = registry.package_entity_get(package.package_name)
         get_package(pkg, package, runtime.id)
 
@@ -70,11 +73,12 @@ def enqueue(args):
                           properties=pika.BasicProperties(delivery_mode=2))
     connection.close()
 
-def enqueue_download(pkg_name, filename, pkg, update_package, runtime_id):
+def enqueue_download(package, pkg, url, update_package, runtime_id):
     args = {
-        'pkg_name': pkg_name,
-        'file': filename,
+        'package_id': package.id,
+        'package_name': package.package_name,
         'pkg': pkg,
+        'url': url,
         'update_package': update_package,
         'runtime_id': runtime_id
         }

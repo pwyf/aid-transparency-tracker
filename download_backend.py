@@ -117,14 +117,17 @@ def metadata_to_db(pkg, success, update_package, runtime_id):
     db.session.commit()
     add_hardcoded_result(-2, runtime_id, package.id, success)
 
-def save_file(pkg_name, filename, pkg, update_package, runtime_id):
+def save_file(package_id, package_name, pkg, filename, update_package, runtime_id):
+    # `package` is models.Packaege
+    # `pkg` is a CKAN dataset
+    # `filename` is the url of the file
     try:
         success = False
         directory = DATA_STORAGE_DIR()
-        print "Attempting to fetch package", pkg_name, "from", filename
+        print "Attempting to fetch package", package_name, "from", filename
         url = fixURL(filename)
         try:
-            path = os.path.join(directory, pkg_name + '.xml')
+            path = os.path.join(directory, package_name + '.xml')
             with file(path, 'w') as localFile:
                 webFile = urllib2.urlopen(url)
                 localFile.write(webFile.read())
@@ -140,19 +143,20 @@ def save_file(pkg_name, filename, pkg, update_package, runtime_id):
         except Exception, e:
             print "  Couldn't write metadata to DB"
         try:
-            dqruntests.start_testing(pkg_name)
+            dqruntests.start_testing(package_name)
             print "  Package tested"
         except Exception, e:
-            print "  Couldn't test package",pkg_name,e
+            print "  Couldn't test package",package_name,e
     except Exception, e:
         pass
 
 def dequeue_download(body):
     args = json.loads(body)
     try:
-        save_file(args['pkg_name'],
-                  args['file'],
+        save_file(args['package_id'],
+                  args['package_name'],
                   args['pkg'],
+                  args['url'],
                   args['update_package'],
                   args['runtime_id'])
     except Exception:
