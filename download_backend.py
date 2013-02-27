@@ -180,9 +180,7 @@ def handle_queue(queue_name, callback_fn):
         channel = connection.channel()
         channel.queue_declare(queue=queue_name, durable=True)
         channel.basic_qos(prefetch_count=1)
-
         channel.basic_consume(callback_fn, queue=queue_name)
-
         channel.start_consuming()
     except:
         pass 

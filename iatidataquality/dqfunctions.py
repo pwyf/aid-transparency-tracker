@@ -1,3 +1,6 @@
+from db import *
+import models
+
 def aggregate_percentages(data):
     # Aggregates results data for a specific runtime.
 
@@ -165,3 +168,10 @@ def agr_results(data, conditions=None, mode=None):
             except KeyError:
                 pass
     return out
+
+def add_test_status(package_id, status_id):
+    pstatus = models.PackageStatus()
+    pstatus.package_id = package_id
+    pstatus.status = status_id
+    db.session.add(pstatus)
+    db.session.commit()

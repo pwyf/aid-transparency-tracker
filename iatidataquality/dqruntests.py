@@ -1,5 +1,5 @@
 from db import *
-import models, dqprocessing, dqparsetests, pika, json
+import models, dqprocessing, dqparsetests, pika, json, dqfunctions
 
 download_queue='iati_tests_queue'
 
@@ -13,22 +13,14 @@ def load_packages(runtime, package_name=None):
 
     if (package_name is not None):
         package = models.Package.query.filter_by(package_name=package_name).first()
-        pstatus = models.PackageStatus()
-        pstatus.package_id = package.id
-        pstatus.status = 2
-        db.session.add(pstatus)
-        db.session.commit()
+        dqfunctions.add_test_status(package.id, 2)
         filename = path + '/' + package.package_name + '.xml'
         # Run tests on file -> send to queue
         enqueue_download(filename, runtime, package.id, None)
         output.append(package.package_name)
     else:
         for package in models.Package.query.filter_by(active=True).order_by(models.Package.id).all():
-            pstatus = models.PackageStatus()
-            pstatus.package_id = package.id
-            pstatus.status = 2
-            db.session.add(pstatus)
-            db.session.commit()
+            dqfunctions.add_test_status(package.id, 2)
             filename = path + '/' + package.package_name + '.xml'
             enqueue_download(filename, runtime, package.id, None)
             output.append(package.package_name)

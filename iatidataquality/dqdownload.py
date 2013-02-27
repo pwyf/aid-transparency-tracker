@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys, os, json, pika, ckan, ckanclient
 from datetime import date, datetime
-import models
+import models, dqfunctions
 from db import *
 
 db.create_all()
@@ -36,11 +36,7 @@ def get_package(pkg, package, runtime_id):
                          resource['url'], update_package, runtime_id)
     else:
         print "Package", pkg["name"], "is already the latest version"
-        pstatus = models.PackageStatus()
-        pstatus.package_id = package.id
-        pstatus.status = 4
-        db.session.add(pstatus)
-        db.session.commit()
+        dqfunctions.add_test_status(package.id, 4)
 
 def run():
     # Get list of packages from DB
@@ -57,11 +53,7 @@ def run():
     # This might be too slow for web UI, because it makes one query 
     # per package to the Registry to check whether it's been updated
     for package in packages:
-        pstatus = models.PackageStatus()
-        pstatus.package_id = package.id
-        pstatus.status = 1
-        db.session.add(pstatus)
-        db.session.commit()
+        dqfunctions.add_test_status(package.id, 1)
         pkg = registry.package_entity_get(package.package_name)
         get_package(pkg, package, runtime.id)
 
