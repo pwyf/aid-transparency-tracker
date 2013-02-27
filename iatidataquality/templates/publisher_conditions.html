@@ -1,7 +1,7 @@
 {% set active_page='pc'%}{% extends "layout.html" %}
 {% block title %}Publisher Conditions{% endblock %}
 {% block content %}
-   <script src="static/jquery.tablesorter.min.js"></script>
+   <script src="/static/jquery.tablesorter.min.js"></script>
     <script >
     $(function() {
     $("table#pcs").tablesorter({ sortList: [[0,0]] });
@@ -26,5 +26,4 @@
     </tr>
     </tbody>
     </table>
-
 {% endblock %}

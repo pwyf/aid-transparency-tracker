@@ -5,7 +5,7 @@ import models
 from sqlalchemy import func
 import math
 
-from iatidataquality import app, db
+from iatidataquality import app, db, dqdownload
 
 import datetime
 class JSONEncoder(json.JSONEncoder):
@@ -137,10 +137,22 @@ def api_packages():
     return jsonify(
                    aggregated_test_results= aggregated_test_results(data), results_by_org=results_by_org(data, packages))
 
+@app.route("/api/packages/run/<package_id>/")
+def api_package_run(package_id):
+    try:
+        dqdownload.run(package_id)
+        status = "ok"
+    except Exception, e:
+        status = "failed"
+    return jsonify({"status": status})
+
 @app.route("/api/packages/status/<package_id>/")
 def api_package_status(package_id):
-    status = models.PackageStatus.query.filter_by(package_id=package_id).order_by("runtime_datetime desc").first_or_404()
-    return jsonify(status.as_dict())
+    try:
+        status = models.PackageStatus.query.filter_by(package_id=package_id).order_by("runtime_datetime desc").first()
+        return jsonify(status.as_dict())
+    except Exception:
+        return jsonify({"status":"failed"})
 
 @app.route('/api/packages/<package_name>')
 @support_jsonp

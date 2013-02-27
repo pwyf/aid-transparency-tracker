@@ -293,20 +293,25 @@ def packages(id=None, runtime_id=None):
             ).order_by(models.Runtime.id.desc()
             ).first()
         latest = True
+    if (latest_runtime):
+        aggregate_results = db.session.query(models.Test,
+                                             models.AggregateResult.results_data,
+                                             models.AggregateResult.results_num,
+                                             models.AggregateResult.result_hierarchy
+                ).filter(models.AggregateResult.package_id==p[0].id,
+                         models.AggregateResult.runtime_id==latest_runtime.id
+                ).group_by(models.AggregateResult.result_hierarchy, models.Test
+                ).join(models.AggregateResult
+                ).all()
 
-    aggregate_results = db.session.query(models.Test,
-                                         models.AggregateResult.results_data,
-                                         models.AggregateResult.results_num,
-                                         models.AggregateResult.result_hierarchy
-            ).filter(models.AggregateResult.package_id==p[0].id,
-                     models.AggregateResult.runtime_id==latest_runtime.id
-            ).group_by(models.AggregateResult.result_hierarchy, models.Test
-            ).join(models.AggregateResult
-            ).all()
+        flat_results = aggregate_results
 
-    flat_results = aggregate_results
-
-    aggregate_results = dqfunctions.agr_results(aggregate_results, pconditions)
+        aggregate_results = dqfunctions.agr_results(aggregate_results, pconditions)
+    else:
+        aggregate_results = None
+        pconditions = None
+        flat_results = None
+        latest_runtime = None
  
     return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest, pconditions=pconditions, flat_results=flat_results)
 
@@ -381,7 +386,7 @@ def import_publisher_conditions(step=None):
 
 @app.route("/publisher_conditions/export/")
 def export_publisher_conditions():
-    conditions = db.session.query(models.PublisherCondition.description).all()
+    conditions = db.session.query(models.PublisherCondition.description).distinct().all()
     conditionstext = ""
     for i, condition in enumerate(conditions):
         if (i != 0):

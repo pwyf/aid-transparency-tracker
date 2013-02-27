@@ -38,13 +38,11 @@ def get_package(pkg, package, runtime_id):
         print "Package", pkg["name"], "is already the latest version"
         dqfunctions.add_test_status(package.id, 4)
 
-def run():
+def run(package_name=None):
     # Get list of packages from DB
 
     url = 'http://iatiregistry.org/api'
     registry = ckanclient.CkanClient(base_location=url)
-
-    packages = models.Package.query.filter_by(active=True).all()
 
     # `pkg` is the Dataset entity
     # `package` is the name of the package
@@ -52,10 +50,18 @@ def run():
 
     # This might be too slow for web UI, because it makes one query 
     # per package to the Registry to check whether it's been updated
-    for package in packages:
+    if (package_name is None):
+        packages = models.Package.query.filter_by(active=True).all()
+        for package in packages:
+            dqfunctions.add_test_status(package.id, 1)
+            pkg = registry.package_entity_get(package.package_name)
+            get_package(pkg, package, runtime.id)
+    else:    
+        package = models.Package.query.filter_by(package_name=package_name).first()
         dqfunctions.add_test_status(package.id, 1)
         pkg = registry.package_entity_get(package.package_name)
         get_package(pkg, package, runtime.id)
+        
 
 def enqueue(args):
     body = json.dumps(args)

@@ -34,6 +34,11 @@ def create_package_group(group):
     except Exception, e:
         pass
 
+    try:
+        pg.package_country = ckangroup['extras']['country']
+    except Exception, e:
+        pass
+
     fields = [
         'publisher_iati_id', 'publisher_segmentation', 'publisher_type', 
         'publisher_ui', 'publisher_organization_type', 
