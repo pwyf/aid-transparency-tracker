@@ -1,0 +1,40 @@
+{% set active_page='registry'%}{% extends "layout.html" %}
+{% block title %}Manage Packages{% endblock %}
+{% block content %}
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#packages").tablesorter({ sortList: [[0,0]] });
+    });
+
+    </script>
+    <form action="" method="post">
+    <input type="submit" name="refresh" class="btn pull-right" value="Refresh package list from Registry"/>
+    <h1>Package management</h1>
+    <p>Choose active packages</p>
+    <input class="btn btn-success" type="submit" value="Activate selected packages" />
+    <table class="table" id="packages">
+    <thead>
+    <th>Registry ID</th><th>Name</th><th>Active?</th>
+    </thead>
+    <tbody>
+	{% for pk in pkgs %}
+    <tr>
+	<td><input type="hidden" name="package" value="{{pk.package_name}}" /><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td><input type="checkbox" {% if pk.active %}checked{%endif%} name="active_{{pk.package_name}}"/> <span>{% if pk.active %}Active{%endif%}</span></td>
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+    <input class="btn btn-success" type="submit" value="Activate selected packages" />
+    </form>
+<script>
+    $("input").change(function(thischeckbox) {
+        if ($(this).attr('checked')) {
+            $(this).next().text("Active");
+        }
+        else {
+            $(this).next().text("");
+        }
+    });
+</script>
+{% endblock %}

@@ -68,8 +68,6 @@ def tests_new(id=None):
     else:
         return render_template("test_editor.html", test={})
 
-
-
 @app.route("/publisher_conditions/")
 @app.route("/publisher_conditions/<id>/")
 def publisher_conditions(id=None):
@@ -209,7 +207,29 @@ def registry_download():
     dqdownload.run()
     return "Downloading"
 
-@app.route("/packages/", methods=['GET', 'POST'])
+@app.route("/packages/manage/", methods=['GET', 'POST'])
+def packages_manage():
+    if (request.method == 'POST'):
+        if ("refresh" in request.form):
+            dqregistry.refresh_packages()
+            flash("Refreshed packages from Registry", "success")
+        else:
+            for package in request.form.getlist('package'):
+                p = models.Package.query.filter_by(package_name=package).first()
+                try:
+                    request.form["active_"+package]
+                    p.active=True
+                except Exception:
+                    p.active=False
+                db.session.add(p)
+            db.session.commit()
+            flash("Updated packages", "success")
+        return redirect(url_for('packages_manage'))
+    else:
+        pkgs = models.Package.query.order_by(models.Package.package_name).all()
+        return render_template("packages_manage.html", pkgs=pkgs)
+
+@app.route("/packages/")
 @app.route("/packages/<id>/")
 @app.route("/packages/<id>/runtimes/<runtime_id>/")
 def packages(id=None, runtime_id=None):
@@ -227,7 +247,7 @@ def packages(id=None, runtime_id=None):
             flash("Updated packages", "success")
             return redirect(url_for('packages'))
         else:
-            pkgs = models.Package.query.order_by(models.Package.package_name).all()
+            pkgs = models.Package.query.filter_by(active=True).order_by(models.Package.package_name).all()
             return render_template("packages.html", pkgs=pkgs)
 
     # Get package data
@@ -289,17 +309,6 @@ def packages(id=None, runtime_id=None):
     aggregate_results = dqfunctions.agr_results(aggregate_results, pconditions)
  
     return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest, pconditions=pconditions, flat_results=flat_results)
-
-@app.route("/runtests/new/")
-def run_new_tests():
-    res = dqruntests.start_testing()
-    
-    flash('Running tests; this may take some time.', "success")
-    return render_template("runtests.html", tasks=res)
-
-@app.route("/runtests/")
-def check_tests(id=None):
-    return render_template("checktests.html")
 
 @app.route("/tests/import/", methods=['GET', 'POST'])
 def import_tests():

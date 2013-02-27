@@ -39,12 +39,11 @@
                 <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                  <li{% if active_page == "runtests" %} class="active"{%endif%}><a href="{{url_for('check_tests')}}">Run tests</a></li>
                   <li{% if active_page == "pc" %} class="active"{%endif%}><a href="{{url_for('publisher_conditions')}}">Publisher conditions</a></li>
                   <li{% if active_page == "import_tests" %} class="active"{%endif%}><a href="{{url_for('import_tests')}}">Import tests</a></li>
                   <li{% if active_page == "import_conditions" %} class="active"{%endif%}><a href="{{url_for('import_publisher_conditions')}}">Import conditions</a></li>
                   <li{% if active_page == "registry_refresh" %} class="active"{%endif%}><a href="{{url_for('registry_refresh')}}">Refresh from Registry</a></li>
-                  <li{% if active_page == "registry_download" %} class="active"{%endif%}><a href="{{url_for('registry_download')}}">Download from Registry</a></li>
+                  <li{% if active_page == "registry_download" %} class="active"{%endif%}><a href="{{url_for('registry_download')}}">Run tests</a></li>
                 </ul>
               </li>
             </ul>
