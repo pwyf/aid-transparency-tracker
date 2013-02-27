@@ -1,86 +1,52 @@
 from db import *
-import models, dqprocessing, dqparsetests
-from lxml import etree
+import models, dqprocessing, dqparsetests, pika, json
+
+download_queue='iati_tests_queue'
 
 def DATA_STORAGE_DIR():
     return app.config["DATA_STORAGE_DIR"]
 
-@app.route("/aggregate_results/<runtime>/")
-@app.route("/aggregate_results/<runtime>/<commit>/")
-def aggregate_results(runtime):
-    return dqprocessing.aggregate_results(runtime)
-
-def test_activity(runtime_id, package_id, result_identifier, data, test_functions, result_hierarchy):
-    xmldata = etree.fromstring(data)
-
-    tests = models.Test.query.filter(models.Test.active == True).all()
-    conditions = models.TestCondition.query.filter(models.TestCondition.active == True).all()
-    
-    for test in tests:
-        if not test.id in test_functions:
-            continue
-        try:
-            if test_functions[test.id](xmldata):
-                the_result = 1
-            else:
-                the_result = 0
-        # If an exception is not caught in test functions,
-        # it should not count against the published
-        except Exception:
-            continue
-
-        newresult = models.Result()
-        newresult.runtime_id = runtime_id
-        newresult.package_id = package_id
-        newresult.test_id = test.id
-        newresult.result_data = the_result
-        newresult.result_identifier = result_identifier
-        newresult.result_hierarchy = result_hierarchy
-        db.session.add(newresult)
-    return "Success"
-
-def check_file(file_name, runtime_id, package_id, context=None):
-    try:
-        data = etree.parse(file_name)
-    except etree.XMLSyntaxError:
-        dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, False)
-        return
-    dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, True)
-    from dqparsetests import test_functions as tf
-    test_functions = tf()
-    for activity in data.findall('iati-activity'):
-        try:
-            result_hierarchy = activity.get('hierarchy')
-        except KeyError:
-            result_hierarchy = None
-        result_identifier = activity.find('iati-identifier').text
-        activity_data = etree.tostring(activity)
-        res = test_activity(runtime_id, package_id, result_identifier, activity_data, test_functions, result_hierarchy)
-    db.session.commit()
-
-@celery.task(name="iatidataquality.load_package", track_started=True)
-def load_package(runtime):
-    output = ""
+#@celery.task(name="iatidataquality.load_package", track_started=True)
+def load_packages(runtime):
+    output = []
     
     path = DATA_STORAGE_DIR()
     for package in models.Package.query.filter_by(active=True).order_by(models.Package.id).all():
-        print package.id
-        output = output + ""
-        output = output + "Loading file " + package.package_name + "...<br />"
-        
+        # check file; add one task per package
+
         filename = path + '/' + package.package_name + '.xml'
 
         # run tests on file
-        res = check_file(filename, runtime, package.id, None)
+        enqueue_download(filename, runtime, package.id, None)
 
-        output = output + 'Finished adding task </a>.<br />'
-    db.session.commit()
-    aggregate_results(runtime)
-    db.session.commit()
-    return output
+        output.append(package.package_name)
+    return {'testing_packages': output}
 
+def enqueue(args):
+    body = json.dumps(args)
+    
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(host='localhost'))
+    channel = connection.channel()
+    channel.queue_declare(queue=download_queue, durable=True)
+    channel.basic_publish(exchange='',
+                          routing_key=download_queue,
+                          body=body,
+                          properties=pika.BasicProperties(delivery_mode=2))
+    connection.close()
+
+def enqueue_download(filename, runtime_id, package_id, context=None):
+    args = {
+        'filename': filename,
+        'runtime_id': runtime_id,
+        'package_id': package_id,
+        'context': context
+        }
+    enqueue(args)
+
+# start testing all packages
 def start_testing():
     newrun = models.Runtime()
     db.session.add(newrun)
     db.session.commit()
-    return load_package.delay(newrun.id)
+    return load_packages(newrun.id)

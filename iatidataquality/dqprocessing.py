@@ -1,5 +1,5 @@
-from iatidataquality import app, db, dqfunctions
-import models, api
+from iatidataquality import db, dqfunctions
+import models
 from sqlalchemy import func
 
 def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
@@ -13,12 +13,13 @@ def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
         result.result_data = 0 
     db.session.add(result)
 
-def aggregate_results(runtime):
+def aggregate_results(runtime, package_id):
         # for each package, get results for this runtime
         # compute % pass for each hierarchy and test
         # write to db
     check_existing_results = db.session.query(models.AggregateResult
             ).filter(models.AggregateResult.runtime_id==runtime
+            ).filter(models.AggregateResult.package_id==package_id
             ).first()
     
     if (check_existing_results):
@@ -32,6 +33,7 @@ def aggregate_results(runtime):
                 func.count(models.Result.id),
                 models.Result.package_id
         ).filter(models.Result.runtime_id==runtime
+        ).filter(models.Result.package_id==package_id
         ).join(models.Result
         ).group_by(models.Result.package_id, models.Result.result_hierarchy, models.Test, models.Result.result_data
         ).all()
@@ -48,6 +50,5 @@ def aggregate_results(runtime):
             a.results_data = aresult["percentage_passed"]
             a.results_num = aresult["total_results"]
             db.session.add(a)
-            db.session.commit()
     
-    return api.jsonify({"status": status, "data": aresults})
+    return {"status": status, "data": aresults}

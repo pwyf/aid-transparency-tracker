@@ -1,8 +1,6 @@
 from flask import Flask, render_template, flash, request, Markup, session, redirect, url_for, escape, Response, abort, send_file
 import StringIO
-from flask.ext.celery import Celery
 from flask.ext.sqlalchemy import SQLAlchemy
-#from celery.task.sets import TaskSet # Need to improve later
 
 from sqlalchemy import func
 from datetime import datetime
@@ -293,19 +291,11 @@ def run_new_tests():
     res = dqruntests.start_testing()
     
     flash('Running tests; this may take some time.', "success")
-    return render_template("runtests.html", task=res)
+    return render_template("runtests.html", tasks=res)
 
 @app.route("/runtests/")
-@app.route("/runtests/<id>/")
 def check_tests(id=None):
-    if (id):
-        task = dqruntests.load_package.AsyncResult(id)
-        return render_template("checktest.html", task=task)
-    else: 
-        i = celery.control.inspect()
-        active_tasks = i.active()
-        registered_tasks = i.reserved()
-        return render_template("checktests.html", active_tasks=active_tasks, registered_tasks=registered_tasks)
+    return render_template("checktests.html")
 
 @app.route("/tests/import/", methods=['GET', 'POST'])
 def import_tests():
