@@ -62,7 +62,7 @@ Provide the password and click "Import tests"
 Download IATI data
 ==================
 
-Currently moving out of using Celery. The new process will be:
+This can now be accessed from the UI, or else from the command line
 
 1. Refresh all Packages from IATI Registry (via a nice UI + background process)
 2. Set "active" to True for some packages (via a nice UI)
@@ -72,13 +72,22 @@ You can do 1) and 2) automatically by running:
 
     python quickstart.py
 
+    or via the browser interface, go to "Refresh from Registry"
+
 Then run 3) to update all CKAN metadata and download the file:
 
     python download_iati_data.py
 
+    or via the  browser interface, go to "Download from Registry"
+
 In order for 3) to work, you need to have RabbitMQ running on your system (if you have Celery you should be fine) and then run:
 
     python download_backend.py
+
+You can also use `supervisor`:
+
+1. Rename the provided `supervisord.conf.tmpl` file to `supervisord.conf` to match your paths (especially the path to your virtualenv)
+2. Run `supervisord -n` (Remove `-n` if you don't want to see the output, but it's probably useful for testing)
 
 Run tests
 =========
