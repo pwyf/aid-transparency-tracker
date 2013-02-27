@@ -58,7 +58,7 @@ def load_package(runtime):
     output = ""
     
     path = DATA_STORAGE_DIR()
-    for package in models.Package.query.order_by(models.Package.id).all():
+    for package in models.Package.query.filter_by(active=True).order_by(models.Package.id).all():
         print package.id
         output = output + ""
         output = output + "Loading file " + package.package_name + "...<br />"

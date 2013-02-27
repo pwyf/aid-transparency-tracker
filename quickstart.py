@@ -23,6 +23,6 @@ if __name__ == '__main__':
     try:
         assert sys.argv[1] == "dontrefresh"
         refresh = False
-    except AssertionError, IndexError:
+    except Exception:
         refresh = True
     run(refresh)

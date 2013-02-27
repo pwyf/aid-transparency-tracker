@@ -10,17 +10,30 @@
     </script>
 
     	<h1>Select a package</h1>
+    <form action="" method="post">
+    <input class="btn btn-success" type="submit" value="Activate selected packages" />
     <table class="table" id="packages">
     <thead>
-    <th>Registry ID</th><th>Name</th><th>Country</th><th>License</th>
+    <th>Registry ID</th><th>Name</th><th>Active?</th>
     </thead>
     <tbody>
 	{% for pk in pkgs %}
     <tr>
-	<td><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td>{{ pk.package_country }}</td><td>{{ pk.package_license }}</td><!--<td></td>-->
+	<td><input type="hidden" name="package" value="{{pk.package_name}}" /><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td><input type="checkbox" {% if pk.active %}checked{%endif%} name="active_{{pk.package_name}}"/> <span>{% if pk.active %}Active{%endif%}</span></td>
     </tr>
 	{% endfor %}
     </tbody>
     </table>
-
+    <input class="btn btn-success" type="submit" value="Activate selected packages" />
+    </form>
+<script>
+    $("input").change(function(thischeckbox) {
+        if ($(this).attr('checked')) {
+            $(this).next().text("Active");
+        }
+        else {
+            $(this).next().text("");
+        }
+    });
+</script>
 {% endblock %}

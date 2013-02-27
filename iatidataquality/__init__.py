@@ -201,13 +201,26 @@ def publisher(id=None):
 
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs, results=aggregate_results, runtime=latest_runtime)
 
-@app.route("/packages/")
+@app.route("/packages/", methods=['GET', 'POST'])
 @app.route("/packages/<id>/")
 @app.route("/packages/<id>/runtimes/<runtime_id>/")
 def packages(id=None, runtime_id=None):
     if (id is None):
-        pkgs = models.Package.query.order_by(models.Package.package_name).all()
-        return render_template("packages.html", pkgs=pkgs)
+        if (request.method == 'POST'):
+            for package in request.form.getlist('package'):
+                p = models.Package.query.filter_by(package_name=package).first()
+                try:
+                    request.form["active_"+package]
+                    p.active=True
+                except Exception:
+                    p.active=False
+                db.session.add(p)
+            db.session.commit()
+            flash("Updated packages", "success")
+            return redirect(url_for('packages'))
+        else:
+            pkgs = models.Package.query.order_by(models.Package.package_name).all()
+            return render_template("packages.html", pkgs=pkgs)
 
     # Get package data
     p = db.session.query(models.Package,

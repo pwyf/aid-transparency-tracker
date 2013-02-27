@@ -5,6 +5,56 @@ import json
 
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
+def create_package_group(group):
+    pg = models.PackageGroup()
+    pg.name = group
+    pg.man_auto="auto"
+    
+    # Query CKAN
+    url = 'http://iatiregistry.org/api'
+    import ckanclient
+    registry = ckanclient.CkanClient(base_location=url)
+    ckangroup = registry.group_entity_get(group)
+
+    mapping = [
+        ("title", "title"),
+        ("ckan_id", "id"),
+        ("revision_id", "revision_id"),
+        ("created_date", "created"),
+        ("state", "state")
+        ]
+    for attr, key in mapping:
+        try:
+            setattr(pg, attr, ckangroup[key])
+        except Exception, e:
+            pass
+
+    try:
+        pg.license_id = ckangroup['extras']['publisher_license_id']
+    except Exception, e:
+        pass
+
+    fields = [
+        'publisher_iati_id', 'publisher_segmentation', 'publisher_type', 
+        'publisher_ui', 'publisher_organization_type', 
+        'publisher_frequency', 'publisher_thresholds', 'publisher_units', 
+        'publisher_contact', 'publisher_agencies', 
+        'publisher_field_exclusions', 'publisher_description', 
+        'publisher_record_exclusions', 'publisher_timeliness', 
+        'publisher_country', 'publisher_refs', 
+        'publisher_constraints', 'publisher_data_quality'
+        ]
+
+    for field in fields:
+        try:
+            setattr(pg, field, ckangroup['extras'][field])
+        except Exception, e:
+            pass
+
+    db.session.add(pg)
+    db.session.commit()
+    return pg
+
 def refresh_packages():
     try:
         offset = 0
@@ -28,7 +78,17 @@ def refresh_packages():
                     pkg = models.Package()
                 for attr, key in components:
                     setattr(pkg, key, package[attr])
-                
+                try:
+                    # there is a group, so use that group ID, or create one
+                    group = package['groups'][0]
+                    try:
+                        pg = models.PackageGroup.query.filter_by(name=group).first()
+                        pkg.package_group = pg.id
+                    except Exception, e:
+                        pg = create_package_group(group)
+                        pkg.package_group = pg.id
+                except Exception, e:
+                    pass
                 pkg.man_auto = 'auto'
                 db.session.add(pkg)
             db.session.commit()
