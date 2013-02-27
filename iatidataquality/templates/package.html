@@ -16,7 +16,7 @@
     });
     </script>
 	<h1>{{pkg.package_title}}<code>{{pkg.package_name}}</code></h1>
-    <div class="status pull-right alert alert-info"><a href="#" class="checkStatusRefresh"><i class="icon-refresh"></i></a><span class="status_text">Checking status... </span></div>
+    <div class="status pull-right alert alert-info"><a href="#" class="checkStatusRefresh"><i class="icon-refresh"></i></a><span class="status_text"> Checking...</span></div>
     <table class="table" id="publishers">
     <tbody>
     <tr>
@@ -154,17 +154,24 @@
                 });
     });
     function checkStatus(){
-        $(".status_text").html("Checking...");
+        $(".status_text").html(" Checking...");
         $.getJSON("/api/packages/status/{{pkg.id}}/", function(data){
             status = data["status"];
             if (status == 1) {
-                statustext = 'Now downloading (started at ' + data["runtime_datetime"] + ")";
+                statustext = ' Now downloading (started at ' + data["runtime_datetime"] + ")";
             }
             if (status == 2) {
-                statustext = 'Currently testing (started at ' + data["runtime_datetime"] + ")";
+                statustext = ' Currently testing (started at ' + data["runtime_datetime"] + ")";
             }
             if (status == 3) {
-                statustext = 'Last run at ' + data["runtime_datetime"];
+                statustext = ' Last run at ' + data["runtime_datetime"];
+                statusicon = '<i class="icon-ok"></i>';
+                $(".checkStatusRefresh").html(statusicon);
+            }
+            if (status == 4) {
+                statustext = ' Last run at ' + data["runtime_datetime"] + ', no change';
+                statusicon = '<i class="icon-ok"></i>';
+                $(".checkStatusRefresh").html(statusicon);
             }
             $(".status_text").html(statustext);
         });

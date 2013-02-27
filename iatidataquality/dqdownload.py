@@ -36,6 +36,11 @@ def get_package(pkg, package, runtime_id):
                          resource['url'], update_package, runtime_id)
     else:
         print "Package", pkg["name"], "is already the latest version"
+        pstatus = models.PackageStatus()
+        pstatus.package_id = package.id
+        pstatus.status = 4
+        db.session.add(pstatus)
+        db.session.commit()
 
 def run():
     # Get list of packages from DB
