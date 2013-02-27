@@ -40,20 +40,23 @@ Copy and edit the config.py.tmpl:
 
     cp config.py.tmpl config.py
 
-Run the celery script:
-
-    python manage.py celeryd
-
 Run the server:
 
     python manage.py runserver
 
+To get the download data and the tests running, run the backends (more details below):
+
+    python download_backend.py
+    python tests_backend.py
+
 Import Scripts
 ==============
 
-These steps must be followed in this order, and you must have created the database tables (`manage.py runserver` does this automatically).
+If you're having problems with creation of database tables then just run:
 
-Import the tests to the database, run the server and go to (e.g.):
+    python manage.py runserver
+
+Import the tests to the database: run the server and go to (e.g.):
 
     http://127.0.0.1:5000/tests/import/
 
@@ -80,7 +83,7 @@ Then run 3) to update all CKAN metadata and download the file:
 
     or via the  browser interface, go to "Download from Registry"
 
-In order for 3) to work, you need to have RabbitMQ running on your system (if you have Celery you should be fine) and then run:
+In order for 3) to work, you need to have RabbitMQ running on your system and then run:
 
     python download_backend.py
 
@@ -92,7 +95,7 @@ You can also use `supervisor`:
 Run tests
 =========
 
-There are two ways to run tests (remember, you need Celery running via `python manage.py celeryd`):
+There are two ways to run tests:
 
 1. via the browser
 
@@ -100,5 +103,8 @@ There are two ways to run tests (remember, you need Celery running via `python m
 
 2. via the command line
 
-    cd iatidataquality
-    python dqruntests.py
+    python run_tests.py
+
+For either, make sure you have the backend running:
+
+    python tests_backend.py
