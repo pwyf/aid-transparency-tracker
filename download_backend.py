@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys, os, json, ckan, pika, urllib2
 from datetime import date, datetime
-from iatidataquality import models, db, DATA_STORAGE_DIR
+from iatidataquality import models, db, DATA_STORAGE_DIR, dqruntests
 from iatidataquality.dqprocessing import add_hardcoded_result
 
 runtime = models.Runtime()
@@ -121,6 +121,7 @@ def save_file(pkg_name, filename, pkg, update_package, runtime_id):
     try:
         success = False
         directory = DATA_STORAGE_DIR()
+        print "Attempting to fetch package", pkg_name, "from", filename
         url = fixURL(filename)
         try:
             path = os.path.join(directory, pkg_name + '.xml')
@@ -129,14 +130,20 @@ def save_file(pkg_name, filename, pkg, update_package, runtime_id):
                 localFile.write(webFile.read())
                 webFile.close()
                 success = True
+                print "  Downloaded, processing..."
         except urllib2.URLError, e:
             success = False
-            pass
+            print "  Couldn't fetch URL"
         try:
             metadata_to_db(pkg, success, update_package, runtime_id)
+            print "  Wrote metadata to DB"
         except Exception, e:
-            pass
-        print filename
+            print "  Couldn't write metadata to DB"
+        try:
+            dqruntests.start_testing(pkg_name)
+            print "  Package tested"
+        except Exception, e:
+            print "  Couldn't test package",pkg_name,e
     except Exception, e:
         pass
 

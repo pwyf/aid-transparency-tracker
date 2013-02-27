@@ -6,20 +6,22 @@ download_queue='iati_tests_queue'
 def DATA_STORAGE_DIR():
     return app.config["DATA_STORAGE_DIR"]
 
-#@celery.task(name="iatidataquality.load_package", track_started=True)
-def load_packages(runtime):
+def load_packages(runtime, package_name=None):
     output = []
     
     path = DATA_STORAGE_DIR()
-    for package in models.Package.query.filter_by(active=True).order_by(models.Package.id).all():
-        # check file; add one task per package
 
+    if (package_name is not None):
+        package = models.Package.query.filter_by(package_name=package_name).first()
         filename = path + '/' + package.package_name + '.xml'
-
-        # run tests on file
+        # Run tests on file -> send to queue
         enqueue_download(filename, runtime, package.id, None)
-
         output.append(package.package_name)
+    else:
+        for package in models.Package.query.filter_by(active=True).order_by(models.Package.id).all():
+            filename = path + '/' + package.package_name + '.xml'
+            enqueue_download(filename, runtime, package.id, None)
+            output.append(package.package_name)
     return {'testing_packages': output}
 
 def enqueue(args):
@@ -44,9 +46,9 @@ def enqueue_download(filename, runtime_id, package_id, context=None):
         }
     enqueue(args)
 
-# start testing all packages
-def start_testing():
+# start testing all packages, or just one if provided
+def start_testing(package_name=None):
     newrun = models.Runtime()
     db.session.add(newrun)
     db.session.commit()
-    return load_packages(newrun.id)
+    return load_packages(newrun.id, package_name)
