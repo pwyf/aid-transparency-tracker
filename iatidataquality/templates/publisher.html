@@ -24,29 +24,31 @@
     </tbody>
     </table>
 
+    {% if results %}
     <div class="pull-right testruns">
         <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
     </div>
     <h1>Latest results <code>{{runtime.runtime_datetime}}</code></h1>
     <div class="clearer">&nbsp;</div>
-    {% for h, values in results.items() %}
-    <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
-    <table class="table" id="results">
-    <thead>
-    <th>Test</th><th>% Passed</th><th>Total results</th>
-    </thead>
-    <tbody>
-    {% for test, result in values.items() %}
-    <tr id="tr{{result.test.test_id}}h{{h}}" class="group-{% if result.test.group %}{{result.test.group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
-	<td><a href="{{url_for('tests', id=result.test.test_id)}}">{{ result.test.test_description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition}}"></i>{%endif%}</td>
-    <td class="pct">{{result.test.percentage|round|int}}</td>
-    <td>{{result.test.total_num}}</td>
-    </tr>
-    {% endfor%}
-    </tbody>
-    </table>
-    </fieldset>
-    {% endfor %}
+        {% for h, values in results.items() %}
+        <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
+        <table class="table" id="results">
+        <thead>
+        <th>Test</th><th>% Passed</th><th>Total results</th>
+        </thead>
+        <tbody>
+        {% for test, result in values.items() %}
+        <tr id="tr{{result.test.test_id}}h{{h}}" class="group-{% if result.test.group %}{{result.test.group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
+	    <td><a href="{{url_for('tests', id=result.test.test_id)}}">{{ result.test.test_description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition}}"></i>{%endif%}</td>
+        <td class="pct">{{result.test.percentage|round|int}}</td>
+        <td>{{result.test.total_num}}</td>
+        </tr>
+        {% endfor%}
+        </tbody>
+        </table>
+        </fieldset>
+        {% endfor %}
+    {%endif%}
 
 <script>
 

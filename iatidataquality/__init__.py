@@ -176,22 +176,26 @@ def publisher(id=None):
                models.PackageGroup,
         ).order_by(models.Runtime.id.desc()
         ).first()
+    
+    if latest_runtime:
+        aggregate_results = db.session.query(models.Test,
+                                             models.AggregateResult.results_data,
+                                             models.AggregateResult.results_num,
+                                             models.AggregateResult.result_hierarchy,
+                                             models.AggregateResult.package_id
+                ).filter(models.Package.package_group==p_group.id,
+                         models.AggregateResult.runtime_id==latest_runtime.id
+                ).group_by(models.AggregateResult.result_hierarchy, models.Test.id, models.AggregateResult.package_id
+                ).join(models.AggregateResult,
+                       models.Package
+                ).all()
 
-    aggregate_results = db.session.query(models.Test,
-                                         models.AggregateResult.results_data,
-                                         models.AggregateResult.results_num,
-                                         models.AggregateResult.result_hierarchy,
-                                         models.AggregateResult.package_id
-            ).filter(models.Package.package_group==p_group.id,
-                     models.AggregateResult.runtime_id==latest_runtime.id
-            ).group_by(models.AggregateResult.result_hierarchy, models.Test.id, models.AggregateResult.package_id
-            ).join(models.AggregateResult,
-                   models.Package
-            ).all()
+        pconditions = models.PublisherCondition.query.filter_by(publisher_id=p_group.id).all()
 
-    pconditions = models.PublisherCondition.query.filter_by(publisher_id=p_group.id).all()
-
-    aggregate_results = dqfunctions.agr_results(aggregate_results, conditions=pconditions, mode="publisher")
+        aggregate_results = dqfunctions.agr_results(aggregate_results, conditions=pconditions, mode="publisher")
+    else:
+        latest_runtime = None
+        aggregate_results = None
 
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs, results=aggregate_results, runtime=latest_runtime)
 
