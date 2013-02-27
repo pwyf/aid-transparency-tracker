@@ -9,11 +9,7 @@ from datetime import datetime
 
 from db import *
 
-import models
-import api
-import dqfunctions
-import dqprocessing
-import dqruntests
+import models, api, dqfunctions, dqprocessing, dqruntests, dqdownload, dqregistry
 
 def DATA_STORAGE_DIR():
     return app.config["DATA_STORAGE_DIR"]
@@ -200,6 +196,16 @@ def publisher(id=None):
     aggregate_results = dqfunctions.agr_results(aggregate_results, conditions=pconditions, mode="publisher")
 
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs, results=aggregate_results, runtime=latest_runtime)
+
+@app.route("/registry/refresh/")
+def registry_refresh():
+    dqregistry.refresh_packages()
+    return "Refreshed"
+
+@app.route("/registry/download/")
+def registry_download():
+    dqdownload.run()
+    return "Downloading"
 
 @app.route("/packages/", methods=['GET', 'POST'])
 @app.route("/packages/<id>/")
