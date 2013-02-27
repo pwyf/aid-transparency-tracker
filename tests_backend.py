@@ -1,6 +1,6 @@
 import sys, os, json, ckan, pika, urllib2
 from datetime import date, datetime
-from iatidataquality import models, db, DATA_STORAGE_DIR, dqprocessing, dqparsetests
+from iatidataquality import models, db, DATA_STORAGE_DIR, dqprocessing, dqparsetests, dqfunctions
 from iatidataquality.dqprocessing import add_hardcoded_result
 from lxml import etree
 
@@ -61,12 +61,8 @@ def check_file(file_name, runtime_id, package_id, context=None):
         print "Aggregating results..."
         dqprocessing.aggregate_results(runtime_id, package_id)
         print "Finished aggregating results"
-        db.session.commit()
-        pstatus = models.PackageStatus()
-        pstatus.package_id = package_id
-        pstatus.status = 3
-        db.session.add(pstatus)
-        db.session.commit()
+        db.session.commit()    
+        dqfunctions.add_test_status(package_id, 3)
     except Exception, e:
         print "Exception in check_file ", e
 
