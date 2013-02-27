@@ -9,6 +9,8 @@ build
 *.html~
 *.css~
 *.js~
+*.conf~
+*.csv~
 .gitignore
 .gitignore~
 data/*

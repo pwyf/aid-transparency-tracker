@@ -3,7 +3,7 @@ from db import *
 import models
 import json
 
-REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title,ckan_url&offset=%s&limit=1000"
+REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
 def refresh_packages():
     try:
@@ -16,8 +16,7 @@ def refresh_packages():
             # Don't get revision ID; empty var will trigger download of file elsewhere
             components = [ ("id","package_ckan_id"),
                            ("name","package_name"),
-                           ("title","package_title"),
-                           ("ckan_url","source_url")
+                           ("title","package_title")
                 ]
             try:
                 assert len(data["results"]) >= 1
@@ -29,6 +28,8 @@ def refresh_packages():
                     pkg = models.Package()
                 for attr, key in components:
                     setattr(pkg, key, package[attr])
+                
+                pkg.man_auto = 'auto'
                 db.session.add(pkg)
             db.session.commit()
             offset +=1000

@@ -1,24 +1,14 @@
 #!/usr/bin/env python
-import sys
-import ckan    
-import urllib2
+import sys, os, json, ckan, pika, urllib2
 from datetime import date, datetime
-import os
-from iatidataquality import models, db,  DATA_STORAGE_DIR
+from iatidataquality import models, db, DATA_STORAGE_DIR
 from iatidataquality.dqprocessing import add_hardcoded_result
-import json
-import daemon
-
-import sys
-import pprint
-pp = pprint.PrettyPrinter(indent=2)
 
 runtime = models.Runtime()
 db.session.add(runtime)
 db.session.commit()
 
 download_queue = 'iati_download_queue'
-import pika
 
 def fixURL(url):
     # helper function to replace spaces with %20 (otherwise fails with some servers, e.g. US)
@@ -75,7 +65,7 @@ def create_package_group(group):
     db.session.commit()
     return pg
 
-def metadata_to_db(pkg, success, update_package):
+def metadata_to_db(pkg, success, update_package, runtime_id):
     if (update_package):
         package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
     else:
@@ -95,7 +85,10 @@ def metadata_to_db(pkg, success, update_package):
         ]
 
     for attr, key in mapping:
-        setattr(package, attr, pkg[key])
+        try:
+            setattr(package, attr, pkg[key])
+        except Exception:
+            pass
 
     try:
         # there is a group, so use that group ID, or create one
@@ -122,32 +115,41 @@ def metadata_to_db(pkg, success, update_package):
 
     db.session.add(package)
     db.session.commit()
-    add_hardcoded_result(-2, runtime.id, package.id, success)
+    add_hardcoded_result(-2, runtime_id, package.id, success)
 
-
-def save_file(pkg_name, filename, pkg, update_package):
-    success = False
-    directory = DATA_STORAGE_DIR()
-    url = fixURL(filename)
+def save_file(pkg_name, filename, pkg, update_package, runtime_id):
     try:
-        path = os.path.join(directory, pkg_name + '.xml')
-        with file(path, 'w') as localFile:
-            webFile = urllib2.urlopen(url)
-            localFile.write(webFile.read())
-            webFile.close()
-            success = True
-    except urllib2.URLError, e:
         success = False
-        print "couldn't get file"
-    metadata_to_db(pkg, success, update_package)
-    print filename
+        directory = DATA_STORAGE_DIR()
+        url = fixURL(filename)
+        try:
+            path = os.path.join(directory, pkg_name + '.xml')
+            with file(path, 'w') as localFile:
+                webFile = urllib2.urlopen(url)
+                localFile.write(webFile.read())
+                webFile.close()
+                success = True
+        except urllib2.URLError, e:
+            success = False
+            pass
+        try:
+            metadata_to_db(pkg, success, update_package, runtime_id)
+        except Exception, e:
+            pass
+        print filename
+    except Exception, e:
+        pass
 
 def dequeue_download(body):
     args = json.loads(body)
-    save_file(args['pkg_name'],
-              args['file'],
-              args['pkg'],
-              args['update_package'])
+    try:
+        save_file(args['pkg_name'],
+                  args['file'],
+                  args['pkg'],
+                  args['update_package'],
+                  args['runtime_id'])
+    except Exception:
+        print "Exception!!", e
 
 def get_connection(host):
     count = 0.4
@@ -181,6 +183,7 @@ def callback_fn(ch, method, properties, body):
     ch.basic_ack(delivery_tag = method.delivery_tag)
 
 if __name__ == '__main__':
+    print "Starting up..."
     directory = DATA_STORAGE_DIR()
     if not os.path.exists(directory):
         try:
@@ -188,7 +191,6 @@ if __name__ == '__main__':
         except Exception, e:
             print "Failed:", e
             print "Couldn't create directory"
-#   with daemon.DaemonContext(files_preserve=files_preserve):
     while True:
         handle_queue(download_queue, callback_fn)
 

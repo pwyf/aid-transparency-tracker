@@ -8,14 +8,21 @@ from iatidataquality import models, dqregistry
 
 db.create_all()
 
-def run():
+def run(refresh):
     which_packages = [
                 ('worldbank-tz', True),
                 ('unops-tz', True),
                 ('dfid-tz', True)
                 ]
-    dqregistry.refresh_packages()
+    if refresh:
+        dqregistry.refresh_packages()
     dqregistry.activate_packages(which_packages, clear_revision_id=True)
 
 if __name__ == '__main__':
-    run()
+    import sys
+    try:
+        assert sys.argv[1] == "dontrefresh"
+        refresh = False
+    except AssertionError, IndexError:
+        refresh = True
+    run(refresh)
