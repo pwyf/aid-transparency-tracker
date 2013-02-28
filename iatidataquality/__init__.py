@@ -167,33 +167,27 @@ def publisher(id=None):
             ).filter(models.Package.package_group == p_group.id
             ).order_by(models.Package.package_name).all()
 
-    latest_runtime = db.session.query(models.Runtime
+    """try:"""
+    aggregate_results = db.session.query(models.Test,
+                                     models.AggregateResult.results_data,
+                                     models.AggregateResult.results_num,
+                                     models.AggregateResult.result_hierarchy,
+                                     models.AggregateResult.package_id,
+                                     func.min(models.AggregateResult.runtime_id)
         ).filter(models.PackageGroup.id==p_group.id
-        ).join(models.Result,
-               models.Package,
-               models.PackageGroup,
-        ).order_by(models.Runtime.id.desc()
-        ).first()
-    
-    if latest_runtime:
-        aggregate_results = db.session.query(models.Test,
-                                             models.AggregateResult.results_data,
-                                             models.AggregateResult.results_num,
-                                             models.AggregateResult.result_hierarchy,
-                                             models.AggregateResult.package_id
-                ).filter(models.Package.package_group==p_group.id,
-                         models.AggregateResult.runtime_id==latest_runtime.id
-                ).group_by(models.AggregateResult.result_hierarchy, models.Test.id, models.AggregateResult.package_id
-                ).join(models.AggregateResult,
-                       models.Package
-                ).all()
+        ).group_by(models.AggregateResult.result_hierarchy, models.Test, models.AggregateResult.package_id
+        ).join(models.AggregateResult
+        ).join(models.Package
+        ).join(models.PackageGroup
+        ).all()
 
-        pconditions = models.PublisherCondition.query.filter_by(publisher_id=p_group.id).all()
+    pconditions = models.PublisherCondition.query.filter_by(publisher_id=p_group.id).all()
 
-        aggregate_results = dqfunctions.agr_results(aggregate_results, conditions=pconditions, mode="publisher")
-    else:
+    aggregate_results = dqfunctions.agr_results(aggregate_results, conditions=pconditions, mode="publisher")
+    latest_runtime=1
+    """except Exception, e:
         latest_runtime = None
-        aggregate_results = None
+        aggregate_results = None"""
 
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs, results=aggregate_results, runtime=latest_runtime)
 
@@ -399,6 +393,12 @@ def export_publisher_conditions():
     return send_file(strIO,
                      attachment_filename="publisher_structures.txt",
                      as_attachment=True)
+
+@app.route("/aggregate_results/<package_id>/<runtime>")
+def display_aggregate_results(package_id, runtime):
+    dqprocessing.aggregate_results(runtime, package_id)
+    db.session.commit()
+    return "ok"
 
 @app.errorhandler(404)
 def page_not_found(error):

@@ -38,10 +38,10 @@
         </thead>
         <tbody>
         {% for test, result in values.items() %}
-        <tr id="tr{{result.test.test_id}}h{{h}}" class="group-{% if result.test.group %}{{result.test.group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
-	    <td><a href="{{url_for('tests', id=result.test.test_id)}}">{{ result.test.test_description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition}}"></i>{%endif%}</td>
-        <td class="pct">{{result.test.percentage|round|int}}</td>
-        <td>{{result.test.total_num}}</td>
+        <tr id="tr{{result.test.test.id}}h{{h}}" class="group-{% if result.test.test.test_group %}{{result.test.test.test_group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
+	    <td><a href="{{url_for('tests', id=result.test.test.id)}}">{{ result.test.test.description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition}}"></i>{%endif%}</td>
+        <td class="pct">{{result["test"].results_pct|round|int}}</td>
+        <td>{{result["test"].results_num}}</td>
         </tr>
         {% endfor%}
         </tbody>

@@ -71,8 +71,8 @@ def agr_results(data, conditions=None, mode=None):
     """
         data variable looks like this:
             models.Test,
-            models.AggregateResult.results_data,
-            models.AggregateResult.results_num,
+            models.AggregateResult.results_data, ## percentage
+            models.AggregateResult.results_num, ## total values
             models.AggregateResult.result_hierarchy
 
         conditions variable looks like this:
@@ -112,40 +112,42 @@ def agr_results(data, conditions=None, mode=None):
 
     out = {}
 
- 
     for h in hierarchies:
+        
         for t in tests:
             if (mode=="publisher"):
                 # aggregate data across multiple packages for a single publisher
+
+                # for each package, add percentage for each
                 total_pct = 0
                 total_activities = 0
-                test_id = ""
-                test_name = ""
-                test_description = ""
                 total_packages = len(packages)
                 for p in packages:
                     try:
-                        total_pct = total_pct + d[(h, t, p)][1]
-                        total_activities = total_activities + d[(h, t, p)][2]
-                        test_id = d[(h, t, p)][0].id
-                        test_name = d[(h, t, p)][0].name
-                        test_description = d[(h, t, p)][0].description
+                        ok_tdata = d[(h, t, p)]
+                        total_pct = total_pct + d[(h, t, p)][1] #percentage
+                        total_activities = total_activities + d[(h, t, p)][2] #total vals
                     except KeyError:
                         pass
+                
                 if (total_activities>0):
-                    tdata = {
-                            'percentage': int(float(total_pct)/(total_packages)),
-                            'total_num': total_activities,
-                            'test_id': test_id,
-                            'test_name': test_name,
-                            'test_description': test_description
-                           }
+                    
+                    tdata = {}
+                    tdata["test"] = {}
+                    tdata["test"]["id"] = ok_tdata.Test.id
+                    tdata["test"]["description"] = ok_tdata.Test.description
+                    tdata["test"]["test_group"] = ok_tdata.Test.test_group
+                    tdata["results_pct"] = int(float(total_pct/total_packages))
+                    tdata["results_num"] = total_activities
+                    tdata["result_hierarchy"] = total_activities
+                
             else:
                 # return data for this single package
                 try:
                     tdata = d[(h, t)]
                 except KeyError:
                     tdata = None
+
             try: out[h]
             except KeyError: out[h] = {}
             try: out[h][t]
