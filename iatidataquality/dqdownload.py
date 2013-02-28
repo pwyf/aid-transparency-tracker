@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-import sys, os, json, pika, ckan, ckanclient, urllib2
+import sys, os, json, ckan, ckanclient, urllib2
+import queue
 from datetime import date, datetime
 import models, dqfunctions
 from db import *
@@ -59,23 +60,10 @@ def run(package_name=None):
         except AssertionError:
             get_package(package, runtime.id)
 
-def enqueue(args):
-    body = json.dumps(args)
-    
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
-    channel.queue_declare(queue=download_queue, durable=True)
-    channel.basic_publish(exchange='',
-                          routing_key=download_queue,
-                          body=body,
-                          properties=pika.BasicProperties(delivery_mode=2))
-    connection.close()
-
 def enqueue_download(package, runtime_id):
     args = {
         'package_id': package.id,
         'package_name': package.package_name,
         'runtime_id': runtime_id
         }
-    enqueue(args)
+    queue.enqueue(args)

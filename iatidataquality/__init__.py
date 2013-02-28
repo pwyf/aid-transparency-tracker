@@ -7,7 +7,7 @@ from datetime import datetime
 
 from db import *
 
-import models, api, dqfunctions, dqprocessing, dqruntests, dqdownload, dqregistry
+import models, api, dqfunctions, dqprocessing, dqruntests, dqdownload, dqregistry, queue
 
 def DATA_STORAGE_DIR():
     return app.config["DATA_STORAGE_DIR"]
