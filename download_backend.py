@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-import sys, os, json, ckan, pika, urllib2, ckanclient
+import sys, os, json, ckan, urllib2, ckanclient
 from datetime import date, datetime
-from iatidataquality import models, db, DATA_STORAGE_DIR, dqruntests
+from iatidataquality import models, db, DATA_STORAGE_DIR, dqruntests, queue
 from iatidataquality.dqprocessing import add_hardcoded_result
 
+# FIXME: this should be in config
 download_queue = 'iati_download_queue'
 
 def fixURL(url):
@@ -172,30 +173,6 @@ def dequeue_download(body):
     except Exception:
         print "Exception!!", e
 
-def get_connection(host):
-    count = 0.4
-    while count < 60:
-        try:            
-            connection = pika.BlockingConnection(
-                pika.ConnectionParameters(host=host))
-            return connection
-        except:
-            time.sleep(count)
-            count *= 1.7
-    sys.exit(1)
-
-def handle_queue(queue_name, callback_fn):
-    try:
-        connection = get_connection('localhost')
-        channel = connection.channel()
-        channel.queue_declare(queue=queue_name, durable=True)
-        channel.basic_qos(prefetch_count=1)
-        channel.basic_consume(callback_fn, queue=queue_name)
-        channel.start_consuming()
-    except:
-        pass 
-    finally:
-        connection.close()
 
 def callback_fn(ch, method, properties, body):
     dequeue_download(body)
@@ -211,5 +188,5 @@ if __name__ == '__main__':
             print "Failed:", e
             print "Couldn't create directory"
     while True:
-        handle_queue(download_queue, callback_fn)
+        queue.handle_queue(download_queue, callback_fn)
 
