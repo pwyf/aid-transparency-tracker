@@ -1,6 +1,7 @@
 import pika
 import sys
 import time
+import json
 
 # FIXME: host= should be in config
 def enqueue(args):
