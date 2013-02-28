@@ -12,7 +12,8 @@
     <input type="submit" name="refresh" class="btn pull-right" value="Refresh package list from Registry"/>
     <h1>Package management</h1>
     <p>Choose active packages</p>
-    <input class="btn btn-success" type="submit" value="Activate selected packages" />
+    <p><input class="btn btn-success" type="submit" value="Activate selected packages" /></p>
+    <p><a id="markall" class="btn pull-right btn-mini">Mark all active</a> <a id="unmarkall" class="btn pull-right btn-mini">Mark all inactive</a></p>
     <table class="table" id="packages">
     <thead>
     <th>Registry ID</th><th>Name</th><th>Active?</th>
@@ -35,6 +36,18 @@
         else {
             $(this).next().text("");
         }
+    });
+    $("#markall").click(function(e){
+        e.preventDefault();
+        $("input:checkbox").each(function(){
+            $(this).prop('checked', true);
+        });
+    });
+    $("#unmarkall").click(function(e){
+        e.preventDefault();
+        $("input:checkbox").each(function(){
+            $(this).prop('checked', false);
+        });
     });
 </script>
 {% endblock %}

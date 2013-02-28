@@ -1,12 +1,8 @@
 #!/usr/bin/env python
-import sys, os, json, ckan, pika, urllib2
+import sys, os, json, ckan, pika, urllib2, ckanclient
 from datetime import date, datetime
 from iatidataquality import models, db, DATA_STORAGE_DIR, dqruntests
 from iatidataquality.dqprocessing import add_hardcoded_result
-
-runtime = models.Runtime()
-db.session.add(runtime)
-db.session.commit()
 
 download_queue = 'iati_download_queue'
 
@@ -65,67 +61,84 @@ def create_package_group(group):
     db.session.commit()
     return pg
 
-def metadata_to_db(pkg, success, update_package, runtime_id):
-    if (update_package):
-        package = models.Package.query.filter_by(package_ckan_id=pkg['id']).first()
-    else:
-        package = models.Package()
-    package.man_auto = 'auto'
-    package.source_url = pkg['resources'][0]['url']
-
-    mapping = [
-        ("package_ckan_id", "id"),
-        ("package_name", "name"),
-        ("package_title", "title"),
-        ("package_license_id", "license_id"),
-        ("package_license", "license"),
-        ("package_metadata_created", "metadata_created"),
-        ("package_metadata_modified", "metadata_modified"),
-        ("package_revision_id", "revision_id")
-        ]
-
-    for attr, key in mapping:
-        try:
-            setattr(package, attr, pkg[key])
-        except Exception:
-            pass
-
+def metadata_to_db(pkg, package_name, success, runtime_id):
     try:
-        # there is a group, so use that group ID, or create one
-        group = pkg['groups'][0]
-        try:
-            pg = models.PackageGroup.query.filter_by(name=group).first()
-            package.package_group = pg.id
-        except Exception, e:
-            pg = create_package_group(group)
-            package.package_group = pg.id
-    except Exception, e:
-        pass
+        package = models.Package.query.filter_by(package_name=package_name).first()
+        package.man_auto = 'auto'
+        package.source_url = pkg['resources'][0]['url']
 
-    fields = [ 
-        "activity_period-from", "activity_period-to",
-        "activity_count", "country", "filetype", "verified" 
-        ]
-    for field in fields:
+        mapping = [
+            ("package_ckan_id", "id"),
+            ("package_name", "name"),
+            ("package_title", "title"),
+            ("package_license_id", "license_id"),
+            ("package_license", "license"),
+            ("package_metadata_created", "metadata_created"),
+            ("package_metadata_modified", "metadata_modified"),
+            ("package_revision_id", "revision_id")
+            ]
+
+        for attr, key in mapping:
+            try:
+                setattr(package, attr, pkg[key])
+            except Exception:
+                pass
+
         try:
-            field_name = "package_" + field.replace("-", "_")
-            setattr(package, field_name, pkg["extras"][field])
+            # there is a group, so use that group ID, or create one
+            group = pkg['groups'][0]
+            try:
+                pg = models.PackageGroup.query.filter_by(name=group).first()
+                package.package_group = pg.id
+            except Exception, e:
+                pg = create_package_group(group)
+                package.package_group = pg.id
         except Exception, e:
             pass
 
-    db.session.add(package)
-    db.session.commit()
-    add_hardcoded_result(-2, runtime_id, package.id, success)
+        fields = [ 
+            "activity_period-from", "activity_period-to",
+            "activity_count", "country", "filetype", "verified" 
+            ]
+        for field in fields:
+            try:
+                field_name = "package_" + field.replace("-", "_")
+                setattr(package, field_name, pkg["extras"][field])
+            except Exception, e:
+                pass
 
-def save_file(package_id, package_name, pkg, filename, update_package, runtime_id):
+        db.session.add(package)
+        db.session.commit()
+        add_hardcoded_result(-2, runtime_id, package.id, success)
+    except Exception, e:
+        print "Error in metadata_to_db:", e
+
+def save_file(package_id, package_name, runtime_id):
+    
+    CKANurl = 'http://iatiregistry.org/api'
+    registry = ckanclient.CkanClient(base_location=CKANurl)   
+    try:
+        pkg = registry.package_entity_get(package_name)
+        resources = pkg.get('resources', [])
+        if resources == []:
+            return
+        try:
+            assert len(resources) == 1
+        except Exception, e:
+            print "WARNING: more than one resource found. Will attempt to use the first one."
+            pass
+        url = resources[0]['url']
+    except Exception, e:
+        print "Couldn't get URL from CKAN for package", package_name,e
+        return
+
     # `package` is models.Packaege
     # `pkg` is a CKAN dataset
-    # `filename` is the url of the file
     try:
         success = False
         directory = DATA_STORAGE_DIR()
-        print "Attempting to fetch package", package_name, "from", filename
-        url = fixURL(filename)
+        print "Attempting to fetch package", package_name, "from", url
+        url = fixURL(url)
         try:
             path = os.path.join(directory, package_name + '.xml')
             with file(path, 'w') as localFile:
@@ -138,7 +151,7 @@ def save_file(package_id, package_name, pkg, filename, update_package, runtime_i
             success = False
             print "  Couldn't fetch URL"
         try:
-            metadata_to_db(pkg, success, update_package, runtime_id)
+            metadata_to_db(pkg, package_name, success, runtime_id)
             print "  Wrote metadata to DB"
         except Exception, e:
             print "  Couldn't write metadata to DB"
@@ -155,9 +168,6 @@ def dequeue_download(body):
     try:
         save_file(args['package_id'],
                   args['package_name'],
-                  args['pkg'],
-                  args['url'],
-                  args['update_package'],
                   args['runtime_id'])
     except Exception:
         print "Exception!!", e

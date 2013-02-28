@@ -169,9 +169,10 @@ def agr_results(data, conditions=None, mode=None):
                 pass
     return out
 
-def add_test_status(package_id, status_id):
+def add_test_status(package_id, status_id, commit=True):
     pstatus = models.PackageStatus()
     pstatus.package_id = package_id
     pstatus.status = status_id
     db.session.add(pstatus)
-    db.session.commit()
+    if (commit):
+        db.session.commit()

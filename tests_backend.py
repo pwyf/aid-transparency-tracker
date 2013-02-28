@@ -4,7 +4,6 @@ from iatidataquality import models, db, DATA_STORAGE_DIR, dqprocessing, dqparset
 from iatidataquality.dqprocessing import add_hardcoded_result
 from lxml import etree
 
-
 download_queue='iati_tests_queue'
 
 def aggregate_results(runtime, package_id):
