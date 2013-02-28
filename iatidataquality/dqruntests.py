@@ -1,6 +1,8 @@
 from db import *
-import models, dqprocessing, dqparsetests, pika, json, dqfunctions
+import models, dqprocessing, dqparsetests, json, dqfunctions
+import queue
 
+# FIXME: this should be in config
 download_queue='iati_tests_queue'
 
 def DATA_STORAGE_DIR():
@@ -26,19 +28,6 @@ def load_packages(runtime, package_name=None):
             output.append(package.package_name)
     return {'testing_packages': output}
 
-def enqueue(args):
-    body = json.dumps(args)
-    
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
-    channel.queue_declare(queue=download_queue, durable=True)
-    channel.basic_publish(exchange='',
-                          routing_key=download_queue,
-                          body=body,
-                          properties=pika.BasicProperties(delivery_mode=2))
-    connection.close()
-
 def enqueue_download(filename, runtime_id, package_id, context=None):
     args = {
         'filename': filename,
@@ -46,7 +35,7 @@ def enqueue_download(filename, runtime_id, package_id, context=None):
         'package_id': package_id,
         'context': context
         }
-    enqueue(args)
+    queue.enqueue(args)
 
 # start testing all packages, or just one if provided
 def start_testing(package_name=None):
