@@ -23,10 +23,11 @@ def load_packages(runtime, package_name=None):
 
     if (package_name is not None):
         package = models.Package.query.filter_by(package_name=package_name).first()
-        load_package(package)
+        packages = [ package ]
     else:
-        for package in models.Package.query.filter_by(active=True).order_by(models.Package.id).all():
-            load_package(package)
+        packages = [ p for p in models.Package.query.filter_by(active=True).order_by(models.Package.id).all() ]
+    [ load_package(pkg) for pkg in packages ]
+
     return {'testing_packages': output}
 
 def enqueue_download(filename, runtime_id, package_id, context=None):
