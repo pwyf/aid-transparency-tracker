@@ -1,6 +1,7 @@
 from db import *
 import models, dqprocessing, dqparsetests, json, dqfunctions
 import queue
+import os
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
@@ -15,7 +16,7 @@ def load_packages(runtime, package_name=None):
 
     def load_package(package):
         dqfunctions.add_test_status(package.id, 2)
-        filename = path + '/' + package.package_name + '.xml'
+        filename = os.path.join(path, package.package_name + '.xml')
         # Run tests on file -> send to queue
         enqueue_download(filename, runtime, package.id, None)
         output.append(package.package_name)
