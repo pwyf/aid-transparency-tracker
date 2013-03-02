@@ -13,19 +13,19 @@ def load_packages(runtime, package_name=None):
     
     path = DATA_STORAGE_DIR()
 
-    if (package_name is not None):
-        package = models.Package.query.filter_by(package_name=package_name).first()
+    def load_package(package):
         dqfunctions.add_test_status(package.id, 2)
         filename = path + '/' + package.package_name + '.xml'
         # Run tests on file -> send to queue
         enqueue_download(filename, runtime, package.id, None)
         output.append(package.package_name)
+
+    if (package_name is not None):
+        package = models.Package.query.filter_by(package_name=package_name).first()
+        load_package(package)
     else:
         for package in models.Package.query.filter_by(active=True).order_by(models.Package.id).all():
-            dqfunctions.add_test_status(package.id, 2)
-            filename = path + '/' + package.package_name + '.xml'
-            enqueue_download(filename, runtime, package.id, None)
-            output.append(package.package_name)
+            load_package(package)
     return {'testing_packages': output}
 
 def enqueue_download(filename, runtime_id, package_id, context=None):
