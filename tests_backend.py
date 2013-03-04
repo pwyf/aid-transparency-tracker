@@ -51,8 +51,15 @@ def check_file(file_name, runtime_id, package_id, context=None):
         from iatidataquality.dqparsetests import test_functions as tf
         test_functions = tf()
 
+        def get_result_hierarchy(activity):
+            hierarchy = activity.get('hierarchy', default=None)
+            if hierarchy is "":
+                return None
+            return hierarchy
+
         for activity in data.findall('iati-activity'):
-            result_hierarchy = activity.get('hierarchy', default=None)
+            result_hierarchy = get_result_hierarchy(activity)
+
             result_identifier = activity.find('iati-identifier').text
             activity_data = etree.tostring(activity)
 
