@@ -21,6 +21,19 @@ serverurl=unix:///tmp/supervisor.sock ; use a unix:// URL  for a unix socket
 ; BELOW: on the line beginning command, add the path to your python install, 
 ; or if you are using a virtualenv, the virtualenv path followed by a space 
 ; and then the path to the download_backend.py script. E.g. below...
-command = /home/mark/sites/IATI-Data-Quality/pyenv/bin/python /home/mark/sites/IATI-Data-Quality/download_backend.py
+command = ./download_backend.py
+process_name=%(process_num)s
+numprocs=1
+
+[program:iatitest]
+; BELOW: on the line beginning command, add the path to your python install, 
+; or if you are using a virtualenv, the virtualenv path followed by a space 
+; and then the path to the download_backend.py script. E.g. below...
+command = ./test_backend.py
+process_name=%(process_num)s
+numprocs=1
+
+[program:webapp]
+command = ./manage.py runserver
 process_name=%(process_num)s
 numprocs=1
