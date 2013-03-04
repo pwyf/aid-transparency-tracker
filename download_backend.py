@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import sys, os, json, ckan, urllib2, ckanclient
 from datetime import date, datetime
-from iatidataquality import models, db, DATA_STORAGE_DIR, dqruntests, queue
+from iatidataquality import models, db, dqruntests, queue
 from iatidataquality.dqprocessing import add_hardcoded_result
+
+import config
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
@@ -137,7 +139,7 @@ def save_file(package_id, package_name, runtime_id):
     # `pkg` is a CKAN dataset
     try:
         success = False
-        directory = db.app.config["DATA_STORAGE_DIR"]
+        directory = config.DATA_STORAGE_DIR
 
         print "Attempting to fetch package", package_name, "from", url
         url = fixURL(url)
@@ -183,7 +185,7 @@ def callback_fn(ch, method, properties, body):
 
 if __name__ == '__main__':
     print "Starting up..."
-    directory = db.app.config["DATA_STORAGE_DIR"]
+    directory = config.DATA_STORAGE_DIR
     if not os.path.exists(directory):
         try:
             os.makedirs(directory)

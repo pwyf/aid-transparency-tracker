@@ -8,7 +8,9 @@
 
 import iatidataquality
 
-from iatidataquality import models, dqregistry, clear_revisions
+from iatidataquality import models, dqregistry 
+import iatidataquality.dqfunctions
+
 
 import optparse
 import sys
@@ -35,7 +37,7 @@ def main():
     options, args = p.parse_args()
 
     if options.clear_revisionid:
-        clear_revisions()
+        iatidataquality.dqfunctions.clear_revisions()
         return
 
     run(refresh=options.dont_refresh)

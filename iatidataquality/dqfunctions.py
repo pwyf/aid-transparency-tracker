@@ -179,3 +179,14 @@ def add_test_status(package_id, status_id, commit=True):
     db.session.add(pstatus)
     if (commit):
         db.session.commit()
+
+def clear_revisions():
+    for pkg in models.Package.query.filter(
+        models.Package.package_revision_id!=None, 
+        models.Package.active == True
+        ).all():
+
+        pkg.package_revision_id = None
+        
+        db.session.add(pkg)
+    db.session.commit()

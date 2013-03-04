@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import sys, os, json, ckan, urllib2
 from datetime import date, datetime
-from iatidataquality import models, db, DATA_STORAGE_DIR, dqprocessing, dqparsetests, dqfunctions, queue
+from iatidataquality import models, db, dqprocessing, dqparsetests, dqfunctions, queue
 from iatidataquality.dqprocessing import add_hardcoded_result
 from lxml import etree
+
+import config
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
@@ -92,7 +94,7 @@ def callback_fn(ch, method, properties, body):
 
 if __name__ == '__main__':
     print "Starting up..."
-    directory = DATA_STORAGE_DIR()
+    directory = config.DATA_STORAGE_DIR
     if not os.path.exists(directory):
         try:
             os.makedirs(directory)
