@@ -3,6 +3,9 @@ import sys
 import time
 import json
 
+# FIXME
+download_queue = 'iati_download_queue'
+
 # FIXME: host= should be in config
 def enqueue(args):
     body = json.dumps(args)
