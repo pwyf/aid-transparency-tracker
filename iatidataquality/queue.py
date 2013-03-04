@@ -12,7 +12,7 @@ def enqueue(queue, args):
     channel = connection.channel()
     channel.queue_declare(queue=queue, durable=True)
     channel.basic_publish(exchange='',
-                          routing_key=download_queue,
+                          routing_key=queue,
                           body=body,
                           properties=pika.BasicProperties(delivery_mode=2))
     connection.close()
