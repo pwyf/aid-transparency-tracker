@@ -46,7 +46,7 @@ def check_against_files(test_str):
 
     remove_tst(test)
 
-def test_checktitle():
+def test_do_checks():
     tests = [
         "title/text() exists?",
         "description/text() exists?"
