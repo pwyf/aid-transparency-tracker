@@ -171,7 +171,9 @@ def dequeue_download(body):
                   args['package_name'],
                   args['runtime_id'])
     except Exception:
+        print sys.exc_info()
         print "Exception!!", e
+        print
 
 
 def callback_fn(ch, method, properties, body):
