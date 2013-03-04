@@ -36,4 +36,5 @@ numprocs=1
 [program:webapp]
 command = ./manage.py runserver
 process_name=%(process_num)s
-numprocs=1
+stopasgroup=true 
+killasgroup=true 
