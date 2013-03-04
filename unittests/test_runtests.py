@@ -60,6 +60,10 @@ def check_against_files(test_str):
 def check_data_files_w_tst_syntax_error(test_str):
     return check_against_files(test_str)
 
+@nose.tools.raises(lxml.etree.XPathEvalError)
+def check_data_files_w_xpath_eval_error(test_str):
+    return check_against_files(test_str)
+
 @nose.with_setup(setup_func, teardown_func)
 def test_do_checks():
     tests = [
@@ -77,7 +81,7 @@ def test_invalid_xpath_syntax():
         ]
 
     for test_str in tests:
-        yield check_against_files, test_str
+        yield check_data_files_w_xpath_eval_error, test_str
 
 @nose.with_setup(setup_func, teardown_func)
 def test_unrecognised_syntaxes():
