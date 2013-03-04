@@ -23,8 +23,18 @@ def test_checktitle():
     from iatidataquality.dqparsetests import test_functions as tf
     test_functions = tf()
 
-    assert (test_functions[test.id](lxml.etree.parse(os.path.join(current, "good.xml")).find('iati-activity'))==True)
-    assert (test_functions[test.id](lxml.etree.parse(os.path.join(current, "bad.xml")).find('iati-activity'))==False)
+    data_files = [
+        ("good.xml", True),
+        ("bad.xml", False)
+        ]
+
+    def check_data_file(data_file, expected_result):
+        parse_tree = lxml.etree.parse(os.path.join(current, data_file))
+        activity = parse_tree.find('iati-activity')
+        assert test_functions[test.id](activity) == expected_result
+
+    [ check_data_file(data_file, expected_result)
+      for data_file, expected_result in data_files ]
 
     db.session.delete(test)
     db.session.commit()
