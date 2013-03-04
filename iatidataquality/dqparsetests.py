@@ -3,6 +3,8 @@ import sys
 from functools import partial
 import iatidataquality.models as models
 
+class TestSyntaxError(Exception): pass
+
 mappings = []
 
 def add(regex):
@@ -100,8 +102,7 @@ def test_functions():
                 if m:
                     f = mapping[1](m.groups())
                     if f == None:
-                        print "Not implemented:"
-                        print line
+                        raise TestSyntaxError(line)
                     else:
                         test_functions[test.id] = f
                     break
