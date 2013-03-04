@@ -30,7 +30,7 @@ def test_activity(runtime_id, package_id, result_identifier, data, test_function
         # If an exception is not caught in test functions,
         # it should not count against the publisher
         except Exception:
-            continue
+            the_result=2
 
         newresult = models.Result()
         newresult.runtime_id = runtime_id
