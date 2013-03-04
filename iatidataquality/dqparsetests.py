@@ -93,7 +93,6 @@ def test_functions():
     for test in tests:
         if test.test_level == 1:
             line = test.name
-            print line
             if comment.match(line) or blank.match(line):
                 continue
             for mapping in mappings:
