@@ -49,7 +49,8 @@ def check_against_files(test_str):
 def test_do_checks():
     tests = [
         "title/text() exists?",
-        "description/text() exists?"
+        "description/text() exists?",
+        "description/text) exists?"
         ]
 
     [ check_against_files(test) for test in tests ]
