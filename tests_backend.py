@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys, os, json, ckan, urllib2
 from datetime import date, datetime
 from iatidataquality import models, db, DATA_STORAGE_DIR, dqprocessing, dqparsetests, dqfunctions, queue
