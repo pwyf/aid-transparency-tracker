@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from iatidataquality import models, db, DATA_STORAGE_DIR, dqruntests
 
 def run():
