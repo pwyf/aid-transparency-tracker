@@ -66,4 +66,4 @@ def enqueue_download(package, runtime_id):
         'package_name': package.package_name,
         'runtime_id': runtime_id
         }
-    queue.enqueue(args)
+    queue.enqueue(download_queue, args)

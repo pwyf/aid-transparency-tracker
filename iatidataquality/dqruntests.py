@@ -4,7 +4,7 @@ import queue
 import os
 
 # FIXME: this should be in config
-download_queue='iati_tests_queue'
+tests_queue='iati_tests_queue'
 
 def DATA_STORAGE_DIR():
     return app.config["DATA_STORAGE_DIR"]
@@ -37,7 +37,7 @@ def enqueue_download(filename, runtime_id, package_id, context=None):
         'package_id': package_id,
         'context': context
         }
-    queue.enqueue(args)
+    queue.enqueue(tests_queue, args)
 
 # start testing all packages, or just one if provided
 def start_testing(package_name=None):

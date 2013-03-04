@@ -3,17 +3,14 @@ import sys
 import time
 import json
 
-# FIXME
-download_queue = 'iati_download_queue'
-
 # FIXME: host= should be in config
-def enqueue(args):
+def enqueue(queue, args):
     body = json.dumps(args)
     
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
-    channel.queue_declare(queue=download_queue, durable=True)
+    channel.queue_declare(queue=queue, durable=True)
     channel.basic_publish(exchange='',
                           routing_key=download_queue,
                           body=body,
