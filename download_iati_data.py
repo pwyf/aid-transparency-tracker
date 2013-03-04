@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from iatidataquality import models, db, DATA_STORAGE_DIR, dqdownload
+from iatidataquality import models, db, dqdownload
 
 if __name__ == '__main__':
     print """

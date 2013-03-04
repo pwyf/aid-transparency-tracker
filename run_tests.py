@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from iatidataquality import models, db, DATA_STORAGE_DIR, dqruntests
+from iatidataquality import models, db, dqruntests
 
 def run():
     taskid = dqruntests.start_testing()

@@ -137,7 +137,8 @@ def save_file(package_id, package_name, runtime_id):
     # `pkg` is a CKAN dataset
     try:
         success = False
-        directory = DATA_STORAGE_DIR()
+        directory = db.app.config["DATA_STORAGE_DIR"]
+
         print "Attempting to fetch package", package_name, "from", url
         url = fixURL(url)
         try:
@@ -182,7 +183,7 @@ def callback_fn(ch, method, properties, body):
 
 if __name__ == '__main__':
     print "Starting up..."
-    directory = DATA_STORAGE_DIR()
+    directory = db.app.config["DATA_STORAGE_DIR"]
     if not os.path.exists(directory):
         try:
             os.makedirs(directory)

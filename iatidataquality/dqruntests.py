@@ -6,13 +6,10 @@ import os
 # FIXME: this should be in config
 tests_queue='iati_tests_queue'
 
-def DATA_STORAGE_DIR():
-    return app.config["DATA_STORAGE_DIR"]
-
 def load_packages(runtime, package_name=None):
     output = []
     
-    path = DATA_STORAGE_DIR()
+    path = app.config["DATA_STORAGE_DIR"]
 
     def load_package(package):
         dqfunctions.add_test_status(package.id, 2)
