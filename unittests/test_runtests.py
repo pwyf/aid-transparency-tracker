@@ -1,6 +1,16 @@
+import os
+import sys
+
+current = os.path.dirname(os.path.abspath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
+import iatidataquality
+from iatidataquality import db
+import lxml.etree
+
 def test_checktitle():
-    import models
-    test = models.Test()
+    test = iatidataquality.models.Test()
     test.name = "title/text() exists?"
     test.active = True
     test.description = "Does title exist?"
@@ -12,4 +22,5 @@ def test_checktitle():
 
     from iatidataquality.dqparsetests import test_functions as tf
     test_functions = tf()
-    print test_functions[test.id](etree.parse("testxml.xml").find('iati-activity'))
+    print test_functions[test.id](lxml.etree.parse(os.path.join(current, "testxml.xml")).find('iati-activity'))
+
