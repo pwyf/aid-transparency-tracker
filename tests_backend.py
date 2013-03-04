@@ -52,10 +52,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
         test_functions = tf()
 
         for activity in data.findall('iati-activity'):
-            try:
-                result_hierarchy = activity.get('hierarchy')
-            except KeyError:
-                result_hierarchy = None
+            result_hierarchy = activity.get('hierarchy', default=None)
             result_identifier = activity.find('iati-identifier').text
             activity_data = etree.tostring(activity)
 
