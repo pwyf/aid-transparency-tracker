@@ -1,4 +1,5 @@
-from db import *
+
+from iatidataquality import db
 import models
 
 def aggregate_percentages(data):

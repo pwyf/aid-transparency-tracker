@@ -1,11 +1,12 @@
 from flask import Flask, abort, url_for, redirect, request, current_app
 from functools import wraps
 import json
-import models
 from sqlalchemy import func
 import math
 
-from iatidataquality import app, db, dqdownload
+from iatidataquality import app, db
+import dqdownload
+import models
 
 import datetime
 class JSONEncoder(json.JSONEncoder):

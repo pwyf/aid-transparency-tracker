@@ -1,4 +1,5 @@
-from db import *
+from iatidataquality import db
+
 import models, dqprocessing, dqparsetests, json, dqfunctions
 import queue
 import os

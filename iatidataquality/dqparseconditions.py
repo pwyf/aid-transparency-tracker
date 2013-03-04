@@ -1,4 +1,4 @@
-from db import *
+from iatidataquality import db
 import re
 import sys
 from functools import partial

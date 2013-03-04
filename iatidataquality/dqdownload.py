@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+
 import sys, os, json, ckan, ckanclient, urllib2
 import queue
 from datetime import date, datetime
-import models, dqfunctions
-from db import *
 
-db.create_all()
+from iatidataquality import db
+
+import models, dqfunctions
 
 download_queue = 'iati_download_queue'
 

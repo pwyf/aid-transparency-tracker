@@ -5,13 +5,15 @@
         2) populating the list of packages from the Registry (will download basic data about all packages)
         3) setting 3 to "active"
 """
-from iatidataquality.db import *
+
+import iatidataquality
+
 from iatidataquality import models, dqregistry, clear_revisions
 
 import optparse
 import sys
 
-db.create_all()
+iatidataquality.db.create_all()
 
 def run(refresh):
     which_packages = [

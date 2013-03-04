@@ -1,5 +1,6 @@
+from iatidataquality import db
+
 import urllib2
-from db import *
 import models
 import json
 

@@ -1,4 +1,5 @@
-from db import *
+
+from iatidataquality import db
 import models
 import csv
 import urllib2

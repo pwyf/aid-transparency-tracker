@@ -1,5 +1,5 @@
 from sqlalchemy import *
-from db import app, db
+from iatidataquality import db
 from datetime import datetime
 
 class PackageStatus(db.Model):

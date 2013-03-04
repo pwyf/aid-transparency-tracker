@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 from flask.ext.script import Manager
-from iatidataquality import app, db, dqimporttests
+import iatidataquality
+import iatidataquality.dqimporttests
 
-db.create_all()
-dqimporttests.hardcodedTests()
-manager = Manager(app)
+def run():
+    iatidataquality.db.create_all()
+    iatidataquality.dqimporttests.hardcodedTests()
+    manager = Manager(iatidataquality.app)
+    manager.run()
 
 if __name__ == "__main__":
-    manager.run()
+    run()
