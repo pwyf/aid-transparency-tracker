@@ -6,9 +6,13 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 import iatidataquality
+import iatidataquality.dqparsetests
+
 from iatidataquality import db
 import lxml.etree
-from nose import *
+
+import nose
+import nose.tools
 
 TEST_GROUP = "TEST_TEST"
 
@@ -52,13 +56,34 @@ def check_against_files(test_str):
     [ check_data_file(data_file, expected_result)
       for data_file, expected_result in data_files ]
 
-@with_setup(setup_func, teardown_func)
+@nose.tools.raises(iatidataquality.dqparsetests.TestSyntaxError)
+def check_data_files_w_tst_syntax_error(test_str):
+    return check_against_files(test_str)
+
+@nose.with_setup(setup_func, teardown_func)
 def test_do_checks():
     tests = [
         "title/text() exists?",
         "description/text() exists?",
-        "description/text) exists?",
-        "description/text) existz?"
         ]
 
     [ check_against_files(test) for test in tests ]
+
+
+@nose.with_setup(setup_func, teardown_func)
+def test_invalid_xpath_syntax():
+    tests = [
+        "description/text) exists?",
+        ]
+
+    for test_str in tests:
+        yield check_against_files, test_str
+
+@nose.with_setup(setup_func, teardown_func)
+def test_unrecognised_syntaxes():
+    tests = [
+        "description/text) existz?"
+        ]
+
+    for test_str in tests:
+        yield check_data_files_w_tst_syntax_error, test_str
