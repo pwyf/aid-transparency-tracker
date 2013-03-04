@@ -50,6 +50,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
         dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, True)
         from iatidataquality.dqparsetests import test_functions as tf
         test_functions = tf()
+
         for activity in data.findall('iati-activity'):
             try:
                 result_hierarchy = activity.get('hierarchy')
@@ -57,7 +58,11 @@ def check_file(file_name, runtime_id, package_id, context=None):
                 result_hierarchy = None
             result_identifier = activity.find('iati-identifier').text
             activity_data = etree.tostring(activity)
-            res = test_activity(runtime_id, package_id, result_identifier, activity_data, test_functions, result_hierarchy)
+
+            res = test_activity(runtime_id, package_id, 
+                                result_identifier, activity_data, 
+                                test_functions, result_hierarchy)
+
         db.session.commit()
         print "Aggregating results..."
         dqprocessing.aggregate_results(runtime_id, package_id)
