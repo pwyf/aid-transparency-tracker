@@ -403,3 +403,15 @@ def display_aggregate_results(package_id, runtime):
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
+
+
+def clear_revisions():
+    for pkg in models.Package.query.filter(
+        models.Package.package_revision_id!=None, 
+        models.Package.active == True
+        ).all():
+
+        pkg.package_revision_id = None
+        
+        db.session.add(pkg)
+    db.session.commit()
