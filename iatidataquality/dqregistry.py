@@ -78,9 +78,7 @@ def _refresh_packages():
                        ("name","package_name"),
                        ("title","package_title")
                        ]
-        try:
-            assert len(data["results"]) >= 1
-        except AssertionError:
+        if len(data["results"]) < 1:
             break
         for package in data["results"]:
             pkg = models.Package.query.filter_by(
