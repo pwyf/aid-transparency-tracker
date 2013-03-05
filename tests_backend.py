@@ -8,7 +8,7 @@ from iatidataquality import models, db, dqprocessing, dqparsetests, \
     dqfunctions, queue
 from iatidataquality.dqprocessing import add_hardcoded_result
 from lxml import etree
-
+from iatidataquality.util import ensure_download_dir
 
 
 # FIXME: this should be in config
@@ -101,11 +101,6 @@ def callback_fn(ch, method, properties, body):
 if __name__ == '__main__':
     print "Starting up..."
     directory = config.DATA_STORAGE_DIR
-    if not os.path.exists(directory):
-        try:
-            os.makedirs(directory)
-        except Exception, e:
-            print "Failed:", e
-            print "Couldn't create directory"
+    ensure_download_dir(directory)
     while True:
         queue.handle_queue(download_queue, callback_fn)
