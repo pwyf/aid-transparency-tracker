@@ -4,6 +4,8 @@ import urllib2
 import models
 import json
 
+import util
+
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
 CKANurl = 'http://iatiregistry.org/api'
@@ -63,49 +65,50 @@ def create_package_group(group, handle_country=True):
     db.session.commit()
     return pg
 
-def refresh_packages():
-    try:
-        offset = 0
-        while True:
-            data = urllib2.urlopen(REGISTRY_URL % (offset), timeout=60).read()
-            print (REGISTRY_URL % (offset))
-            data = json.loads(data)
+def _refresh_packages():
+    offset = 0
+    while True:
+        data = urllib2.urlopen(REGISTRY_URL % (offset), timeout=60).read()
+        print (REGISTRY_URL % (offset))
+        data = json.loads(data)
             
-            # Don't get revision ID; 
-            # empty var will trigger download of file elsewhere
-            components = [ ("id","package_ckan_id"),
-                           ("name","package_name"),
-                           ("title","package_title")
-                ]
+        # Don't get revision ID; 
+        # empty var will trigger download of file elsewhere
+        components = [ ("id","package_ckan_id"),
+                       ("name","package_name"),
+                       ("title","package_title")
+                       ]
+        try:
+            assert len(data["results"]) >= 1
+        except AssertionError:
+            break
+        for package in data["results"]:
+            pkg = models.Package.query.filter_by(
+                package_name=package['name']).first()
+            if (pkg is None):
+                pkg = models.Package()
+            for attr, key in components:
+                setattr(pkg, key, package[attr])
             try:
-                assert len(data["results"]) >= 1
-            except AssertionError:
-                break
-            for package in data["results"]:
-                pkg = models.Package.query.filter_by(
-                    package_name=package['name']).first()
-                if (pkg is None):
-                    pkg = models.Package()
-                for attr, key in components:
-                    setattr(pkg, key, package[attr])
+                # there is a group, so use that group ID, or create one
+                group = package['groups'][0]
                 try:
-                    # there is a group, so use that group ID, or create one
-                    group = package['groups'][0]
-                    try:
-                        pg = models.PackageGroup.query.filter_by(
-                            name=group).first()
-                        pkg.package_group = pg.id
-                    except Exception, e:
-                        pg = create_package_group(group)
-                        pkg.package_group = pg.id
+                    pg = models.PackageGroup.query.filter_by(
+                        name=group).first()
+                    pkg.package_group = pg.id
                 except Exception, e:
-                    pass
-                pkg.man_auto = 'auto'
-                db.session.add(pkg)
-            db.session.commit()
-            offset +=1000
-    except Exception, e:
-        print "Couldn't open Registry", e
+                    pg = create_package_group(group)
+                    pkg.package_group = pg.id
+            except Exception, e:
+                pass
+            pkg.man_auto = 'auto'
+            db.session.add(pkg)
+        db.session.commit()
+        offset += 1000
+
+def refresh_packages():
+    with util.report_error(None, "Couldn't open Registry"):
+        return _refresh_packages()
 
 def activate_packages(data, clear_revision_id=None):
     for package_name, active in data:
