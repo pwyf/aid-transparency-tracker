@@ -39,12 +39,10 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         ]
 
     for attr, key in mapping:
-        try:
+        with report_error(None, None):
             setattr(package, attr, pkg[key])
-        except Exception:
-            pass
 
-    try:
+    with report_error(None, None):
         # there is a group, so use that group ID, or create one
         group = pkg['groups'][0]
         try:
@@ -53,19 +51,15 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         except Exception, e:
             pg = create_package_group(group, handle_country=False)
             package.package_group = pg.id
-    except Exception, e:
-        pass
 
     fields = [ 
         "activity_period-from", "activity_period-to",
         "activity_count", "country", "filetype", "verified" 
         ]
     for field in fields:
-        try:
+        with report_error(None, None):
             field_name = "package_" + field.replace("-", "_")
             setattr(package, field_name, pkg["extras"][field])
-        except Exception, e:
-            pass
 
     db.session.add(package)
     db.session.commit()
