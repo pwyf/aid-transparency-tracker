@@ -21,58 +21,55 @@ def fixURL(url):
     return url
 
 def metadata_to_db(pkg, package_name, success, runtime_id):
-    try:
-        package = models.Package.query.filter_by(
-            package_name=package_name).first()
+    package = models.Package.query.filter_by(
+        package_name=package_name).first()
 
-        package.man_auto = 'auto'
-        package.source_url = pkg['resources'][0]['url']
+    package.man_auto = 'auto'
+    package.source_url = pkg['resources'][0]['url']
 
-        mapping = [
-            ("package_ckan_id", "id"),
-            ("package_name", "name"),
-            ("package_title", "title"),
-            ("package_license_id", "license_id"),
-            ("package_license", "license"),
-            ("package_metadata_created", "metadata_created"),
-            ("package_metadata_modified", "metadata_modified"),
-            ("package_revision_id", "revision_id")
-            ]
+    mapping = [
+        ("package_ckan_id", "id"),
+        ("package_name", "name"),
+        ("package_title", "title"),
+        ("package_license_id", "license_id"),
+        ("package_license", "license"),
+        ("package_metadata_created", "metadata_created"),
+        ("package_metadata_modified", "metadata_modified"),
+        ("package_revision_id", "revision_id")
+        ]
 
-        for attr, key in mapping:
-            try:
-                setattr(package, attr, pkg[key])
-            except Exception:
-                pass
-
+    for attr, key in mapping:
         try:
-            # there is a group, so use that group ID, or create one
-            group = pkg['groups'][0]
-            try:
-                pg = models.PackageGroup.query.filter_by(name=group).first()
-                package.package_group = pg.id
-            except Exception, e:
-                pg = create_package_group(group, handle_country=False)
-                package.package_group = pg.id
+            setattr(package, attr, pkg[key])
+        except Exception:
+            pass
+
+    try:
+        # there is a group, so use that group ID, or create one
+        group = pkg['groups'][0]
+        try:
+            pg = models.PackageGroup.query.filter_by(name=group).first()
+            package.package_group = pg.id
+        except Exception, e:
+            pg = create_package_group(group, handle_country=False)
+            package.package_group = pg.id
+    except Exception, e:
+        pass
+
+    fields = [ 
+        "activity_period-from", "activity_period-to",
+        "activity_count", "country", "filetype", "verified" 
+        ]
+    for field in fields:
+        try:
+            field_name = "package_" + field.replace("-", "_")
+            setattr(package, field_name, pkg["extras"][field])
         except Exception, e:
             pass
 
-        fields = [ 
-            "activity_period-from", "activity_period-to",
-            "activity_count", "country", "filetype", "verified" 
-            ]
-        for field in fields:
-            try:
-                field_name = "package_" + field.replace("-", "_")
-                setattr(package, field_name, pkg["extras"][field])
-            except Exception, e:
-                pass
-
-        db.session.add(package)
-        db.session.commit()
-        add_hardcoded_result(-2, runtime_id, package.id, success)
-    except Exception, e:
-        print "Error in metadata_to_db:", e
+    db.session.add(package)
+    db.session.commit()
+    add_hardcoded_result(-2, runtime_id, package.id, success)
 
 def actually_save_file(package_name, orig_url, pkg, runtime_id):
     # `pkg` is a CKAN dataset
