@@ -6,6 +6,8 @@ import json
 
 import util
 
+from dqfunctions import packages_from_registry
+
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
 CKANurl = 'http://iatiregistry.org/api'
@@ -66,43 +68,36 @@ def create_package_group(group, handle_country=True):
     return pg
 
 def _refresh_packages():
-    offset = 0
-    while True:
-        data = urllib2.urlopen(REGISTRY_URL % (offset), timeout=60).read()
-        print (REGISTRY_URL % (offset))
-        data = json.loads(data)
-            
-        # Don't get revision ID; 
-        # empty var will trigger download of file elsewhere
-        components = [ ("id","package_ckan_id"),
-                       ("name","package_name"),
-                       ("title","package_title")
-                       ]
-        if len(data["results"]) < 1:
-            break
-        for package in data["results"]:
-            pkg = models.Package.query.filter_by(
-                package_name=package['name']).first()
-            if (pkg is None):
-                pkg = models.Package()
-            for attr, key in components:
-                setattr(pkg, key, package[attr])
+    # Don't get revision ID; 
+    # empty var will trigger download of file elsewhere
+    components = [ ("id","package_ckan_id"),
+                   ("name","package_name"),
+                   ("title","package_title")
+                   ]
+
+    for package in packages_from_registry(REGISTRY_URL):
+        pkg = models.Package.query.filter_by(
+            package_name=package['name']).first()
+        if (pkg is None):
+            pkg = models.Package()
+        for attr, key in components:
+            setattr(pkg, key, package[attr])
+        try:
+            # there is a group, so use that group ID, or create one
+            group = package['groups'][0]
             try:
-                # there is a group, so use that group ID, or create one
-                group = package['groups'][0]
-                try:
-                    pg = models.PackageGroup.query.filter_by(
-                        name=group).first()
-                    pkg.package_group = pg.id
-                except Exception, e:
-                    pg = create_package_group(group)
-                    pkg.package_group = pg.id
+                pg = models.PackageGroup.query.filter_by(
+                    name=group).first()
+                pkg.package_group = pg.id
             except Exception, e:
-                pass
-            pkg.man_auto = 'auto'
-            db.session.add(pkg)
-            db.session.commit()
-        offset += 1000
+                pg = create_package_group(group)
+                pkg.package_group = pg.id
+        except Exception, e:
+            pass
+        pkg.man_auto = 'auto'
+        db.session.add(pkg)
+        db.session.commit()
+
 
 def refresh_packages():
     with util.report_error(None, "Couldn't open Registry"):

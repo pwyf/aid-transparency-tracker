@@ -1,4 +1,7 @@
 
+import json
+import urllib2
+
 from iatidataquality import db
 import models
 
@@ -190,3 +193,18 @@ def clear_revisions():
         
         db.session.add(pkg)
     db.session.commit()
+
+def packages_from_registry(registry_url):
+    offset = 0
+    while True:
+        data = urllib2.urlopen(REGISTRY_URL % (offset), timeout=60).read()
+        print (REGISTRY_URL % (offset))
+        data = json.loads(data)
+
+        if len(data["results"]) < 1:
+            break          
+
+        for pkg in data["results"]:
+            yield pkg
+
+        offset += 1000

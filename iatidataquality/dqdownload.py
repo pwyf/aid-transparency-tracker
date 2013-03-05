@@ -5,10 +5,12 @@ from datetime import date, datetime
 
 from iatidataquality import db
 
-import models, dqfunctions
+import models
+from dqfunctions import add_test_status, packages_from_registry
 
 download_queue = 'iati_download_queue'
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title,revision_id&offset=%s&limit=1000"
+
 
 def run(package_name=None):
     runtime = models.Runtime()
@@ -17,21 +19,8 @@ def run(package_name=None):
     # Get list of packages from DB
     if (package_name is None):
         # Check registry for packages list
-        registry_packages = []
-        offset = 0
-        while True:  
-            data = urllib2.urlopen(REGISTRY_URL % (offset), timeout=60).read()
-            print (REGISTRY_URL % (offset))
-            data = json.loads(data)
-
-            if len(data["results"]) < 1:
-                break          
-
-            [ registry_packages.append(
-                    (pkg['name'], pkg['revision_id'])
-                    ) for pkg in data["results"] ]
-
-            offset += 1000
+        registry_packages = [ (pkg["name"], pkg["revision_id"]) 
+                              for pkg in packages_from_registry(REGISTRY_URL) ]
 
         print "Found", len(registry_packages),"packages on the IATI Registry"
         print "Checking for updates, calculating and queuing packages;"
@@ -48,17 +37,17 @@ def run(package_name=None):
         print "Testing",len(testing_packages),"packages"
         print "Writing status of packages..."
         for tp in testing_packages:
-            dqfunctions.add_test_status(tp, 1, commit=False)
+            add_test_status(tp, 1, commit=False)
         db.session.commit()
     else:    
         package = models.Package.query.filter_by(
             package_name=package_name).first()
-        dqfunctions.add_test_status(package.id, 1)
+        add_test_status(package.id, 1)
         CKANurl = 'http://iatiregistry.org/api'
         registry = ckanclient.CkanClient(base_location=CKANurl)  
         pkg = registry.package_entity_get(package.package_name)
         if pkg['revision_id'] == package.package_revision_id:
-            dqfunctions.add_test_status(package.id, 4)
+            add_test_status(package.id, 4)
         else:
             get_package(package, runtime.id)
 
