@@ -24,9 +24,7 @@ def run(package_name=None):
             print (REGISTRY_URL % (offset))
             data = json.loads(data)
 
-            try:
-                assert len(data["results"]) >= 1
-            except AssertionError:
+            if len(data["results"]) < 1:
                 break          
 
             [ registry_packages.append(
