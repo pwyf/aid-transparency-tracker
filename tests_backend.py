@@ -17,11 +17,13 @@ download_queue='iati_tests_queue'
 def aggregate_results(runtime, package_id):
     return dqprocessing.aggregate_results(runtime, package_id)
 
-def test_activity(runtime_id, package_id, result_identifier, data, test_functions, result_hierarchy):
+def test_activity(runtime_id, package_id, result_identifier, data, 
+                  test_functions, result_hierarchy):
     xmldata = etree.fromstring(data)
 
     tests = models.Test.query.filter(models.Test.active == True).all()
-    conditions = models.TestCondition.query.filter(models.TestCondition.active == True).all()
+    conditions = models.TestCondition.query.filter(
+        models.TestCondition.active == True).all()
     
     for test in tests:
         if not test.id in test_functions:
@@ -34,7 +36,7 @@ def test_activity(runtime_id, package_id, result_identifier, data, test_function
         # If an exception is not caught in test functions,
         # it should not count against the publisher
         except Exception:
-            the_result=2
+            the_result = 2
 
         newresult = models.Result()
         newresult.runtime_id = runtime_id
