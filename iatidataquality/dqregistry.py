@@ -101,7 +101,7 @@ def _refresh_packages():
                 pass
             pkg.man_auto = 'auto'
             db.session.add(pkg)
-        db.session.commit()
+            db.session.commit()
         offset += 1000
 
 def refresh_packages():
