@@ -1,4 +1,5 @@
-from flask import Flask, render_template, flash, request, Markup, session, redirect, url_for, escape, Response, abort, send_file
+from flask import Flask, render_template, flash, request, Markup, \
+    session, redirect, url_for, escape, Response, abort, send_file
 import StringIO
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -98,7 +99,8 @@ def publisher_conditions(id=None):
 
 @app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
 def publisher_conditions_editor(id=None):
-    publishers = models.PackageGroup.query.order_by(models.PackageGroup.id).all()
+    publishers = models.PackageGroup.query.order_by(
+        models.PackageGroup.id).all()
     tests = models.Test.query.order_by(models.Test.id).all()
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
@@ -119,14 +121,17 @@ def publisher_conditions_editor(id=None):
         else:
             flash('Incorrect password', "error")
             pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
-            return render_template("publisher_condition_editor.html", pc=pc, publishers=publishers, tests=tests)
+            return render_template("publisher_condition_editor.html", 
+                                   pc=pc, publishers=publishers, tests=tests)
     else:
         pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
-        return render_template("publisher_condition_editor.html", pc=pc, publishers=publishers, tests=tests)
+        return render_template("publisher_condition_editor.html", 
+                               pc=pc, publishers=publishers, tests=tests)
 
 @app.route("/publisher_conditions/new/", methods=['GET', 'POST'])
 def publisher_conditions_new(id=None):
-    publishers = models.PackageGroup.query.order_by(models.PackageGroup.id).all()
+    publishers = models.PackageGroup.query.order_by(
+        models.PackageGroup.id).all()
     tests = models.Test.query.order_by(models.Test.id).all()
     if (request.method == 'POST'):
         pc = models.PublisherCondition()
@@ -146,13 +151,16 @@ def publisher_conditions_new(id=None):
             return redirect(url_for('publisher_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
-            return render_template("publisher_condition_editor.html", pc=pc, publishers=publishers, tests=tests)
+            return render_template("publisher_condition_editor.html", 
+                                   pc=pc, publishers=publishers, tests=tests)
     else:
-        return render_template("publisher_condition_editor.html", pc={}, publishers=publishers, tests=tests)
+        return render_template("publisher_condition_editor.html", 
+                               pc={}, publishers=publishers, tests=tests)
 
 @app.route("/publishers/")
 def publishers():
-    p_groups = models.PackageGroup.query.order_by(models.PackageGroup.name).all()
+    p_groups = models.PackageGroup.query.order_by(
+        models.PackageGroup.name).all()
 
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
     return render_template("publishers.html", p_groups=p_groups, pkgs=pkgs)
@@ -173,21 +181,26 @@ def publisher(id=None):
                                      models.AggregateResult.package_id,
                                      func.min(models.AggregateResult.runtime_id)
         ).filter(models.PackageGroup.id==p_group.id
-        ).group_by(models.AggregateResult.result_hierarchy, models.Test, models.AggregateResult.package_id
+        ).group_by(models.AggregateResult.result_hierarchy, models.Test, 
+                   models.AggregateResult.package_id
         ).join(models.AggregateResult
         ).join(models.Package
         ).join(models.PackageGroup
         ).all()
 
-    pconditions = models.PublisherCondition.query.filter_by(publisher_id=p_group.id).all()
+    pconditions = models.PublisherCondition.query.filter_by(
+        publisher_id=p_group.id).all()
 
-    aggregate_results = dqfunctions.agr_results(aggregate_results, conditions=pconditions, mode="publisher")
+    aggregate_results = dqfunctions.agr_results(aggregate_results, 
+                                                conditions=pconditions, 
+                                                mode="publisher")
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None
         aggregate_results = None"""
 
-    return render_template("publisher.html", p_group=p_group, pkgs=pkgs, results=aggregate_results, runtime=latest_runtime)
+    return render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
+                           results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/registry/refresh/")
 def registry_refresh():
@@ -239,7 +252,8 @@ def packages(id=None, runtime_id=None):
             flash("Updated packages", "success")
             return redirect(url_for('packages'))
         else:
-            pkgs = models.Package.query.filter_by(active=True).order_by(models.Package.package_name).all()
+            pkgs = models.Package.query.filter_by(active=True).order_by(
+                models.Package.package_name).all()
             return render_template("packages.html", pkgs=pkgs)
 
     # Get package data
@@ -256,7 +270,8 @@ def packages(id=None, runtime_id=None):
     else:
         # Get publisher-specific conditions.
 
-        pconditions = models.PublisherCondition.query.filter_by(publisher_id=p[1].id).all()
+        pconditions = models.PublisherCondition.query.filter_by(
+            publisher_id=p[1].id).all()
 
     # Get list of runtimes
     try:
@@ -298,14 +313,18 @@ def packages(id=None, runtime_id=None):
 
         flat_results = aggregate_results
 
-        aggregate_results = dqfunctions.agr_results(aggregate_results, pconditions)
+        aggregate_results = dqfunctions.agr_results(aggregate_results, 
+                                                    pconditions)
     else:
         aggregate_results = None
         pconditions = None
         flat_results = None
         latest_runtime = None
  
-    return render_template("package.html", p=p, runtimes=runtimes, results=aggregate_results, latest_runtime=latest_runtime, latest=latest, pconditions=pconditions, flat_results=flat_results)
+    return render_template("package.html", p=p, runtimes=runtimes, 
+                           results=aggregate_results, 
+                           latest_runtime=latest_runtime, latest=latest, 
+                           pconditions=pconditions, flat_results=flat_results)
 
 @app.route("/tests/import/", methods=['GET', 'POST'])
 def import_tests():
@@ -344,7 +363,9 @@ def import_publisher_conditions(step=None):
                     results = dqimportpublisherconditions.importPCs(url, False)
                 if (results):
                     flash('Parsed tests', "success")
-                    return render_template("import_publisher_conditions_step2.html", results=results, step=step)
+                    return render_template(
+                        "import_publisher_conditions_step2.html", 
+                        results=results, step=step)
                 else:
                     results = None
                     flash('There was an error importing your tests', "error")
@@ -360,7 +381,10 @@ def import_publisher_conditions(step=None):
             operation = request.form['pc['+row+'][operation]']
             condition = request.form['pc['+row+'][condition]']
             condition_value = request.form['pc['+row+'][condition_value]']
-            pc = models.PublisherCondition.query.filter_by(publisher_id=publisher_id, test_id=test_id, operation=operation, condition=condition, condition_value=condition_value).first()
+            pc = models.PublisherCondition.query.filter_by(
+                publisher_id=publisher_id, test_id=test_id, 
+                operation=operation, condition=condition, 
+                condition_value=condition_value).first()
             if (pc is None):
                 pc = models.PublisherCondition()
             pc.publisher_id=publisher_id
@@ -378,7 +402,8 @@ def import_publisher_conditions(step=None):
 
 @app.route("/publisher_conditions/export/")
 def export_publisher_conditions():
-    conditions = db.session.query(models.PublisherCondition.description).distinct().all()
+    conditions = db.session.query(
+        models.PublisherCondition.description).distinct().all()
     conditionstext = ""
     for i, condition in enumerate(conditions):
         if (i != 0):
