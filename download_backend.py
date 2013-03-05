@@ -8,6 +8,7 @@ import config
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
+CKANurl = 'http://iatiregistry.org/api'
 
 def fixURL(url):
     # helper function to replace spaces with %20 (otherwise fails with some servers, e.g. US)
@@ -20,9 +21,8 @@ def create_package_group(group):
     pg.man_auto="auto"
     
     # Query CKAN
-    url = 'http://iatiregistry.org/api'
     import ckanclient
-    registry = ckanclient.CkanClient(base_location=url)
+    registry = ckanclient.CkanClient(base_location=CKANurl)
     ckangroup = registry.group_entity_get(group)
 
     mapping = [
@@ -118,7 +118,6 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
 
 def save_file(package_id, package_name, runtime_id):
     
-    CKANurl = 'http://iatiregistry.org/api'
     registry = ckanclient.CkanClient(base_location=CKANurl)   
     try:
         pkg = registry.package_entity_get(package_name)
