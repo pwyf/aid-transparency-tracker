@@ -71,7 +71,8 @@ def refresh_packages():
             print (REGISTRY_URL % (offset))
             data = json.loads(data)
             
-            # Don't get revision ID; empty var will trigger download of file elsewhere
+            # Don't get revision ID; 
+            # empty var will trigger download of file elsewhere
             components = [ ("id","package_ckan_id"),
                            ("name","package_name"),
                            ("title","package_title")
@@ -81,7 +82,8 @@ def refresh_packages():
             except AssertionError:
                 break
             for package in data["results"]:
-                pkg = models.Package.query.filter_by(package_name=package['name']).first()
+                pkg = models.Package.query.filter_by(
+                    package_name=package['name']).first()
                 if (pkg is None):
                     pkg = models.Package()
                 for attr, key in components:
@@ -90,7 +92,8 @@ def refresh_packages():
                     # there is a group, so use that group ID, or create one
                     group = package['groups'][0]
                     try:
-                        pg = models.PackageGroup.query.filter_by(name=group).first()
+                        pg = models.PackageGroup.query.filter_by(
+                            name=group).first()
                         pkg.package_group = pg.id
                     except Exception, e:
                         pg = create_package_group(group)
