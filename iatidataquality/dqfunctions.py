@@ -197,8 +197,8 @@ def clear_revisions():
 def packages_from_registry(registry_url):
     offset = 0
     while True:
-        data = urllib2.urlopen(REGISTRY_URL % (offset), timeout=60).read()
-        print (REGISTRY_URL % (offset))
+        data = urllib2.urlopen(registry_url % (offset), timeout=60).read()
+        print (registry_url % (offset))
         data = json.loads(data)
 
         if len(data["results"]) < 1:
