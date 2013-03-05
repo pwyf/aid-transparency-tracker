@@ -11,7 +11,8 @@ download_queue = 'iati_download_queue'
 CKANurl = 'http://iatiregistry.org/api'
 
 def fixURL(url):
-    # helper function to replace spaces with %20 (otherwise fails with some servers, e.g. US)
+    # helper function to replace spaces with %20 
+    # (otherwise fails with some servers, e.g. US)
     url = url.replace(" ", "%20")
     return url
 
@@ -66,7 +67,9 @@ def create_package_group(group):
 
 def metadata_to_db(pkg, package_name, success, runtime_id):
     try:
-        package = models.Package.query.filter_by(package_name=package_name).first()
+        package = models.Package.query.filter_by(
+            package_name=package_name).first()
+
         package.man_auto = 'auto'
         package.source_url = pkg['resources'][0]['url']
 
@@ -127,7 +130,7 @@ def save_file(package_id, package_name, runtime_id):
         try:
             assert len(resources) == 1
         except Exception, e:
-            print "WARNING: more than one resource found. Will attempt to use the first one."
+            print "WARNING: multiple resources found; attempting to use first"
             pass
         url = resources[0]['url']
     except Exception, e:
