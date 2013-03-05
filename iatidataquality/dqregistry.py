@@ -6,15 +6,16 @@ import json
 
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
-def create_package_group(group):
+CKANurl = 'http://iatiregistry.org/api'
+
+def create_package_group(group, handle_country=True):
     pg = models.PackageGroup()
     pg.name = group
     pg.man_auto="auto"
     
     # Query CKAN
-    url = 'http://iatiregistry.org/api'
     import ckanclient
-    registry = ckanclient.CkanClient(base_location=url)
+    registry = ckanclient.CkanClient(base_location=CKANurl)
     ckangroup = registry.group_entity_get(group)
 
     mapping = [
@@ -35,10 +36,11 @@ def create_package_group(group):
     except Exception, e:
         pass
 
-    try:
-        pg.package_country = ckangroup['extras']['country']
-    except Exception, e:
-        pass
+    if handle_country:
+        try:
+            pg.package_country = ckangroup['extras']['country']
+        except Exception, e:
+            pass
 
     fields = [
         'publisher_iati_id', 'publisher_segmentation', 'publisher_type', 

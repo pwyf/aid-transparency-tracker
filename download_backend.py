@@ -7,7 +7,7 @@ import sys, os, json, ckan, urllib2, ckanclient
 from datetime import date, datetime
 from iatidataquality import models, db, dqruntests, queue
 from iatidataquality.dqprocessing import add_hardcoded_result
-
+from iatidataquality.dqregistry import create_package_group
 
 
 # FIXME: this should be in config
@@ -19,55 +19,6 @@ def fixURL(url):
     # (otherwise fails with some servers, e.g. US)
     url = url.replace(" ", "%20")
     return url
-
-def create_package_group(group):
-    pg = models.PackageGroup()
-    pg.name = group
-    pg.man_auto="auto"
-    
-    # Query CKAN
-    import ckanclient
-    registry = ckanclient.CkanClient(base_location=CKANurl)
-    ckangroup = registry.group_entity_get(group)
-
-    mapping = [
-        ("title", "title"),
-        ("ckan_id", "id"),
-        ("revision_id", "revision_id"),
-        ("created_date", "created"),
-        ("state", "state")
-        ]
-    for attr, key in mapping:
-        try:
-            setattr(pg, attr, ckangroup[key])
-        except Exception, e:
-            pass
-
-    try:
-        pg.license_id = ckangroup['extras']['publisher_license_id']
-    except Exception, e:
-        pass
-
-    fields = [
-        'publisher_iati_id', 'publisher_segmentation', 'publisher_type', 
-        'publisher_ui', 'publisher_organization_type', 
-        'publisher_frequency', 'publisher_thresholds', 'publisher_units', 
-        'publisher_contact', 'publisher_agencies', 
-        'publisher_field_exclusions', 'publisher_description', 
-        'publisher_record_exclusions', 'publisher_timeliness', 
-        'publisher_country', 'publisher_refs', 
-        'publisher_constraints', 'publisher_data_quality'
-        ]
-
-    for field in fields:
-        try:
-            setattr(pg, field, ckangroup['extras'][field])
-        except Exception, e:
-            pass
-
-    db.session.add(pg)
-    db.session.commit()
-    return pg
 
 def metadata_to_db(pkg, package_name, success, runtime_id):
     try:
@@ -101,7 +52,7 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
                 pg = models.PackageGroup.query.filter_by(name=group).first()
                 package.package_group = pg.id
             except Exception, e:
-                pg = create_package_group(group)
+                pg = create_package_group(group, handle_country=False)
                 package.package_group = pg.id
         except Exception, e:
             pass
