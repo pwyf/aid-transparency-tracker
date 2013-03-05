@@ -1,5 +1,6 @@
 
 import contextlib
+import os
 
 @contextlib.contextmanager
 def report_error(success, failure):
@@ -12,3 +13,8 @@ def report_error(success, failure):
             print failure, e
     finally:
         pass
+
+def ensure_download_dir(directory):
+    if not os.path.exists(directory):
+        with report_error(None, "Couldn't create directory"):
+            os.makedirs(directory)

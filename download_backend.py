@@ -8,7 +8,7 @@ from datetime import date, datetime
 from iatidataquality import models, db, dqruntests, queue
 from iatidataquality.dqprocessing import add_hardcoded_result
 from iatidataquality.dqregistry import create_package_group
-from iatidataquality.util import report_error
+from iatidataquality.util import report_error, ensure_download_dir
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
@@ -131,12 +131,7 @@ def callback_fn(ch, method, properties, body):
 if __name__ == '__main__':
     print "Starting up..."
     directory = config.DATA_STORAGE_DIR
-    if not os.path.exists(directory):
-        try:
-            os.makedirs(directory)
-        except Exception, e:
-            print "Failed:", e
-            print "Couldn't create directory"
+    ensure_download_dir(directory)
     while True:
         queue.handle_queue(download_queue, callback_fn)
 
