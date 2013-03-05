@@ -4,7 +4,7 @@ python:
 services:
   - rabbitmq
 install:
-  - pip install -r requirements.txt -e .
+  - pip install -r requirements.txt --use-mirrors
 before_script:
   - cp config.py.tmpl config.py
   - python quickstart.py
