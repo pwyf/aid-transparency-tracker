@@ -34,7 +34,14 @@ def main():
     p.add_option("--clear-revisionid", dest="clear_revisionid", 
                  action="store_true",
                  help="Clear CKAN revision ids")
+    p.add_option("--drop-db", dest="drop_all",
+                  action="store_true",
+                  help="Delete DB")
     options, args = p.parse_args()
+
+    if options.drop_all:
+        iatidataquality.db.drop_all()
+        return
 
     if options.clear_revisionid:
         iatidataquality.dqfunctions.clear_revisions()
