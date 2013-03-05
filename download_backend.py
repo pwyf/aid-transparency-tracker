@@ -75,22 +75,20 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         print "Error in metadata_to_db:", e
 
 def save_file(package_id, package_name, runtime_id):
-    
     registry = ckanclient.CkanClient(base_location=CKANurl)   
     try:
         pkg = registry.package_entity_get(package_name)
         resources = pkg.get('resources', [])
-        if resources == []:
-            return
-        try:
-            assert len(resources) == 1
-        except Exception, e:
-            print "WARNING: multiple resources found; attempting to use first"
-            pass
-        url = resources[0]['url']
     except Exception, e:
-        print "Couldn't get URL from CKAN for package", package_name,e
+        print "Couldn't get URL from CKAN for package", package_name, e
         return
+
+    if resources == []:
+        return
+    if len(resources) > 1:
+        print "WARNING: multiple resources found; attempting to use first"
+
+    url = resources[0]['url']
 
     # `package` is models.Packaege
     # `pkg` is a CKAN dataset
@@ -100,6 +98,7 @@ def save_file(package_id, package_name, runtime_id):
 
         print "Attempting to fetch package", package_name, "from", url
         url = fixURL(url)
+
         try:
             path = os.path.join(directory, package_name + '.xml')
             with file(path, 'w') as localFile:
@@ -111,16 +110,19 @@ def save_file(package_id, package_name, runtime_id):
         except urllib2.URLError, e:
             success = False
             print "  Couldn't fetch URL"
+
         try:
             metadata_to_db(pkg, package_name, success, runtime_id)
             print "  Wrote metadata to DB"
         except Exception, e:
             print "  Couldn't write metadata to DB"
+
         try:
             dqruntests.start_testing(package_name)
             print "  Package tested"
         except Exception, e:
             print "  Couldn't test package",package_name,e
+
     except Exception, e:
         pass
 
