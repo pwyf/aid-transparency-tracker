@@ -1,0 +1,12 @@
+language: python
+python:
+  - "2.7"
+services:
+  - mysql
+  - rabbitmq
+install:
+  - pip install -r requirements.txt -e .
+before_script:
+  - cp config.py.tmpl config.py
+  - python quickstart.py
+script: "nosetests --exclude tests unittests/test_runtests.py"
