@@ -1,10 +1,14 @@
 #!/usr/bin/env python
+
+# this line must precede ckan import
+import config
+
 import sys, os, json, ckan, urllib2, ckanclient
 from datetime import date, datetime
 from iatidataquality import models, db, dqruntests, queue
 from iatidataquality.dqprocessing import add_hardcoded_result
 
-import config
+
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
