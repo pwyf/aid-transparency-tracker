@@ -20,10 +20,12 @@ def load_packages(runtime, package_name=None):
         output.append(package.package_name)
 
     if (package_name is not None):
-        package = models.Package.query.filter_by(package_name=package_name).first()
+        package = models.Package.query.filter_by(
+            package_name=package_name).first()
         packages = [ package ]
     else:
-        packages = [ p for p in models.Package.query.filter_by(active=True).order_by(models.Package.id).all() ]
+        packages = models.Package.query.filter_by(
+            active=True).order_by(models.Package.id).all()
     [ load_package(pkg) for pkg in packages ]
 
     return {'testing_packages': output}
