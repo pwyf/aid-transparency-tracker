@@ -7,5 +7,5 @@ install:
   - pip install -r requirements.txt --use-mirrors
 before_script:
   - cp config.py.tmpl config.py
-  - python quickstart.py
+  - python quickstart.py --dont-refresh
 script: "nosetests --exclude tests unittests/test_runtests.py"
