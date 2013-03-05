@@ -8,7 +8,7 @@ from datetime import date, datetime
 from iatidataquality import models, db, dqruntests, queue
 from iatidataquality.dqprocessing import add_hardcoded_result
 from iatidataquality.dqregistry import create_package_group
-
+from iatidataquality.util import report_error
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
@@ -74,6 +74,34 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
     except Exception, e:
         print "Error in metadata_to_db:", e
 
+def actually_save_file(package_name, orig_url, pkg, runtime_id):
+    # `pkg` is a CKAN dataset
+    success = False
+    directory = config.DATA_STORAGE_DIR
+
+    print "Attempting to fetch package", package_name, "from", orig_url
+    url = fixURL(orig_url)
+
+    try:
+        path = os.path.join(directory, package_name + '.xml')
+        with file(path, 'w') as localFile:
+            webFile = urllib2.urlopen(url)
+            localFile.write(webFile.read())
+            webFile.close()
+            success = True
+            print "  Downloaded, processing..."
+    except urllib2.URLError, e:
+        success = False
+        print "  Couldn't fetch URL"
+
+    with report_error("  Wrote metadata to DB", 
+                      "  Couldn't write metadata to DB"):
+        metadata_to_db(pkg, package_name, success, runtime_id)
+
+    with report_error("  Package tested",
+                      "  Couldn't test package %s" % package_name):
+        dqruntests.start_testing(package_name)
+
 def save_file(package_id, package_name, runtime_id):
     registry = ckanclient.CkanClient(base_location=CKANurl)   
     try:
@@ -90,41 +118,8 @@ def save_file(package_id, package_name, runtime_id):
 
     url = resources[0]['url']
 
-    # `package` is models.Packaege
-    # `pkg` is a CKAN dataset
-    try:
-        success = False
-        directory = config.DATA_STORAGE_DIR
-
-        print "Attempting to fetch package", package_name, "from", url
-        url = fixURL(url)
-
-        try:
-            path = os.path.join(directory, package_name + '.xml')
-            with file(path, 'w') as localFile:
-                webFile = urllib2.urlopen(url)
-                localFile.write(webFile.read())
-                webFile.close()
-                success = True
-                print "  Downloaded, processing..."
-        except urllib2.URLError, e:
-            success = False
-            print "  Couldn't fetch URL"
-
-        try:
-            metadata_to_db(pkg, package_name, success, runtime_id)
-            print "  Wrote metadata to DB"
-        except Exception, e:
-            print "  Couldn't write metadata to DB"
-
-        try:
-            dqruntests.start_testing(package_name)
-            print "  Package tested"
-        except Exception, e:
-            print "  Couldn't test package",package_name,e
-
-    except Exception, e:
-        pass
+    with report_error(None, None):
+        actually_save_file(package_name, url, pkg, runtime_id)
 
 def dequeue_download(body):
     args = json.loads(body)
