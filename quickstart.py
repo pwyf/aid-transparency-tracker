@@ -10,7 +10,7 @@ import iatidataquality
 
 from iatidataquality import models, dqregistry 
 import iatidataquality.dqfunctions
-
+import iatidataquality.dqimporttests
 
 import optparse
 import sys
@@ -37,10 +37,23 @@ def main():
     p.add_option("--drop-db", dest="drop_all",
                   action="store_true",
                   help="Delete DB")
+    p.add_option("--enroll-tests", dest="enroll_tests",
+                 help="Enroll a CSV file of tests")
+    p.add_option("--level", dest="level",
+                 type="int",
+                 default=1,
+                 help="Test level (e.g., 1 == Activity)")
+
     options, args = p.parse_args()
 
     if options.drop_all:
         iatidataquality.db.drop_all()
+        return
+
+    if options.enroll_tests:
+        iatidataquality.dqimporttests.importTests(
+            filename=options.enroll_tests, 
+            level=options.level)
         return
 
     if options.clear_revisionid:
