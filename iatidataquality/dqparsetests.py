@@ -103,19 +103,26 @@ def test_functions():
     tests = itertools.ifilter(lambda test: test.test_level == 1, tests)
     tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
 
+    def get_mappings(ms, line):
+        for regex, lam in ms:
+            yield regex.match(line), lam
+
+    first_true = lambda tupl: bool(tupl.__getitem__(0))
+
     for test in tests:
         line = test.name
         test_id = test.id
 
-        for regex, lam in mappings:
-            m = regex.match(line)
-            if m:
-                f = lam(m.groups())
-                if f == None:
-                    raise TestSyntaxError(line)
+        match_data = get_mappings(mappings, line)
+        matching_mappings = itertools.ifilter(first_true, match_data)
 
-                test_functions[test_id] = f
-                break
+        try:
+            m, lam = matching_mappings.next()
+        except StopIteration:
+            raise TestSyntaxError(line)
 
+        f = lam(m.groups())
 
+        test_functions[test_id] = f
+        
     return test_functions
