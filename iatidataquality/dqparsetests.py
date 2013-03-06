@@ -89,10 +89,13 @@ def test_functions():
     def fail(line):
         return None
 
-    tests = models.Test.query.filter(models.Test.active == True).all()
+    def get_active_tests():
+        for test in models.Test.query.filter(models.Test.active == True).all():
+            yield test
 
     test_functions = {}
-    for test in tests:
+
+    for test in get_active_tests():
         if test.test_level == 1:
             line = test.name
             if comment.match(line) or blank.match(line):
