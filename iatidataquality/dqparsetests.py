@@ -5,25 +5,23 @@ import iatidataquality.models as models
 
 class TestSyntaxError(Exception): pass
 
-mappings = []
-
-def add(regex):
-    def append_to_mappings(fn):
-        global mappings
-        mappings.append((re.compile(regex),fn))
-        return fn
-    return append_to_mappings
-
-def add_partial(regex):
-    def append_to_mappings(fn):
-        global mappings
-        def partial_fn(groups):
-            return partial(fn, groups=groups)
-        mappings.append((re.compile(regex), partial_fn))
-        return fn
-    return append_to_mappings
 
 def test_functions():
+    mappings = []
+
+    def add(regex):
+        def append_to_mappings(fn):
+            mappings.append((re.compile(regex),fn))
+            return fn
+        return append_to_mappings
+
+    def add_partial(regex):
+        def append_to_mappings(fn):
+            def partial_fn(groups):
+                return partial(fn, groups=groups)
+            mappings.append((re.compile(regex), partial_fn))
+            return fn
+        return append_to_mappings
 
     @add('(\S*) is an? (.*)\?')
     def is_an(groups):
@@ -73,11 +71,13 @@ def test_functions():
 
     @add_partial('only one of (\S*) or (\S*) exists\?')
     def exist_xor(activity, groups):
-        return (exist_check(activity, groups[0]) != exist_check(activity, groups[1]))
+        return (exist_check(activity, groups[0]) != 
+                exist_check(activity, groups[1]))
 
     @add_partial('(\S*) or (\S*) exists\?')
     def exist_or(activity, groups):
-        return (exist_check(activity, groups[0]) or exist_check(activity, groups[1]))
+        return (exist_check(activity, groups[0]) or 
+                exist_check(activity, groups[1]))
 
     @add_partial('(\S*) exists\?') 
     def exist(activity, groups):
@@ -106,4 +106,6 @@ def test_functions():
                     else:
                         test_functions[test.id] = f
                     break
+
+
     return test_functions
