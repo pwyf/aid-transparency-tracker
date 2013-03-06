@@ -107,10 +107,10 @@ def test_functions():
         line = test.name
         test_id = test.id
 
-        for mapping in mappings:
-            m = mapping[0].match(line)
+        for regex, lam in mappings:
+            m = regex.match(line)
             if m:
-                f = mapping[1](m.groups())
+                f = lam(m.groups())
                 if f == None:
                     raise TestSyntaxError(line)
 
