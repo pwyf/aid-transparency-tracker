@@ -111,7 +111,6 @@ def test_functions():
 
     def function_for_test(test):
         line = test.name
-        test_id = test.id
 
         match_data = get_mappings(mappings, line)
         matching_mappings = itertools.ifilter(first_true, match_data)
@@ -123,10 +122,10 @@ def test_functions():
 
         f = lam(m.groups())
 
-        return test_id, f
+        return f
 
     for test in tests:
-        test_id, f = function_for_test(test)
-        test_functions[test_id] = f
+        f = function_for_test(test)
+        test_functions[test.id] = f
 
     return test_functions
