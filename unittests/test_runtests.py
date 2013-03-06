@@ -1,5 +1,6 @@
 import os
 import sys
+import csv
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
@@ -72,6 +73,17 @@ def test_do_checks():
         ]
 
     [ check_against_files(test) for test in tests ]
+
+@nose.with_setup(setup_func, teardown_func)
+def test_checks_from_csv():
+    filename = os.path.join(os.path.dirname(__file__),
+                            "activity_tests.csv")
+
+    with file(filename) as f:
+        reader = csv.reader(f)
+        header = reader.next() # i.e., discard first line
+        for test_str, description, group in reader:
+            yield check_against_files, test_str
 
 
 @nose.with_setup(setup_func, teardown_func)
