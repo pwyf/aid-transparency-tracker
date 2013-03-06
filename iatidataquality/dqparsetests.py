@@ -120,9 +120,7 @@ def test_functions():
         except StopIteration:
             raise TestSyntaxError(line)
 
-        f = lam(m.groups())
-
-        return f
+        return lam(m.groups())
 
     def id_of_test(test): return test.id
 
