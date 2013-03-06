@@ -16,3 +16,4 @@ build
 data/*
 config.py
 supervisord.conf
+bin/*
