@@ -97,17 +97,17 @@ def test_functions():
         for test in models.Test.query.filter(models.Test.active == True).all():
             yield test
 
-    test_functions = {}
-
-    tests = get_active_tests()
-    tests = itertools.ifilter(lambda test: test.test_level == 1, tests)
-    tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
-
     def get_mappings(ms, line):
         for regex, lam in ms:
             yield regex.match(line), lam
 
     first_true = lambda tupl: bool(tupl.__getitem__(0))
+
+    test_functions = {}
+
+    tests = get_active_tests()
+    tests = itertools.ifilter(lambda test: test.test_level == 1, tests)
+    tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
 
     for test in tests:
         line = test.name
