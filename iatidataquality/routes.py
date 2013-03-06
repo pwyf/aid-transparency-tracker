@@ -51,12 +51,13 @@ def tests_editor(id=None):
 def tests_new(id=None):
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            test = models.Test()
-            test.name = request.form['name']
-            test.description = request.form['description']
-            test.test_level = request.form['test_level']
-            test.active = request.form['active']
-            test.test_group = request.form['test_group']
+            test = models.Test(
+                name = request.form['name'],
+                description = request.form['description'],
+                test_group = request.form['test_group'],
+                test_level = request.form['test_level'],
+                active = request.form['active']
+                )
             db.session.add(test)
             db.session.commit()
             flash('Updated', "success")

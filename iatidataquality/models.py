@@ -144,6 +144,21 @@ class Test(db.Model):
     test_level = Column(Integer)
     active = Column(Boolean)
 
+    def __init__(self,
+                 name,
+                 description,
+                 test_group,
+                 test_level,
+                 active,
+                 id=None):
+        self.name = name
+        self.description = description
+        self.test_group = test_group
+        self.test_level = test_level
+        self.active = active
+        if id is not None:
+            self.id = id
+
     def __repr__(self):
         return self.name+u', '+unicode(self.id)
 

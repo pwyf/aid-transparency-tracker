@@ -34,12 +34,13 @@ def teardown_func():
     db.session.commit()
 
 def create_tst(name):
-    test = iatidataquality.models.Test()
-    test.name = name
-    test.active = True
-    test.description = "Test FN"
-    test.test_group = "TEST_TEST"
-    test.test_level=1
+    test = iatidataquality.models.Test(
+        name = name,
+        description = "Test FN",
+        test_group = "TEST_TEST",
+        test_level = 1,
+        active = True
+        )
     db.session.add(test)
     db.session.commit()
     return test

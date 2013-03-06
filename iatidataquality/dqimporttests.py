@@ -13,12 +13,14 @@ def hardcodedTests():
     for hardcoded_test in hardcoded_tests:
         if models.Test.query.filter(models.Test.id==hardcoded_test[0]).first():
             continue
-        test = models.Test()
-        test.id = hardcoded_test[0]
-        test.name = hardcoded_test[1]
-        test.description =  hardcoded_test[2]
-        test.test_level = 2 # File
-        test.active = True
+        test = models.Test(
+            name = hardcoded_test[1],
+            description = hardcoded_test[2],
+            test_group = None,
+            test_level = 2,
+            active = True,
+            id = hardcoded_test[0]
+            )
         db.session.add(test)
         db.session.commit()
 
