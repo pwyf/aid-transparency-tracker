@@ -9,6 +9,9 @@ class TestSyntaxError(Exception): pass
 comment = re.compile('#')
 blank = re.compile('^$')
 
+def ignore_line(line):
+    return bool(comment.match(line) or blank.match(line))
+
 def test_functions():
     mappings = []
 
@@ -98,11 +101,10 @@ def test_functions():
 
     tests = get_active_tests()
     tests = itertools.ifilter(lambda test: test.test_level == 1, tests)
+    tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
 
     for test in tests:
         line = test.name
-        if comment.match(line) or blank.match(line):
-            continue
         for mapping in mappings:
             m = mapping[0].match(line)
             if m:
