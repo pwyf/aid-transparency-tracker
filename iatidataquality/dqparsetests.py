@@ -105,14 +105,16 @@ def test_functions():
 
     for test in tests:
         line = test.name
+        test_id = test.id
+
         for mapping in mappings:
             m = mapping[0].match(line)
             if m:
                 f = mapping[1](m.groups())
                 if f == None:
                     raise TestSyntaxError(line)
-                else:
-                    test_functions[test.id] = f
+
+                test_functions[test_id] = f
                 break
 
 
