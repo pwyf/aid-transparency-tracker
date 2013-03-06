@@ -10,8 +10,7 @@ blank = re.compile('^$')
 def ignore_line(line):
     return bool(comment.match(line) or blank.match(line))
 
-
-def generate_test_functions(tests):
+def generate_mappings():
     mappings = []
 
     def add(regex):
@@ -92,6 +91,10 @@ def generate_test_functions(tests):
     def fail(line):
         return None
 
+    return mappings
+
+def generate_test_functions(tests):
+    mappings = generate_mappings()
 
     def get_mappings(ms, line):
         for regex, lam in ms:
