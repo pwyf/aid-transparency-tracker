@@ -34,6 +34,9 @@ def main():
     p.add_option("--clear-revisionid", dest="clear_revisionid", 
                  action="store_true",
                  help="Clear CKAN revision ids")
+    p.add_option("--init-db", dest="init_db",
+                  action="store_true",
+                  help="Initialise DB")
     p.add_option("--drop-db", dest="drop_all",
                   action="store_true",
                   help="Delete DB")
@@ -48,6 +51,10 @@ def main():
 
     if options.drop_all:
         iatidataquality.db.drop_all()
+        return
+
+    if options.init_db:
+        iatidataquality.db.create_all()
         return
 
     if options.enroll_tests:
