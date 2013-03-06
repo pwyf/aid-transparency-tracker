@@ -12,7 +12,14 @@ blank = re.compile('^$')
 def ignore_line(line):
     return bool(comment.match(line) or blank.match(line))
 
+def get_active_tests():
+    for test in models.Test.query.filter(models.Test.active == True).all():
+        yield test
+
 def test_functions():
+    return generate_test_functions(get_active_tests())
+
+def generate_test_functions(tests):
     mappings = []
 
     def add(regex):
@@ -93,9 +100,6 @@ def test_functions():
     def fail(line):
         return None
 
-    def get_active_tests():
-        for test in models.Test.query.filter(models.Test.active == True).all():
-            yield test
 
     def get_mappings(ms, line):
         for regex, lam in ms:
@@ -105,7 +109,6 @@ def test_functions():
 
     test_functions = {}
 
-    tests = get_active_tests()
     tests = itertools.ifilter(lambda test: test.test_level == 1, tests)
     tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
 
@@ -129,4 +132,4 @@ def test_functions():
         test_id = id_of_test(test)
         return test_id, f
 
-    return dict([ test_data(t) for t in tests ])
+    return dict(itertools.imap(test_data, tests))
