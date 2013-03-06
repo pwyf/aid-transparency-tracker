@@ -5,6 +5,8 @@ import iatidataquality.models as models
 
 class TestSyntaxError(Exception): pass
 
+comment = re.compile('#')
+blank = re.compile('^$')
 
 def test_functions():
     mappings = []
@@ -90,8 +92,6 @@ def test_functions():
     tests = models.Test.query.filter(models.Test.active == True).all()
 
     test_functions = {}
-    comment = re.compile('#')
-    blank = re.compile('^$')
     for test in tests:
         if test.test_level == 1:
             line = test.name
