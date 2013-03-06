@@ -18,10 +18,15 @@ import nose.tools
 TEST_GROUP = "TEST_TEST"
 
 def setup_func():
-    return None
+    tests = iatidataquality.models.Test.query.filter_by(
+        test_group=TEST_GROUP).all()
+    for test in tests:
+        db.session.delete(test)
+    db.session.commit()
 
 def teardown_func():
-    tests = iatidataquality.models.Test.query.filter_by(test_group=TEST_GROUP).all()
+    tests = iatidataquality.models.Test.query.filter_by(
+        test_group=TEST_GROUP).all()
     for test in tests:
         db.session.delete(test)
     db.session.commit()
