@@ -124,8 +124,11 @@ def test_functions():
 
         return f
 
-    for test in tests:
-        f = function_for_test(test)
-        test_functions[test.id] = f
+    def id_of_test(test): return test.id
 
-    return test_functions
+    def test_data(test):
+        f = function_for_test(test)
+        test_id = id_of_test(test)
+        return test_id, f
+
+    return dict([ test_data(t) for t in tests ])
