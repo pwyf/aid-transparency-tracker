@@ -14,7 +14,7 @@ python-dateutil==1.5
 wsgiref==0.1.2
 ckan
 ckanclient
-pika
+pika==0.9.8
 supervisor
 oursql
 foxpath
