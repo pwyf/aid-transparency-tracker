@@ -1,5 +1,6 @@
 import re
 import sys
+import itertools
 from functools import partial
 import iatidataquality.models as models
 
@@ -95,20 +96,22 @@ def test_functions():
 
     test_functions = {}
 
-    for test in get_active_tests():
-        if test.test_level == 1:
-            line = test.name
-            if comment.match(line) or blank.match(line):
-                continue
-            for mapping in mappings:
-                m = mapping[0].match(line)
-                if m:
-                    f = mapping[1](m.groups())
-                    if f == None:
-                        raise TestSyntaxError(line)
-                    else:
-                        test_functions[test.id] = f
-                    break
+    tests = get_active_tests()
+    tests = itertools.ifilter(lambda test: test.test_level == 1, tests)
+
+    for test in tests:
+        line = test.name
+        if comment.match(line) or blank.match(line):
+            continue
+        for mapping in mappings:
+            m = mapping[0].match(line)
+            if m:
+                f = mapping[1](m.groups())
+                if f == None:
+                    raise TestSyntaxError(line)
+                else:
+                    test_functions[test.id] = f
+                break
 
 
     return test_functions
