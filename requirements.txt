@@ -17,3 +17,4 @@ ckanclient
 pika
 supervisor
 oursql
+foxpath

@@ -2,6 +2,8 @@ import os
 import sys
 import csv
 
+import foxpath
+
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
@@ -62,7 +64,7 @@ def check_against_files(test_str):
     [ check_data_file(data_file, expected_result)
       for data_file, expected_result in data_files ]
 
-@nose.tools.raises(iatidataquality.foxpath.TestSyntaxError)
+@nose.tools.raises(foxpath.TestSyntaxError)
 def check_data_files_w_tst_syntax_error(test_str):
     return check_against_files(test_str)
 
