@@ -6,7 +6,7 @@ from dqprocessing import add_hardcoded_result
 from dqregistry import create_package_group
 from util import report_error
 
-from iatidataquality import db
+from iatidataquality import db, app
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
@@ -66,7 +66,7 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
 def actually_save_file(package_name, orig_url, pkg, runtime_id):
     # `pkg` is a CKAN dataset
     success = False
-    directory = config.DATA_STORAGE_DIR
+    directory = app.config['DATA_STORAGE_DIR']
 
     print "Attempting to fetch package", package_name, "from", orig_url
     url = fixURL(orig_url)
@@ -100,14 +100,16 @@ def save_file(package_id, package_name, runtime_id):
         print "Couldn't get URL from CKAN for package", package_name, e
         return
 
+    print package_id, package_name, runtime_id
     if resources == []:
         return
     if len(resources) > 1:
         print "WARNING: multiple resources found; attempting to use first"
 
     url = resources[0]['url']
+    print url
 
-    with report_error(None, None):
+    with report_error("Saving %s" % url, None):
         actually_save_file(package_name, url, pkg, runtime_id)
 
 def dequeue_download(body):

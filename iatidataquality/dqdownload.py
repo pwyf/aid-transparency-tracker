@@ -31,6 +31,7 @@ def run(package_name=None):
         packages = models.Package.query.filter_by(active=True).all()
         for package in packages:
             name = package.package_name
+            print name
             if package.package_revision_id != registry_packages[name]:
                 testing_packages.append(package.id)
                 enqueue_download(package, runtime.id)

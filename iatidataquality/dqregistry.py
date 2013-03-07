@@ -76,6 +76,7 @@ def _refresh_packages():
                    ]
 
     for package in packages_from_registry(REGISTRY_URL):
+        print package['name']
         pkg = models.Package.query.filter_by(
             package_name=package['name']).first()
         if (pkg is None):
