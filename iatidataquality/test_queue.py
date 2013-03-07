@@ -1,9 +1,17 @@
 
+#  IATI Data Quality, tools for Data QA on IATI-formatted  publications
+#  by Mark Brough, Martin Keegan, Ben Webb and Jennifer Smith
+#
+#  Copyright (C) 2013  Publish What You Fund
+#
+#  This programme is free software; you may redistribute and/or modify
+#  it under the terms of the GNU Affero General Public License v3.0
+
 import sys, os, json, ckan, urllib2
 import itertools
 from datetime import date, datetime
-import models, dqprocessing, dqparsetests, \
-    dqfunctions, queue
+import models, dqprocessing, dqparsetests
+import dqfunctions, queue
 import dqprocessing
 from lxml import etree
 
