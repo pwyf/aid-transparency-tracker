@@ -24,18 +24,33 @@ def add_partial(regex):
 
 def parsePC(publisher_structures):
 
+    def publisher_and_test_level(groups):
+        like = '%' + groups[1] + '%'
+        publisher = models.PackageGroup.query.filter_by(name=groups[0]).first()
+        tests = db.session.query(
+            models.Test.id, 
+            models.Test.name, 
+            models.Test.description
+            ).filter(models.Test.name.like(like)).all()
+        return publisher, tests
 
     @add_partial('(\S*) does not use (\S*) at activity level')
     def doesnt_use_at_activity_level(activity, groups):
-        publisher = models.PackageGroup.query.filter_by(name=groups[0]).first()
-        tests = db.session.query(models.Test.id, models.Test.name, models.Test.description).filter(models.Test.name.like('%' + groups[1] + '%')).all()
-        return {'publisher':publisher, 'tests': tests, 'operation': 0, 'condition': 'activity level', 'condition_value': 1}
+        publisher, tests = publisher_and_test_level(groups)
+        return {'publisher':publisher, 
+                'tests': tests, 
+                'operation': 0, 
+                'condition': 'activity level', 
+                'condition_value': 1}
 
     @add_partial('(\S*) does not use (\S*) at activity hierarchy (\d*)')
     def doesnt_use_at_activity_hierarchy(activity, groups):
-        publisher = models.PackageGroup.query.filter_by(name=groups[0]).first()
-        tests = db.session.query(models.Test.id, models.Test.name, models.Test.description).filter(models.Test.name.like('%' + groups[1] + '%')).all()
-        return {'publisher':publisher, 'tests': tests, 'operation': 0, 'condition': 'activity hierarchy', 'condition_value': groups[2]}
+        publisher, tests = publisher_and_test_level(groups)
+        return {'publisher':publisher, 
+                'tests': tests, 
+                'operation': 0, 
+                'condition': 'activity hierarchy', 
+                'condition_value': groups[2]}
 
     @add('(.*)')
     def fail(line):
