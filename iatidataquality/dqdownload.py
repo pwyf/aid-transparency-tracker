@@ -46,20 +46,24 @@ def download_packages(runtime):
         print "Found", len(registry_packages),"packages on the IATI Registry"
         print "Checking for updates, calculating and queuing packages;"
         print "this may take a moment..."
+
         registry_packages=dict(registry_packages)
-        
         testing_packages=[]
         packages = models.Package.query.filter_by(active=True).all()
+
         for package in packages:
             name = package.package_name
             print name
             if package.package_revision_id != registry_packages[name]:
                 testing_packages.append(package.id)
                 enqueue_download(package, runtime.id)
-        print "Testing",len(testing_packages),"packages"
+
+        print "Testing", len(testing_packages), "packages"
         print "Writing status of packages..."
+
         for tp in testing_packages:
             add_test_status(tp, 1, commit=False)
+
         db.session.commit()
 
 def download_package(runtime, package_name):
