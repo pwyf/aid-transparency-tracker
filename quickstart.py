@@ -29,7 +29,7 @@ def run(refresh):
 
 def main():
     p = optparse.OptionParser()
-    p.add_option("--dont-refresh", dest="dont_refresh", action="store_true",
+    p.add_option("--refresh", dest="refresh", action="store_true",
                  help="Don't refresh")
     p.add_option("--clear-revisionid", dest="clear_revisionid", 
                  action="store_true",
@@ -55,6 +55,7 @@ def main():
 
     if options.init_db:
         iatidataquality.db.create_all()
+        iatidataquality.dqimporttests.hardcodedTests()
         return
 
     if options.enroll_tests:
@@ -67,7 +68,7 @@ def main():
         iatidataquality.dqfunctions.clear_revisions()
         return
 
-    run(refresh=options.dont_refresh)
+    run(refresh=options.refresh)
 
 if __name__ == '__main__':
     main()
