@@ -82,11 +82,13 @@ def check_file(file_name, runtime_id, package_id, context=None):
                                 test_functions, result_hierarchy)
 
         db.session.commit()
+
         print "Aggregating results..."
         dqprocessing.aggregate_results(runtime_id, package_id)
         print "Finished aggregating results"
         db.session.commit()    
-        dqfunctions.add_test_status(package_id, 3)
+
+        dqfunctions.add_test_status(package_id, 3, commit=True)
     except Exception, e:
         print "Exception in check_file ", e
 
