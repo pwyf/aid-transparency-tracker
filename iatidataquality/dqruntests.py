@@ -1,6 +1,6 @@
 from iatidataquality import db, app
 
-import models, dqprocessing, dqparsetests, json, dqfunctions
+import models, dqprocessing, json, dqfunctions
 import queue
 import os
 
