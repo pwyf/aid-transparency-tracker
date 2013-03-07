@@ -60,6 +60,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
             data = etree.parse(file_name)
         except etree.XMLSyntaxError:
             dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, False)
+            db.session.commit()
             return
 
         dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, True)
