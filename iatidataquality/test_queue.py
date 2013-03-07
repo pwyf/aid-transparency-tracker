@@ -5,7 +5,6 @@ import models, dqprocessing, dqparsetests, \
     dqfunctions, queue
 import dqprocessing
 from lxml import etree
-from util import ensure_download_dir
 
 from iatidataquality import db
 
