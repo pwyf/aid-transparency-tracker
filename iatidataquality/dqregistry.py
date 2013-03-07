@@ -3,6 +3,7 @@ from iatidataquality import db
 import urllib2
 import models
 import json
+import ckanclient
 
 import util
 
@@ -98,6 +99,12 @@ def refresh_package(package):
     pkg.man_auto = 'auto'
     db.session.add(pkg)
     db.session.commit()
+
+def refresh_package_by_name(package_name):
+    CKANurl = 'http://iatiregistry.org/api'
+    registry = ckanclient.CkanClient(base_location=CKANurl)  
+    package = registry.package_entity_get(package_name)
+    refresh_package(package)
 
 def _refresh_packages():
     [ refresh_package(package) 
