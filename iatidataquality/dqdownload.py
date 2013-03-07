@@ -39,44 +39,47 @@ def get_package(pkg, package, runtime_id):
         add_test_status(package.id, 4)
 
 def download_packages(runtime):
-        # Check registry for packages list
-        registry_packages = [ (pkg["name"], pkg["revision_id"]) 
-                              for pkg in packages_from_registry(REGISTRY_URL) ]
+    # Check registry for packages list
+    registry_packages = [ (pkg["name"], pkg["revision_id"]) 
+                          for pkg in packages_from_registry(REGISTRY_URL) ]
 
-        print "Found", len(registry_packages),"packages on the IATI Registry"
-        print "Checking for updates, calculating and queuing packages;"
-        print "this may take a moment..."
+    print "Found", len(registry_packages),"packages on the IATI Registry"
+    print "Checking for updates, calculating and queuing packages;"
+    print "this may take a moment..."
 
-        registry_packages=dict(registry_packages)
-        testing_packages=[]
-        packages = models.Package.query.filter_by(active=True).all()
+    registry_packages=dict(registry_packages)
+    testing_packages=[]
+    packages = models.Package.query.filter_by(active=True).all()
 
-        for package in packages:
-            name = package.package_name
-            print name
-            if package.package_revision_id != registry_packages[name]:
-                testing_packages.append(package.id)
-                enqueue_download(package, runtime.id)
+    for package in packages:
+        name = package.package_name
+        print name
+        if package.package_revision_id != registry_packages[name]:
+            testing_packages.append(package.id)
+            enqueue_download(package, runtime.id)
 
-        print "Testing", len(testing_packages), "packages"
-        print "Writing status of packages..."
+    print "Testing", len(testing_packages), "packages"
+    print "Writing status of packages..."
 
-        for tp in testing_packages:
-            add_test_status(tp, 1, commit=False)
+    for tp in testing_packages:
+        add_test_status(tp, 1, commit=False)
 
-        db.session.commit()
+    db.session.commit()
 
 def download_package(runtime, package_name):
-        package = models.Package.query.filter_by(
-            package_name=package_name).first()
-        add_test_status(package.id, 1)
-        CKANurl = 'http://iatiregistry.org/api'
-        registry = ckanclient.CkanClient(base_location=CKANurl)  
-        pkg = registry.package_entity_get(package.package_name)
-        if pkg['revision_id'] == package.package_revision_id:
-            add_test_status(package.id, 4)
-        else:
-            get_package(pkg, package, runtime.id)
+    package = models.Package.query.filter_by(
+        package_name=package_name).first()
+    add_test_status(package.id, 1)
+
+    CKANurl = 'http://iatiregistry.org/api'
+    registry = ckanclient.CkanClient(base_location=CKANurl)  
+
+    pkg = registry.package_entity_get(package.package_name)
+
+    if pkg['revision_id'] == package.package_revision_id:
+        add_test_status(package.id, 4)
+    else:
+        get_package(pkg, package, runtime.id)
 
 def run(package_name=None):
     runtime = testrun.start_new_testrun()
