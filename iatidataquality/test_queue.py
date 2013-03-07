@@ -21,20 +21,8 @@ def test_activity(runtime_id, package_id, result_identifier, data,
     tests = models.Test.query.filter(models.Test.active == True).all()
     conditions = models.TestCondition.query.filter(
         models.TestCondition.active == True).all()
-    
-    for test in tests:
-        if not test.id in test_functions:
-            continue
-        try:
-            if test_functions[test.id](xmldata):
-                the_result = 1
-            else:
-                the_result = 0
-        # If an exception is not caught in test functions,
-        # it should not count against the publisher
-        except Exception:
-            the_result = 2
 
+    def add_result(test_id, the_result):
         newresult = models.Result()
         newresult.runtime_id = runtime_id
         newresult.package_id = package_id
@@ -43,6 +31,21 @@ def test_activity(runtime_id, package_id, result_identifier, data,
         newresult.result_identifier = result_identifier
         newresult.result_hierarchy = result_hierarchy
         db.session.add(newresult)
+
+    def execute_test(test_id):
+        try:
+            return int(test_functions[test_id](xmldata))
+        except:
+            # If an exception is not caught in test functions,
+            # it should not count against the publisher
+            return 2
+    
+    for test in tests:
+        if not test.id in test_functions:
+            continue
+        the_result = execute_test(test.id)
+        add_result(test.id, the_result)
+
     return "Success"
 
 def check_file(file_name, runtime_id, package_id, context=None):
