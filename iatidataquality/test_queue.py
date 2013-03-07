@@ -19,6 +19,7 @@ def test_activity(runtime_id, package_id, result_identifier, data,
     xmldata = etree.fromstring(data)
 
     tests = models.Test.query.filter(models.Test.active == True).all()
+    # FIXME: is this even used?
     conditions = models.TestCondition.query.filter(
         models.TestCondition.active == True).all()
 
