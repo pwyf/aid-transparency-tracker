@@ -8,6 +8,8 @@ from iatidataquality import db
 import models
 from dqfunctions import add_test_status, packages_from_registry
 
+import testrun
+
 download_queue = 'iati_download_queue'
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title,revision_id&offset=%s&limit=1000"
 
@@ -37,9 +39,7 @@ def get_package(pkg, package, runtime_id):
         add_test_status(package.id, 4)
 
 def run(package_name=None):
-    runtime = models.Runtime()
-    db.session.add(runtime)
-    db.session.commit()
+    runtime = testrun.start_new_testrun()
     # Get list of packages from DB
     if (package_name is None):
         # Check registry for packages list

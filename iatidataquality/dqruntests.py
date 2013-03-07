@@ -4,6 +4,8 @@ import models, dqprocessing, json, dqfunctions
 import queue
 import os
 
+import testrun
+
 # FIXME: this should be in config
 tests_queue='iati_tests_queue'
 
@@ -41,7 +43,5 @@ def enqueue_download(filename, runtime_id, package_id, context=None):
 
 # start testing all packages, or just one if provided
 def start_testing(package_name=None):
-    newrun = models.Runtime()
-    db.session.add(newrun)
-    db.session.commit()
+    newrun = testrun.start_new_testrun()
     return load_packages(newrun.id, package_name)
