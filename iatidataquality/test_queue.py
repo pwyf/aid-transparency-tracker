@@ -54,20 +54,25 @@ def test_activity(runtime_id, package_id, result_identifier, data,
 
     return "Success"
 
-def check_file(file_name, runtime_id, package_id, context=None):
+def parse_xml(file_name):
     try:
-        try:
-            data = etree.parse(file_name)
-        except etree.XMLSyntaxError:
-            dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, False)
-            db.session.commit()
-            return
+        data = etree.parse(file_name)
+        return True, data
+    except etree.XMLSyntaxError:
+        return False, None
+    except:
+        return False, None
 
-        dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, True)
+def check_file(test_functions, file_name, runtime_id, package_id, context=None):
+    try:
+        xml_parsed, data = parse_xml(file_name)
+
+        dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, 
+                                           xml_parsed)
         db.session.commit()
 
-        from dqparsetests import test_functions as tf
-        test_functions = tf()
+        if not xml_parsed:
+            return
 
         def get_result_hierarchy(activity):
             hierarchy = activity.get('hierarchy', default=None)
@@ -99,16 +104,20 @@ def check_file(file_name, runtime_id, package_id, context=None):
     except Exception, e:
         print "Exception in check_file ", e
 
-def dequeue_download(body):
+def dequeue_download(body, test_functions):
     try:
         args = json.loads(body)
-        check_file(args['filename'],
-                  args['runtime_id'],
-                  args['package_id'],
-                  args['context'])
+        check_file(test_functions, 
+                   args['filename'],
+                   args['runtime_id'],
+                   args['package_id'],
+                   args['context'])
     except Exception, e:
         print "Exception in dequeue_download", e
 
 def run_test_queue():
+    from dqparsetests import test_functions as tf
+    test_functions = tf()
+
     for body in queue.handle_queue_generator(download_queue):
-        dequeue_download(body)
+        dequeue_download(body, test_functions)
