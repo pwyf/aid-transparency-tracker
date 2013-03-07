@@ -103,7 +103,6 @@ def _refresh_packages():
     [ refresh_package(package) 
       for package in packages_from_registry(REGISTRY_URL) ]
 
-
 def refresh_packages():
     with util.report_error(None, "Couldn't open Registry"):
         return _refresh_packages()

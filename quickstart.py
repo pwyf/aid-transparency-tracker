@@ -15,14 +15,13 @@ import iatidataquality.dqimporttests
 import optparse
 import sys
 
-iatidataquality.db.create_all()
+which_packages = [
+    ('worldbank-tz', True),
+    ('unops-tz', True),
+    ('dfid-tz', True)
+    ]
 
 def run(refresh):
-    which_packages = [
-                ('worldbank-tz', True),
-                ('unops-tz', True),
-                ('dfid-tz', True)
-                ]
     if refresh:
         dqregistry.refresh_packages()
     dqregistry.activate_packages(which_packages, clear_revision_id=True)
