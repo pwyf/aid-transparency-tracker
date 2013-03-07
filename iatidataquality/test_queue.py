@@ -1,5 +1,6 @@
 
 import sys, os, json, ckan, urllib2
+import itertools
 from datetime import date, datetime
 import models, dqprocessing, dqparsetests, \
     dqfunctions, queue
@@ -33,19 +34,23 @@ def test_activity(runtime_id, package_id, result_identifier, data,
         newresult.result_hierarchy = result_hierarchy
         db.session.add(newresult)
 
+    # | test_result == True  -> 1
+    # | test_result == False -> 0
+    # | exception            -> 2 (exceptions aren't counted against publishers)
     def execute_test(test_id):
         try:
             return int(test_functions[test_id](xmldata))
         except:
-            # If an exception is not caught in test functions,
-            # it should not count against the publisher
             return 2
-    
-    for test in tests:
-        if not test.id in test_functions:
-            continue
+
+    def execute_and_record(test):
         the_result = execute_test(test.id)
         add_result(test.id, the_result)
+
+    test_exists = lambda t: t.id in test_functions
+    tests = itertools.ifilter(test_exists, tests)
+    
+    [ execute_and_record(test) for test in tests ]
 
     return "Success"
 
