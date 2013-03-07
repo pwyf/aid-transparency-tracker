@@ -7,6 +7,7 @@ install:
   - pip install -r requirements.txt --use-mirrors
 before_script:
   - cp config.py.tmpl config.py
+  - sudo -u postgres createdb iatidq
   - python quickstart.py --drop-db
   - python quickstart.py --init-db
   - python quickstart.py --refresh --minimal-pkgs
