@@ -10,6 +10,7 @@ def hardcodedTests():
         (-3, 'valid_xml', "Check that xml is well structured"),
         (-4, 'schema_conformance', "Check that xml conforms to schema")
     ]
+
     for hardcoded_test in hardcoded_tests:
         if models.Test.query.filter(models.Test.id==hardcoded_test[0]).first():
             continue
@@ -22,7 +23,7 @@ def hardcodedTests():
             id = hardcoded_test[0]
             )
         db.session.add(test)
-        db.session.commit()
+    db.session.commit()
 
 def importTests(filename='tests/activity_tests.csv', level=1, local=True):
     #models.Test.query.filter(models.Test.test_level==1).update({models.Test.active: False})
