@@ -144,7 +144,7 @@ class Test(db.Model):
     test_level = Column(Integer)
     active = Column(Boolean)
 
-    def __init__(self,
+    def setup(self,
                  name,
                  description,
                  test_group,

@@ -52,7 +52,8 @@ def tests_editor(id=None):
 def tests_new(id=None):
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            test = models.Test(
+            test = models.Test()
+            test.setup(
                 name = request.form['name'],
                 description = request.form['description'],
                 test_group = request.form['test_group'],

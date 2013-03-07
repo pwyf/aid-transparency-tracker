@@ -14,7 +14,8 @@ def hardcodedTests():
     for hardcoded_test in hardcoded_tests:
         if models.Test.query.filter(models.Test.id==hardcoded_test[0]).first():
             continue
-        test = models.Test(
+        test = models.Test()
+        test.setup(
             name = hardcoded_test[1],
             description = hardcoded_test[2],
             test_group = None,
@@ -43,18 +44,15 @@ def importTests(filename='tests/activity_tests.csv', level=1, local=True):
         test = models.Test.query.filter(models.Test.name==row['test']).first()
 
         if not test:
-            test = models.Test(
-                name = row['test'],
-                description = row['description'],
-                test_group = row['group'],
-                test_level = level,
-                active = True)
-        else:
-            test.name = row['test']
-            test.description = row['description']
-            test.test_group = row['group']
-            test.test_level = level
-            test.active = True
+            test = models.Test()
+
+        test.setup(
+            name = row['test'],
+            description = row['description'],
+            test_group = row['group'],
+            test_level = level,
+            active = True
+            )
         test.file = filename
         test.line = data.line_num
         db.session.add(test)
