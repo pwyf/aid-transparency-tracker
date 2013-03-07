@@ -11,6 +11,30 @@ from dqfunctions import add_test_status, packages_from_registry
 download_queue = 'iati_download_queue'
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title,revision_id&offset=%s&limit=1000"
 
+def get_package(pkg, package, runtime_id):
+    new_package = False
+    update_package = False
+    # Check if package already exists; if it has not been updated more 
+    # recently than the database, then download it again
+    check_package = package
+
+    if ((package.package_revision_id) != (pkg['revision_id'])):
+        # if the package has been updated, 
+        # then download it and update the package data
+        update_package = True
+        print "Updating package", pkg['name']
+
+    if (update_package or new_package):
+        resources = pkg.get('resources', [])
+        assert len(resources) <= 1
+        if resources == []:
+            return
+
+        resource = resources[0]
+        enqueue_download(package, runtime_id)
+    else:
+        print "Package", pkg["name"], "is already the latest version"
+        add_test_status(package.id, 4)
 
 def run(package_name=None):
     runtime = models.Runtime()
@@ -50,7 +74,7 @@ def run(package_name=None):
         if pkg['revision_id'] == package.package_revision_id:
             add_test_status(package.id, 4)
         else:
-            get_package(package, runtime.id)
+            get_package(pkg, package, runtime.id)
 
 def enqueue_download(package, runtime_id):
     args = {
