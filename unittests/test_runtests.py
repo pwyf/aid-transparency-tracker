@@ -37,7 +37,7 @@ def create_tst(name):
     test = iatidataquality.models.Test(
         name = name,
         description = "Test FN",
-        test_group = "TEST_TEST",
+        test_group = TEST_GROUP,
         test_level = 1,
         active = True
         )
