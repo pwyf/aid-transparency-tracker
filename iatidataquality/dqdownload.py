@@ -62,12 +62,7 @@ def download_packages(runtime):
             add_test_status(tp, 1, commit=False)
         db.session.commit()
 
-def run(package_name=None):
-    runtime = testrun.start_new_testrun()
-    # Get list of packages from DB
-    if (package_name is None):
-        download_packages(runtime)
-    else:    
+def download_package(runtime, package_name):
         package = models.Package.query.filter_by(
             package_name=package_name).first()
         add_test_status(package.id, 1)
@@ -78,6 +73,14 @@ def run(package_name=None):
             add_test_status(package.id, 4)
         else:
             get_package(pkg, package, runtime.id)
+
+def run(package_name=None):
+    runtime = testrun.start_new_testrun()
+    # Get list of packages from DB
+    if (package_name is None):
+        download_packages(runtime)
+    else:
+        download_package(runtime, package_name)
 
 def enqueue_download(package, runtime_id):
     args = {
