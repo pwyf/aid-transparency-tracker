@@ -63,6 +63,7 @@ def check_file(file_name, runtime_id, package_id, context=None):
             return
 
         dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, True)
+        db.session.commit()
 
         from dqparsetests import test_functions as tf
         test_functions = tf()
