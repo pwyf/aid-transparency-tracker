@@ -10,6 +10,7 @@ from iatidataquality import app
 from iatidataquality import db
 
 import models
+import dqfunctions
 
 @app.route("/")
 def home():
@@ -183,7 +184,9 @@ def publisher(id=None):
                                      func.min(models.AggregateResult.runtime_id)
         ).filter(models.PackageGroup.id==p_group.id
         ).group_by(models.AggregateResult.result_hierarchy, models.Test, 
-                   models.AggregateResult.package_id
+                   models.AggregateResult.package_id,
+                   models.AggregateResult.results_data,
+                   models.AggregateResult.results_num
         ).join(models.AggregateResult
         ).join(models.Package
         ).join(models.PackageGroup
@@ -308,7 +311,10 @@ def packages(id=None, runtime_id=None):
                                              models.AggregateResult.result_hierarchy
                 ).filter(models.AggregateResult.package_id==p[0].id,
                          models.AggregateResult.runtime_id==latest_runtime.id
-                ).group_by(models.AggregateResult.result_hierarchy, models.Test
+                ).group_by(models.AggregateResult.result_hierarchy, 
+                           models.Test,
+                           models.AggregateResult.results_data,
+                           models.AggregateResult.results_num 
                 ).join(models.AggregateResult
                 ).all()
 
