@@ -38,10 +38,7 @@ def get_package(pkg, package, runtime_id):
         print "Package", pkg["name"], "is already the latest version"
         add_test_status(package.id, 4)
 
-def run(package_name=None):
-    runtime = testrun.start_new_testrun()
-    # Get list of packages from DB
-    if (package_name is None):
+def download_packages(runtime):
         # Check registry for packages list
         registry_packages = [ (pkg["name"], pkg["revision_id"]) 
                               for pkg in packages_from_registry(REGISTRY_URL) ]
@@ -64,6 +61,12 @@ def run(package_name=None):
         for tp in testing_packages:
             add_test_status(tp, 1, commit=False)
         db.session.commit()
+
+def run(package_name=None):
+    runtime = testrun.start_new_testrun()
+    # Get list of packages from DB
+    if (package_name is None):
+        download_packages(runtime)
     else:    
         package = models.Package.query.filter_by(
             package_name=package_name).first()
