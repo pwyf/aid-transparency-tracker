@@ -67,38 +67,39 @@ def create_package_group(group, handle_country=True):
     db.session.commit()
     return pg
 
-def _refresh_packages():
-    # Don't get revision ID; 
-    # empty var will trigger download of file elsewhere
-    components = [ ("id","package_ckan_id"),
-                   ("name","package_name"),
-                   ("title","package_title")
-                   ]
+# Don't get revision ID; 
+# empty var will trigger download of file elsewhere
 
-    def refresh_package(package):
-        print package['name']
-        pkg = models.Package.query.filter_by(
-            package_name=package['name']).first()
-        if (pkg is None):
-            pkg = models.Package()
-        for attr, key in components:
-            setattr(pkg, key, package[attr])
+components = [ ("id","package_ckan_id"),
+               ("name","package_name"),
+               ("title","package_title")
+               ]
+
+def refresh_package(package):
+    print package['name']
+    pkg = models.Package.query.filter_by(
+        package_name=package['name']).first()
+    if (pkg is None):
+        pkg = models.Package()
+    for attr, key in components:
+        setattr(pkg, key, package[attr])
+    try:
+        # there is a group, so use that group ID, or create one
+        group = package['groups'][0]
         try:
-            # there is a group, so use that group ID, or create one
-            group = package['groups'][0]
-            try:
-                pg = models.PackageGroup.query.filter_by(
-                    name=group).first()
-                pkg.package_group = pg.id
-            except Exception, e:
-                pg = create_package_group(group)
-                pkg.package_group = pg.id
+            pg = models.PackageGroup.query.filter_by(
+                name=group).first()
+            pkg.package_group = pg.id
         except Exception, e:
-            pass
-        pkg.man_auto = 'auto'
-        db.session.add(pkg)
-        db.session.commit()
+            pg = create_package_group(group)
+            pkg.package_group = pg.id
+    except Exception, e:
+        pass
+    pkg.man_auto = 'auto'
+    db.session.add(pkg)
+    db.session.commit()
 
+def _refresh_packages():
     [ refresh_package(package) 
       for package in packages_from_registry(REGISTRY_URL) ]
 
