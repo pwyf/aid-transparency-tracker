@@ -62,6 +62,7 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
     db.session.add(package)
     db.session.commit()
     add_hardcoded_result(-2, runtime_id, package.id, success)
+    db.session.commit()
 
 def actually_save_file(package_name, orig_url, pkg, runtime_id):
     # `pkg` is a CKAN dataset
@@ -90,6 +91,9 @@ def actually_save_file(package_name, orig_url, pkg, runtime_id):
     with report_error("  Package tested",
                       "  Couldn't test package %s" % package_name):
         dqruntests.start_testing(package_name)
+
+    db.session.commit()
+
 
 def save_file(package_id, package_name, runtime_id):
     registry = ckanclient.CkanClient(base_location=CKANurl)   
