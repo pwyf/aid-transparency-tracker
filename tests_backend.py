@@ -98,9 +98,12 @@ def callback_fn(ch, method, properties, body):
     dequeue_download(body)
     ch.basic_ack(delivery_tag = method.delivery_tag)
 
+def run_test_queue():
+    while True:
+        queue.handle_queue(download_queue, callback_fn)
+
 if __name__ == '__main__':
     print "Starting up..."
     directory = config.DATA_STORAGE_DIR
     ensure_download_dir(directory)
-    while True:
-        queue.handle_queue(download_queue, callback_fn)
+    run_test_queue()
