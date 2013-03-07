@@ -43,14 +43,20 @@ def importTests(filename='tests/activity_tests.csv', level=1, local=True):
         test = models.Test.query.filter(models.Test.name==row['test']).first()
 
         if not test:
-            test = models.Test()
-        test.name = row['test']
-        test.description = row['description']
-        test.test_group = row['group']
+            test = models.Test(
+                name = row['test'],
+                description = row['description'],
+                test_group = row['group'],
+                test_level = level,
+                active = True)
+        else:
+            test.name = row['test']
+            test.description = row['description']
+            test.test_group = row['group']
+            test.test_level = level
+            test.active = True
         test.file = filename
         test.line = data.line_num
-        test.test_level = level
-        test.active = True
         db.session.add(test)
     db.session.commit()
     print "Imported successfully"
