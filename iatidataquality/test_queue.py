@@ -82,18 +82,14 @@ def check_file(file_name, runtime_id, package_id, context=None):
         print "Exception in check_file ", e
 
 def dequeue_download(body):
-    args = json.loads(body)
     try:
+        args = json.loads(body)
         check_file(args['filename'],
                   args['runtime_id'],
                   args['package_id'],
                   args['context'])
     except Exception, e:
         print "Exception in dequeue_download", e
-
-def callback_fn(ch, method, properties, body):
-    dequeue_download(body)
-    ch.basic_ack(delivery_tag = method.delivery_tag)
 
 def run_test_queue():
     for body in queue.handle_queue_generator(download_queue):
