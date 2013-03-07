@@ -1,10 +1,12 @@
 
 import sys, os, json, ckan, urllib2, ckanclient
 from datetime import date, datetime
-import models, db, dqruntests, queue
+import models, dqruntests, queue
 from dqprocessing import add_hardcoded_result
 from dqregistry import create_package_group
 from util import report_error
+
+from iatidataquality import db
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'

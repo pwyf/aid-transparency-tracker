@@ -1,11 +1,13 @@
 
 import sys, os, json, ckan, urllib2
 from datetime import date, datetime
-import models, db, dqprocessing, dqparsetests, \
+import models, dqprocessing, dqparsetests, \
     dqfunctions, queue
 import dqprocessing
 from lxml import etree
 from util import ensure_download_dir
+
+from iatidataquality import db
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
