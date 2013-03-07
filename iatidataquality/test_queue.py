@@ -61,7 +61,9 @@ def check_file(file_name, runtime_id, package_id, context=None):
         except etree.XMLSyntaxError:
             dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, False)
             return
+
         dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, True)
+
         from dqparsetests import test_functions as tf
         test_functions = tf()
 
@@ -71,15 +73,18 @@ def check_file(file_name, runtime_id, package_id, context=None):
                 return None
             return hierarchy
 
-        for activity in data.findall('iati-activity'):
+        def run_test_activity(activity):
             result_hierarchy = get_result_hierarchy(activity)
-
+            
             result_identifier = activity.find('iati-identifier').text
             activity_data = etree.tostring(activity)
 
             res = test_activity(runtime_id, package_id, 
                                 result_identifier, activity_data, 
                                 test_functions, result_hierarchy)
+
+        activities = data.findall('iati-activity')
+        [ run_test_activity(activity) for activity in activities ]
 
         db.session.commit()
 
