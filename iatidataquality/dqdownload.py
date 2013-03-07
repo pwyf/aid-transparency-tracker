@@ -11,7 +11,9 @@ from dqfunctions import add_test_status, packages_from_registry
 import testrun
 
 download_queue = 'iati_download_queue'
+
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title,revision_id&offset=%s&limit=1000"
+CKANurl = 'http://iatiregistry.org/api'
 
 def get_package(pkg, package, runtime_id):
     new_package = False
@@ -71,7 +73,6 @@ def download_package(runtime, package_name):
         package_name=package_name).first()
     add_test_status(package.id, 1)
 
-    CKANurl = 'http://iatiregistry.org/api'
     registry = ckanclient.CkanClient(base_location=CKANurl)  
 
     pkg = registry.package_entity_get(package.package_name)
