@@ -75,7 +75,7 @@ def _refresh_packages():
                    ("title","package_title")
                    ]
 
-    for package in packages_from_registry(REGISTRY_URL):
+    def refresh_package(package):
         print package['name']
         pkg = models.Package.query.filter_by(
             package_name=package['name']).first()
@@ -98,6 +98,9 @@ def _refresh_packages():
         pkg.man_auto = 'auto'
         db.session.add(pkg)
         db.session.commit()
+
+    [ refresh_package(package) 
+      for package in packages_from_registry(REGISTRY_URL) ]
 
 
 def refresh_packages():
