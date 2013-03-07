@@ -96,5 +96,5 @@ def callback_fn(ch, method, properties, body):
     ch.basic_ack(delivery_tag = method.delivery_tag)
 
 def run_test_queue():
-    while True:
-        queue.handle_queue(download_queue, callback_fn)
+    for body in queue.handle_queue_generator(download_queue):
+        dequeue_download(body)

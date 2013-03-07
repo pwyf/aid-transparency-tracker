@@ -42,3 +42,17 @@ def handle_queue(queue_name, callback_fn):
         pass 
     finally:
         connection.close()
+
+def handle_queue_generator(queue_name):
+    try:
+        connection = get_connection('localhost')
+        channel = connection.channel()
+        #channel.queue_declare(queue=queue_name, durable=True)
+        #channel.basic_qos(prefetch_count=1)
+        for method, properties, body in channel.consume(queue_name):
+            channel.basic_ack(method.delivery_tag)
+            yield body
+    finally:
+        requeued_messages = channel.cancel()
+        channel.close()
+        connection.close()
