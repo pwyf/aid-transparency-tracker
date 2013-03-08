@@ -13,6 +13,38 @@ import urllib2
 from iatidataquality import db
 import models
 
+def aggregate_percentages(data):
+    # Aggregates results data for a specific runtime.
+
+    packages = set(map(lambda x: (x[4]), data))
+    hierarchies = set(map(lambda x: (x[2]), data))
+    tests = set(map(lambda x: (x[0].id, x[0].description, x[0].test_group), data))
+    
+    d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4]),(x[3])), data))
+    out = []
+    for p in packages:
+        for t in tests:
+            for h in hierarchies:
+                try: fail = d[(t[0],0,h,p)]
+                except: fail = 0
+                try: success = d[(t[0],1,h,p)]
+                except: success = 0
+                try:
+                    percentage = int((float(success)/(fail+success)) * 100)
+                except ZeroDivisionError:
+                    # Don't return data to DB if there are no results
+                    continue
+                data = {}
+                data = {
+                    "test_id": t[0],
+                    "percentage_passed": percentage,
+                    "total_results": fail+success,
+                    "hierarchy": h,
+                    "package_id": p
+                }
+                out.append(data)
+    return out
+
 def add_test_status(package_id, status_id, commit=True):
     pstatus = models.PackageStatus()
     pstatus.package_id = package_id
