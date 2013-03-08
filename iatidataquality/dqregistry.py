@@ -92,9 +92,8 @@ def setup_package_group(package, pkg):
     with util.report_error(None, "Error saving package_group"):
         # there is a group, so use that group ID, or create one
         group = pkg['groups'][0]
-        try:
-            pg = models.PackageGroup.query.filter_by(name=group).first()
-        except Exception, e:
+        pg = models.PackageGroup.query.filter_by(name=group).first()
+        if pg is None:
             pg = create_package_group(group, handle_country=False)
         package.package_group = pg.id
 
@@ -115,18 +114,8 @@ def refresh_package(package):
     for attr, key in components:
         setattr(pkg, key, package[attr])
 
-    try:
-        # there is a group, so use that group ID, or create one
-        group = package['groups'][0]
-        try:
-            pg = models.PackageGroup.query.filter_by(
-                name=group).first()
-            pkg.package_group = pg.id
-        except Exception, e:
-            pg = create_package_group(group)
-            pkg.package_group = pg.id
-    except Exception, e:
-        pass
+    setup_package_group(pkg, package)
+
     pkg.man_auto = 'auto'
     db.session.add(pkg)
     db.session.commit()
