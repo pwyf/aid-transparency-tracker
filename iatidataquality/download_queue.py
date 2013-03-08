@@ -11,7 +11,7 @@ import sys, os, json, ckan, ckanclient
 from datetime import date, datetime
 import models, dqruntests, queue
 from dqprocessing import add_hardcoded_result
-from dqregistry import create_package_group
+from dqregistry import create_package_group, setup_package_group
 from util import report_error, download_file
 
 from iatidataquality import db, app
@@ -42,17 +42,6 @@ def copy_package_attributes(package, pkg):
     for attr, key in mapping:
         with report_error(None, None):
             setattr(package, attr, pkg[key])
-
-# package: a sqla model; pkg: a ckan object
-def setup_package_group(package, pkg):
-    with report_error(None, "Error saving package_group"):
-        # there is a group, so use that group ID, or create one
-        group = pkg['groups'][0]
-        try:
-            pg = models.PackageGroup.query.filter_by(name=group).first()
-        except Exception, e:
-            pg = create_package_group(group, handle_country=False)
-        package.package_group = pg.id
 
 # package: a sqla model; pkg: a ckan object
 def copy_package_fields(package, pkg):
