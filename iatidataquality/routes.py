@@ -19,7 +19,7 @@ from iatidataquality import app
 from iatidataquality import db
 
 import models
-import dqfunctions
+import aggregation
 
 @app.route("/")
 def home():
@@ -205,7 +205,7 @@ def publisher(id=None):
     pconditions = models.PublisherCondition.query.filter_by(
         publisher_id=p_group.id).all()
 
-    aggregate_results = dqfunctions.agr_results(aggregate_results, 
+    aggregate_results = aggregation.agr_results(aggregate_results, 
                                                 conditions=pconditions, 
                                                 mode="publisher")
     latest_runtime=1
@@ -330,7 +330,7 @@ def packages(id=None, runtime_id=None):
 
         flat_results = aggregate_results
 
-        aggregate_results = dqfunctions.agr_results(aggregate_results, 
+        aggregate_results = aggregation.agr_results(aggregate_results, 
                                                     pconditions)
     else:
         aggregate_results = None
