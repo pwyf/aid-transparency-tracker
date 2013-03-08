@@ -157,10 +157,7 @@ def _agr_results(data, conditions=None, mode=None):
                         }
             else:
                 # return data for this single package
-                try:
-                    tdata = d[(h, t)]
-                except KeyError:
-                    tdata = None
+                tdata = d.get((h, t), None)
 
             if h not in out:
                 out[h] = {}
