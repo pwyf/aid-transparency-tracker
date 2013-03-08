@@ -113,6 +113,7 @@ def _agr_results(data, conditions=None, mode=None):
     hierarchies = set(map(lambda x: (x[3]), data))
     tests = set(map(lambda x: (x[0]["id"]), data))
 
+    cdtns = None
     if conditions:
         cdtns = dict(map(lambda x: ((x.test_id, x.condition, x.condition_value, x.operation),(x.description)), conditions))
     
