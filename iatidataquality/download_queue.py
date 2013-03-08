@@ -7,12 +7,12 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import sys, os, json, ckan, urllib2, ckanclient
+import sys, os, json, ckan, ckanclient
 from datetime import date, datetime
 import models, dqruntests, queue
 from dqprocessing import add_hardcoded_result
 from dqregistry import create_package_group
-from util import report_error
+from util import report_error, download_file
 
 from iatidataquality import db, app
 
@@ -82,13 +82,10 @@ def actually_save_file(package_name, orig_url, pkg, runtime_id):
 
     try:
         path = os.path.join(directory, package_name + '.xml')
-        with file(path, 'w') as localFile:
-            webFile = urllib2.urlopen(url)
-            localFile.write(webFile.read())
-            webFile.close()
-            success = True
-            print "  Downloaded, processing..."
-    except urllib2.URLError, e:
+        download_file(url, path)
+        success = True
+        print "  Downloaded, processing..."
+    except:
         success = False
         print "  Couldn't fetch URL"
 

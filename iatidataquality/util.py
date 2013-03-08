@@ -37,3 +37,9 @@ def stream_of_file(filename, local):
         return f
     except:
         return False
+
+def download_file(url, path):
+    with file(path, 'w') as localFile:
+        webFile = urllib2.urlopen(url)
+        localFile.write(webFile.read())
+        webFile.close()
