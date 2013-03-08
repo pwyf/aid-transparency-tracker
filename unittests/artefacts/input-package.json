@@ -1,0 +1,752 @@
+[
+  [
+    {
+      "description": "Activity date has an ISO-date attribute", 
+      "test_group": "activity-date", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 7, 
+      "id": 6, 
+      "name": "activity-date/@iso-date exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Conditions", 
+      "test_group": "conditions", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 37, 
+      "id": 36, 
+      "name": "conditions exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Check that xml is well structured", 
+      "test_group": null, 
+      "file": null, 
+      "active": true, 
+      "test_level": 2, 
+      "line": null, 
+      "id": -3, 
+      "name": "valid_xml"
+    }, 
+    100.0, 
+    1, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Summary information about contract document", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 46, 
+      "id": 45, 
+      "name": "document-link/category[@code='A06'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Title", 
+      "test_group": "title", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 2, 
+      "id": 1, 
+      "name": "title/text() exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Description", 
+      "test_group": "description", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 4, 
+      "id": 3, 
+      "name": "description/text() exists?"
+    }, 
+    96.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Sector percentage attribute is properly formatted", 
+      "test_group": "sector", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 25, 
+      "id": 24, 
+      "name": "sector/@percentage is an integer?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Accountable organisation", 
+      "test_group": "accountable", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 14, 
+      "id": 13, 
+      "name": "participating-org[@role='accountable'] or participating-org[@role='Accountable'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Budget document", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 45, 
+      "id": 44, 
+      "name": "document-link/category[@code='A05'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Activity date planned start date", 
+      "test_group": "activity-date", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 9, 
+      "id": 8, 
+      "name": "activity-date[@type='start-planned'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Activity date actual end date", 
+      "test_group": "activity-date", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 12, 
+      "id": 11, 
+      "name": "activity-date[@type='end-actual'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Aid type", 
+      "test_group": "aid-type", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 28, 
+      "id": 27, 
+      "name": "default-aid-type exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Finance type", 
+      "test_group": "finance-type", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 29, 
+      "id": 28, 
+      "name": "default-finance-type exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Conditions document", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 44, 
+      "id": 43, 
+      "name": "document-link/category[@code='A04'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Recipient country percentage attributes sum to 100%", 
+      "test_group": "recipient", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 20, 
+      "id": 19, 
+      "name": "recipient-country/@percentage sum to 100?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Recipient region percentage is attribute properly formatted", 
+      "test_group": "recipient", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 21, 
+      "id": 20, 
+      "name": "recipient-region/@percentage is an integer?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Collaboration type", 
+      "test_group": "collaboration-type", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 26, 
+      "id": 25, 
+      "name": "collaboration-type exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Tender", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 50, 
+      "id": 49, 
+      "name": "document-link/category[@code='A10'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Disbursements", 
+      "test_group": "disbursement", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 35, 
+      "id": 34, 
+      "name": "transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='d'] exists?"
+    }, 
+    37.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Objectives / Purpose of activity document", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 42, 
+      "id": 41, 
+      "name": "document-link/category[@code='A02'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Title has more than 10 characters", 
+      "test_group": "title", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 3, 
+      "id": 2, 
+      "name": "title/text() has more than 10 characters?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Budget", 
+      "test_group": "budget", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 31, 
+      "id": 30, 
+      "name": "budget exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Transactions", 
+      "test_group": "transaction", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 33, 
+      "id": 32, 
+      "name": "transaction exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Results, outcomes and outputs document", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 48, 
+      "id": 47, 
+      "name": "document-link/category[@code='A08'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Description has more than 40 characters", 
+      "test_group": "description", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 5, 
+      "id": 4, 
+      "name": "description/text() has more than 40 characters?"
+    }, 
+    96.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Sector", 
+      "test_group": "sector", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 23, 
+      "id": 22, 
+      "name": "sector exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Flow type", 
+      "test_group": "flow-type", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 27, 
+      "id": 26, 
+      "name": "default-flow-type exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Tied aid status", 
+      "test_group": "tied-aid-status", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 30, 
+      "id": 29, 
+      "name": "default-tied-status exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Activity date planned end date", 
+      "test_group": "activity-date", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 10, 
+      "id": 9, 
+      "name": "activity-date[@type='end-planned'] exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Results", 
+      "test_group": "results", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 36, 
+      "id": 35, 
+      "name": "result exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Extending organisation", 
+      "test_group": "extending", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 15, 
+      "id": 14, 
+      "name": "participating-org[@role='extending'] or participating-org[@role='Extending'] exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Pre- and post-project impact appraisal", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 41, 
+      "id": 40, 
+      "name": "document-link/category[@code='A01'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Memorandum of understanding document", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 49, 
+      "id": 48, 
+      "name": "document-link/category[@code='A09'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Funding organisation", 
+      "test_group": "funding", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 13, 
+      "id": 12, 
+      "name": "participating-org[@role='funding'] or participating-org[@role='Funding'] exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Recipient region percentage attributes sum to 100%", 
+      "test_group": "recipient", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 22, 
+      "id": 21, 
+      "name": "recipient-region/@percentage sum to 100?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Sector, more than once", 
+      "test_group": "sector", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 24, 
+      "id": 23, 
+      "name": "sector exists more than 1 time?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Recipient country percentage attribute is properly formatted", 
+      "test_group": "recipient", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 19, 
+      "id": 18, 
+      "name": "recipient-country/@percentage is an integer?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Contract", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 51, 
+      "id": 50, 
+      "name": "document-link/category[@code='A11'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Review of project performance and evaluation document", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 47, 
+      "id": 46, 
+      "name": "document-link/category[@code='A07'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Planned disbursement", 
+      "test_group": "planned-disbursement", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 32, 
+      "id": 31, 
+      "name": "planned-disbursement exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Document - Intended ultimate beneficiaries document", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 43, 
+      "id": 42, 
+      "name": "document-link/category[@code='A03'] exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Activity status exists once, and only once", 
+      "test_group": "activity-status", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 6, 
+      "id": 5, 
+      "name": "activity-status exists 1 time?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Project documents", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 39, 
+      "id": 38, 
+      "name": "document-link exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Activity date actual start date", 
+      "test_group": "activity-date", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 11, 
+      "id": 10, 
+      "name": "activity-date[@type='start-actual'] exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Implementing organisation", 
+      "test_group": "implementing", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 16, 
+      "id": 15, 
+      "name": "participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Sub-national geographic location", 
+      "test_group": "location", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 38, 
+      "id": 37, 
+      "name": "location exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Recipient region or recipient country (not both)", 
+      "test_group": "recipient", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 18, 
+      "id": 17, 
+      "name": "only one of recipient-region or recipient-country exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Project document category stated", 
+      "test_group": "document-link", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 40, 
+      "id": 39, 
+      "name": "document-link/category exists?"
+    }, 
+    0.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Recipient region or recipient country", 
+      "test_group": "recipient", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 17, 
+      "id": 16, 
+      "name": "recipient-region or recipient-country exists?"
+    }, 
+    100.0, 
+    58, 
+    null
+  ], 
+  [
+    {
+      "description": "Commitments", 
+      "test_group": "commitment", 
+      "file": "tests/activity_tests.csv", 
+      "active": true, 
+      "test_level": 1, 
+      "line": 34, 
+      "id": 33, 
+      "name": "transaction/transaction-type[@code='C'] or transaction/transaction-type[@code='c'] exists?"
+    }, 
+    15.0, 
+    58, 
+    null
+  ]
+]
