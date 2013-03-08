@@ -164,8 +164,10 @@ def _agr_results(data, conditions=None, mode=None):
 
             try: out[h]
             except KeyError: out[h] = {}
+
             try: out[h][t]
             except KeyError: out[h][t] = {}
+
             try: 
                 if tdata:
                     out[h][t]["test"] = tdata
