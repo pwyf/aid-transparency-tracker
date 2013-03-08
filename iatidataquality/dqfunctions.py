@@ -171,7 +171,9 @@ def _agr_results(data, conditions=None, mode=None):
                     out[h][t]["test"] = tdata
                 try:
                     if conditions:
-                        out[h][t]["condition"] = cdtns[(t,'activity hierarchy', str(h), 0)]
+                        key = (t,'activity hierarchy', str(h), 0) 
+                        if key in cdtns:
+                            out[h][t]["condition"] = cdtns[key]
                 except KeyError:
                     # cdtns[...] doesn't exist
                     pass
