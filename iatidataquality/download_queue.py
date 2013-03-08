@@ -48,15 +48,15 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         with report_error(None, None):
             setattr(package, attr, pkg[key])
 
-    with report_error(None, None):
+    with report_error(None, "Error saving package_group"):
         # there is a group, so use that group ID, or create one
         group = pkg['groups'][0]
         try:
             pg = models.PackageGroup.query.filter_by(name=group).first()
-            package.package_group = pg.id
         except Exception, e:
             pg = create_package_group(group, handle_country=False)
-            package.package_group = pg.id
+        package.package_group = pg.id
+        
 
     fields = [ 
         "activity_period-from", "activity_period-to",
