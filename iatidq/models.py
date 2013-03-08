@@ -8,7 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 from sqlalchemy import *
-from iatidataquality import db
+from iatidq import db
 from datetime import datetime
 
 class PackageStatus(db.Model):

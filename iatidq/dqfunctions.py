@@ -10,7 +10,7 @@
 import json
 import urllib2
 
-from iatidataquality import db
+from iatidq import db
 import models
 
 def aggregate_percentages(data):

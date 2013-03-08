@@ -15,7 +15,7 @@ import dqfunctions, queue
 import dqprocessing
 from lxml import etree
 
-from iatidataquality import db
+from iatidq import db
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'

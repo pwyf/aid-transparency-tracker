@@ -14,12 +14,12 @@
         3) setting 3 to "active"
 """
 
-import iatidataquality
+import iatidq
 
-from iatidataquality import models, dqregistry 
-import iatidataquality.dqfunctions
-import iatidataquality.dqimporttests
-import iatidataquality.dqdownload
+from iatidq import models, dqregistry 
+import iatidq.dqfunctions
+import iatidq.dqimporttests
+import iatidq.dqdownload
 
 import optparse
 import sys
@@ -70,30 +70,30 @@ def main():
     options, args = p.parse_args()
 
     if options.drop_all:
-        iatidataquality.db.drop_all()
+        iatidq.db.drop_all()
         return
 
     if options.init_db:
-        iatidataquality.db.create_all()
-        iatidataquality.dqimporttests.hardcodedTests()
+        iatidq.db.create_all()
+        iatidq.dqimporttests.hardcodedTests()
         return
 
     if options.enroll_tests:
-        iatidataquality.dqimporttests.importTests(
+        iatidq.dqimporttests.importTests(
             filename=options.enroll_tests, 
             level=options.level)
         return
 
     if options.clear_revisionid:
-        iatidataquality.dqfunctions.clear_revisions()
+        iatidq.dqfunctions.clear_revisions()
         return
 
     if options.download:
         if options.minimal_pkgs:
             for package_name, _ in which_packages:
-                iatidataquality.dqdownload.run(package_name=package_name)
+                iatidq.dqdownload.run(package_name=package_name)
         else:
-            iatidataquality.dqdownload.run()
+            iatidatq.dqdownload.run()
         return
 
     run(refresh=options.refresh, minimal=options.minimal_pkgs)

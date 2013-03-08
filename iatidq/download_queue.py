@@ -14,7 +14,7 @@ from dqprocessing import add_hardcoded_result
 from dqregistry import create_package_group, setup_package_group
 from util import report_error, download_file
 
-from iatidataquality import db, app
+from iatidq import db, app
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'

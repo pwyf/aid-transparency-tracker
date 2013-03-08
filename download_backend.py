@@ -11,8 +11,8 @@
 # this line must precede ckan import
 import config
 
-from iatidataquality.util import ensure_download_dir
-from iatidataquality.download_queue import run_download_queue
+from iatidq.util import ensure_download_dir
+from iatidq.download_queue import run_download_queue
 
 if __name__ == '__main__':
     print "Starting up..."

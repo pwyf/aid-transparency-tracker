@@ -10,8 +10,8 @@
 
 # this line must precede ckan import
 import config
-from iatidataquality.test_queue import run_test_queue
-from iatidataquality.util import ensure_download_dir
+from iatidq.test_queue import run_test_queue
+from iatidq.util import ensure_download_dir
 
 if __name__ == '__main__':
     print "Starting up..."

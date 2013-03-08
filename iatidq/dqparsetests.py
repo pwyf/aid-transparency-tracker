@@ -7,10 +7,10 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import iatidataquality.models as models
+import iatidq.models as models
 import foxpath
 
-from iatidataquality import db
+from iatidq import db
 
 def get_active_tests():
     for test in models.Test.query.filter(models.Test.active == True).all():

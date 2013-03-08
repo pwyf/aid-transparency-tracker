@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidataquality import db
+from iatidq import db
 import models
 import csv
 

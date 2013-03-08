@@ -11,7 +11,7 @@ import sys, os, json, ckan, ckanclient, urllib2
 import queue
 from datetime import date, datetime
 
-from iatidataquality import db
+from iatidq import db
 
 import models
 from dqfunctions import add_test_status, packages_from_registry
