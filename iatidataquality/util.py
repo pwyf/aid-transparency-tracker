@@ -9,6 +9,7 @@
 
 import contextlib
 import os
+import urllib2
 
 @contextlib.contextmanager
 def report_error(success, failure):
@@ -26,3 +27,13 @@ def ensure_download_dir(directory):
     if not os.path.exists(directory):
         with report_error(None, "Couldn't create directory"):
             os.makedirs(directory)
+
+def stream_of_file(filename, local):
+    try:
+        if (local==True):
+            f = open(filename, 'r')
+        else:
+            f = urllib2.urlopen(filename, timeout=60)
+        return f
+    except:
+        return False

@@ -11,19 +11,16 @@ from iatidataquality import db
 
 import models
 import csv
-import urllib2
+import util
 
 
 def importPCs(filename='tests/publisher_structures.txt', local=True):
-    #models.Test.query.filter(models.Test.test_level==1).update({models.Test.active: False})
+    #models.Test.query.filter(models.Test.test_level==1).\
+    #    update({models.Test.active: False})
 
-    if (local==True):
-        f = open(filename)
-    else:
-        try:
-            f = urllib2.urlopen(filename, timeout=60)
-        except:
-            return False
+    f = util.stream_of_file(filename, local)
+    if not f:
+        return False
     
     results = {}
     for n, line in enumerate(f):

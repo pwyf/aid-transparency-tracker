@@ -10,7 +10,8 @@
 from iatidataquality import db
 import models
 import csv
-import urllib2
+
+import util
 
 def hardcodedTests():
     hardcoded_tests = [
@@ -35,17 +36,13 @@ def hardcodedTests():
     db.session.commit()
 
 def importTests(filename='tests/activity_tests.csv', level=1, local=True):
-    #models.Test.query.filter(models.Test.test_level==1).update({models.Test.active: False})
+    #models.Test.query.filter(models.Test.test_level==1).\
+    #    update({models.Test.active: False})
 
-    if (local==True):
-        f = open(filename, 'r')
-    else:
-        try:
-            f = urllib2.urlopen(filename, timeout=60)
-        except:
-            return False
-    
-    
+    f = util.stream_of_file(filename, local)
+    if not f:
+        return False
+
     data = csv.DictReader(f)
 
     for row in data:
