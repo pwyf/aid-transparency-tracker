@@ -8,10 +8,10 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-import iatidataquality
-import iatidataquality.dqparsetests
+import iatidq
+import iatidq.dqparsetests
 
-from iatidataquality import db
+from iatidq import db
 import lxml.etree
 
 import nose
@@ -20,21 +20,21 @@ import nose.tools
 TEST_GROUP = "TEST_TEST"
 
 def setup_func():
-    tests = iatidataquality.models.Test.query.filter_by(
+    tests = iatidq.models.Test.query.filter_by(
         test_group=TEST_GROUP).all()
     for test in tests:
         db.session.delete(test)
     db.session.commit()
 
 def teardown_func():
-    tests = iatidataquality.models.Test.query.filter_by(
+    tests = iatidq.models.Test.query.filter_by(
         test_group=TEST_GROUP).all()
     for test in tests:
         db.session.delete(test)
     db.session.commit()
 
 def create_tst(name):
-    test = iatidataquality.models.Test(
+    test = iatidq.models.Test(
         name = name,
         description = "Test FN",
         test_group = TEST_GROUP,
@@ -47,7 +47,7 @@ def create_tst(name):
 
 def check_against_files(test_str):
     test = create_tst(test_str)
-    from iatidataquality.dqparsetests import test_functions as tf
+    from iatidq.dqparsetests import test_functions as tf
     test_functions = tf()
 
     data_files = [
