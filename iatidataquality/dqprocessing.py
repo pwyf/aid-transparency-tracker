@@ -16,10 +16,7 @@ def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
     result.test_id = test_id 
     result.runtime_id = runtime_id
     result.package_id = package_id
-    if result_data:
-        result.result_data = 1
-    else:
-        result.result_data = 0 
+    result.result_data = int(bool(result_data))
     db.session.add(result)
 
 def aggregate_results(runtime, package_id):
