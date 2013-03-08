@@ -72,6 +72,16 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
     add_hardcoded_result(-2, runtime_id, package.id, success)
     db.session.commit()
 
+def manage_download(path, url):
+    # report_error mangles return values; so we don't use it here
+    try:
+        download_file(url, path)
+        print "  Downloaded, processing..."
+        return True
+    except:
+        print "  Couldn't fetch URL"
+        return False
+
 def actually_save_file(package_name, orig_url, pkg, runtime_id):
     # `pkg` is a CKAN dataset
     success = False
@@ -79,15 +89,9 @@ def actually_save_file(package_name, orig_url, pkg, runtime_id):
 
     print "Attempting to fetch package", package_name, "from", orig_url
     url = fixURL(orig_url)
+    path = os.path.join(directory, package_name + '.xml')
 
-    try:
-        path = os.path.join(directory, package_name + '.xml')
-        download_file(url, path)
-        success = True
-        print "  Downloaded, processing..."
-    except:
-        success = False
-        print "  Couldn't fetch URL"
+    success = manage_download(path, url)
 
     with report_error("  Wrote metadata to DB", 
                       "  Couldn't write metadata to DB"):
