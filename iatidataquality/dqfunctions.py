@@ -168,15 +168,13 @@ def _agr_results(data, conditions=None, mode=None):
             if t not in out[h]:
                 out[h][t] = {}
 
-            try: 
-                if tdata:
-                    out[h][t]["test"] = tdata
-                if conditions:
-                    key = (t,'activity hierarchy', str(h), 0) 
-                    if key in cdtns:
-                        out[h][t]["condition"] = cdtns[key]
-            except KeyError: del out[h][t]
-            except UnboundLocalError: del out[h][t]
+            if tdata:
+                out[h][t]["test"] = tdata
+            if conditions:
+                key = (t,'activity hierarchy', str(h), 0) 
+                if key in cdtns:
+                    out[h][t]["condition"] = cdtns[key]
+
             try:
                 if (out[h][t] == {}): del out[h][t]
             except KeyError:
