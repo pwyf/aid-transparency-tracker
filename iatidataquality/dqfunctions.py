@@ -162,11 +162,11 @@ def _agr_results(data, conditions=None, mode=None):
                 except KeyError:
                     tdata = None
 
-            try: out[h]
-            except KeyError: out[h] = {}
+            if h not in out:
+                out[h] = {}
 
-            try: out[h][t]
-            except KeyError: out[h][t] = {}
+            if t not in out[h]:
+                out[h][t] = {}
 
             try: 
                 if tdata:
