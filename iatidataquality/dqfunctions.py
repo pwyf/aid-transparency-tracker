@@ -144,15 +144,16 @@ def _agr_results(data, conditions=None, mode=None):
                 
                 if (total_activities>0):
                     
-                    tdata = {}
-                    tdata["test"] = {}
-                    tdata["test"]["id"] = ok_tdata.Test.id
-                    tdata["test"]["description"] = ok_tdata.Test.description
-                    tdata["test"]["test_group"] = ok_tdata.Test.test_group
-                    tdata["results_pct"] = int(float(total_pct/total_packages))
-                    tdata["results_num"] = total_activities
-                    tdata["result_hierarchy"] = total_activities
-                
+                    tdata = {
+                        "test": {
+                            "id": ok_tdata.Test.id,
+                            "description": ok_tdata.Test.description,
+                            "test_group": ok_tdata.Test.test_group
+                            },
+                        "results_pct": int(float(total_pct/total_packages)),
+                        "results_num": total_activities,
+                        "result_hierarchy": total_activities
+                        }
             else:
                 # return data for this single package
                 try:
