@@ -170,12 +170,10 @@ def _agr_results(data, conditions=None, mode=None):
                 if tdata:
                     out[h][t]["test"] = tdata
                 try:
-                    out[h][t]["condition"] = cdtns[(t,'activity hierarchy', str(h), 0)]
+                    if conditions:
+                        out[h][t]["condition"] = cdtns[(t,'activity hierarchy', str(h), 0)]
                 except KeyError:
                     # cdtns[...] doesn't exist
-                    pass
-                except UnboundLocalError:
-                    # cdtns doesn't exist
                     pass
             except KeyError: del out[h][t]
             except UnboundLocalError: del out[h][t]
