@@ -13,7 +13,7 @@ import iatidataquality
 import iatidq.dqimporttests
 
 def run():
-    iatidataquality.db.create_all()
+    iatidq.db.create_all()
     iatidq.dqimporttests.hardcodedTests()
     manager = Manager(iatidataquality.app)
     manager.run()

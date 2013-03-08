@@ -8,7 +8,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidataquality import models, db, dqruntests
+from iatidq import dqruntests
 
 def run():
     taskid = dqruntests.start_testing()
