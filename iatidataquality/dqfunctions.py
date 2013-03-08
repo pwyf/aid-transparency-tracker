@@ -79,7 +79,7 @@ def pkg_test_percentages(data):
             out[h][t] = data
     return out
 
-def agr_results(data, conditions=None, mode=None):
+def _agr_results(data, conditions=None, mode=None):
     """
         data variable looks like this:
             models.Test,
@@ -182,6 +182,10 @@ def agr_results(data, conditions=None, mode=None):
             except KeyError:
                 pass
     return out
+
+def agr_results(data, conditions=None, mode=None):
+    results = _agr_results(data, conditions, mode)
+    return results
 
 def add_test_status(package_id, status_id, commit=True):
     pstatus = models.PackageStatus()
