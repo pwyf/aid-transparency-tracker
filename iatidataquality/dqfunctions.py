@@ -115,7 +115,10 @@ def _agr_results(data, conditions=None, mode=None):
 
     cdtns = None
     if conditions:
-        cdtns = dict(map(lambda x: ((x.test_id, x.condition, x.condition_value, x.operation),(x.description)), conditions))
+        cdtns = dict(map(lambda x: (
+                    (x.test_id, x.condition, x.condition_value, x.operation),
+                    (x.description)
+                    ), conditions))
     
     if (mode=="publisher"):
         packages = set(map(lambda x: (x[4]), data))
