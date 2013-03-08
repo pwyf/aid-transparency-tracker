@@ -111,16 +111,16 @@ def _agr_results(data, conditions=None, mode=None):
     """
 
     hierarchies = set(map(lambda x: (x[3]), data))
-    tests = set(map(lambda x: (x[0].id), data))
+    tests = set(map(lambda x: (x[0]["id"]), data))
 
     if conditions:
         cdtns = dict(map(lambda x: ((x.test_id, x.condition, x.condition_value, x.operation),(x.description)), conditions))
     
     if (mode=="publisher"):
         packages = set(map(lambda x: (x[4]), data))
-        d = dict(map(lambda x: ((x[3], x[0].id, x[4]),(x)), data))
+        d = dict(map(lambda x: ((x[3], x[0]["id"], x[4]),(x)), data))
     else:
-        d = dict(map(lambda x: ((x[3], x[0].id),(x)), data))
+        d = dict(map(lambda x: ((x[3], x[0]["id"]),(x)), data))
 
     out = {}
 
@@ -146,9 +146,9 @@ def _agr_results(data, conditions=None, mode=None):
                     
                     tdata = {
                         "test": {
-                            "id": ok_tdata.Test.id,
-                            "description": ok_tdata.Test.description,
-                            "test_group": ok_tdata.Test.test_group
+                            "id": ok_tdata[0]["id"],
+                            "description": ok_tdata[0]["description"],
+                            "test_group": ok_tdata[0]["test_group"]
                             },
                         "results_pct": int(float(total_pct/total_packages)),
                         "results_num": total_activities,
@@ -185,7 +185,10 @@ def _agr_results(data, conditions=None, mode=None):
     return out
 
 def agr_results(data, conditions=None, mode=None):
-    results = _agr_results(data, conditions, mode)
+    def replace_first(tupl, newval):
+        return tuple([newval] + list(tupl)[1:])
+    switch_first = lambda t: replace_first(t, t[0].as_dict())
+    results = _agr_results(map(switch_first, data), conditions, mode)
     return results
 
 def add_test_status(package_id, status_id, commit=True):
