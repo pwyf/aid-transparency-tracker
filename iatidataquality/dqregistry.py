@@ -97,23 +97,28 @@ def setup_package_group(package, pkg):
             pg = create_package_group(group, handle_country=False)
         package.package_group = pg.id
 
+# FIXME: compare this with similar function in download_queue
+
+# pkg is sqlalchemy model; package is ckan object
+def copy_pkg_attributes(pkg, package):
+    components = [ 
+        ("id","package_ckan_id"),
+        ("name","package_name"),
+        ("title","package_title")
+        ]
+    for attr, key in components:
+        setattr(pkg, key, package[attr])
+    
 # Don't get revision ID; 
 # empty var will trigger download of file elsewhere
-
-components = [ ("id","package_ckan_id"),
-               ("name","package_name"),
-               ("title","package_title")
-               ]
-
 def refresh_package(package):
     print package['name']
     pkg = models.Package.query.filter_by(
         package_name=package['name']).first()
     if (pkg is None):
         pkg = models.Package()
-    for attr, key in components:
-        setattr(pkg, key, package[attr])
 
+    copy_pkg_attributes(pkg, package)
     setup_package_group(pkg, package)
 
     pkg.man_auto = 'auto'
