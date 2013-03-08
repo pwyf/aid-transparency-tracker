@@ -22,16 +22,8 @@ REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,t
 
 CKANurl = 'http://iatiregistry.org/api'
 
-def create_package_group(group, handle_country=True):
-    pg = models.PackageGroup()
-    pg.name = group
-    pg.man_auto="auto"
-    
-    # Query CKAN
-    import ckanclient
-    registry = ckanclient.CkanClient(base_location=CKANurl)
-    ckangroup = registry.group_entity_get(group)
-
+# pg is sqlalchemy model; ckangroup is a ckan object
+def copy_pg_attributes(pg, ckangroup):
     mapping = [
         ("title", "title"),
         ("ckan_id", "id"),
@@ -45,6 +37,8 @@ def create_package_group(group, handle_country=True):
         except Exception, e:
             pass
 
+# pg is sqlalchemy model; ckangroup is a ckan object
+def copy_pg_misc_attributes(pg, ckangroup, handle_country):
     try:
         pg.license_id = ckangroup['extras']['publisher_license_id']
     except Exception, e:
@@ -56,6 +50,8 @@ def create_package_group(group, handle_country=True):
         except Exception, e:
             pass
 
+# pg is sqlalchemy model; ckangroup is a ckan object
+def copy_pg_fields(pg, ckangroup):
     fields = [
         'publisher_iati_id', 'publisher_segmentation', 'publisher_type', 
         'publisher_ui', 'publisher_organization_type', 
@@ -72,6 +68,20 @@ def create_package_group(group, handle_country=True):
             setattr(pg, field, ckangroup['extras'][field])
         except Exception, e:
             pass
+
+def create_package_group(group, handle_country=True):
+    pg = models.PackageGroup()
+    pg.name = group
+    pg.man_auto="auto"
+    
+    # Query CKAN
+    import ckanclient
+    registry = ckanclient.CkanClient(base_location=CKANurl)
+    ckangroup = registry.group_entity_get(group)
+
+    copy_pg_attributes(pg, ckangroup)
+    copy_pg_misc_attributes(pg, ckangroup, handle_country)
+    copy_pg_fields(pg, ckangroup)
 
     db.session.add(pg)
     db.session.commit()
