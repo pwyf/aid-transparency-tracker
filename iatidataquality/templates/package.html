@@ -87,8 +87,8 @@
         </thead>
         <tbody>
         {% for test, result in values.items() %}
-        <tr id="tr{{result["test"][0].id}}h{{h}}" class="group-{% if result.test[0].test_group %}{{result.test[0].test_group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
-	    <td><a href="{{url_for('tests', id=result["test"][0].id)}}">{{ result["test"][0].description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition}}"></i>{%endif%}</td>
+        <tr id="tr{{result["test"][0].id}}h{{h}}" class="group-{% if result["test"][0].test_group %}{{result["test"][0].test_group}}{% else %}unknown{%endif%}{% if result["condition"] %} condition-hidden alert{%endif%}">
+	    <td><a href="{{url_for('tests', id=result["test"][0].id)}}">{{ result["test"][0].description }}</a>{% if result["condition"] %} <i class="icon-info-sign" title="{{result["condition"]}}"></i>{%endif%}</td>
         <td class="pct">{{result["test"][1]|round|int}}</td>
         <td>{{result["test"][2]}}</td>
         <td class="schedule"></td>
