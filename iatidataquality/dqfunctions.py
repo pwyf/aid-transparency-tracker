@@ -188,7 +188,8 @@ def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):
         return tuple([newval] + list(tupl)[1:])
     switch_first = lambda t: replace_first(t, t[0].as_dict())
-    results = _agr_results(map(switch_first, data), conditions, mode)
+    fixed_data = map(switch_first, data)
+    results = _agr_results(fixed_data, conditions, mode)
     return results
 
 def add_test_status(package_id, status_id, commit=True):
