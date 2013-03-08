@@ -137,8 +137,8 @@ def _agr_results(data, conditions=None, mode=None):
                 for p in packages:
                     try:
                         ok_tdata = d[(h, t, p)]
-                        total_pct = total_pct + ok_tdata[1] #percentage
-                        total_activities = total_activities + ok_tdata[2] #total vals
+                        total_pct += ok_tdata[1] #percentage
+                        total_activities += ok_tdata[2] #total vals
                     except KeyError:
                         pass
                 
