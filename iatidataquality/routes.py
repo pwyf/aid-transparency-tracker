@@ -18,7 +18,14 @@ from datetime import datetime
 from iatidataquality import app
 from iatidataquality import db
 
-import models
+
+import os
+import sys
+current = os.path.dirname(os.path.abspath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
+from iatidq import models
 import aggregation
 
 @app.route("/")

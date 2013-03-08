@@ -14,8 +14,14 @@ from sqlalchemy import func
 import math
 
 from iatidataquality import app, db
-import dqdownload
-import models
+
+import os
+import sys
+current = os.path.dirname(os.path.abspath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
+from iatidq import dqdownload, models
 
 import datetime
 class JSONEncoder(json.JSONEncoder):

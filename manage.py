@@ -10,11 +10,11 @@
 
 from flask.ext.script import Manager
 import iatidataquality
-import iatidataquality.dqimporttests
+import iatidq.dqimporttests
 
 def run():
     iatidataquality.db.create_all()
-    iatidataquality.dqimporttests.hardcodedTests()
+    iatidq.dqimporttests.hardcodedTests()
     manager = Manager(iatidataquality.app)
     manager.run()
 
