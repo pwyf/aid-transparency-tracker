@@ -26,13 +26,8 @@ def fixURL(url):
     url = url.replace(" ", "%20")
     return url
 
-def metadata_to_db(pkg, package_name, success, runtime_id):
-    package = models.Package.query.filter_by(
-        package_name=package_name).first()
-
-    package.man_auto = 'auto'
-    package.source_url = pkg['resources'][0]['url']
-
+# package: a sqla model; pkg: a ckan object
+def copy_package_attributes(package, pkg):
     mapping = [
         ("package_ckan_id", "id"),
         ("package_name", "name"),
@@ -48,6 +43,8 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         with report_error(None, None):
             setattr(package, attr, pkg[key])
 
+# package: a sqla model; pkg: a ckan object
+def setup_package_group(package, pkg):
     with report_error(None, "Error saving package_group"):
         # there is a group, so use that group ID, or create one
         group = pkg['groups'][0]
@@ -56,8 +53,9 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         except Exception, e:
             pg = create_package_group(group, handle_country=False)
         package.package_group = pg.id
-        
 
+# package: a sqla model; pkg: a ckan object
+def copy_package_fields(package, pkg):
     fields = [ 
         "activity_period-from", "activity_period-to",
         "activity_count", "country", "filetype", "verified" 
@@ -66,6 +64,17 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         with report_error(None, None):
             field_name = "package_" + field.replace("-", "_")
             setattr(package, field_name, pkg["extras"][field])
+
+def metadata_to_db(pkg, package_name, success, runtime_id):
+    package = models.Package.query.filter_by(
+        package_name=package_name).first()
+
+    package.man_auto = 'auto'
+    package.source_url = pkg['resources'][0]['url']
+
+    copy_package_attributes(package, pkg)
+    setup_package_group(package, pkg)
+    copy_package_fields(package, pkg)
 
     db.session.add(package)
     db.session.commit()
