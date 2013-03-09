@@ -126,7 +126,6 @@ def refresh_package(package):
     db.session.commit()
 
 def refresh_package_by_name(package_name):
-    CKANurl = 'http://iatiregistry.org/api'
     registry = ckanclient.CkanClient(base_location=CKANurl)  
     package = registry.package_entity_get(package_name)
     refresh_package(package)
