@@ -1,0 +1,75 @@
+{
+  "maintainer": null, 
+  "maintainer_email": null, 
+  "id": "eadabacf-64b1-4800-aa73-bc7250fb797a", 
+  "metadata_created": "2011-05-15T19:26:59.031955", 
+  "relationships": [], 
+  "metadata_modified": "2013-03-09T01:03:07.508944", 
+  "author": null, 
+  "author_email": "pic@worldbank.org", 
+  "download_url": "http://siteresources.worldbank.org/IATI/WB-TZ.xml", 
+  "state": "active", 
+  "version": null, 
+  "license_id": "other-at", 
+  "resources": [
+    {
+      "mimetype": "text/xml", 
+      "resource_group_id": "6d429ec3-064e-c951-9bde-dcf24fb9b546", 
+      "hash": "c6e01722e7e02d9f9ea872ceb1d08efd77e97595", 
+      "description": "", 
+      "name": null, 
+      "format": "IATI-XML", 
+      "url": "http://siteresources.worldbank.org/IATI/WB-TZ.xml", 
+      "cache_url": null, 
+      "webstore_url": null, 
+      "cache_last_updated": null, 
+      "package_id": "eadabacf-64b1-4800-aa73-bc7250fb797a", 
+      "mimetype_inner": null, 
+      "webstore_last_updated": null, 
+      "last_modified": null, 
+      "position": 0, 
+      "id": "a3037f43-ea9a-41ee-81eb-006474f5d734", 
+      "resource_type": null, 
+      "size": "509070"
+    }
+  ], 
+  "tags": [], 
+  "groups": [
+    "testbank"
+  ], 
+  "name": "testbank-tz", 
+  "isopen": true, 
+  "license": "OKD Compliant::Other (Attribution)", 
+  "notes_rendered": "", 
+  "url": null, 
+  "ckan_url": "http://iatiregistry.org/dataset/testbank-tz", 
+  "notes": null, 
+  "title": "World Bank activity file for TANZANIA, UNITED REPUBLIC OF", 
+  "ratings_average": null, 
+  "extras": {
+    "donors": [
+      "testbank"
+    ], 
+    "activity_period-from": "2011-01-01 00:00", 
+    "publisher_iati_id": "44000", 
+    "verified": "yes", 
+    "language": "en", 
+    "publisher_organization_type": "40", 
+    "donors_type": [
+      "multilateral"
+    ], 
+    "activity_count": "59", 
+    "filetype": "activity", 
+    "record_updated": "2011-11-16 13:22", 
+    "archive_file": "no", 
+    "publisher_country": "998", 
+    "country": "TZ", 
+    "department": "", 
+    "donors_country": [], 
+    "activity_period-to": "2011-12-31 00:00", 
+    "data_updated": "2012-12-16 03:09", 
+    "publishertype": "primary_source"
+  }, 
+  "ratings_count": 0, 
+  "revision_id": "2fd5311d-ea16-414f-87c0-b393ce18f4a3"
+}

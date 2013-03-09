@@ -11,4 +11,4 @@ before_script:
   - python quickstart.py --drop-db
   - python quickstart.py --init-db
   - python quickstart.py --refresh --minimal-pkgs
-script: "nosetests --exclude tests unittests/test_runtests.py unittests/test_aggregationfn.py"
+script: "nosetests --exclude tests unittests/test_runtests.py unittests/test_aggregationfn.py unittests/test_dataflows.py"
