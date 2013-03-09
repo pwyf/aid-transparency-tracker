@@ -9,7 +9,7 @@
 
 from iatidq import db
 import models
-import csv
+import unicodecsv
 
 import util
 
@@ -43,7 +43,7 @@ def importTests(filename='tests/activity_tests.csv', level=1, local=True):
     if not f:
         return False
 
-    data = csv.DictReader(f)
+    data = unicodecsv.DictReader(f)
 
     for row in data:
         test = models.Test.query.filter(models.Test.name==row['test']).first()

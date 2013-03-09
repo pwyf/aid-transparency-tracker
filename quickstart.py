@@ -79,8 +79,9 @@ def main():
         return
 
     if options.enroll_tests:
+        filename = options.enroll_tests.decode()
         iatidq.dqimporttests.importTests(
-            filename=options.enroll_tests, 
+            filename=filename, 
             level=options.level)
         return
 
