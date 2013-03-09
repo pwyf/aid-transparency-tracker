@@ -15,9 +15,9 @@ import util
 
 def hardcodedTests():
     hardcoded_tests = [
-        (-2, 'url_exists', "Check that the xml file actually exists."),
-        (-3, 'valid_xml', "Check that xml is well structured"),
-        (-4, 'schema_conformance', "Check that xml conforms to schema")
+        (-2, u'url_exists', u"Check that the xml file actually exists."),
+        (-3, u'valid_xml', u"Check that xml is well structured"),
+        (-4, u'schema_conformance', u"Check that xml conforms to schema")
     ]
 
     for hardcoded_test in hardcoded_tests:
