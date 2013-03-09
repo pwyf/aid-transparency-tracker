@@ -93,6 +93,7 @@ def _agr_results(data, conditions=None, mode=None):
     for h in hierarchies:
         
         for t in tests:
+            tdata = {}
             if (mode=="publisher"):
                 # aggregate data across multiple packages for a single publisher
 
