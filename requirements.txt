@@ -16,7 +16,6 @@ ckan
 ckanclient
 pika==0.9.8
 supervisor
-oursql
 foxpath
 psycopg2
 unicodecsv
