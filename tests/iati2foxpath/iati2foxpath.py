@@ -5,10 +5,12 @@
 
 from lxml import etree
 import re
+import csv
 
 organisations_schema = "iati-organisations-schema.xsd"
 activities_schema = "iati-activities-schema.xsd"
 common_schema = "iati-common.xsd"
+codelists_mapping = "iati-codelists.csv"
 
 NS = "{http://www.w3.org/2001/XMLSchema}"
 
@@ -19,6 +21,14 @@ datafiles = [activities_data, common_data]
 
 elements = {}
 attributes = {}
+codes = {}
+
+def getCodeLists(mapping=codelists_mapping):
+    f = open(mapping)
+    codelists = csv.DictReader(f)
+    for codelist in codelists:
+        codes[(codelist['element'], codelist['attribute'])] = codelist['codelist_name']
+    f.close()
 
 def cleanUpType(data):
     return re.sub("xsd:", "", data)
@@ -30,15 +40,25 @@ def getAttributes(data):
         zattributes[attribute.get('name')] = cleanUpType(attribute.get('type'))
     return zattributes
 
-def getElementAttributes(data):
+def getElementAttributes(data, element_name):
     zattributes = {}
     try:
         theattributes = data.find(NS+"complexType").findall(NS+"attribute")
         for attribute in theattributes:
             try:
-                zattributes[attribute.get('name')] = cleanUpType(attribute.get('type'))
+                attribute_name = attribute.get('name')
+                attribute_type = cleanUpType(attribute.get('type'))
             except Exception:
-                zattributes[attribute.get('ref')] = attributes[attribute.get('ref')]
+                attribute_name = attribute.get('ref')
+                attribute_type = attributes[attribute.get('ref')]
+            
+            try:
+                attribute_codelist = codes[(element_name, attribute_name)]
+                zattributes[attribute_name] = {'type': attribute_type,
+                                               'codelist': attribute_codelist }
+            except Exception:
+                zattributes[attribute_name] = {'type': attribute_type}
+                
     except Exception:
         pass
     return zattributes
@@ -53,7 +73,7 @@ def getSubElements(data):
             except Exception:
                 element_name=element.get('ref')
             zsubelements[element_name] = {}
-            zsubelements[element_name]['attributes'] = getElementAttributes(element)
+            zsubelements[element_name]['attributes'] = getElementAttributes(element, element_name)
             zsubelements[element_name]['elements'] = getSubElements(element)
     except Exception:
         pass
@@ -69,7 +89,7 @@ def getElements(data):
         except Exception:
             element_name=element.get('ref')
         zelements[element_name] = {}
-        zelements[element_name]['attributes'] = getElementAttributes(element)
+        zelements[element_name]['attributes'] = getElementAttributes(element, element_name)
         zelements[element_name]['elements'] = getSubElements(element)
     return zelements
 
@@ -81,29 +101,27 @@ def printAttributes(element, attributes, parent_element=None):
             else:
                 parent = element
             print parent + "/@" + attribute + " exists?"
-            print parent + "/@" + attribute + " is a " + attribute_data + "?"
+            print parent + "/@" + attribute + " is a " + attribute_data['type'] + "?"
+            if 'codelist' in attribute_data:
+                print parent + "/@" + attribute + " is on codelist " + attribute_data['codelist'] + "?"
 
 def printElements(elements, parent_element=None):
     for element, element_data in elements.items():
-        if ((element != "elements") and (element != "attributes")):
+        if ((element != "elements") and (element != "attributes") and (element != None)):
             if (parent_element is not None):
                 print str(parent_element) + "/" + str(element) + " exists?"
             else:
                 print element, "exists?"
-            if parent_element is not None:
+            if ((parent_element is not None) and (element is not None)):
                 parent = parent_element + "/" + element
             else:
                 parent = element
-            try:
-                printAttributes(element, element_data['attributes'], parent)
-            except Exception:
-                pass
-            try:
-                printElements(element_data['elements'], parent_element=parent)
-            except Exception:
-                pass
+            printAttributes(element, element_data['attributes'], parent)
+            printElements(element_data['elements'], parent_element=parent)
 
 def run():
+    getCodeLists()
+
     for datafile in datafiles:
         attributes.update(getAttributes(datafile))
     attributes['xml:lang'] = "string"

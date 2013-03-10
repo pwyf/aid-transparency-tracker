@@ -3,19 +3,24 @@ sector/@percentage exists?
 sector/@percentage is a positiveInteger?
 sector/@code exists?
 sector/@code is a string?
+sector/@code is on codelist Sector?
 sector/@vocabulary exists?
 sector/@vocabulary is a string?
+sector/@vocabulary is on codelist Vocabulary?
 activity-date exists?
 reporting-org exists?
 reporting-org/@type exists?
 reporting-org/@type is a string?
+reporting-org/@type is on codelist OrganisationType?
 reporting-org/@ref exists?
 reporting-org/@ref is a string?
 participating-org exists?
 participating-org/@type exists?
 participating-org/@type is a string?
+participating-org/@type is on codelist OrganisationType?
 participating-org/@role exists?
 participating-org/@role is a string?
+participating-org/@role is on codelist OrganisationRole?
 participating-org/@ref exists?
 participating-org/@ref is a string?
 iati-identifier exists?
@@ -32,13 +37,17 @@ recipient-country/@percentage exists?
 recipient-country/@percentage is a positiveInteger?
 recipient-country/@code exists?
 recipient-country/@code is a string?
+recipient-country/@code is on codelist Country?
 policy-marker exists?
 policy-marker/@code exists?
 policy-marker/@code is a string?
+policy-marker/@code is on codelist PolicyMarker?
 policy-marker/@vocabulary exists?
 policy-marker/@vocabulary is a string?
+policy-marker/@vocabulary is on codelist Vocabulary?
 policy-marker/@significance exists?
 policy-marker/@significance is a string?
+policy-marker/@significance is on codelist PolicySignificance?
 contact-info exists?
 contact-info/email exists?
 contact-info/organisation exists?
@@ -50,14 +59,35 @@ activity-status exists?
 result exists?
 result/@type exists?
 result/@type is a string?
+result/@type is on codelist ResultType?
 result/@aggregation-status exists?
 result/@aggregation-status is a boolean?
-result/None exists?
+result/indicator exists?
+result/indicator/@ascending exists?
+result/indicator/@ascending is a boolean?
+result/indicator/@measure exists?
+result/indicator/@measure is a string?
+result/indicator/@measure is on codelist IndicatorMeasure?
+result/indicator/baseline exists?
+result/indicator/baseline/@value exists?
+result/indicator/baseline/@value is a string?
+result/indicator/baseline/@year exists?
+result/indicator/baseline/@year is a positiveInteger?
+result/indicator/period exists?
+result/indicator/period/actual exists?
+result/indicator/period/actual/@value exists?
+result/indicator/period/actual/@value is a string?
+result/indicator/period/period-end exists?
+result/indicator/period/period-start exists?
+result/indicator/period/target exists?
+result/indicator/period/target/@value exists?
+result/indicator/period/target/@value is a string?
 default-finance-type exists?
 default-aid-type exists?
 description exists?
 description/@type exists?
 description/@type is a string?
+description/@type is on codelist DescriptionType?
 default-flow-type exists?
 transaction exists?
 transaction/@ref exists?
@@ -86,6 +116,7 @@ transaction/description exists?
 related-activity exists?
 related-activity/@type exists?
 related-activity/@type is a string?
+related-activity/@type is on codelist RelatedActivityType?
 related-activity/@ref exists?
 related-activity/@ref is a string?
 title exists?
@@ -95,6 +126,7 @@ conditions/@attached is a boolean?
 conditions/condition exists?
 conditions/condition/@type exists?
 conditions/condition/@type is a string?
+conditions/condition/@type is on codelist ConditionType?
 iati-activity exists?
 iati-activity/@linked-data-uri exists?
 iati-activity/@linked-data-uri is a string?
@@ -102,16 +134,17 @@ iati-activity/@hierarchy exists?
 iati-activity/@hierarchy is a int?
 iati-activity/@default-currency exists?
 iati-activity/@default-currency is a string?
+iati-activity/@default-currency is on codelist Currency?
 iati-activity/@xml:lang exists?
 iati-activity/@xml:lang is a string?
 iati-activity/@last-updated-datetime exists?
 iati-activity/@last-updated-datetime is a dateTime?
 iati-activity/@version exists?
 iati-activity/@version is a decimal?
-iati-activity/None exists?
 budget exists?
 budget/@type exists?
 budget/@type is a string?
+budget/@type is on codelist BudgetType?
 budget/period-end exists?
 budget/period-start exists?
 budget/value exists?
@@ -128,11 +161,13 @@ location/description exists?
 location/gazetteer-entry exists?
 location/gazetteer-entry/@gazetteer-ref exists?
 location/gazetteer-entry/@gazetteer-ref is a string?
+location/gazetteer-entry/@gazetteer-ref is on codelist GazetteerAgency?
 location/coordinates exists?
 location/coordinates/@latitude exists?
 location/coordinates/@latitude is a decimal?
 location/coordinates/@precision exists?
 location/coordinates/@precision is a string?
+location/coordinates/@precision is on codelist GeographicalPrecision?
 location/coordinates/@longitude exists?
 location/coordinates/@longitude is a decimal?
 location/location-type exists?
@@ -149,12 +184,15 @@ recipient-region/@percentage exists?
 recipient-region/@percentage is a positiveInteger?
 recipient-region/@code exists?
 recipient-region/@code is a string?
+recipient-region/@code is on codelist Region?
 document-link exists?
 document-link/@url exists?
 document-link/@url is a anyURI?
 document-link/@format exists?
 document-link/@format is a string?
-document-link/None exists?
+document-link/@format is on codelist FileFormat?
+document-link/category exists?
+document-link/language exists?
 legacy-data exists?
 legacy-data/@name exists?
 legacy-data/@name is a string?
@@ -169,4 +207,3 @@ iati-activities/@version exists?
 iati-activities/@version is a decimal?
 iati-activities/@linked-data-default exists?
 iati-activities/@linked-data-default is a string?
-iati-activities/None exists?
