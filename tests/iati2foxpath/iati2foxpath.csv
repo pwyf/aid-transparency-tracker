@@ -1,0 +1,172 @@
+sector exists?
+sector/@percentage exists?
+sector/@percentage is a positiveInteger?
+sector/@code exists?
+sector/@code is a string?
+sector/@vocabulary exists?
+sector/@vocabulary is a string?
+activity-date exists?
+reporting-org exists?
+reporting-org/@type exists?
+reporting-org/@type is a string?
+reporting-org/@ref exists?
+reporting-org/@ref is a string?
+participating-org exists?
+participating-org/@type exists?
+participating-org/@type is a string?
+participating-org/@role exists?
+participating-org/@role is a string?
+participating-org/@ref exists?
+participating-org/@ref is a string?
+iati-identifier exists?
+activity-website exists?
+default-tied-status exists?
+planned-disbursement exists?
+planned-disbursement/@updated exists?
+planned-disbursement/@updated is a date?
+planned-disbursement/period-end exists?
+planned-disbursement/period-start exists?
+planned-disbursement/value exists?
+recipient-country exists?
+recipient-country/@percentage exists?
+recipient-country/@percentage is a positiveInteger?
+recipient-country/@code exists?
+recipient-country/@code is a string?
+policy-marker exists?
+policy-marker/@code exists?
+policy-marker/@code is a string?
+policy-marker/@vocabulary exists?
+policy-marker/@vocabulary is a string?
+policy-marker/@significance exists?
+policy-marker/@significance is a string?
+contact-info exists?
+contact-info/email exists?
+contact-info/organisation exists?
+contact-info/mailing-address exists?
+contact-info/person-name exists?
+contact-info/telephone exists?
+collaboration-type exists?
+activity-status exists?
+result exists?
+result/@type exists?
+result/@type is a string?
+result/@aggregation-status exists?
+result/@aggregation-status is a boolean?
+result/None exists?
+default-finance-type exists?
+default-aid-type exists?
+description exists?
+description/@type exists?
+description/@type is a string?
+default-flow-type exists?
+transaction exists?
+transaction/@ref exists?
+transaction/@ref is a string?
+transaction/aid-type exists?
+transaction/flow-type exists?
+transaction/provider-org exists?
+transaction/provider-org/@provider-activity-id exists?
+transaction/provider-org/@provider-activity-id is a string?
+transaction/provider-org/@ref exists?
+transaction/provider-org/@ref is a string?
+transaction/receiver-org exists?
+transaction/receiver-org/@receiver-activity-id exists?
+transaction/receiver-org/@receiver-activity-id is a string?
+transaction/receiver-org/@ref exists?
+transaction/receiver-org/@ref is a string?
+transaction/disbursement-channel exists?
+transaction/value exists?
+transaction/finance-type exists?
+transaction/tied-status exists?
+transaction/transaction-date exists?
+transaction/transaction-date/@iso-date exists?
+transaction/transaction-date/@iso-date is a date?
+transaction/transaction-type exists?
+transaction/description exists?
+related-activity exists?
+related-activity/@type exists?
+related-activity/@type is a string?
+related-activity/@ref exists?
+related-activity/@ref is a string?
+title exists?
+conditions exists?
+conditions/@attached exists?
+conditions/@attached is a boolean?
+conditions/condition exists?
+conditions/condition/@type exists?
+conditions/condition/@type is a string?
+iati-activity exists?
+iati-activity/@linked-data-uri exists?
+iati-activity/@linked-data-uri is a string?
+iati-activity/@hierarchy exists?
+iati-activity/@hierarchy is a int?
+iati-activity/@default-currency exists?
+iati-activity/@default-currency is a string?
+iati-activity/@xml:lang exists?
+iati-activity/@xml:lang is a string?
+iati-activity/@last-updated-datetime exists?
+iati-activity/@last-updated-datetime is a dateTime?
+iati-activity/@version exists?
+iati-activity/@version is a decimal?
+iati-activity/None exists?
+budget exists?
+budget/@type exists?
+budget/@type is a string?
+budget/period-end exists?
+budget/period-start exists?
+budget/value exists?
+comment exists?
+other-identifier exists?
+other-identifier/@owner-ref exists?
+other-identifier/@owner-ref is a string?
+other-identifier/@owner-name exists?
+other-identifier/@owner-name is a string?
+location exists?
+location/@percentage exists?
+location/@percentage is a positiveInteger?
+location/description exists?
+location/gazetteer-entry exists?
+location/gazetteer-entry/@gazetteer-ref exists?
+location/gazetteer-entry/@gazetteer-ref is a string?
+location/coordinates exists?
+location/coordinates/@latitude exists?
+location/coordinates/@latitude is a decimal?
+location/coordinates/@precision exists?
+location/coordinates/@precision is a string?
+location/coordinates/@longitude exists?
+location/coordinates/@longitude is a decimal?
+location/location-type exists?
+location/administrative exists?
+location/administrative/@country exists?
+location/administrative/@country is a string?
+location/administrative/@adm1 exists?
+location/administrative/@adm1 is a string?
+location/administrative/@adm2 exists?
+location/administrative/@adm2 is a string?
+location/name exists?
+recipient-region exists?
+recipient-region/@percentage exists?
+recipient-region/@percentage is a positiveInteger?
+recipient-region/@code exists?
+recipient-region/@code is a string?
+document-link exists?
+document-link/@url exists?
+document-link/@url is a anyURI?
+document-link/@format exists?
+document-link/@format is a string?
+document-link/None exists?
+legacy-data exists?
+legacy-data/@name exists?
+legacy-data/@name is a string?
+legacy-data/@value exists?
+legacy-data/@value is a string?
+legacy-data/@iati-equivalent exists?
+legacy-data/@iati-equivalent is a NMTOKEN?
+iati-activities exists?
+iati-activities/@generated-datetime exists?
+iati-activities/@generated-datetime is a dateTime?
+iati-activities/@version exists?
+iati-activities/@version is a decimal?
+iati-activities/@linked-data-default exists?
+iati-activities/@linked-data-default is a string?
+iati-activities/None exists?
