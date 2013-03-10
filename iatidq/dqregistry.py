@@ -142,7 +142,7 @@ def activate_packages(data, clear_revision_id=None):
     for package_name, active in data:
         pkg = models.Package.query.filter_by(package_name=package_name).first()
         if (clear_revision_id is not None):
-            pkg.package_revision_id = ""
+            pkg.package_revision_id = u""
         pkg.active = active
         db.session.add(pkg)
     db.session.commit()

@@ -13,6 +13,8 @@
         2) populating the list of packages from the Registry (will download basic data about all packages)
         3) setting 3 to "active"
 """
+#import warnings
+#warnings.filterwarnings('error')
 
 import iatidq
 
@@ -25,9 +27,9 @@ import optparse
 import sys
 
 which_packages = [
-    ('worldbank-tz', True),
-    ('unops-tz', True),
-    ('dfid-tz', True)
+    (u'worldbank-tz', True),
+    (u'unops-tz', True),
+    (u'dfid-tz', True)
     ]
 
 def run(refresh=False, minimal=False):
