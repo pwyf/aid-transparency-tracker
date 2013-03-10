@@ -72,7 +72,7 @@ def copy_pg_fields(pg, ckangroup):
 def create_package_group(group, handle_country=True):
     pg = models.PackageGroup()
     pg.name = group
-    pg.man_auto="auto"
+    pg.man_auto = u"auto"
     
     # Query CKAN
     import ckanclient
@@ -121,7 +121,7 @@ def refresh_package(package):
     copy_pkg_attributes(pkg, package)
     setup_package_group(pkg, package)
 
-    pkg.man_auto = 'auto'
+    pkg.man_auto = u'auto'
     db.session.add(pkg)
     db.session.commit()
 
