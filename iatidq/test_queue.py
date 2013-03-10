@@ -91,7 +91,7 @@ def check_file(test_functions, file_name, runtime_id, package_id, context=None):
         def run_test_activity(activity):
             result_hierarchy = get_result_hierarchy(activity)
             
-            result_identifier = activity.find('iati-identifier').text
+            result_identifier = activity.find('iati-identifier').text.decode()
             activity_data = etree.tostring(activity)
 
             res = test_activity(runtime_id, package_id, 
