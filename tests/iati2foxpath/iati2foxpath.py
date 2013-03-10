@@ -4,6 +4,7 @@
 # tests for IATI Data Quality.
 
 from lxml import etree
+import re
 
 organisations_schema = "iati-organisations-schema.xsd"
 activities_schema = "iati-activities-schema.xsd"
@@ -17,13 +18,27 @@ common_data = etree.parse(common_schema)
 datafiles = [activities_data, common_data]
 
 elements = {}
+attributes = {}
+
+def cleanUpType(data):
+    return re.sub("xsd:", "", data)
 
 def getAttributes(data):
     zattributes = {}
+    attributes = data.findall(NS+"attribute")
+    for attribute in attributes:
+        zattributes[attribute.get('name')] = cleanUpType(attribute.get('type'))
+    return zattributes
+
+def getElementAttributes(data):
+    zattributes = {}
     try:
-        attributes = data.find(NS+"complexType").findall(NS+"attribute")
-        for attribute in attributes:
-            zattributes[attribute.get('name')] = {}
+        theattributes = data.find(NS+"complexType").findall(NS+"attribute")
+        for attribute in theattributes:
+            try:
+                zattributes[attribute.get('name')] = cleanUpType(attribute.get('type'))
+            except Exception:
+                zattributes[attribute.get('ref')] = attributes[attribute.get('ref')]
     except Exception:
         pass
     return zattributes
@@ -32,14 +47,13 @@ def getSubElements(data):
     zsubelements = {}
     try:
         elements=data.find(NS+'complexType').find(NS+'choice').findall(NS+'element')
-        #print etree.tostring(elements)
         for element in elements:
             try:
                 element_name= element.get('name')
             except Exception:
                 element_name=element.get('ref')
             zsubelements[element_name] = {}
-            zsubelements[element_name]['attributes'] = getAttributes(element)
+            zsubelements[element_name]['attributes'] = getElementAttributes(element)
             zsubelements[element_name]['elements'] = getSubElements(element)
     except Exception:
         pass
@@ -55,18 +69,19 @@ def getElements(data):
         except Exception:
             element_name=element.get('ref')
         zelements[element_name] = {}
-        zelements[element_name]['attributes'] = getAttributes(element)
+        zelements[element_name]['attributes'] = getElementAttributes(element)
         zelements[element_name]['elements'] = getSubElements(element)
     return zelements
 
 def printAttributes(element, attributes, parent_element=None):
-    for attribute in attributes:
+    for attribute, attribute_data in attributes.items():
         if attribute is not None:
             if parent_element is not None:
                 parent = parent_element
             else:
                 parent = element
             print parent + "/@" + attribute + " exists?"
+            print parent + "/@" + attribute + " is a " + attribute_data + "?"
 
 def printElements(elements, parent_element=None):
     for element, element_data in elements.items():
@@ -89,6 +104,10 @@ def printElements(elements, parent_element=None):
                 pass
 
 def run():
+    for datafile in datafiles:
+        attributes.update(getAttributes(datafile))
+    attributes['xml:lang'] = "string"
+
     for datafile in datafiles:
         elements.update(getElements(datafile))
 
