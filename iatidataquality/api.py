@@ -230,3 +230,64 @@ def api_package_activities(package_name, test_id, hierarchy_id=None):
     else:
         return jsonify(test_results)
 
+@app.route('/api/publishers/<packagegroup_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
+@app.route('/api/publishers/<packagegroup_name>/tests/<test_id>/activities')
+@support_jsonp
+def api_package_activities(packagegroup_name, test_id, hierarchy_id=None):
+    if "offset" in request.args:
+        offset = request.args['offset']
+    else:
+        offset = 0
+    packagegroup = db.session.query(models.PackageGroup).filter(models.PackageGroup.name == packagegroup_name).first()
+
+    if (hierarchy_id):
+        if (hierarchy_id=="None"): hierarchy_id=None
+        # This is crude because it assumes there is only one result for this
+        # test per activity-identifier. But that should be the case anyway.
+        test_count = db.session.query(func.count(models.Result.result_identifier)
+            ).filter(models.PackageGroup.name == packagegroup_name, 
+                     models.Result.test_id==test_id,
+                     models.Result.result_hierarchy==hierarchy_id
+            ).join(models.Package
+            ).join(models.PackageGroup
+            ).all()
+        test_results = db.session.query(models.Result.result_identifier, 
+                                        models.Result.result_data,
+                                        func.max(models.Result.runtime_id)
+            ).filter(models.PackageGroup.name == packagegroup_name, 
+                     models.Result.test_id==test_id,
+                     models.Result.result_hierarchy==hierarchy_id
+            ).group_by(models.Result.result_identifier
+            ).join(models.Package
+            ).join(models.PackageGroup
+            ).limit(50
+            ).offset(offset
+            ).all()
+    else:
+        # This is crude because it assumes there is only one result for this
+        # test per activity-identifier. But that should be the case anyway.
+        test_count = db.session.query(func.count(models.Result.result_identifier)
+            ).filter(models.PackageGroup.name == packagegroup_name, 
+                     models.Result.test_id==test_id
+            ).join(models.Package
+            ).join(models.PackageGroup
+            ).all()
+        test_results = db.session.query(models.Result.result_identifier, 
+                                        models.Result.result_data,
+                                        func.count(models.Result.runtime_id)
+            ).filter(models.PackageGroup.name == packagegroup_name, 
+                     models.Result.test_id==test_id
+            ).group_by(models.Result.result_identifier
+            ).join(models.Package
+            ).join(models.PackageGroup
+            ).limit(50
+            ).offset(offset
+            ).all()
+    
+    test_results = dict(map(lambda x: (x[0],x[1]), test_results))
+
+    if ((packagegroup == None) or (test_results==None)):
+        abort(404)
+    else:
+        return jsonify({"count": test_count, "results": test_results})
+

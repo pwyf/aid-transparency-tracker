@@ -1,0 +1,228 @@
+{% set active_page='packages'%}{% extends "layout.html" %}
+{% if p[0] %}
+{% set grp = p[1] %}
+{% set pkg = p[0] %}
+{% else %}
+{% set pkg = p %}
+{% endif %}
+{% block title %}{{pkg.package_title}} &raquo; Packages{% endblock %}
+{% block content %}
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#packages").tablesorter({ sortList: [[0,0]] });
+    $("table#publishers").tablesorter({ sortList: [[0,0]] });
+    $("table#results").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+    <a href="" id="runTestsNow" class="btn pull-right">Check package</a>
+	<h1>{{pkg.package_title}}<code>{{pkg.package_name}}</code></h1>
+    <div class="status pull-right alert alert-info"><a href="#" class="checkStatusRefresh"><i class="icon-refresh"></i></a><span class="status_text"> Checking...</span></div>
+    <table class="table" id="publishers">
+    <tbody>
+    <tr>
+	<td>Package name</td><td>{{ pkg.package_name }}</td>
+    </tr>
+    <tr>
+    <td>Package title</td><td>{{ pkg.package_title }}</td>
+    </tr>
+    <tr>
+    <td>Package country</td><td>{{ pkg.package_country }}</td>
+    </tr>
+    {% if grp is defined %}
+    <tr>
+    <td>Package group</td><td><a href="{{url_for('publisher', id=grp.name)}}">{{ grp.title }}</a></td>
+    </tr>
+    {% endif %}
+    <tr>
+    <td>Link</td><td><a href="http://iatiregistry.org/dataset/{{pkg.package_name}}">http://iatiregistry.org/dataset/{{ pkg.package_name }}</a></td>
+    </tr>
+    </tbody>
+    </table>
+    {% if not results %}
+        <div class="alert alert-danger">No test runs on this dataset yet.</div>
+    {% else %}
+        {% if not latest %}
+        <div class="alert alert-block alert-latest">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Not showing the latest data.</h4>
+        Activity-level information is only available for the latest data.
+        <p><a class="btn btn-primary" href="{{url_for('packages', id=pkg.package_name)}}">Show latest</a></p>
+        </div>{% endif %}
+        
+        <div class="pull-right testruns">
+            <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
+            <a class="btn" href="#runtimesmodal" data-toggle="modal" role="button">Switch test run</a>
+            <div id="runtimesmodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Display results from another runtime</h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table" id="runtimes_table">
+                        <thead>
+                        <th>ID</th><th>Date</th>
+                        </thead>
+                        <tbody>
+                        {% for runtime in runtimes %}
+                        <tr>
+	                    <td><a href="{{url_for('packages', id=pkg.package_name, runtime_id=runtime.runtime_id)}}">{{runtime.runtime_id}}</a></td><td>{{ runtime.runtime_datetime }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                 <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
+            </div>
+        </div>
+        <h1>{% if latest %}Latest results{%else%}Runtime {{latest_runtime.id}}{%endif%} <code>{{latest_runtime.runtime_datetime}}</code></h1>
+        {% for h, values in results.items() %}
+        <div class="clearer">&nbsp;</div>
+        <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
+        <table class="table" id="results">
+        <thead>
+        <th>Test</th><th>% Passed</th><th>Total results</th><th>Schedule</th>{% if latest %}<th>Details</th>{%endif%}
+        </thead>
+        <tbody>
+        {% for test, result in values.items() %}
+        <tr id="tr{{result["test"][0].id}}h{{h}}" class="group-{% if result["test"][0]["test_group"] %}{{result["test"][0]["test_group"]}}{% else %}unknown{%endif%}{% if result["condition"] %} condition-hidden alert{%endif%}">
+	    <td><a href="{{url_for('tests', id=result["test"][0]["id"])}}">{{ result["test"][0]["description"] }}</a>{% if result["condition"] %} <i class="icon-info-sign" title="{{result["condition"]}}"></i>{%endif%}</td>
+        <td class="pct">{{result["test"][1]|round|int}}</td>
+        <td>{{result["test"][2]}}</td>
+        <td class="schedule"></td>
+        {% if latest%}<td><a href="#" class="showResult" id="result{{result["test"][0]["id"]}}hierarchy{{h}}"><i class="icon-chevron-down"></i></a></td>{%endif%}
+        </tr>
+        {% endfor%}
+        </tbody>
+        </table>
+        </fieldset>
+        {% endfor %}
+    {% endif %}
+<script>
+    
+    $(".showResult").click(function(e){
+        if ($(this).hasClass("visible")) {
+            e.preventDefault();
+
+
+            re=new RegExp("result([0-9]*)hierarchy([0-9]|[A-z]*)");
+            r=re.exec(this.id);
+
+            result_id = r[1]
+            hierarchy_id=r[2]
+
+            $(this).removeClass("visible").html('<i class="icon-chevron-down"></i>');
+            $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
+        } else {
+            e.preventDefault();
+
+            re=new RegExp("result([0-9]*)hierarchy([0-9]|[A-z]*)");
+            r=re.exec(this.id);
+
+            result_id = r[1]
+            hierarchy_id=r[2]
+            $("#tr"+result_id+"h"+hierarchy_id).after('<tr class="hidden-results-tr" id="tr-result-' + result_id + '"><td colspan="5"></td></tr>');
+            $.getJSON("/api/packages/{{pkg.package_name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities", function(data){
+                var items = [];
+                $.each(data, function(key, val){
+                    if (val == '1') {
+                        var status="PASS";
+                        var statusclass="success";
+                    } else {
+                        var status="FAIL";
+                        var statusclass="error";
+                    }
+                    items.push('<tr id="' + val + '" class="' + statusclass + '"><td><a href="http://beta.openaidsearch.org/explore-detail/?id=' + key + '">'+key+'</a></td><td>' + status + '</td></tr>');
+                });
+                $('<table/>', {
+                    html: items.join('')
+                  }).appendTo("#tr-result-"+result_id+" td");
+                $("#tr-result-"+result_id).slideDown("slow");
+            });
+            $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
+    }
+    });
+    $.getJSON("/api/publishers/{{grp.publisher_iati_id}}", function(data){
+                var items = [];
+                if (data["data"]) {
+                    $.each(data["data"], function(key, val){
+                        element = val["element"];
+                        if (val["status_actual"] =='fp') { status = '<i class="icon-wrench" title="Future publication"></i>'; }
+                        if (val["status_actual"] =='uc') { status = '<i class="icon-remove" title="Uncompliant"></i>'; }
+                        if (val["status_actual"] =='fc') { status = '<i class="icon-ok" title="Fully compliant"></i>'; }
+                        if (val["status_actual"] =='up') { status = '<i class="icon-remove" title="Unable to publish"></i>'; }
+                        if (val["status_actual"] =='pc') { status = '<i class="icon-flag" title="Partially compliant"></i>'; }
+        
+                        $(".group-" + element + " td.schedule").html('<span title="' + val["publication_date"] + ': ' + val["notes"] + '">' + status + '</span>');
+                    });
+                }
+    });
+    function checkStatus(){
+        $(".status_text").html(" Checking...");
+        $.getJSON("/api/packages/status/{{pkg.id}}/", function(data){
+            status = data["status"];
+            if (status == 1) {
+                statustext = ' Now downloading (started at ' + data["runtime_datetime"] + ")";
+                var reCheckStatus = setTimeout(function(){checkStatus()}, 5000);
+            }
+            if (status == 2) {
+                statustext = ' Currently testing (started at ' + data["runtime_datetime"] + ")";
+                var reCheckStatus = setTimeout(function(){checkStatus()}, 5000);
+            }
+            if (status == 3) {
+                statustext = ' Last run at ' + data["runtime_datetime"];
+                statusicon = '<i class="icon-ok"></i>';
+                $(".checkStatusRefresh").html(statusicon);
+            }
+            if (status == 4) {
+                statustext = ' Last run at ' + data["runtime_datetime"] + ', no change';
+                statusicon = '<i class="icon-ok"></i>';
+                $(".checkStatusRefresh").html(statusicon);
+            }
+            if (status == "failed") {
+                statustext = ' No tests';
+                statusicon = '<i class="icon-remove"></i>';
+                $(".checkStatusRefresh").html(statusicon);
+            }
+            $(".status_text").html(statustext);
+        });
+    }
+    checkStatus();
+    $(".checkStatusRefresh").click(function(e){
+        e.preventDefault();
+        checkStatus();
+    });
+    $("#runTestsNow").click(function(e){
+        e.preventDefault();
+        $.getJSON("/api/packages/run/{{pkg.package_name}}/", function(data){
+            if (data['status'] == "ok"){
+                statustext = ' Now running...';
+                statusicon = '<i class="icon-refresh"></i>';
+                $(".checkStatusRefresh").html(statusicon);
+                $(".status_text").html(statustext);
+                var reCheckStatus = setTimeout(function(){checkStatus()}, 5000);
+            }
+        }).error(function(){
+            statustext = ' Did not run';
+            statusicon = '<i class="icon-remove"></i>';
+            $(".checkStatusRefresh").html(statusicon);
+            $(".status_text").html(statustext);
+        });
+    });
+    var showAllTests;
+    $("#showAllTests").click(function(e){
+        e.preventDefault();
+        $(".condition-hidden").toggle();
+        if (showAllTests == true) {
+            showAllTests = false;
+            $(this).text("Show all tests");
+        } else {
+            showAllTests = true;
+            $(this).text("Show only relevant tests");
+        }
+    });
+</script>
+
+{% endblock %}

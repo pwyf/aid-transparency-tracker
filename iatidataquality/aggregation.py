@@ -82,7 +82,7 @@ def _agr_results(data, conditions=None, mode=None):
                     (x.description)
                     ), conditions))
     
-    if (mode=="publisher"):
+    if ((mode=="publisher") or (mode=="publisher_simple")):
         packages = set(map(lambda x: (x[4]), data))
         d = dict(map(lambda x: ((x[3], x[0]["id"], x[4]),(x)), data))
     else:
@@ -90,25 +90,29 @@ def _agr_results(data, conditions=None, mode=None):
 
     out = {}
 
+
     for h in hierarchies:
-        
         for t in tests:
+            all_pcts = []
             tdata = {}
-            if (mode=="publisher"):
+            if ((mode=="publisher") or (mode=="publisher_simple")):
                 # aggregate data across multiple packages for a single publisher
 
                 # for each package, add percentage for each
                 total_pct = 0
                 total_activities = 0
                 total_packages = len(packages)
+
+                # need below to only include packages that are in this hierarchy
+                packages_in_hierarchy = 0
                 for p in packages:
                     try:
                         ok_tdata = d[(h, t, p)]
                         total_pct += ok_tdata[1] #percentage
                         total_activities += ok_tdata[2] #total vals
+                        packages_in_hierarchy +=1
                     except KeyError:
                         pass
-                
                 if (total_activities>0):
                     
                     tdata = {
@@ -117,7 +121,7 @@ def _agr_results(data, conditions=None, mode=None):
                             "description": ok_tdata[0]["description"],
                             "test_group": ok_tdata[0]["test_group"]
                             },
-                        "results_pct": int(float(total_pct/total_packages)),
+                        "results_pct": int(float(total_pct/packages_in_hierarchy)),
                         "results_num": total_activities,
                         "result_hierarchy": total_activities
                         }
@@ -142,7 +146,37 @@ def _agr_results(data, conditions=None, mode=None):
                 if (out[h][t] == {}): del out[h][t]
             except KeyError:
                 pass
-    return out
+    if (mode=="publisher_simple"):
+        simple_out = {}
+        hierarchies = set(out)
+        tests = set()
+        for h in hierarchies:
+            tests.update(set(out[h]))
+        for t in tests: 
+            results_pct = 0.0
+            results_num = 0.0
+            results_weighted_pct_average_numerator = 0.0
+            for hierarchy in hierarchies:
+                try:
+                    results_pct+= out[hierarchy][t]['test']["results_pct"]
+                    results_num+= out[hierarchy][t]['test']["results_num"]
+                    results_weighted_pct_average_numerator += (out[hierarchy][t]['test']["results_pct"]*out[hierarchy][t]['test']["results_num"])
+                    okhierarchy = hierarchy
+                except Exception:
+                    pass
+
+            simple_out[t] = {
+                    "test": {
+                        "id": out[okhierarchy][t]['test']['test']["id"],
+                        "description": out[okhierarchy][t]['test']['test']["description"],
+                        "test_group": out[okhierarchy][t]['test']['test']["test_group"]
+                        },
+                    "results_pct": (results_weighted_pct_average_numerator/results_num),
+                    "results_num": results_num
+                    }
+        return simple_out
+    else:
+        return out
 
 def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):

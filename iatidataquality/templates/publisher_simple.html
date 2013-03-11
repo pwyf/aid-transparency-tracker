@@ -10,49 +10,34 @@
     });
 
     </script>
-	<h1>{{p_group.title}}<code>{{p_group.name}}</code></h1>
-    <table class="table" id="packages">
-    <thead>
-    <th>Registry ID</th><th>Name</th><th>Country</th><th>License</th>
-    </thead>
-    <tbody>
-	{% for pk in pkgs %}
-    <tr>
-	<td><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td>{{ pk.package_country }}</td><td>{{ pk.package_license }}</td><!--<td></td>-->
-    </tr>
-	{% endfor %}
-    </tbody>
-    </table>
+    <h1>{{p_group.title}}<code>{{p_group.name}}</code></h1>
 
     {% if results %}
     <div class="pull-right testruns">
         <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
     </div>
-    <h1>Latest results <code>{{runtime.runtime_datetime}}</code></h1>
+    <h3>Latest results </h3>
     <div class="clearer">&nbsp;</div>
-        {% for h, values in results.items() %}
-        <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
+        <fieldset><legend>Simple view</legend>
         <table class="table" id="results">
         <thead>
         <th>Test</th><th>% Passed</th><th>Total results</th><th>Detail</th>
         </thead>
         <tbody>
-        {% for test, result in values.items() %}
-        <tr id="tr{{result["test"]["test"]["id"]}}h{{h}}" class="group-{% if result["test"]["test"]["test_group"] %}{{result["test"]["test"]["test_group"]}}{% else %}unknown{%endif%}{% if result["condition"] %} condition-hidden alert{%endif%}">
-	    <td><a href="{{url_for('tests', id=result["test"]["test"]["id"])}}">{{ result["test"]["test"]["description"] }}</a>{% if result["condition"] %} <i class="icon-info-sign" title="{{result["condition"]}}"></i>{%endif%}</td>
-        <td class="pct">{{result["test"].results_pct|round|int}}</td>
-        <td>{{result["test"]["results_num"]}}</td>
-        <td><a href="#" class="showResult" id="result{{result["test"]["test"]["id"]}}hierarchy{{h}}"><i class="icon-chevron-down"></i></a></td>
+        {% for test, result in results.items() %}
+        <tr id="tr{{result["test"]["id"]}}" class="group-{% if result["test"]["test_group"] %}{{result["test"]["test_group"]}}{% else %}unknown{%endif%}{% if result["condition"] %} condition-hidden alert{%endif%}">
+	    <td><a href="{{url_for('tests', id=result["test"]["id"])}}">{{ result["test"]["description"] }}</a>{% if result["condition"] %} <i class="icon-info-sign" title="{{result["condition"]}}"></i>{%endif%}</td>
+        <td class="pct">{{result.results_pct|round|int}}</td>
+        <td>{{result["results_num"]|round|int}}</td>
+        <td><a href="#" class="showResult" id="result{{result["test"]["id"]}}hierarchy{{h}}"><i class="icon-chevron-down"></i></a></td>
         </tr>
         {% endfor%}
         </tbody>
         </table>
         </fieldset>
-        {% endfor %}
     {%endif%}
 
 <script>
-
     $(document).on('click', ".pagination a", function(e){
         e.preventDefault();
         re=new RegExp("tr\-pagination\-([0-9]*|[A-z]*)\-hierarchy\-([0-9]|[A-z]*)");
@@ -147,6 +132,7 @@
             $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
     }
     });
+
 </script>
 
 {% endblock %}

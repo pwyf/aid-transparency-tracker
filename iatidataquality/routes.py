@@ -184,8 +184,8 @@ def publishers():
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
     return render_template("publishers.html", p_groups=p_groups, pkgs=pkgs)
 
-@app.route("/publishers/<id>/")
-def publisher(id=None):
+@app.route("/publishers/<id>/detail")
+def publisher_detail(id=None):
     p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
 
     pkgs = db.session.query(models.Package
@@ -198,7 +198,7 @@ def publisher(id=None):
                                      models.AggregateResult.results_num,
                                      models.AggregateResult.result_hierarchy,
                                      models.AggregateResult.package_id,
-                                     func.min(models.AggregateResult.runtime_id)
+                                     func.max(models.AggregateResult.runtime_id)
         ).filter(models.PackageGroup.id==p_group.id
         ).group_by(models.AggregateResult.result_hierarchy, models.Test, 
                    models.AggregateResult.package_id,
@@ -221,6 +221,44 @@ def publisher(id=None):
         aggregate_results = None"""
 
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
+                           results=aggregate_results, runtime=latest_runtime)
+
+@app.route("/publishers/<id>/")
+def publisher(id=None):
+    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Package.package_group == p_group.id
+            ).order_by(models.Package.package_name).all()
+
+    """try:"""
+    aggregate_results = db.session.query(models.Test,
+                                     models.AggregateResult.results_data,
+                                     models.AggregateResult.results_num,
+                                     models.AggregateResult.result_hierarchy,
+                                     models.AggregateResult.package_id,
+                                     func.max(models.AggregateResult.runtime_id)
+        ).filter(models.PackageGroup.id==p_group.id
+        ).group_by(models.AggregateResult.result_hierarchy, 
+                   models.Test, 
+                   models.AggregateResult.package_id
+        ).join(models.AggregateResult
+        ).join(models.Package
+        ).join(models.PackageGroup
+        ).all()
+
+    pconditions = models.PublisherCondition.query.filter_by(
+        publisher_id=p_group.id).all()
+
+    aggregate_results = aggregation.agr_results(aggregate_results, 
+                                                conditions=pconditions, 
+                                                mode="publisher_simple")
+    latest_runtime=1
+    """except Exception, e:
+        latest_runtime = None
+        aggregate_results = None"""
+
+    return render_template("publisher_simple.html", p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/registry/refresh/")
