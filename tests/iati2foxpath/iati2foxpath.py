@@ -18,6 +18,7 @@ activities_data = etree.parse(activities_schema)
 common_data = etree.parse(common_schema)
 
 datafiles = [activities_data, common_data]
+supported_attributes = ['decimal', 'dateTime', 'date', 'positiveInteger', 'boolean', 'int']
 
 elements = {}
 attributes = {}
@@ -101,7 +102,8 @@ def printAttributes(element, attributes, parent_element=None):
             else:
                 parent = element
             print parent + "/@" + attribute + " exists?"
-            print parent + "/@" + attribute + " is a " + attribute_data['type'] + "?"
+            if attribute_data['type'] in supported_attributes:
+                print parent + "/@" + attribute + " is a " + attribute_data['type'] + "?"
             if 'codelist' in attribute_data:
                 print parent + "/@" + attribute + " is on codelist " + attribute_data['codelist'] + "?"
 

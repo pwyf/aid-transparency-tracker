@@ -3,27 +3,20 @@ sector exists?,,sector,1
 sector/@percentage exists?,,sector,1
 sector/@percentage is a positiveInteger?,,sector,1
 sector/@code exists?,,sector,1
-sector/@code is a string?,,sector,1
 sector/@code is on codelist Sector?,,sector,1
 sector/@vocabulary exists?,,sector,1
-sector/@vocabulary is a string?,,sector,1
 sector/@vocabulary is on codelist Vocabulary?,,sector,1
 activity-date exists?,,activity-date,1
 reporting-org exists?,,reporting-org,1
 reporting-org/@type exists?,,reporting-org,1
-reporting-org/@type is a string?,,reporting-org,1
 reporting-org/@type is on codelist OrganisationType?,,reporting-org,1
 reporting-org/@ref exists?,,reporting-org,1
-reporting-org/@ref is a string?,,reporting-org,1
 participating-org exists?,,participating-org,1
 participating-org/@type exists?,,participating-org,1
-participating-org/@type is a string?,,participating-org,1
 participating-org/@type is on codelist OrganisationType?,,participating-org,1
 participating-org/@role exists?,,participating-org,1
-participating-org/@role is a string?,,participating-org,1
 participating-org/@role is on codelist OrganisationRole?,,participating-org,1
 participating-org/@ref exists?,,participating-org,1
-participating-org/@ref is a string?,,participating-org,1
 iati-identifier exists?,,iati-identifier,1
 activity-website exists?,,activity-website,1
 default-tied-status exists?,,default-tied-status,1
@@ -37,17 +30,13 @@ recipient-country exists?,,recipient-country,1
 recipient-country/@percentage exists?,,recipient-country,1
 recipient-country/@percentage is a positiveInteger?,,recipient-country,1
 recipient-country/@code exists?,,recipient-country,1
-recipient-country/@code is a string?,,recipient-country,1
 recipient-country/@code is on codelist Country?,,recipient-country,1
 policy-marker exists?,,policy-marker,1
 policy-marker/@code exists?,,policy-marker,1
-policy-marker/@code is a string?,,policy-marker,1
 policy-marker/@code is on codelist PolicyMarker?,,policy-marker,1
 policy-marker/@vocabulary exists?,,policy-marker,1
-policy-marker/@vocabulary is a string?,,policy-marker,1
 policy-marker/@vocabulary is on codelist Vocabulary?,,policy-marker,1
 policy-marker/@significance exists?,,policy-marker,1
-policy-marker/@significance is a string?,,policy-marker,1
 policy-marker/@significance is on codelist PolicySignificance?,,policy-marker,1
 contact-info exists?,,contact-info,1
 contact-info/email exists?,,contact-info,1
@@ -59,7 +48,6 @@ collaboration-type exists?,,collaboration-type,1
 activity-status exists?,,activity-status,1
 result exists?,,result,1
 result/@type exists?,,result,1
-result/@type is a string?,,result,1
 result/@type is on codelist ResultType?,,result,1
 result/@aggregation-status exists?,,result,1
 result/@aggregation-status is a boolean?,,result,1
@@ -67,44 +55,34 @@ result/indicator exists?,,result,1
 result/indicator/@ascending exists?,,result,1
 result/indicator/@ascending is a boolean?,,result,1
 result/indicator/@measure exists?,,result,1
-result/indicator/@measure is a string?,,result,1
 result/indicator/@measure is on codelist IndicatorMeasure?,,result,1
 result/indicator/baseline exists?,,result,1
 result/indicator/baseline/@value exists?,,result,1
-result/indicator/baseline/@value is a string?,,result,1
 result/indicator/baseline/@year exists?,,result,1
 result/indicator/baseline/@year is a positiveInteger?,,result,1
 result/indicator/period exists?,,result,1
 result/indicator/period/actual exists?,,result,1
 result/indicator/period/actual/@value exists?,,result,1
-result/indicator/period/actual/@value is a string?,,result,1
 result/indicator/period/period-end exists?,,result,1
 result/indicator/period/period-start exists?,,result,1
 result/indicator/period/target exists?,,result,1
 result/indicator/period/target/@value exists?,,result,1
-result/indicator/period/target/@value is a string?,,result,1
 default-finance-type exists?,,default-finance-type,1
 default-aid-type exists?,,default-aid-type,1
 description exists?,,description,1
 description/@type exists?,,description,1
-description/@type is a string?,,description,1
 description/@type is on codelist DescriptionType?,,description,1
 default-flow-type exists?,,default-flow-type,1
 transaction exists?,,transaction,0
 transaction/@ref exists?,,transaction,0
-transaction/@ref is a string?,,transaction,0
 transaction/aid-type exists?,,transaction,0
 transaction/flow-type exists?,,transaction,0
 transaction/provider-org exists?,,transaction,0
 transaction/provider-org/@provider-activity-id exists?,,transaction,0
-transaction/provider-org/@provider-activity-id is a string?,,transaction,0
 transaction/provider-org/@ref exists?,,transaction,0
-transaction/provider-org/@ref is a string?,,transaction,0
 transaction/receiver-org exists?,,transaction,0
 transaction/receiver-org/@receiver-activity-id exists?,,transaction,0
-transaction/receiver-org/@receiver-activity-id is a string?,,transaction,0
 transaction/receiver-org/@ref exists?,,transaction,0
-transaction/receiver-org/@ref is a string?,,transaction,0
 transaction/disbursement-channel exists?,,transaction,0
 transaction/value exists?,,transaction,0
 transaction/finance-type exists?,,transaction,0
@@ -116,35 +94,28 @@ transaction/transaction-type exists?,,transaction,0
 transaction/description exists?,,transaction,0
 related-activity exists?,,related-activity,1
 related-activity/@type exists?,,related-activity,1
-related-activity/@type is a string?,,related-activity,1
 related-activity/@type is on codelist RelatedActivityType?,,related-activity,1
 related-activity/@ref exists?,,related-activity,1
-related-activity/@ref is a string?,,related-activity,1
 title exists?,,title,1
 conditions exists?,,conditions,1
 conditions/@attached exists?,,conditions,1
 conditions/@attached is a boolean?,,conditions,1
 conditions/condition exists?,,conditions,1
 conditions/condition/@type exists?,,conditions,1
-conditions/condition/@type is a string?,,conditions,1
 conditions/condition/@type is on codelist ConditionType?,,conditions,1
 iati-activity exists?,,iati-activity,1
 iati-activity/@linked-data-uri exists?,,iati-activity,1
-iati-activity/@linked-data-uri is a string?,,iati-activity,1
 iati-activity/@hierarchy exists?,,iati-activity,1
 iati-activity/@hierarchy is a int?,,iati-activity,1
 iati-activity/@default-currency exists?,,iati-activity,1
-iati-activity/@default-currency is a string?,,iati-activity,1
 iati-activity/@default-currency is on codelist Currency?,,iati-activity,1
 iati-activity/@xml:lang exists?,,iati-activity,1
-iati-activity/@xml:lang is a string?,,iati-activity,1
 iati-activity/@last-updated-datetime exists?,,iati-activity,1
 iati-activity/@last-updated-datetime is a dateTime?,,iati-activity,1
 iati-activity/@version exists?,,iati-activity,1
 iati-activity/@version is a decimal?,,iati-activity,1
 budget exists?,,budget,1
 budget/@type exists?,,budget,1
-budget/@type is a string?,,budget,1
 budget/@type is on codelist BudgetType?,,budget,1
 budget/period-end exists?,,budget,1
 budget/period-start exists?,,budget,1
@@ -152,59 +123,45 @@ budget/value exists?,,budget,1
 comment exists?,,comment,1
 other-identifier exists?,,other-identifier,1
 other-identifier/@owner-ref exists?,,other-identifier,1
-other-identifier/@owner-ref is a string?,,other-identifier,1
 other-identifier/@owner-name exists?,,other-identifier,1
-other-identifier/@owner-name is a string?,,other-identifier,1
 location exists?,,location,1
 location/@percentage exists?,,location,1
 location/@percentage is a positiveInteger?,,location,1
 location/description exists?,,location,1
 location/gazetteer-entry exists?,,location,1
 location/gazetteer-entry/@gazetteer-ref exists?,,location,1
-location/gazetteer-entry/@gazetteer-ref is a string?,,location,1
 location/gazetteer-entry/@gazetteer-ref is on codelist GazetteerAgency?,,location,1
 location/coordinates exists?,,location,1
 location/coordinates/@latitude exists?,,location,1
 location/coordinates/@latitude is a decimal?,,location,1
 location/coordinates/@precision exists?,,location,1
-location/coordinates/@precision is a string?,,location,1
 location/coordinates/@precision is on codelist GeographicalPrecision?,,location,1
 location/coordinates/@longitude exists?,,location,1
 location/coordinates/@longitude is a decimal?,,location,1
 location/location-type exists?,,location,1
 location/administrative exists?,,location,1
 location/administrative/@country exists?,,location,1
-location/administrative/@country is a string?,,location,1
 location/administrative/@adm1 exists?,,location,1
-location/administrative/@adm1 is a string?,,location,1
 location/administrative/@adm2 exists?,,location,1
-location/administrative/@adm2 is a string?,,location,1
 location/name exists?,,location,1
 recipient-region exists?,,recipient-region,1
 recipient-region/@percentage exists?,,recipient-region,1
 recipient-region/@percentage is a positiveInteger?,,recipient-region,1
 recipient-region/@code exists?,,recipient-region,1
-recipient-region/@code is a string?,,recipient-region,1
 recipient-region/@code is on codelist Region?,,recipient-region,1
 document-link exists?,,document-link,1
 document-link/@url exists?,,document-link,1
-document-link/@url is a anyURI?,,document-link,1
 document-link/@format exists?,,document-link,1
-document-link/@format is a string?,,document-link,1
 document-link/@format is on codelist FileFormat?,,document-link,1
 document-link/category exists?,,document-link,1
 document-link/language exists?,,document-link,1
 legacy-data exists?,,legacy-data,1
 legacy-data/@name exists?,,legacy-data,1
-legacy-data/@name is a string?,,legacy-data,1
 legacy-data/@value exists?,,legacy-data,1
-legacy-data/@value is a string?,,legacy-data,1
 legacy-data/@iati-equivalent exists?,,legacy-data,1
-legacy-data/@iati-equivalent is a NMTOKEN?,,legacy-data,1
 iati-activities exists?,,iati-activities,2
 iati-activities/@generated-datetime exists?,,iati-activities,2
 iati-activities/@generated-datetime is a dateTime?,,iati-activities,2
 iati-activities/@version exists?,,iati-activities,2
 iati-activities/@version is a decimal?,,iati-activities,2
 iati-activities/@linked-data-default exists?,,iati-activities,2
-iati-activities/@linked-data-default is a string?,,iati-activities,2
