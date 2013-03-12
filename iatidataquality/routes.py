@@ -278,15 +278,15 @@ def packages_manage():
             dqregistry.refresh_packages()
             flash("Refreshed packages from Registry", "success")
         else:
+            data = []
             for package in request.form.getlist('package'):
-                p = models.Package.query.filter_by(package_name=package).first()
                 try:
                     request.form["active_"+package]
-                    p.active=True
+                    active=True
                 except Exception:
-                    p.active=False
-                db.session.add(p)
-            db.session.commit()
+                    active=False
+                data.append((package, active))
+            dqregistry.activate_packages(data)
             flash("Updated packages", "success")
         return redirect(url_for('packages_manage'))
     else:
