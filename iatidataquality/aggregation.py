@@ -173,7 +173,7 @@ def _agr_results(data, conditions=None, mode=None):
                 try:
                     key = (t,'activity hierarchy', str(hierarchy)) 
                     try:
-                        if ((key in cdtns) and (cdtns[key][0]==0)):
+                        if ((cdtns) and (key in cdtns) and (cdtns[key][0]==0)):
                             continue
                     except KeyError:
                         pass
