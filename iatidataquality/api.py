@@ -233,7 +233,7 @@ def api_package_activities(package_name, test_id, hierarchy_id=None):
 @app.route('/api/publishers/<packagegroup_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
 @app.route('/api/publishers/<packagegroup_name>/tests/<test_id>/activities')
 @support_jsonp
-def api_package_activities(packagegroup_name, test_id, hierarchy_id=None):
+def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
     if "offset" in request.args:
         offset = request.args['offset']
     else:
