@@ -96,7 +96,7 @@ def main():
             for package_name, _ in which_packages:
                 iatidq.dqdownload.run(package_name=package_name)
         else:
-            iatidatq.dqdownload.run()
+            iatidq.dqdownload.run()
         return
 
     run(refresh=options.refresh, minimal=options.minimal_pkgs)
