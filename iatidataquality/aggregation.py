@@ -78,8 +78,8 @@ def _agr_results(data, conditions=None, mode=None):
     cdtns = None
     if conditions:
         cdtns = dict(map(lambda x: (
-                    (x.test_id, x.condition, x.condition_value, x.operation),
-                    (x.description)
+                    (x.test_id, x.condition, x.condition_value),
+                    (x.operation, x.description)
                     ), conditions))
     
     if ((mode=="publisher") or (mode=="publisher_simple")):
@@ -127,7 +127,20 @@ def _agr_results(data, conditions=None, mode=None):
                         }
             else:
                 # return data for this single package
-                tdata = d.get((h, t), None)
+                data = d.get((h, t), None)
+                if data is not None:
+                    tdata = {
+                        "test": {
+                            "id": data[0]["id"],
+                            "description": data[0]["description"],
+                            "test_group": data[0]["test_group"]
+                            },
+                        "results_pct": data[1],
+                        "results_num": data[2],
+                        "result_hierarchy": data[3]
+                        }
+                else:
+                    tdata = None
 
             if h not in out:
                 out[h] = {}
@@ -136,9 +149,9 @@ def _agr_results(data, conditions=None, mode=None):
                 out[h][t] = {}
 
             if tdata:
-                out[h][t]["test"] = tdata
+                out[h][t] = tdata
             if conditions:
-                key = (t,'activity hierarchy', str(h), 0) 
+                key = (t,'activity hierarchy', str(h)) 
                 if key in cdtns:
                     out[h][t]["condition"] = cdtns[key]
 
@@ -158,18 +171,24 @@ def _agr_results(data, conditions=None, mode=None):
             results_weighted_pct_average_numerator = 0.0
             for hierarchy in hierarchies:
                 try:
-                    results_pct+= out[hierarchy][t]['test']["results_pct"]
-                    results_num+= out[hierarchy][t]['test']["results_num"]
-                    results_weighted_pct_average_numerator += (out[hierarchy][t]['test']["results_pct"]*out[hierarchy][t]['test']["results_num"])
+                    key = (t,'activity hierarchy', str(hierarchy)) 
+                    try:
+                        if ((key in cdtns) and (cdtns[key][0]==0)):
+                            continue
+                    except KeyError:
+                        pass
+                    results_pct+= out[hierarchy][t]["results_pct"]
+                    results_num+= out[hierarchy][t]["results_num"]
+                    results_weighted_pct_average_numerator += (out[hierarchy][t]["results_pct"]*out[hierarchy][t]["results_num"])
                     okhierarchy = hierarchy
-                except Exception:
+                except KeyError:
                     pass
 
             simple_out[t] = {
                     "test": {
-                        "id": out[okhierarchy][t]['test']['test']["id"],
-                        "description": out[okhierarchy][t]['test']['test']["description"],
-                        "test_group": out[okhierarchy][t]['test']['test']["test_group"]
+                        "id": out[okhierarchy][t]['test']["id"],
+                        "description": out[okhierarchy][t]['test']["description"],
+                        "test_group": out[okhierarchy][t]['test']["test_group"]
                         },
                     "results_pct": (results_weighted_pct_average_numerator/results_num),
                     "results_num": results_num
