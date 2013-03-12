@@ -165,3 +165,33 @@ iati-activities/@generated-datetime is a dateTime?,,iati-activities,2
 iati-activities/@version exists?,,iati-activities,2
 iati-activities/@version is a decimal?,,iati-activities,2
 iati-activities/@linked-data-default exists?,,iati-activities,2
+title/text() has more than 10 characters?,Title has more than 10 characters,title,1
+description/text() has more than 40 characters?,Description has more than 40 characters,description,1
+activity-status exists 1 time?,"Activity status exists once, and only once",activity-status,1
+activity-status exists 1 time?,"Activity status exists once, and only once",activity-status,1
+activity-date/@iso-date exists?,Activity date has an ISO-date attribute,activity-date,1
+activity-date/@iso-date is an iso date?,Activity date ISO-date attribute is properly formatted,activity-date,1
+activity-date[@type='start-planned'] exists?,Activity date planned start date,activity-date,1
+activity-date[@type='end-planned'] exists?,Activity date planned end date,activity-date,1
+activity-date[@type='start-actual'] exists?,Activity date actual start date,activity-date,1
+activity-date[@type='end-actual'] exists?,Activity date actual end date,activity-date,1
+participating-org[@role='funding'] or participating-org[@role='Funding'] exists?,Funding organisation,funding,1
+participating-org[@role='accountable'] or participating-org[@role='Accountable'] exists?,Accountable organisation,accountable,1
+participating-org[@role='extending'] or participating-org[@role='Extending'] exists?,Extending organisation,extending,1
+participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?,Implementing organisation,implementing,1
+recipient-region or recipient-country exists?,Recipient region or recipient country,recipient,1
+only one of recipient-region or recipient-country exists?,Recipient region or recipient country (not both),recipient,1
+sector exists more than 1 time?,"Sector, more than once",sector,1
+transaction/transaction-type[@code='C'] or transaction/transaction-type[@code='c'] exists?,Commitments,commitment,1
+transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='d'] exists?,Disbursements,disbursement,1
+document-link/category[@code='A01'] exists?,Document - Pre- and post-project impact appraisal,document-link,1
+document-link/category[@code='A02'] exists?,Document - Objectives / Purpose of activity document,document-link,1
+document-link/category[@code='A03'] exists?,Document - Intended ultimate beneficiaries document,document-link,1
+document-link/category[@code='A04'] exists?,Document - Conditions document,document-link,1
+document-link/category[@code='A05'] exists?,Document - Budget document,document-link,1
+document-link/category[@code='A06'] exists?,Document - Summary information about contract document,document-link,1
+document-link/category[@code='A07'] exists?,Document - Review of project performance and evaluation document,document-link,1
+document-link/category[@code='A08'] exists?,"Document - Results, outcomes and outputs document",document-link,1
+document-link/category[@code='A09'] exists?,Document - Memorandum of understanding document,document-link,1
+document-link/category[@code='A10'] exists?,Document - Tender,document-link,1
+document-link/category[@code='A11'] exists?,Document - Contract,document-link,1
