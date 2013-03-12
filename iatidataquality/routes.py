@@ -25,7 +25,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models
+from iatidq import models, dqdownload, dqregistry
 import aggregation
 
 @app.route("/")
