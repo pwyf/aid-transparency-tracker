@@ -416,7 +416,7 @@ def import_publisher_conditions(step=None):
     # 
     if (step == '2'):
         if (request.method == 'POST'):
-            import dqimportpublisherconditions
+            from iatidq import dqimportpublisherconditions
             if (request.form['password'] == app.config["SECRET_PASSWORD"]):
                 if (request.form.get('local')):
                     results = dqimportpublisherconditions.importPCs()
