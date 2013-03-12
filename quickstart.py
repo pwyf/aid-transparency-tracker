@@ -22,6 +22,7 @@ from iatidq import models, dqregistry
 import iatidq.dqfunctions
 import iatidq.dqimporttests
 import iatidq.dqdownload
+import iatidq.dqimportcodelists
 
 import optparse
 import sys
@@ -68,6 +69,10 @@ def main():
                  action="store_true",
                  default=False,
                  help="Download packages")
+    p.add_option("--import_codelists", dest="import_codelists",
+                 action="store_true",
+                 default=False,
+                 help="Import codelists")
 
     options, args = p.parse_args()
 
@@ -89,6 +94,10 @@ def main():
 
     if options.clear_revisionid:
         iatidq.dqfunctions.clear_revisions()
+        return
+
+    if options.import_codelists:
+        iatidq.dqimportcodelists.importCodelists()
         return
 
     if options.download:

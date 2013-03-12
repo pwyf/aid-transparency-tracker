@@ -174,6 +174,53 @@ class Test(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+class Codelist(db.Model):
+    __tablename__ = 'codelist'
+    id = Column(Integer, primary_key=True)
+    name = Column(UnicodeText)
+    description = Column(UnicodeText)
+    source = Column(UnicodeText)
+
+    def setup(self,
+                 name,
+                 description,
+                 id=None):
+        self.name = name
+        self.description = description
+        if id is not None:
+            self.id = id
+
+    def __repr__(self):
+        return self.name+u', '+unicode(self.id)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class CodelistCode(db.Model):
+    __tablename__ = 'codelistcode'
+    id = Column(Integer, primary_key=True)
+    name = Column(UnicodeText)
+    code = Column(UnicodeText)
+    codelist_id = Column(Integer, ForeignKey('codelist.id'))
+    source = Column(UnicodeText)
+
+    def setup(self,
+                 name,
+                 code,
+                 codelist_id,
+                 id=None):
+        self.name = name
+        self.code = code
+        self.codelist_id = codelist_id
+        if id is not None:
+            self.id = id
+
+    def __repr__(self):
+        return self.name+u', '+unicode(self.id)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class PublisherCondition(db.Model):
     __tablename__ = 'publishercondition'
     id = Column(Integer, primary_key=True)
