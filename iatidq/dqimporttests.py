@@ -35,6 +35,12 @@ def hardcodedTests():
         db.session.add(test)
     db.session.commit()
 
+def returnLevel(row, level):
+    if (('level' in row) and (row['level'] != "")):
+        return row['level']
+    else:
+        return level
+
 def importTests(filename='tests/activity_tests.csv', level=1, local=True):
     #models.Test.query.filter(models.Test.test_level==1).\
     #    update({models.Test.active: False})
@@ -55,7 +61,7 @@ def importTests(filename='tests/activity_tests.csv', level=1, local=True):
             name = row['test'],
             description = row['description'],
             test_group = row['group'],
-            test_level = level,
+            test_level = returnLevel(row, level),
             active = True
             )
         test.file = filename
