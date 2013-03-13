@@ -24,6 +24,7 @@ import iatidq.dqimporttests
 import iatidq.dqdownload
 import iatidq.dqimportcodelists
 import iatidq.dqruntests
+import iatidq.dqindicators
 
 import optparse
 import sys
@@ -206,6 +207,10 @@ def main():
                  action="store_true",
                  dest="all_dfid_packages",
                  help="Test all DfID packages. --Local-folder must be provided.")
+    p.add_option("--import_indicators", dest="import_indicators",
+                 action="store_true",
+                 default=False,
+                 help="Import indicators. Will try to assign indicators to existing tests.")
 
     options, args = p.parse_args()
 
@@ -249,6 +254,13 @@ def main():
                 iatidq.dqdownload.run(package_name=package_name)
         else:
             iatidq.dqdownload.run()
+        return
+
+    if options.import_indicators:
+        if options.filename:
+            iatidq.dqindicators.importIndicators(filename=options.filename)
+        else:
+            iatidq.dqindicators.importIndicators()
         return
 
     if options.enqueue_test:
