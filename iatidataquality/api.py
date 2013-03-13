@@ -7,8 +7,8 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, abort, url_for, redirect, request, current_app
-from functools import wraps
+from flask import Flask, abort, url_for, redirect, request, current_app, make_response
+from functools import wraps, update_wrapper
 import json
 from sqlalchemy import func
 import math
@@ -48,6 +48,13 @@ def support_jsonp(func):
         else:
             return func(*args, **kwargs)
     return decorated_function
+
+def nocache(f):
+    def new_func(*args, **kwargs):
+        resp = make_response(f(*args, **kwargs))
+        resp.cache_control.no_cache = True
+        return resp
+    return update_wrapper(new_func, f)
 
 class AggregatedTestResults:
     def make_division(self,i):
@@ -170,6 +177,7 @@ def api_package_run(package_id):
     return jsonify({"status": status})
 
 @app.route("/api/packages/status/<package_id>/")
+@nocache
 def api_package_status(package_id):
     try:
         status = models.PackageStatus.query.filter_by(package_id=package_id).order_by("runtime_datetime desc").first()
