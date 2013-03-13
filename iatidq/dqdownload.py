@@ -65,16 +65,13 @@ def download_packages(runtime):
         name = package.package_name
         print name
         if package.package_revision_id != registry_packages[name]:
+            # need to add status here, because otherwise the status could 
+            # be written to DB after the package has finished testing
+            add_test_status(tp, 1, commit=True)
             testing_packages.append(package.id)
             enqueue_download(package, runtime.id)
 
     print "Testing", len(testing_packages), "packages"
-    print "Writing status of packages..."
-
-    for tp in testing_packages:
-        add_test_status(tp, 1, commit=False)
-
-    db.session.commit()
 
 def download_package(runtime, package_name):
     package = models.Package.query.filter_by(
