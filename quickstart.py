@@ -34,6 +34,124 @@ which_packages = [
     (u'dfid-tz', True)
     ]
 
+dfid_packages = {
+  "dfid-ws": True, 
+  "dfid-ls": True, 
+  "dfid-lr": True, 
+  "dfid-le": True, 
+  "dfid-rw": True, 
+  "dfid-la": True, 
+  "dfid-lc": True, 
+  "dfid-ru": True, 
+  "dfid-lk": True, 
+  "dfid-gb": True, 
+  "dfid-ge": True, 
+  "dfid-gh": True, 
+  "dfid-gm": True, 
+  "dfid-gn": True, 
+  "dfid-gt": True, 
+  "dfid-org": True, 
+  "dfid-gy": True, 
+  "dfid-vu": True, 
+  "dfid-ot": True, 
+  "dfid-vn": True, 
+  "dfid-fa": True, 
+  "dfid-89": True, 
+  "dfid-fj": True, 
+  "worldbank-tz": True, 
+  "dfid-ms": True, 
+  "dfid-jm": True, 
+  "dfid-bt": True, 
+  "dfid-br": True, 
+  "dfid-bl": True, 
+  "dfid-bj": True, 
+  "dfid-bi": True, 
+  "dfid-bf": True, 
+  "dfid-798": True, 
+  "dfid-bd": True, 
+  "dfid-ug": True, 
+  "dfid-ba": True, 
+  "dfid-eb": True, 
+  "dfid-ec": True, 
+  "dfid-ea": True, 
+  "dfid-ef": True, 
+  "dfid-ed": True, 
+  "dfid-er": True, 
+  "dfid-et": True, 
+  "dfid-380": True, 
+  "dfid-mv": True, 
+  "dfid-mw": True, 
+  "dfid-tz": True, 
+  "dfid-mz": True, 
+  "dfid-ib": True, 
+  "dfid-tr": True, 
+  "dfid-tl": True, 
+  "dfid-mg": True, 
+  "dfid-md": True, 
+  "dfid-tj": True, 
+  "dfid-td": True, 
+  "dfid-mn": True, 
+  "dfid-tc": True, 
+  "dfid-mm": True, 
+  "dfid-dk": True, 
+  "dfid-th": True, 
+  "dfid-sl": True, 
+  "dfid-sn": True, 
+  "dfid-so": True, 
+  "dfid-sh": True, 
+  "dfid-sd": True, 
+  "dfid-hn": True, 
+  "dfid-ht": True, 
+  "dfid-sq": True, 
+  "dfid-ss": True, 
+  "unops-tz": True, 
+  "dfid-ke": True, 
+  "dfid-kg": True, 
+  "dfid-cv": True, 
+  "dfid-ko": True, 
+  "dfid-kh": True, 
+  "dfid-cl": True, 
+  "dfid-cm": True, 
+  "dfid-cn": True, 
+  "dfid-cd": True, 
+  "dfid-cf": True, 
+  "dfid-cg": True, 
+  "dfid-rs": True, 
+  "dfid-cb": True, 
+  "dfid-zw": True, 
+  "dfid-zz": True, 
+  "dfid-za": True, 
+  "dfid-zm": True, 
+  "dfid-ni": True, 
+  "dfid-298": True, 
+  "dfid-289": True, 
+  "dfid-na": True, 
+  "dfid-ng": True, 
+  "dfid-ne": True, 
+  "dfid-null": True, 
+  "dfid-ns": True, 
+  "dfid-np": True, 
+  "dfid-af": True, 
+  "dfid-ua": True, 
+  "dfid-ac": True, 
+  "dfid-ao": True, 
+  "dfid-al": True, 
+  "dfid-as": True, 
+  "dfid-ye": True, 
+  "dfid-in": True, 
+  "dfid-ph": True, 
+  "dfid-pk": True, 
+  "dfid-pn": True, 
+  "dfid-cp": True, 
+  "dfid-id": True, 
+  "dfid-pe": True, 
+  "dfid-pg": True, 
+  "dfid-ps": True, 
+  "dfid-iq": True, 
+  "dfid-189": True, 
+  "dfid-589": True
+}
+
 def run(refresh=False, minimal=False):
     if refresh:
         if minimal:
@@ -82,6 +200,12 @@ def main():
                  help="Set name of package to be tested")
     p.add_option("--filename", dest="filename",
                  help="Set filename of data to test")
+    p.add_option("--local_folder", dest="local_folder",
+                 help="Set local folder where data to test is stored")
+    p.add_option("--all_dfid_packages", 
+                 action="store_true",
+                 dest="all_dfid_packages",
+                 help="Test all DfID packages. --Local-folder must be provided.")
 
     options, args = p.parse_args()
 
@@ -107,6 +231,16 @@ def main():
 
     if options.import_codelists:
         iatidq.dqimportcodelists.importCodelists()
+        return
+
+    if options.all_dfid_packages:
+        assert options.local_folder
+        for p in dfid_packages:
+            print p
+            package_name = p
+            filename = options.local_folder + "/" + package_name + ".xml"
+            iatidq.dqruntests.enqueue_package_for_test(filename,
+                                                       package_name)
         return
 
     if options.download:
