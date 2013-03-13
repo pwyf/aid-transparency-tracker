@@ -138,6 +138,13 @@ def api_test(test_id):
     else:
         return jsonify(test.as_dict())
 
+@app.route("/api/packages/active/")
+def api_packages_active():
+    data = []
+    for package in models.Package.query.filter_by(active=True).all():
+        data.append((package.package_name, package.active))
+    return jsonify(data)
+
 @app.route("/api/packages/")
 @support_jsonp
 def api_packages():
