@@ -50,6 +50,13 @@ def enqueue_download(filename, runtime_id, package_id, context=None):
         }
     queue.enqueue(tests_queue, args)
 
+def enqueue_package_for_test(filename, package_name):
+    package = models.Package.query.filter_by(
+        package_name=package_name).first()
+    package_id = package.id
+    runtime_id = testrun.start_new_testrun().id
+    enqueue_download(filename, runtime_id, package_id)
+
 # start testing all packages, or just one if provided
 def start_testing(package_name=None):
     newrun = testrun.start_new_testrun()

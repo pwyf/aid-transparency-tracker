@@ -73,6 +73,14 @@ def main():
                  action="store_true",
                  default=False,
                  help="Import codelists")
+    p.add_option("--enqueue-test", dest="enqueue_test",
+                 action="store_true",
+                 default=False,
+                 help="Set a package to be tested (with --package)")
+    p.add_option("--package", dest="package_name",
+                 help="Set name of package to be tested")
+    p.add_option("--filename", dest="filename",
+                 help="Set filename of data to test")
 
     options, args = p.parse_args()
 
@@ -106,6 +114,14 @@ def main():
                 iatidq.dqdownload.run(package_name=package_name)
         else:
             iatidq.dqdownload.run()
+        return
+
+    if options.enqueue_test:
+        assert options.package_name
+        assert options.filename
+
+        dqruntests.enqueue_package_for_test(options.filename,
+                                            options.package_name)
         return
 
     run(refresh=options.refresh, minimal=options.minimal_pkgs)
