@@ -25,7 +25,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models, dqdownload, dqregistry
+from iatidq import models, dqdownload, dqregistry, dqindicators
 import aggregation
 
 @app.route("/")
@@ -484,6 +484,95 @@ def display_aggregate_results(package_id, runtime):
     dqprocessing.aggregate_results(runtime, package_id)
     db.session.commit()
     return "ok"
+
+@app.route("/indicators/")
+def indicatorgroups():
+    indicatorgroups = dqindicators.indicatorGroups()
+    return render_template("indicatorgroups.html", indicatorgroups=indicatorgroups)
+
+@app.route("/indicators/import/")
+def import_indicators():
+    return dqindicators.importIndicators()
+
+@app.route("/indicators/<indicatorgroup>/edit/", methods=['GET', 'POST'])
+def indicatorgroups_edit(indicatorgroup=None):
+    if (request.method == 'POST'):
+        data = {
+            'name': request.form['name'],
+            'description': request.form['description']
+        }
+        indicatorgroup = dqindicators.updateIndicatorGroup(indicatorgroup, data)
+        flash('Successfully updated IndicatorGroup', 'success')
+    else:
+        indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
+    return render_template("indicatorgroups_edit.html", indicatorgroup=indicatorgroup)
+
+@app.route("/indicators/<indicatorgroup>/delete/")
+def indicatorgroups_delete(indicatorgroup=None):
+    indicatorgroup = dqindicators.deleteIndicatorGroup(indicatorgroup)
+    flash('Successfully deleted IndicatorGroup', 'success')
+    return redirect(url_for('indicatorgroups'))
+
+@app.route("/indicators/new/", methods=['GET', 'POST'])
+def indicatorgroups_new():
+    if (request.method == 'POST'):
+        data = {
+            'name': request.form['name'],
+            'description': request.form['description']
+        }
+        indicatorgroup = dqindicators.addIndicatorGroup(data)
+        if indicatorgroup:
+            flash('Successfully added IndicatorGroup.', 'success')
+        else:
+            flash("Couldn't add IndicatorGroup. Maybe one already exists with the same name?", 'error')
+    else:
+        indicatorgroup = None
+    return render_template("indicatorgroups_edit.html", indicatorgroup=indicatorgroup)
+
+@app.route("/indicators/<indicatorgroup>/")
+def indicators(indicatorgroup=None):
+    indicators = dqindicators.indicators(indicatorgroup)
+    indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
+    return render_template("indicators.html", indicatorgroup=indicatorgroup, indicators=indicators)
+
+@app.route("/indicators/<indicatorgroup>/new/", methods=['GET', 'POST'])
+def indicators_new(indicatorgroup=None):
+    indicatorgroups = dqindicators.indicatorGroups()
+    if (request.method == 'POST'):
+        data = {
+            'name': request.form['name'],
+            'description': request.form['description'],
+            'indicatorgroup_id': request.form['indicatorgroup_id']
+        }
+        indicator = dqindicators.addIndicator(data)
+        if indicator:
+            flash('Successfully added Indicator.', 'success')
+        else:
+            flash("Couldn't add Indicator. Maybe one already exists with the same name?", 'error')
+    else:
+        indicator = None
+    return render_template("indicator_edit.html", indicatorgroups=indicatorgroups, indicator=indicator)
+
+@app.route("/indicators/<indicatorgroup>/<indicator>/edit/", methods=['GET', 'POST'])
+def indicators_edit(indicatorgroup=None, indicator=None):
+    indicatorgroups = dqindicators.indicatorGroups()
+    if (request.method == 'POST'):
+        data = {
+            'name': request.form['name'],
+            'description': request.form['description'],
+            'indicatorgroup_id': request.form['indicatorgroup_id']
+        }
+        indicator = dqindicators.updateIndicator(indicatorgroup, indicator, data)
+        flash('Successfully updated Indicator', 'success')
+    else:
+        indicator = dqindicators.indicators(indicatorgroup, indicator)
+    return render_template("indicator_edit.html", indicatorgroups=indicatorgroups, indicator=indicator)
+
+@app.route("/indicators/<indicatorgroup>/<indicator>/delete/")
+def indicators_delete(indicatorgroup=None, indicator=None):
+    indicator = dqindicators.deleteIndicator(indicatorgroup, indicator)
+    flash('Successfully deleted Indicator', 'success')
+    return redirect(url_for('indicatorgroups', id=indicatorgroup))
 
 @app.errorhandler(404)
 def page_not_found(error):

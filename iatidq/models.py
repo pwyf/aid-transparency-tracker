@@ -221,6 +221,73 @@ class CodelistCode(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+class IndicatorGroup(db.Model):
+    __tablename__ = 'indicatorgroup'
+    id = Column(Integer, primary_key=True)
+    name = Column(UnicodeText)
+    description = Column(UnicodeText)
+
+    def setup(self,
+                 name,
+                 description,
+                 id=None):
+        self.name = name
+        self.description = description
+        if id is not None:
+            self.id = id
+
+    def __repr__(self):
+        return self.name+u', '+unicode(self.id)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class Indicator(db.Model):
+    __tablename__ = 'indicator'
+    id = Column(Integer, primary_key=True)
+    name = Column(UnicodeText)
+    description = Column(UnicodeText)
+    indicatorgroup_id = Column(Integer, ForeignKey('indicatorgroup.id'))
+
+    def setup(self,
+                 name,
+                 description,
+                 indicatorgroup_id,
+                 id=None):
+        self.name = name
+        self.description = description
+        self.indicatorgroup_id = indicatorgroup_id
+        if id is not None:
+            self.id = id
+
+    def __repr__(self):
+        return self.name+u', '+unicode(self.id)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class IndicatorTest(db.Model):
+    __tablename__ = 'indicatortest'
+    id = Column(Integer, primary_key=True)
+    indicator_id = Column(Integer, ForeignKey('indicator.id'))
+    test_id = Column(Integer, ForeignKey('test.id'))
+
+    def setup(self,
+                 indicator_id,
+                 test_id,
+                 id=None):
+        self.indicator_id = indicator_id
+        self.test_id = test_id
+        if id is not None:
+            self.id = id
+
+    def __repr__(self):
+        return self.name+u', '+unicode(self.id)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
 class PublisherCondition(db.Model):
     __tablename__ = 'publishercondition'
     id = Column(Integer, primary_key=True)

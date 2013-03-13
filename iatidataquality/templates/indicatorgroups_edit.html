@@ -1,0 +1,24 @@
+{% set active_page='indicators'%}{% extends "layout.html" %}
+{% block title %}{% if indicatorgroup%}Edit{%else%}New{%endif%} Indicator Group {{indicatorgroup.name}} &raquo; Indicators{% endblock %}
+{% block content %}
+	<h1>Indicator Group {{indicatorgroup.name}}</h1>
+    <form name="indicatorupdate" method="post" action="">
+    <table class="table">
+    <thead>
+    <th>Item</th><th>Value</th>
+    </thead>
+    <tbody>
+    <tr>
+	<td>Name:</td><td><input type="text" name="name" value="{{ indicatorgroup.name }}"/></td>
+    </tr>
+    <tr
+    ><td>Description:</td><td><input type="text" name="description" value="{{indicatorgroup.description}}"/></td>
+    </tr>
+    <tr>
+    <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
+    </tr>
+    </tbody>
+    </table>
+    </form>
+
+{% endblock %}

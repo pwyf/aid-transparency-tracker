@@ -44,6 +44,7 @@
                   <li{% if active_page == "import_conditions" %} class="active"{%endif%}><a href="{{url_for('import_publisher_conditions')}}">Import conditions</a></li>
                   <li{% if active_page == "registry_refresh" %} class="active"{%endif%}><a href="{{url_for('registry_refresh')}}">Refresh from Registry</a></li>
                   <li{% if active_page == "registry_download" %} class="active"{%endif%}><a href="{{url_for('registry_download')}}">Run tests</a></li>
+                  <li{% if active_page == "indicators" %} class="active"{%endif%}><a href="{{url_for('indicatorgroups')}}">Indicators</a></li>
                 </ul>
               </li>
             </ul>

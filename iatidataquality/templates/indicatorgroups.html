@@ -1,0 +1,47 @@
+{% set active_page='indicators'%}{% extends "layout.html" %}
+{% block title %}Indicators{% endblock %}
+{% block content %}
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#tests").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+	<h1>Indicator Groups</h1>
+    <div class="pull-right">
+    <a class="btn btn-success" href="{{url_for('indicatorgroups_new')}}"><i class="icon-white icon-plus"></i> <b>New</b></a>
+    </div>
+    <table class="table" id="tests">
+    <thead>
+    <th>Name</th><th>Description</th><th></th>
+    </thead>
+    <tbody>
+	{% for indicatorgroup in indicatorgroups %}
+    <tr>
+	<td>
+        <a href="{{url_for('indicators', indicatorgroup=indicatorgroup.name)}}">{{ indicatorgroup.name }}</a>
+    </td>
+    <td>{{indicatorgroup.description}}</td>
+    <td>
+        <a href="{{url_for('indicatorgroups_edit', indicatorgroup=indicatorgroup.name)}}"><i class="icon-pencil"></i></a> 
+        <a href="{{url_for('indicatorgroups_delete', indicatorgroup=indicatorgroup.name)}}" data-confirm="Are you sure you want to delete indicator group {{indicatorgroup.name}}? This action will also delete all indicators associated with this group, and cannot be undone."><i class="icon-trash"></i></a>
+    </td>
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+<script>
+$(document).ready(function() {
+	$('a[data-confirm]').click(function(ev) {
+		var href = $(this).attr('href');
+		if (!$('#dataConfirmModal').length) {
+			$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+		} 
+		$('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+		$('#dataConfirmOK').attr('href', href);
+		$('#dataConfirmModal').modal({show:true});
+		return false;
+	});
+});
+</script>
+{% endblock %}
