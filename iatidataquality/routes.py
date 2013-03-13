@@ -491,8 +491,13 @@ def indicatorgroups():
     return render_template("indicatorgroups.html", indicatorgroups=indicatorgroups)
 
 @app.route("/indicators/import/")
-def import_indicators():
-    return dqindicators.importIndicators()
+def indicators_import():
+    if dqindicators.importIndicators():
+        flash('Successfully imported your indicators', 'success')
+    else:
+        flash('Could not import your indicators', 'error')
+    return redirect(url_for('indicatorgroups'))
+    
 
 @app.route("/indicators/<indicatorgroup>/edit/", methods=['GET', 'POST'])
 def indicatorgroups_edit(indicatorgroup=None):
