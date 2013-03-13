@@ -23,6 +23,7 @@ import iatidq.dqfunctions
 import iatidq.dqimporttests
 import iatidq.dqdownload
 import iatidq.dqimportcodelists
+import iatidq.dqruntests
 
 import optparse
 import sys
@@ -120,8 +121,8 @@ def main():
         assert options.package_name
         assert options.filename
 
-        dqruntests.enqueue_package_for_test(options.filename,
-                                            options.package_name)
+        iatidq.dqruntests.enqueue_package_for_test(options.filename,
+                                                   options.package_name)
         return
 
     run(refresh=options.refresh, minimal=options.minimal_pkgs)
