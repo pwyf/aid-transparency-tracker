@@ -22,7 +22,7 @@ from iatidq import models, dqregistry
 import iatidq.dqfunctions
 import iatidq.dqimporttests
 import iatidq.dqdownload
-import iatidq.dqimportcodelists
+import iatidq.dqcodelists
 import iatidq.dqruntests
 import iatidq.dqindicators
 
@@ -235,7 +235,7 @@ def main():
         return
 
     if options.import_codelists:
-        iatidq.dqimportcodelists.importCodelists()
+        iatidq.dqcodelists.importCodelists()
         return
 
     if options.all_dfid_packages:

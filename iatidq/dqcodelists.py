@@ -10,10 +10,20 @@
 from iatidq import db
 import models
 import unicodecsv
+from collections import defaultdict
 
 import util
 
 CODELIST_API = "http://data.aidinfolabs.org/data/%s"
+
+def generateCodelists():
+    codelists = db.session.query(models.CodelistCode.code,
+                     models.Codelist.name
+                    ).join(models.Codelist).all()
+    cl = defaultdict(list)
+    for code, codelist in codelists:
+        cl[codelist].append(code)
+    return dict(cl)
 
 def importCodelists(filename=False, local=False):
     codelists_url = (CODELIST_API % ("codelist.csv"))
@@ -42,7 +52,7 @@ def importCodelists(filename=False, local=False):
             return False
         codelist_data = unicodecsv.DictReader(f)
         for crow in codelist_data:
-            codelistcode = models.CodelistCode.query.filter(models.CodelistCode.code==crow['code']).first()
+            codelistcode = models.CodelistCode.query.filter_by(code=crow['code'], codelist_id=codelist.id).first()
             if not codelistcode:
                 codelistcode = models.CodelistCode()
             codelistcode.setup(

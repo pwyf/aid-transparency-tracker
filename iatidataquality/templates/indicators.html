@@ -9,12 +9,13 @@
     </script>
 	<h1>Indicator Group {{indicatorgroup.name}}</h1>
     <div class="pull-right">
-    <a class="btn btn-success" href="{{url_for('indicatorgroups_edit', indicatorgroup=indicatorgroup.name)}}"><i class="icon-white icon-pencil"></i> <b>Edit Group</b></a>
-    <a class="btn btn-danger" href="{{url_for('indicatorgroups_delete', indicatorgroup=indicatorgroup.name)}}" data-confirm="Are you sure you want to delete indicator group {{indicatorgroup.name}}? This action will also delete all indicators associated with this group, and cannot be undone."><i class="icon-white icon-trash"></i> <b>Delete Group</b></a>
+    <p><a class="btn btn-success" href="{{url_for('indicatorgroups_edit', indicatorgroup=indicatorgroup.name)}}"><i class="icon-white icon-pencil"></i> <b>Edit Group</b></a>
+    <a class="btn btn-danger" href="{{url_for('indicatorgroups_delete', indicatorgroup=indicatorgroup.name)}}" data-confirm="Are you sure you want to delete indicator group {{indicatorgroup.name}}? This action will also delete all indicators associated with this group, and cannot be undone."><i class="icon-white icon-trash"></i> <b>Delete Group</b></a></p>
+
+    <p><a class="btn btn-success" href="{{url_for('indicators_new', indicatorgroup=indicatorgroup.name)}}"><i class="icon-white icon-plus"></i> <b>New Indicator</b></a></p>
     </div>
     <h3>{{indicatorgroup.description}}</h3>
     <div class="pull-right">
-    <a class="btn btn-success" href="{{url_for('indicators_new', indicatorgroup=indicatorgroup.name)}}"><i class="icon-white icon-plus"></i> <b>New Indicator</b></a>
     </div>
 
 	<h1>Indicators</h1>
