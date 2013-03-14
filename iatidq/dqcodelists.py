@@ -40,7 +40,7 @@ def importCodelists(filename=False, local=False):
             codelist = models.Codelist()
         codelist.setup(
             name = row['name'],
-            description = unicode(row['description'])
+            description = row['description']
             )
         codelist.source = codelists_url
         db.session.add(codelist)
