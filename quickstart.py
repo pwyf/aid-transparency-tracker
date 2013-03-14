@@ -203,14 +203,15 @@ def main():
                  help="Set filename of data to test")
     p.add_option("--local_folder", dest="local_folder",
                  help="Set local folder where data to test is stored")
-    p.add_option("--all_dfid_packages", 
-                 action="store_true",
-                 dest="all_dfid_packages",
-                 help="Test all DfID packages. --Local-folder must be provided.")
     p.add_option("--import_indicators", dest="import_indicators",
                  action="store_true",
                  default=False,
                  help="Import indicators. Will try to assign indicators to existing tests.")
+    p.add_option("--setup", dest="setup",
+                 action="store_true",
+                 default=False,
+                 help="""Quick setup. Will init db, add tests, add codelists, 
+                      add indicators, refresh package data from Registry.""")
 
     options, args = p.parse_args()
 
@@ -238,16 +239,6 @@ def main():
         iatidq.dqcodelists.importCodelists()
         return
 
-    if options.all_dfid_packages:
-        assert options.local_folder
-        for p in dfid_packages:
-            print p
-            package_name = p
-            filename = options.local_folder + "/" + package_name + ".xml"
-            iatidq.dqruntests.enqueue_package_for_test(filename,
-                                                       package_name)
-        return
-
     if options.download:
         if options.minimal_pkgs:
             for package_name, _ in which_packages:
@@ -261,6 +252,23 @@ def main():
             iatidq.dqindicators.importIndicators(filename=options.filename)
         else:
             iatidq.dqindicators.importIndicators()
+        return
+
+    if options.setup:
+        print "Creating DB"
+        iatidq.db.create_all()
+        print "Adding hardcoded tests"
+        iatidq.dqimporttests.hardcodedTests()
+        print "Importing tests"
+        iatidq.dqimporttests.importTests(
+            filename="tests/iati2foxpath_tests.csv")
+        print "Importing indicators"
+        iatidq.dqindicators.importIndicators(
+            filename="tests/iati2foxpath_tests.csv")
+        print "Importing codelists"
+        iatidq.dqcodelists.importCodelists()
+        print "Refreshing package data from Registry"
+        dqregistry.refresh_packages()
         return
 
     if options.enqueue_test:
