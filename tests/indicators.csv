@@ -1,0 +1,28 @@
+name,description
+dates-actual,Actual dates
+expenditure-actual,Actual expenditure
+aid-type,Aid Type
+budget,Budget Docs
+collaboration-type,Collaboration Type
+conditions,Conditions
+contact-details,Contact details
+contracts,Contracts
+current-status,Current Status
+description,Description
+evaluations,Evaluations
+finance-type,Finance Type
+flow-type,Flow Type
+impact-appraisals,Impact Appraisals
+implementer,Implementer
+mou,MoU
+objectives,Objectives
+cost-overall,Overall cost
+dates-planned,Planned dates
+expenditure-planned,Planned expenditure
+results,Results
+sector,Sector
+location,Sub-national location
+tenders,Tenders
+tied-aid-status,Tied Aid Status
+title,Title
+unique-id,Unique ID
