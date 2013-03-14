@@ -577,7 +577,33 @@ def indicators_edit(indicatorgroup=None, indicator=None):
 def indicators_delete(indicatorgroup=None, indicator=None):
     indicator = dqindicators.deleteIndicator(indicatorgroup, indicator)
     flash('Successfully deleted Indicator', 'success')
-    return redirect(url_for('indicatorgroups', id=indicatorgroup))
+    return redirect(url_for('indicators', indicatorgroup=indicatorgroup))
+
+@app.route("/indicators/<indicatorgroup>/<indicator>/", methods=['GET', 'POST'])
+def indicatortests(indicatorgroup=None, indicator=None):
+    alltests = dqindicators.allTests()
+    indicator = dqindicators.indicators(indicatorgroup, indicator)
+    indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
+    if (request.method == 'POST'):
+        for test in request.form.getlist('test'):
+            data = {
+                    'indicator_id': indicator.id,
+                    'test_id': test
+            }
+            if dqindicators.addIndicatorTest(data):
+                flash('Successfully added test to your indicator.', 'success');
+            else:
+                flash("Couldn't add test to your indicator.", 'error');
+    indicatortests = dqindicators.indicatorTests(indicator.name)
+    return render_template("indicatortests.html", indicatorgroup=indicatorgroup, indicator=indicator, indicatortests=indicatortests, alltests=alltests)
+
+@app.route("/indicators/<indicatorgroup>/<indicator>/<indicatortest>/delete/")
+def indicatortests_delete(indicatorgroup=None, indicator=None, indicatortest=None):
+    if dqindicators.deleteIndicatorTest(indicatortest):
+        flash('Successfully removed test from indicator ' + indicator + '.', 'success')
+    else:
+        flash('Could not remove test from indicator ' + indicator + '.', 'success')        
+    return redirect(url_for('indicatortests', indicatorgroup=indicatorgroup, indicator=indicator))
 
 @app.errorhandler(404)
 def page_not_found(error):

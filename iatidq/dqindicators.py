@@ -47,12 +47,7 @@ def importIndicators(indicatorgroup_name="pwyf2013", filename='tests/activity_te
                             "description" : "",
                             "indicatorgroup_id" : indicatorgroup.id
                         })
-        checkIT = indicatorTest({
-                            "test_id" : test.id,
-                            "indicator_id" : indicator.id
-                        })
-        if not checkIT:
-            addIndicatorTest({
+        addIndicatorTest({
                             "test_id" : test.id,
                             "indicator_id" : indicator.id
                         })
@@ -112,8 +107,10 @@ def deleteIndicatorGroup(indicatorgroup):
     if (checkIG is not None):
         checkI = models.Indicator.query.filter_by(indicatorgroup_id=checkIG.id).all()
         for I in checkI:
+            checkIT = models.IndicatorTest.query.filter_by(indicator_id=I.id).all()
+            for IT in checkIT:
+                db.session.delete(IT)
             db.session.delete(I)
-        db.session.commit()
         db.session.delete(checkIG)
         db.session.commit()
         return True
@@ -158,16 +155,25 @@ def deleteIndicator(indicatorgroup, indicator):
                 ).join(models.IndicatorGroup
                 ).first()
     if (checkI is not None):
+        checkIT = models.IndicatorTest.query.filter_by(indicator_id=checkI.id).all()
+        for IT in checkIT:
+            db.session.delete(IT)
+
         db.session.delete(checkI)
         db.session.commit()
         return True
     else:
         return False
 
-def indicatorTest(data):
-    checkIT = models.IndicatorTest.query.filter_by(test_id=data["test_id"], indicator_id=data["indicator_id"]).first()
-    if checkIT:
-        return checkIT
+def indicatorTests(indicator_name):
+    indicatorTests = db.session.query(models.Test,
+                                      models.IndicatorTest
+                ).filter(models.Indicator.name==indicator_name
+                ).join(models.IndicatorTest
+                ).join(models.Indicator
+                ).all()
+    if indicatorTests:
+        return indicatorTests
     else:
         return False
 
@@ -185,11 +191,18 @@ def addIndicatorTest(data):
     else:
         return False
 
-def deleteIndicatorTest(data):
-    checkIT = models.IndicatorTest.query.filter_by(test_id=data["test_id"], indicator_id=data["indicator_id"]).first()
+def deleteIndicatorTest(indicatortest_id):
+    checkIT = models.IndicatorTest.query.filter_by(id=indicatortest_id).first()
     if checkIT:
         db.session.delete(checkIT)
         db.session.commit()
-        return newIT.id
+        return checkIT
+    else:
+        return False
+
+def allTests():
+    checkT = models.Test.query.all()
+    if checkT:
+        return checkT
     else:
         return False
