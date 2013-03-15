@@ -37,6 +37,8 @@ def importIndicators(indicatorgroup_name="pwyf2013", filename='tests/activity_te
             continue
         
         indicator_name = row['group']
+        if (indicator_name == ""):
+            continue
         
         checkI = indicators(indicatorgroup_name, indicator_name)
         if checkI:
