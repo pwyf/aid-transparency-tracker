@@ -111,11 +111,9 @@ def check_file(test_functions, codelists, file_name,
                                 result_identifier, result_hierarchy,
                                 activity_data, test_functions, 
                                 codelists)
-
+            db.session.commit()
         activities = data.findall('iati-activity')
         [ run_test_activity(activity) for activity in activities ]
-
-        db.session.commit()
 
         print "Aggregating results..."
         dqprocessing.aggregate_results(runtime_id, package_id)
