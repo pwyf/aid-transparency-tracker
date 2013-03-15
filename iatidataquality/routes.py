@@ -193,7 +193,8 @@ def publisher_detail(id=None):
             ).order_by(models.Package.package_name).all()
 
     """try:"""
-    aggregate_results = db.session.query(models.Test,
+    aggregate_results = db.session.query(models.Indicator,
+                                     models.Test,
                                      models.AggregateResult.results_data,
                                      models.AggregateResult.results_num,
                                      models.AggregateResult.result_hierarchy,
@@ -204,6 +205,8 @@ def publisher_detail(id=None):
                    models.AggregateResult.package_id,
                    models.AggregateResult.results_data,
                    models.AggregateResult.results_num
+        ).join(models.IndicatorTest
+        ).join(models.Test
         ).join(models.AggregateResult
         ).join(models.Package
         ).join(models.PackageGroup
@@ -232,7 +235,8 @@ def publisher(id=None):
             ).order_by(models.Package.package_name).all()
 
     """try:"""
-    aggregate_results = db.session.query(models.Test,
+    aggregate_results = db.session.query(models.Indicator,
+                                     models.Test,
                                      models.AggregateResult.results_data,
                                      models.AggregateResult.results_num,
                                      models.AggregateResult.result_hierarchy,
@@ -242,6 +246,8 @@ def publisher(id=None):
         ).group_by(models.AggregateResult.result_hierarchy, 
                    models.Test, 
                    models.AggregateResult.package_id
+        ).join(models.IndicatorTest
+        ).join(models.Test
         ).join(models.AggregateResult
         ).join(models.Package
         ).join(models.PackageGroup
@@ -360,7 +366,8 @@ def packages(id=None, runtime_id=None):
             ).first()
         latest = True
     if (latest_runtime):
-        aggregate_results = db.session.query(models.Test,
+        aggregate_results = db.session.query(models.Indicator,
+                                             models.Test,
                                              models.AggregateResult.results_data,
                                              models.AggregateResult.results_num,
                                              models.AggregateResult.result_hierarchy
@@ -370,6 +377,8 @@ def packages(id=None, runtime_id=None):
                            models.Test,
                            models.AggregateResult.results_data,
                            models.AggregateResult.results_num 
+                ).join(models.IndicatorTest
+                ).join(models.Test
                 ).join(models.AggregateResult
                 ).all()
 

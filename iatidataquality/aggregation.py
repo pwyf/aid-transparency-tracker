@@ -44,6 +44,7 @@ def pkg_test_percentages(data):
 def _agr_results(data, conditions=None, mode=None):
     """
         data variable looks like this:
+            models.Indicator,
             models.Test,
             models.AggregateResult.results_data, ## percentage
             models.AggregateResult.results_num, ## total values
@@ -72,8 +73,8 @@ def _agr_results(data, conditions=None, mode=None):
             in publisher mode, allow weighting of data by package rather than number of activities.
     """
 
-    hierarchies = set(map(lambda x: (x[3]), data))
-    tests = set(map(lambda x: (x[0]["id"]), data))
+    hierarchies = set(map(lambda x: (x[4]), data))
+    tests = set(map(lambda x: (x[1].id), data))
 
     cdtns = None
     if conditions:
@@ -83,10 +84,10 @@ def _agr_results(data, conditions=None, mode=None):
                     ), conditions))
     
     if ((mode=="publisher") or (mode=="publisher_simple")):
-        packages = set(map(lambda x: (x[4]), data))
-        d = dict(map(lambda x: ((x[3], x[0]["id"], x[4]),(x)), data))
+        packages = set(map(lambda x: (x[5]), data))
+        d = dict(map(lambda x: ((x[4], x[1].id, x[5]),(x)), data))
     else:
-        d = dict(map(lambda x: ((x[3], x[0]["id"]),(x)), data))
+        d = dict(map(lambda x: ((x[4], x[1].id),(x)), data))
 
     out = {}
 
@@ -108,18 +109,19 @@ def _agr_results(data, conditions=None, mode=None):
                 for p in packages:
                     try:
                         ok_tdata = d[(h, t, p)]
-                        total_pct += ok_tdata[1] #percentage
-                        total_activities += ok_tdata[2] #total vals
+                        total_pct += ok_tdata[2] #percentage
+                        total_activities += ok_tdata[3] #total vals
                         packages_in_hierarchy +=1
                     except KeyError:
                         pass
                 if (total_activities>0):
                     
                     tdata = {
+                        "indicator": ok_tdata[0],
                         "test": {
-                            "id": ok_tdata[0]["id"],
-                            "description": ok_tdata[0]["description"],
-                            "test_group": ok_tdata[0]["test_group"]
+                            "id": ok_tdata[1].id,
+                            "description": ok_tdata[1].description,
+                            "test_group": ok_tdata[1].test_group
                             },
                         "results_pct": int(float(total_pct/packages_in_hierarchy)),
                         "results_num": total_activities,
@@ -131,13 +133,13 @@ def _agr_results(data, conditions=None, mode=None):
                 if data is not None:
                     tdata = {
                         "test": {
-                            "id": data[0]["id"],
-                            "description": data[0]["description"],
-                            "test_group": data[0]["test_group"]
+                            "id": data[1].id,
+                            "description": data[1].description,
+                            "test_group": data[1].test_group
                             },
-                        "results_pct": data[1],
-                        "results_num": data[2],
-                        "result_hierarchy": data[3]
+                        "results_pct": data[2],
+                        "results_num": data[3],
+                        "result_hierarchy": data[4]
                         }
                 else:
                     tdata = None
@@ -185,6 +187,7 @@ def _agr_results(data, conditions=None, mode=None):
                     pass
 
             simple_out[t] = {
+                    "indicator": out[okhierarchy][t]['indicator'],
                     "test": {
                         "id": out[okhierarchy][t]['test']["id"],
                         "description": out[okhierarchy][t]['test']["description"],
