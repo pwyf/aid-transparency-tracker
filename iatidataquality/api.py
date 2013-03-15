@@ -21,7 +21,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqdownload, models
+from iatidq import dqdownload, models, dqpackages
 
 import datetime
 class JSONEncoder(json.JSONEncoder):
@@ -180,7 +180,7 @@ def api_package_run(package_id):
 @nocache
 def api_package_status(package_id):
     try:
-        status = models.PackageStatus.query.filter_by(package_id=package_id).order_by("runtime_datetime desc").first()
+        status = dqpackages.package_status(package_id)
         return jsonify(status.as_dict())
     except Exception:
         return jsonify({"status":"failed"})

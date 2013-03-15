@@ -70,7 +70,7 @@ result/indicator/period/target exists?,"Result, indicator, period covered, targe
 result/indicator/period/target/@value exists?,"Result, indicator, period covered, target result value",results,result,1,Target value for the target mileston 
 default-finance-type exists?,Default finance type ,finance-type,default-finance-type,1,Default finance type 
 default-aid-type exists?,Default aid type ,aid-type,default-aid-type,1,Default aid type 
-description exists?,Description,description,description,1,Activity description
+description/text() exists?,Description,description,description,1,Activity description
 description/@type exists?,Description type,description,description,1,Type of activity description
 description/@type is on list DescriptionType?,Description type is on the IATI Description Type codelist,description,description,1,Type of activity description is on the IATI Description Type codelist
 default-flow-type exists?,Flow type,flow-type,default-flow-type,1,Default flow type 
@@ -97,7 +97,7 @@ related-activity exists?,Related activity,,related-activity,1,Another IATI activ
 related-activity/@type exists?,Related activity type,,related-activity,1,Type of relationship between related activities
 related-activity/@type is on list RelatedActivityType?,Related activity type is on related activity type codelist,,related-activity,1,Type of relationship between related activities if on IATI Related Activity Type codelist
 related-activity/@ref exists?,Related activity ID,,related-activity,1,Machine readable identification for related activity
-title exists?,Title,title,title,1,Activity title 
+title/text() exists?,Title,title,title,1,Activity title 
 conditions exists?,Conditions,conditions,conditions,1,Conditions attached to the activity 
 conditions/@attached exists?,Conditions attached,conditions,conditions,1,Yes/No value for wheher conditions are attached to the activity 
 conditions/@attached is a boolean?,Conditions attached is properly formatted,conditions,conditions,1,Conditions attached can be aggregated
@@ -105,16 +105,16 @@ conditions/condition exists?,"Conditions, individual condition exists",condition
 conditions/condition/@type exists?,"Conditions, individual condition has a type",conditions,conditions,1,Type of condition attached to the activity
 conditions/condition/@type is on list ConditionType?,"Conditions, individual condition is on condition type codelist",conditions,conditions,1,Type of condition attached to the activity is on the IATI Condito Type Codelist
 iati-activity exists?,IATI Activity,,iati-activity,1,Top-level element for a single IATI activity report 
-iati-activity/@linked-data-uri exists?,IATI Activity linked data URI,,iati-activity,1,A Linked Data URI for the activity exists
-iati-activity/@hierarchy exists?,IATI Activity hierarchy,,iati-activity,1,Shortcut to show whether activity is parent or child 
-iati-activity/@hierarchy is a int?,IATI Activity hierarchy is a number,,iati-activity,1,?
-iati-activity/@default-currency exists?,IATI Activity currency code,,iati-activity,1,Default ISO 4217 currency code for all financial values in the activity report
-iati-activity/@default-currency is on list Currency?,IATI Activity currency code is on currency codelist,,iati-activity,1,Default ISO 4217 currency code for all financial values in the activity report is on the IATI Currency codelist
-iati-activity/@xml:lang exists?,IATI Activity default language,,iati-activity,1,XML language for IATI activity 
-iati-activity/@last-updated-datetime exists?,IATI Activity last updated date,,iati-activity,1,Last date/time that the data for the activity was updated
-iati-activity/@last-updated-datetime is a dateTime?,IATI Activity last updated date is properly formatted,,iati-activity,1,Last updated date time for the activity is in date time format
-iati-activity/@version exists?,IATI Activity version,,iati-activity,1,Number indicating the IATI specification version in use  for the activity
-iati-activity/@version is a decimal?,IATI Activity version is properly formatted,,iati-activity,1,IATI specification version for the activity is a decimal
+@linked-data-uri exists?,IATI Activity linked data URI,,iati-activity,1,A Linked Data URI for the activity exists
+@hierarchy exists?,IATI Activity hierarchy,,iati-activity,1,Shortcut to show whether activity is parent or child 
+@hierarchy is a int?,IATI Activity hierarchy is a number,,iati-activity,1,?
+@default-currency exists?,IATI Activity currency code,,iati-activity,1,Default ISO 4217 currency code for all financial values in the activity report
+@default-currency is on list Currency?,IATI Activity currency code is on currency codelist,,iati-activity,1,Default ISO 4217 currency code for all financial values in the activity report is on the IATI Currency codelist
+@xml:lang exists?,IATI Activity default language,,iati-activity,1,XML language for IATI activity 
+@last-updated-datetime exists?,IATI Activity last updated date,,iati-activity,1,Last date/time that the data for the activity was updated
+@last-updated-datetime is a dateTime?,IATI Activity last updated date is properly formatted,,iati-activity,1,Last updated date time for the activity is in date time format
+@version exists?,IATI Activity version,,iati-activity,1,Number indicating the IATI specification version in use  for the activity
+@version is a decimal?,IATI Activity version is properly formatted,,iati-activity,1,IATI specification version for the activity is a decimal
 budget exists?,Budget,cost-overall,budget,1,The value of the  activity's budget for each financial year 
 budget/@type exists?,Budget type,cost-overall,budget,1,Type of activity budget 
 budget/@type is on list BudgetType?,Budget type is on budget type codelist,cost-overall,budget,1,Type of activity budget is on IATI Budget Type codelist
@@ -179,6 +179,12 @@ participating-org[@role='funding'] or participating-org[@role='Funding'] exists?
 participating-org[@role='accountable'] or participating-org[@role='Accountable'] exists?,Accountable organisation,,accountable,1,Accountable organisation
 participating-org[@role='extending'] or participating-org[@role='Extending'] exists?,Extending organisation,,extending,1,Extending organisation
 participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?,Implementing organisation,implementer,implementing,1,Implementing organisation
+participating-org exists?,Participating organisation,implementer,participating-org,1,Participating organisation involved in the activity
+participating-org[@role='implementing']/@type exists?,"Participating organisation, type",implementer,participating-org,1,Participating organisation by type
+participating-org[@role='implementing']/@type is on list OrganisationType?,"Participating organisation, type is on the IATI organisation type codelist",implementer,participating-org,1,Participating organisation type is on the IATI organisation type codelist
+participating-org[@role='implementing']/@role is on list OrganisationRole?,"Participating organisation, role is on the IATI organisation role codelist",implementer,participating-org,1,Participating organisation role is on the IATI organisation role codelist
+participating-org[@role='implementing']/@ref exists?,"Participating organisation, ref",implementer,participating-org,1,Machine-readable identification for organisation
+participating-org[@role='implementing']/@ref is on list OrganisationIdentifier?,"Participating organisation, ref is on the IATI organisation identifier codelist",implementer,participating-org,1,Machine-readable identification for organisation is on organisation identifier codelist
 recipient-region or recipient-country exists?,Recipient region or recipient country,,recipient,1,Recipient region or recipient country
 only one of recipient-region or recipient-country exists?,Recipient region or recipient country (not both),,recipient,1,Recipient region or recipient country (not both)
 sector exists more than 1 time?,"Sector, more than once",sector,sector,1,"Sector, more than once"
@@ -195,3 +201,7 @@ document-link/category[@code='A08'] exists?,"Document - Results, outcomes and ou
 document-link/category[@code='A09'] exists?,Document - Memorandum of understanding document,mou,document-link,1,Document - Memorandum of understanding document
 document-link/category[@code='A10'] exists?,Document - Tender,tenders,document-link,1,Document - Tender
 document-link/category[@code='A11'] exists?,Document - Contract,contracts,document-link,1,Document - Contract
+activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?,Current data,basic,,1,Test whether data is current
+activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 4 months ago?,Activities with data in last 4 months,basic,,,
+activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 2 months ago?,Activities with data in last month,basic,,,
+activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 1 month ago?,Activities with data less than one month old,basic,,,

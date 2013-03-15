@@ -1,0 +1,72 @@
+{% set active_page='indicators'%}{% extends "layout.html" %}
+{% block title %}Indicators{% endblock %}
+{% block content %}
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#tests").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+	<h1>Indicator {{indicator.description}} <code><a href="{{url_for('indicators', indicatorgroup=indicatorgroup.name)}}">{{indicatorgroup.name}}</a>/{{indicator.name}}</code></h1>
+    <div class="pull-right">
+    <p><a class="btn btn-success" href="{{url_for('indicators_edit', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}"><i class="icon-white icon-pencil"></i> <b>Edit Indicator</b></a>
+    <a class="btn btn-danger" href="{{url_for('indicators_delete', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}" data-confirm="Are you sure you want to delete indicator {{indicator.name}}? This action cannot be undone."><i class="icon-white icon-trash"></i> <b>Delete Indicator</b></a></p>
+
+    <p><a class="btn btn-success" href="#addTests" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add Test to Indicator</b></a></p>
+    </div>
+    <div class="pull-right">
+    </div>
+
+	<h1>Tests</h1>
+    <table class="table" id="tests">
+    <thead>
+    <th>ID</th><th>Name</th><th>Description</th>
+    </thead>
+    <tbody>
+    {% if indicatortests %}
+	    {% for it in indicatortests %}
+        <tr>
+	    <td>{{ it.Test.name }}</td>
+        <td>{{ it.Test.description}}</td>
+        <td>
+            <a href="{{url_for('indicatortests_delete', indicatorgroup=indicatorgroup.name, indicator=indicator.name, indicatortest=it.IndicatorTest.id)}}" data-confirm="Are you sure you want to remove Test {{it.Test.name}} from {{indicator.name}}? This action will not delete the test itself."><i class="icon-trash"></i></a>
+        </td>
+        </tr>
+	    {% endfor %}
+    {%endif%}
+    </tbody>
+    </table>
+
+<div id="addTests" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addTestsModalLabel" aria-hidden="true"> 
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <form method="post" action="">
+        <h3 id="addTestsModalLabel">Add Tests</h3>
+    </div>
+    <div class="modal-body">
+    {% for test in alltests %}
+        <label for="test_{{test.id}}"><input type="checkbox" value="{{test.id}}" id="test_{{test.id}}" name="test" /> {{test.name}}</label>
+    {%endfor%}
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <input type="submit" value="Add tests to this indicator" class="btn btn-success" />
+    </div>
+</form>
+</div>
+
+<script>
+$(document).ready(function() {
+	$('a[data-confirm]').click(function(ev) {
+		var href = $(this).attr('href');
+		if (!$('#dataConfirmModal').length) {
+			$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+		} 
+		$('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+		$('#dataConfirmOK').attr('href', href);
+		$('#dataConfirmModal').modal({show:true});
+		return false;
+	});
+});
+</script>
+{% endblock %}

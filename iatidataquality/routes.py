@@ -201,7 +201,9 @@ def publisher_detail(id=None):
                                      models.AggregateResult.package_id,
                                      func.max(models.AggregateResult.runtime_id)
         ).filter(models.PackageGroup.id==p_group.id
-        ).group_by(models.AggregateResult.result_hierarchy, models.Test, 
+        ).group_by(models.Indicator,
+                   models.AggregateResult.result_hierarchy, 
+                   models.Test, 
                    models.AggregateResult.package_id,
                    models.AggregateResult.results_data,
                    models.AggregateResult.results_num
@@ -245,6 +247,10 @@ def publisher(id=None):
         ).filter(models.PackageGroup.id==p_group.id
         ).group_by(models.AggregateResult.result_hierarchy, 
                    models.Test, 
+                   models.AggregateResult.package_id,
+                   models.Indicator,
+                   models.AggregateResult.results_data,
+                   models.AggregateResult.results_num,
                    models.AggregateResult.package_id
         ).join(models.IndicatorTest
         ).join(models.Test
@@ -258,13 +264,13 @@ def publisher(id=None):
 
     aggregate_results = aggregation.agr_results(aggregate_results, 
                                                 conditions=pconditions, 
-                                                mode="publisher_simple")
+                                                mode="publisher_indicators")
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None
         aggregate_results = None"""
 
-    return render_template("publisher_simple.html", p_group=p_group, pkgs=pkgs, 
+    return render_template("publisher_indicators.html", p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/registry/refresh/")
@@ -376,7 +382,8 @@ def packages(id=None, runtime_id=None):
                 ).group_by(models.AggregateResult.result_hierarchy, 
                            models.Test,
                            models.AggregateResult.results_data,
-                           models.AggregateResult.results_num 
+                           models.AggregateResult.results_num,
+                           models.Indicator
                 ).join(models.IndicatorTest
                 ).join(models.Test
                 ).join(models.AggregateResult
