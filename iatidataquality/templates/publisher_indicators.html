@@ -11,6 +11,7 @@
     </script>
 
     <h1>{{p_group.title}}<code>{{p_group.name}}</code></h1>
+    <div class="pull-right"><a href="{{url_for('publisher_detail', id=p_group.name)}}" class="btn">Detail</a></div>
 
     {% if results %}
     <h3>Latest results </h3>
@@ -23,7 +24,7 @@
         <tbody>
         {% for indicator, result in results.items() %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
-            <td><a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">{{result["indicator"]["name"]}}</a></td>
+            <td><a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">{{result["indicator"]["description"]}}</a></td>
 	        <td></td>
             <td class="pct">{{result.results_pct|round|int}}</td>
             <td></td>
@@ -32,7 +33,7 @@
 
             {% for testdata in result["tests"] %}
             <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
-            <td><span class="hidden">{{result["indicator"]["name"]}}</span></td>
+            <td><span class="hidden">{{result["indicator"]["description"]}}</span></td>
 	        <td><a href="{{url_for('tests', id=testdata["test"]["id"])}}">{{ testdata["test"]["description"] }}</a>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
             <td class="pct">{{testdata.results_pct|round|int}}</td>
             <td>{{testdata["results_num"]|round|int}}</td>

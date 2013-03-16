@@ -11,6 +11,7 @@ reporting-org exists?,Reporting organisation,,reporting-org,1,The organisation i
 reporting-org/@type exists?,"Reporting organisation, type",,reporting-org,1,Reporting organisation by type
 reporting-org/@type is on list OrganisationType?,"Reporting organisation, type is on the IATI organisation type codelist",,reporting-org,1,Reporting organisation type is on the IATI organisation type codelist
 reporting-org/@ref exists?,"Reporting organisation, ref",,reporting-org,1,Machine-readable identification for the reporting organisation
+reporting-org/@ref is on list OrganisationIdentifier?,"Reporting organisation, ref is on the IATI organisation identifier codelist",,reporting-org,1,Machine-readable identification for organisation is on organisation identifier codelist
 participating-org exists?,Participating organisation,implementer,participating-org,1,Participating organisation involved in the activity
 participating-org/@type exists?,"Participating organisation, type",implementer,participating-org,1,Participating organisation by type
 participating-org/@type is on list OrganisationType?,"Participating organisation, type is on the IATI organisation type codelist",implementer,participating-org,1,Participating organisation type is on the IATI organisation type codelist
@@ -180,11 +181,21 @@ participating-org[@role='accountable'] or participating-org[@role='Accountable']
 participating-org[@role='extending'] or participating-org[@role='Extending'] exists?,Extending organisation,,extending,1,Extending organisation
 participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?,Implementing organisation,implementer,implementing,1,Implementing organisation
 participating-org exists?,Participating organisation,implementer,participating-org,1,Participating organisation involved in the activity
-participating-org[@role='implementing']/@type exists?,"Participating organisation, type",implementer,participating-org,1,Participating organisation by type
-participating-org[@role='implementing']/@type is on list OrganisationType?,"Participating organisation, type is on the IATI organisation type codelist",implementer,participating-org,1,Participating organisation type is on the IATI organisation type codelist
-participating-org[@role='implementing']/@role is on list OrganisationRole?,"Participating organisation, role is on the IATI organisation role codelist",implementer,participating-org,1,Participating organisation role is on the IATI organisation role codelist
-participating-org[@role='implementing']/@ref exists?,"Participating organisation, ref",implementer,participating-org,1,Machine-readable identification for organisation
-participating-org[@role='implementing']/@ref is on list OrganisationIdentifier?,"Participating organisation, ref is on the IATI organisation identifier codelist",implementer,participating-org,1,Machine-readable identification for organisation is on organisation identifier codelist
+participating-org[@role='implementing']/@type exists?,"Implementing organisation, type",implementer,participating-org,1,Participating organisation by type
+participating-org[@role='implementing']/@type is on list OrganisationType?,"Implementing organisation, type is on the IATI organisation type codelist",implementer,participating-org,1,Participating organisation type is on the IATI organisation type codelist
+participating-org[@role='implementing']/@role is on list OrganisationRole?,"Implementing organisation, role is on the IATI organisation role codelist",implementer,participating-org,1,Participating organisation role is on the IATI organisation role codelist
+participating-org[@role='implementing']/@ref exists?,"Implementing organisation, ref",implementer,participating-org,1,Machine-readable identification for organisation
+participating-org[@role='implementing']/@ref is on list OrganisationIdentifier?,"Implementing organisation, ref is on the IATI organisation identifier codelist",implementer,participating-org,1,Machine-readable identification for organisation is on organisation identifier codelist
+participating-org[@role='extending']/@type exists?,"Extending organisation, type",,extending,,
+participating-org[@role='extending']/@type is on list OrganisationType?,"Extending organisation, type is on the IATI organisation type codelist",,extending,,
+participating-org[@role='extending']/@role is on list OrganisationRole?,"Extending organisation, role is on the IATI organisation role codelist",,extending,,
+participating-org[@role='extending']/@ref exists?,"Extending organisation, ref",,extending,,
+participating-org[@role='extending']/@ref is on list OrganisationIdentifier?,"Extending organisation, ref is on the IATI organisation identifier codelist",,extending,,
+participating-org[@role='funding']/@type exists?,"Funding organisation, type",,funding,,
+participating-org[@role='funding']/@type is on list OrganisationType?,"Funding organisation, type is on the IATI organisation type codelist",,funding,,
+participating-org[@role='funding']/@role is on list OrganisationRole?,"Funding organisation, role is on the IATI organisation role codelist",,funding,,
+participating-org[@role='funding']/@ref exists?,"Funding organisation, ref",,funding,,
+participating-org[@role='funding']/@ref is on list OrganisationIdentifier?,"Funding organisation, ref is on the IATI organisation identifier codelist",,funding,,
 recipient-region or recipient-country exists?,Recipient region or recipient country,,recipient,1,Recipient region or recipient country
 only one of recipient-region or recipient-country exists?,Recipient region or recipient country (not both),,recipient,1,Recipient region or recipient country (not both)
 sector exists more than 1 time?,"Sector, more than once",sector,sector,1,"Sector, more than once"
