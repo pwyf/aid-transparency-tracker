@@ -265,6 +265,9 @@ def main():
         print "Importing indicators"
         iatidq.dqindicators.importIndicators(
             filename="tests/iati2foxpath_tests.csv")
+        print "Importing indicator descriptions"
+        iatidq.dqindicators.importIndicatorDescriptions(
+            filename="tests/indicators.csv")
         print "Importing codelists"
         iatidq.dqcodelists.importCodelists()
         print "Refreshing package data from Registry"

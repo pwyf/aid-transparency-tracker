@@ -14,7 +14,37 @@ import csv
 import util
 import unicodecsv
 
-def importIndicators(indicatorgroup_name="pwyf2013", filename='tests/activity_tests.csv', local=True):
+def importIndicatorDescriptions(indicatorgroup_name="pwyf2013", filename='tests/indicators.csv', local=True):
+    f = util.stream_of_file(filename, local)
+    if not f:
+        return False
+
+    checkIG = indicatorGroups(indicatorgroup_name)
+    if checkIG:
+        indicatorgroup = checkIG
+    else:
+        indicatorgroup = addIndicatorGroup({"name": indicatorgroup_name,
+                                            "description": ""
+                                            })
+    rows = unicodecsv.DictReader(f)
+
+    for row in rows:
+        data = {}
+        data['name']=row['name']
+        data['description']=row['description']
+        data['indicatorgroup_id']=indicatorgroup.id
+
+        checkI = indicators(indicatorgroup_name, data['name'])
+        if checkI:
+            indicator = updateIndicator(indicatorgroup_name, data['name'], data)
+        else:
+            indicator = addIndicator({
+                            "name" : indicator_name,
+                            "description" : "",
+                            "indicatorgroup_id" : indicatorgroup.id
+                        })
+
+def importIndicators(indicatorgroup_name="pwyf2013", filename='tests/iati2foxpath_tests.csv', local=True):
 
     f = util.stream_of_file(filename, local)
     if not f:
