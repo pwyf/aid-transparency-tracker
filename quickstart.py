@@ -226,9 +226,11 @@ def main():
 
     if options.enroll_tests:
         filename = options.enroll_tests.decode()
-        iatidq.dqimporttests.importTests(
+        result = iatidq.dqimporttests.importTests(
             filename=filename, 
             level=options.level)
+        if not result:
+            print "Error importing"
         return
 
     if options.clear_revisionid:
@@ -249,7 +251,8 @@ def main():
 
     if options.import_indicators:
         if options.filename:
-            iatidq.dqindicators.importIndicators(filename=options.filename)
+            iatidq.dqindicators.importIndicatorsFromFile("pwyf2013",
+                                                         options.filename)
         else:
             iatidq.dqindicators.importIndicators()
         return
@@ -260,14 +263,15 @@ def main():
         print "Adding hardcoded tests"
         iatidq.dqimporttests.hardcodedTests()
         print "Importing tests"
-        iatidq.dqimporttests.importTests(
+        iatidq.dqimporttests.importTestsFromFile(
             filename="tests/iati2foxpath_tests.csv")
         print "Importing indicators"
-        iatidq.dqindicators.importIndicators(
-            filename="tests/iati2foxpath_tests.csv")
+        iatidq.dqindicators.importIndicatorsFromFile(
+            "pwyf2013",
+            "tests/iati2foxpath_tests.csv")
         print "Importing indicator descriptions"
-        iatidq.dqindicators.importIndicatorDescriptions(
-            filename="tests/indicators.csv")
+        iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
+                                                                "tests/indicators.csv")
         print "Importing codelists"
         iatidq.dqcodelists.importCodelists()
         print "Refreshing package data from Registry"

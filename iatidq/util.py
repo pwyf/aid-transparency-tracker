@@ -28,16 +28,6 @@ def ensure_download_dir(directory):
         with report_error(None, "Couldn't create directory"):
             os.makedirs(directory)
 
-def stream_of_file(filename, local):
-    try:
-        if (local==True):
-            f = open(filename, 'r')
-        else:
-            f = urllib2.urlopen(filename, timeout=60)
-        return f
-    except:
-        return False
-
 def download_file(url, path):
     with file(path, 'w') as localFile:
         webFile = urllib2.urlopen(url)

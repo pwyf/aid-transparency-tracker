@@ -12,18 +12,14 @@ from iatidq import db
 import models
 import csv
 import util
+import urllib2
 
-
-def importPCs(filename='tests/publisher_structures.txt', local=True):
+def _importPCs(fh, local=True):
     #models.Test.query.filter(models.Test.test_level==1).\
     #    update({models.Test.active: False})
-
-    f = util.stream_of_file(filename, local)
-    if not f:
-        return False
     
     results = {}
-    for n, line in enumerate(f):
+    for n, line in enumerate(fh):
         text = line.strip('\n')
         results[n]=text
         #results.append(text)
@@ -37,6 +33,14 @@ def importPCs(filename='tests/publisher_structures.txt', local=True):
         tested_results.append(data)
 
     return tested_results
+
+def importPCsFromFile(filename='tests/publisher_structures.txt', local=True):
+    with file(filename) as fh:
+        return _importPCs(fh, local=True) 
+
+def importPCsFromUrl(url):
+    fh = urllib2.urlopen(url)
+    return _importPCs(fh, local=False)
 
 if __name__ == "__main__":
     importPCs('../tests/publisher_structures.txt')

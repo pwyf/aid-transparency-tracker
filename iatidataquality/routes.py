@@ -30,6 +30,8 @@ sys.path.append(parent)
 from iatidq import models, dqdownload, dqregistry, dqindicators
 import aggregation
 
+test_list_location = "tests/activity_tests.csv"
+
 @app.route("/")
 def home():
     return render_template("dashboard.html")
@@ -432,11 +434,11 @@ def import_tests():
         import dqimporttests
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
             if (request.form.get('local')):
-                result = dqimporttests.importTests()
+                result = dqimporttests.importTestsFromFile(test_list_location)
             else:
                 url = request.form['url']
                 level = int(request.form['level'])
-                result = dqimporttests.importTests(url, level, False)
+                result = dqimporttests.importTestsFromUrl(url, level=level)
             if (result==True):
                 flash('Imported tests', "success")
             else:
@@ -457,10 +459,10 @@ def import_publisher_conditions(step=None):
             from iatidq import dqimportpublisherconditions
             if (request.form['password'] == app.config["SECRET_PASSWORD"]):
                 if (request.form.get('local')):
-                    results = dqimportpublisherconditions.importPCs()
+                    results = dqimportpublisherconditions.importPCsFromFile()
                 else:
                     url = request.form['url']
-                    results = dqimportpublisherconditions.importPCs(url, False)
+                    results = dqimportpublisherconditions.importPCsFromUrl(url)
                 if (results):
                     flash('Parsed tests', "success")
                     return render_template(

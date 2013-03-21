@@ -11,6 +11,8 @@ from iatidq import db
 import models
 import unicodecsv
 from collections import defaultdict
+import urllib2
+import lxml.etree
 
 import util
 
@@ -25,17 +27,17 @@ def generateCodelists():
         cl[codelist].append(code)
     return dict(cl)
 
-def importCodelists(filename=False, local=False):
+def importCodelists():
     codelists_url = (CODELIST_API % ("codelist.csv"))
 
-    f = util.stream_of_file(codelists_url, local)
-    if not f:
-        return False
+    f = urllib2.urlopen(codelists_url)
 
     codelists_data = unicodecsv.DictReader(f)
 
     for row in codelists_data:
-        codelist = models.Codelist.query.filter(models.Codelist.name==row['name']).first()
+        codelist = models.Codelist.query.filter(
+            models.Codelist.name==row['name']).first()
+
         if not codelist:
             codelist = models.Codelist()
         codelist.setup(
@@ -47,12 +49,18 @@ def importCodelists(filename=False, local=False):
         db.session.commit()
         
         codelist_url = (CODELIST_API % ("codelist/" + row['name'] + ".csv"))
-        f = util.stream_of_file(codelist_url, local)
-        if not f:
-            return False
+        print row
+        print
+        print codelist_url
+        print
+
+        f = urllib2.urlopen(codelist_url)
         codelist_data = unicodecsv.DictReader(f)
         for crow in codelist_data:
-            codelistcode = models.CodelistCode.query.filter_by(code=crow['code'], codelist_id=codelist.id).first()
+            #print crow
+            codelistcode = models.CodelistCode.query.filter_by(
+                code=crow['code'], codelist_id=codelist.id).first()
+
             if not codelistcode:
                 codelistcode = models.CodelistCode()
             codelistcode.setup(

@@ -41,15 +41,10 @@ def returnLevel(row, level):
     else:
         return level
 
-def importTests(filename='tests/activity_tests.csv', level=1, local=True):
+def _importTests(fh, filename, level=1, local=True):
     #models.Test.query.filter(models.Test.test_level==1).\
     #    update({models.Test.active: False})
-
-    f = util.stream_of_file(filename, local)
-    if not f:
-        return False
-
-    data = unicodecsv.DictReader(f)
+    data = unicodecsv.DictReader(fh)
 
     for row in data:
         test = models.Test.query.filter(models.Test.name==row['test']).first()
@@ -71,6 +66,10 @@ def importTests(filename='tests/activity_tests.csv', level=1, local=True):
     print "Imported successfully"
     return True
 
-if __name__ == "__main__":
-    hardcodedTests()
-    importTests('../tests/activity_tests.csv')
+def importTestsFromFile(filename, level=1):
+    with file(filename) as fh:
+        return _importTests(fh, filename, level=level, local=True)
+
+def importTestsFromUrl(url, level=1):
+    fh = urllib2.urlopen(url)
+    return _importTests(fh, url, level=level, local=False)

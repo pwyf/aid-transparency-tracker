@@ -14,11 +14,17 @@ import csv
 import util
 import unicodecsv
 
-def importIndicatorDescriptions(indicatorgroup_name="pwyf2013", filename='tests/indicators.csv', local=True):
-    f = util.stream_of_file(filename, local)
-    if not f:
-        return False
+def importIndicatorDescriptions():
+    indicatorgroup_name = "pwyf2013"
+    filename = 'tests/indicators.csv'
+    return importIndicatorDescriptionsFromFile(indicatorgroup_name, filename)
 
+def importIndicatorDescriptionsFromFile(indicatorgroup_name, filename):
+    with file(filename) as fh:
+        return _importIndicatorDescriptions(indicatorgroup_name, 
+                                                   fh, True)
+
+def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
     checkIG = indicatorGroups(indicatorgroup_name)
     if checkIG:
         indicatorgroup = checkIG
@@ -26,7 +32,7 @@ def importIndicatorDescriptions(indicatorgroup_name="pwyf2013", filename='tests/
         indicatorgroup = addIndicatorGroup({"name": indicatorgroup_name,
                                             "description": ""
                                             })
-    rows = unicodecsv.DictReader(f)
+    rows = unicodecsv.DictReader(fh)
 
     for row in rows:
         data = {}
@@ -44,12 +50,17 @@ def importIndicatorDescriptions(indicatorgroup_name="pwyf2013", filename='tests/
                             "indicatorgroup_id" : indicatorgroup.id
                         })
 
-def importIndicators(indicatorgroup_name="pwyf2013", filename='tests/iati2foxpath_tests.csv', local=True):
+def importIndicators():
+    filename = 'tests/iati2foxpath_tests.csv'
+    indicatorgroup_id = 'pwyf2013'
+    with file(filename) as fh:
+        return _importIndicators(indicatorgroup_name, fh, True)
 
-    f = util.stream_of_file(filename, local)
-    if not f:
-        return False
+def importIndicatorsFromFile(indicatorgroup_name, filename):
+    with file(filename) as fh:
+        return _importIndicators(indicatorgroup_name, fh, True)
 
+def _importIndicators(indicatorgroup_name, fh, local):
     checkIG = indicatorGroups(indicatorgroup_name)
     if checkIG:
         indicatorgroup = checkIG
@@ -58,7 +69,7 @@ def importIndicators(indicatorgroup_name="pwyf2013", filename='tests/iati2foxpat
                                             "description": ""
                                             })
         
-    data = unicodecsv.DictReader(f)
+    data = unicodecsv.DictReader(fh)
 
     for row in data:
         test = models.Test.query.filter(models.Test.name==row['test']).first()
