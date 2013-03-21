@@ -21,6 +21,8 @@ from iatidataquality import db
 
 import os
 import sys
+import json
+
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
@@ -209,6 +211,7 @@ def _publisher_detail(p_group):
     pconditions = models.PublisherCondition.query.filter_by(
         publisher_id=p_group.id).all()
 
+    db.session.commit()
     return aggregation.agr_results(aggregate_results, 
                                    conditions=pconditions, 
                                    mode="publisher")
@@ -227,8 +230,25 @@ def publisher_detail(id=None):
         latest_runtime = None
         aggregate_results = None"""
 
-    return render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
+    txt = render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime)
+    return txt
+
+@app.route("/publishers/<id>/detail.json")
+def publisher_detail_json(id=None):
+    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Package.package_group == p_group.id
+            ).order_by(models.Package.package_name).all()
+
+    aggregate_results = _publisher_detail(p_group)
+    latest_runtime=1
+    """except Exception, e:
+        latest_runtime = None
+        aggregate_results = None"""
+
+    return json.dumps(aggregate_results, indent=2)
 
 @app.route("/publishers/<id>/")
 def publisher(id=None):
