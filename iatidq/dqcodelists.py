@@ -27,6 +27,21 @@ def generateCodelists():
         cl[codelist].append(code)
     return dict(cl)
 
+def handle_row(codelist, crow):
+    #print crow
+    codelistcode = models.CodelistCode.query.filter_by(
+        code=crow['code'], codelist_id=codelist.id).first()
+
+    if not codelistcode:
+        codelistcode = models.CodelistCode()
+    codelistcode.setup(
+        name = crow['name'],
+        code = crow['code'],
+        codelist_id = codelist.id
+        )
+    codelistcode.source = codelist_url
+    db.session.add(codelistcode)
+
 def importCodelists():
     codelists_url = (CODELIST_API % ("codelist.csv"))
 
@@ -57,22 +72,8 @@ def importCodelists():
         f = urllib2.urlopen(codelist_url)
         codelist_data = unicodecsv.DictReader(f)
 
-        def handle_row(crow):
-            #print crow
-            codelistcode = models.CodelistCode.query.filter_by(
-                code=crow['code'], codelist_id=codelist.id).first()
 
-            if not codelistcode:
-                codelistcode = models.CodelistCode()
-            codelistcode.setup(
-                name = crow['name'],
-                code = crow['code'],
-                codelist_id = codelist.id
-                )
-            codelistcode.source = codelist_url
-            db.session.add(codelistcode)
-
-        [ handle_row(crow) for crow in codelist_data ]
+        [ handle_row(codelist, crow) for crow in codelist_data ]
 
     [ handle_codelist(row) for row in codelists_data ]
 
