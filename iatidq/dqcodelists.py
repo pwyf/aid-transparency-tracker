@@ -67,12 +67,22 @@ def handle_codelist(codelists_url, row):
 
     [ handle_row(codelist, crow) for crow in codelist_data ]
 
+def pretend_xml_is_csv(f):
+    data = f.read()
+    root = lxml.etree.XML(data)
+    
+    for elt in root.findall('codelist'):
+        yield {
+            "name": elt.find('name').text,
+            "description":elt.find('description').text
+            }
+
 def importCodelists():
-    codelists_url = (CODELIST_API % ("codelist.csv"))
+    codelists_url = (CODELIST_API % ("codelist.xml"))
 
     f = urllib2.urlopen(codelists_url)
 
-    codelists_data = unicodecsv.DictReader(f)
+    codelists_data = pretend_xml_is_csv(f)
 
     [ handle_codelist(codelists_url, row) for row in codelists_data ]
 
