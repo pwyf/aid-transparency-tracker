@@ -184,15 +184,7 @@ def publishers():
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
     return render_template("publishers.html", p_groups=p_groups, pkgs=pkgs)
 
-@app.route("/publishers/<id>/detail")
-def publisher_detail(id=None):
-    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
-
-    pkgs = db.session.query(models.Package
-            ).filter(models.Package.package_group == p_group.id
-            ).order_by(models.Package.package_name).all()
-
-    """try:"""
+def _publisher_detail(p_group):
     aggregate_results = db.session.query(models.Indicator,
                                      models.Test,
                                      models.AggregateResult.results_data,
@@ -217,9 +209,19 @@ def publisher_detail(id=None):
     pconditions = models.PublisherCondition.query.filter_by(
         publisher_id=p_group.id).all()
 
-    aggregate_results = aggregation.agr_results(aggregate_results, 
-                                                conditions=pconditions, 
-                                                mode="publisher")
+    return aggregation.agr_results(aggregate_results, 
+                                   conditions=pconditions, 
+                                   mode="publisher")
+
+@app.route("/publishers/<id>/detail")
+def publisher_detail(id=None):
+    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Package.package_group == p_group.id
+            ).order_by(models.Package.package_name).all()
+
+    aggregate_results = _publisher_detail(p_group)
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None
