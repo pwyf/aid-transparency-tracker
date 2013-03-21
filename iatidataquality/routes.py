@@ -30,6 +30,9 @@ sys.path.append(parent)
 from iatidq import models, dqdownload, dqregistry, dqindicators
 import aggregation
 
+import StringIO
+import unicodecsv
+
 test_list_location = "tests/activity_tests.csv"
 
 @app.route("/")
@@ -228,9 +231,6 @@ def publisher_detail(id=None):
 
     aggregate_results = _publisher_detail(p_group)
     latest_runtime=1
-    """except Exception, e:
-        latest_runtime = None
-        aggregate_results = None"""
 
     txt = render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime)
@@ -251,6 +251,34 @@ def publisher_detail_json(id=None):
         aggregate_results = None"""
 
     return json.dumps(aggregate_results, indent=2)
+
+@app.route("/publishers/<id>/detail.csv")
+def publisher_detail_csv(id=None):
+    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Package.package_group == p_group.id
+            ).order_by(models.Package.package_name).all()
+
+    aggregate_results = _publisher_detail(p_group)
+    latest_runtime=1
+    """except Exception, e:
+        latest_runtime = None
+        aggregate_results = None"""
+
+    print >>sys.stderr, aggregate_results.keys()
+    print "---"
+
+    def gen_csv():
+        s = StringIO.StringIO()
+        w = unicodecsv.writer(s)
+        for k, v in aggregate_results[1].iteritems():
+            s.seek(0)
+            w.writerow((k, v["test"]["description"]))
+            s.seek(0)
+            yield s.read()
+
+    return Response(gen_csv(), mimetype="text/csv")
 
 @app.route("/publishers/<id>/")
 def publisher(id=None):
