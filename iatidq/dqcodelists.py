@@ -27,7 +27,7 @@ def generateCodelists():
         cl[codelist].append(code)
     return dict(cl)
 
-def handle_row(codelist, crow):
+def handle_row(codelist, codelist_url, crow):
     #print crow
     codelistcode = models.CodelistCode.query.filter_by(
         code=crow['code'], codelist_id=codelist.id).first()
@@ -65,7 +65,7 @@ def handle_codelist(codelists_url, row):
     f = urllib2.urlopen(codelist_url)
     codelist_data = unicodecsv.DictReader(f)
 
-    [ handle_row(codelist, crow) for crow in codelist_data ]
+    [ handle_row(codelist, codelist_url, crow) for crow in codelist_data ]
 
 def pretend_xml_is_csv(f):
     data = f.read()
