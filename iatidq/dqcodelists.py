@@ -34,7 +34,7 @@ def importCodelists():
 
     codelists_data = unicodecsv.DictReader(f)
 
-    for row in codelists_data:
+    def handle_codelist(row):
         codelist = models.Codelist.query.filter(
             models.Codelist.name==row['name']).first()
 
@@ -56,7 +56,8 @@ def importCodelists():
 
         f = urllib2.urlopen(codelist_url)
         codelist_data = unicodecsv.DictReader(f)
-        for crow in codelist_data:
+
+        def handle_row(crow):
             #print crow
             codelistcode = models.CodelistCode.query.filter_by(
                 code=crow['code'], codelist_id=codelist.id).first()
@@ -70,6 +71,12 @@ def importCodelists():
                 )
             codelistcode.source = codelist_url
             db.session.add(codelistcode)
+
+        [ handle_row(crow) for crow in codelist_data ]
+
+    [ handle_codelist(row) for row in codelists_data ]
+
+
     db.session.commit()
     print "Imported successfully"
     return True
