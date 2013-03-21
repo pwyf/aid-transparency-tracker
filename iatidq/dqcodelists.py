@@ -42,6 +42,31 @@ def handle_row(codelist, crow):
     codelistcode.source = codelist_url
     db.session.add(codelistcode)
 
+def handle_codelist(codelists_url, row):
+    codelist = models.Codelist.query.filter(
+        models.Codelist.name==row['name']).first()
+
+    if not codelist:
+        codelist = models.Codelist()
+    codelist.setup(
+        name = row['name'],
+        description = row['description']
+        )
+    codelist.source = codelists_url
+    db.session.add(codelist)
+    db.session.commit()
+        
+    codelist_url = (CODELIST_API % ("codelist/" + row['name'] + ".csv"))
+    print row
+    print
+    print codelist_url
+    print
+
+    f = urllib2.urlopen(codelist_url)
+    codelist_data = unicodecsv.DictReader(f)
+
+    [ handle_row(codelist, crow) for crow in codelist_data ]
+
 def importCodelists():
     codelists_url = (CODELIST_API % ("codelist.csv"))
 
@@ -49,34 +74,7 @@ def importCodelists():
 
     codelists_data = unicodecsv.DictReader(f)
 
-    def handle_codelist(row):
-        codelist = models.Codelist.query.filter(
-            models.Codelist.name==row['name']).first()
-
-        if not codelist:
-            codelist = models.Codelist()
-        codelist.setup(
-            name = row['name'],
-            description = row['description']
-            )
-        codelist.source = codelists_url
-        db.session.add(codelist)
-        db.session.commit()
-        
-        codelist_url = (CODELIST_API % ("codelist/" + row['name'] + ".csv"))
-        print row
-        print
-        print codelist_url
-        print
-
-        f = urllib2.urlopen(codelist_url)
-        codelist_data = unicodecsv.DictReader(f)
-
-
-        [ handle_row(codelist, crow) for crow in codelist_data ]
-
-    [ handle_codelist(row) for row in codelists_data ]
-
+    [ handle_codelist(codelists_url, row) for row in codelists_data ]
 
     db.session.commit()
     print "Imported successfully"
