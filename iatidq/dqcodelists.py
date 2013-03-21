@@ -57,10 +57,6 @@ def handle_codelist(codelists_url, row):
     db.session.commit()
         
     codelist_url = (CODELIST_API % ("codelist/" + row['name'] + ".csv"))
-    print row
-    print
-    print codelist_url
-    print
 
     f = urllib2.urlopen(codelist_url)
     codelist_data = unicodecsv.DictReader(f)
