@@ -304,7 +304,7 @@ def publisher_detail_xls(id=None):
         spreadsheet.workbook_from_aggregation(filename, aggregate_results)
         with file(filename) as f:
             data = f.read()
-            return data # needs MIME type
+            return Response(data, mimetype='application/vnd.ms-excel')
     finally:
         if os.path.exists(filename):
             os.unlink(filename)
