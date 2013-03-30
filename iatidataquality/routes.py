@@ -33,6 +33,8 @@ import aggregation
 import StringIO
 import unicodecsv
 
+import spreadsheet
+
 test_list_location = "tests/activity_tests.csv"
 
 @app.route("/")
@@ -279,6 +281,33 @@ def publisher_detail_csv(id=None):
             yield s.read()
 
     return Response(gen_csv(), mimetype="text/csv")
+
+@app.route("/publishers/<id>/detail.xls")
+def publisher_detail_xls(id=None):
+    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Package.package_group == p_group.id
+            ).order_by(models.Package.package_name).all()
+
+    aggregate_results = _publisher_detail(p_group)
+    latest_runtime=1
+    """except Exception, e:
+        latest_runtime = None
+        aggregate_results = None"""
+
+    print >>sys.stderr, aggregate_results.keys()
+    print "---"
+
+    filename = tempfile.mktemp()
+    try:
+        spreadsheet.workbook_from_aggregation(filename, aggregate_results)
+        with file(filename) as f:
+            data = f.read()
+            return data # needs MIME type
+    finally:
+        if os.path.exists(filename):
+            os.unlink(filename)
 
 @app.route("/publishers/<id>/")
 def publisher(id=None):

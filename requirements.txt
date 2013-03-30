@@ -19,3 +19,4 @@ supervisor
 foxpath
 psycopg2
 unicodecsv
+openpyxl
