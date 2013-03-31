@@ -20,3 +20,4 @@ foxpath
 psycopg2
 unicodecsv
 openpyxl
+Flask-Login
