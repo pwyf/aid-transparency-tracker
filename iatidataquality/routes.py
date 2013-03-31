@@ -17,7 +17,7 @@ from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
-
+from iatidataquality import auth
 
 import os
 import sys
@@ -34,8 +34,17 @@ import StringIO
 import unicodecsv
 import tempfile
 import spreadsheet
+from flaskext.auth import AuthUser, login_required
 
 test_list_location = "tests/activity_tests.csv"
+
+
+@app.before_request
+def init_users():
+    admin = AuthUser(username='admin')
+    admin.set_and_encrypt_password('password')
+    app.users = {'admin': admin}
+
 
 @app.route("/")
 def home():
@@ -82,6 +91,19 @@ def tests_editor(id=None):
         test = models.Test.query.filter_by(id=id).first_or_404()
         return render_template("test_editor.html", test=test)
 
+@app.route('/login', methods=['GET', 'POST'])
+def dologin():
+    if request.method == 'POST':
+        username = request.form['username']
+        if username in app.users:
+            # Authenticate and log in!
+            if app.users[username].authenticate(request.form['password']):
+                return redirect(url_for('home'))
+        return 'Failure :('
+    return render_template('login.html')
+
+
+@login_required()
 @app.route("/tests/new/", methods=['GET', 'POST'])
 def tests_new(id=None):
     if (request.method == 'POST'):

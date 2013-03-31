@@ -1,0 +1,23 @@
+{% set active_page='login' %}{% extends "layout.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+    <h1>IATI Data Quality browser</h1>
+    <p class="lead">This is a testing site for a forthcoming IATI Data Quality tool. It's under active development, so you shouldn't rely on any of the information contained in here.</p>
+    <!--<p>
+    <a class="btn btn-success btn-large">
+    Learn more
+    </a>
+    </p>-->
+    </div>
+    <div class="row">
+        <div class="span6">
+		  <form method="POST">
+                Username: <input type="text" name="username"/><br/>
+                Password: <input type="password" name="password"/><br/>
+                <input type="submit" value="Log in"/>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
