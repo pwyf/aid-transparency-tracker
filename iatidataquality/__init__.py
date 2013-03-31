@@ -9,10 +9,27 @@
 
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, current_user
 
 app = Flask(__name__.split('.')[0])
 app.config.from_pyfile('../config.py')
 db = SQLAlchemy(app)
+
+
+login_manager = LoginManager()
+login_manager.login_view = 'account.signin'
+login_manager.login_message = u"Please sign in to access this page."
+login_manager.setup_app(app)
+
+class User(object):
+    pass
+
+@login_manager.user_loader
+def load_user(userid):
+    if userid == "admin":
+        return User()
+    else:
+        return None
 
 import api
 import routes

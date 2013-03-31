@@ -41,6 +41,15 @@ test_list_location = "tests/activity_tests.csv"
 def home():
     return render_template("dashboard.html")
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    user = request.args.get('user')
+    login_user(user)
+    flash("Logged in successfully.")
+    return redirect(request.args.get("next") or url_for("index"))
+    return render_template("login.html", form=form)
+
+
 @app.route("/tests/")
 @app.route("/tests/<id>/")
 def tests(id=None):
