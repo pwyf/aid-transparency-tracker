@@ -11,13 +11,14 @@ from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 import StringIO
 from flask.ext.sqlalchemy import SQLAlchemy
-
+from flask.ext.login import (LoginManager, current_user, login_required,
+                            login_user, logout_user, UserMixin, AnonymousUser,
+                            confirm_login, fresh_login_required)
 from sqlalchemy import func
 from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
-from iatidataquality import auth
 
 import os
 import sys
@@ -34,17 +35,43 @@ import StringIO
 import unicodecsv
 import tempfile
 import spreadsheet
-from flaskext.auth import AuthUser, login_required
 
 test_list_location = "tests/activity_tests.csv"
 
 
-@app.before_request
-def init_users():
-    admin = AuthUser(username='admin')
-    admin.set_and_encrypt_password('password')
-    app.users = {'admin': admin}
+class User(UserMixin):
+    def __init__(self, name, id, active=True):
+        self.name = name
+        self.id = id
+        self.active = active
 
+    def is_active(self):
+        return self.active
+
+class Anonymous(AnonymousUser):
+    name = u"Anonymous"
+
+
+USERS = {
+    1: User(u"admin", 1),
+    3: User(u"notadmin", 3, False),
+}
+
+USER_NAMES = dict((u.name, u) for u in USERS.itervalues())
+
+login_manager = LoginManager()
+
+login_manager.anonymous_user = Anonymous
+login_manager.login_view = "login"
+login_manager.login_message = u"Please log in to access this page."
+login_manager.refresh_view = "reauth"
+
+@login_manager.user_loader
+def load_user(id):
+    return USERS.get(int(id))
+
+
+login_manager.setup_app(app)
 
 @app.route("/")
 def home():
@@ -52,12 +79,24 @@ def home():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    user = request.args.get('user')
-    login_user(user)
-    flash("Logged in successfully.")
-    return redirect(request.args.get("next") or url_for("index"))
-    return render_template("login.html", form=form)
+    if request.method == "POST" and "username" in request.form:
+        username = request.form["username"]
+        if username in USER_NAMES:
+            remember = request.form.get("remember", "no") == "yes"
+            if login_user(USER_NAMES[username], remember=remember):
+                flash("Logged in!")
+                return redirect(request.args.get("next") or url_for("index"))
+            else:
+                flash("Sorry, but you could not log in.")
+        else:
+            flash(u"Invalid username.")
+    return render_template("login.html")
 
+
+@app.route("/settings")
+@login_required
+def settings():
+    return "hi"
 
 @app.route("/tests/")
 @app.route("/tests/<id>/")
@@ -91,20 +130,9 @@ def tests_editor(id=None):
         test = models.Test.query.filter_by(id=id).first_or_404()
         return render_template("test_editor.html", test=test)
 
-@app.route('/login', methods=['GET', 'POST'])
-def dologin():
-    if request.method == 'POST':
-        username = request.form['username']
-        if username in app.users:
-            # Authenticate and log in!
-            if app.users[username].authenticate(request.form['password']):
-                return redirect(url_for('home'))
-        return 'Failure :('
-    return render_template('login.html')
 
-
-@login_required()
 @app.route("/tests/new/", methods=['GET', 'POST'])
+@login_required
 def tests_new(id=None):
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
