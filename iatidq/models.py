@@ -10,6 +10,9 @@
 from sqlalchemy import *
 from iatidq import db
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+
+## TEST RUNTIME-SPECIFIC DATA
 
 class PackageStatus(db.Model):
     __tablename__ = 'packagestatus'
@@ -37,6 +40,8 @@ class Runtime(db.Model):
 
     def __repr__(self):
         return unicode(self.runtime_datetime)+u' '+unicode(self.id)
+
+## IATI REGISTRY PACKAGEGROUPS AND PACKAGES
 
 class PackageGroup(db.Model):
     __tablename__ = 'packagegroup'
@@ -112,7 +117,8 @@ class Package(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-# Tests - at activity or file level.
+## RESULTS
+
 class Result(db.Model):
     __tablename__ = 'result'
     id = Column(Integer, primary_key=True)
@@ -120,9 +126,6 @@ class Result(db.Model):
     package_id = Column(Integer, ForeignKey('package.id'))
     test_id = Column(Integer, ForeignKey('test.id'))
     result_data = Column(Integer)
-    # result_identifier can be file or activity
-    # The identifier for the element associated with this result
-    # E.g. the releavnt activity identifier
     result_identifier = Column(UnicodeText)
     result_hierarchy = Column(Integer)
 
@@ -134,6 +137,7 @@ class AggregateResult(db.Model):
     id = Column(Integer,primary_key=True)
     runtime_id=Column(Integer, ForeignKey('runtime.id'))
     package_id = Column(Integer, ForeignKey('package.id'))
+    aggregateresulttype_id = Column(Integer, ForeignKey('aggregateresulttype.id'))
     test_id = Column(Integer, ForeignKey('test.id'))
     result_hierarchy = Column(Integer)
     results_data = Column(Float)
@@ -141,6 +145,20 @@ class AggregateResult(db.Model):
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+# AggregateResultType allows 
+class AggregateResultType(db.Model):
+    __tablename__ = 'aggregateresulttype'
+    id = Column(Integer,primary_key=True)
+    name = Column(UnicodeText)
+    filterby_testid = Column(Integer, ForeignKey('test.id'))
+    filterby_testresult = Column(Integer)
+    active = Column(Integer)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+## TESTS
 
 class Test(db.Model):
     __tablename__ = 'test'
@@ -173,6 +191,8 @@ class Test(db.Model):
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+## CODELISTS
 
 class Codelist(db.Model):
     __tablename__ = 'codelist'
@@ -220,6 +240,8 @@ class CodelistCode(db.Model):
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+## INDICATORS
 
 class IndicatorGroup(db.Model):
     __tablename__ = 'indicatorgroup'
@@ -287,10 +309,11 @@ class IndicatorTest(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-
 class PublisherCondition(db.Model):
     __tablename__ = 'publishercondition'
     id = Column(Integer, primary_key=True)
+    # TODO: this needs to be adjusted to publisher.id
+    # some other UI and processes will need to be adjusted
     publisher_id = Column(Integer, ForeignKey('packagegroup.id'))
     test_id = Column(Integer, ForeignKey('test.id'))
     operation = Column(Integer) # show (1) or don't show (0) result
@@ -304,26 +327,35 @@ class PublisherCondition(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class TestCondition(db.Model):
-    __tablename__ = 'testcondition'
+## PUBLISHERS; RELATIONS WITH PACKAGES
+
+class Publisher(db.Model):
+    __tablename__ = 'publisher'
     id = Column(Integer, primary_key=True)
-    condition = Column(UnicodeText)
-    description = Column(UnicodeText)
-    file = Column(UnicodeText)
-    line = Column(UnicodeText)
-    test_level = Column(UnicodeText)
-    active = Column(Boolean)
-
-    def __repr__(self):
-        return self.condition+u', '+unicode(self.id)
-
+    publisher_name = Column(UnicodeText)
+    publisher_code = Column(UnicodeText)
+    # publisher_code is also used to communicate
+    # with implementation schedules
+    
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-# InfoResult
+class PublisherPackage(db.Model):
+    __tablename__ = 'publisherpackage'
+    id = Column(Integer, primary_key=True)
+    publisher_id = Column(Integer, ForeignKey('publisher.id'))
+    package_id = Column(Integer, ForeignKey('package.id'))
+
+class PublisherPackageGroup(db.Model):
+    __tablename__ = 'publisherpackagegroup'
+    id = Column(Integer, primary_key=True)
+    publisher_id = Column(Integer, ForeignKey('publisher.id'))
+    packagegroup_id = Column(Integer, ForeignKey('packagegroup.id'))
+
+## INFORESULTS
+# TODO: IMPLEMENT
 # ==> total amount of disbursements in this package
 # e.g. 1 = total disbursements
-
 
 class InfoResult(db.Model):
     __tablename__ = 'info_result'
@@ -333,10 +365,6 @@ class InfoResult(db.Model):
     info_id = Column(Integer, ForeignKey('info_type.id'))
     result_data = Column(UnicodeText)
     
-
-# InfoType
-#
-
 class InfoType(db.Model):
     __tablename__ = 'info_type'
     id = Column(Integer, primary_key=True)
@@ -349,3 +377,90 @@ class InfoType(db.Model):
 
     def __repr__(self):
         return self.source_url, self.id
+
+## USERS
+
+class User(db.Model):
+    __tablename__ = 'user'
+    id = Column(Integer, primary_key=True)
+    username = Column(UnicodeText)
+    first_name = Column(UnicodeText)
+    last_name = Column(UnicodeText)
+    email_address = Column(UnicodeText)
+    reset_password_key = Column(UnicodeText)
+    pw_hash = db.Column(String(255))
+
+    def __init__(self, username, password, first_name, last_name, email_address):
+        self.username = username
+        self.pw_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.pw_hash, password)
+
+    def __repr__(self):
+        return self.username, self.id, self.password2
+
+class UserOption(db.Model):
+    __tablename__ = 'useroption'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    option_id = Column(Integer, ForeignKey('option.id'))
+    # basically two different values are permitted
+    # given different names for clarity
+    useroption_value = Column(UnicodeText)
+    useroption_qualifier = Column(UnicodeText)
+
+# Option: e.g. permission_view, survey_access
+class Option(db.Model):
+    __tablename__ = 'option'
+    id = Column(Integer, primary_key=True)
+    name = Column(UnicodeText)
+    qualifier_required = Column(Integer)
+
+## PUBLISHER SURVEYS
+
+class PublisherSurvey(db.Model):
+    __tablename__ = 'publishersurvey'
+    id = Column(Integer,primary_key=True)
+    currentworkflow_id = Column(Integer, ForeignKey('workflow.id'))
+    currentworkflow_deadline = Column(DateTime)
+    publisher_id = Column(Integer, ForeignKey('publisher.id'))
+
+class PublisherSurveyData(db.Model):
+    __tablename__ = 'publishersurveydata'
+    id = Column(Integer,primary_key=True)
+    publishersurvey_id = Column(Integer, ForeignKey('publishersurvey.id'))
+    indicator_id = Column(Integer, ForeignKey('indicator.id'))
+    workflow_id = Column(Integer, ForeignKey('workflow.id'))
+    published_status = Column(Integer, ForeignKey('publishedstatus.id'))
+    published_source = Column(UnicodeText)
+    published_comment = Column(UnicodeText)
+    published_accepted = Column(Integer)
+
+class PublishedStatus(db.Model):
+    __tablename__ = 'publishedstatus'
+    id = Column(Integer, primary_key=True)
+    name = Column(UnicodeText)
+    publishedstatus_class = Column(UnicodeText)
+    
+class Workflow(db.Model):
+    __tablename__='workflow'
+    id = Column(Integer,primary_key=True)
+    name = Column(UnicodeText)
+    leadsto = Column(Integer, ForeignKey('workflowtype.id'))
+    workflow_type = Column(Integer, ForeignKey('workflowtype.id'))
+
+# WorkflowType: define what sort of workflow this should be.
+#   Will initially be hardcoded but this should make it easier
+#   to expand and define later.
+class WorkflowType(db.Model):
+    __tablename__='workflowtype'
+    id = Column(Integer,primary_key=True)
+    name = Column(UnicodeText)
+
+class WorkflowNotification(db.Model):
+    __tablename__='workflownotifications'
+    id = Column(Integer, primary_key=True)
+    workflow_from = Column(Integer, ForeignKey('workflow.id'))
+    workflow_to = Column(Integer, ForeignKey('workflow.id'))
+    workflow_notice = Column(UnicodeText)
