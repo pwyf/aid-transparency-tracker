@@ -337,6 +337,15 @@ class Publisher(db.Model):
     # publisher_code is also used to communicate
     # with implementation schedules
     
+    def setup(self,
+                 publisher_name,
+                 publisher_code,
+                 id=None):
+        self.publisher_name = publisher_name
+        self.publisher_code = publisher_code
+        if id is not None:
+            self.id = id
+
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
@@ -345,6 +354,15 @@ class PublisherPackage(db.Model):
     id = Column(Integer, primary_key=True)
     publisher_id = Column(Integer, ForeignKey('publisher.id'))
     package_id = Column(Integer, ForeignKey('package.id'))
+    
+    def setup(self,
+                 publisher_id,
+                 package_id,
+                 id=None):
+        self.publisher_id = publisher_id
+        self.package_id = package_id
+        if id is not None:
+            self.id = id
 
 class PublisherPackageGroup(db.Model):
     __tablename__ = 'publisherpackagegroup'

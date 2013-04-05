@@ -12,3 +12,6 @@ import models
 
 def package_status(package_id):
     return models.PackageStatus.query.filter_by(package_id=package_id).order_by("runtime_datetime desc").first()
+
+def packages():
+    return models.Package.query.order_by(models.Package.package_name).all()

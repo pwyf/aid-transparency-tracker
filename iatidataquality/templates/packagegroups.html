@@ -8,16 +8,16 @@
     });
 
     </script>
-    <div class="pull-right"><a class="btn btn-success" href="{{url_for('publisher_new')}}"><i class="icon-plus icon-white"></i><b> New publisher</b></a></div>
+
 	<h1>Select a publisher</h1>
     <table class="table" id="publishers">
     <thead>
-    <th>Publisher code</th><th>Publisher name</th>
+    <th>Registry ID</th><th>Name</th><th>Registry URL</th>
     </thead>
     <tbody>
-	{% for publisher in publishers %}
+	{% for p in p_groups %}
     <tr>
-	<td><a href="{{url_for('publisher', id=publisher.publisher_code)}}">{{ publisher.publisher_code }}</a></td><td>{{ publisher.publisher_name }}</td>
+	<td><a href="{{url_for('publisher', id=p.name)}}">{{ p.name }}</a></td><td>{{ p.title }}</td><td><a href="http://iatiregistry.org/publisher/{{p.name}}">http://iatiregistry.org/publisher/{{p.name}}</td>
     </tr>
 	{% endfor %}
     </tbody>

@@ -25,6 +25,7 @@ import iatidq.dqdownload
 import iatidq.dqcodelists
 import iatidq.dqruntests
 import iatidq.dqindicators
+import iatidq.dqpublishers
 
 import optparse
 import sys
@@ -89,6 +90,10 @@ def main():
                  action="store_true",
                  default=False,
                  help="Import indicators. Will try to assign indicators to existing tests.")
+    p.add_option("--import_publishers", dest="import_publishers",
+                 action="store_true",
+                 default=False,
+                 help="Import publishers. Will try to create and assign publishers to existing packages.")
     p.add_option("--setup", dest="setup",
                  action="store_true",
                  default=False,
@@ -137,6 +142,13 @@ def main():
                                                          options.filename)
         else:
             iatidq.dqindicators.importIndicators()
+        return
+
+    if options.import_publishers:
+        if options.filename:
+            iatidq.dqpublishers.importPublisherPackagesFromFile(options.filename)
+        else:
+            print "Error: please provide a filename"
         return
 
     if options.setup:

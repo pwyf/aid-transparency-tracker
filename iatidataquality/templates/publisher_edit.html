@@ -1,0 +1,76 @@
+{% set active_page='publishers'%}{% extends "layout.html" %}
+{% block title %}{% if publisher%}Edit{%else%}New{%endif%} Publisher {{publisher.publisher_name}} &raquo; Publishers{% endblock %}
+{% block content %}
+	<h1>Publisher {{publisher.publisher_name}}</h1>
+    <div class="pull-right">
+    <p><a class="btn btn-success" href="#addPackages" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add Package to Publisher</b></a></p>
+    </div>
+    <form name="publisherupdate" method="post" action="">
+    <table class="table">
+    <thead>
+    <th>Item</th><th>Value</th>
+    </thead>
+    <tbody>
+    <tr>
+	<td>Publisher name:</td><td><input type="text" name="publisher_name" value="{{ publisher.publisher_name }}"/></td>
+    </tr>
+    <tr>
+    <td>Publisher code:</td><td><input type="text" name="publisher_code" value="{{publisher.publisher_code}}"/></td>
+    </tr>
+    <tr>
+    <td colspan="2"><input type="submit" value="Update" class="btn" name="updatepublisher"/></td>
+    </tr>
+    </tbody>
+    </table>
+    </form>
+
+    <div id="addPackages" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addPackagesModalLabel" aria-hidden="true"> 
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <form method="post" action="">
+            <h3 id="addPackagesModalLabel">Add Packages</h3>
+        </div>
+        <div class="modal-body">
+        {% for package in packages %}
+            <label for="package_{{package.id}}"><input type="checkbox" value="{{package.id}}" id="package_{{package.id}}" name="package" /> {{package.package_name}}</label>
+        {%endfor%}
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <input type="submit" value="Add packages to this publisher" name="addpackages" class="btn btn-success" />
+        </div>
+    </form>
+    </div>
+
+    <h1>Publisher's packages</h1>
+    <table class="table">
+    <thead>
+    <th>Package ID</th><th>Package Name</th>
+    </thead>
+    <tbody>
+    {% for pp in publisherpackages %}
+    <tr>
+	<td>{{pp.Package.package_name}}</td><td>{{pp.Package.package_title}}</td>
+    <td>
+        <a href="{{url_for('publisherpackage_delete', publisher_code=publisher.publisher_code, package_name=pp.Package.package_name, publisherpackage_id=pp.PublisherPackage.id)}}" data-confirm="Are you sure you want to remove Package {{pp.Package.package_name}} from {{publisher.publisher_code}}? This action will not delete the package itself."><i class="icon-trash"></i></a>
+    </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+<script>
+$(document).ready(function() {
+	$('a[data-confirm]').click(function(ev) {
+		var href = $(this).attr('href');
+		if (!$('#dataConfirmModal').length) {
+			$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+		} 
+		$('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+		$('#dataConfirmOK').attr('href', href);
+		$('#dataConfirmModal').modal({show:true});
+		return false;
+	});
+});
+</script>
+{% endblock %}

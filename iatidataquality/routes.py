@@ -27,7 +27,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models, dqdownload, dqregistry, dqindicators
+from iatidq import models, dqdownload, dqregistry, dqindicators, dqpublishers, dqpackages
 import aggregation
 
 import StringIO
@@ -187,11 +187,69 @@ def publisher_conditions_new(id=None):
 
 @app.route("/publishers/")
 def publishers():
+    publishers = models.Publisher.query.order_by(
+        models.Publisher.publisher_name).all()
+    return render_template("publishers.html", publishers=publishers)
+
+@app.route("/publishers/new/", methods=['GET','POST'])
+def publisher_new():
+    if (request.method == 'POST'):
+        data = {
+            'publisher_code': request.form['publisher_code'],
+            'publisher_name': request.form['publisher_name']
+        }
+        publisher = dqpublishers.addPublisher(data)
+        if publisher:
+            flash('Successfully added publisher', 'success')
+            return redirect(url_for('publisher_edit', publisher_code=publisher.id))
+        else:
+            flash("Couldn't add publisher", "error")
+            return render_template("publisher_edit.html", publisher=data)
+    else:
+        publisher=None
+        return render_template("publisher_edit.html", publisher=publisher)
+
+@app.route("/publishers/<publisher_code>/edit/", methods=['GET','POST'])
+def publisher_edit(publisher_code=None):
+    packages = dqpackages.packages()
+    if (request.method == 'POST'):
+        if 'addpackages' in request.form:
+            publisher = dqpublishers.publishers(publisher_code)
+            for package in request.form.getlist('package'):
+                data = {
+                        'publisher_id': publisher.id,
+                        'package_id': package
+                }
+                if dqpublishers.addPublisherPackage(data):
+                    flash('Successfully added package to your publisher.', 'success')
+                else:
+                    flash("Couldn't add package to your publisher.", 'error')
+        elif 'updatepublisher' in request.form:
+            data = {
+                'publisher_code': request.form['publisher_code'],
+                'publisher_name': request.form['publisher_name']
+            }
+            publisher = dqpublishers.updatePublisher(publisher_code, data)
+    else:
+        publisher = dqpublishers.publishers(publisher_code)
+    publisherpackages = dqpublishers.publisherPackages(publisher.publisher_code)
+    return render_template("publisher_edit.html", publisher=publisher, packages=packages, publisherpackages=publisherpackages)
+
+@app.route("/publishers/<publisher_code>/<package_name>/<publisherpackage_id>/delete/")
+def publisherpackage_delete(publisher_code=None, package_name=None, publisherpackage_id=None):
+    if dqpublishers.deletePublisherPackage(publisher_code, package_name, publisherpackage_id):
+        flash('Successfully removed package ' + package_name + ' from publisher ' + publisher_code + '.', 'success')
+    else:
+        flash('Could not remove package ' + package_name + ' from publisher ' + publisher_code + '.', 'error')        
+    return redirect(url_for('publisher_edit', publisher_code=publisher_code))
+
+@app.route("/packagegroups/")
+def packagegroups():
     p_groups = models.PackageGroup.query.order_by(
         models.PackageGroup.name).all()
 
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
-    return render_template("publishers.html", p_groups=p_groups, pkgs=pkgs)
+    return render_template("packagegroups.html", p_groups=p_groups, pkgs=pkgs)
 
 def _publisher_detail(p_group):
     aggregate_results = db.session.query(models.Indicator,
@@ -688,9 +746,9 @@ def indicatortests(indicatorgroup=None, indicator=None):
                     'test_id': test
             }
             if dqindicators.addIndicatorTest(data):
-                flash('Successfully added test to your indicator.', 'success');
+                flash('Successfully added test to your indicator.', 'success')
             else:
-                flash("Couldn't add test to your indicator.", 'error');
+                flash("Couldn't add test to your indicator.", 'error')
     indicatortests = dqindicators.indicatorTests(indicator.name)
     return render_template("indicatortests.html", indicatorgroup=indicatorgroup, indicator=indicator, indicatortests=indicatortests, alltests=alltests)
 
@@ -699,7 +757,7 @@ def indicatortests_delete(indicatorgroup=None, indicator=None, indicatortest=Non
     if dqindicators.deleteIndicatorTest(indicatortest):
         flash('Successfully removed test from indicator ' + indicator + '.', 'success')
     else:
-        flash('Could not remove test from indicator ' + indicator + '.', 'success')        
+        flash('Could not remove test from indicator ' + indicator + '.', 'error')        
     return redirect(url_for('indicatortests', indicatorgroup=indicatorgroup, indicator=indicator))
 
 @app.errorhandler(404)
