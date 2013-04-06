@@ -1,24 +1,24 @@
-{% set active_page='publishers'%}{% extends "layout.html" %}
-{% block title %}{% if publisher%}Edit{%else%}New{%endif%} Publisher {{publisher.publisher_name}} &raquo; Publishers{% endblock %}
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}{% if organisation%}Edit{%else%}New{%endif%} Organisation {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
 {% block content %}
-	<h1>Publisher {{publisher.publisher_name}}</h1>
+	<h1>Organisation {{organisation.organisation_name}}</h1>
     <div class="pull-right">
-    <p><a class="btn btn-success" href="#addPackages" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add Package to Publisher</b></a></p>
+    <p><a class="btn btn-success" href="#addPackages" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add Package to Organisation</b></a></p>
     </div>
-    <form name="publisherupdate" method="post" action="">
+    <form name="organisationupdate" method="post" action="">
     <table class="table">
     <thead>
     <th>Item</th><th>Value</th>
     </thead>
     <tbody>
     <tr>
-	<td>Publisher name:</td><td><input type="text" name="publisher_name" value="{{ publisher.publisher_name }}"/></td>
+	<td>Organisation name:</td><td><input type="text" name="organisation_name" value="{{ organisation.organisation_name }}"/></td>
     </tr>
     <tr>
-    <td>Publisher code:</td><td><input type="text" name="publisher_code" value="{{publisher.publisher_code}}"/></td>
+    <td>Organisation code:</td><td><input type="text" name="organisation_code" value="{{organisation.organisation_code}}"/></td>
     </tr>
     <tr>
-    <td colspan="2"><input type="submit" value="Update" class="btn" name="updatepublisher"/></td>
+    <td colspan="2"><input type="submit" value="Update" class="btn" name="updateorganisation"/></td>
     </tr>
     </tbody>
     </table>
@@ -37,22 +37,22 @@
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <input type="submit" value="Add packages to this publisher" name="addpackages" class="btn btn-success" />
+            <input type="submit" value="Add packages to this organisation" name="addpackages" class="btn btn-success" />
         </div>
     </form>
     </div>
 
-    <h1>Publisher's packages</h1>
+    <h1>Organisation's packages</h1>
     <table class="table">
     <thead>
     <th>Package ID</th><th>Package Name</th>
     </thead>
     <tbody>
-    {% for pp in publisherpackages %}
+    {% for pp in organisationpackages %}
     <tr>
 	<td>{{pp.Package.package_name}}</td><td>{{pp.Package.package_title}}</td>
     <td>
-        <a href="{{url_for('publisherpackage_delete', publisher_code=publisher.publisher_code, package_name=pp.Package.package_name, publisherpackage_id=pp.PublisherPackage.id)}}" data-confirm="Are you sure you want to remove Package {{pp.Package.package_name}} from {{publisher.publisher_code}}? This action will not delete the package itself."><i class="icon-trash"></i></a>
+        <a href="{{url_for('organisationpackage_delete', organisation_code=organisation.organisation_code, package_name=pp.Package.package_name, organisationpackage_id=pp.OrganisationPackage.id)}}" data-confirm="Are you sure you want to remove Package {{pp.Package.package_name}} from {{organisation.organisation_code}}? This action will not delete the package itself."><i class="icon-trash"></i></a>
     </td>
     </tr>
     {% endfor %}

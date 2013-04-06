@@ -327,47 +327,47 @@ class PublisherCondition(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-## PUBLISHERS; RELATIONS WITH PACKAGES
+## ORGANISATIONS; RELATIONS WITH PACKAGES
 
-class Publisher(db.Model):
-    __tablename__ = 'publisher'
+class Organisation(db.Model):
+    __tablename__ = 'organisation'
     id = Column(Integer, primary_key=True)
-    publisher_name = Column(UnicodeText)
-    publisher_code = Column(UnicodeText)
-    # publisher_code is also used to communicate
+    organisation_name = Column(UnicodeText)
+    organisation_code = Column(UnicodeText)
+    # organisation_code is also used to communicate
     # with implementation schedules
     
     def setup(self,
-                 publisher_name,
-                 publisher_code,
+                 organisation_name,
+                 organisation_code,
                  id=None):
-        self.publisher_name = publisher_name
-        self.publisher_code = publisher_code
+        self.organisation_name = organisation_name
+        self.organisation_code = organisation_code
         if id is not None:
             self.id = id
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class PublisherPackage(db.Model):
-    __tablename__ = 'publisherpackage'
+class OrganisationPackage(db.Model):
+    __tablename__ = 'organisationpackage'
     id = Column(Integer, primary_key=True)
-    publisher_id = Column(Integer, ForeignKey('publisher.id'))
+    organisation_id = Column(Integer, ForeignKey('organisation.id'))
     package_id = Column(Integer, ForeignKey('package.id'))
     
     def setup(self,
-                 publisher_id,
+                 organisation_id,
                  package_id,
                  id=None):
-        self.publisher_id = publisher_id
+        self.organisation_id = organisation_id
         self.package_id = package_id
         if id is not None:
             self.id = id
 
-class PublisherPackageGroup(db.Model):
-    __tablename__ = 'publisherpackagegroup'
+class OrganisationPackageGroup(db.Model):
+    __tablename__ = 'organisationpackagegroup'
     id = Column(Integer, primary_key=True)
-    publisher_id = Column(Integer, ForeignKey('publisher.id'))
+    organisation_id = Column(Integer, ForeignKey('organisation.id'))
     packagegroup_id = Column(Integer, ForeignKey('packagegroup.id'))
 
 ## INFORESULTS
@@ -435,19 +435,19 @@ class Option(db.Model):
     name = Column(UnicodeText)
     qualifier_required = Column(Integer)
 
-## PUBLISHER SURVEYS
+## ORGANISATION SURVEYS
 
-class PublisherSurvey(db.Model):
-    __tablename__ = 'publishersurvey'
+class OrganisationSurvey(db.Model):
+    __tablename__ = 'organisationsurvey'
     id = Column(Integer,primary_key=True)
     currentworkflow_id = Column(Integer, ForeignKey('workflow.id'))
     currentworkflow_deadline = Column(DateTime)
-    publisher_id = Column(Integer, ForeignKey('publisher.id'))
+    organisation_id = Column(Integer, ForeignKey('organisation.id'))
 
-class PublisherSurveyData(db.Model):
-    __tablename__ = 'publishersurveydata'
+class OrganisationSurveyData(db.Model):
+    __tablename__ = 'organisationsurveydata'
     id = Column(Integer,primary_key=True)
-    publishersurvey_id = Column(Integer, ForeignKey('publishersurvey.id'))
+    organisationsurvey_id = Column(Integer, ForeignKey('organisationsurvey.id'))
     indicator_id = Column(Integer, ForeignKey('indicator.id'))
     workflow_id = Column(Integer, ForeignKey('workflow.id'))
     published_status = Column(Integer, ForeignKey('publishedstatus.id'))

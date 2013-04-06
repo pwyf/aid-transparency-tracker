@@ -1,0 +1,26 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}Organisations{% endblock %}
+{% block content %}
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#organisations").tablesorter({ sortList: [[0,0]] });
+    });
+
+    </script>
+    <div class="pull-right"><a class="btn btn-success" href="{{url_for('organisation_new')}}"><i class="icon-plus icon-white"></i><b> New organisation</b></a></div>
+	<h1>Select a organisation</h1>
+    <table class="table" id="organisations">
+    <thead>
+    <th>Publisher code</th><th>Publisher name</th>
+    </thead>
+    <tbody>
+	{% for organisation in organisations %}
+    <tr>
+	<td><a href="{{url_for('organisations', id=organisation.organisation_code)}}">{{ organisation.organisation_code }}</a></td><td>{{ organisation.organisation_name }}</td>
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}

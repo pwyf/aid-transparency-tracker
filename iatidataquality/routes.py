@@ -27,7 +27,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models, dqdownload, dqregistry, dqindicators, dqpublishers, dqpackages
+from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
 import aggregation
 
 import StringIO
@@ -185,66 +185,70 @@ def publisher_conditions_new(id=None):
         return render_template("publisher_condition_editor.html", 
                                pc={}, publishers=publishers, tests=tests)
 
-@app.route("/publishers/")
-def publishers():
-    publishers = models.Publisher.query.order_by(
-        models.Publisher.publisher_name).all()
-    return render_template("publishers.html", publishers=publishers)
+@app.route("/organisations/")
+@app.route("/organisations/<id>/")
+def organisations(id=None):
+    if (id is not None):
+        organisation = dqorganisations.organisations(id)
+        return render_template("organisation.html", organisation=organisation)
+    else:
+        organisations = dqorganisations.organisations()
+        return render_template("organisations.html", organisations=organisations)
 
-@app.route("/publishers/new/", methods=['GET','POST'])
-def publisher_new():
+@app.route("/organisations/new/", methods=['GET','POST'])
+def organisation_new():
     if (request.method == 'POST'):
         data = {
-            'publisher_code': request.form['publisher_code'],
-            'publisher_name': request.form['publisher_name']
+            'organisation_code': request.form['organisation_code'],
+            'organisation_name': request.form['organisation_name']
         }
-        publisher = dqpublishers.addPublisher(data)
-        if publisher:
-            flash('Successfully added publisher', 'success')
-            return redirect(url_for('publisher_edit', publisher_code=publisher.id))
+        organisation = dqorganisations.addOrganisation(data)
+        if organisation:
+            flash('Successfully added organisation', 'success')
+            return redirect(url_for('organisation_edit', organisation_code=organisation.organisation_code))
         else:
-            flash("Couldn't add publisher", "error")
-            return render_template("publisher_edit.html", publisher=data)
+            flash("Couldn't add organisation", "error")
+            return render_template("organisation_edit.html", organisation=data)
     else:
-        publisher=None
-        return render_template("publisher_edit.html", publisher=publisher)
+        organisation=None
+        return render_template("organisation_edit.html", organisation=organisation)
 
-@app.route("/publishers/<publisher_code>/edit/", methods=['GET','POST'])
-def publisher_edit(publisher_code=None):
+@app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
+def organisation_edit(organisation_code=None):
     packages = dqpackages.packages()
     if (request.method == 'POST'):
         if 'addpackages' in request.form:
-            publisher = dqpublishers.publishers(publisher_code)
+            organisation = dqorganisations.organisations(organisation_code)
             for package in request.form.getlist('package'):
                 data = {
-                        'publisher_id': publisher.id,
+                        'organisation_id': organisation.id,
                         'package_id': package
                 }
-                if dqpublishers.addPublisherPackage(data):
-                    flash('Successfully added package to your publisher.', 'success')
+                if dqorganisations.addOrganisationPackage(data):
+                    flash('Successfully added package to your organisation.', 'success')
                 else:
-                    flash("Couldn't add package to your publisher.", 'error')
-        elif 'updatepublisher' in request.form:
+                    flash("Couldn't add package to your organisation.", 'error')
+        elif 'updateorganisation' in request.form:
             data = {
-                'publisher_code': request.form['publisher_code'],
-                'publisher_name': request.form['publisher_name']
+                'organisation_code': request.form['organisation_code'],
+                'organisation_name': request.form['organisation_name']
             }
-            publisher = dqpublishers.updatePublisher(publisher_code, data)
+            organisation = dqorganisations.updateOrganisation(organisation_code, data)
     else:
-        publisher = dqpublishers.publishers(publisher_code)
-    publisherpackages = dqpublishers.publisherPackages(publisher.publisher_code)
-    return render_template("publisher_edit.html", publisher=publisher, packages=packages, publisherpackages=publisherpackages)
+        organisation = dqorganisations.organisations(organisation_code)
+    organisationpackages = dqorganisations.organisationPackages(organisation.organisation_code)
+    return render_template("organisation_edit.html", organisation=organisation, packages=packages, organisationpackages=organisationpackages)
 
-@app.route("/publishers/<publisher_code>/<package_name>/<publisherpackage_id>/delete/")
-def publisherpackage_delete(publisher_code=None, package_name=None, publisherpackage_id=None):
-    if dqpublishers.deletePublisherPackage(publisher_code, package_name, publisherpackage_id):
-        flash('Successfully removed package ' + package_name + ' from publisher ' + publisher_code + '.', 'success')
+@app.route("/organisations/<organisation_code>/<package_name>/<organisationpackage_id>/delete/")
+def organisationpackage_delete(organisation_code=None, package_name=None, organisationpackage_id=None):
+    if dqorganisation.deleteOrganisationPackage(organisation_code, package_name, organisationpackage_id):
+        flash('Successfully removed package ' + package_name + ' from organisation ' + organisation_code + '.', 'success')
     else:
-        flash('Could not remove package ' + package_name + ' from publisher ' + publisher_code + '.', 'error')        
-    return redirect(url_for('publisher_edit', publisher_code=publisher_code))
+        flash('Could not remove package ' + package_name + ' from organisation ' + organisation_code + '.', 'error')        
+    return redirect(url_for('organisation_edit', organisation_code=organisation_code))
 
-@app.route("/packagegroups/")
-def packagegroups():
+@app.route("/publishers/")
+def publishers():
     p_groups = models.PackageGroup.query.order_by(
         models.PackageGroup.name).all()
 

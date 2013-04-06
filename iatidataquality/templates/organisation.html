@@ -1,0 +1,61 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}{{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+    <h1>{{organisation.organisation_name}}</h1>
+    <p class="lead">An initial assessment of your aid transparency is available below.</p>
+    </div>
+    
+    <div class="row">
+        <div class="span6 commitment">
+            <h1>Commitment</h1>
+            <p class="foundschedule"><i class="icon icon-refresh"></i> Checking for implementation schedule...</p>
+            <p class="ambition"></p>
+            <p>
+            <p class="review"></p>
+            </p>
+        </div>
+        <div class="span6 publication">
+            <h1>Publication</h1>
+            <p><i class="icon icon-ok"></i> IATI data found</p>
+            <p><i class="icon icon-minus"></i> Average quality</p>
+            <p><i class="icon icon-remove"></i> No results, conditions, or project documents</p>
+            <p><i class="icon icon-remove"></i> Data appears to be very high-level and aggregated</p>
+            <p><i class="icon icon-info-sign"></i> Please tell us about the way you structure your data</p>
+            <p>
+            <a class="btn btn-success" href="mockup_tracker.html">Review IATI data »</a>
+            </p>
+        </div>
+    </div>    
+    <script type="text/javascript">
+        var success = false;
+        jQuery().ready(function() { 
+            var url = "http://tracker.publishwhatyoufund.org"; 
+            jQuery.getJSON(url+"/api/organisations/{{organisation.organisation_code}}" + "?callback=?", null, function(org) { 
+                success = true;
+                var group = org['scores']['group'];
+                var group_code = org['scores']['group_code'];
+                if (group=="Ambitious") {
+                    var icon_class = "icon-ok";
+                } else if (group=="Moderately ambitious") {
+                    var icon_class = "icon-minus";
+                } else {
+                    var icon_class = "icon-remove";
+                }
+                jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found');
+                jQuery(".commitment .ambition").html('<i class="icon '+icon_class+'"></i> <span class="label '+group_code+'">'+group+'</span>'); 
+                jQuery(".commitment .review").html('<a class="btn btn-success" href="http://tracker.publishwhatyoufund.org/organisations/{{organisation.organisation_code}}">Review Implementation schedule »</a>');
+            });
+        });
+
+        setTimeout(function() {
+            if (!success)
+            {
+                // Handle error
+                jQuery(".commitment .foundschedule").html('<i class="icon icon-remove"></i> No implementation schedule found');
+                jQuery(".commitment .ambition").html('');
+                jQuery(".commitment .review").html('<a class="btn btn-warning" href="http://tracker.publishwhatyoufund.org/about/">Create an Implementation schedule »</a>');
+            }
+        }, 5000);
+    </script>
+{% endblock %}
