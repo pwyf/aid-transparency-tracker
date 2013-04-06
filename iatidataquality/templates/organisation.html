@@ -20,12 +20,13 @@
             {% if summary_data is not none %}
             <p><i class="icon icon-ok"></i> IATI data found</p>
             <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}% (for {{summary_data[1]}} indicators)</p>
-            {% else %}
-            <p><i class="icon icon-remove"></i> No IATI data found</p>
-            {% endif %}
             <p><i class="icon icon-info-sign"></i> Please tell us about the way you structure your data</p>
             <p>
-            <a class="btn btn-success" href="mockup_tracker.html">Review IATI data »</a>
+            <a class="btn btn-success" href="{{url_for('orgview', organisation_code=organisation.organisation_code}}">Review IATI data »</a>
+            {% else %}
+            <p><i class="icon icon-remove"></i> No IATI data found</p>
+            <a class="btn btn-warning" href="http://aidtransparency.net">Publish your IATI data »</a>
+            {% endif %}
             </p>
         </div>
     </div>    
