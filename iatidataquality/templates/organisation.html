@@ -19,7 +19,7 @@
             <h1>Publication</h1>
             {% if summary_data is not none %}
             <p><i class="icon icon-ok"></i> IATI data found</p>
-            <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}%</p>
+            <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}% (for {{summary_data[1]}} indicators)</p>
             {% else %}
             <p><i class="icon icon-remove"></i> No IATI data found</p>
             {% endif %}
