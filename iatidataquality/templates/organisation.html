@@ -17,10 +17,12 @@
         </div>
         <div class="span6 publication">
             <h1>Publication</h1>
+            {% if summary_data is not none %}
             <p><i class="icon icon-ok"></i> IATI data found</p>
-            <p><i class="icon icon-minus"></i> Average quality</p>
-            <p><i class="icon icon-remove"></i> No results, conditions, or project documents</p>
-            <p><i class="icon icon-remove"></i> Data appears to be very high-level and aggregated</p>
+            <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}%</p>
+            {% else %}
+            <p><i class="icon icon-remove"></i> No IATI data found</p>
+            {% endif %}
             <p><i class="icon icon-info-sign"></i> Please tell us about the way you structure your data</p>
             <p>
             <a class="btn btn-success" href="mockup_tracker.html">Review IATI data »</a>

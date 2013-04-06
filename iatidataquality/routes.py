@@ -190,7 +190,11 @@ def publisher_conditions_new(id=None):
 def organisations(id=None):
     if (id is not None):
         organisation = dqorganisations.organisations(id)
-        return render_template("organisation.html", organisation=organisation)
+        try:
+            summary_data = _organisation_indicators_summary(organisation)
+        except Exception, e:
+            summary_data = None
+        return render_template("organisation.html", organisation=organisation, summary_data=summary_data)
     else:
         organisations = dqorganisations.organisations()
         return render_template("organisations.html", organisations=organisations)
@@ -255,6 +259,57 @@ def publishers():
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
     return render_template("packagegroups.html", p_groups=p_groups, pkgs=pkgs)
 
+def _organisation_indicators_summary(organisation):
+    summarydata = _organisation_indicators(organisation)
+    # Create crude total score
+    totalpct = 0.00
+    totalindicators = 0
+    for indicator, indicatordata in summarydata.items():
+        totalpct += indicatordata['results_pct']
+        totalindicators +=1
+    totalscore = totalpct/totalindicators
+    return totalscore, totalindicators
+    
+
+def _organisation_indicators(organisation):
+    aggregate_results = db.session.query(models.Indicator,
+                                     models.Test,
+                                     models.AggregateResult.results_data,
+                                     models.AggregateResult.results_num,
+                                     models.AggregateResult.result_hierarchy,
+                                     models.AggregateResult.package_id,
+                                     func.max(models.AggregateResult.runtime_id)
+        ).filter(models.Organisation.organisation_code==organisation.organisation_code
+        ).group_by(models.AggregateResult.result_hierarchy, 
+                   models.Test, 
+                   models.AggregateResult.package_id,
+                   models.Indicator,
+                   models.AggregateResult.results_data,
+                   models.AggregateResult.results_num,
+                   models.AggregateResult.package_id
+        ).join(models.IndicatorTest
+        ).join(models.Test
+        ).join(models.AggregateResult
+        ).join(models.Package
+        ).join(models.OrganisationPackage
+        ).join(models.Organisation
+        ).all()
+
+    #pconditions = models.PublisherCondition.query.filter(
+    #        models.Organisation.organisation_code==organisation.organisation_code
+    #        ).join(models.OrganisationPackage
+    #        ).join(models.Organisation
+    #        ).all()
+    # TODO: refactor PublisherCondition to refer to 
+    # Organisation rather than PackageGroup
+    pconditions = None
+
+    return aggregation.agr_results(aggregate_results, 
+                                                conditions=pconditions, 
+                                                mode="publisher_indicators")
+
+
+
 def _publisher_detail(p_group):
     aggregate_results = db.session.query(models.Indicator,
                                      models.Test,
@@ -284,6 +339,24 @@ def _publisher_detail(p_group):
     return aggregation.agr_results(aggregate_results, 
                                    conditions=pconditions, 
                                    mode="publisher")
+
+@app.route("/orgview/<organisation_code>/")
+def orgview(organisation_code=None):
+    p_group = models.Organisation.query.filter_by(organisation_code=organisation_code).first_or_404()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Organisation.organisation_code == organisation_code
+            ).join(models.OrganisationPackage
+            ).join(models.Organisation
+            ).order_by(models.Package.package_name
+            ).all()
+
+    aggregate_results = _organisation_indicators(p_group);
+
+    latest_runtime=1
+
+    return render_template("organisation_indicators.html", p_group=p_group, pkgs=pkgs, 
+                           results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/publishers/<id>/detail")
 def publisher_detail(id=None):
