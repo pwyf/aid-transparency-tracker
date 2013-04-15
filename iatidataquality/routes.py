@@ -28,7 +28,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models, dqdownload, dqregistry, dqindicators
+from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
 import aggregation
 
 import StringIO
@@ -244,13 +244,130 @@ def publisher_conditions_new(id=None):
         return render_template("publisher_condition_editor.html", 
                                pc={}, publishers=publishers, tests=tests)
 
+@app.route("/organisations/")
+@app.route("/organisations/<id>/")
+def organisations(id=None):
+    if (id is not None):
+        organisation = dqorganisations.organisations(id)
+        try:
+            summary_data = _organisation_indicators_summary(organisation)
+        except Exception, e:
+            summary_data = None
+        return render_template("organisation.html", organisation=organisation, summary_data=summary_data)
+    else:
+        organisations = dqorganisations.organisations()
+        return render_template("organisations.html", organisations=organisations)
+
+@app.route("/organisations/new/", methods=['GET','POST'])
+def organisation_new():
+    if (request.method == 'POST'):
+        data = {
+            'organisation_code': request.form['organisation_code'],
+            'organisation_name': request.form['organisation_name']
+        }
+        organisation = dqorganisations.addOrganisation(data)
+        if organisation:
+            flash('Successfully added organisation', 'success')
+            return redirect(url_for('organisation_edit', organisation_code=organisation.organisation_code))
+        else:
+            flash("Couldn't add organisation", "error")
+            return render_template("organisation_edit.html", organisation=data)
+    else:
+        organisation=None
+        return render_template("organisation_edit.html", organisation=organisation)
+
+@app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
+def organisation_edit(organisation_code=None):
+    packages = dqpackages.packages()
+    if (request.method == 'POST'):
+        if 'addpackages' in request.form:
+            organisation = dqorganisations.organisations(organisation_code)
+            for package in request.form.getlist('package'):
+                data = {
+                        'organisation_id': organisation.id,
+                        'package_id': package
+                }
+                if dqorganisations.addOrganisationPackage(data):
+                    flash('Successfully added package to your organisation.', 'success')
+                else:
+                    flash("Couldn't add package to your organisation.", 'error')
+        elif 'updateorganisation' in request.form:
+            data = {
+                'organisation_code': request.form['organisation_code'],
+                'organisation_name': request.form['organisation_name']
+            }
+            organisation = dqorganisations.updateOrganisation(organisation_code, data)
+    else:
+        organisation = dqorganisations.organisations(organisation_code)
+    organisationpackages = dqorganisations.organisationPackages(organisation.organisation_code)
+    return render_template("organisation_edit.html", organisation=organisation, packages=packages, organisationpackages=organisationpackages)
+
+@app.route("/organisations/<organisation_code>/<package_name>/<organisationpackage_id>/delete/")
+def organisationpackage_delete(organisation_code=None, package_name=None, organisationpackage_id=None):
+    if dqorganisation.deleteOrganisationPackage(organisation_code, package_name, organisationpackage_id):
+        flash('Successfully removed package ' + package_name + ' from organisation ' + organisation_code + '.', 'success')
+    else:
+        flash('Could not remove package ' + package_name + ' from organisation ' + organisation_code + '.', 'error')        
+    return redirect(url_for('organisation_edit', organisation_code=organisation_code))
+
 @app.route("/publishers/")
 def publishers():
     p_groups = models.PackageGroup.query.order_by(
         models.PackageGroup.name).all()
 
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
-    return render_template("publishers.html", p_groups=p_groups, pkgs=pkgs)
+    return render_template("packagegroups.html", p_groups=p_groups, pkgs=pkgs)
+
+def _organisation_indicators_summary(organisation):
+    summarydata = _organisation_indicators(organisation)
+    # Create crude total score
+    totalpct = 0.00
+    totalindicators = 0
+    for indicator, indicatordata in summarydata.items():
+        totalpct += indicatordata['results_pct']
+        totalindicators +=1
+    totalscore = totalpct/totalindicators
+    return totalscore, totalindicators
+    
+
+def _organisation_indicators(organisation):
+    aggregate_results = db.session.query(models.Indicator,
+                                     models.Test,
+                                     models.AggregateResult.results_data,
+                                     models.AggregateResult.results_num,
+                                     models.AggregateResult.result_hierarchy,
+                                     models.AggregateResult.package_id,
+                                     func.max(models.AggregateResult.runtime_id)
+        ).filter(models.Organisation.organisation_code==organisation.organisation_code
+        ).group_by(models.AggregateResult.result_hierarchy, 
+                   models.Test, 
+                   models.AggregateResult.package_id,
+                   models.Indicator,
+                   models.AggregateResult.results_data,
+                   models.AggregateResult.results_num,
+                   models.AggregateResult.package_id
+        ).join(models.IndicatorTest
+        ).join(models.Test
+        ).join(models.AggregateResult
+        ).join(models.Package
+        ).join(models.OrganisationPackage
+        ).join(models.Organisation
+        ).all()
+
+    #pconditions = models.PublisherCondition.query.filter(
+    #        models.Organisation.organisation_code==organisation.organisation_code
+    #        ).join(models.OrganisationPackage
+    #        ).join(models.Organisation
+    #        ).all()
+    # TODO: refactor PublisherCondition to refer to 
+    # Organisation rather than PackageGroup
+    pconditions = None
+
+    return aggregation.agr_results(aggregate_results, 
+                                                conditions=pconditions, 
+                                                mode="publisher_indicators")
+
+
 
 def _publisher_detail(p_group):
     aggregate_results = db.session.query(models.Indicator,
@@ -281,6 +398,24 @@ def _publisher_detail(p_group):
     return aggregation.agr_results(aggregate_results, 
                                    conditions=pconditions, 
                                    mode="publisher")
+
+@app.route("/orgview/<organisation_code>/")
+def orgview(organisation_code=None):
+    p_group = models.Organisation.query.filter_by(organisation_code=organisation_code).first_or_404()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Organisation.organisation_code == organisation_code
+            ).join(models.OrganisationPackage
+            ).join(models.Organisation
+            ).order_by(models.Package.package_name
+            ).all()
+
+    aggregate_results = _organisation_indicators(p_group);
+
+    latest_runtime=1
+
+    return render_template("organisation_indicators.html", p_group=p_group, pkgs=pkgs, 
+                           results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/publishers/<id>/detail")
 def publisher_detail(id=None):
@@ -747,9 +882,9 @@ def indicatortests(indicatorgroup=None, indicator=None):
                     'test_id': test
             }
             if dqindicators.addIndicatorTest(data):
-                flash('Successfully added test to your indicator.', 'success');
+                flash('Successfully added test to your indicator.', 'success')
             else:
-                flash("Couldn't add test to your indicator.", 'error');
+                flash("Couldn't add test to your indicator.", 'error')
     indicatortests = dqindicators.indicatorTests(indicator.name)
     return render_template("indicatortests.html", indicatorgroup=indicatorgroup, indicator=indicator, indicatortests=indicatortests, alltests=alltests)
 
@@ -758,7 +893,7 @@ def indicatortests_delete(indicatorgroup=None, indicator=None, indicatortest=Non
     if dqindicators.deleteIndicatorTest(indicatortest):
         flash('Successfully removed test from indicator ' + indicator + '.', 'success')
     else:
-        flash('Could not remove test from indicator ' + indicator + '.', 'success')        
+        flash('Could not remove test from indicator ' + indicator + '.', 'error')        
     return redirect(url_for('indicatortests', indicatorgroup=indicatorgroup, indicator=indicator))
 
 @app.errorhandler(404)

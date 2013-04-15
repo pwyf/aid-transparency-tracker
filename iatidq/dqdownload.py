@@ -64,12 +64,17 @@ def download_packages(runtime):
     for package in packages:
         name = package.package_name
         print name
-        if package.package_revision_id != registry_packages[name]:
-            # need to add status here, because otherwise the status could 
-            # be written to DB after the package has finished testing
-            add_test_status(package.id, 1, commit=True)
-            testing_packages.append(package.id)
-            enqueue_download(package, runtime.id)
+    
+        try:
+            if package.package_revision_id != registry_packages[name]:
+                # need to add status here, because otherwise the status could 
+                # be written to DB after the package has finished testing
+                add_test_status(package.id, 1, commit=True)
+                testing_packages.append(package.id)
+                enqueue_download(package, runtime.id)
+        except KeyError:
+            # TODO: handle deleted packages; for now just pass
+            pass
 
     print "Testing", len(testing_packages), "packages"
 

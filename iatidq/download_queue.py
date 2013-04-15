@@ -76,8 +76,8 @@ def manage_download(path, url):
         download_file(url, path)
         print "  Downloaded, processing..."
         return True
-    except:
-        print "  Couldn't fetch URL"
+    except Exception, e:
+        print "  Couldn't fetch URL", e
         return False
 
 def actually_save_file(package_name, orig_url, pkg, runtime_id):
