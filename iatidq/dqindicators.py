@@ -256,7 +256,8 @@ def indicatorGroupTests(indicatorgroup_name=None, option=None):
         checkIGT = db.session.query(models.Indicator.name,
                                     models.Indicator.description,
                                     models.Test.name,
-                                    models.Test.description
+                                    models.Test.description,
+                                    models.Test.level
                                 ).filter(models.IndicatorGroup.name==indicatorgroup_name
                                 ).join(models.IndicatorGroup
                                 ).join(models.IndicatorTest
@@ -264,7 +265,8 @@ def indicatorGroupTests(indicatorgroup_name=None, option=None):
                                 ).all()
     else:
         checkIGT = db.session.query(models.Test.name,
-                                    models.Test.description
+                                    models.Test.description,
+                                    models.Test.level
                                 ).outerjoin(models.IndicatorTest, models.IndicatorTest.test_id==models.Test.id
                                 ).outerjoin(models.Indicator
                                 ).outerjoin(models.IndicatorGroup
