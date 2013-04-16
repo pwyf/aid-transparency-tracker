@@ -93,11 +93,6 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/settings")
-@login_required
-def settings():
-    return "hi"
-
 @app.route("/tests/")
 @app.route("/tests/<id>/")
 def tests(id=None):
