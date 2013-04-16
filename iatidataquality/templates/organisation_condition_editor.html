@@ -1,8 +1,8 @@
 {% set active_page='pc'%}{% extends "layout.html" %}
-{% block title %}{%if pc.id%}{{pc.id}}{%else%}New{%endif%} &raquo; Publisher Conditions{% endblock %}
+{% block title %}{%if pc.id%}{{pc.id}}{%else%}New{%endif%} &raquo; Organisation Conditions{% endblock %}
 {% block content %}
     <form action="" method="post">
-    <h1>{% if pc.id %}Edit publisher condition {{pc.id}}{% else %}Create a new publisher condition{%endif%}</h1>
+    <h1>{% if pc.id %}Edit organisation condition {{pc.id}}{% else %}Create a new organisation condition{%endif%}</h1>
     <table class="table">
     <thead>
         <th>Item</th>
@@ -14,11 +14,11 @@
         <td><input type="text" value="{{pc.description}}" name="description" /></td>
     </tr>
     <tr>
-        <td>Publisher ID</td>
+        <td>Organisastion ID</td>
         <td>
-        <select name="publisher_id">
-        {% for publisher in publishers %}
-        <option value="{{publisher.id}}"{% if pc.publisher_id == publisher.id %} selected{%endif%}>{{publisher.name}}</option>
+        <select name="organisation_id">
+        {% for organisation in organisations %}
+        <option value="{{organisation.id}}"{% if pc.organisation_code == organisation.organisation_code %} selected{%endif%}>{{organisation.organisation_name}}</option>
         {%endfor%}
         </select>
         </td>
