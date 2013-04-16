@@ -161,7 +161,6 @@ def ipc_step2():
             return render_template("import_publisher_conditions.html")
 
 def ipc_step3():
-    out = []
     for row in request.form.getlist('include'):
         publisher_id = request.form['pc['+row+'][publisher_id]']
         test_id = request.form['pc['+row+'][test_id]']
