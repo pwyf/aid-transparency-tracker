@@ -112,19 +112,29 @@ def organisation_edit(organisation_code=None):
                         'package_id': package
                 }
                 if dqorganisations.addOrganisationPackage(data):
-                    flash('Successfully added package to your organisation.', 'success')
+                    flash('Successfully added package to your organisation.', 
+                          'success')
                 else:
-                    flash("Couldn't add package to your organisation.", 'error')
+                    flash("Couldn't add package to your organisation.", 
+                          'error')
         elif 'updateorganisation' in request.form:
             data = {
                 'organisation_code': request.form['organisation_code'],
                 'organisation_name': request.form['organisation_name']
             }
-            organisation = dqorganisations.updateOrganisation(organisation_code, data)
+            organisation = dqorganisations.updateOrganisation(
+                organisation_code, data)
     else:
         organisation = dqorganisations.organisations(organisation_code)
-    organisationpackages = dqorganisations.organisationPackages(organisation.organisation_code)
-    return render_template("organisation_edit.html", organisation=organisation, packages=packages, organisationpackages=organisationpackages)
+
+    organisationpackages = dqorganisations.organisationPackages(
+        organisation.organisation_code)
+
+    return render_template(
+        "organisation_edit.html", 
+        organisation=organisation, 
+        packages=packages, 
+        organisationpackages=organisationpackages)
 
 @app.route("/organisations/<organisation_code>/<package_name>/<organisationpackage_id>/delete/")
 def organisationpackage_delete(organisation_code=None, package_name=None, organisationpackage_id=None):
