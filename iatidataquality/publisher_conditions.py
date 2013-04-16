@@ -56,8 +56,8 @@ def get_pcs():
     return db.session.query(
         OrganisationCondition.id,
         OrganisationCondition.description,
-        Organisation.title.label("organisation_name"),
-        Organisation.id.label("organisation_code"),
+        Organisation.organisation_name.label("organisation_name"),
+        Organisation.organisation_code.label("organisation_code"),
         Test.name.label("test_name"),    
         Test.description.label("test_description"),
         Test.id.label("test_id")
