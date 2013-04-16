@@ -110,13 +110,15 @@ def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
 
     for d in data:
         if (option !="no"):
-            out.writerow({"indicator_name": d[0], 
-                          "indicator_description": d[1], 
-                          "test_name": d[2], 
-                          "test_description": d[3]})
+            out.writerow({"test_name": d[2], 
+                          "test_description": d[3], 
+                          "level": d[4],
+                          "indicator_name": d[0], 
+                          "indicator_description": d[1], })
         else:
             out.writerow({"test_name": d[0], 
-                          "test_description": d[1]})            
+                          "test_description": d[1], 
+                          "level": d[2]})            
     strIO.seek(0)
     if option ==None:
         option = ""
