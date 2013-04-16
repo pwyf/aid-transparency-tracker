@@ -147,11 +147,14 @@ def ipc_step2():
         flash('Wrong password', "error")
         return render_template("import_publisher_conditions.html")
 
-    if request.form.get('local'):
-        results = dqimportpublisherconditions.importPCsFromFile()
-    else:
-        url = request.form['url']
-        results = dqimportpublisherconditions.importPCsFromUrl(url)
+    def get_results():
+        if request.form.get('local'):
+            return dqimportpublisherconditions.importPCsFromFile()
+        else:
+            url = request.form['url']
+            return dqimportpublisherconditions.importPCsFromUrl(url)
+
+    results = get_results()
 
     if results:
         flash('Parsed tests', "success")
