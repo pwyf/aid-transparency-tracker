@@ -37,13 +37,13 @@ which_packages = [
     ]
 
 def refresh(options):
-    if options.minimal:
+    if options.minimal_pkgs:
         for package_name, _ in which_packages:
             dqregistry.refresh_package_by_name(package_name)
     else:
         dqregistry.refresh_packages()
 
-def run(minimal=False):
+def activate_packages(options):
     dqregistry.activate_packages(which_packages, clear_revision_id=True)
 
 def drop_all(options):
@@ -125,7 +125,8 @@ commands = {
     "import_organisations": import_organisations,
     "setup": setup,
     "enqueue_test": enqueue_test,
-    "refresh": refresh
+    "refresh": refresh,
+    "activate_packages": activate_packages
 }
 
 def main():
@@ -189,9 +190,12 @@ def main():
         if getattr(options, mode, None):
             handler(options)
             return
+    
+    usage()
 
-
-    run(minimal=options.minimal_pkgs)
+def usage():
+    print "You need to specify which mode to run under"
+    sys.exit(1)
 
 if __name__ == '__main__':
     main()
