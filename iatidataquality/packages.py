@@ -42,7 +42,7 @@ def packages_manage():
         pkgs = models.Package.query.order_by(models.Package.package_name).all()
         return render_template("packages_manage.html", pkgs=pkgs)
 
-    if ("refresh" in request.form):
+    if "refresh" in request.form:
         dqregistry.refresh_packages()
         flash("Refreshed packages from Registry", "success")
     else:
@@ -63,7 +63,7 @@ def packages_manage():
 @app.route("/packages/<id>/")
 @app.route("/packages/<id>/runtimes/<runtime_id>/")
 def packages(id=None, runtime_id=None):
-    if (id is None):
+    if id is None:
         pkgs = models.Package.query.filter_by(active=True).order_by(
             models.Package.package_name).all()
         return render_template("packages.html", pkgs=pkgs)
@@ -74,7 +74,7 @@ def packages(id=None, runtime_id=None):
 		).filter(models.Package.package_name == id
         ).join(models.PackageGroup).first()
 
-    if (p is None):
+    if p is None:
         p = db.session.query(models.Package
 		).filter(models.Package.package_name == id
         ).first()
@@ -96,7 +96,7 @@ def packages(id=None, runtime_id=None):
     except Exception:
         return abort(404)
 
-    if (runtime_id):
+    if runtime_id:
         # If a runtime is specified in the request, get the data
 
         latest_runtime = db.session.query(models.Runtime,
@@ -112,7 +112,7 @@ def packages(id=None, runtime_id=None):
             ).order_by(models.Runtime.id.desc()
             ).first()
         latest = True
-    if (latest_runtime):
+    if latest_runtime:
         aggregate_results = db.session.query(models.Indicator,
                                              models.Test,
                                              models.AggregateResult.results_data,
