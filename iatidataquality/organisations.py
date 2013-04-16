@@ -105,10 +105,10 @@ def organisation_edit(organisation_code=None):
     
 
     packages = dqpackages.packages()
+    organisation = dqorganisations.organisations(organisation_code)
+
     if request.method == 'POST':
         if 'addpackages' in request.form:
-            organisation = dqorganisations.organisations(organisation_code)
-
             def add_org_pkg(package):
                 data = {
                     'organisation_id': organisation.id,
@@ -131,8 +131,6 @@ def organisation_edit(organisation_code=None):
             }
             organisation = dqorganisations.updateOrganisation(
                 organisation_code, data)
-    else:
-        organisation = dqorganisations.organisations(organisation_code)
 
     organisationpackages = dqorganisations.organisationPackages(
         organisation.organisation_code)
