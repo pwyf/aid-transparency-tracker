@@ -115,6 +115,13 @@ def publisher_conditions_new(id=None):
     publishers = PackageGroup.query.order_by(
         PackageGroup.id).all()
     tests = Test.query.order_by(Test.id).all()
+
+    template_args = dict(
+        pc={},
+        publishers=publishers, 
+        tests=tests
+        )
+
     if (request.method == 'POST'):
         pc = PublisherCondition()
         configure_publisher_condition(pc)
@@ -125,11 +132,10 @@ def publisher_conditions_new(id=None):
             return redirect(url_for('publisher_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
-            return render_template("publisher_condition_editor.html", 
-                                   pc=pc, publishers=publishers, tests=tests)
+            template_args["pc"] = pc
     else:
         return render_template("publisher_condition_editor.html", 
-                               pc={}, publishers=publishers, tests=tests)
+                               **template_args)
 
 @app.route("/publisher_conditions/import/step<step>", methods=['GET', 'POST'])
 @app.route("/publisher_conditions/import/", methods=['GET', 'POST'])
