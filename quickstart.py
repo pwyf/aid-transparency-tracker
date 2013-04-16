@@ -37,9 +37,14 @@ which_packages = [
     ]
 
 def refresh(options):
-    if options.minimal_pkgs:
-        for package_name, _ in which_packages:
-            dqregistry.refresh_package_by_name(package_name)
+    pkg_names = None
+    if options.package_name:
+        pkg_names = [options.package_name]
+    elif options.minimal_pkgs:
+        pkg_names = [i[0] for i in which_packages]
+
+    if pkg_names is not None:
+        [ dqregistry.refresh_package_by_name(name) for name in pkg_names ]
     else:
         dqregistry.refresh_packages()
 
