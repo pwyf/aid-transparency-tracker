@@ -102,21 +102,24 @@ def organisation_publication(organisation_code=None):
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 def organisation_edit(organisation_code=None):
+    def add_org_pkg(organisation, package):
+        data = {
+            'organisation_id': organisation.id,
+            'package_id': package
+            }
+        if dqorganisations.addOrganisationPackage(data):
+            flash('Successfully added package to your organisation.', 
+                  'success')
+        else:
+            flash("Couldn't add package to your organisation.", 
+                  'error')
+
     packages = dqpackages.packages()
     if request.method == 'POST':
         if 'addpackages' in request.form:
             organisation = dqorganisations.organisations(organisation_code)
-            for package in request.form.getlist('package'):
-                data = {
-                        'organisation_id': organisation.id,
-                        'package_id': package
-                }
-                if dqorganisations.addOrganisationPackage(data):
-                    flash('Successfully added package to your organisation.', 
-                          'success')
-                else:
-                    flash("Couldn't add package to your organisation.", 
-                          'error')
+            [ add_org_pkg(organisation, package) for package in request.form.getlist('package') ]
+                
         elif 'updateorganisation' in request.form:
             data = {
                 'organisation_code': request.form['organisation_code'],
