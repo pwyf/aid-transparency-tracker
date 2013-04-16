@@ -84,35 +84,13 @@ def login():
         if username in USER_NAMES:
             remember = request.form.get("remember", "no") == "yes"
             if login_user(USER_NAMES[username], remember=remember):
-                flash("Logged in!")
+                flash("Logged in!", "success")
                 return redirect(request.args.get("next") or url_for("index"))
             else:
-                flash("Sorry, but you could not log in.")
+                flash("Sorry, but you could not log in.", "error")
         else:
-            flash(u"Invalid username.")
+            flash(u"Invalid username.", "error")
     return render_template("login.html")
-
-
-
-@app.route("/orgview/<organisation_code>/")
-def orgview(organisation_code=None):
-    p_group = models.Organisation.query.filter_by(organisation_code=organisation_code).first_or_404()
-
-    pkgs = db.session.query(models.Package
-            ).filter(models.Organisation.organisation_code == organisation_code
-            ).join(models.OrganisationPackage
-            ).join(models.Organisation
-            ).order_by(models.Package.package_name
-            ).all()
-
-    aggregate_results = _organisation_indicators(p_group);
-
-    latest_runtime=1
-
-    return render_template("organisation_indicators.html", p_group=p_group, pkgs=pkgs, 
-                           results=aggregate_results, runtime=latest_runtime)
-
-
 
 @app.route("/aggregate_results/<package_id>/<runtime>")
 def display_aggregate_results(package_id, runtime):

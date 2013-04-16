@@ -1,0 +1,218 @@
+indicator_name,indicator_description,test_name,test_description
+sector,Sector,sector exists?,Sector 
+sector,Sector,sector/@percentage exists?,"Sector, percentage"
+sector,Sector,sector/@percentage is a positiveInteger?,"Sector, valid number"
+sector,Sector,sector/@code exists?,"Sector, code"
+sector,Sector,sector/@code is on list Sector?,"Sector, code on Sector codelist"
+sector,Sector,sector/@vocabulary exists?,"Sector, vocabulary"
+sector,Sector,sector/@vocabulary is on list Vocabulary?,"Sector, vocabulary on Sector vocabulary list"
+implementer,Implementer,participating-org exists?,Participating organisation
+implementer,Implementer,participating-org/@type exists?,"Participating organisation, type"
+implementer,Implementer,participating-org/@type is on list OrganisationType?,"Participating organisation, type is on the IATI organisation type codelist"
+implementer,Implementer,participating-org/@role exists?,"Participating organisation, role"
+implementer,Implementer,participating-org/@role is on list OrganisationRole?,"Participating organisation, role is on the IATI organisation role codelist"
+implementer,Implementer,participating-org/@ref exists?,"Participating organisation, ref"
+implementer,Implementer,participating-org/@ref is on list OrganisationIdentifier?,"Participating organisation, ref is on the IATI organisation identifier codelist"
+unique-id,Unique ID,iati-identifier exists?,Unique IATI Identifier
+tied-aid-status,Tied Aid Status,default-tied-status exists?,Tied aid status
+expenditure-planned,Planned expenditure,planned-disbursement exists?,Planned disbursement 
+expenditure-planned,Planned expenditure,planned-disbursement/@updated exists?,"Planned disbursement, updated date"
+expenditure-planned,Planned expenditure,planned-disbursement/@updated is a date?,"Planned disbursement, updated date is a valid date"
+expenditure-planned,Planned expenditure,planned-disbursement/period-end exists?,"Planned disbursement, period start"
+expenditure-planned,Planned expenditure,planned-disbursement/period-start exists?,"Planned disbursement, period end"
+expenditure-planned,Planned expenditure,planned-disbursement/value exists?,"Planned disbursement, amount"
+contact-details,Contact details,contact-info exists?,Contact information for the activity 
+contact-details,Contact details,contact-info/email exists?,Contact email
+contact-details,Contact details,contact-info/organisation exists?,Contact organisation
+contact-details,Contact details,contact-info/mailing-address exists?,Contact mailing address
+contact-details,Contact details,contact-info/person-name exists?,Contact person name 
+contact-details,Contact details,contact-info/telephone exists?,Contact telephone number 
+collaboration-type,Collaboration Type,collaboration-type exists?,Collaboration type 
+current-status,Current Status,activity-status exists?,Activity status 
+results,Results,result exists?,Result
+finance-type,Finance Type,default-finance-type exists?,Default finance type 
+aid-type,Aid Type,default-aid-type exists?,Default aid type 
+description,Description,description/text() exists?,Description
+description,Description,description/@type exists?,Description type
+description,Description,description/@type is on list DescriptionType?,Description type is on the IATI Description Type codelist
+flow-type,Flow Type,default-flow-type exists?,Flow type
+flow-type,Flow Type,transaction/flow-type exists?,Transaction flow type
+title,Title,title/text() exists?,Title
+conditions,Conditions,conditions exists?,Conditions
+conditions,Conditions,conditions/@attached exists?,Conditions attached
+conditions,Conditions,conditions/@attached is a boolean?,Conditions attached is properly formatted
+conditions,Conditions,conditions/condition exists?,"Conditions, individual condition exists"
+conditions,Conditions,conditions/condition/@type exists?,"Conditions, individual condition has a type"
+conditions,Conditions,conditions/condition/@type is on list ConditionType?,"Conditions, individual condition is on condition type codelist"
+cost-overall,Overall cost,budget exists?,Budget
+cost-overall,Overall cost,budget/@type exists?,Budget type
+cost-overall,Overall cost,budget/@type is on list BudgetType?,Budget type is on budget type codelist
+cost-overall,Overall cost,budget/period-end exists?,Budget period end
+cost-overall,Overall cost,budget/period-start exists?,Budget period start
+cost-overall,Overall cost,budget/value exists?,Budget value
+location,Sub-national location,location exists?,Location (sub-national)
+location,Sub-national location,location/coordinates exists?,Location (sub-national) coordinates
+title,Title,title/text() has more than 10 characters?,"Title, more than 10 chars"
+description,Description,description/text() has more than 40 characters?,"Description, more than 40 chars"
+current-status,Current Status,activity-status exists 1 time?,"Activity status, only once"
+dates-planned,Planned dates,activity-date[@type='start-planned'] exists?,Activity date planned start date
+dates-planned,Planned dates,activity-date[@type='end-planned'] exists?,Activity date planned end date
+dates-actual,Actual dates,activity-date[@type='start-actual'] exists?,Activity date actual start date
+dates-actual,Actual dates,activity-date[@type='end-actual'] exists?,Activity date actual end date
+implementer,Implementer,participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?,Implementing organisation
+implementer,Implementer,participating-org[@role='implementing']/@type exists?,"Implementing organisation, type"
+implementer,Implementer,participating-org[@role='implementing']/@type is on list OrganisationType?,"Implementing organisation, type is on the IATI organisation type codelist"
+implementer,Implementer,participating-org[@role='implementing']/@role is on list OrganisationRole?,"Implementing organisation, role is on the IATI organisation role codelist"
+implementer,Implementer,participating-org[@role='implementing']/@ref exists?,"Implementing organisation, ref"
+implementer,Implementer,participating-org[@role='implementing']/@ref is on list OrganisationIdentifier?,"Implementing organisation, ref is on the IATI organisation identifier codelist"
+sector,Sector,sector exists more than 1 time?,"Sector, more than once"
+expenditure-planned,Planned expenditure,transaction/transaction-type[@code='C'] or transaction/transaction-type[@code='c'] exists?,Commitments
+expenditure-actual,Actual expenditure,transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='d'] exists?,Disbursements
+impact-appraisals,Impact Appraisals,document-link/category[@code='A01'] exists?,Document - Pre- and post-project impact appraisal
+objectives,Objectives,document-link/category[@code='A02'] exists?,Document - Objectives / Purpose of activity document
+conditions,Conditions,document-link/category[@code='A04'] exists?,Document - Conditions document
+budget,Budget Docs,document-link/category[@code='A05'] exists?,Document - Budget document
+contracts,Contracts,document-link/category[@code='A06'] exists?,Document - Summary information about contract document
+evaluations,Evaluations,document-link/category[@code='A07'] exists?,Document - Review of project performance and evaluation document
+results,Results,document-link/category[@code='A08'] exists?,"Document - Results, outcomes and outputs document"
+mou,MoU,document-link/category[@code='A09'] exists?,Document - Memorandum of understanding document
+tenders,Tenders,document-link/category[@code='A10'] exists?,Document - Tender
+contracts,Contracts,document-link/category[@code='A11'] exists?,Document - Contract
+basic,Basic tests,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?,Current data
+basic,Basic tests,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 4 months ago?,Activities with data in last 4 months
+basic,Basic tests,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 2 months ago?,Activities with data in last month
+basic,Basic tests,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 1 month ago?,Activities with data less than one month old
+,,@hierarchy exists?,IATI Activity hierarchy
+,,participating-org[@role='extending']/@type exists?,"Extending organisation, type"
+,,activity-date exists?,Activity date 
+,,reporting-org exists?,Reporting organisation
+,,reporting-org/@type exists?,"Reporting organisation, type"
+,,reporting-org/@type is on list OrganisationType?,"Reporting organisation, type is on the IATI organisation type codelist"
+,,reporting-org/@ref exists?,"Reporting organisation, ref"
+,,activity-website exists?,Activity website
+,,recipient-country exists?,Recipient country 
+,,recipient-country/@percentage exists?,"Recipient country, percentage"
+,,recipient-country/@percentage is a positiveInteger?,"Recipient country, percentage is a valid number"
+,,recipient-country/@code exists?,"Recipient country, code"
+,,recipient-country/@code is on list Country?,"Recipient country, code is on the IATI country codelist"
+,,policy-marker exists?,Policy marker
+,,policy-marker/@code exists?,"Policy marker, code"
+,,policy-marker/@code is on list PolicyMarker?,"Policy marker, code is on the IATI policy marker codelist"
+,,policy-marker/@vocabulary exists?,"Policy marker, vocabulary"
+,,policy-marker/@vocabulary is on list Vocabulary?,"Policy marker, vocabulary is on IATI vocabulary codelist"
+,,policy-marker/@significance exists?,"Policy marker, significance"
+,,policy-marker/@significance is on list PolicySignificance?,"Policy marker, significance is on IATI policy significance codelist"
+,,result/@type exists?,"Result, type"
+,,result/@type is on list ResultType?,"Result, type is on IATI result type codelist"
+,,result/@aggregation-status exists?,"Result, aggregation status"
+,,result/@aggregation-status is a boolean?,"Result, aggregation status is in a valid format"
+,,result/indicator exists?,"Result, indicator"
+,,result/indicator/@ascending exists?,"Result, indicator, moves from small to large"
+,,result/indicator/@ascending is a boolean?,"Result, indicator, suitable for aggregation"
+,,result/indicator/@measure exists?,"Result, indicator, type of measurement"
+,,result/indicator/@measure is on list IndicatorMeasure?,"Result, indicator, type of measurement is on the IATI indicator measure codelist"
+,,result/indicator/baseline exists?,"Result, indicator, baseline"
+,,result/indicator/baseline/@value exists?,"Result, indicator, baseline value"
+,,result/indicator/baseline/@year exists?,"Result, indicator, baseline year"
+,,result/indicator/baseline/@year is a positiveInteger?,"Result, indicator, baseline year is in a valid format"
+,,result/indicator/period exists?,"Result, indicator, period covered"
+,,result/indicator/period/actual exists?,"Result, indicator, period covered, achieved result"
+,,result/indicator/period/actual/@value exists?,"Result, indicator, period covered, achieved result value"
+,,result/indicator/period/period-end exists?,"Result, indicator, period covered, start"
+,,result/indicator/period/period-start exists?,"Result, indicator, period covered, end"
+,,result/indicator/period/target exists?,"Result, indicator, period covered, target result"
+,,result/indicator/period/target/@value exists?,"Result, indicator, period covered, target result value"
+,,transaction exists?,Financial transactions related to an activity
+,,transaction/@ref exists?,Financial transactions related to an activity - reference
+,,transaction/aid-type exists?,Transaction aid type
+,,transaction/provider-org exists?,"Transaction, provider org"
+,,transaction/provider-org/@provider-activity-id exists?,"Transaction, provider org's IATI activity ID"
+,,transaction/provider-org/@ref exists?,"Transaction, provider org's IATI organisation ID"
+,,transaction/receiver-org exists?,"Transaction, receiver org"
+,,transaction/receiver-org/@receiver-activity-id exists?,"Transaction, receiver org's IATI activity ID"
+,,transaction/receiver-org/@ref exists?,"Transaction, received org's IATI organisation ID"
+,,transaction/disbursement-channel exists?,"Transaction, disbursement channel"
+,,transaction/value exists?,"Transaction, value"
+,,transaction/finance-type exists?,"Transaction, finance type"
+,,transaction/tied-status exists?,"Transaction, tied aid status"
+,,transaction/transaction-date exists?,"Transaction, transaction date"
+,,transaction/transaction-date/@iso-date exists?,"Transaction, transaction date iso-date"
+,,transaction/transaction-date/@iso-date is a date?,"Transaction, transaction date iso-date is a date"
+,,transaction/transaction-type exists?,"Transaction, transaction type"
+,,transaction/description exists?,"Transaction, description"
+,,related-activity exists?,Related activity
+,,related-activity/@type exists?,Related activity type
+,,related-activity/@type is on list RelatedActivityType?,Related activity type is on related activity type codelist
+,,related-activity/@ref exists?,Related activity ID
+,,iati-activity exists?,IATI Activity
+,,@linked-data-uri exists?,IATI Activity linked data URI
+,,@hierarchy is a int?,IATI Activity hierarchy is a number
+,,@default-currency exists?,IATI Activity currency code
+,,@default-currency is on list Currency?,IATI Activity currency code is on currency codelist
+,,@xml:lang exists?,IATI Activity default language
+,,@last-updated-datetime exists?,IATI Activity last updated date
+,,@last-updated-datetime is a dateTime?,IATI Activity last updated date is properly formatted
+,,@version exists?,IATI Activity version
+,,@version is a decimal?,IATI Activity version is properly formatted
+,,comment exists?,Comment
+,,other-identifier exists?,Other identifier
+,,other-identifier/@owner-ref exists?,Other identifier owner ref
+,,other-identifier/@owner-name exists?,Other identifier owner name
+,,location/@percentage exists?,Location (sub-national) percentage
+,,location/@percentage is a positiveInteger?,Location (sub-national) is properly formatted
+,,location/description exists?,Location (sub-national) description
+,,location/gazetteer-entry exists?,Location (sub-national) gazetteer
+,,location/gazetteer-entry/@gazetteer-ref exists?,Location (sub-national) gazetteer ref
+,,location/gazetteer-entry/@gazetteer-ref is on list GazetteerAgency?,Location (sub-national) gazetteer ref is on gazetteer agency codelist
+,,location/coordinates/@latitude exists?,Location (sub-national) coordinates latitude
+,,location/coordinates/@latitude is a decimal?,Location (sub-national) coordinates latitude is properly formatted
+,,location/coordinates/@precision exists?,Location (sub-national) coordinates precision code
+,,location/coordinates/@precision is on list GeographicalPrecision?,Location (sub-national) coordinates precision code is on geographical precision code
+,,location/coordinates/@longitude exists?,Location (sub-national) coordinates longitude
+,,location/coordinates/@longitude is a decimal?,Location (sub-national) coordinates longitude is properly formatted
+,,location/location-type exists?,Location (sub-national) type
+,,location/administrative exists?,Location (sub-national) administrative area
+,,location/administrative/@country exists?,Location (sub-national) administrative area country
+,,location/administrative/@adm1 exists?,Location (sub-national) administrative area admin1
+,,location/administrative/@adm2 exists?,Location (sub-national) administrative area admin2
+,,location/name exists?,Location (sub-national) name
+,,recipient-region exists?,Recipient region
+,,recipient-region/@percentage exists?,Recipient region percentage
+,,recipient-region/@percentage is a positiveInteger?,Recipient region percentage is properly formatted
+,,recipient-region/@code exists?,Recipient region code
+,,recipient-region/@code is on list Region?,Recipient region code is on the IATI region codelist
+,,document-link exists?,Document link
+,,document-link/@url exists?,Document link URL
+,,document-link/@format exists?,Document link format
+,,document-link/@format is on list FileFormat?,Document link format is on IATI fileformat list
+,,document-link/category exists?,Document link category
+,,document-link/language exists?,Document link language
+,,legacy-data exists?,Legacy data 
+,,legacy-data/@name exists?,Legacy data original field name
+,,legacy-data/@iati-equivalent exists?,Legacy data IATI equivalent field
+,,iati-activities exists?,IATI Activities
+,,iati-activities/@generated-datetime exists?,IATI Activities generated datetime
+,,legacy-data/@value exists?,Legacy data original field value
+,,iati-activities/@generated-datetime is a dateTime?,IATI Activities generated datetime is properly formatted
+,,iati-activities/@version exists?,IATI Activities version number
+,,iati-activities/@version is a decimal?,IATI Activities version number is properly formatted
+,,iati-activities/@linked-data-default exists?,IATI Activities linked data ID
+,,activity-date/@iso-date exists?,Activity date has an ISO-date attribute
+,,activity-date/@iso-date is an iso date?,Activity date ISO-date attribute is properly formatted
+,,participating-org[@role='funding'] or participating-org[@role='Funding'] exists?,Funding organisation
+,,participating-org[@role='accountable'] or participating-org[@role='Accountable'] exists?,Accountable organisation
+,,participating-org[@role='extending'] or participating-org[@role='Extending'] exists?,Extending organisation
+,,participating-org exists?,Participating organisation
+,,recipient-region or recipient-country exists?,Recipient region or recipient country
+,,only one of recipient-region or recipient-country exists?,Recipient region or recipient country (not both)
+,,document-link/category[@code='A03'] exists?,Document - Intended ultimate beneficiaries document
+,,participating-org[@role='extending']/@type is on list OrganisationType?,"Extending organisation, type is on the IATI organisation type codelist"
+,,participating-org[@role='extending']/@role is on list OrganisationRole?,"Extending organisation, role is on the IATI organisation role codelist"
+,,participating-org[@role='extending']/@ref exists?,"Extending organisation, ref"
+,,participating-org[@role='extending']/@ref is on list OrganisationIdentifier?,"Extending organisation, ref is on the IATI organisation identifier codelist"
+,,participating-org[@role='funding']/@type exists?,"Funding organisation, type"
+,,participating-org[@role='funding']/@type is on list OrganisationType?,"Funding organisation, type is on the IATI organisation type codelist"
+,,participating-org[@role='funding']/@role is on list OrganisationRole?,"Funding organisation, role is on the IATI organisation role codelist"
+,,participating-org[@role='funding']/@ref exists?,"Funding organisation, ref"
+,,participating-org[@role='funding']/@ref is on list OrganisationIdentifier?,"Funding organisation, ref is on the IATI organisation identifier codelist"
+,,reporting-org/@ref is on list OrganisationIdentifier?,"Reporting organisation, ref is on the IATI organisation identifier codelist"

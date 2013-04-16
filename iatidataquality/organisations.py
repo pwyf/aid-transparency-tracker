@@ -40,10 +40,10 @@ test_list_location = "tests/activity_tests.csv"
 
 
 @app.route("/organisations/")
-@app.route("/organisations/<id>/")
-def organisations(id=None):
-    if (id is not None):
-        organisation = dqorganisations.organisations(id)
+@app.route("/organisations/<organisation_code>/")
+def organisations(organisation_code=None):
+    if (organisation_code is not None):
+        organisation = dqorganisations.organisations(organisation_code)
         try:
             summary_data = _organisation_indicators_summary(organisation)
         except Exception, e:
@@ -66,10 +66,29 @@ def organisation_new():
             return redirect(url_for('organisation_edit', organisation_code=organisation.organisation_code))
         else:
             flash("Couldn't add organisation", "error")
-            return render_template("organisation_edit.html", organisation=data)
+            organisation = data
     else:
         organisation=None
-        return render_template("organisation_edit.html", organisation=organisation)
+    return render_template("organisation_edit.html", organisation=organisation)
+
+
+@app.route("/organisations/<organisation_code>/publication/")
+def organisation_publication(organisation_code=None):
+    p_group = models.Organisation.query.filter_by(organisation_code=organisation_code).first_or_404()
+
+    pkgs = db.session.query(models.Package
+            ).filter(models.Organisation.organisation_code == organisation_code
+            ).join(models.OrganisationPackage
+            ).join(models.Organisation
+            ).order_by(models.Package.package_name
+            ).all()
+
+    aggregate_results = _organisation_indicators(p_group);
+
+    latest_runtime=1
+
+    return render_template("organisation_indicators.html", p_group=p_group, pkgs=pkgs, 
+                           results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 def organisation_edit(organisation_code=None):

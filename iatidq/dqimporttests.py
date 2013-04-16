@@ -42,20 +42,18 @@ def returnLevel(row, level):
         return level
 
 def _importTests(fh, filename, level=1, local=True):
-    #models.Test.query.filter(models.Test.test_level==1).\
-    #    update({models.Test.active: False})
     data = unicodecsv.DictReader(fh)
 
     for row in data:
-        test = models.Test.query.filter(models.Test.name==row['test']).first()
+        test = models.Test.query.filter(models.Test.name==row['test_name']).first()
 
         if not test:
             test = models.Test()
 
         test.setup(
-            name = row['test'],
-            description = row['description'],
-            test_group = row['group'],
+            name = row['test_name'],
+            description = row['test_description'],
+            test_group = row['indicator_name'],
             test_level = returnLevel(row, level),
             active = True
             )

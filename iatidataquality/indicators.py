@@ -93,6 +93,37 @@ def indicators(indicatorgroup=None):
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
     return render_template("indicators.html", indicatorgroup=indicatorgroup, indicators=indicators)
 
+@app.route("/indicators/<indicatorgroup>_tests.csv")
+@app.route("/indicators/<indicatorgroup>_<option>tests.csv")
+def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
+    strIO = StringIO.StringIO()
+    if (option != "no"):
+        fieldnames = "indicator_name indicator_description test_name test_description".split()
+    else:
+        fieldnames = "test_name test_description".split()
+    out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
+    headers = {}
+    for fieldname in fieldnames:
+        headers[fieldname] = fieldname
+    out.writerow(headers)
+    data = dqindicators.indicatorGroupTests(indicatorgroup, option)
+
+    for d in data:
+        if (option !="no"):
+            out.writerow({"indicator_name": d[0], 
+                          "indicator_description": d[1], 
+                          "test_name": d[2], 
+                          "test_description": d[3]})
+        else:
+            out.writerow({"test_name": d[0], 
+                          "test_description": d[1]})            
+    strIO.seek(0)
+    if option ==None:
+        option = ""
+    return send_file(strIO,
+                     attachment_filename=indicatorgroup + "_" + option + "tests.csv",
+                     as_attachment=True)
+
 @app.route("/indicators/<indicatorgroup>/new/", methods=['GET', 'POST'])
 def indicators_new(indicatorgroup=None):
     indicatorgroups = dqindicators.indicatorGroups()
@@ -147,7 +178,7 @@ def indicatortests(indicatorgroup=None, indicator=None):
                 flash('Successfully added test to your indicator.', 'success')
             else:
                 flash("Couldn't add test to your indicator.", 'error')
-    indicatortests = dqindicators.indicatorTests(indicator.name)
+    indicatortests = dqindicators.indicatorTests(indicatorgroup.name, indicator.name)
     return render_template("indicatortests.html", indicatorgroup=indicatorgroup, indicator=indicator, indicatortests=indicatortests, alltests=alltests)
 
 @app.route("/indicators/<indicatorgroup>/<indicator>/<indicatortest>/delete/")

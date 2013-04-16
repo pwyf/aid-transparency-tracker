@@ -51,7 +51,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
                         })
 
 def importIndicators():
-    filename = 'tests/iati2foxpath_tests.csv'
+    filename = 'tests/tests.csv'
     indicatorgroup_id = 'pwyf2013'
     with file(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True)
@@ -72,12 +72,12 @@ def _importIndicators(indicatorgroup_name, fh, local):
     data = unicodecsv.DictReader(fh)
 
     for row in data:
-        test = models.Test.query.filter(models.Test.name==row['test']).first()
+        test = models.Test.query.filter(models.Test.name==row['test_name']).first()
 
         if not test:
             continue
         
-        indicator_name = row['group']
+        indicator_name = row['indicator_name']
         if (indicator_name == ""):
             continue
         
@@ -208,10 +208,11 @@ def deleteIndicator(indicatorgroup, indicator):
     else:
         return False
 
-def indicatorTests(indicator_name):
+def indicatorTests(indicatorgroup_name, indicator_name):
     indicatorTests = db.session.query(models.Test,
                                       models.IndicatorTest
                 ).filter(models.Indicator.name==indicator_name
+                ).filter(models.IndicatorGroup.name==indicatorgroup_name
                 ).join(models.IndicatorTest
                 ).join(models.Indicator
                 ).all()
@@ -247,5 +248,30 @@ def allTests():
     checkT = models.Test.query.all()
     if checkT:
         return checkT
+    else:
+        return False
+
+def indicatorGroupTests(indicatorgroup_name=None, option=None):
+    if (option != "no"):
+        checkIGT = db.session.query(models.Indicator.name,
+                                    models.Indicator.description,
+                                    models.Test.name,
+                                    models.Test.description
+                                ).filter(models.IndicatorGroup.name==indicatorgroup_name
+                                ).join(models.IndicatorGroup
+                                ).join(models.IndicatorTest
+                                ).join(models.Test
+                                ).all()
+    else:
+        checkIGT = db.session.query(models.Test.name,
+                                    models.Test.description
+                                ).outerjoin(models.IndicatorTest, models.IndicatorTest.test_id==models.Test.id
+                                ).outerjoin(models.Indicator
+                                ).outerjoin(models.IndicatorGroup
+                                ).filter(models.IndicatorGroup.id==None
+                                ).filter(models.Test.id>0
+                                ).all()
+    if checkIGT:
+        return checkIGT
     else:
         return False

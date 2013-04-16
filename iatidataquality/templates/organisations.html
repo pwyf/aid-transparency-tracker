@@ -17,7 +17,7 @@
     <tbody>
 	{% for organisation in organisations %}
     <tr>
-	<td><a href="{{url_for('organisations', id=organisation.organisation_code)}}">{{ organisation.organisation_code }}</a></td><td>{{ organisation.organisation_name }}</td>
+	<td><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{ organisation.organisation_code }}</a></td><td>{{ organisation.organisation_name }}</td>
     </tr>
 	{% endfor %}
     </tbody>
