@@ -51,9 +51,9 @@ def organisations_feedback(organisation_code=None):
                         'where': request.form['where'+condition]
                 }
                 if dqorganisations.addFeedback(data):
-                    flash('Successfully added test to your indicator.', 'success')
+                    flash('Successfully added condition.', 'success')
                 else:
-                    flash("Couldn't add test to your indicator.", 'error')
+                    flash("Couldn't add condition.", 'error')
         
         return render_template("organisation_feedback.html", organisation=organisation)
     else:
