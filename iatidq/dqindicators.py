@@ -250,3 +250,18 @@ def allTests():
         return checkT
     else:
         return False
+
+def indicatorGroupTests(indicatorgroup_name):
+    checkIGT = db.session.query(models.Indicator.name,
+                                models.Indicator.description,
+                                models.Test.name,
+                                models.Test.description
+                            ).filter(models.IndicatorGroup.name==indicatorgroup_name
+                            ).join(models.IndicatorGroup
+                            ).join(models.IndicatorTest
+                            ).join(models.Test
+                            ).all()
+    if checkIGT:
+        return checkIGT
+    else:
+        return False

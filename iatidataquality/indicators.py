@@ -93,6 +93,26 @@ def indicators(indicatorgroup=None):
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
     return render_template("indicators.html", indicatorgroup=indicatorgroup, indicators=indicators)
 
+@app.route("/indicators/<indicatorgroup>.csv")
+def indicatorgroup_tests_csv(indicatorgroup=None):
+    strIO = StringIO.StringIO()
+    out = unicodecsv.DictWriter(strIO, fieldnames="indicator_name indicator_description test_name test_description".split())
+    out.writerow({"indicator_name": "indicator_name", 
+                  "indicator_description": "indicator_description", 
+                  "test_name": "test_name", 
+                  "test_description": "test_description"})
+    data = dqindicators.indicatorGroupTests(indicatorgroup)
+
+    for d in data:
+        out.writerow({"indicator_name": d[0], 
+                      "indicator_description": d[1], 
+                      "test_name": d[2], 
+                      "test_description": d[3]})
+    strIO.seek(0)
+    return send_file(strIO,
+                     attachment_filename=indicatorgroup + ".csv",
+                     as_attachment=True)
+
 @app.route("/indicators/<indicatorgroup>/new/", methods=['GET', 'POST'])
 def indicators_new(indicatorgroup=None):
     indicatorgroups = dqindicators.indicatorGroups()
