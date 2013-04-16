@@ -163,11 +163,15 @@ def ipc_step2():
 def ipc_step3():
     for row in request.form.getlist('include'):
 
-        publisher_id = request.form['pc['+row+'][publisher_id]']
-        test_id = request.form['pc['+row+'][test_id]']
-        operation = request.form['pc['+row+'][operation]']
-        condition = request.form['pc['+row+'][condition]']
-        condition_value = request.form['pc['+row+'][condition_value]']
+        def pc_form_value(key):
+            form_key = 'pc[%s][%s]' % (row, key)
+            return request.form[form_key]
+
+        publisher_id = pc_form_value('publisher_id')
+        test_id = pc_form_value('test_id')
+        operation = pc_form_value('operation')
+        condition = pc_form_value('condition')
+        condition_value = pc_form_value('condition_value')
 
         pc = PublisherCondition.query.filter_by(
             publisher_id=publisher_id, test_id=test_id, 
@@ -182,7 +186,7 @@ def ipc_step3():
         pc.operation = operation
         pc.condition = condition
         pc.condition_value = condition_value
-        pc.description = request.form['pc['+row+'][description]']
+        pc.description = pc_form_value('description')
         db.session.add(pc)
 
     db.session.commit()
