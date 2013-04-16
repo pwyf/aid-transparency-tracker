@@ -21,13 +21,21 @@ import lxml.etree
 
 import nose
 import nose.tools
+import sys
 
 from iatidq.models import *
 
+def log(s):
+    return
+    print >>sys.stderr, s
+
 def setup_func():
+    print >>sys.stderr, "setting up"
     iatidq.db.drop_all()
     iatidq.db.create_all()
+    print  >>sys.stderr, "about to commit in setup"
     db.session.commit()
+    print  >>sys.stderr, "committed"
 
 def teardown_func():
     pass
@@ -66,11 +74,12 @@ def test_refresh():
     pkg = pkgs[0]
     assert pkg.package_name == package_name
 
-@nose.with_setup(setup_func, teardown_func)
 def test_example_tests():
     publisher = 'worldbank'
     country = 'tz'
     package_name = '-'.join([publisher, country])
+
+    log("starting")
 
     # check there's nothing in the db
     pgs = get_packagegroups_by_name(publisher)
@@ -78,37 +87,49 @@ def test_example_tests():
     pkgs = get_packages_by_name(package_name)
     assert len(pkgs) == 0
 
+    log("about to add something")
+
     # do refresh
     iatidq.dqregistry.refresh_package_by_name(package_name)
 
+    log("about to import hardcoded")
+
     iatidq.dqimporttests.hardcodedTests()
+
+    log("loading foxpath tests")
+
+    log("#tests: %d" % iatidq.models.Test.query.count())
 
     # load foxpath tests
     os.chdir(parent)
     iatidq.dqimporttests.importTestsFromFile(
-        filename="tests/iati2foxpath_tests.csv")
+        filename="tests/sample_tests.csv")
+
+    log("#tests: %d" % iatidq.models.Test.query.count())
+
     print "Importing indicators"
     iatidq.dqindicators.importIndicatorsFromFile(
         "test_pwyf2013",
-        "tests/iati2foxpath_tests.csv")
+        "tests/sample_tests.csv")
+
+    log("loading indicators")
 
     iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
                                                             "tests/indicators.csv")
-    print "Importing codelists"
-    iatidq.dqcodelists.importCodelists()
-    print "Refreshing package data from Registry"
-    dqregistry.refresh_packages()
+    log("Importing codelists")
+    #iatidq.dqcodelists.importCodelists()
+    #log("Refreshing package data from Registry")
+    #iatidq.dqregistry.refresh_packages()
 
 
-
+    log("about to start testing")
  
     from iatidq.dqparsetests import test_functions as tf
     test_functions = tf()
     from iatidq import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
-#    for t in iatidq.models.Test.query.all():
-#        print t
+    log("#tests: %d" % iatidq.models.Test.query.count())
 
     from iatidq.testrun import start_new_testrun
     runtime = start_new_testrun()
@@ -118,11 +139,23 @@ def test_example_tests():
 
     pkg = get_packages_by_name('worldbank-tz')[0]
 
-    iatidq.test_queue.check_file(test_functions, 
+    log(pkg.package_name)
+
+    assert iatidq.test_queue.check_file(test_functions, 
                codelists,
                "pkgdata-worldbank-tz.json",
                runtime.id,
                pkg.id,
                context=None)
 
+    results = iatidq.models.Result.query.all()
     assert len(results) > 0
+    print >>sys.stderr, len(results)
+
+@nose.with_setup(setup_func, teardown_func)
+def test_example_tests_nose():
+    return test_example_tests()
+
+if __name__ == '__main__':
+    setup_func()
+    test_example_tests()
