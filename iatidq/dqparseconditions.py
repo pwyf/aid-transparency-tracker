@@ -65,8 +65,6 @@ def parsePC(publisher_structures):
     def fail(line):
         return None
 
-    #tests = models.Test.query.filter(models.Test.active == True).all()
-
     test_functions = {}
     comment = re.compile('#')
     blank = re.compile('^$')
@@ -89,5 +87,5 @@ def parsePC(publisher_structures):
     return test_functions
 
 if __name__ == '__main__':
-    publisher_structures = {"dfid does not use document-link at activity hierarchy 2", "worldbank does not use default-tied-status at activity level"}
+    publisher_structures = {"GB-1 does not use document-link at activity hierarchy 2", "44000 does not use default-tied-status at activity level"}
     print parsePC(publisher_structures)
