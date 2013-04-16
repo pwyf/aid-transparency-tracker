@@ -52,6 +52,20 @@ def get_pc(pc_id):
         ).filter_by(id=pc_id
                     ).join(PackageGroup, Test).first()
 
+def get_pcs():
+    return db.session.query(
+        PublisherCondition.id,
+        PublisherCondition.description,
+        PackageGroup.title.label("packagegroup_name"),
+        PackageGroup.id.label("packagegroup_id"),
+        Test.name.label("test_name"),    
+        Test.description.label("test_description"),
+        Test.id.label("test_id")
+        ).order_by(
+        PublisherCondition.id
+        ).join(PackageGroup, Test
+               ).all()
+        
 @app.route("/publisher_conditions/")
 @app.route("/publisher_conditions/<id>/")
 def publisher_conditions(id=None):
@@ -59,16 +73,7 @@ def publisher_conditions(id=None):
         pc = get_pc(id)
         return render_template("publisher_condition.html", pc=pc)
     else:
-        pcs = db.session.query(PublisherCondition.id,
-                               PublisherCondition.description,
-                               PackageGroup.title.label("packagegroup_name"),
-                               PackageGroup.id.label("packagegroup_id"),
-                               Test.name.label("test_name"),    
-                               Test.description.label("test_description"),
-                               Test.id.label("test_id")
-                            ).order_by(PublisherCondition.id
-                            ).join(PackageGroup, Test
-                            ).all()
+        pcs = get_pcs()
         return render_template("publisher_conditions.html", pcs=pcs)
 
 @app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
