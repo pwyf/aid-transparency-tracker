@@ -142,11 +142,17 @@ def organisation_edit(organisation_code=None):
         organisationpackages=organisationpackages)
 
 @app.route("/organisations/<organisation_code>/<package_name>/<organisationpackage_id>/delete/")
-def organisationpackage_delete(organisation_code=None, package_name=None, organisationpackage_id=None):
-    if dqorganisation.deleteOrganisationPackage(organisation_code, package_name, organisationpackage_id):
+def organisationpackage_delete(organisation_code=None, 
+                               package_name=None, organisationpackage_id=None):
+
+    result = dqorganisation.deleteOrganisationPackage(
+        organisation_code, package_name, organisationpackage_id)
+
+    if result:
         flash('Successfully removed package ' + package_name + ' from organisation ' + organisation_code + '.', 'success')
     else:
-        flash('Could not remove package ' + package_name + ' from organisation ' + organisation_code + '.', 'error')        
+        flash('Could not remove package ' + package_name + ' from organisation ' + organisation_code + '.', 'error')
+        
     return redirect(url_for('organisation_edit', organisation_code=organisation_code))
 
 def _organisation_indicators_summary(organisation):
