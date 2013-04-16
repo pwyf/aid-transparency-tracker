@@ -36,14 +36,97 @@ which_packages = [
     (u'dfid-tz', True)
     ]
 
-def run(refresh=False, minimal=False):
-    if refresh:
-        if minimal:
-            for package_name, _ in which_packages:
-                dqregistry.refresh_package_by_name(package_name)
-        else:
-            dqregistry.refresh_packages()
+def refresh(options):
+    if options.minimal:
+        for package_name, _ in which_packages:
+            dqregistry.refresh_package_by_name(package_name)
+    else:
+        dqregistry.refresh_packages()
+
+def run(minimal=False):
     dqregistry.activate_packages(which_packages, clear_revision_id=True)
+
+def drop_all(options):
+    iatidq.db.drop_all()
+
+def init_db(options):
+    iatidq.db.create_all()
+    iatidq.dqimporttests.hardcodedTests()
+
+def enroll_tests(options):
+    filename = options.enroll_tests.decode()
+    result = iatidq.dqimporttests.importTests(
+        filename=filename, 
+        level=options.level)
+    if not result:
+        print "Error importing"
+
+def clear_revisionid(options):
+    iatidq.dqfunctions.clear_revisions()
+
+def import_codelists(options):
+    iatidq.dqcodelists.importCodelists()
+
+def download(options):
+    if options.minimal_pkgs:
+        for package_name, _ in which_packages:
+            iatidq.dqdownload.run(package_name=package_name)
+    else:
+        iatidq.dqdownload.run()
+
+def import_indicators(options):
+    if options.filename:
+        iatidq.dqindicators.importIndicatorsFromFile("pwyf2013",
+                                                     options.filename)
+    else:
+        iatidq.dqindicators.importIndicators()
+
+def import_organisations(options):
+    if options.filename:
+        iatidq.dqorganisations.importOrganisationPackagesFromFile(options.filename)
+    else:
+        print "Error: please provide a filename"
+
+def setup(options):
+    print "Creating DB"
+    iatidq.db.create_all()
+    print "Adding hardcoded tests"
+    iatidq.dqimporttests.hardcodedTests()
+    print "Importing tests"
+    iatidq.dqimporttests.importTestsFromFile(
+        filename="tests/iati2foxpath_tests.csv")
+    print "Importing indicators"
+    iatidq.dqindicators.importIndicatorsFromFile(
+        "pwyf2013",
+        "tests/iati2foxpath_tests.csv")
+    print "Importing indicator descriptions"
+    iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
+                                                            "tests/indicators.csv")
+    print "Importing codelists"
+    iatidq.dqcodelists.importCodelists()
+    print "Refreshing package data from Registry"
+    dqregistry.refresh_packages()
+
+def enqueue_test(options):
+    assert options.package_name
+    assert options.filename
+
+    iatidq.dqruntests.enqueue_package_for_test(options.filename,
+                                               options.package_name)
+
+commands = {
+    "drop_all": drop_all,
+    "init_db": init_db,
+    "enroll_tests": enroll_tests,
+    "clear_revisionid": clear_revisionid,
+    "import_codelists": import_codelists,
+    "download": download,
+    "import_indicators": import_indicators,
+    "import_organisations": import_organisations,
+    "setup": setup,
+    "enqueue_test": enqueue_test,
+    "refresh": refresh
+}
 
 def main():
     p = optparse.OptionParser()
@@ -102,85 +185,13 @@ def main():
 
     options, args = p.parse_args()
 
-    if options.drop_all:
-        iatidq.db.drop_all()
-        return
+    for mode, handler in commands.iteritems():
+        if getattr(options, mode, None):
+            handler(options)
+            return
 
-    if options.init_db:
-        iatidq.db.create_all()
-        iatidq.dqimporttests.hardcodedTests()
-        return
 
-    if options.enroll_tests:
-        filename = options.enroll_tests.decode()
-        result = iatidq.dqimporttests.importTests(
-            filename=filename, 
-            level=options.level)
-        if not result:
-            print "Error importing"
-        return
-
-    if options.clear_revisionid:
-        iatidq.dqfunctions.clear_revisions()
-        return
-
-    if options.import_codelists:
-        iatidq.dqcodelists.importCodelists()
-        return
-
-    if options.download:
-        if options.minimal_pkgs:
-            for package_name, _ in which_packages:
-                iatidq.dqdownload.run(package_name=package_name)
-        else:
-            iatidq.dqdownload.run()
-        return
-
-    if options.import_indicators:
-        if options.filename:
-            iatidq.dqindicators.importIndicatorsFromFile("pwyf2013",
-                                                         options.filename)
-        else:
-            iatidq.dqindicators.importIndicators()
-        return
-
-    if options.import_organisations:
-        if options.filename:
-            iatidq.dqorganisations.importOrganisationPackagesFromFile(options.filename)
-        else:
-            print "Error: please provide a filename"
-        return
-
-    if options.setup:
-        print "Creating DB"
-        iatidq.db.create_all()
-        print "Adding hardcoded tests"
-        iatidq.dqimporttests.hardcodedTests()
-        print "Importing tests"
-        iatidq.dqimporttests.importTestsFromFile(
-            filename="tests/iati2foxpath_tests.csv")
-        print "Importing indicators"
-        iatidq.dqindicators.importIndicatorsFromFile(
-            "pwyf2013",
-            "tests/iati2foxpath_tests.csv")
-        print "Importing indicator descriptions"
-        iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
-                                                                "tests/indicators.csv")
-        print "Importing codelists"
-        iatidq.dqcodelists.importCodelists()
-        print "Refreshing package data from Registry"
-        dqregistry.refresh_packages()
-        return
-
-    if options.enqueue_test:
-        assert options.package_name
-        assert options.filename
-
-        iatidq.dqruntests.enqueue_package_for_test(options.filename,
-                                                   options.package_name)
-        return
-
-    run(refresh=options.refresh, minimal=options.minimal_pkgs)
+    run(minimal=options.minimal_pkgs)
 
 if __name__ == '__main__':
     main()
