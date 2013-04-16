@@ -22,3 +22,4 @@ import tests
 import organisations
 import registry
 import packages
+import indicators
