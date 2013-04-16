@@ -45,7 +45,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
             indicator = updateIndicator(indicatorgroup_name, data['name'], data)
         else:
             indicator = addIndicator({
-                            "name" : indicator_name,
+                            "name" : data["name"],
                             "description" : "",
                             "indicatorgroup_id" : indicatorgroup.id
                         })
