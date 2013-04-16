@@ -84,12 +84,12 @@ def login():
         if username in USER_NAMES:
             remember = request.form.get("remember", "no") == "yes"
             if login_user(USER_NAMES[username], remember=remember):
-                flash("Logged in!")
+                flash("Logged in!", "success")
                 return redirect(request.args.get("next") or url_for("index"))
             else:
-                flash("Sorry, but you could not log in.")
+                flash("Sorry, but you could not log in.", "error")
         else:
-            flash(u"Invalid username.")
+            flash(u"Invalid username.", "error")
     return render_template("login.html")
 
 @app.route("/aggregate_results/<package_id>/<runtime>")
