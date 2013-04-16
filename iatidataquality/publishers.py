@@ -71,8 +71,11 @@ def _publisher_detail(p_group):
         ).join(PackageGroup
         ).all()
 
-    pconditions = PublisherCondition.query.filter_by(
-        publisher_id=p_group.id).all()
+    """pconditions = PublisherCondition.query.filter_by(
+        publisher_id=p_group.id).all()"""
+    # Publisherconditions have been removed in favour
+    #  of organisation conditions
+    pconditions = {}
 
     db.session.commit()
     return aggregation.agr_results(aggregate_results, 
@@ -189,8 +192,11 @@ def publisher(id=None):
         ).join(PackageGroup
         ).all()
 
-    pconditions = PublisherCondition.query.filter_by(
-        publisher_id=p_group.id).all()
+    """pconditions = PublisherCondition.query.filter_by(
+        publisher_id=p_group.id).all()"""
+    # Publisher Conditions have been removed in favour of
+    #  organisation conditions.
+    pconditions = {}
 
     aggregate_results = aggregation.agr_results(aggregate_results, 
                                                 conditions=pconditions, 
