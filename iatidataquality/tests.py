@@ -61,14 +61,12 @@ def tests_editor(id=None):
             db.session.add(test)
             db.session.commit()
             flash('Updated', "success")
-            return render_template("test_editor.html", test=test)
         else:
             flash('Incorrect password', "error")
             test = models.Test.query.filter_by(id=id).first_or_404()
-            return render_template("test_editor.html", test=test)
     else:
         test = models.Test.query.filter_by(id=id).first_or_404()
-        return render_template("test_editor.html", test=test)
+    return render_template("test_editor.html", test=test)
 
 
 @app.route("/tests/new/", methods=['GET', 'POST'])
@@ -87,12 +85,12 @@ def tests_new(id=None):
             db.session.add(test)
             db.session.commit()
             flash('Updated', "success")
-            return render_template("test_editor.html", test=test)
         else:
             flash('Incorrect password', "error")
-            return render_template("test_editor.html", test={})
+            test = {}
     else:
-        return render_template("test_editor.html", test={})
+        test = {}
+    return render_template("test_editor.html", test=test)
 
 
 @app.route("/tests/import/", methods=['GET', 'POST'])
@@ -112,6 +110,4 @@ def import_tests():
                 flash('There was an error importing your tests', "error")
         else:
             flash('Wrong password', "error")
-        return render_template("import_tests.html")
-    else:
-        return render_template("import_tests.html")
+    return render_template("import_tests.html")
