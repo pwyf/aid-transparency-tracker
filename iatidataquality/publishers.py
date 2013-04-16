@@ -44,16 +44,19 @@ def publishers():
     pkgs = models.Package.query.order_by(models.Package.package_name).all()
     return render_template("packagegroups.html", p_groups=p_groups, pkgs=pkgs)
 
-def _publisher_detail(p_group):
-    aggregate_results = db.session.query(models.Indicator,
+def _publisher_detail_ungrouped(p_group):
+    return db.session.query(models.Indicator,
                                      models.Test,
                                      models.AggregateResult.results_data,
                                      models.AggregateResult.results_num,
                                      models.AggregateResult.result_hierarchy,
                                      models.AggregateResult.package_id,
                                      func.max(models.AggregateResult.runtime_id)
-        ).filter(models.PackageGroup.id==p_group.id
-        ).group_by(models.Indicator,
+        ).filter(models.PackageGroup.id==p_group.id)
+
+def _publisher_detail(p_group):
+    aggregate_results = _publisher_detail_ungrouped(p_group)\
+        .group_by(models.Indicator,
                    models.AggregateResult.result_hierarchy, 
                    models.Test, 
                    models.AggregateResult.package_id,
@@ -169,15 +172,8 @@ def publisher(id=None):
             ).order_by(models.Package.package_name).all()
 
     """try:"""
-    aggregate_results = db.session.query(models.Indicator,
-                                     models.Test,
-                                     models.AggregateResult.results_data,
-                                     models.AggregateResult.results_num,
-                                     models.AggregateResult.result_hierarchy,
-                                     models.AggregateResult.package_id,
-                                     func.max(models.AggregateResult.runtime_id)
-        ).filter(models.PackageGroup.id==p_group.id
-        ).group_by(models.AggregateResult.result_hierarchy, 
+    aggregate_results = _publisher_detail_ungrouped(p_group)\
+        .group_by(models.AggregateResult.result_hierarchy, 
                    models.Test, 
                    models.AggregateResult.package_id,
                    models.Indicator,
