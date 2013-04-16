@@ -162,17 +162,21 @@ def ipc_step2():
 
 def ipc_step3():
     for row in request.form.getlist('include'):
+
         publisher_id = request.form['pc['+row+'][publisher_id]']
         test_id = request.form['pc['+row+'][test_id]']
         operation = request.form['pc['+row+'][operation]']
         condition = request.form['pc['+row+'][condition]']
         condition_value = request.form['pc['+row+'][condition_value]']
+
         pc = PublisherCondition.query.filter_by(
             publisher_id=publisher_id, test_id=test_id, 
             operation=operation, condition=condition, 
             condition_value=condition_value).first()
+
         if (pc is None):
             pc = PublisherCondition()
+
         pc.publisher_id=publisher_id
         pc.test_id=test_id
         pc.operation = operation
@@ -180,6 +184,7 @@ def ipc_step3():
         pc.condition_value = condition_value
         pc.description = request.form['pc['+row+'][description]']
         db.session.add(pc)
+
     db.session.commit()
     flash('Successfully updated publisher conditions', 'success')
     return redirect(url_for('publisher_conditions'))
