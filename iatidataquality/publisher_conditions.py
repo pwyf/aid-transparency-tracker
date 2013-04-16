@@ -162,7 +162,6 @@ def ipc_step2():
             "import_publisher_conditions_step2.html", 
             results=results, step=step)
     else:
-        results = None
         flash('There was an error importing your tests', "error")
         return redirect(url_for('import_publisher_conditions'))
 
