@@ -81,8 +81,8 @@ def publisher_conditions_editor(id=None):
     publishers = PackageGroup.query.order_by(
         PackageGroup.id).all()
     tests = Test.query.order_by(Test.id).all()
-    if (request.method == 'POST'):
-        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+    if request.method == 'POST':
+        if request.form['password'] == app.config["SECRET_PASSWORD"]:
             pc = PublisherCondition.query.filter_by(id=id).first_or_404()
             pc.description = request.form['description']
             pc.publisher_id = int(request.form['publisher_id'])
