@@ -113,27 +113,6 @@ def orgview(organisation_code=None):
                            results=aggregate_results, runtime=latest_runtime)
 
 
-@app.route("/tests/import/", methods=['GET', 'POST'])
-def import_tests():
-    if (request.method == 'POST'):
-        import dqimporttests
-        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            if (request.form.get('local')):
-                result = dqimporttests.importTestsFromFile(test_list_location)
-            else:
-                url = request.form['url']
-                level = int(request.form['level'])
-                result = dqimporttests.importTestsFromUrl(url, level=level)
-            if (result==True):
-                flash('Imported tests', "success")
-            else:
-                flash('There was an error importing your tests', "error")
-        else:
-            flash('Wrong password', "error")
-        return render_template("import_tests.html")
-    else:
-        return render_template("import_tests.html")
-
 
 @app.route("/aggregate_results/<package_id>/<runtime>")
 def display_aggregate_results(package_id, runtime):

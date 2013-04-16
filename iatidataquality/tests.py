@@ -93,3 +93,25 @@ def tests_new(id=None):
             return render_template("test_editor.html", test={})
     else:
         return render_template("test_editor.html", test={})
+
+
+@app.route("/tests/import/", methods=['GET', 'POST'])
+def import_tests():
+    if (request.method == 'POST'):
+        import dqimporttests
+        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+            if (request.form.get('local')):
+                result = dqimporttests.importTestsFromFile(test_list_location)
+            else:
+                url = request.form['url']
+                level = int(request.form['level'])
+                result = dqimporttests.importTestsFromUrl(url, level=level)
+            if (result==True):
+                flash('Imported tests', "success")
+            else:
+                flash('There was an error importing your tests', "error")
+        else:
+            flash('Wrong password', "error")
+        return render_template("import_tests.html")
+    else:
+        return render_template("import_tests.html")
