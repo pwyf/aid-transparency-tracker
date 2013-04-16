@@ -35,7 +35,7 @@ def parsePC(organisation_structures):
 
     def organisation_and_test_level(groups):
         like = '%' + groups[1] + '%'
-        organisation = models.Organisation.query.filter_by(organisation_name=groups[0]).first()
+        organisation = models.Organisation.query.filter_by(organisation_code=groups[0]).first()
         tests = db.session.query(
             models.Test.id, 
             models.Test.name, 

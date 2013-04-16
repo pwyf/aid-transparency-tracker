@@ -20,7 +20,7 @@
     <tbody>
 	{% for pc in pcs %}
     <tr>
-	<td><a href="{{url_for('organisation_conditions', id=pc.id)}}">{{ pc.id }}</a></td><td>{{pc.description}}</td><td><a href="{{url_for('organisation', organisation_code=pc.organisation_code)}}">{{pc.organisation_name}}</td><td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_description}}</a></td>
+	<td><a href="{{url_for('organisation_conditions', id=pc.id)}}">{{ pc.id }}</a></td><td>{{pc.description}}</td><td><a href="{{url_for('organisations', organisation_code=pc.organisation_code)}}">{{pc.organisation_name}}</td><td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_description}}</a></td>
     </tr>
 	{% endfor %}
     </tr>

@@ -46,6 +46,7 @@ def get_pc(pc_id):
         OrganisationCondition.condition_value,
         Organisation.organisation_name.label("organisation_name"),
         Organisation.organisation_code.label("organisation_code"),
+        Organisation.id.label("organisation_id"),
         Test.name.label("test_name"),    
         Test.description.label("test_description"),
         Test.id.label("test_id")
@@ -58,6 +59,7 @@ def get_pcs():
         OrganisationCondition.description,
         Organisation.organisation_name.label("organisation_name"),
         Organisation.organisation_code.label("organisation_code"),
+        Organisation.id.label("organisation_id"),
         Test.name.label("test_name"),    
         Test.description.label("test_description"),
         Test.id.label("test_id")
@@ -85,7 +87,7 @@ def configure_organisation_condition(pc):
     pc.condition_value = request.form['condition_value']
     pc.file = request.form['file']
     pc.line = int(request.form['line'])
-    pc.active = int(request.form['active'])
+    pc.active = bool(request.form['active'])
 
 def update_organisation_condition(pc_id):
     pc = OrganisationCondition.query.filter_by(id=pc_id).first_or_404()
