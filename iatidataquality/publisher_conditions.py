@@ -143,7 +143,10 @@ def ipc_step2():
         return
 
     from iatidq import dqimportpublisherconditions
-    if request.form['password'] == app.config["SECRET_PASSWORD"]:
+    if not (request.form['password'] == app.config["SECRET_PASSWORD"]):
+        flash('Wrong password', "error")
+        return render_template("import_publisher_conditions.html")
+    else:
         if request.form.get('local'):
             results = dqimportpublisherconditions.importPCsFromFile()
         else:
@@ -158,9 +161,6 @@ def ipc_step2():
             results = None
             flash('There was an error importing your tests', "error")
             return redirect(url_for('import_publisher_conditions'))
-    else:
-        flash('Wrong password', "error")
-        return render_template("import_publisher_conditions.html")
 
 def import_pc_row(row):
     def pc_form_value(key):
