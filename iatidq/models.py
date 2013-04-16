@@ -309,12 +309,10 @@ class IndicatorTest(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class PublisherCondition(db.Model):
-    __tablename__ = 'publishercondition'
+class OrganisationCondition(db.Model):
+    __tablename__ = 'organisationcondition'
     id = Column(Integer, primary_key=True)
-    # TODO: this needs to be adjusted to publisher.id
-    # some other UI and processes will need to be adjusted
-    publisher_id = Column(Integer, ForeignKey('packagegroup.id'))
+    organisation_id = Column(Integer, ForeignKey('organisation.id'))
     test_id = Column(Integer, ForeignKey('test.id'))
     operation = Column(Integer) # show (1) or don't show (0) result
     condition = Column(UnicodeText) # activity level, hierarchy 2
