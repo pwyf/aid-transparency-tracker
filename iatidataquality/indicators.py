@@ -147,7 +147,7 @@ def indicatortests(indicatorgroup=None, indicator=None):
                 flash('Successfully added test to your indicator.', 'success')
             else:
                 flash("Couldn't add test to your indicator.", 'error')
-    indicatortests = dqindicators.indicatorTests(indicator.name)
+    indicatortests = dqindicators.indicatorTests(indicatorgroup.name, indicator.name)
     return render_template("indicatortests.html", indicatorgroup=indicatorgroup, indicator=indicator, indicatortests=indicatortests, alltests=alltests)
 
 @app.route("/indicators/<indicatorgroup>/<indicator>/<indicatortest>/delete/")

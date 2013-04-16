@@ -208,10 +208,11 @@ def deleteIndicator(indicatorgroup, indicator):
     else:
         return False
 
-def indicatorTests(indicator_name):
+def indicatorTests(indicatorgroup_name, indicator_name):
     indicatorTests = db.session.query(models.Test,
                                       models.IndicatorTest
                 ).filter(models.Indicator.name==indicator_name
+                ).filter(models.IndicatorGroup.name==indicatorgroup_name
                 ).join(models.IndicatorTest
                 ).join(models.Indicator
                 ).all()
