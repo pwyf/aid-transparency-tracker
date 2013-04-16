@@ -16,3 +16,5 @@ db = SQLAlchemy(app)
 
 import api
 import routes
+import publishers
+import publisher_conditions
