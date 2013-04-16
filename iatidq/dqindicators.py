@@ -269,8 +269,8 @@ def indicatorGroupTests(indicatorgroup_name=None, option=None):
                                 ).outerjoin(models.Indicator
                                 ).outerjoin(models.IndicatorGroup
                                 ).filter(models.IndicatorGroup.id==None
+                                ).filter(models.Test.id>0
                                 ).all()
-    #).filter(models.IndicatorTest.indicator_id==None
     if checkIGT:
         return checkIGT
     else:
