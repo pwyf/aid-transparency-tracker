@@ -64,22 +64,9 @@ def packages_manage():
 @app.route("/packages/<id>/runtimes/<runtime_id>/")
 def packages(id=None, runtime_id=None):
     if (id is None):
-        if (request.method == 'POST'):
-            for package in request.form.getlist('package'):
-                p = models.Package.query.filter_by(package_name=package).first()
-                try:
-                    request.form["active_"+package]
-                    p.active=True
-                except Exception:
-                    p.active=False
-                db.session.add(p)
-            db.session.commit()
-            flash("Updated packages", "success")
-            return redirect(url_for('packages'))
-        else:
-            pkgs = models.Package.query.filter_by(active=True).order_by(
-                models.Package.package_name).all()
-            return render_template("packages.html", pkgs=pkgs)
+        pkgs = models.Package.query.filter_by(active=True).order_by(
+            models.Package.package_name).all()
+        return render_template("packages.html", pkgs=pkgs)
 
     # Get package data
     p = db.session.query(models.Package,
