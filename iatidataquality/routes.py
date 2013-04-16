@@ -112,16 +112,6 @@ def orgview(organisation_code=None):
     return render_template("organisation_indicators.html", p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime)
 
-@app.route("/registry/refresh/")
-def registry_refresh():
-    dqregistry.refresh_packages()
-    return "Refreshed"
-
-@app.route("/registry/download/")
-def registry_download():
-    dqdownload.run()
-    return "Downloading"
-
 @app.route("/packages/manage/", methods=['GET', 'POST'])
 def packages_manage():
     if (request.method == 'POST'):
