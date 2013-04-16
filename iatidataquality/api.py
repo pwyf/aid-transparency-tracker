@@ -23,6 +23,8 @@ sys.path.append(parent)
 
 from iatidq import dqdownload, models, dqpackages
 
+from iatidq.models import *
+
 import datetime
 class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -120,15 +122,15 @@ def api_index():
 @app.route("/api/tests/")
 def api_tests():
     session = db.session
-    data = session.query(func.count(models.Result.id),
-                models.Result.result_data,
-                models.Result.test_id
-            ).group_by(models.Result.test_id
-            ).group_by(models.Result.result_data).all()
+    data = session.query(func.count(Result.id),
+                Result.result_data,
+                Result.test_id
+            ).group_by(Result.test_id
+            ).group_by(Result.result_data).all()
     percentage_passed = test_percentages(data)
 
     tests = map(lambda x: x.as_dict(),
-                session.query(models.Test).all()
+                session.query(Test).all()
             )
     for test in tests:
         try:
@@ -139,7 +141,7 @@ def api_tests():
 
 @app.route("/api/tests/<test_id>")
 def api_test(test_id):
-    test = db.session.query(models.Test).filter(models.Test.id == test_id).first()
+    test = db.session.query(Test).filter(Test.id == test_id).first()
     if test == None:
         abort(404)
     else:
@@ -148,21 +150,21 @@ def api_test(test_id):
 @app.route("/api/packages/active/")
 def api_packages_active():
     data = []
-    for package in models.Package.query.filter_by(active=True).all():
+    for package in Package.query.filter_by(active=True).all():
         data.append((package.package_name, package.active))
     return jsonify(data)
 
 @app.route("/api/packages/")
 @support_jsonp
 def api_packages():
-    packages = db.session.query(models.Package).all()
+    packages = db.session.query(Package).all()
 
     session = db.session
-    data = session.query(func.count(models.Result.id),
-                models.Result.result_data,
-                models.Result.package_id
-            ).group_by(models.Result.package_id
-            ).group_by(models.Result.result_data).all()
+    data = session.query(func.count(Result.id),
+                Result.result_data,
+                Result.package_id
+            ).group_by(Result.package_id
+            ).group_by(Result.result_data).all()
 
     return jsonify(
                    aggregated_test_results= aggregated_test_results(data), results_by_org=results_by_org(data, packages))
@@ -188,7 +190,7 @@ def api_package_status(package_id):
 @app.route('/api/packages/<package_name>')
 @support_jsonp
 def api_package(package_name):
-    package = db.session.query(models.Package).filter(models.Package.package_name == package_name).first()
+    package = db.session.query(Package).filter(Package.package_name == package_name).first()
     if package == None:
         abort(404)
     else:
@@ -215,30 +217,30 @@ def api_publisher_data(publisher_id):
 @app.route('/api/packages/<package_name>/tests/<test_id>/activities')
 @support_jsonp
 def api_package_activities(package_name, test_id, hierarchy_id=None):
-    package = db.session.query(models.Package).filter(models.Package.package_name == package_name).first()
-    latest_runtime = db.session.query(models.Runtime
-        ).filter(models.Result.package_id==package.id
-        ).join(models.Result
-        ).order_by(models.Runtime.id.desc()
+    package = db.session.query(Package).filter(Package.package_name == package_name).first()
+    latest_runtime = db.session.query(Runtime
+        ).filter(Result.package_id==package.id
+        ).join(Result
+        ).order_by(Runtime.id.desc()
         ).first()
 
     if (hierarchy_id):
         if (hierarchy_id=="None"): hierarchy_id=None
-        test_results = db.session.query(models.Result.result_identifier, 
-                                        models.Result.result_data
-            ).filter(models.Package.package_name == package_name, 
-                     models.Result.runtime_id==latest_runtime.id, 
-                     models.Result.test_id==test_id,
-                     models.Result.result_hierarchy==hierarchy_id
-            ).join(models.Package
+        test_results = db.session.query(Result.result_identifier, 
+                                        Result.result_data
+            ).filter(Package.package_name == package_name, 
+                     Result.runtime_id==latest_runtime.id, 
+                     Result.test_id==test_id,
+                     Result.result_hierarchy==hierarchy_id
+            ).join(Package
             ).all()
     else:
-        test_results = db.session.query(models.Result.result_identifier, 
-                                        models.Result.result_data
-            ).filter(models.Package.package_name == package_name, 
-                     models.Result.runtime_id==latest_runtime.id, 
-                     models.Result.test_id==test_id
-            ).join(models.Package
+        test_results = db.session.query(Result.result_identifier, 
+                                        Result.result_data
+            ).filter(Package.package_name == package_name, 
+                     Result.runtime_id==latest_runtime.id, 
+                     Result.test_id==test_id
+            ).join(Package
             ).all()
     if ((package == None) or (test_results==None)):
         abort(404)
@@ -253,48 +255,48 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
         offset = request.args['offset']
     else:
         offset = 0
-    packagegroup = db.session.query(models.PackageGroup).filter(models.PackageGroup.name == packagegroup_name).first()
+    packagegroup = db.session.query(PackageGroup).filter(PackageGroup.name == packagegroup_name).first()
 
     if (hierarchy_id):
         if (hierarchy_id=="None"): hierarchy_id=None
         # This is crude because it assumes there is only one result for this
         # test per activity-identifier. But that should be the case anyway.
-        test_count = db.session.query(func.count(models.Result.result_identifier)
-            ).filter(models.PackageGroup.name == packagegroup_name, 
-                     models.Result.test_id==test_id,
-                     models.Result.result_hierarchy==hierarchy_id
-            ).join(models.Package
-            ).join(models.PackageGroup
+        test_count = db.session.query(func.count(Result.result_identifier)
+            ).filter(PackageGroup.name == packagegroup_name, 
+                     Result.test_id==test_id,
+                     Result.result_hierarchy==hierarchy_id
+            ).join(Package
+            ).join(PackageGroup
             ).all()
-        test_results = db.session.query(models.Result.result_identifier, 
-                                        models.Result.result_data,
-                                        func.max(models.Result.runtime_id)
-            ).filter(models.PackageGroup.name == packagegroup_name, 
-                     models.Result.test_id==test_id,
-                     models.Result.result_hierarchy==hierarchy_id
-            ).group_by(models.Result.result_identifier
-            ).join(models.Package
-            ).join(models.PackageGroup
+        test_results = db.session.query(Result.result_identifier, 
+                                        Result.result_data,
+                                        func.max(Result.runtime_id)
+            ).filter(PackageGroup.name == packagegroup_name, 
+                     Result.test_id==test_id,
+                     Result.result_hierarchy==hierarchy_id
+            ).group_by(Result.result_identifier
+            ).join(Package
+            ).join(PackageGroup
             ).limit(50
             ).offset(offset
             ).all()
     else:
         # This is crude because it assumes there is only one result for this
         # test per activity-identifier. But that should be the case anyway.
-        test_count = db.session.query(func.count(models.Result.result_identifier)
-            ).filter(models.PackageGroup.name == packagegroup_name, 
-                     models.Result.test_id==test_id
-            ).join(models.Package
-            ).join(models.PackageGroup
+        test_count = db.session.query(func.count(Result.result_identifier)
+            ).filter(PackageGroup.name == packagegroup_name, 
+                     Result.test_id==test_id
+            ).join(Package
+            ).join(PackageGroup
             ).all()
-        test_results = db.session.query(models.Result.result_identifier, 
-                                        models.Result.result_data,
-                                        func.count(models.Result.runtime_id)
-            ).filter(models.PackageGroup.name == packagegroup_name, 
-                     models.Result.test_id==test_id
-            ).group_by(models.Result.result_identifier
-            ).join(models.Package
-            ).join(models.PackageGroup
+        test_results = db.session.query(Result.result_identifier, 
+                                        Result.result_data,
+                                        func.count(Result.runtime_id)
+            ).filter(PackageGroup.name == packagegroup_name, 
+                     Result.test_id==test_id
+            ).group_by(Result.result_identifier
+            ).join(Package
+            ).join(PackageGroup
             ).limit(50
             ).offset(offset
             ).all()
