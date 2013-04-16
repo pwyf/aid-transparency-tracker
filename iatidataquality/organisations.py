@@ -159,7 +159,8 @@ def organisationpackage_delete(organisation_code=None,
     msg_template, msg_type = get_message(result)    
     flash(msg_template % (package_name, organisation_code), msg_type)
         
-    return redirect(url_for('organisation_edit', organisation_code=organisation_code))
+    return redirect(url_for('organisation_edit', 
+                            organisation_code=organisation_code))
 
 def _organisation_indicators_summary(organisation):
     summarydata = _organisation_indicators(organisation)
