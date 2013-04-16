@@ -59,6 +59,30 @@ def packages_manage():
     return redirect(url_for('packages_manage'))
 
 
+def package_aggregation(p, latest_runtime):
+    return db.session.query(
+        models.Indicator,
+        models.Test,
+        models.AggregateResult.results_data,
+        models.AggregateResult.results_num,
+        models.AggregateResult.result_hierarchy
+        ).filter(
+        models.AggregateResult.package_id==p[0].id,
+        models.AggregateResult.runtime_id==latest_runtime.id
+        ).group_by(
+            models.AggregateResult.result_hierarchy, 
+            models.Test,
+            models.AggregateResult.results_data,
+            models.AggregateResult.results_num,
+            models.Indicator
+            ).join(
+            models.IndicatorTest
+            ).join(
+                models.Test
+                ).join(
+                models.AggregateResult
+                ).all()
+                   
 @app.route("/packages/")
 @app.route("/packages/<id>/")
 @app.route("/packages/<id>/runtimes/<runtime_id>/")
@@ -98,39 +122,24 @@ def packages(id=None, runtime_id=None):
     except Exception:
         return abort(404)
 
-    if runtime_id:
-        # If a runtime is specified in the request, get the data
+    def get_latest_runtime():
+        if runtime_id:
+            # If a runtime is specified in the request, get the data
+            return (db.session.query(models.Runtime).\
+                        filter(models.Runtime.id==runtime_id
+                               ).first(), False)
+        else:
+            # Select the highest runtime; then get data for that one
+            return (db.session.query(models.Runtime).\
+                        filter(models.Result.package_id==p[0].id
+                               ).join(models.Result).\
+                        order_by(models.Runtime.id.desc()).first(),
+                    True)
 
-        latest_runtime = db.session.query(models.Runtime,
-            ).filter(models.Runtime.id==runtime_id
-            ).first()
-        latest = False
-    else:
-        # Select the highest runtime; then get data for that one
+    latest_runtime, latest = get_latest_runtime()
 
-        latest_runtime = db.session.query(models.Runtime
-            ).filter(models.Result.package_id==p[0].id
-            ).join(models.Result
-            ).order_by(models.Runtime.id.desc()
-            ).first()
-        latest = True
     if latest_runtime:
-        aggregate_results = db.session.query(models.Indicator,
-                                             models.Test,
-                                             models.AggregateResult.results_data,
-                                             models.AggregateResult.results_num,
-                                             models.AggregateResult.result_hierarchy
-                ).filter(models.AggregateResult.package_id==p[0].id,
-                         models.AggregateResult.runtime_id==latest_runtime.id
-                ).group_by(models.AggregateResult.result_hierarchy, 
-                           models.Test,
-                           models.AggregateResult.results_data,
-                           models.AggregateResult.results_num,
-                           models.Indicator
-                ).join(models.IndicatorTest
-                ).join(models.Test
-                ).join(models.AggregateResult
-                ).all()
+        aggregate_results = package_aggregation(p, latest_runtime)
 
         flat_results = aggregate_results
 
