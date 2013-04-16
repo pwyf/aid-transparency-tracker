@@ -42,7 +42,7 @@ test_list_location = "tests/activity_tests.csv"
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
-    if (organisation_code is not None):
+    if organisation_code is not None:
         organisation = dqorganisations.organisations(organisation_code)
         try:
             summary_data = _organisation_indicators_summary(organisation)
@@ -55,7 +55,7 @@ def organisations(organisation_code=None):
 
 @app.route("/organisations/new/", methods=['GET','POST'])
 def organisation_new():
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         data = {
             'organisation_code': request.form['organisation_code'],
             'organisation_name': request.form['organisation_name']
@@ -93,7 +93,7 @@ def organisation_publication(organisation_code=None):
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 def organisation_edit(organisation_code=None):
     packages = dqpackages.packages()
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         if 'addpackages' in request.form:
             organisation = dqorganisations.organisations(organisation_code)
             for package in request.form.getlist('package'):
