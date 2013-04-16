@@ -15,14 +15,11 @@ import util
 import urllib2
 
 def _importPCs(fh, local=True):
-    #models.Test.query.filter(models.Test.test_level==1).\
-    #    update({models.Test.active: False})
     
     results = {}
     for n, line in enumerate(fh):
         text = line.strip('\n')
         results[n]=text
-        #results.append(text)
         
     import dqparseconditions
     test_functions = dqparseconditions.parsePC(results)
