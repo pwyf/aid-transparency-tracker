@@ -69,12 +69,14 @@ def get_pcs():
 @app.route("/publisher_conditions/")
 @app.route("/publisher_conditions/<id>/")
 def publisher_conditions(id=None):
-    if (id is not None):
+    if id is not None:
         pc = get_pc(id)
         return render_template("publisher_condition.html", pc=pc)
     else:
         pcs = get_pcs()
         return render_template("publisher_conditions.html", pcs=pcs)
+
+    
 
 @app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
 def publisher_conditions_editor(id=None):
