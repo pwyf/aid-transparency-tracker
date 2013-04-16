@@ -93,7 +93,8 @@ def check_file(test_functions, codelists, file_name,
         db.session.commit()
 
         if not xml_parsed:
-            return
+            print "XML parse failed"
+            return False
 
         def get_result_hierarchy(activity):
             hierarchy = activity.get('hierarchy', default=None)
@@ -121,8 +122,10 @@ def check_file(test_functions, codelists, file_name,
         db.session.commit()    
 
         dqfunctions.add_test_status(package_id, 3, commit=True)
+        return True
     except Exception, e:
         print "Exception in check_file ", e
+        return False
 
 def dequeue_download(body, test_functions, codelists):
     try:
