@@ -76,8 +76,7 @@ def publisher_conditions(id=None):
         pcs = get_pcs()
         return render_template("publisher_conditions.html", pcs=pcs)
 
-def update_publisher_condition(pc_id):
-    pc = PublisherCondition.query.filter_by(id=pc_id).first_or_404()
+def configure_publisher_condition(pc):
     pc.description = request.form['description']
     pc.publisher_id = int(request.form['publisher_id'])
     pc.test_id = int(request.form['test_id'])
@@ -87,6 +86,10 @@ def update_publisher_condition(pc_id):
     pc.file = request.form['file']
     pc.line = int(request.form['line'])
     pc.active = int(request.form['active'])
+
+def update_publisher_condition(pc_id):
+    pc = PublisherCondition.query.filter_by(id=pc_id).first_or_404()
+    configure_publisher_condition(pc)
     db.session.add(pc)
     db.session.commit()
 
@@ -114,15 +117,7 @@ def publisher_conditions_new(id=None):
     tests = Test.query.order_by(Test.id).all()
     if (request.method == 'POST'):
         pc = PublisherCondition()
-        pc.description = request.form['description']
-        pc.publisher_id = int(request.form['publisher_id'])
-        pc.test_id = int(request.form['test_id'])
-        pc.operation = int(request.form['operation'])
-        pc.condition = request.form['condition']
-        pc.condition_value = request.form['condition_value']
-        pc.file = request.form['file']
-        pc.line = int(request.form['line'])
-        pc.active = int(request.form['active'])
+        configure_publisher_condition(pc)
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
             db.session.add(pc)
             db.session.commit()
