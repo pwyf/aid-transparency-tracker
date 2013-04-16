@@ -72,8 +72,8 @@ def organisation_new():
     return render_template("organisation_edit.html", organisation=organisation)
 
 
-@app.route("/orgview/<organisation_code>/")
-def orgview(organisation_code=None):
+@app.route("/organisations/<organisation_code>/publication/")
+def organisation_publication(organisation_code=None):
     p_group = models.Organisation.query.filter_by(organisation_code=organisation_code).first_or_404()
 
     pkgs = db.session.query(models.Package
