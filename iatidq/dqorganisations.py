@@ -24,9 +24,9 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
 
         for row in data:
             if organisation_c is None:
-                checkP = organisations(row['publisher_code'])
-                organisation_code = row['publisher_code']
-                organisation_name = row['publisher_name']
+                checkP = organisations(row['organisation_code'])
+                organisation_code = row['organisation_code']
+                organisation_name = row['organisation_name']
             else:
                 checkP = organisations(organisation_c)
                 organisation_code = organisation_c
