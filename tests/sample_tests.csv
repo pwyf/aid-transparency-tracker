@@ -1,4 +1,4 @@
-test,description,group,oldgroup,level,longdescription
+indicator_name,indicator_description,test_name,test_description
 "description/text() exists?",Description,description,description,1,"Activity description"
 "description/text() has more than 40 characters?","Description, more than 40 chars",description,description,1,"Description has more than 40 characters"
 "description/@type exists?","Description type",description,description,1,"Type of activity description"
