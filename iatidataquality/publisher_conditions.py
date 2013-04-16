@@ -76,8 +76,6 @@ def publisher_conditions(id=None):
         pcs = get_pcs()
         return render_template("publisher_conditions.html", pcs=pcs)
 
-    
-
 @app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
 def publisher_conditions_editor(id=None):
     publishers = PackageGroup.query.order_by(
@@ -101,9 +99,6 @@ def publisher_conditions_editor(id=None):
             return redirect(url_for('publisher_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
-            pc = PublisherCondition.query.filter_by(id=id).first_or_404()
-            return render_template("publisher_condition_editor.html", 
-                                   pc=pc, publishers=publishers, tests=tests)
     else:
         pc = PublisherCondition.query.filter_by(id=id).first_or_404()
         return render_template("publisher_condition_editor.html", 
