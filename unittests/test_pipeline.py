@@ -38,6 +38,7 @@ def setup_func():
     print  >>sys.stderr, "committed"
 
 def teardown_func():
+    db.session.commit()
     pass
 
 def get_packagegroups_by_name(name):
@@ -74,7 +75,7 @@ def test_refresh():
     pkg = pkgs[0]
     assert pkg.package_name == package_name
 
-def test_example_tests():
+def _test_example_tests():
     publisher = 'worldbank'
     country = 'tz'
     package_name = '-'.join([publisher, country])
@@ -143,7 +144,7 @@ def test_example_tests():
 
     assert iatidq.test_queue.check_file(test_functions, 
                codelists,
-               "pkgdata-worldbank-tz.json",
+               "unittests/artefacts/worldbank-tz.xml",
                runtime.id,
                pkg.id,
                context=None)
@@ -153,8 +154,8 @@ def test_example_tests():
     print >>sys.stderr, len(results)
 
 @nose.with_setup(setup_func, teardown_func)
-def test_example_tests_nose():
-    return test_example_tests()
+def test_example_tests():
+    return _test_example_tests()
 
 if __name__ == '__main__':
     setup_func()

@@ -80,8 +80,6 @@ def parse_xml(file_name):
         return True, data
     except etree.XMLSyntaxError:
         return False, None
-    except:
-        return False, None
 
 def check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id, context=None):
@@ -125,7 +123,7 @@ def check_file(test_functions, codelists, file_name,
         return True
     except Exception, e:
         print "Exception in check_file ", e
-        return False
+        raise
 
 def dequeue_download(body, test_functions, codelists):
     try:
