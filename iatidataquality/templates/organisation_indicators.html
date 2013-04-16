@@ -49,7 +49,20 @@
         <tbody>
         {% for indicator, result in results.items() %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
-            <td><a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">{{result["indicator"]["description"]}}</a></td>
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        Description of the indicator goes here. <a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">Details &raquo;</a>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
 	        <td></td>
             <td class="pct">{{result.results_pct|round|int}}</td>
             <td></td>
