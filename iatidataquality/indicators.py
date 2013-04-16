@@ -98,9 +98,9 @@ def indicators(indicatorgroup=None):
 def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
     strIO = StringIO.StringIO()
     if (option != "no"):
-        fieldnames = "indicator_name indicator_description test_name test_description".split()
+        fieldnames = "test_name test_description test_level indicator_name indicator_description".split()
     else:
-        fieldnames = "test_name test_description".split()
+        fieldnames = "test_name test_description test_level".split()
     out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
     headers = {}
     for fieldname in fieldnames:
@@ -112,13 +112,13 @@ def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
         if (option !="no"):
             out.writerow({"test_name": d[2], 
                           "test_description": d[3], 
-                          "level": d[4],
+                          "test_level": d[4],
                           "indicator_name": d[0], 
                           "indicator_description": d[1], })
         else:
             out.writerow({"test_name": d[0], 
                           "test_description": d[1], 
-                          "level": d[2]})            
+                          "test_level": d[2]})            
     strIO.seek(0)
     if option ==None:
         option = ""
