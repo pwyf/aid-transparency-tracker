@@ -153,6 +153,29 @@ def _test_example_tests():
     assert len(results) > 0
     print >>sys.stderr, len(results)
 
+    aggtest_results = iatidq.models.AggregateResult.query.all()
+    for result in aggtest_results:
+        assert result.runtime_id == runtime.id
+        assert result.package_id == pkg.id
+    
+    resultful_tests = [
+        'valid_xml',
+        'description/text() exists?',
+        'description/text() has more than 40 characters?',
+        'description/@type exists?',
+        'title/text() exists?',
+        'title/text() has more than 10 characters?'
+        ]
+
+    expected_test_ids = [ i.id for i in iatidq.models.Test.query.filter(
+        Test.name.in_(resultful_tests)).all() ]
+    
+    observed_test_ids = [ i.test_id for i in aggtest_results ]
+
+    print expected_test_ids
+    print observed_test_ids
+    assert set(expected_test_ids) == set(observed_test_ids)
+
 @nose.with_setup(setup_func, teardown_func)
 def test_example_tests():
     return _test_example_tests()
