@@ -92,28 +92,6 @@ def login():
             flash(u"Invalid username.")
     return render_template("login.html")
 
-
-
-@app.route("/orgview/<organisation_code>/")
-def orgview(organisation_code=None):
-    p_group = models.Organisation.query.filter_by(organisation_code=organisation_code).first_or_404()
-
-    pkgs = db.session.query(models.Package
-            ).filter(models.Organisation.organisation_code == organisation_code
-            ).join(models.OrganisationPackage
-            ).join(models.Organisation
-            ).order_by(models.Package.package_name
-            ).all()
-
-    aggregate_results = _organisation_indicators(p_group);
-
-    latest_runtime=1
-
-    return render_template("organisation_indicators.html", p_group=p_group, pkgs=pkgs, 
-                           results=aggregate_results, runtime=latest_runtime)
-
-
-
 @app.route("/aggregate_results/<package_id>/<runtime>")
 def display_aggregate_results(package_id, runtime):
     dqprocessing.aggregate_results(runtime, package_id)
