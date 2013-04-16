@@ -38,25 +38,26 @@ import spreadsheet
 
 @app.route("/packages/manage/", methods=['GET', 'POST'])
 def packages_manage():
-    if request.method == 'POST':
-        if ("refresh" in request.form):
-            dqregistry.refresh_packages()
-            flash("Refreshed packages from Registry", "success")
-        else:
-            data = []
-            for package in request.form.getlist('package'):
-                try:
-                    request.form["active_"+package]
-                    active=True
-                except Exception:
-                    active=False
-                data.append((package, active))
-            dqregistry.activate_packages(data)
-            flash("Updated packages", "success")
-        return redirect(url_for('packages_manage'))
-    else:
+    if request.method != 'POST':
         pkgs = models.Package.query.order_by(models.Package.package_name).all()
         return render_template("packages_manage.html", pkgs=pkgs)
+
+    if ("refresh" in request.form):
+        dqregistry.refresh_packages()
+        flash("Refreshed packages from Registry", "success")
+    else:
+        data = []
+        for package in request.form.getlist('package'):
+            try:
+                request.form["active_"+package]
+                active=True
+            except Exception:
+                active=False
+            data.append((package, active))
+        dqregistry.activate_packages(data)
+        flash("Updated packages", "success")
+    return redirect(url_for('packages_manage'))
+
 
 @app.route("/packages/")
 @app.route("/packages/<id>/")
