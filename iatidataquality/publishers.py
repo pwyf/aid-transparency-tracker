@@ -28,8 +28,10 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
 import aggregation
+
+from iatidq.models import *
 
 import StringIO
 import unicodecsv
@@ -38,35 +40,38 @@ import spreadsheet
 
 @app.route("/publishers/")
 def publishers():
-    p_groups = models.PackageGroup.query.order_by(
-        models.PackageGroup.name).all()
+    p_groups = PackageGroup.query.order_by(
+        PackageGroup.name).all()
 
-    pkgs = models.Package.query.order_by(models.Package.package_name).all()
+    pkgs = Package.query.order_by(Package.package_name).all()
     return render_template("packagegroups.html", p_groups=p_groups, pkgs=pkgs)
 
+def _publisher_detail_ungrouped(p_group):
+    return db.session.query(Indicator,
+                                     Test,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(PackageGroup.id==p_group.id)
+
 def _publisher_detail(p_group):
-    aggregate_results = db.session.query(models.Indicator,
-                                     models.Test,
-                                     models.AggregateResult.results_data,
-                                     models.AggregateResult.results_num,
-                                     models.AggregateResult.result_hierarchy,
-                                     models.AggregateResult.package_id,
-                                     func.max(models.AggregateResult.runtime_id)
-        ).filter(models.PackageGroup.id==p_group.id
-        ).group_by(models.Indicator,
-                   models.AggregateResult.result_hierarchy, 
-                   models.Test, 
-                   models.AggregateResult.package_id,
-                   models.AggregateResult.results_data,
-                   models.AggregateResult.results_num
-        ).join(models.IndicatorTest
-        ).join(models.Test
-        ).join(models.AggregateResult
-        ).join(models.Package
-        ).join(models.PackageGroup
+    aggregate_results = _publisher_detail_ungrouped(p_group)\
+        .group_by(Indicator,
+                   AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(PackageGroup
         ).all()
 
-    pconditions = models.PublisherCondition.query.filter_by(
+    pconditions = PublisherCondition.query.filter_by(
         publisher_id=p_group.id).all()
 
     db.session.commit()
@@ -76,11 +81,11 @@ def _publisher_detail(p_group):
 
 @app.route("/publishers/<id>/detail")
 def publisher_detail(id=None):
-    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+    p_group = PackageGroup.query.filter_by(name=id).first_or_404()
 
-    pkgs = db.session.query(models.Package
-            ).filter(models.Package.package_group == p_group.id
-            ).order_by(models.Package.package_name).all()
+    pkgs = db.session.query(Package
+            ).filter(Package.package_group == p_group.id
+            ).order_by(Package.package_name).all()
 
     aggregate_results = _publisher_detail(p_group)
     latest_runtime=1
@@ -91,11 +96,11 @@ def publisher_detail(id=None):
 
 @app.route("/publishers/<id>/detail.json")
 def publisher_detail_json(id=None):
-    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+    p_group = PackageGroup.query.filter_by(name=id).first_or_404()
 
-    pkgs = db.session.query(models.Package
-            ).filter(models.Package.package_group == p_group.id
-            ).order_by(models.Package.package_name).all()
+    pkgs = db.session.query(Package
+            ).filter(Package.package_group == p_group.id
+            ).order_by(Package.package_name).all()
 
     aggregate_results = _publisher_detail(p_group)
     latest_runtime=1
@@ -107,11 +112,11 @@ def publisher_detail_json(id=None):
 
 @app.route("/publishers/<id>/detail.csv")
 def publisher_detail_csv(id=None):
-    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+    p_group = PackageGroup.query.filter_by(name=id).first_or_404()
 
-    pkgs = db.session.query(models.Package
-            ).filter(models.Package.package_group == p_group.id
-            ).order_by(models.Package.package_name).all()
+    pkgs = db.session.query(Package
+            ).filter(Package.package_group == p_group.id
+            ).order_by(Package.package_name).all()
 
     aggregate_results = _publisher_detail(p_group)
     latest_runtime=1
@@ -135,11 +140,11 @@ def publisher_detail_csv(id=None):
 
 @app.route("/publishers/<id>/detail.xls")
 def publisher_detail_xls(id=None):
-    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+    p_group = PackageGroup.query.filter_by(name=id).first_or_404()
 
-    pkgs = db.session.query(models.Package
-            ).filter(models.Package.package_group == p_group.id
-            ).order_by(models.Package.package_name).all()
+    pkgs = db.session.query(Package
+            ).filter(Package.package_group == p_group.id
+            ).order_by(Package.package_name).all()
 
     aggregate_results = _publisher_detail(p_group)
     latest_runtime=1
@@ -162,36 +167,29 @@ def publisher_detail_xls(id=None):
 
 @app.route("/publishers/<id>/")
 def publisher(id=None):
-    p_group = models.PackageGroup.query.filter_by(name=id).first_or_404()
+    p_group = PackageGroup.query.filter_by(name=id).first_or_404()
 
-    pkgs = db.session.query(models.Package
-            ).filter(models.Package.package_group == p_group.id
-            ).order_by(models.Package.package_name).all()
+    pkgs = db.session.query(Package
+            ).filter(Package.package_group == p_group.id
+            ).order_by(Package.package_name).all()
 
     """try:"""
-    aggregate_results = db.session.query(models.Indicator,
-                                     models.Test,
-                                     models.AggregateResult.results_data,
-                                     models.AggregateResult.results_num,
-                                     models.AggregateResult.result_hierarchy,
-                                     models.AggregateResult.package_id,
-                                     func.max(models.AggregateResult.runtime_id)
-        ).filter(models.PackageGroup.id==p_group.id
-        ).group_by(models.AggregateResult.result_hierarchy, 
-                   models.Test, 
-                   models.AggregateResult.package_id,
-                   models.Indicator,
-                   models.AggregateResult.results_data,
-                   models.AggregateResult.results_num,
-                   models.AggregateResult.package_id
-        ).join(models.IndicatorTest
-        ).join(models.Test
-        ).join(models.AggregateResult
-        ).join(models.Package
-        ).join(models.PackageGroup
+    aggregate_results = _publisher_detail_ungrouped(p_group)\
+        .group_by(AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   Indicator,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num,
+                   AggregateResult.package_id
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(PackageGroup
         ).all()
 
-    pconditions = models.PublisherCondition.query.filter_by(
+    pconditions = PublisherCondition.query.filter_by(
         publisher_id=p_group.id).all()
 
     aggregate_results = aggregation.agr_results(aggregate_results, 

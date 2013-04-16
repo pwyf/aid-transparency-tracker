@@ -28,7 +28,8 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
+from iatidq.models import *
 import aggregation
 
 import StringIO
@@ -36,83 +37,94 @@ import unicodecsv
 import tempfile
 import spreadsheet
 
+def get_pc(pc_id):
+    return db.session.query(
+        PublisherCondition.id,
+        PublisherCondition.description,
+        PublisherCondition.operation,
+        PublisherCondition.condition,
+        PublisherCondition.condition_value,
+        PackageGroup.title.label("packagegroup_name"),
+        PackageGroup.id.label("packagegroup_id"),
+        Test.name.label("test_name"),    
+        Test.description.label("test_description"),
+        Test.id.label("test_id")
+        ).filter_by(id=pc_id
+                    ).join(PackageGroup, Test).first()
+
+def get_pcs():
+    return db.session.query(
+        PublisherCondition.id,
+        PublisherCondition.description,
+        PackageGroup.title.label("packagegroup_name"),
+        PackageGroup.id.label("packagegroup_id"),
+        Test.name.label("test_name"),    
+        Test.description.label("test_description"),
+        Test.id.label("test_id")
+        ).order_by(
+        PublisherCondition.id
+        ).join(PackageGroup, Test
+               ).all()
+        
 @app.route("/publisher_conditions/")
 @app.route("/publisher_conditions/<id>/")
 def publisher_conditions(id=None):
-    if (id is not None):
-        pc = db.session.query(models.PublisherCondition.id,
-                               models.PublisherCondition.description,
-                               models.PublisherCondition.operation,
-                               models.PublisherCondition.condition,
-                               models.PublisherCondition.condition_value,
-                               models.PackageGroup.title.label("packagegroup_name"),
-                               models.PackageGroup.id.label("packagegroup_id"),
-                               models.Test.name.label("test_name"),    
-                               models.Test.description.label("test_description"),
-                               models.Test.id.label("test_id")
-                            ).filter_by(id=id
-                            ).join(models.PackageGroup, models.Test).first()
+    if id is not None:
+        pc = get_pc(id)
         return render_template("publisher_condition.html", pc=pc)
     else:
-        pcs = db.session.query(models.PublisherCondition.id,
-                               models.PublisherCondition.description,
-                               models.PackageGroup.title.label("packagegroup_name"),
-                               models.PackageGroup.id.label("packagegroup_id"),
-                               models.Test.name.label("test_name"),    
-                               models.Test.description.label("test_description"),
-                               models.Test.id.label("test_id")
-                            ).order_by(models.PublisherCondition.id
-                            ).join(models.PackageGroup, models.Test
-                            ).all()
+        pcs = get_pcs()
         return render_template("publisher_conditions.html", pcs=pcs)
+
+def configure_publisher_condition(pc):
+    pc.description = request.form['description']
+    pc.publisher_id = int(request.form['publisher_id'])
+    pc.test_id = int(request.form['test_id'])
+    pc.operation = int(request.form['operation'])
+    pc.condition = request.form['condition']
+    pc.condition_value = request.form['condition_value']
+    pc.file = request.form['file']
+    pc.line = int(request.form['line'])
+    pc.active = int(request.form['active'])
+
+def update_publisher_condition(pc_id):
+    pc = PublisherCondition.query.filter_by(id=pc_id).first_or_404()
+    configure_publisher_condition(pc)
+    db.session.add(pc)
+    db.session.commit()
 
 @app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
 def publisher_conditions_editor(id=None):
-    publishers = models.PackageGroup.query.order_by(
-        models.PackageGroup.id).all()
-    tests = models.Test.query.order_by(models.Test.id).all()
-    if (request.method == 'POST'):
-        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
-            pc.description = request.form['description']
-            pc.publisher_id = int(request.form['publisher_id'])
-            pc.test_id = int(request.form['test_id'])
-            pc.operation = int(request.form['operation'])
-            pc.condition = request.form['condition']
-            pc.condition_value = request.form['condition_value']
-            pc.file = request.form['file']
-            pc.line = int(request.form['line'])
-            pc.active = int(request.form['active'])
-            db.session.add(pc)
-            db.session.commit()
+    publishers = PackageGroup.query.order_by(
+        PackageGroup.id).all()
+    tests = Test.query.order_by(Test.id).all()
+    if request.method == 'POST':
+        if request.form['password'] == app.config["SECRET_PASSWORD"]:
+            update_publisher_condition(id)
             flash('Updated', "success")
             return redirect(url_for('publisher_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
-            pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
-            return render_template("publisher_condition_editor.html", 
-                                   pc=pc, publishers=publishers, tests=tests)
     else:
-        pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
+        pc = PublisherCondition.query.filter_by(id=id).first_or_404()
         return render_template("publisher_condition_editor.html", 
                                pc=pc, publishers=publishers, tests=tests)
 
 @app.route("/publisher_conditions/new/", methods=['GET', 'POST'])
 def publisher_conditions_new(id=None):
-    publishers = models.PackageGroup.query.order_by(
-        models.PackageGroup.id).all()
-    tests = models.Test.query.order_by(models.Test.id).all()
+    publishers = PackageGroup.query.order_by(
+        PackageGroup.id).all()
+    tests = Test.query.order_by(Test.id).all()
+
+    template_args = dict(
+        pc={},
+        publishers=publishers, 
+        tests=tests
+        )
+
     if (request.method == 'POST'):
-        pc = models.PublisherCondition()
-        pc.description = request.form['description']
-        pc.publisher_id = int(request.form['publisher_id'])
-        pc.test_id = int(request.form['test_id'])
-        pc.operation = int(request.form['operation'])
-        pc.condition = request.form['condition']
-        pc.condition_value = request.form['condition_value']
-        pc.file = request.form['file']
-        pc.line = int(request.form['line'])
-        pc.active = int(request.form['active'])
+        pc = PublisherCondition()
+        configure_publisher_condition(pc)
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
             db.session.add(pc)
             db.session.commit()
@@ -120,11 +132,71 @@ def publisher_conditions_new(id=None):
             return redirect(url_for('publisher_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
-            return render_template("publisher_condition_editor.html", 
-                                   pc=pc, publishers=publishers, tests=tests)
+            template_args["pc"] = pc
     else:
         return render_template("publisher_condition_editor.html", 
-                               pc={}, publishers=publishers, tests=tests)
+                               **template_args)
+
+def ipc_step2():
+    step = '2'
+    if request.method != 'POST':
+        return
+
+    from iatidq import dqimportpublisherconditions
+    if not (request.form['password'] == app.config["SECRET_PASSWORD"]):
+        flash('Wrong password', "error")
+        return render_template("import_publisher_conditions.html")
+
+    def get_results():
+        if request.form.get('local'):
+            return dqimportpublisherconditions.importPCsFromFile()
+        else:
+            url = request.form['url']
+            return dqimportpublisherconditions.importPCsFromUrl(url)
+
+    results = get_results()
+
+    if results:
+        flash('Parsed tests', "success")
+        return render_template(
+            "import_publisher_conditions_step2.html", 
+            results=results, step=step)
+    else:
+        flash('There was an error importing your tests', "error")
+        return redirect(url_for('import_publisher_conditions'))
+
+def import_pc_row(row):
+    def pc_form_value(key):
+        form_key = 'pc[%s][%s]' % (row, key)
+        return request.form[form_key]
+
+    publisher_id = pc_form_value('publisher_id')
+    test_id = pc_form_value('test_id')
+    operation = pc_form_value('operation')
+    condition = pc_form_value('condition')
+    condition_value = pc_form_value('condition_value')
+
+    pc = PublisherCondition.query.filter_by(
+        publisher_id=publisher_id, test_id=test_id, 
+        operation=operation, condition=condition, 
+        condition_value=condition_value).first()
+
+    if (pc is None):
+        pc = PublisherCondition()
+        
+    pc.publisher_id=publisher_id
+    pc.test_id=test_id
+    pc.operation = operation
+    pc.condition = condition
+    pc.condition_value = condition_value
+    pc.description = pc_form_value('description')
+    db.session.add(pc)
+
+def ipc_step3():
+    [ import_pc_row(row) for row in request.form.getlist('include') ]
+    db.session.commit()
+    flash('Successfully updated publisher conditions', 'success')
+    return redirect(url_for('publisher_conditions'))
 
 @app.route("/publisher_conditions/import/step<step>", methods=['GET', 'POST'])
 @app.route("/publisher_conditions/import/", methods=['GET', 'POST'])
@@ -132,57 +204,16 @@ def import_publisher_conditions(step=None):
     # Step=1: form; submit to step2
     # 
     if (step == '2'):
-        if (request.method == 'POST'):
-            from iatidq import dqimportpublisherconditions
-            if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-                if (request.form.get('local')):
-                    results = dqimportpublisherconditions.importPCsFromFile()
-                else:
-                    url = request.form['url']
-                    results = dqimportpublisherconditions.importPCsFromUrl(url)
-                if (results):
-                    flash('Parsed tests', "success")
-                    return render_template(
-                        "import_publisher_conditions_step2.html", 
-                        results=results, step=step)
-                else:
-                    results = None
-                    flash('There was an error importing your tests', "error")
-                    return redirect(url_for('import_publisher_conditions'))
-            else:
-                flash('Wrong password', "error")
-                return render_template("import_publisher_conditions.html")
+        return ipc_step2()
     elif (step=='3'):
-        out = []
-        for row in request.form.getlist('include'):
-            publisher_id = request.form['pc['+row+'][publisher_id]']
-            test_id = request.form['pc['+row+'][test_id]']
-            operation = request.form['pc['+row+'][operation]']
-            condition = request.form['pc['+row+'][condition]']
-            condition_value = request.form['pc['+row+'][condition_value]']
-            pc = models.PublisherCondition.query.filter_by(
-                publisher_id=publisher_id, test_id=test_id, 
-                operation=operation, condition=condition, 
-                condition_value=condition_value).first()
-            if (pc is None):
-                pc = models.PublisherCondition()
-            pc.publisher_id=publisher_id
-            pc.test_id=test_id
-            pc.operation = operation
-            pc.condition = condition
-            pc.condition_value = condition_value
-            pc.description = request.form['pc['+row+'][description]']
-            db.session.add(pc)
-        db.session.commit()
-        flash('Successfully updated publisher conditions', 'success')
-        return redirect(url_for('publisher_conditions'))
+        return ipc_step3()
     else:
         return render_template("import_publisher_conditions.html")
 
 @app.route("/publisher_conditions/export/")
 def export_publisher_conditions():
     conditions = db.session.query(
-        models.PublisherCondition.description).distinct().all()
+        PublisherCondition.description).distinct().all()
     conditionstext = ""
     for i, condition in enumerate(conditions):
         if (i != 0):

@@ -28,7 +28,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, dqtests
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, dqtests
 import aggregation
 
 import StringIO
