@@ -1,0 +1,7 @@
+test,description,group,oldgroup,level,longdescription
+"description/text() exists?",Description,description,description,1,"Activity description"
+"description/text() has more than 40 characters?","Description, more than 40 chars",description,description,1,"Description has more than 40 characters"
+"description/@type exists?","Description type",description,description,1,"Type of activity description"
+"description/@type is on list DescriptionType?","Description type is on the IATI Description Type codelist",description,description,1,"Type of activity description is on the IATI Description Type codelist"
+"title/text() exists?",Title,title,title,1,"Activity title"
+"title/text() has more than 10 characters?","Title, more than 10 chars",title,title,1,"Title has more than 10 characters"
