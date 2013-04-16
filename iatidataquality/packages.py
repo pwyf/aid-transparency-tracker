@@ -70,20 +70,22 @@ def packages(id=None, runtime_id=None):
 
     # Get package data
     p = db.session.query(models.Package,
-        models.PackageGroup
-		).filter(models.Package.package_name == id
-        ).join(models.PackageGroup).first()
+                         models.PackageGroup
+                         ).filter(models.Package.package_name == id
+                                  ).join(models.PackageGroup).first()
 
-    if p is None:
-        p = db.session.query(models.Package
-		).filter(models.Package.package_name == id
-        ).first()
-        pconditions = {}
-    else:
+
+    def get_pconditions():
+        if p is None:
+            p = db.session.query(models.Package).\
+                filter(models.Package.package_name == id).first()
+            return {}
+        else:
         # Get publisher-specific conditions.
+            return models.PublisherCondition.query.filter_by(
+                publisher_id=p[1].id).all()
 
-        pconditions = models.PublisherCondition.query.filter_by(
-            publisher_id=p[1].id).all()
+    pconditions = get_pconditions()
 
     # Get list of runtimes
     try:
