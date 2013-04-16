@@ -145,13 +145,19 @@ def organisation_edit(organisation_code=None):
 def organisationpackage_delete(organisation_code=None, 
                                package_name=None, organisationpackage_id=None):
 
+    def get_message(result):
+        if result:
+            return ('Successfully removed package %s from organisation %s.',
+                    'success')
+        else:
+            return ('Could not remove package %s from organisation %s.',
+                    'error')
+
     result = dqorganisation.deleteOrganisationPackage(
         organisation_code, package_name, organisationpackage_id)
 
-    if result:
-        flash('Successfully removed package ' + package_name + ' from organisation ' + organisation_code + '.', 'success')
-    else:
-        flash('Could not remove package ' + package_name + ' from organisation ' + organisation_code + '.', 'error')
+    msg_template, msg_type = get_message(result)    
+    flash(msg_template % (package_name, organisation_code), msg_type)
         
     return redirect(url_for('organisation_edit', organisation_code=organisation_code))
 
