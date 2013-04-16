@@ -62,6 +62,7 @@ def organisations(organisation_code=None):
 
 @app.route("/organisations/new/", methods=['GET','POST'])
 def organisation_new():
+    organisation = None
     if request.method == 'POST':
         data = {
             'organisation_code': request.form['organisation_code'],
@@ -76,8 +77,6 @@ def organisation_new():
         else:
             flash("Couldn't add organisation", "error")
             organisation = data
-    else:
-        organisation=None
     return render_template("organisation_edit.html", organisation=organisation)
 
 
