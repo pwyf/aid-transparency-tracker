@@ -146,22 +146,22 @@ def ipc_step2():
     if not (request.form['password'] == app.config["SECRET_PASSWORD"]):
         flash('Wrong password', "error")
         return render_template("import_publisher_conditions.html")
-    else:
-        if request.form.get('local'):
-            results = dqimportpublisherconditions.importPCsFromFile()
-        else:
-            url = request.form['url']
-            results = dqimportpublisherconditions.importPCsFromUrl(url)
 
-        if results:
-            flash('Parsed tests', "success")
-            return render_template(
-                "import_publisher_conditions_step2.html", 
-                results=results, step=step)
-        else:
-            results = None
-            flash('There was an error importing your tests', "error")
-            return redirect(url_for('import_publisher_conditions'))
+    if request.form.get('local'):
+        results = dqimportpublisherconditions.importPCsFromFile()
+    else:
+        url = request.form['url']
+        results = dqimportpublisherconditions.importPCsFromUrl(url)
+
+    if results:
+        flash('Parsed tests', "success")
+        return render_template(
+            "import_publisher_conditions_step2.html", 
+            results=results, step=step)
+    else:
+        results = None
+        flash('There was an error importing your tests', "error")
+        return redirect(url_for('import_publisher_conditions'))
 
 def import_pc_row(row):
     def pc_form_value(key):
