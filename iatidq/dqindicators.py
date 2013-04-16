@@ -251,16 +251,26 @@ def allTests():
     else:
         return False
 
-def indicatorGroupTests(indicatorgroup_name):
-    checkIGT = db.session.query(models.Indicator.name,
-                                models.Indicator.description,
-                                models.Test.name,
-                                models.Test.description
-                            ).filter(models.IndicatorGroup.name==indicatorgroup_name
-                            ).join(models.IndicatorGroup
-                            ).join(models.IndicatorTest
-                            ).join(models.Test
-                            ).all()
+def indicatorGroupTests(indicatorgroup_name=None, option=None):
+    if (option != "no"):
+        checkIGT = db.session.query(models.Indicator.name,
+                                    models.Indicator.description,
+                                    models.Test.name,
+                                    models.Test.description
+                                ).filter(models.IndicatorGroup.name==indicatorgroup_name
+                                ).join(models.IndicatorGroup
+                                ).join(models.IndicatorTest
+                                ).join(models.Test
+                                ).all()
+    else:
+        checkIGT = db.session.query(models.Test.name,
+                                    models.Test.description
+                                ).outerjoin(models.IndicatorTest, models.IndicatorTest.test_id==models.Test.id
+                                ).outerjoin(models.Indicator
+                                ).outerjoin(models.IndicatorGroup
+                                ).filter(models.IndicatorGroup.id==None
+                                ).all()
+    #).filter(models.IndicatorTest.indicator_id==None
     if checkIGT:
         return checkIGT
     else:
