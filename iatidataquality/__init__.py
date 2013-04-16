@@ -21,3 +21,4 @@ import publisher_conditions
 import tests
 import organisations
 import registry
+import packages
