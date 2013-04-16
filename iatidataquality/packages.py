@@ -38,7 +38,7 @@ import spreadsheet
 
 @app.route("/packages/manage/", methods=['GET', 'POST'])
 def packages_manage():
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         if ("refresh" in request.form):
             dqregistry.refresh_packages()
             flash("Refreshed packages from Registry", "success")
