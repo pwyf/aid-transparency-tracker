@@ -19,3 +19,4 @@ import routes
 import publishers
 import publisher_conditions
 import tests
+import organisations
