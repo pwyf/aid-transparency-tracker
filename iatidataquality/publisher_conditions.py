@@ -152,6 +152,7 @@ def ipc_step2():
         else:
             url = request.form['url']
             results = dqimportpublisherconditions.importPCsFromUrl(url)
+
         if results:
             flash('Parsed tests', "success")
             return render_template(
