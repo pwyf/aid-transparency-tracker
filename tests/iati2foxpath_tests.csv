@@ -1,4 +1,4 @@
-test,description,group,oldgroup,level,longdescription
+test_name,test_description,indicator_name,oldgroup,level,longdescription
 sector exists?,Sector ,sector,sector,1,Sector 
 sector/@percentage exists?,"Sector, percentage",sector,sector,1,Percentage of the activity allocated to the sector
 sector/@percentage is a positiveInteger?,"Sector, valid number",sector,sector,1,Percentage of the activity allocated to the sector is a positive integer 

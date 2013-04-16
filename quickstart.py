@@ -36,6 +36,9 @@ which_packages = [
     (u'dfid-tz', True)
     ]
 
+default_tests_filename="tests/tests.csv"
+default_indicator_group_name="pwyf2013"
+
 def refresh(options):
     if options.minimal_pkgs:
         for package_name, _ in which_packages:
@@ -94,11 +97,11 @@ def setup(options):
     iatidq.dqimporttests.hardcodedTests()
     print "Importing tests"
     iatidq.dqimporttests.importTestsFromFile(
-        filename="tests/iati2foxpath_tests.csv")
+        filename=default_tests_filename)
     print "Importing indicators"
     iatidq.dqindicators.importIndicatorsFromFile(
-        "pwyf2013",
-        "tests/iati2foxpath_tests.csv")
+        default_indicator_group_name,
+        default_tests_filename)
     print "Importing indicator descriptions"
     iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
                                                             "tests/indicators.csv")

@@ -51,7 +51,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
                         })
 
 def importIndicators():
-    filename = 'tests/iati2foxpath_tests.csv'
+    filename = 'tests/tests.csv'
     indicatorgroup_id = 'pwyf2013'
     with file(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True)
@@ -72,12 +72,12 @@ def _importIndicators(indicatorgroup_name, fh, local):
     data = unicodecsv.DictReader(fh)
 
     for row in data:
-        test = models.Test.query.filter(models.Test.name==row['test']).first()
+        test = models.Test.query.filter(models.Test.name==row['test_name']).first()
 
         if not test:
             continue
         
-        indicator_name = row['group']
+        indicator_name = row['indicator_name']
         if (indicator_name == ""):
             continue
         
