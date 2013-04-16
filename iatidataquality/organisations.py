@@ -70,7 +70,9 @@ def organisation_new():
         organisation = dqorganisations.addOrganisation(data)
         if organisation:
             flash('Successfully added organisation', 'success')
-            return redirect(url_for('organisation_edit', organisation_code=organisation.organisation_code))
+            return redirect(url_for(
+                    'organisation_edit', 
+                    organisation_code=organisation.organisation_code))
         else:
             flash("Couldn't add organisation", "error")
             organisation = data
