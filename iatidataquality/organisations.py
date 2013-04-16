@@ -40,10 +40,10 @@ test_list_location = "tests/activity_tests.csv"
 
 
 @app.route("/organisations/")
-@app.route("/organisations/<id>/")
-def organisations(id=None):
-    if (id is not None):
-        organisation = dqorganisations.organisations(id)
+@app.route("/organisations/<organisation_code>/")
+def organisations(organisation_code=None):
+    if (organisation_code is not None):
+        organisation = dqorganisations.organisations(organisation_code)
         try:
             summary_data = _organisation_indicators_summary(organisation)
         except Exception, e:
