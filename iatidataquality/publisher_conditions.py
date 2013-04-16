@@ -138,7 +138,7 @@ def publisher_conditions_new(id=None):
                                **template_args)
 
 def ipc_step2():
-    step = 2
+    step = '2'
     if (request.method == 'POST'):
         from iatidq import dqimportpublisherconditions
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
