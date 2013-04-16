@@ -93,62 +93,6 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/tests/")
-@app.route("/tests/<id>/")
-def tests(id=None):
-    if (id is not None):
-        test = models.Test.query.filter_by(id=id).first_or_404()
-        return render_template("test.html", test=test)
-    else:
-        tests = models.Test.query.order_by(models.Test.id).all()
-        return render_template("tests.html", tests=tests)
-
-@app.route("/tests/<id>/edit/", methods=['GET', 'POST'])
-def tests_editor(id=None):
-    if (request.method == 'POST'):
-        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            test = models.Test.query.filter_by(id=id).first_or_404()
-            test.name = request.form['name']
-            test.description = request.form['description']
-            test.test_level = request.form['test_level']
-            test.active = request.form['active']
-            test.test_group = request.form['test_group']
-            db.session.add(test)
-            db.session.commit()
-            flash('Updated', "success")
-            return render_template("test_editor.html", test=test)
-        else:
-            flash('Incorrect password', "error")
-            test = models.Test.query.filter_by(id=id).first_or_404()
-            return render_template("test_editor.html", test=test)
-    else:
-        test = models.Test.query.filter_by(id=id).first_or_404()
-        return render_template("test_editor.html", test=test)
-
-
-@app.route("/tests/new/", methods=['GET', 'POST'])
-@login_required
-def tests_new(id=None):
-    if (request.method == 'POST'):
-        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            test = models.Test()
-            test.setup(
-                name = request.form['name'],
-                description = request.form['description'],
-                test_group = request.form['test_group'],
-                test_level = request.form['test_level'],
-                active = request.form['active']
-                )
-            db.session.add(test)
-            db.session.commit()
-            flash('Updated', "success")
-            return render_template("test_editor.html", test=test)
-        else:
-            flash('Incorrect password', "error")
-            return render_template("test_editor.html", test={})
-    else:
-        return render_template("test_editor.html", test={})
-
 @app.route("/organisations/")
 @app.route("/organisations/<id>/")
 def organisations(id=None):
