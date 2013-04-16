@@ -28,7 +28,8 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
+from iatidq.models import *
 import aggregation
 
 import StringIO
@@ -40,40 +41,40 @@ import spreadsheet
 @app.route("/publisher_conditions/<id>/")
 def publisher_conditions(id=None):
     if (id is not None):
-        pc = db.session.query(models.PublisherCondition.id,
-                               models.PublisherCondition.description,
-                               models.PublisherCondition.operation,
-                               models.PublisherCondition.condition,
-                               models.PublisherCondition.condition_value,
-                               models.PackageGroup.title.label("packagegroup_name"),
-                               models.PackageGroup.id.label("packagegroup_id"),
-                               models.Test.name.label("test_name"),    
-                               models.Test.description.label("test_description"),
-                               models.Test.id.label("test_id")
+        pc = db.session.query(PublisherCondition.id,
+                               PublisherCondition.description,
+                               PublisherCondition.operation,
+                               PublisherCondition.condition,
+                               PublisherCondition.condition_value,
+                               PackageGroup.title.label("packagegroup_name"),
+                               PackageGroup.id.label("packagegroup_id"),
+                               Test.name.label("test_name"),    
+                               Test.description.label("test_description"),
+                               Test.id.label("test_id")
                             ).filter_by(id=id
-                            ).join(models.PackageGroup, models.Test).first()
+                            ).join(PackageGroup, Test).first()
         return render_template("publisher_condition.html", pc=pc)
     else:
-        pcs = db.session.query(models.PublisherCondition.id,
-                               models.PublisherCondition.description,
-                               models.PackageGroup.title.label("packagegroup_name"),
-                               models.PackageGroup.id.label("packagegroup_id"),
-                               models.Test.name.label("test_name"),    
-                               models.Test.description.label("test_description"),
-                               models.Test.id.label("test_id")
-                            ).order_by(models.PublisherCondition.id
-                            ).join(models.PackageGroup, models.Test
+        pcs = db.session.query(PublisherCondition.id,
+                               PublisherCondition.description,
+                               PackageGroup.title.label("packagegroup_name"),
+                               PackageGroup.id.label("packagegroup_id"),
+                               Test.name.label("test_name"),    
+                               Test.description.label("test_description"),
+                               Test.id.label("test_id")
+                            ).order_by(PublisherCondition.id
+                            ).join(PackageGroup, Test
                             ).all()
         return render_template("publisher_conditions.html", pcs=pcs)
 
 @app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
 def publisher_conditions_editor(id=None):
-    publishers = models.PackageGroup.query.order_by(
-        models.PackageGroup.id).all()
-    tests = models.Test.query.order_by(models.Test.id).all()
+    publishers = PackageGroup.query.order_by(
+        PackageGroup.id).all()
+    tests = Test.query.order_by(Test.id).all()
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
+            pc = PublisherCondition.query.filter_by(id=id).first_or_404()
             pc.description = request.form['description']
             pc.publisher_id = int(request.form['publisher_id'])
             pc.test_id = int(request.form['test_id'])
@@ -89,21 +90,21 @@ def publisher_conditions_editor(id=None):
             return redirect(url_for('publisher_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
-            pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
+            pc = PublisherCondition.query.filter_by(id=id).first_or_404()
             return render_template("publisher_condition_editor.html", 
                                    pc=pc, publishers=publishers, tests=tests)
     else:
-        pc = models.PublisherCondition.query.filter_by(id=id).first_or_404()
+        pc = PublisherCondition.query.filter_by(id=id).first_or_404()
         return render_template("publisher_condition_editor.html", 
                                pc=pc, publishers=publishers, tests=tests)
 
 @app.route("/publisher_conditions/new/", methods=['GET', 'POST'])
 def publisher_conditions_new(id=None):
-    publishers = models.PackageGroup.query.order_by(
-        models.PackageGroup.id).all()
-    tests = models.Test.query.order_by(models.Test.id).all()
+    publishers = PackageGroup.query.order_by(
+        PackageGroup.id).all()
+    tests = Test.query.order_by(Test.id).all()
     if (request.method == 'POST'):
-        pc = models.PublisherCondition()
+        pc = PublisherCondition()
         pc.description = request.form['description']
         pc.publisher_id = int(request.form['publisher_id'])
         pc.test_id = int(request.form['test_id'])
@@ -160,12 +161,12 @@ def import_publisher_conditions(step=None):
             operation = request.form['pc['+row+'][operation]']
             condition = request.form['pc['+row+'][condition]']
             condition_value = request.form['pc['+row+'][condition_value]']
-            pc = models.PublisherCondition.query.filter_by(
+            pc = PublisherCondition.query.filter_by(
                 publisher_id=publisher_id, test_id=test_id, 
                 operation=operation, condition=condition, 
                 condition_value=condition_value).first()
             if (pc is None):
-                pc = models.PublisherCondition()
+                pc = PublisherCondition()
             pc.publisher_id=publisher_id
             pc.test_id=test_id
             pc.operation = operation
@@ -182,7 +183,7 @@ def import_publisher_conditions(step=None):
 @app.route("/publisher_conditions/export/")
 def export_publisher_conditions():
     conditions = db.session.query(
-        models.PublisherCondition.description).distinct().all()
+        PublisherCondition.description).distinct().all()
     conditionstext = ""
     for i, condition in enumerate(conditions):
         if (i != 0):
