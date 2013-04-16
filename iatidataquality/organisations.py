@@ -42,19 +42,23 @@ test_list_location = "tests/activity_tests.csv"
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
+    template_args = {}
     if organisation_code is not None:
         organisation = dqorganisations.organisations(organisation_code)
+
         try:
             summary_data = _organisation_indicators_summary(organisation)
         except Exception, e:
             summary_data = None
-        return render_template("organisation.html", 
-                               organisation=organisation, 
-                               summary_data=summary_data)
+
+        template_args = dict(organisation=organisation, 
+                             summary_data=summary_data)
     else:
         organisations = dqorganisations.organisations()
-        return render_template("organisations.html", 
-                               organisations=organisations)
+
+        template_args = dict(organisations=organisations)
+
+    return render_template("organisations.html", **template_args)
 
 @app.route("/organisations/new/", methods=['GET','POST'])
 def organisation_new():
