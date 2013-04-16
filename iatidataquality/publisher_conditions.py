@@ -37,22 +37,26 @@ import unicodecsv
 import tempfile
 import spreadsheet
 
+def get_pc(pc_id):
+    return db.session.query(
+        PublisherCondition.id,
+        PublisherCondition.description,
+        PublisherCondition.operation,
+        PublisherCondition.condition,
+        PublisherCondition.condition_value,
+        PackageGroup.title.label("packagegroup_name"),
+        PackageGroup.id.label("packagegroup_id"),
+        Test.name.label("test_name"),    
+        Test.description.label("test_description"),
+        Test.id.label("test_id")
+        ).filter_by(id=pc_id
+                    ).join(PackageGroup, Test).first()
+
 @app.route("/publisher_conditions/")
 @app.route("/publisher_conditions/<id>/")
 def publisher_conditions(id=None):
     if (id is not None):
-        pc = db.session.query(PublisherCondition.id,
-                               PublisherCondition.description,
-                               PublisherCondition.operation,
-                               PublisherCondition.condition,
-                               PublisherCondition.condition_value,
-                               PackageGroup.title.label("packagegroup_name"),
-                               PackageGroup.id.label("packagegroup_id"),
-                               Test.name.label("test_name"),    
-                               Test.description.label("test_description"),
-                               Test.id.label("test_id")
-                            ).filter_by(id=id
-                            ).join(PackageGroup, Test).first()
+        pc = get_pc(id)
         return render_template("publisher_condition.html", pc=pc)
     else:
         pcs = db.session.query(PublisherCondition.id,
