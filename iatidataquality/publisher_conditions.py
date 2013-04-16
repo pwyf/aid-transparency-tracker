@@ -160,35 +160,35 @@ def ipc_step2():
             flash('Wrong password', "error")
             return render_template("import_publisher_conditions.html")
 
+def import_pc_row(row):
+    def pc_form_value(key):
+        form_key = 'pc[%s][%s]' % (row, key)
+        return request.form[form_key]
+
+    publisher_id = pc_form_value('publisher_id')
+    test_id = pc_form_value('test_id')
+    operation = pc_form_value('operation')
+    condition = pc_form_value('condition')
+    condition_value = pc_form_value('condition_value')
+
+    pc = PublisherCondition.query.filter_by(
+        publisher_id=publisher_id, test_id=test_id, 
+        operation=operation, condition=condition, 
+        condition_value=condition_value).first()
+
+    if (pc is None):
+        pc = PublisherCondition()
+        
+    pc.publisher_id=publisher_id
+    pc.test_id=test_id
+    pc.operation = operation
+    pc.condition = condition
+    pc.condition_value = condition_value
+    pc.description = pc_form_value('description')
+    db.session.add(pc)
+
 def ipc_step3():
-    for row in request.form.getlist('include'):
-
-        def pc_form_value(key):
-            form_key = 'pc[%s][%s]' % (row, key)
-            return request.form[form_key]
-
-        publisher_id = pc_form_value('publisher_id')
-        test_id = pc_form_value('test_id')
-        operation = pc_form_value('operation')
-        condition = pc_form_value('condition')
-        condition_value = pc_form_value('condition_value')
-
-        pc = PublisherCondition.query.filter_by(
-            publisher_id=publisher_id, test_id=test_id, 
-            operation=operation, condition=condition, 
-            condition_value=condition_value).first()
-
-        if (pc is None):
-            pc = PublisherCondition()
-
-        pc.publisher_id=publisher_id
-        pc.test_id=test_id
-        pc.operation = operation
-        pc.condition = condition
-        pc.condition_value = condition_value
-        pc.description = pc_form_value('description')
-        db.session.add(pc)
-
+    [ import_pc_row(row) for row in request.form.getlist('include') ]
     db.session.commit()
     flash('Successfully updated publisher conditions', 'success')
     return redirect(url_for('publisher_conditions'))
