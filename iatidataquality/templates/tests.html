@@ -14,15 +14,35 @@
     </div>
     <table class="table" id="tests">
     <thead>
-    <th>ID</th><th>Name</th><th>Description</th>
+    <th>ID</th><th>Name</th><th>Description</th><th></th>
     </thead>
     <tbody>
 	{% for t in tests %}
     <tr>
-	<td><a href="{{url_for('tests', id=t.id)}}">{{ t.id }}</a></td><td>{{ t.name }}</td><td>{{t.description}}</td>
+	<td><a href="{{url_for('tests', id=t.id)}}">{{ t.id }}</a></td>
+    <td>{{ t.name }}</td>
+    <td>{{ t.description }}</td>
+    <td>
+        <a href="{{url_for('tests_editor', id=t.id)}}"><i class="icon-pencil"></i></a> 
+        <a href="{{url_for('tests_delete', id=t.id)}}" data-confirm="Are you sure you want to delete test {{t.name}}?"><i class="icon-trash"></i></a>
+    </td>
     </tr>
 	{% endfor %}
     </tbody>
     </table>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	$('a[data-confirm]').click(function(ev) {
+		var href = $(this).attr('href');
+		if (!$('#dataConfirmModal').length) {
+			$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+		} 
+		$('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
+		$('#dataConfirmOK').attr('href', href);
+		$('#dataConfirmModal').modal({show:true});
+		return false;
+	});
+});
+</script>
 {% endblock %}
