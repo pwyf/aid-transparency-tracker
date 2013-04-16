@@ -39,46 +39,46 @@ import spreadsheet
 
 def get_pc(pc_id):
     return db.session.query(
-        PublisherCondition.id,
-        PublisherCondition.description,
-        PublisherCondition.operation,
-        PublisherCondition.condition,
-        PublisherCondition.condition_value,
-        PackageGroup.title.label("packagegroup_name"),
-        PackageGroup.id.label("packagegroup_id"),
+        OrganisationCondition.id,
+        OrganisationCondition.description,
+        OrganisationCondition.operation,
+        OrganisationCondition.condition,
+        OrganisationCondition.condition_value,
+        Organisation.organisation_name.label("organisation_name"),
+        Organisation.organisation_code.label("organisation_code"),
         Test.name.label("test_name"),    
         Test.description.label("test_description"),
         Test.id.label("test_id")
         ).filter_by(id=pc_id
-                    ).join(PackageGroup, Test).first()
+                    ).join(Organisation, Test).first()
 
 def get_pcs():
     return db.session.query(
-        PublisherCondition.id,
-        PublisherCondition.description,
-        PackageGroup.title.label("packagegroup_name"),
-        PackageGroup.id.label("packagegroup_id"),
+        OrganisationCondition.id,
+        OrganisationCondition.description,
+        Organisation.title.label("organisation_name"),
+        Organisation.id.label("organisation_code"),
         Test.name.label("test_name"),    
         Test.description.label("test_description"),
         Test.id.label("test_id")
         ).order_by(
-        PublisherCondition.id
-        ).join(PackageGroup, Test
+        OrganisationCondition.id
+        ).join(Organisation, Test
                ).all()
         
-@app.route("/publisher_conditions/")
-@app.route("/publisher_conditions/<id>/")
-def publisher_conditions(id=None):
+@app.route("/organisation_conditions/")
+@app.route("/organisation_conditions/<id>/")
+def organisation_conditions(id=None):
     if id is not None:
         pc = get_pc(id)
-        return render_template("publisher_condition.html", pc=pc)
+        return render_template("organisation_condition.html", pc=pc)
     else:
         pcs = get_pcs()
-        return render_template("publisher_conditions.html", pcs=pcs)
+        return render_template("organisation_conditions.html", pcs=pcs)
 
-def configure_publisher_condition(pc):
+def configure_organisation_condition(pc):
     pc.description = request.form['description']
-    pc.publisher_id = int(request.form['publisher_id'])
+    pc.organisation_id = int(request.form['organisation_id'])
     pc.test_id = int(request.form['test_id'])
     pc.operation = int(request.form['operation'])
     pc.condition = request.form['condition']
@@ -87,54 +87,54 @@ def configure_publisher_condition(pc):
     pc.line = int(request.form['line'])
     pc.active = int(request.form['active'])
 
-def update_publisher_condition(pc_id):
-    pc = PublisherCondition.query.filter_by(id=pc_id).first_or_404()
-    configure_publisher_condition(pc)
+def update_organisation_condition(pc_id):
+    pc = OrganisationCondition.query.filter_by(id=pc_id).first_or_404()
+    configure_organisation_condition(pc)
     db.session.add(pc)
     db.session.commit()
 
-@app.route("/publisher_conditions/<id>/edit/", methods=['GET', 'POST'])
-def publisher_conditions_editor(id=None):
-    publishers = PackageGroup.query.order_by(
-        PackageGroup.id).all()
+@app.route("/organisation_conditions/<id>/edit/", methods=['GET', 'POST'])
+def organisation_conditions_editor(id=None):
+    organisations = Organisation.query.order_by(
+        Organisation.organisation_code).all()
     tests = Test.query.order_by(Test.id).all()
     if request.method == 'POST':
         if request.form['password'] == app.config["SECRET_PASSWORD"]:
-            update_publisher_condition(id)
+            update_organisation_condition(id)
             flash('Updated', "success")
-            return redirect(url_for('publisher_conditions_editor', id=pc.id))
+            return redirect(url_for('organisation_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
     else:
-        pc = PublisherCondition.query.filter_by(id=id).first_or_404()
-        return render_template("publisher_condition_editor.html", 
-                               pc=pc, publishers=publishers, tests=tests)
+        pc = OrganisationCondition.query.filter_by(id=id).first_or_404()
+        return render_template("organisation_condition_editor.html", 
+                               pc=pc, organisations=organisations, tests=tests)
 
-@app.route("/publisher_conditions/new/", methods=['GET', 'POST'])
-def publisher_conditions_new(id=None):
-    publishers = PackageGroup.query.order_by(
-        PackageGroup.id).all()
+@app.route("/organisation_conditions/new/", methods=['GET', 'POST'])
+def organisation_conditions_new(id=None):
+    organisations = Organisation.query.order_by(
+        Organisation.organisation_code).all()
     tests = Test.query.order_by(Test.id).all()
 
     template_args = dict(
         pc={},
-        publishers=publishers, 
+        organisations=organisations, 
         tests=tests
         )
 
     if (request.method == 'POST'):
-        pc = PublisherCondition()
-        configure_publisher_condition(pc)
+        pc = OrganisationCondition()
+        configure_organisation_condition(pc)
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
             db.session.add(pc)
             db.session.commit()
             flash('Created new condition', "success")
-            return redirect(url_for('publisher_conditions_editor', id=pc.id))
+            return redirect(url_for('organisation_conditions_editor', id=pc.id))
         else:
             flash('Incorrect password', "error")
             template_args["pc"] = pc
     else:
-        return render_template("publisher_condition_editor.html", 
+        return render_template("organisation_condition_editor.html", 
                                **template_args)
 
 def ipc_step2():
@@ -145,7 +145,7 @@ def ipc_step2():
     from iatidq import dqimportpublisherconditions
     if not (request.form['password'] == app.config["SECRET_PASSWORD"]):
         flash('Wrong password', "error")
-        return render_template("import_publisher_conditions.html")
+        return render_template("import_organisation_conditions.html")
 
     def get_results():
         if request.form.get('local'):
@@ -157,34 +157,34 @@ def ipc_step2():
     results = get_results()
 
     if results:
-        flash('Parsed tests', "success")
+        flash('Parsed conditions', "success")
         return render_template(
-            "import_publisher_conditions_step2.html", 
+            "import_organisation_conditions_step2.html", 
             results=results, step=step)
     else:
-        flash('There was an error importing your tests', "error")
-        return redirect(url_for('import_publisher_conditions'))
+        flash('There was an error importing your conditions', "error")
+        return redirect(url_for('import_organisation_conditions'))
 
 def import_pc_row(row):
     def pc_form_value(key):
         form_key = 'pc[%s][%s]' % (row, key)
         return request.form[form_key]
 
-    publisher_id = pc_form_value('publisher_id')
+    organisation_id = pc_form_value('organisation_id')
     test_id = pc_form_value('test_id')
     operation = pc_form_value('operation')
     condition = pc_form_value('condition')
     condition_value = pc_form_value('condition_value')
 
-    pc = PublisherCondition.query.filter_by(
-        publisher_id=publisher_id, test_id=test_id, 
+    pc = OrganisationCondition.query.filter_by(
+        organisation_id=organisation_id, test_id=test_id, 
         operation=operation, condition=condition, 
         condition_value=condition_value).first()
 
     if (pc is None):
-        pc = PublisherCondition()
+        pc = OrganisationCondition()
         
-    pc.publisher_id=publisher_id
+    pc.organisation_id=organisation_id
     pc.test_id=test_id
     pc.operation = operation
     pc.condition = condition
@@ -195,12 +195,12 @@ def import_pc_row(row):
 def ipc_step3():
     [ import_pc_row(row) for row in request.form.getlist('include') ]
     db.session.commit()
-    flash('Successfully updated publisher conditions', 'success')
-    return redirect(url_for('publisher_conditions'))
+    flash('Successfully updated organisation conditions', 'success')
+    return redirect(url_for('organisation_conditions'))
 
-@app.route("/publisher_conditions/import/step<step>", methods=['GET', 'POST'])
-@app.route("/publisher_conditions/import/", methods=['GET', 'POST'])
-def import_publisher_conditions(step=None):
+@app.route("/organisation_conditions/import/step<step>", methods=['GET', 'POST'])
+@app.route("/organisation_conditions/import/", methods=['GET', 'POST'])
+def import_organisation_conditions(step=None):
     # Step=1: form; submit to step2
     # 
     if (step == '2'):
@@ -208,12 +208,12 @@ def import_publisher_conditions(step=None):
     elif (step=='3'):
         return ipc_step3()
     else:
-        return render_template("import_publisher_conditions.html")
+        return render_template("import_organisation_conditions.html")
 
-@app.route("/publisher_conditions/export/")
-def export_publisher_conditions():
+@app.route("/organisation_conditions/export/")
+def export_organisation_conditions():
     conditions = db.session.query(
-        PublisherCondition.description).distinct().all()
+        OrganisationCondition.description).distinct().all()
     conditionstext = ""
     for i, condition in enumerate(conditions):
         if (i != 0):
@@ -224,5 +224,5 @@ def export_publisher_conditions():
     strIO.write(str(conditionstext))
     strIO.seek(0)
     return send_file(strIO,
-                     attachment_filename="publisher_structures.txt",
+                     attachment_filename="organisation_structures.txt",
                      as_attachment=True)
