@@ -66,10 +66,10 @@ def organisation_new():
             return redirect(url_for('organisation_edit', organisation_code=organisation.organisation_code))
         else:
             flash("Couldn't add organisation", "error")
-            return render_template("organisation_edit.html", organisation=data)
+            organisation = data
     else:
         organisation=None
-        return render_template("organisation_edit.html", organisation=organisation)
+    return render_template("organisation_edit.html", organisation=organisation)
 
 
 @app.route("/orgview/<organisation_code>/")
