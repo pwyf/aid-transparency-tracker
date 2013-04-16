@@ -121,3 +121,18 @@ def deleteOrganisationPackage(organisation_code, package_name, organisationpacka
         return checkPP
     else:
         return False
+
+def addFeedback(data):
+    checkF=models.OrganisationConditionFeedback.query.filter_by(uses=data["uses"], element=data["element"], where=data["where"]
+            ).first()
+    if not checkF:
+        feedback = models.OrganisationConditionFeedback()
+        feedback.organisation_id=data["organisation_id"]
+        feedback.uses=data["uses"]
+        feedback.element=data["element"]
+        feedback.where=data["where"]
+        db.session.add(feedback)
+        db.session.commit()
+        return feedback
+    else:
+        return False

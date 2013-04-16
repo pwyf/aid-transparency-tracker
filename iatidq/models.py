@@ -327,6 +327,17 @@ class PublisherCondition(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+class OrganisationConditionFeedback(db.Model):
+    __tablename__ ='organisationconditionfeedback'
+    id = Column(Integer, primary_key=True)
+    organisation_id = Column(UnicodeText)
+    uses = Column(UnicodeText)
+    element = Column(UnicodeText)
+    where = Column(UnicodeText)
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 ## ORGANISATIONS; RELATIONS WITH PACKAGES
 
 class Organisation(db.Model):

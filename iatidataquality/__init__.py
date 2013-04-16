@@ -20,6 +20,7 @@ import publishers
 import publisher_conditions
 import tests
 import organisations
+import organisations_feedback
 import registry
 import packages
 import indicators
