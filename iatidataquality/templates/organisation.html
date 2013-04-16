@@ -22,7 +22,7 @@
             <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}% (for {{summary_data[1]}} indicators)</p>
             <p><i class="icon icon-info-sign"></i> Please tell us about the way you structure your data</p>
             <p>
-            <a class="btn btn-success" href="{{url_for('orgview', organisation_code=organisation.organisation_code)}}">Review IATI data »</a>
+            <a class="btn btn-success" href="{{url_for('orgview', organisation_code=organisation.organisation_code)}}">Review Publication »</a>
             {% else %}
             <p><i class="icon icon-remove"></i> No IATI data found</p>
             <a class="btn btn-warning" href="http://aidtransparency.net">Publish your IATI data »</a>
@@ -47,7 +47,7 @@
                 }
                 jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found');
                 jQuery(".commitment .ambition").html('<i class="icon '+icon_class+'"></i> <span class="label '+group_code+'">'+group+'</span>'); 
-                jQuery(".commitment .review").html('<a class="btn btn-success" href="http://tracker.publishwhatyoufund.org/organisations/{{organisation.organisation_code}}">Review Implementation schedule »</a>');
+                jQuery(".commitment .review").html('<a class="btn btn-success" href="http://tracker.publishwhatyoufund.org/organisations/{{organisation.organisation_code}}">Review Commitment »</a>');
             });
         });
 
