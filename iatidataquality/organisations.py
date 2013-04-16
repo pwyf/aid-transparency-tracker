@@ -55,12 +55,14 @@ def organisations(organisation_code=None):
 
         template_args = dict(organisation=organisation, 
                              summary_data=summary_data)
+
+        return render_template("organisation.html", **template_args)
     else:
         organisations = dqorganisations.organisations()
 
         template_args = dict(organisations=organisations)
 
-    return render_template("organisations.html", **template_args)
+        return render_template("organisations.html", **template_args)
 
 @app.route("/organisations/new/", methods=['GET','POST'])
 def organisation_new():
