@@ -31,6 +31,8 @@ sys.path.append(parent)
 from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
 import aggregation
 
+from iatidq.models import *
+
 import StringIO
 import unicodecsv
 import tempfile
@@ -82,14 +84,14 @@ def organisation_new():
 
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None):
-    p_group = models.Organisation.query.filter_by(
+    p_group = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    pkgs = db.session.query(models.Package
-            ).filter(models.Organisation.organisation_code == organisation_code
-            ).join(models.OrganisationPackage
-            ).join(models.Organisation
-            ).order_by(models.Package.package_name
+    pkgs = db.session.query(Package
+            ).filter(Organisation.organisation_code == organisation_code
+            ).join(OrganisationPackage
+            ).join(Organisation
+            ).order_by(Package.package_name
             ).all()
 
     aggregate_results = _organisation_indicators(p_group);
@@ -175,33 +177,33 @@ def _organisation_indicators_summary(organisation):
     
 
 def _organisation_indicators(organisation):
-    aggregate_results = db.session.query(models.Indicator,
-                                     models.Test,
-                                     models.AggregateResult.results_data,
-                                     models.AggregateResult.results_num,
-                                     models.AggregateResult.result_hierarchy,
-                                     models.AggregateResult.package_id,
-                                     func.max(models.AggregateResult.runtime_id)
-        ).filter(models.Organisation.organisation_code==organisation.organisation_code
-        ).group_by(models.AggregateResult.result_hierarchy, 
-                   models.Test, 
-                   models.AggregateResult.package_id,
-                   models.Indicator,
-                   models.AggregateResult.results_data,
-                   models.AggregateResult.results_num,
-                   models.AggregateResult.package_id
-        ).join(models.IndicatorTest
-        ).join(models.Test
-        ).join(models.AggregateResult
-        ).join(models.Package
-        ).join(models.OrganisationPackage
-        ).join(models.Organisation
+    aggregate_results = db.session.query(Indicator,
+                                     Test,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(Organisation.organisation_code==organisation.organisation_code
+        ).group_by(AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   Indicator,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num,
+                   AggregateResult.package_id
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
         ).all()
 
-    #pconditions = models.PublisherCondition.query.filter(
-    #        models.Organisation.organisation_code==organisation.organisation_code
-    #        ).join(models.OrganisationPackage
-    #        ).join(models.Organisation
+    #pconditions = PublisherCondition.query.filter(
+    #        Organisation.organisation_code==organisation.organisation_code
+    #        ).join(OrganisationPackage
+    #        ).join(Organisation
     #        ).all()
     # TODO: refactor PublisherCondition to refer to 
     # Organisation rather than PackageGroup
