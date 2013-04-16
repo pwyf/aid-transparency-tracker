@@ -1,5 +1,5 @@
 {% set active_page='pc'%}{% extends "layout.html" %}
-{% block title %}Publisher Conditions{% endblock %}
+{% block title %}Organisation Conditions{% endblock %}
 {% block content %}
    <script src="/static/jquery.tablesorter.min.js"></script>
     <script >
@@ -9,9 +9,9 @@
     </script>
 	<h1>Select a condition</h1>
     <div class="pull-right">
-    <a href="{{url_for('publisher_conditions_new')}}" class="btn btn-success"><i class="icon-plus icon-white"></i> New</a>
-    <a href="{{url_for('import_publisher_conditions')}}" class="btn">Import data</a>
-    <a href="{{url_for('export_publisher_conditions')}}" class="btn">Export data</a>
+    <a href="{{url_for('organisation_conditions_new')}}" class="btn btn-success"><i class="icon-plus icon-white"></i> New</a>
+    <a href="{{url_for('import_organisation_conditions')}}" class="btn">Import data</a>
+    <a href="{{url_for('export_organisation_conditions')}}" class="btn">Export data</a>
     </div>
     <table class="table" id="pcs">
     <thead>
@@ -20,7 +20,7 @@
     <tbody>
 	{% for pc in pcs %}
     <tr>
-	<td><a href="{{url_for('publisher_conditions', id=pc.id)}}">{{ pc.id }}</a></td><td>{{pc.description}}</td><td><a href="{{url_for('publisher', id=pc.packagegroup_id)}}">{{pc.packagegroup_name}}</td><td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_description}}</a></td>
+	<td><a href="{{url_for('organisation_conditions', id=pc.id)}}">{{ pc.id }}</a></td><td>{{pc.description}}</td><td><a href="{{url_for('organisation', organisation_code=pc.organisation_code)}}">{{pc.organisation_name}}</td><td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_description}}</a></td>
     </tr>
 	{% endfor %}
     </tr>
