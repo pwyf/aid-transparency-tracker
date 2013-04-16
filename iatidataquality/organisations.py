@@ -48,10 +48,13 @@ def organisations(organisation_code=None):
             summary_data = _organisation_indicators_summary(organisation)
         except Exception, e:
             summary_data = None
-        return render_template("organisation.html", organisation=organisation, summary_data=summary_data)
+        return render_template("organisation.html", 
+                               organisation=organisation, 
+                               summary_data=summary_data)
     else:
         organisations = dqorganisations.organisations()
-        return render_template("organisations.html", organisations=organisations)
+        return render_template("organisations.html", 
+                               organisations=organisations)
 
 @app.route("/organisations/new/", methods=['GET','POST'])
 def organisation_new():
