@@ -82,7 +82,8 @@ def organisation_new():
 
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None):
-    p_group = models.Organisation.query.filter_by(organisation_code=organisation_code).first_or_404()
+    p_group = models.Organisation.query.filter_by(
+        organisation_code=organisation_code).first_or_404()
 
     pkgs = db.session.query(models.Package
             ).filter(models.Organisation.organisation_code == organisation_code
@@ -95,7 +96,8 @@ def organisation_publication(organisation_code=None):
 
     latest_runtime=1
 
-    return render_template("organisation_indicators.html", p_group=p_group, pkgs=pkgs, 
+    return render_template("organisation_indicators.html", 
+                           p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
