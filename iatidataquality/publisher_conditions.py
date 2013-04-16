@@ -137,32 +137,37 @@ def publisher_conditions_new(id=None):
         return render_template("publisher_condition_editor.html", 
                                **template_args)
 
+def ipc_step2():
+    step = 2
+    if (request.method == 'POST'):
+        from iatidq import dqimportpublisherconditions
+        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
+            if (request.form.get('local')):
+                results = dqimportpublisherconditions.importPCsFromFile()
+            else:
+                url = request.form['url']
+                results = dqimportpublisherconditions.importPCsFromUrl(url)
+            if (results):
+                flash('Parsed tests', "success")
+                return render_template(
+                    "import_publisher_conditions_step2.html", 
+                    results=results, step=step)
+            else:
+                results = None
+                flash('There was an error importing your tests', "error")
+                return redirect(url_for('import_publisher_conditions'))
+        else:
+            flash('Wrong password', "error")
+            return render_template("import_publisher_conditions.html")
+
+
 @app.route("/publisher_conditions/import/step<step>", methods=['GET', 'POST'])
 @app.route("/publisher_conditions/import/", methods=['GET', 'POST'])
 def import_publisher_conditions(step=None):
     # Step=1: form; submit to step2
     # 
     if (step == '2'):
-        if (request.method == 'POST'):
-            from iatidq import dqimportpublisherconditions
-            if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-                if (request.form.get('local')):
-                    results = dqimportpublisherconditions.importPCsFromFile()
-                else:
-                    url = request.form['url']
-                    results = dqimportpublisherconditions.importPCsFromUrl(url)
-                if (results):
-                    flash('Parsed tests', "success")
-                    return render_template(
-                        "import_publisher_conditions_step2.html", 
-                        results=results, step=step)
-                else:
-                    results = None
-                    flash('There was an error importing your tests', "error")
-                    return redirect(url_for('import_publisher_conditions'))
-            else:
-                flash('Wrong password', "error")
-                return render_template("import_publisher_conditions.html")
+        return ipc_step2()
     elif (step=='3'):
         out = []
         for row in request.form.getlist('include'):
