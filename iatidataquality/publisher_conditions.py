@@ -160,6 +160,30 @@ def ipc_step2():
             flash('Wrong password', "error")
             return render_template("import_publisher_conditions.html")
 
+def ipc_step3():
+    out = []
+    for row in request.form.getlist('include'):
+        publisher_id = request.form['pc['+row+'][publisher_id]']
+        test_id = request.form['pc['+row+'][test_id]']
+        operation = request.form['pc['+row+'][operation]']
+        condition = request.form['pc['+row+'][condition]']
+        condition_value = request.form['pc['+row+'][condition_value]']
+        pc = PublisherCondition.query.filter_by(
+            publisher_id=publisher_id, test_id=test_id, 
+            operation=operation, condition=condition, 
+            condition_value=condition_value).first()
+        if (pc is None):
+            pc = PublisherCondition()
+        pc.publisher_id=publisher_id
+        pc.test_id=test_id
+        pc.operation = operation
+        pc.condition = condition
+        pc.condition_value = condition_value
+        pc.description = request.form['pc['+row+'][description]']
+        db.session.add(pc)
+    db.session.commit()
+    flash('Successfully updated publisher conditions', 'success')
+    return redirect(url_for('publisher_conditions'))
 
 @app.route("/publisher_conditions/import/step<step>", methods=['GET', 'POST'])
 @app.route("/publisher_conditions/import/", methods=['GET', 'POST'])
@@ -169,29 +193,7 @@ def import_publisher_conditions(step=None):
     if (step == '2'):
         return ipc_step2()
     elif (step=='3'):
-        out = []
-        for row in request.form.getlist('include'):
-            publisher_id = request.form['pc['+row+'][publisher_id]']
-            test_id = request.form['pc['+row+'][test_id]']
-            operation = request.form['pc['+row+'][operation]']
-            condition = request.form['pc['+row+'][condition]']
-            condition_value = request.form['pc['+row+'][condition_value]']
-            pc = PublisherCondition.query.filter_by(
-                publisher_id=publisher_id, test_id=test_id, 
-                operation=operation, condition=condition, 
-                condition_value=condition_value).first()
-            if (pc is None):
-                pc = PublisherCondition()
-            pc.publisher_id=publisher_id
-            pc.test_id=test_id
-            pc.operation = operation
-            pc.condition = condition
-            pc.condition_value = condition_value
-            pc.description = request.form['pc['+row+'][description]']
-            db.session.add(pc)
-        db.session.commit()
-        flash('Successfully updated publisher conditions', 'success')
-        return redirect(url_for('publisher_conditions'))
+        return ipc_step3()
     else:
         return render_template("import_publisher_conditions.html")
 
