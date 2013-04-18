@@ -96,7 +96,7 @@ def organisation_publication(organisation_code=None):
             ).order_by(Package.package_name
             ).all()
 
-    aggregate_results = _organisation_indicators(p_group);
+    aggregate_results = _organisation_indicators(p_group)
 
     latest_runtime=1
 
