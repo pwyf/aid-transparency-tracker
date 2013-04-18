@@ -166,7 +166,7 @@ def organisation_edit(organisation_code=None):
     
 
     packages = dqpackages.packages()
-    packages = dqpackages.packageGroups()
+    packagegroups = dqpackages.packageGroups()
     organisation = dqorganisations.organisations(organisation_code)
 
     if request.method == 'POST':
