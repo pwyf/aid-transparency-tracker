@@ -104,11 +104,69 @@ def organisation_publication(organisation_code=None):
                            p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime)
 
+@app.route("/organisations/publication.csv")
+def all_organisations_publication_csv():
+    strIO = StringIO.StringIO()
+    fieldnames = "organisation_name organisation_code indicator_name indicator_description percentage_passed num_results".split()
+    out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
+    headers = {}
+    for fieldname in fieldnames:
+        headers[fieldname] = fieldname
+    out.writerow(headers)
+    organisations = Organisation.query.all()
+    for organisation in organisations:
+
+        aggregate_results = _organisation_indicators(organisation)
+
+        for resultid, result in aggregate_results.items():
+            out.writerow({
+                          "organisation_name": organisation.organisation_name, 
+                          "organisation_code": organisation.organisation_code, 
+                          "indicator_name": result['indicator']['name'],
+                          "indicator_description": result['indicator']['description'], 
+                          "percentage_passed": result['results_pct'], 
+                          "num_results": result['results_num']
+                        })      
+    strIO.seek(0)
+    return send_file(strIO,
+                         attachment_filename="dataqualityresults_all.csv",
+                         as_attachment=True)
+
+@app.route("/organisations/<organisation_code>/publication.csv")
+def organisation_publication_csv(organisation_code=None):
+    p_group = Organisation.query.filter_by(
+        organisation_code=organisation_code).first_or_404()
+
+    aggregate_results = _organisation_indicators(p_group)
+
+    strIO = StringIO.StringIO()
+    fieldnames = "organisation_name organisation_code indicator_name indicator_description percentage_passed num_results".split()
+    out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
+    headers = {}
+    for fieldname in fieldnames:
+        headers[fieldname] = fieldname
+    out.writerow(headers)
+
+    for resultid, result in aggregate_results.items():
+        out.writerow({
+                      "organisation_name": p_group.organisation_name, 
+                      "organisation_code": p_group.organisation_code, 
+                      "indicator_name": result['indicator']['name'],
+                      "indicator_description": result['indicator']['description'], 
+                      "percentage_passed": result['results_pct'], 
+                      "num_results": result['results_num']
+                    })      
+    strIO.seek(0)
+    return send_file(strIO,
+                     attachment_filename="dataqualityresults_" + organisation_code + ".csv",
+                     as_attachment=True)
+
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 def organisation_edit(organisation_code=None):
     
 
     packages = dqpackages.packages()
+    packages = dqpackages.packagegroups()
     organisation = dqorganisations.organisations(organisation_code)
 
     if request.method == 'POST':
@@ -127,6 +185,18 @@ def organisation_edit(organisation_code=None):
 
             packages = request.form.getlist('package')
             [ add_org_pkg(package) for package in packages ]
+
+        elif 'addpackagegroup' in request.form:
+            data = {
+                'organisation_id': organisation.id,
+                'packagegroup_id': request.form['packagegroup']
+            }
+            if dqorganisations.addOrganisationPackageFromPackageGroup(data):
+                flash('Successfully added package group to your organisation.', 
+                      'success')
+            else:
+                flash("Couldn't add package group to your organisation.", 
+                      'error')
                 
         elif 'updateorganisation' in request.form:
             data = {
@@ -143,6 +213,7 @@ def organisation_edit(organisation_code=None):
         "organisation_edit.html", 
         organisation=organisation, 
         packages=packages, 
+        packagegroups=packagegroups,
         organisationpackages=organisationpackages)
 
 @app.route("/organisations/<organisation_code>/<package_name>/<organisationpackage_id>/delete/")

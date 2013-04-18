@@ -4,7 +4,9 @@
 	<h1>Organisation {{organisation.organisation_name}}</h1>
     <div class="pull-right">
     <p><a class="btn btn-success" href="#addPackages" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add Package to Organisation</b></a></p>
+    <p><a class="btn btn-success" href="#addPackageGroup" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add Package Group to Organisation</b></a></p>
     </div>
+    <div class="clearer">&nbsp;</div>
     <form name="organisationupdate" method="post" action="">
     <table class="table">
     <thead>
@@ -38,6 +40,27 @@
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             <input type="submit" value="Add packages to this organisation" name="addpackages" class="btn btn-success" />
+        </div>
+    </form>
+    </div>
+
+    <div id="addPackageGroup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addPackageGroupModalLabel" aria-hidden="true"> 
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <form method="post" action="">
+            <h3 id="addPackageGroupModalLabel">Add packages based on package group</h3>
+        </div>
+        <div class="modal-body">
+        <select name="packagegroup">
+        <option value="" selected>Select a package group</option>
+        {% for packagegroup in packagegroups %}
+            <option value="{{packagegroup.id}}"> {{packagegroup.name}}</option>
+        {%endfor%}
+        </select>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <input type="submit" value="Add all packages in this package group to this organisation" name="addpackagegroup" class="btn btn-success" />
         </div>
     </form>
     </div>
