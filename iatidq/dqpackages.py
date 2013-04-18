@@ -15,3 +15,6 @@ def package_status(package_id):
 
 def packages():
     return models.Package.query.order_by(models.Package.package_name).all()
+
+def packageGroups():
+    return models.PackageGroup.query.order_by(models.PackageGroup.name).all()
