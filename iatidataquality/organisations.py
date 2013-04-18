@@ -202,9 +202,7 @@ def _organisation_indicators(organisation):
         ).join(Organisation
         ).all()
 
-    pconditions = OrganisationCondition.query.filter(
-            Organisation.organisation_code==organisation.organisation_code
-            ).join(Organisation
+    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
     return aggregation.agr_results(aggregate_results, 
