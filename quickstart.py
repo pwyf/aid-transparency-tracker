@@ -26,6 +26,7 @@ import iatidq.dqcodelists
 import iatidq.dqruntests
 import iatidq.dqindicators
 import iatidq.dqorganisations
+import iatidq.dqaggregationtypes
 
 import optparse
 import sys
@@ -95,6 +96,19 @@ def import_organisations(options):
     else:
         print "Error: please provide a filename"
 
+def create_aggregation_types():
+    print "Adding an aggregation type for all data"
+    iatidq.aggregationtypes.addAggregationType({'name':'All data',
+                                                'description': '',
+                                                'test_id':'',
+                                                'test_result':'1'})
+    print "Adding an aggregation type for current data"
+    currentdata_test = iatidq.dqtests.test_by_test_name("activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?")
+    iatidq.aggregationtypes.addAggregationType({'name':'Current data',
+                                                'description': '',
+                                                'test_id':currentdata_test.id,
+                                                'test_result':'1'})
+
 def setup(options):
     print "Creating DB"
     iatidq.db.create_all()
@@ -114,6 +128,10 @@ def setup(options):
     iatidq.dqcodelists.importCodelists()
     print "Refreshing package data from Registry"
     dqregistry.refresh_packages()
+    print "Adding organisations"
+    iatidq.dqorganisations.importOrganisationPackagesFromFile("organisations_with_identifiers.csv")
+    create_aggregation_types()
+    print "Setup complete."
 
 def enqueue_test(options):
     assert options.package_name
@@ -134,7 +152,8 @@ commands = {
     "setup": setup,
     "enqueue_test": enqueue_test,
     "refresh": refresh,
-    "activate_packages": activate_packages
+    "activate_packages": activate_packages,
+    "create_aggregation_types": create_aggregation_types
 }
 
 def main():
@@ -186,6 +205,10 @@ def main():
                  action="store_true",
                  default=False,
                  help="Import organisations. Will try to create and assign organisations to existing packages.")
+    p.add_option("--create_aggregation_types", dest="create_aggregation_types",
+                 action="store_true",
+                 default=False,
+                 help="Create basic aggregation types.")
     p.add_option("--setup", dest="setup",
                  action="store_true",
                  default=False,
