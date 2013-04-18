@@ -24,3 +24,4 @@ import organisations_feedback
 import registry
 import packages
 import indicators
+import aggregationtypes
