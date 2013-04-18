@@ -137,7 +137,7 @@ class AggregateResult(db.Model):
     id = Column(Integer,primary_key=True)
     runtime_id=Column(Integer, ForeignKey('runtime.id'))
     package_id = Column(Integer, ForeignKey('package.id'))
-    aggregateresulttype_id = Column(Integer, ForeignKey('aggregateresulttype.id'))
+    aggregateresulttype_id = Column(Integer, ForeignKey('aggregationtype.id'))
     test_id = Column(Integer, ForeignKey('test.id'))
     result_hierarchy = Column(Integer)
     results_data = Column(Float)
@@ -146,14 +146,31 @@ class AggregateResult(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-# AggregateResultType allows 
-class AggregateResultType(db.Model):
-    __tablename__ = 'aggregateresulttype'
+# AggregationType allows for different aggregations
+# Particularly used for looking only at current data
+class AggregationType(db.Model):
+    __tablename__ = 'aggregationtype'
     id = Column(Integer,primary_key=True)
     name = Column(UnicodeText)
-    filterby_testid = Column(Integer, ForeignKey('test.id'))
-    filterby_testresult = Column(Integer)
+    description = Column(UnicodeText)
+    test_id = Column(Integer, ForeignKey('test.id'))
+    test_result = Column(Integer)
     active = Column(Integer)
+
+    def setup(self,
+                 name,
+                 description,
+                 test_id,
+                 test_result,
+                 active,
+                 id=None):
+        self.name = name
+        self.description = description
+        self.test_id = test_id
+        self.test_result = test_result
+        self.active = active
+        if id is not None:
+            self.id = id
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
