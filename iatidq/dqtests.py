@@ -14,7 +14,7 @@ def tests(test_id=None):
     if test_id is not None:
         checkTests = models.Test.query.filter_by(id=test_id).first_or_404()
     else:
-        checkTests = models.Test.query.all()
+        checkTests = models.Test.query.order_by(models.Test.id).all()
 
     if checkTests:
         return checkTests
