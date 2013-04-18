@@ -191,8 +191,9 @@ def organisation_edit(organisation_code=None):
                 'organisation_id': organisation.id,
                 'packagegroup_id': request.form['packagegroup']
             }
-            if dqorganisations.addOrganisationPackageFromPackageGroup(data):
-                flash('Successfully added package group to your organisation.', 
+            add_packagegroups = dqorganisations.addOrganisationPackageFromPackageGroup(data)
+            if add_packagegroups:
+                flash('Successfully added ' + str(add_packagegroups) + ' packages to your organisation.', 
                       'success')
             else:
                 flash("Couldn't add package group to your organisation.", 
