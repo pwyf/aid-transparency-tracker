@@ -202,14 +202,10 @@ def _organisation_indicators(organisation):
         ).join(Organisation
         ).all()
 
-    #pconditions = PublisherCondition.query.filter(
-    #        Organisation.organisation_code==organisation.organisation_code
-    #        ).join(OrganisationPackage
-    #        ).join(Organisation
-    #        ).all()
-    # TODO: refactor PublisherCondition to refer to 
-    # Organisation rather than PackageGroup
-    pconditions = None
+    pconditions = OrganisationCondition.query.filter(
+            Organisation.organisation_code==organisation.organisation_code
+            ).join(Organisation
+            ).all()
 
     return aggregation.agr_results(aggregate_results, 
                                                 conditions=pconditions, 
