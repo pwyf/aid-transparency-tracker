@@ -113,6 +113,22 @@ def addOrganisationPackage(data):
     else:
         return False
 
+def addOrganisationPackageFromPackageGroup(data):
+    packages = models.Package.query.filter_by(package_group=data['packagegroup_id']
+            ).all()
+    count_packages = 0
+    for package in packages:
+        packagedata = {
+            'organisation_id': data['organisation_id'],
+            'package_id': package.id
+        }
+        if addOrganisationPackage(packagedata):
+            count_packages+=1
+    if count_packages >0:
+        return count_packages
+    else:
+        return False
+
 def deleteOrganisationPackage(organisation_code, package_name, organisationpackage_id):
     checkPP = models.OrganisationPackage.query.filter_by(id=organisationpackage_id).first()
     if checkPP:
