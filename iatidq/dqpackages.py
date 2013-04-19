@@ -18,3 +18,15 @@ def packages():
 
 def packageGroups():
     return models.PackageGroup.query.order_by(models.PackageGroup.name).all()
+
+def packageOrganisations(package_id):
+    if package_id is not None:
+        packageorganisations = db.session.query(models.Organisation,
+                                             models.OrganisationPackage
+                        ).filter(models.Package.id==package_id
+                        ).join(models.OrganisationPackage
+                        ).join(models.Package
+                        ).all()
+        return packageorganisations
+    else:
+        return False
