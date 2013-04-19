@@ -105,13 +105,31 @@ def addOrganisationPackage(data):
         newPP = models.OrganisationPackage()
         newPP.setup(
             organisation_id = data["organisation_id"],
-            package_id = data["package_id"]
+            package_id = data["package_id"],
+            condition = data["condition"]
         )
         db.session.add(newPP)
         db.session.commit()
         return newPP
     else:
         return False
+
+def addOrganisationPackageGroup(data):
+    checkPG=models.OrganisationPackageGroup.query.filter_by(organisation_id=data['organisation_id'], package_id=data['package_id']
+                ).first()
+    if (checkPG is None):
+        newPG = models.OrganisationPackageGroup()
+        newPG.setup(
+            organisation_id = data["organisation_id"],
+            packagegroup_id = data["packagegroup_id"],
+            condition = data["condition"]
+        )
+        db.session.add(newPG)
+        db.session.commit()
+        return newPP
+    else:
+        # Confirm that it's already been added
+        return checkPG
 
 def addOrganisationPackageFromPackageGroup(data):
     packages = models.Package.query.filter_by(package_group=data['packagegroup_id']
@@ -120,7 +138,8 @@ def addOrganisationPackageFromPackageGroup(data):
     for package in packages:
         packagedata = {
             'organisation_id': data['organisation_id'],
-            'package_id': package.id
+            'package_id': package.id,
+            'condition': data["condition"]
         }
         if addOrganisationPackage(packagedata):
             count_packages+=1

@@ -171,10 +171,12 @@ def organisation_edit(organisation_code=None):
 
     if request.method == 'POST':
         if 'addpackages' in request.form:
+            condition = request.form['condition']
             def add_org_pkg(package):
                 data = {
                     'organisation_id': organisation.id,
-                    'package_id': package
+                    'package_id': package,
+                    'condition': condition
                     }
                 if dqorganisations.addOrganisationPackage(data):
                     flash('Successfully added package to your organisation.', 
@@ -187,11 +189,19 @@ def organisation_edit(organisation_code=None):
             [ add_org_pkg(package) for package in packages ]
 
         elif 'addpackagegroup' in request.form:
+            condition = request.form['condition']
             data = {
                 'organisation_id': organisation.id,
-                'packagegroup_id': request.form['packagegroup']
+                'packagegroup_id': request.form['packagegroup'],
+                'condition': condition
             }
             add_packagegroups = dqorganisations.addOrganisationPackageFromPackageGroup(data)
+            if 'applyfuture' in request.form:
+                if dqorganisations.addOrganisationPackageGroup(data):
+                    flash('All future packages in this package group will be added to this organisation')
+                else:
+                    flash('Could not ensure that all packages in this package group will be added to this organisation')
+                
             if add_packagegroups:
                 flash('Successfully added ' + str(add_packagegroups) + ' packages to your organisation.', 
                       'success')
