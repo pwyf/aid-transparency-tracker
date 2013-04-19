@@ -36,8 +36,10 @@
         {% for package in packages %}
             <label for="package_{{package.id}}"><input type="checkbox" value="{{package.id}}" id="package_{{package.id}}" name="package" /> {{package.package_name}}</label>
         {%endfor%}
+
         </div>
         <div class="modal-footer">
+            Condition (optional): <input type="text" name="condition" /><br />
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             <input type="submit" value="Add packages to this organisation" name="addpackages" class="btn btn-success" />
         </div>
@@ -51,12 +53,27 @@
             <h3 id="addPackageGroupModalLabel">Add packages based on package group</h3>
         </div>
         <div class="modal-body">
-        <select name="packagegroup">
-        <option value="" selected>Select a package group</option>
-        {% for packagegroup in packagegroups %}
-            <option value="{{packagegroup.id}}"> {{packagegroup.name}}</option>
-        {%endfor%}
-        </select>
+        <table class="table">
+        <p>The IATI Registry generally groups packages into "Package Groups". You can add all packages in a single Package Group below, and optionally, apply to any new packages found on the IATI Registry.</p>
+        <tbody>
+        <tr>
+            <td>Package Group:</td>
+            <td>
+            <select name="packagegroup">
+            <option value="" selected></option>
+            {% for packagegroup in packagegroups %}
+                <option value="{{packagegroup.id}}"> {{packagegroup.name}}</option>
+            {%endfor%}
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Condition (optional): </td><td><input type="text" name="condition" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><label for="applyfuture"><input type="checkbox" name="applyfuture" id="applyfuture"/> Also apply to new packages in this package group</label></td>
+        </tbody>
+        </table>
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
