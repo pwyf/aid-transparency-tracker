@@ -380,13 +380,16 @@ class OrganisationPackage(db.Model):
     id = Column(Integer, primary_key=True)
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
     package_id = Column(Integer, ForeignKey('package.id'))
+    condition = Column(UnicodeText)
     
     def setup(self,
                  organisation_id,
                  package_id,
+                 condition=None,
                  id=None):
         self.organisation_id = organisation_id
         self.package_id = package_id
+        self.condition = condition
         if id is not None:
             self.id = id
 
@@ -395,6 +398,18 @@ class OrganisationPackageGroup(db.Model):
     id = Column(Integer, primary_key=True)
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
     packagegroup_id = Column(Integer, ForeignKey('packagegroup.id'))
+    condition = Column(UnicodeText)
+    
+    def setup(self,
+                 organisation_id,
+                 package_id,
+                 condition=None,
+                 id=None):
+        self.organisation_id = organisation_id
+        self.package_id = package_id
+        self.condition = condition
+        if id is not None:
+            self.id = id
 
 ## INFORESULTS
 # TODO: IMPLEMENT
