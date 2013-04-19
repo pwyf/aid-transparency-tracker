@@ -198,9 +198,9 @@ def organisation_edit(organisation_code=None):
             add_packagegroups = dqorganisations.addOrganisationPackageFromPackageGroup(data)
             if 'applyfuture' in request.form:
                 if dqorganisations.addOrganisationPackageGroup(data):
-                    flash('All future packages in this package group will be added to this organisation')
+                    flash('All future packages in this package group will be added to this organisation', 'success')
                 else:
-                    flash('Could not ensure that all packages in this package group will be added to this organisation')
+                    flash('Could not ensure that all packages in this package group will be added to this organisation', 'error')
                 
             if add_packagegroups:
                 flash('Successfully added ' + str(add_packagegroups) + ' packages to your organisation.', 
