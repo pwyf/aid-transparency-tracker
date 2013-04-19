@@ -206,7 +206,7 @@ def organisation_edit(organisation_code=None):
                 flash('Successfully added ' + str(add_packagegroups) + ' packages to your organisation.', 
                       'success')
             else:
-                flash("Couldn't add package group to your organisation.", 
+                flash("No packages were added to your organisation. This could be because you've already added all existing ones.", 
                       'error')
                 
         elif 'updateorganisation' in request.form:
