@@ -402,11 +402,11 @@ class OrganisationPackageGroup(db.Model):
     
     def setup(self,
                  organisation_id,
-                 package_id,
+                 packagegroup_id,
                  condition=None,
                  id=None):
         self.organisation_id = organisation_id
-        self.package_id = package_id
+        self.packagegroup_id = packagegroup_id
         self.condition = condition
         if id is not None:
             self.id = id
