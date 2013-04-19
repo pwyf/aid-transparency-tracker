@@ -10,15 +10,14 @@
    <script src="/static/jquery.tablesorter.min.js"></script>
     <script >
     $(function() {
-    $("table#packages").tablesorter({ sortList: [[0,0]] });
-    $("table#publishers").tablesorter({ sortList: [[0,0]] });
+    $("table#package").tablesorter({ sortList: [[0,0]] });
     $("table#results").tablesorter({ sortList: [[0,0]] });
     });
     </script>
     <a href="" id="runTestsNow" class="btn pull-right">Check package</a>
 	<h1>{{pkg.package_title}}<code>{{pkg.package_name}}</code></h1>
     <div class="status pull-right alert alert-info"><a href="#" class="checkStatusRefresh"><i class="icon-refresh"></i></a><span class="status_text"> Checking...</span></div>
-    <table class="table" id="publishers">
+    <table class="table" id="package">
     <tbody>
     <tr>
 	<td>Package name</td><td>{{ pkg.package_name }}</td>
@@ -33,6 +32,14 @@
     <tr>
     <td>Package group</td><td><a href="{{url_for('publisher', id=grp.name)}}">{{ grp.title }}</a></td>
     </tr>
+    {% endif %}
+    {% if organisations %}
+    <tr><td>Organisations</td>
+        <td>
+        {% for organisation in organisations %}
+        <a href="{{url_for('organisations', organisation_code=organisation.Organisation.organisation_code)}}">{{organisation.Organisation.organisation_name}}</a> 
+        {% endfor %}
+        </td>
     {% endif %}
     <tr>
     <td>Link</td><td><a href="http://iatiregistry.org/dataset/{{pkg.package_name}}">http://iatiregistry.org/dataset/{{ pkg.package_name }}</a></td>
