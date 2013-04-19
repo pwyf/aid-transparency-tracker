@@ -156,8 +156,10 @@ def packages(id=None, runtime_id=None):
         pconditions = None
         flat_results = None
         latest_runtime = None
+    organisations = dqpackages.packageOrganisations(id)
  
     return render_template("package.html", p=p, runtimes=runtimes, 
                            results=aggregate_results, 
                            latest_runtime=latest_runtime, latest=latest, 
-                           pconditions=pconditions, flat_results=flat_results)
+                           pconditions=pconditions, flat_results=flat_results,
+organisations=organisations)
