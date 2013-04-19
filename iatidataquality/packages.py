@@ -89,21 +89,16 @@ def package_aggregation(p, latest_runtime):
 @app.route("/packages/<id>/")
 @app.route("/packages/<id>/runtimes/<runtime_id>/")
 def packages(id=None, runtime_id=None):
-    timing = []
-    timing.append(('started', datetime.utcnow()))
     if id is None:
         pkgs = Package.query.filter_by(active=True).order_by(
             Package.package_name).all()
         return render_template("packages.html", pkgs=pkgs)
 
-    timing.append(('got package', datetime.utcnow()))
     # Get package data
     p = db.session.query(Package,
                          PackageGroup
                          ).filter(Package.package_name == id
                                   ).join(PackageGroup).first()
-
-    timing.append(('got package data', datetime.utcnow()))
 
     def get_pconditions():
         return {}
@@ -121,7 +116,6 @@ def packages(id=None, runtime_id=None):
 
     pconditions = get_pconditions()
 
-    timing.append(('got publisher conditions', datetime.utcnow()))
     # Get list of runtimes
     try:
         runtimes = db.session.query(Result.runtime_id,
@@ -132,8 +126,6 @@ def packages(id=None, runtime_id=None):
             ).all()
     except Exception:
         return abort(404)
-
-    timing.append(('got runtimes list', datetime.utcnow()))
 
     def get_latest_runtime():
         if runtime_id:
@@ -151,8 +143,6 @@ def packages(id=None, runtime_id=None):
 
     latest_runtime, latest = get_latest_runtime()
 
-    timing.append(('got latest runtime', datetime.utcnow()))
-
     if latest_runtime:
         aggregate_results = package_aggregation(p, latest_runtime)
 
@@ -166,11 +156,7 @@ def packages(id=None, runtime_id=None):
         flat_results = None
         latest_runtime = None
 
-
-    timing.append(('aggregate results', datetime.utcnow()))
     organisations = dqpackages.packageOrganisations(p[0].id)
-
-    timing.append(('got organisations', datetime.utcnow()))
  
     return render_template("package.html", p=p, runtimes=runtimes, 
                            results=aggregate_results, 
