@@ -44,20 +44,20 @@ def get_aggregation_type(aggregationtype_id):
         fields = ['name', 'description', 'test_id', 'test_result']
         return dict([ (f, request.form.get(f)) for f in fields ])
 
-    if aggregationtype_id:
-        if not request.method=='POST':
-             return dqaggregationtypes.aggregationTypes(
+    if not request.method == 'POST':
+        if aggregationtype_id:
+            return dqaggregationtypes.aggregationTypes(
                 aggregationtype_id)
         else:
+            return {}
+    else:
+        if aggregationtype_id:
             data = get_data()
             if data['test_id']=="":
                 data['test_id'] = None
             return \
                 dqaggregationtypes.updateAggregationType(aggregationtype_id, 
                                                          data)
-    else:
-        if not request.method=='POST':
-            return {}
         else:
             data = get_data()
             if data['test_id']=="":
