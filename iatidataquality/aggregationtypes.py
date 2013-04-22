@@ -59,12 +59,6 @@ def aggregationtypes_edit(aggregationtype_id=None):
             aggregationtype = \
                 dqaggregationtypes.updateAggregationType(aggregationtype_id, 
                                                          data)
-
-            if aggregationtype:
-               flash('Successfully updated your aggregation type.', 'success')
-            else:
-               aggregationtype = {}
-               flash('Could not update your aggregation type.', 'error')
     else:
         if request.method=='POST':
             data = get_data()
@@ -72,6 +66,7 @@ def aggregationtypes_edit(aggregationtype_id=None):
                 data['test_id'] = None
             aggregationtype = dqaggregationtypes.addAggregationType(data)
 
+    if request.method == 'POST':
             if aggregationtype:
                flash('Successfully added your aggregation type.', 'success')
             else:
