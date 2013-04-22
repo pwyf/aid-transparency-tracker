@@ -26,24 +26,32 @@ def aggregate_results(runtime, package_id):
 
 def get_organisations_for_testing(package_id):
     organisations = []
+    conditions = []
     runtests_again = False
     packageorganisations = dqpackages.packageOrganisations(package_id)
     if packageorganisations:
         for packageorganisation in packageorganisations:
             # add organisations to be tested;
+            organisation_id = packageorganisation.Organisation.id
+            condition = packageorganisation.OrganisationPackage.condition.strip()
+
             organisations.append({
-            'organisation_id': packageorganisation.Organisation.id,
-            'condition': packageorganisation.OrganisationPackage.condition
+            'organisation_id': organisation_id,
+            'condition': condition
                             })
             if condition is not "":
                 runtests_again = True
+            else:
+                conditions.append(condition)
             # if conditions have been specified, then
             # run the tests again without an organisation
+            # but don't show 
+        excluded_conditions = "not("+conditions.join(" or ")+")"
 
     if ((packageorganisations is None) or (runtests_again is True)):
         organisations.append({
         'organisation_id': None,
-        'condition': ""
+        'condition': excluded_conditions
         })
     return organisations
 
