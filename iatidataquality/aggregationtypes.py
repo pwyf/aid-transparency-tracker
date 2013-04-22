@@ -42,14 +42,17 @@ def aggregationtypes(aggregationtype_id=None):
 @app.route("/aggregationtypes/new/", methods=['POST', 'GET'])
 @app.route("/aggregationtypes/<aggregationtype_id>/edit/", methods=['POST', 'GET'])
 def aggregationtypes_edit(aggregationtype_id=None):
+    def get_data():
+        return {
+            'name': request.form['name'],
+            'description': request.form['description'],
+            'test_id': request.form['test_id'],
+            'test_result': request.form['test_result']
+            }
+    
     if aggregationtype_id:
         if request.method=='POST':
-            data = {
-                'name': request.form['name'],
-                'description': request.form['description'],
-                'test_id': request.form['test_id'],
-                'test_result': request.form['test_result']
-            }
+            data = get_data()
             if data['test_id']=="":
                 data['test_id'] = None
             aggregationtype = dqaggregationtypes.updateAggregationType(aggregationtype_id, data)
@@ -63,12 +66,7 @@ def aggregationtypes_edit(aggregationtype_id=None):
     else:
         aggregationtype = {}
         if request.method=='POST':
-            data = {
-                'name': request.form['name'],
-                'description': request.form['description'],
-                'test_id': request.form['test_id'],
-                'test_result': request.form['test_result']
-            }
+            data = get_data()
             if data['test_id']=="":
                 data['test_id'] = None
             aggregationtype = dqaggregationtypes.addAggregationType(data)
