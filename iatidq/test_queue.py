@@ -10,7 +10,7 @@
 import sys, os, json, ckan, urllib2
 import itertools
 from datetime import date, datetime
-import models, dqprocessing, dqparsetests
+import models, dqprocessing, dqparsetests, dqpackages
 import dqfunctions, queue
 import dqprocessing
 from lxml import etree
@@ -23,6 +23,30 @@ download_queue='iati_tests_queue'
 
 def aggregate_results(runtime, package_id):
     return dqprocessing.aggregate_results(runtime, package_id)
+
+def get_organisations_for_testing(package_id):
+    organisations = []
+    runtests_again = False
+    packageorganisations = dqpackages.packageOrganisations(package_id)
+    if packageorganisations:
+        for packageorganisation in packageorganisations:
+            # add organisations to be tested;
+            organisations.append({
+            'organisation_id': packageorganisation.Organisation.id,
+            'condition': packageorganisation.OrganisationPackage.condition
+                            })
+            if condition is not "":
+                runtests_again = True
+            # if conditions have been specified, then
+            # run the tests again without an organisation
+
+    if ((packageorganisations is None) or (runtests_again is True)):
+        organisations.append({
+        'organisation_id': None,
+        'condition': ""
+        })
+    return organisations
+
 
 def test_type(test_name):
     if re.compile("(\S*) is on list (\S*)").match(test_name):
@@ -89,6 +113,9 @@ def check_file(test_functions, codelists, file_name,
         dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, 
                                            xml_parsed)
         db.session.commit()
+
+        organisations = get_organisations_for_testing(package_id)
+        #TODO: Implement for each organisation.
 
         if not xml_parsed:
             print "XML parse failed"
