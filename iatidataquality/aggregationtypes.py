@@ -51,17 +51,15 @@ def get_aggregation_type(aggregationtype_id):
         else:
             return {}
     else:
+        data = get_data()
+        if data['test_id']=="":
+            data['test_id'] = None
+
         if aggregationtype_id:
-            data = get_data()
-            if data['test_id']=="":
-                data['test_id'] = None
             return \
                 dqaggregationtypes.updateAggregationType(aggregationtype_id, 
                                                          data)
         else:
-            data = get_data()
-            if data['test_id']=="":
-                data['test_id'] = None
             return dqaggregationtypes.addAggregationType(data)
 
 @app.route("/aggregationtypes/new/", methods=['POST', 'GET'])
