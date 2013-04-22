@@ -52,6 +52,7 @@ def aggregationtypes_edit(aggregationtype_id=None):
             if data['test_id']=="":
                 data['test_id'] = None
             aggregationtype = dqaggregationtypes.updateAggregationType(aggregationtype_id, data)
+
             if aggregationtype:
                flash('Successfully updated your aggregation type.', 'success')
             else:
@@ -66,10 +67,12 @@ def aggregationtypes_edit(aggregationtype_id=None):
             if data['test_id']=="":
                 data['test_id'] = None
             aggregationtype = dqaggregationtypes.addAggregationType(data)
+
             if aggregationtype:
                flash('Successfully added your aggregation type.', 'success')
             else:
                aggregationtype = {}
                flash('Could not add your aggregation type.', 'error')
+
     tests = dqtests.tests()
     return render_template("aggregation_types_edit.html", aggregationtype=aggregationtype, tests=tests)
