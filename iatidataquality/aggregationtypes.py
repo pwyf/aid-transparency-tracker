@@ -51,7 +51,9 @@ def aggregationtypes_edit(aggregationtype_id=None):
             data = get_data()
             if data['test_id']=="":
                 data['test_id'] = None
-            aggregationtype = dqaggregationtypes.updateAggregationType(aggregationtype_id, data)
+            aggregationtype = \
+                dqaggregationtypes.updateAggregationType(aggregationtype_id, 
+                                                         data)
 
             if aggregationtype:
                flash('Successfully updated your aggregation type.', 'success')
@@ -59,7 +61,8 @@ def aggregationtypes_edit(aggregationtype_id=None):
                aggregationtype = {}
                flash('Could not update your aggregation type.', 'error')
         else:
-            aggregationtype=dqaggregationtypes.aggregationTypes(aggregationtype_id)
+            aggregationtype=dqaggregationtypes.aggregationTypes(
+                aggregationtype_id)
     else:
         aggregationtype = {}
         if request.method=='POST':
@@ -75,4 +78,5 @@ def aggregationtypes_edit(aggregationtype_id=None):
                flash('Could not add your aggregation type.', 'error')
 
     tests = dqtests.tests()
-    return render_template("aggregation_types_edit.html", aggregationtype=aggregationtype, tests=tests)
+    return render_template("aggregation_types_edit.html", 
+                           aggregationtype=aggregationtype, tests=tests)
