@@ -27,7 +27,7 @@ def aggregate_results(runtime, package_id):
 def get_organisations_for_testing(package_id):
     organisations = []
     conditions = []
-    runtests_again = False
+    conditions_specified = False
     packageorganisations = dqpackages.packageOrganisations(package_id)
     if packageorganisations:
         for packageorganisation in packageorganisations:
@@ -37,24 +37,30 @@ def get_organisations_for_testing(package_id):
 
             organisations.append({
             'organisation_id': organisation_id,
-            'condition': condition
+            'activities_xpath': "//iati-activity/["+condition+"]"
                             })
             if condition is not "":
-                runtests_again = True
-            else:
+                conditions_specified = True
                 conditions.append(condition)
-            # if conditions have been specified, then
-            # run the tests again without an organisation
-            # but don't show 
-        excluded_conditions = "not("+conditions.join(" or ")+")"
 
-    if ((packageorganisations is None) or (runtests_again is True)):
+        remainder_xpath = "//iati-activity/[not("+conditions.join(" or ")+")]"
+
+    # If conditions have been specified, then
+    # run the tests again without an organisation
+    # But exclude those activities that have already
+    # been included above.
+
+    if (packageorganisations is None): 
         organisations.append({
         'organisation_id': None,
-        'condition': excluded_conditions
+        'activities_xpath': "//iati-activity"
+        })
+    elif (conditions_specified is True):
+        organisations.append({
+        'organisation_id': None,
+        'activities_xpath': remainder_xpath
         })
     return organisations
-
 
 def test_type(test_name):
     if re.compile("(\S*) is on list (\S*)").match(test_name):
@@ -124,6 +130,9 @@ def check_file(test_functions, codelists, file_name,
 
         organisations = get_organisations_for_testing(package_id)
         #TODO: Implement for each organisation.
+        # This is a bit crude because it only works for
+        # iati-activities, and not organisation files.
+        # But it's sufficient for now.
 
         if not xml_parsed:
             print "XML parse failed"
