@@ -47,7 +47,10 @@ def aggregationtypes_edit(aggregationtype_id=None):
         return dict([ (f, request.form.get(f)) for f in fields ])
     
     if aggregationtype_id:
-        if request.method=='POST':
+        if not request.method=='POST':
+            aggregationtype=dqaggregationtypes.aggregationTypes(
+                aggregationtype_id)
+        else:
             data = get_data()
             if data['test_id']=="":
                 data['test_id'] = None
@@ -60,9 +63,6 @@ def aggregationtypes_edit(aggregationtype_id=None):
             else:
                aggregationtype = {}
                flash('Could not update your aggregation type.', 'error')
-        else:
-            aggregationtype=dqaggregationtypes.aggregationTypes(
-                aggregationtype_id)
     else:
         aggregationtype = {}
         if request.method=='POST':
