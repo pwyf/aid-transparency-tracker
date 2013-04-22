@@ -39,9 +39,7 @@ def aggregationtypes(aggregationtype_id=None):
     ats=dqaggregationtypes.aggregationTypes()
     return render_template("aggregation_types.html", aggregationtypes=ats)
 
-@app.route("/aggregationtypes/new/", methods=['POST', 'GET'])
-@app.route("/aggregationtypes/<aggregationtype_id>/edit/", methods=['POST', 'GET'])
-def aggregationtypes_edit(aggregationtype_id=None):
+def get_aggregation_type(aggregationtype_id):
     def get_data():
         fields = ['name', 'description', 'test_id', 'test_result']
         return dict([ (f, request.form.get(f)) for f in fields ])
@@ -65,6 +63,13 @@ def aggregationtypes_edit(aggregationtype_id=None):
             if data['test_id']=="":
                 data['test_id'] = None
             aggregationtype = dqaggregationtypes.addAggregationType(data)
+
+    return aggregationtype
+
+@app.route("/aggregationtypes/new/", methods=['POST', 'GET'])
+@app.route("/aggregationtypes/<aggregationtype_id>/edit/", methods=['POST', 'GET'])
+def aggregationtypes_edit(aggregationtype_id=None):
+    aggregationtype = get_aggregation_type(aggregationtype_id)
 
     if request.method == 'POST':
         if aggregationtype:
