@@ -43,12 +43,8 @@ def aggregationtypes(aggregationtype_id=None):
 @app.route("/aggregationtypes/<aggregationtype_id>/edit/", methods=['POST', 'GET'])
 def aggregationtypes_edit(aggregationtype_id=None):
     def get_data():
-        return {
-            'name': request.form['name'],
-            'description': request.form['description'],
-            'test_id': request.form['test_id'],
-            'test_result': request.form['test_result']
-            }
+        fields = ['name', 'description', 'test_id', 'test_result']
+        return dict([ (f, request.form.get(f)) for f in fields ])
     
     if aggregationtype_id:
         if request.method=='POST':
