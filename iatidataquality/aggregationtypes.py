@@ -46,25 +46,23 @@ def get_aggregation_type(aggregationtype_id):
 
     if aggregationtype_id:
         if not request.method=='POST':
-            aggregationtype=dqaggregationtypes.aggregationTypes(
+             return dqaggregationtypes.aggregationTypes(
                 aggregationtype_id)
         else:
             data = get_data()
             if data['test_id']=="":
                 data['test_id'] = None
-            aggregationtype = \
+            return \
                 dqaggregationtypes.updateAggregationType(aggregationtype_id, 
                                                          data)
     else:
         if not request.method=='POST':
-            aggregationtype = {}
+            return {}
         else:
             data = get_data()
             if data['test_id']=="":
                 data['test_id'] = None
-            aggregationtype = dqaggregationtypes.addAggregationType(data)
-
-    return aggregationtype
+            return dqaggregationtypes.addAggregationType(data)
 
 @app.route("/aggregationtypes/new/", methods=['POST', 'GET'])
 @app.route("/aggregationtypes/<aggregationtype_id>/edit/", methods=['POST', 'GET'])
