@@ -67,11 +67,11 @@ def aggregationtypes_edit(aggregationtype_id=None):
             aggregationtype = dqaggregationtypes.addAggregationType(data)
 
     if request.method == 'POST':
-            if aggregationtype:
-               flash('Successfully added your aggregation type.', 'success')
-            else:
-               aggregationtype = {}
-               flash('Could not add your aggregation type.', 'error')
+        if aggregationtype:
+            flash('Successfully added your aggregation type.', 'success')
+        else:
+            aggregationtype = {}
+            flash('Could not add your aggregation type.', 'error')
 
     tests = dqtests.tests()
     return render_template("aggregation_types_edit.html", 
