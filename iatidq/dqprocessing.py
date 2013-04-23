@@ -62,6 +62,7 @@ def get_results(agg_type):
     return set([r.id for r in results])
 
 def aggregate_results_single_org(runtime, package_id, agg_type):
+    status = "Updating"
     result_ids = get_results(agg_type)
 
     data = db.session.query(models.Test,
