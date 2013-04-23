@@ -86,22 +86,15 @@ def organisation_new():
 
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None):
-    p_group = Organisation.query.filter_by(
+    organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    pkgs = db.session.query(Package
-            ).filter(Organisation.organisation_code == organisation_code
-            ).join(OrganisationPackage
-            ).join(Organisation
-            ).order_by(Package.package_name
-            ).all()
-
-    aggregate_results = _organisation_indicators(p_group)
+    aggregate_results = _organisation_indicators(organisation)
 
     latest_runtime=1
 
     return render_template("organisation_indicators.html", 
-                           p_group=p_group, pkgs=pkgs, 
+                           organisation=organisation,
                            results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/organisations/publication.csv")
@@ -261,6 +254,7 @@ def _organisation_indicators_summary(organisation):
     
 
 def _organisation_indicators(organisation):
+    aggregation_type = None
     aggregate_results = db.session.query(Indicator,
                                      Test,
                                      AggregateResult.results_data,
@@ -269,6 +263,7 @@ def _organisation_indicators(organisation):
                                      AggregateResult.package_id,
                                      func.max(AggregateResult.runtime_id)
         ).filter(Organisation.organisation_code==organisation.organisation_code
+        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
         ).group_by(AggregateResult.result_hierarchy, 
                    Test, 
                    AggregateResult.package_id,
