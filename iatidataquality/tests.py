@@ -20,6 +20,8 @@ from datetime import datetime
 from iatidataquality import app
 from iatidataquality import db
 
+import iatidq.test_level as test_level
+
 import os
 import sys
 import json
@@ -108,7 +110,8 @@ def import_tests():
         import dqimporttests
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
             if (request.form.get('local')):
-                result = dqimporttests.importTestsFromFile(test_list_location)
+                result = dqimporttests.importTestsFromFile(test_list_location, 
+                                                           test_level.ACTIVITY)
             else:
                 url = request.form['url']
                 level = int(request.form['level'])

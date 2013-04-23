@@ -28,7 +28,7 @@ import iatidq.dqindicators
 import iatidq.dqorganisations
 import iatidq.dqaggregationtypes
 import iatidq.dqtests
-
+import iatidq.test_level as test_level
 import optparse
 import sys
 
@@ -119,7 +119,8 @@ def setup(options):
     iatidq.dqimporttests.hardcodedTests()
     print "Importing tests"
     iatidq.dqimporttests.importTestsFromFile(
-        filename=default_tests_filename)
+        default_tests_filename,
+        test_level.ACTIVITY)
     print "Importing indicators"
     iatidq.dqindicators.importIndicatorsFromFile(
         default_indicator_group_name,
