@@ -28,7 +28,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqorganisations, dqpackages
+from iatidq import dqorganisations, dqpackages, dqaggregationtypes
 import aggregation
 
 from iatidq.models import *
@@ -92,9 +92,10 @@ def integerise(data):
         return None
 
 @app.route("/organisations/<organisation_code>/publication/")
-def organisation_publication(organisation_code=None, aggregation_type=None):
+def organisation_publication(organisation_code=None, aggregation_type=2):
 
-    aggregation_type=integerise(request.args.get('aggregation_type', None))
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
@@ -106,7 +107,9 @@ def organisation_publication(organisation_code=None, aggregation_type=None):
 
     return render_template("organisation_indicators.html", 
                            organisation=organisation,
-                           results=aggregate_results, runtime=latest_runtime)
+                           results=aggregate_results, 
+                           runtime=latest_runtime,
+                           all_aggregation_types=all_aggregation_types)
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
 def organisation_publication_detail(organisation_code=None, 
