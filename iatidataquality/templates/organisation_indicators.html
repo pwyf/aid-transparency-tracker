@@ -14,9 +14,9 @@
     <div class="pull-right">
         <p><form action="" method="GET" id="aggregation_type_form"><a href="{{url_for('organisation_publication_detail', organisation_code=organisation.organisation_code)}}" class="btn">Detail</a> 
             <select name="aggregation_type" id="aggregation_type">
-                <option value="0">All data</option>
-                <option value="1">Current data</option>
-                <option value="">No aggregation type</option>
+                {% for agt in all_aggregation_types %}
+                <option value="{{agt.AggregationType.id}}"{% if agt.AggregationType.id==aggregation_type %} selected{%endif%}>{{agt.AggregationType.name}}</option>
+                {% endfor %}
             </select>
         </form></p>
     </div>
