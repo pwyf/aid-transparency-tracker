@@ -79,7 +79,8 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids):
                 models.Result.result_data,
                 models.Result.result_hierarchy,
                 func.count(models.Result.id),
-                models.Result.package_id
+                models.Result.package_id,
+                models.Result.organisation_id
         ).filter(models.Result.runtime_id==runtime
         ).filter(models.Result.package_id==package_id
         ).join(models.Result
@@ -90,7 +91,7 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids):
                    models.Result.result_data
         ).all()
 
-    aresults = dqfunctions.aggregate_percentages(data)
+    aresults = dqfunctions.aggregate_percentages_org(data)
         
     for aresult in aresults:
         a = models.AggregateResult()

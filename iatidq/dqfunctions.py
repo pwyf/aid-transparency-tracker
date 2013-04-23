@@ -19,7 +19,7 @@ def aggregate_percentages(data):
     packages = set(map(lambda x: (x[4]), data))
     hierarchies = set(map(lambda x: (x[2]), data))
     tests = set(map(lambda x: (x[0].id, x[0].description, x[0].test_group), data))
-    
+
     d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4]),(x[3])), data))
     out = []
     for p in packages:
@@ -43,6 +43,41 @@ def aggregate_percentages(data):
                     "package_id": p
                 }
                 out.append(data)
+    return out
+
+def aggregate_percentages_org(data):
+    # Aggregates results data for a specific runtime.
+
+    packages = set(map(lambda x: (x[4]), data))
+    hierarchies = set(map(lambda x: (x[2]), data))
+    tests = set(map(lambda x: (x[0].id, x[0].description, x[0].test_group), data))
+    organisations = set(map(lambda x: (x[5]), data))
+
+    d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4],x[5]),(x[3])), data))
+    out = []
+    for p in packages:
+        for t in tests:
+            for h in hierarchies:
+                for o in organisations:
+                    try: fail = d[(t[0],0,h,p,o)]
+                    except: fail = 0
+                    try: success = d[(t[0],1,h,p,o)]
+                    except: success = 0
+                    try:
+                        percentage = int((float(success)/(fail+success)) * 100)
+                    except ZeroDivisionError:
+                        # Don't return data to DB if there are no results
+                        continue
+                    data = {}
+                    data = {
+                        "test_id": t[0],
+                        "percentage_passed": percentage,
+                        "total_results": fail+success,
+                        "hierarchy": h,
+                        "package_id": p,
+                        "organisation_id": o
+                        }
+                    out.append(data)
     return out
 
 def add_test_status(package_id, status_id, commit=True):
