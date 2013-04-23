@@ -29,6 +29,7 @@ def get_organisations_for_testing(package_id):
     conditions = []
     conditions_specified = False
     packageorganisations = dqpackages.packageOrganisations(package_id)
+
     if packageorganisations:
         for packageorganisation in packageorganisations:
             # add organisations to be tested;
@@ -50,7 +51,7 @@ def get_organisations_for_testing(package_id):
     # But exclude those activities that have already
     # been included above.
 
-    if (packageorganisations is None): 
+    if (not packageorganisations): 
         organisations.append({
         'organisation_id': None,
         'activities_xpath': "//iati-activity"
@@ -158,6 +159,7 @@ def check_file(test_functions, codelists, file_name,
                                 codelists, organisation_id)
             db.session.commit()
 
+        assert len(organisations) > 0
         for organisation in organisations:
             org_activities = data.xpath(organisation['activities_xpath'])
             org_id = organisation['organisation_id']
