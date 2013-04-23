@@ -65,7 +65,7 @@ def init_db(options):
 
 def enroll_tests(options):
     filename = options.enroll_tests.decode()
-    result = iatidq.dqimporttests.importTests(
+    result = iatidq.dqimporttests.importTestsFromFile(
         filename=filename, 
         level=options.level)
     if not result:
