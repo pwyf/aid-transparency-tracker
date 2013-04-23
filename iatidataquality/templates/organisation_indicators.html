@@ -1,5 +1,5 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
-{% block title %}{{p_group.organisation_name}} &raquo; Organisations{% endblock %}
+{% block title %}{{organisation.organisation_name}} &raquo; Organisations{% endblock %}
 {% block content %}
 
    <script src="/static/jquery.tablesorter.min.js"></script>
@@ -10,8 +10,8 @@
 
     </script>
 
-    <h1><a href="{{url_for('organisations', organisation_code=p_group.organisation_code)}}">{{p_group.organisation_name}}</a><code>{{p_group.organisation_code}}</code></h1>
-    <div class="pull-right"><a href="{{url_for('publisher_detail', id=p_group.organisation_code)}}" class="btn">Detail</a></div>
+    <h1><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a><code>{{organisation.organisation_code}}</code></h1>
+    <div class="pull-right"><a href="{{url_for('publisher_detail', id=organisation.organisation_code)}}" class="btn">Detail</a></div>
 
     {% if results %}
 
@@ -34,7 +34,7 @@
     <div class="alert alert-danger">
         <h4>How do you structure your data?</h4>
         <p>We found multiple hierarchies (e.g. programs and projects) in your data. You haven't told us yet about how you structure your data, and this could make a significant difference to your IATI score.</p>
-        <p><a href="{{url_for('organisations_feedback', organisation_code=p_group.organisation_code)}}" class="btn btn-danger">Provide structure &raquo;</a></p>
+        <p><a href="{{url_for('organisations_feedback', organisation_code=organisation.organisation_code)}}" class="btn btn-danger">Provide structure &raquo;</a></p>
     </div>
         <fieldset>
         <h3>Published to IATI</h3>

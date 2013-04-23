@@ -43,13 +43,16 @@ test_list_location = "tests/activity_tests.csv"
 
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
-def organisations(organisation_code=None):
+def organisations(organisation_code=None, aggregation_type=None):
+
+    aggregation_type=integerise(request.args.get('aggregation_type', None))
+
     template_args = {}
     if organisation_code is not None:
         organisation = dqorganisations.organisations(organisation_code)
 
         try:
-            summary_data = _organisation_indicators_summary(organisation)
+            summary_data = _organisation_indicators_summary(organisation, aggregation_type)
         except Exception, e:
             summary_data = None
 
@@ -84,24 +87,28 @@ def organisation_new():
     return render_template("organisation_edit.html", organisation=organisation)
 
 
+def integerise(data):
+    try:
+        return int(data)
+    except ValueError:
+        return None
+    except TypeError:
+        return None
+
 @app.route("/organisations/<organisation_code>/publication/")
-def organisation_publication(organisation_code=None):
-    p_group = Organisation.query.filter_by(
+def organisation_publication(organisation_code=None, aggregation_type=None):
+
+    aggregation_type=integerise(request.args.get('aggregation_type', None))
+
+    organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    pkgs = db.session.query(Package
-            ).filter(Organisation.organisation_code == organisation_code
-            ).join(OrganisationPackage
-            ).join(Organisation
-            ).order_by(Package.package_name
-            ).all()
-
-    aggregate_results = _organisation_indicators(p_group)
+    aggregate_results = _organisation_indicators(organisation, aggregation_type)
 
     latest_runtime=1
 
     return render_template("organisation_indicators.html", 
-                           p_group=p_group, pkgs=pkgs, 
+                           organisation=organisation,
                            results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/organisations/publication.csv")
@@ -248,8 +255,8 @@ def organisationpackage_delete(organisation_code=None,
     return redirect(url_for('organisation_edit', 
                             organisation_code=organisation_code))
 
-def _organisation_indicators_summary(organisation):
-    summarydata = _organisation_indicators(organisation)
+def _organisation_indicators_summary(organisation, aggregation_type=None):
+    summarydata = _organisation_indicators(organisation, aggregation_type)
     # Create crude total score
     totalpct = 0.00
     totalindicators = 0
@@ -260,7 +267,7 @@ def _organisation_indicators_summary(organisation):
     return totalscore, totalindicators
     
 
-def _organisation_indicators(organisation):
+def _organisation_indicators(organisation, aggregation_type=None):
     aggregate_results = db.session.query(Indicator,
                                      Test,
                                      AggregateResult.results_data,
@@ -269,6 +276,7 @@ def _organisation_indicators(organisation):
                                      AggregateResult.package_id,
                                      func.max(AggregateResult.runtime_id)
         ).filter(Organisation.organisation_code==organisation.organisation_code
+        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
         ).group_by(AggregateResult.result_hierarchy, 
                    Test, 
                    AggregateResult.package_id,
