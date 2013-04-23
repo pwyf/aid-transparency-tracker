@@ -90,12 +90,12 @@ def package_aggregation(p, latest_runtime):
 @app.route("/packages/<package_name>/runtimes/<runtime_id>/")
 def packages(package_name=None, runtime_id=None):
     if package_name is None:
-        pkgs = Package.query.filter_by(active=True).order_by(
+        packages = Package.query.filter_by(active=True).order_by(
             Package.package_name).all()
-        return render_template("packages.html", pkgs=pkgs)
+        return render_template("packages.html", packages=packages)
 
     # Get package data
-    p = db.session.query(Package,
+    package = db.session.query(Package,
                          PackageGroup
                          ).filter(Package.package_name == package_name
                                   ).outerjoin(PackageGroup).first()
@@ -120,7 +120,7 @@ def packages(package_name=None, runtime_id=None):
     try:
         runtimes = db.session.query(AggregateResult.runtime_id,
                                     Runtime.runtime_datetime
-            ).filter(AggregateResult.package_id==p[0].id
+            ).filter(AggregateResult.package_id==package.Package.id
             ).distinct(
             ).join(Runtime
             ).all()
@@ -139,14 +139,14 @@ def packages(package_name=None, runtime_id=None):
                                     func.max(Runtime.id)
                     ).join(AggregateResult
                     ).group_by(Runtime.id
-                    ).filter(AggregateResult.package_id==p[0].id
+                    ).filter(AggregateResult.package_id==package.Package.id
                     ).first()
-            return runtime[0], True
+            return runtime.Runtime, True
 
     latest_runtime, latest = get_latest_runtime()
 
     if latest_runtime:
-        aggregate_results = package_aggregation(p, latest_runtime)
+        aggregate_results = package_aggregation(package, latest_runtime)
 
         aggregate_results = aggregation.agr_results(aggregate_results, 
                                                     pconditions)
@@ -156,9 +156,9 @@ def packages(package_name=None, runtime_id=None):
         flat_results = None
         latest_runtime = None
 
-    organisations = dqpackages.packageOrganisations(p[0].id)
+    organisations = dqpackages.packageOrganisations(package.Package.id)
  
-    return render_template("package.html", p=p, runtimes=runtimes, 
+    return render_template("package.html", package=package, runtimes=runtimes, 
                            results=aggregate_results, 
                            latest_runtime=latest_runtime, latest=latest, 
                            pconditions=pconditions,
