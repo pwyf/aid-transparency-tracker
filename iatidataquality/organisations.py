@@ -38,9 +38,9 @@ import unicodecsv
 
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
-def organisations(organisation_code=None, aggregation_type=None):
+def organisations(organisation_code=None):
 
-    aggregation_type=integerise(request.args.get('aggregation_type', None))
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
 
     template_args = {}
     if organisation_code is not None:
@@ -109,7 +109,8 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                            organisation=organisation,
                            results=aggregate_results, 
                            runtime=latest_runtime,
-                           all_aggregation_types=all_aggregation_types)
+                           all_aggregation_types=all_aggregation_types,
+                           aggregation_type=aggregation_type)
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
 def organisation_publication_detail(organisation_code=None, 
