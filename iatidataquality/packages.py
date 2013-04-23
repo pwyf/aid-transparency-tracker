@@ -118,9 +118,9 @@ def packages(package_name=None, runtime_id=None):
 
     # Get list of runtimes
     try:
-        runtimes = db.session.query(Result.runtime_id,
+        runtimes = db.session.query(AggregateResult.runtime_id,
                                     Runtime.runtime_datetime
-            ).filter(Result.package_id==p[0].id
+            ).filter(AggregateResult.package_id==p[0].id
             ).distinct(
             ).join(Runtime
             ).all()
