@@ -12,7 +12,7 @@
 
     <h1><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a><code>{{organisation.organisation_code}}</code></h1>
     <div class="pull-right">
-        <p><form action="" method="GET" id="aggregation_type_form"><a href="{{url_for('publisher_detail', id=organisation.organisation_code)}}" class="btn">Detail</a> 
+        <p><form action="" method="GET" id="aggregation_type_form"><a href="{{url_for('organisation_publication_detail', organisation_code=organisation.organisation_code)}}" class="btn">Detail</a> 
             <select name="aggregation_type" id="aggregation_type">
                 <option value="0">All data</option>
                 <option value="1">Current data</option>
@@ -93,7 +93,7 @@
         </fieldset>
     {%endif%}
 
-<script>
+<script type="text/javascript">
 
     $(".showTests").click(function(e){
         if ($(this).hasClass("visible")) {
