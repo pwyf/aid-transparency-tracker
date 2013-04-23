@@ -10,7 +10,14 @@
     });
 
     </script>
+    <div class="pull-right">
+        <button type="button" class="btn" data-toggle="collapse" data-target="#packages_div">
+        <i class="icon-file"></i> <b>Packages</b>
+        </button>
+    </div>
 	<h1>{{p_group.title}}<code>{{p_group.name}}</code></h1>
+
+    <div id="packages_div" class="collapse">
     <h2>Packages</h2>
     <table class="table" id="packages">
     <thead>
@@ -24,12 +31,13 @@
 	{% endfor %}
     </tbody>
     </table>
+    </div>
 
     {% if results %}
-    <h2>Results</h2>
     <div class="pull-right testruns">
         <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
     </div>
+    <h2>Results</h2>
     <div class="clearer">&nbsp;</div>
         {% for h, values in results.items() %}
         <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
