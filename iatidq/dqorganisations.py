@@ -14,6 +14,12 @@ import csv
 import util
 import unicodecsv
 
+def checkCondition(row):
+    if (('packagegroup_condition' in row) and (row['packagegroup_condition']!='')):
+        return row['packagegroup_condition']
+    else:
+        return None
+
 def importOrganisationPackagesFromFile(filename, organisation_c=None, organisation_n=None):
     with file(filename) as fh:
         return _importOrganisationPackages(organisation_c, organisation_n, fh, True)
@@ -23,6 +29,8 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
         data = unicodecsv.DictReader(fh)
 
         for row in data:
+            condition = checkCondition(row)
+
             if organisation_c is None:
                 checkP = organisations(row['organisation_code'])
                 organisation_code = row['organisation_code']
@@ -48,7 +56,8 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
                 for package in packages:
                     organisationpackage = addOrganisationPackage({
                                 "organisation_id" : organisation.id,
-                                "package_id" : package.id
+                                "package_id" : package.id,
+                                "condition": condition
                             })
                 
         print "Imported successfully"
