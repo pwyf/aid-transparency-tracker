@@ -38,14 +38,14 @@ def get_organisations_for_testing(package_id):
 
             organisations.append({
             'organisation_id': organisation_id,
-            'activities_xpath': "//iati-activity/["+condition+"]"
+            'activities_xpath': "//iati-activity[%s]" % condition
                             })
             if condition is not "":
                 conditions_specified = True
                 conditions.append(condition)
 
         conditions_str = " or ".join(conditions)
-        remainder_xpath = "//iati-activity/[not(%s)]" % conditions_str
+        remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
 
     # If conditions have been specified, then
     # run the tests again without an organisation
