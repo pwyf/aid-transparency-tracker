@@ -98,7 +98,7 @@ def organisation_publication(organisation_code=None, aggregation_type=None):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = _organisation_indicators(organisation, aggregation_type)
+    aggregate_results = dqorganisations._organisation_indeicators(organisation, aggregation_type)
 
     latest_runtime=1
 
@@ -133,7 +133,7 @@ def all_organisations_publication_csv():
     organisations = Organisation.query.all()
     for organisation in organisations:
 
-        aggregate_results = _organisation_indicators(organisation)
+        aggregate_results = dqorganisations._organisation_indeicators(organisation)
 
         for resultid, result in aggregate_results.items():
             out.writerow({
@@ -154,7 +154,7 @@ def organisation_publication_csv(organisation_code=None):
     p_group = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = _organisation_indicators(p_group)
+    aggregate_results = dqorganisations._organisation_indeicators(p_group)
 
     strIO = StringIO.StringIO()
     fieldnames = "organisation_name organisation_code indicator_name indicator_description percentage_passed num_results".split()
@@ -266,7 +266,7 @@ def organisationpackage_delete(organisation_code=None,
                             organisation_code=organisation_code))
 
 def _organisation_indicators_summary(organisation, aggregation_type=None):
-    summarydata = _organisation_indicators(organisation, aggregation_type)
+    summarydata = dqorganisations._organisation_indeicators(organisation, aggregation_type)
     # Create crude total score
     totalpct = 0.00
     totalindicators = 0
@@ -276,36 +276,3 @@ def _organisation_indicators_summary(organisation, aggregation_type=None):
     totalscore = totalpct/totalindicators
     return totalscore, totalindicators
     
-
-def _organisation_indicators(organisation, aggregation_type=None):
-    aggregate_results = db.session.query(Indicator,
-                                     Test,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(Organisation.organisation_code==organisation.organisation_code
-        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
-        ).group_by(AggregateResult.result_hierarchy, 
-                   Test, 
-                   AggregateResult.package_id,
-                   Indicator,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num,
-                   AggregateResult.package_id
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
-        ).all()
-
-    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
-            ).all()
-
-    return aggregation.agr_results(aggregate_results, 
-                                                conditions=pconditions, 
-                                                mode="publisher_indicators")
-

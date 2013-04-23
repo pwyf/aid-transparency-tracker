@@ -205,3 +205,36 @@ def _organisation_detail(organisation):
     return aggregation.agr_results(aggregate_results, 
                                    conditions=pconditions, 
                                    mode="publisher")
+
+def _organisation_indicators(organisation, aggregation_type=None):
+    aggregate_results = db.session.query(Indicator,
+                                     Test,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(Organisation.organisation_code==organisation.organisation_code
+        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
+        ).group_by(AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   Indicator,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num,
+                   AggregateResult.package_id
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
+        ).all()
+
+    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
+            ).all()
+
+    return aggregation.agr_results(aggregate_results, 
+                                                conditions=pconditions, 
+                                                mode="publisher_indicators")
+
