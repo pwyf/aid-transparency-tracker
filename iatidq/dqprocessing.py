@@ -39,10 +39,15 @@ def aggregate_results(runtime, package_id):
 
     status = "Updating"
 
+    agg_types = models.AggregationType.query.all()
+    if len(agg_types) == 0:
+        return {"status": status, "data": []}
+
     organisation_ids = get_organisation_ids()
 
     if len(organisation_ids) > 0:
-        return aggregate_results_orgs(runtime, package_id, organisation_ids)
+        return aggregate_results_orgs(runtime, package_id, 
+                                      organisation_ids, agg_types)
 
     data = db.session.query(models.Test,
                 models.Result.result_data,
@@ -72,7 +77,7 @@ def aggregate_results(runtime, package_id):
     
     return {"status": status, "data": aresults}
 
-def aggregate_results_orgs(runtime, package_id, organisation_ids):
+def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_types):
     status = "Updating"
 
     data = db.session.query(models.Test,
