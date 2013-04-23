@@ -167,9 +167,6 @@ def check_file(test_functions, codelists, file_name,
 
             [ run_test_activity(org_id, activity) 
               for activity in org_activities ]
-            
-            
-
 
         print "Aggregating results..."
         dqprocessing.aggregate_results(runtime_id, package_id)
