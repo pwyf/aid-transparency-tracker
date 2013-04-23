@@ -135,11 +135,13 @@ def packages(package_name=None, runtime_id=None):
                         ).first(), False)
         else:
             # Select the highest runtime; then get data for that one
-            return (db.session.query(Runtime
-                        ).filter(Result.package_id==p[0].id
-                        ).join(Result
-                        ).order_by(Runtime.id.desc()).first(),
-                    True)
+            runtime = db.session.query(Runtime,
+                                    func.max(Runtime.id)
+                    ).join(AggregateResult
+                    ).group_by(Runtime.id
+                    ).filter(AggregateResult.package_id==p[0].id
+                    ).first()
+            return runtime[0], True
 
     latest_runtime, latest = get_latest_runtime()
 
