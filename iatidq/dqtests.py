@@ -10,6 +10,8 @@
 from iatidq import db
 import models
 
+class TestNotFound(Exception): pass
+
 def tests(test_id=None):
     if test_id is not None:
         checkTests = models.Test.query.filter_by(id=test_id).first_or_404()
@@ -23,10 +25,9 @@ def tests(test_id=None):
 
 def test_by_test_name(test_name=None):
     checkTest = models.Test.query.filter_by(name=test_name).first()
-    if checkTest:
-        return checkTest
-    else:
-        return False
+    if not checkTest:
+        raise TestNotFound
+    return checkTest
 
 def updateTest(data):
     checkTest = tests(id=data['id'])
@@ -45,7 +46,11 @@ def deleteTest(test_id):
     db.session.commit()
 
 def addTest(data):
-    checkTest = test_by_test_name(data["name"])
+    try:
+        checkTest = test_by_test_name(data["name"])
+    except TestNotFound:
+        return False
+
     if not checkTest:
         test = models.Test()
         test.setup(
