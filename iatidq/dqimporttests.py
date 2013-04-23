@@ -13,6 +13,8 @@ import unicodecsv
 
 import util
 
+import test_level
+
 def hardcodedTests():
     hardcoded_tests = [
         (-2, u'url_exists', u"Check that the xml file actually exists."),
@@ -36,8 +38,8 @@ def hardcodedTests():
     db.session.commit()
 
 def returnLevel(row, level):
-    if (('level' in row) and (row['level'] != "")):
-        return row['level']
+    if (('test_level' in row) and (row['test_level'] != "")):
+        return row['test_level']
     else:
         return level
 
