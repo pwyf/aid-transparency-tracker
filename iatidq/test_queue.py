@@ -98,9 +98,9 @@ def test_activity(runtime_id, package_id, result_identifier,
                     "activity": xmldata,
                     "lists": codelists
                 }
-                return int(test_functions[test_id](data))
             else:
-                return int(test_functions[test_id](xmldata))
+                data = xmldata
+            return int(test_functions[test_id](data))
         except:
             return 2
 
