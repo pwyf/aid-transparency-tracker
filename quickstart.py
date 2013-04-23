@@ -97,7 +97,7 @@ def import_organisations(options):
     else:
         print "Error: please provide a filename"
 
-def create_aggregation_types(options):
+def create_aggregation_types():
     print "Adding an aggregation type for all data"
     iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
                                                 'description': '',
