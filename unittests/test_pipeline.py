@@ -89,10 +89,9 @@ def test_refresh():
     pkg = pkgs[0]
     assert pkg.package_name == package_name
 
-def _test_example_tests():
-    publisher = 'worldbank'
-    country = 'tz'
+def _test_example_tests(publisher, country):
     package_name = '-'.join([publisher, country])
+    xml_filename = os.path.join("unittests", "artefacts", package_name + '.xml')
 
     # check there's nothing in the db
     pgs = get_packagegroups_by_name(publisher)
@@ -142,7 +141,7 @@ def _test_example_tests():
 
     assert iatidq.test_queue.check_file(test_functions, 
                codelists,
-               "unittests/artefacts/worldbank-tz.xml",
+               xml_filename,
                runtime.id,
                pkg.id,
                context=None)
@@ -176,7 +175,10 @@ def _test_example_tests():
 
 @nose.with_setup(setup_func, teardown_func)
 def test_example_tests():
-    return _test_example_tests()
+    data = [ ('worldbank', 'tz') ]
+
+    for publisher, country in data:
+        yield _test_example_tests, publisher, country
 
 if __name__ == '__main__':
     setup_func()
