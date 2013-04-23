@@ -11,6 +11,7 @@
 
     </script>
 	<h1>{{p_group.title}}<code>{{p_group.name}}</code></h1>
+    <h2>Packages</h2>
     <table class="table" id="packages">
     <thead>
     <th>Registry ID</th><th>Name</th><th>Country</th><th>License</th>
@@ -25,10 +26,10 @@
     </table>
 
     {% if results %}
+    <h2>Results</h2>
     <div class="pull-right testruns">
         <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
     </div>
-    <h1>Latest results <code>{{runtime.runtime_datetime}}</code></h1>
     <div class="clearer">&nbsp;</div>
         {% for h, values in results.items() %}
         <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
