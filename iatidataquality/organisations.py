@@ -36,6 +36,40 @@ from iatidq.models import *
 import StringIO
 import unicodecsv
 
+def _organisation_detail_ungrouped(organisation):
+    return db.session.query(Indicator,
+                                     Test,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(Organisation.id==organisation.id)
+
+def _organisation_detail(organisation):
+    aggregate_results = _organisation_detail_ungrouped(organisation)\
+        .group_by(Indicator,
+                   AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
+        ).all()
+
+    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
+            ).all()
+
+    db.session.commit()
+    return aggregation.agr_results(aggregate_results, 
+                                   conditions=pconditions, 
+                                   mode="publisher")
+
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None, aggregation_type=None):
@@ -105,6 +139,21 @@ def organisation_publication(organisation_code=None, aggregation_type=None):
     return render_template("organisation_indicators.html", 
                            organisation=organisation,
                            results=aggregate_results, runtime=latest_runtime)
+
+@app.route("/organisations/<organisation_code>/publication/detail/")
+def organisation_publication_detail(organisation_code=None, aggregation_type=None):
+
+    organisation = Organisation.query.filter_by(
+        organisation_code=organisation_code).first_or_404()
+
+    packages = dqorganisations.organisationPackages(
+        organisation.organisation_code)
+
+    aggregate_results = _organisation_detail(organisation)
+
+    txt = render_template("organisation_detail.html", organisation=organisation, packages=packages, 
+                           results=aggregate_results)
+    return txt
 
 @app.route("/organisations/publication.csv")
 def all_organisations_publication_csv():

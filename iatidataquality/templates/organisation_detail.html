@@ -1,5 +1,5 @@
-{% set active_page='publishers'%}{% extends "layout.html" %}
-{% block title %}{{p_group.title}} &raquo; Publishers{% endblock %}
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}{{organisation.organisation_name}} &raquo; Detail &raquo; Organisations{% endblock %}
 {% block content %}
 
    <script src="/static/jquery.tablesorter.min.js"></script>
@@ -15,7 +15,7 @@
         <i class="icon-file"></i> <b>Packages</b>
         </button>
     </div>
-	<h1>{{p_group.title}}<code>{{p_group.name}}</code></h1>
+	<h1><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a> <code>{{organisation.organisation_code}}</code></h1>
 
     <div id="packages_div" class="collapse">
     <h2>Packages</h2>
@@ -24,9 +24,9 @@
     <th>Registry ID</th><th>Name</th><th>Country</th><th>License</th>
     </thead>
     <tbody>
-	{% for pk in pkgs %}
+	{% for pk in packages %}
     <tr>
-	<td><a href="{{url_for('packages', package_name=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td><td>{{ pk.package_country }}</td><td>{{ pk.package_license }}</td><!--<td></td>-->
+	<td><a href="{{url_for('packages', package_name=pk.package_name)}}">{{ pk.Package.package_name }}</a></td><td>{{ pk.Package.package_title }}</td><td>{{ pk.Package.package_country }}</td><td>{{ pk.Package.package_license }}</td><!--<td></td>-->
     </tr>
 	{% endfor %}
     </tbody>
@@ -77,7 +77,7 @@
         $("#tr"+result_id+"h"+hierarchy_id).after('<tr id="tr-pagination-'+ result_id +'-hierarchy-'+hierarchy_id+'" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="'+(page-1)+'" href="#">Prev</a></li><li><a class="'+page+'" href="#">'+page+'</a></li><li><a class="'+(page+1)+'" href="#">'+(page+1)+'</a></li><li><a class="'+(page+2)+'" href="#">'+(page+2)+'</a></li><li><a class="'+(page+3)+'" href="#">'+(page+3)+'</a></li><li><a class="'+(page+4)+'" href="#">'+(page+4)+'</a></li><li><a class="'+(page+1)+'" href="#">Next</a></li></ul></div></td></tr><tr id="tr-result-' + result_id + '"><td class="results" colspan="5"><span class="muted loading_data">Loading data...</span></td></tr>');
 
         $('.loading_data').show();
-        $.getJSON("/api/publishers/{{p_group.name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
+        $.getJSON("/api/publishers/{{organisation.name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
             var items = [];
             $.each(data["results"], function(key, val){
                 if (val == '1') {
@@ -135,7 +135,7 @@
 
             $("#tr"+result_id+"h"+hierarchy_id).after('<tr id="tr-pagination-'+ result_id +'-hierarchy-'+hierarchy_id+'" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="'+(page-1)+'" href="#">Prev</a></li><li><a class="'+page+'" href="#">'+page+'</a></li><li><a class="'+(page+1)+'" href="#">'+(page+1)+'</a></li><li><a class="'+(page+2)+'" href="#">'+(page+2)+'</a></li><li><a class="'+(page+3)+'" href="#">'+(page+3)+'</a></li><li><a class="'+(page+4)+'" href="#">'+(page+4)+'</a></li><li><a class="'+(page+1)+'" href="#">Next</a></li></ul></div></td></tr><tr id="tr-result-' + result_id + '"><td class="results" colspan="5"><span class="muted loading_data">Loading data...</span></td></tr>');
             $('.loading_data').show();
-            $.getJSON("/api/publishers/{{p_group.name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
+            $.getJSON("/api/publishers/{{organisation.name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
                 var items = [];
                 $.each(data["results"], function(key, val){
                     if (val == '1') {
