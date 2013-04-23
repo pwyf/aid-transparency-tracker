@@ -28,18 +28,13 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
+from iatidq import dqorganisations, dqpackages
 import aggregation
 
 from iatidq.models import *
 
 import StringIO
 import unicodecsv
-import tempfile
-import spreadsheet
-
-test_list_location = "tests/activity_tests.csv"
-
 
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
