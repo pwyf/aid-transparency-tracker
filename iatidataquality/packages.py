@@ -148,8 +148,6 @@ def packages(package_name=None, runtime_id=None):
     if latest_runtime:
         aggregate_results = package_aggregation(p, latest_runtime)
 
-        flat_results = aggregate_results
-
         aggregate_results = aggregation.agr_results(aggregate_results, 
                                                     pconditions)
     else:
@@ -163,5 +161,5 @@ def packages(package_name=None, runtime_id=None):
     return render_template("package.html", p=p, runtimes=runtimes, 
                            results=aggregate_results, 
                            latest_runtime=latest_runtime, latest=latest, 
-                           pconditions=pconditions, flat_results=flat_results,
+                           pconditions=pconditions,
 organisations=organisations)
