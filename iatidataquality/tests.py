@@ -91,10 +91,10 @@ def tests_new():
                 "test_level": request.form['test_level'],
                 "active": request.form.get('active', None)
             }
-        test = dqtests.addTest(data)
-        if test:
+        try:
+            test = dqtests.addTest(data)
             flash('Created', "success")
-        else:
+        except dqtests.TestNotFound:
             test = data
             flash('Unable to create. Maybe you already have a test using the same expression?', "error")
     else:
