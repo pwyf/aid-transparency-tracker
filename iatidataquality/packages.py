@@ -86,10 +86,10 @@ def package_aggregation(p, latest_runtime):
                 ).all()
                    
 @app.route("/packages/")
-@app.route("/packages/<id>/")
-@app.route("/packages/<id>/runtimes/<runtime_id>/")
-def packages(id=None, runtime_id=None):
-    if id is None:
+@app.route("/packages/<package_name>/")
+@app.route("/packages/<package_name>/runtimes/<runtime_id>/")
+def packages(package_name=None, runtime_id=None):
+    if package_name is None:
         pkgs = Package.query.filter_by(active=True).order_by(
             Package.package_name).all()
         return render_template("packages.html", pkgs=pkgs)
@@ -97,7 +97,7 @@ def packages(id=None, runtime_id=None):
     # Get package data
     p = db.session.query(Package,
                          PackageGroup
-                         ).filter(Package.package_name == id
+                         ).filter(Package.package_name == package_name
                                   ).join(PackageGroup).first()
 
     def get_pconditions():

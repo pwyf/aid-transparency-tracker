@@ -19,7 +19,7 @@
     <tbody>
 	{% for pk in pkgs %}
     <tr>
-	<td><input type="hidden" name="package" value="{{pk.package_name}}" /><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td>
+	<td><input type="hidden" name="package" value="{{pk.package_name}}" /><a href="{{url_for('packages', package_name=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td>
     </tr>
 	{% endfor %}
     </tbody>
