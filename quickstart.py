@@ -104,7 +104,9 @@ def create_aggregation_types(options):
     #                                            'test_id':'',
     #                                            'test_result':'1'})
     print "Adding an aggregation type for current data"
-    currentdata_test = iatidq.dqtests.test_by_test_name("activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?")
+    currentdata_test = iatidq.dqtests.test_by_test_name(
+        "activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"
+        )
     iatidq.dqaggregationtypes.addAggregationType({'name':'Current data',
                                                 'description': '',
                                                 'test_id':currentdata_test.id,
