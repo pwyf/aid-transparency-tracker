@@ -16,6 +16,7 @@ import iatidq.dqindicators
 import iatidq.test_queue
 import iatidq.dqcodelists
 import iatidq.dqorganisations
+import iatidq.test_level as test_level
 
 from iatidq import db
 import lxml.etree
@@ -110,7 +111,8 @@ def _test_example_tests(publisher, country):
     # load foxpath tests
     os.chdir(parent)
     iatidq.dqimporttests.importTestsFromFile(
-        filename="tests/sample_tests.csv")
+        "tests/sample_tests.csv",
+        test_level.ACTIVITY)
 
     print "Importing indicators"
     iatidq.dqindicators.importIndicatorsFromFile(
