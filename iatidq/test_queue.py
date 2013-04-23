@@ -44,7 +44,8 @@ def get_organisations_for_testing(package_id):
                 conditions_specified = True
                 conditions.append(condition)
 
-        remainder_xpath = "//iati-activity/[not("+conditions.join(" or ")+")]"
+        conditions_str = " or ".join(conditions)
+        remainder_xpath = "//iati-activity/[not(%s)]" % conditions_str
 
     # If conditions have been specified, then
     # run the tests again without an organisation
