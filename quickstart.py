@@ -133,7 +133,7 @@ def setup(options):
     print "Refreshing package data from Registry"
     dqregistry.refresh_packages()
     print "Adding organisations"
-    iatidq.dqorganisations.importOrganisationPackagesFromFile("organisations_with_identifiers.csv")
+    iatidq.dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
     create_aggregation_types()
     print "Setup complete."
 
