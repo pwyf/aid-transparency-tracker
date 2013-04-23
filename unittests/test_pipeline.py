@@ -15,6 +15,7 @@ import iatidq.dqimporttests
 import iatidq.dqindicators
 import iatidq.test_queue
 import iatidq.dqcodelists
+import iatidq.dqorganisations
 
 from iatidq import db
 import lxml.etree
@@ -45,11 +46,13 @@ def setup_organisations(pkg_id):
          '''participating-org[@role="Extending"][@ref="US-18"]'''),
         ]
     for name, code, cond in org_data:
-        org_id = dqorganisations.addOrganisation({'organisation_name': name,
-                                                  'organisation_code': code})
-        dqorganisations.addOrganisationPackage({'organisation_id': org_id,
-                                                'package_id': pkg_id,
-                                                'condition': cond})
+        organisation = iatidq.dqorganisations.addOrganisation(
+            {'organisation_name': name,
+             'organisation_code': code})
+        iatidq.dqorganisations.addOrganisationPackage(
+            {'organisation_id': organisation.id,
+             'package_id': pkg_id,
+             'condition': cond})
 
 def teardown_func():
     iatidq.models.Result.query.delete()
@@ -139,6 +142,11 @@ def _test_example_tests(publisher, country):
     pkg = get_packages_by_name(package_name)[0]
 
     log(pkg.package_name)
+
+    package_id = pkg.id
+    ## this is a hack on a stick
+    if publisher == 'unitedstates':
+        setup_organisations(package_id)
 
 
     assert iatidq.test_queue.check_file(test_functions, 
