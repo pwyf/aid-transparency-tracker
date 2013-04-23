@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, dqfunctions
+from iatidq import db, dqfunctions, dqpackages
 import models
 from sqlalchemy import func
 
@@ -28,12 +28,23 @@ def aggregate_results(runtime, package_id):
             ).filter(models.AggregateResult.package_id==package_id
             ).first()
     
-    if (check_existing_results):
+    if check_existing_results:
         status = "Already aggregated"
         aresults = "None"
-    else:
-        status = "Updating"
-        data = db.session.query(models.Test,
+        return {"status": status, "data": aresults}
+
+    def get_organisation_ids():
+        return [ o.Organisation.id for o in 
+                 dqpackages.packageOrganisations(package_id) ]
+
+    status = "Updating"
+
+    organisation_ids = get_organisation_ids()
+
+    if len(organisation_ids) > 0:
+        return aggregate_results_orgs(runtime, package_id, organisation_ids)
+
+    data = db.session.query(models.Test,
                 models.Result.result_data,
                 models.Result.result_hierarchy,
                 func.count(models.Result.id),
@@ -41,20 +52,56 @@ def aggregate_results(runtime, package_id):
         ).filter(models.Result.runtime_id==runtime
         ).filter(models.Result.package_id==package_id
         ).join(models.Result
-        ).group_by(models.Result.package_id, models.Result.result_hierarchy, models.Test, models.Result.result_data
+        ).group_by(models.Result.package_id, 
+                   models.Result.result_hierarchy, 
+                   models.Test.id, 
+                   models.Result.result_data
         ).all()
 
-        aresults = dqfunctions.aggregate_percentages(data)
+    aresults = dqfunctions.aggregate_percentages(data)
         
-        result_number = 0
-        for aresult in aresults:
-            a = models.AggregateResult()
-            a.runtime_id = runtime
-            a.package_id = aresult["package_id"]
-            a.test_id = aresult["test_id"]
-            a.result_hierarchy = aresult["hierarchy"]
-            a.results_data = aresult["percentage_passed"]
-            a.results_num = aresult["total_results"]
-            db.session.add(a)
+    for aresult in aresults:
+        a = models.AggregateResult()
+        a.runtime_id = runtime
+        a.package_id = aresult["package_id"]
+        a.test_id = aresult["test_id"]
+        a.result_hierarchy = aresult["hierarchy"]
+        a.results_data = aresult["percentage_passed"]
+        a.results_num = aresult["total_results"]
+        db.session.add(a)
+    
+    return {"status": status, "data": aresults}
+
+def aggregate_results_orgs(runtime, package_id, organisation_ids):
+    status = "Updating"
+
+    data = db.session.query(models.Test,
+                models.Result.result_data,
+                models.Result.result_hierarchy,
+                func.count(models.Result.id),
+                models.Result.package_id,
+                models.Result.organisation_id
+        ).filter(models.Result.runtime_id==runtime
+        ).filter(models.Result.package_id==package_id
+        ).join(models.Result
+        ).group_by(models.Result.package_id, 
+                   models.Result.result_hierarchy, 
+                   models.Result.organisation_id,
+                   models.Test.id, 
+                   models.Result.result_data
+        ).all()
+
+    aresults = dqfunctions.aggregate_percentages_org(data)
+        
+    for aresult in aresults:
+        a = models.AggregateResult()
+        a.runtime_id = runtime
+        a.package_id = aresult["package_id"]
+        a.test_id = aresult["test_id"]
+        a.result_hierarchy = aresult["hierarchy"]
+        a.results_data = aresult["percentage_passed"]
+        a.results_num = aresult["total_results"]
+        a.organisation_id = aresult["organisation_id"]
+        db.session.add(a)
     
     return {"status": status, "data": aresults}
