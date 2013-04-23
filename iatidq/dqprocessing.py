@@ -28,12 +28,13 @@ def aggregate_results(runtime, package_id):
             ).filter(models.AggregateResult.package_id==package_id
             ).first()
     
-    if (check_existing_results):
+    if check_existing_results:
         status = "Already aggregated"
         aresults = "None"
-    else:
-        status = "Updating"
-        data = db.session.query(models.Test,
+        return {"status": status, "data": aresults}
+
+    status = "Updating"
+    data = db.session.query(models.Test,
                 models.Result.result_data,
                 models.Result.result_hierarchy,
                 func.count(models.Result.id),
@@ -44,17 +45,17 @@ def aggregate_results(runtime, package_id):
         ).group_by(models.Result.package_id, models.Result.result_hierarchy, models.Test, models.Result.result_data
         ).all()
 
-        aresults = dqfunctions.aggregate_percentages(data)
+    aresults = dqfunctions.aggregate_percentages(data)
         
-        result_number = 0
-        for aresult in aresults:
-            a = models.AggregateResult()
-            a.runtime_id = runtime
-            a.package_id = aresult["package_id"]
-            a.test_id = aresult["test_id"]
-            a.result_hierarchy = aresult["hierarchy"]
-            a.results_data = aresult["percentage_passed"]
-            a.results_num = aresult["total_results"]
-            db.session.add(a)
+    result_number = 0
+    for aresult in aresults:
+        a = models.AggregateResult()
+        a.runtime_id = runtime
+        a.package_id = aresult["package_id"]
+        a.test_id = aresult["test_id"]
+        a.result_hierarchy = aresult["hierarchy"]
+        a.results_data = aresult["percentage_passed"]
+        a.results_num = aresult["total_results"]
+        db.session.add(a)
     
     return {"status": status, "data": aresults}
