@@ -98,13 +98,13 @@ def import_organisations(options):
 
 def create_aggregation_types():
     print "Adding an aggregation type for all data"
-    iatidq.aggregationtypes.addAggregationType({'name':'All data',
+    iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
                                                 'description': '',
                                                 'test_id':'',
                                                 'test_result':'1'})
     print "Adding an aggregation type for current data"
     currentdata_test = iatidq.dqtests.test_by_test_name("activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?")
-    iatidq.aggregationtypes.addAggregationType({'name':'Current data',
+    iatidq.dqaggregationtypes.addAggregationType({'name':'Current data',
                                                 'description': '',
                                                 'test_id':currentdata_test.id,
                                                 'test_result':'1'})
