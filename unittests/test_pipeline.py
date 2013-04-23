@@ -97,10 +97,11 @@ def test_refresh():
 
 def create_aggregation_types(options):
     print "Adding an aggregation type for all data"
-    iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
+    all_ag = iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
                                                 'description': '',
                                                 'test_id': None,
                                                 'test_result':'1'})
+    assert all_ag
     print "Adding an aggregation type for current data"
     currentdata_test = iatidq.dqtests.test_by_test_name(
         "activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"
@@ -109,6 +110,7 @@ def create_aggregation_types(options):
                                                 'description': '',
                                                 'test_id':currentdata_test.id,
                                                 'test_result':'1'})
+    return all_ag
 
 def _test_example_tests(publisher, country):
     package_name = '-'.join([publisher, country])
@@ -152,7 +154,7 @@ def _test_example_tests(publisher, country):
     codelists = dqcodelists.generateCodelists()
 
 
-    create_aggregation_types({})
+    all_ag = create_aggregation_types({})
 
     # FIXME: THIS IS A TOTAL HACK
     iatidq.models.Result.query.delete()
@@ -187,7 +189,9 @@ def _test_example_tests(publisher, country):
     assert len(results) > 0
     print >>sys.stderr, len(results)
 
-    aggtest_results = iatidq.models.AggregateResult.query.all()
+    aggtest_results = iatidq.models.AggregateResult.query.filter(
+        AggregateResult.aggregateresulttype_id == all_ag.id
+        ).all()
     for result in aggtest_results:
         assert result.runtime_id == runtime.id
         assert result.package_id == pkg.id

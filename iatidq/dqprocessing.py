@@ -49,13 +49,9 @@ def aggregate_results(runtime, package_id):
 
     for agg_type in agg_types:
         if len(organisation_ids) > 0:
-            print agg_type
-            print "org"
             data = aggregate_results_orgs(runtime, package_id, 
                                           organisation_ids, agg_type)
         else:
-            print agg_type
-            print "single"
             data = aggregate_results_single_org(runtime, package_id, agg_type)
         aresults += data["data"]
 
