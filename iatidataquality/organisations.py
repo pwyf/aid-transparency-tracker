@@ -99,7 +99,7 @@ def organisation_publication(organisation_code=None, aggregation_type=None):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = dqorganisations._organisation_indeicators(
+    aggregate_results = dqorganisations._organisation_indicators(
         organisation, aggregation_type)
 
     latest_runtime=1
@@ -137,7 +137,7 @@ def all_organisations_publication_csv():
     organisations = Organisation.query.all()
     for organisation in organisations:
 
-        aggregate_results = dqorganisations._organisation_indeicators(
+        aggregate_results = dqorganisations._organisation_indicators(
             organisation)
 
         for resultid, result in aggregate_results.items():
@@ -159,7 +159,7 @@ def organisation_publication_csv(organisation_code=None):
     p_group = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = dqorganisations._organisation_indeicators(p_group)
+    aggregate_results = dqorganisations._organisation_indicators(p_group)
 
     strIO = StringIO.StringIO()
     fieldnames = "organisation_name organisation_code indicator_name indicator_description percentage_passed num_results".split()
@@ -271,7 +271,7 @@ def organisationpackage_delete(organisation_code=None,
                             organisation_code=organisation_code))
 
 def _organisation_indicators_summary(organisation, aggregation_type=None):
-    summarydata = dqorganisations._organisation_indeicators(organisation, 
+    summarydata = dqorganisations._organisation_indicators(organisation, 
                                                             aggregation_type)
     # Create crude total score
     totalpct = 0.00
