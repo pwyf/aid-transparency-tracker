@@ -97,7 +97,7 @@ def import_organisations(options):
     else:
         print "Error: please provide a filename"
 
-def create_aggregation_types():
+def create_aggregation_types(options):
     print "Adding an aggregation type for all data"
     iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
                                                 'description': '',
@@ -134,7 +134,7 @@ def setup(options):
     dqregistry.refresh_packages()
     print "Adding organisations"
     iatidq.dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
-    create_aggregation_types()
+    create_aggregation_types(options)
     print "Setup complete."
 
 def enqueue_test(options):
