@@ -27,6 +27,7 @@ import iatidq.dqruntests
 import iatidq.dqindicators
 import iatidq.dqorganisations
 import iatidq.dqaggregationtypes
+import iatidq.dqtests
 
 import optparse
 import sys
