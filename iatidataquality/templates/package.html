@@ -1,11 +1,11 @@
 {% set active_page='packages'%}{% extends "layout.html" %}
-{% if p[0] %}
-{% set grp = p[1] %}
-{% set pkg = p[0] %}
+{% if package.Package %}
+{% set group = package.PackageGroup %}
+{% set package = package.Package %}
 {% else %}
-{% set pkg = p %}
+{% set package = package %}
 {% endif %}
-{% block title %}{{pkg.package_title}} &raquo; Packages{% endblock %}
+{% block title %}{{package.package_title}} &raquo; Packages{% endblock %}
 {% block content %}
    <script src="/static/jquery.tablesorter.min.js"></script>
     <script >
@@ -15,22 +15,22 @@
     });
     </script>
     <a href="" id="runTestsNow" class="btn pull-right">Check package</a>
-	<h1>{{pkg.package_title}}<code>{{pkg.package_name}}</code></h1>
+	<h1>{{package.package_title}}<code>{{package.package_name}}</code></h1>
     <div class="status pull-right alert alert-info"><a href="#" class="checkStatusRefresh"><i class="icon-refresh"></i></a><span class="status_text"> Checking...</span></div>
     <table class="table" id="package">
     <tbody>
     <tr>
-	<td>Package name</td><td>{{ pkg.package_name }}</td>
+	<td>Package name</td><td>{{ package.package_name }}</td>
     </tr>
     <tr>
-    <td>Package title</td><td>{{ pkg.package_title }}</td>
+    <td>Package title</td><td>{{ package.package_title }}</td>
     </tr>
     <tr>
-    <td>Package country</td><td>{{ pkg.package_country }}</td>
+    <td>Package country</td><td>{{ package.package_country }}</td>
     </tr>
-    {% if grp is defined %}
+    {% if group is defined %}
     <tr>
-    <td>Package group</td><td><a href="{{url_for('publisher', id=grp.name)}}">{{ grp.title }}</a></td>
+    <td>Package group</td><td><a href="{{url_for('publisher', id=group.name)}}">{{ group.title }}</a></td>
     </tr>
     {% endif %}
     {% if organisations %}
@@ -42,7 +42,7 @@
         </td>
     {% endif %}
     <tr>
-    <td>Link</td><td><a href="http://iatiregistry.org/dataset/{{pkg.package_name}}">http://iatiregistry.org/dataset/{{ pkg.package_name }}</a></td>
+    <td>Link</td><td><a href="http://iatiregistry.org/dataset/{{package.package_name}}">http://iatiregistry.org/dataset/{{ package.package_name }}</a></td>
     </tr>
     </tbody>
     </table>
@@ -54,7 +54,7 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <h4>Not showing the latest data.</h4>
         Activity-level information is only available for the latest data.
-        <p><a class="btn btn-primary" href="{{url_for('packages', id=pkg.package_name)}}">Show latest</a></p>
+        <p><a class="btn btn-primary" href="{{url_for('packages', id=package.package_name)}}">Show latest</a></p>
         </div>{% endif %}
         
         <div class="pull-right testruns">
@@ -73,7 +73,7 @@
                         <tbody>
                         {% for runtime in runtimes %}
                         <tr>
-	                    <td><a href="{{url_for('packages', id=pkg.package_name, runtime_id=runtime.runtime_id)}}">{{runtime.runtime_id}}</a></td><td>{{ runtime.runtime_datetime }}</td>
+	                    <td><a href="{{url_for('packages', id=package.package_name, runtime_id=runtime.runtime_id)}}">{{runtime.runtime_id}}</a></td><td>{{ runtime.runtime_datetime }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -131,7 +131,7 @@
             result_id = r[1]
             hierarchy_id=r[2]
             $("#tr"+result_id+"h"+hierarchy_id).after('<tr class="hidden-results-tr" id="tr-result-' + result_id + '"><td colspan="5"></td></tr>');
-            $.getJSON("/api/packages/{{pkg.package_name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities", function(data){
+            $.getJSON("/api/packages/{{package.package_name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities", function(data){
                 var items = [];
                 $.each(data, function(key, val){
                     if (val == '1') {
@@ -151,7 +151,7 @@
             $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
     }
     });
-    $.getJSON("/api/publishers/{{grp.publisher_iati_id}}", function(data){
+    $.getJSON("/api/publishers/{{group.publisher_iati_id}}", function(data){
                 var items = [];
                 if (data["data"]) {
                     $.each(data["data"], function(key, val){
@@ -168,7 +168,7 @@
     });
     function checkStatus(){
         $(".status_text").html(" Checking...");
-        $.getJSON("/api/packages/status/{{pkg.id}}/", function(data){
+        $.getJSON("/api/packages/status/{{package.id}}/", function(data){
             status = data["status"];
             if (status == 1) {
                 statustext = ' Now downloading (started at ' + data["runtime_datetime"] + ")";
@@ -203,7 +203,7 @@
     });
     $("#runTestsNow").click(function(e){
         e.preventDefault();
-        $.getJSON("/api/packages/run/{{pkg.package_name}}/", function(data){
+        $.getJSON("/api/packages/run/{{package.package_name}}/", function(data){
             if (data['status'] == "ok"){
                 statustext = ' Now running...';
                 statusicon = '<i class="icon-refresh"></i>';
