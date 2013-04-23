@@ -98,7 +98,7 @@ def packages(package_name=None, runtime_id=None):
     p = db.session.query(Package,
                          PackageGroup
                          ).filter(Package.package_name == package_name
-                                  ).join(PackageGroup).first()
+                                  ).outerjoin(PackageGroup).first()
 
     def get_pconditions():
         return {}
