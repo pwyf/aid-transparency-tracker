@@ -1,0 +1,58 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}Survey &raquo; {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+{% block content %}
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#tests").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+    <h1>Create survey for {{organisation.organisation_name}} <code>{{organisation.organisation_code}}</code></h1>
+	<h3>Please provide data for {{indicators|count}} indicators.</h3>
+    <div class="alert alert-info">
+        <h4>Check and correct last year's data</h4>
+        <p>To save time, the form has been populated with 2012 data. Please make sure you check each indicator carefully as the website may have broken, or other data may now be available.</p>
+    </div>
+    
+    <form action="" method="post">
+
+    <table class="table" id="results">
+
+    <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th>Evidence</th><th>Comments</th></thead>
+
+    <tbody>
+    {% for indicator in indicators %}
+        <tr id="tr{{indicator.id}}" class="group-unknown">
+            <td rowspan="2"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.name)}}">{{indicator.description}}</a></td>
+            <td><span class="muted">2012</span></td>
+            <td>
+            <span class="badge badge-{{publication_status[twentytwelvedata[indicator.name].result].class}}" title="Researcher's initial assessment">{{ publication_status[twentytwelvedata[indicator.name].result].text }}</span>
+            </td>
+
+            <td>
+            {{twentytwelvedata[indicator.name].result_evidence}}
+            </td>
+
+            <td>
+            {{twentytwelvedata[indicator.name].result_comments}}
+            </td>
+        </tr>
+        <tr id="tr{{indicator.id}}">
+        <td>Researcher</td>
+        <td>
+        <label for="{{indicator.id}}-always"><input type="radio" name="{{indicator.name}}" id="{{indicator.id}}-always"> Always</input><br /><span class="muted">Published for all projects</span></label>
+        <label for="{{indicator.id}}-sometimes"><input type="radio" name="{{indicator.name}}" id="{{indicator.id}}-sometimes"> Sometimes</input><br /><span class="muted">Published for some projects</span></label>
+        <label for="{{indicator.id}}-not"><input type="radio" name="{{indicator.name}}" id="{{indicator.id}}-not"> Not published</input><br /><span class="muted">Not published</span></label>
+        </td>
+
+        <td><textarea></textarea></td>
+
+        <td><textarea></textarea></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    <input type="submit" class="btn btn-success" value="Update Tracker data" />
+
+    </form>
+{% endblock %}
