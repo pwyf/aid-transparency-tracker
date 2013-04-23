@@ -52,6 +52,7 @@ def setup_organisations(pkg_id):
                                                 'condition': cond})
 
 def teardown_func():
+    iatidq.models.Result.query.delete()
     db.session.commit()
     pass
 
@@ -139,6 +140,7 @@ def _test_example_tests(publisher, country):
 
     log(pkg.package_name)
 
+
     assert iatidq.test_queue.check_file(test_functions, 
                codelists,
                xml_filename,
@@ -173,9 +175,19 @@ def _test_example_tests(publisher, country):
     print observed_test_ids
     assert set(expected_test_ids) == set(observed_test_ids)
 
+    iatidq.models.Result.query.delete()
+    iatidq.models.AggregateResult.query.delete()
+    db.session.commit()
+
+
+
 @nose.with_setup(setup_func, teardown_func)
 def test_example_tests():
-    data = [ ('worldbank', 'tz') ]
+    data = [ ('worldbank', 'tz'),
+             ('unitedstates', 'tz') 
+             ]
+
+    #data = [ data[1] ]
 
     for publisher, country in data:
         yield _test_example_tests, publisher, country
