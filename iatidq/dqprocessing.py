@@ -42,7 +42,7 @@ def aggregate_results(runtime, package_id):
     organisation_ids = get_organisation_ids()
 
     if len(organisation_ids) > 0:
-        return aggregate_results_orgs(runtime, package_id, organisation_ids):
+        return aggregate_results_orgs(runtime, package_id, organisation_ids)
 
     data = db.session.query(models.Test,
                 models.Result.result_data,
