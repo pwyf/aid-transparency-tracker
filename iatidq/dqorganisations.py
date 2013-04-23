@@ -9,6 +9,11 @@
 
 from iatidq import db
 
+from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy import func
+
+import aggregation
+
 import models
 import csv
 import util
@@ -182,32 +187,32 @@ def addFeedback(data):
         return False
 
 def _organisation_detail_ungrouped(organisation):
-    return db.session.query(Indicator,
-                                     Test,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(Organisation.id==organisation.id)
+    return db.session.query(models.Indicator,
+                                     models.Test,
+                                     models.AggregateResult.results_data,
+                                     models.AggregateResult.results_num,
+                                     models.AggregateResult.result_hierarchy,
+                                     models.AggregateResult.package_id,
+                                     func.max(models.AggregateResult.runtime_id)
+        ).filter(models.Organisation.id==organisation.id)
 
 def _organisation_detail(organisation):
     aggregate_results = _organisation_detail_ungrouped(organisation)\
-        .group_by(Indicator,
-                   AggregateResult.result_hierarchy, 
-                   Test, 
-                   AggregateResult.package_id,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
+        .group_by(models.Indicator,
+                   models.AggregateResult.result_hierarchy, 
+                   models.Test, 
+                   models.AggregateResult.package_id,
+                   models.AggregateResult.results_data,
+                   models.AggregateResult.results_num
+        ).join(models.IndicatorTest
+        ).join(models.Test
+        ).join(models.AggregateResult
+        ).join(models.Package
+        ).join(models.OrganisationPackage
+        ).join(models.Organisation
         ).all()
 
-    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
+    pconditions = models.OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
     db.session.commit()
@@ -215,32 +220,33 @@ def _organisation_detail(organisation):
                                    conditions=pconditions, 
                                    mode="publisher")
 
-def _organisation_indicators(organisation, aggregation_type=None):
-    aggregate_results = db.session.query(Indicator,
-                                     Test,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(Organisation.organisation_code==organisation.organisation_code
-        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
-        ).group_by(AggregateResult.result_hierarchy, 
-                   Test, 
-                   AggregateResult.package_id,
-                   Indicator,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num,
-                   AggregateResult.package_id
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
+def _organisation_indicators(organisation, aggregation_type=2):
+    aggregate_results = db.session.query(models.Indicator,
+                                     models.Test,
+                                     models.AggregateResult.results_data,
+                                     models.AggregateResult.results_num,
+                                     models.AggregateResult.result_hierarchy,
+                                     models.AggregateResult.package_id,
+                                     func.max(models.AggregateResult.runtime_id)
+        ).filter(models.Organisation.organisation_code==organisation.organisation_code
+        ).filter(models.AggregateResult.aggregateresulttype_id == aggregation_type
+        ).filter(models.AggregateResult.organisation_id == organisation.id
+        ).group_by(models.AggregateResult.result_hierarchy, 
+                   models.Test, 
+                   models.AggregateResult.package_id,
+                   models.Indicator,
+                   models.AggregateResult.results_data,
+                   models.AggregateResult.results_num,
+                   models.AggregateResult.package_id
+        ).join(models.IndicatorTest
+        ).join(models.Test
+        ).join(models.AggregateResult
+        ).join(models.Package
+        ).join(models.OrganisationPackage
+        ).join(models.Organisation
         ).all()
 
-    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
+    pconditions = models.OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
     return aggregation.agr_results(aggregate_results, 
