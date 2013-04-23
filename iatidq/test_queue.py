@@ -64,11 +64,10 @@ def get_organisations_for_testing(package_id):
         })
     return organisations
 
-def test_type(test_name):
+def binary_test(test_name):
     if re.compile("(\S*) is on list (\S*)").match(test_name):
-        return "list"
-    else:
-        return ""
+        return True
+    return False
 
 def test_activity(runtime_id, package_id, result_identifier, 
                   result_hierarchy, data, test_functions, codelists,
@@ -92,9 +91,9 @@ def test_activity(runtime_id, package_id, result_identifier,
     # | test_result == True  -> 1
     # | test_result == False -> 0
     # | exception            -> 2 (exceptions aren't counted against publishers)
-    def execute_test(test_id, test_type):
+    def execute_test(test_id, binary_test):
         try:
-            if (test_type == "list"):
+            if binary_test:
                 data = {
                     "activity": xmldata,
                     "lists": codelists
@@ -106,7 +105,7 @@ def test_activity(runtime_id, package_id, result_identifier,
             return 2
 
     def execute_and_record(test):
-        the_result = execute_test(test.id, test_type(test.name))
+        the_result = execute_test(test.id, binary_test(test.name))
         add_result(test.id, the_result)
 
     test_exists = lambda t: t.id in test_functions
