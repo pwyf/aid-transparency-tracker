@@ -1,0 +1,161 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}{{organisation.organisation_name}} &raquo; Detail &raquo; Organisations{% endblock %}
+{% block content %}
+
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#packages").tablesorter({ sortList: [[0,0]] });
+    $("table#results").tablesorter({ sortList: [[0,0]] });
+    });
+
+    </script>
+    <div class="pull-right">
+        <button type="button" class="btn" data-toggle="collapse" data-target="#packages_div">
+        <i class="icon-file"></i> <b>Packages</b>
+        </button>
+    </div>
+	<h1><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a> <code>{{organisation.organisation_code}}</code></h1>
+
+    <div id="packages_div" class="collapse">
+    <h2>Packages</h2>
+    <table class="table" id="packages">
+    <thead>
+    <th>Registry ID</th><th>Name</th><th>Country</th><th>License</th>
+    </thead>
+    <tbody>
+	{% for pk in packages %}
+    <tr>
+	<td><a href="{{url_for('packages', package_name=pk.package_name)}}">{{ pk.Package.package_name }}</a></td><td>{{ pk.Package.package_title }}</td><td>{{ pk.Package.package_country }}</td><td>{{ pk.Package.package_license }}</td><!--<td></td>-->
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+    </div>
+
+    {% if results %}
+    <div class="pull-right testruns">
+        <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
+    </div>
+    <h2>Results</h2>
+    <div class="clearer">&nbsp;</div>
+        {% for h, values in results.items() %}
+        <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
+        <table class="table" id="results">
+        <thead>
+        <th>Test</th><th>% Passed</th><th>Total results</th><th>Detail</th>
+        </thead>
+        <tbody>
+        {% for test, result in values.items() %}
+        <tr id="tr{{result.test.id}}h{{h}}" class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
+	    <td><a href="{{url_for('tests', id=result.test.id)}}">{{ result.test.description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition[1]}}"></i>{%endif%}</td>
+        <td class="pct">{{result.results_pct|round|int}}</td>
+        <td>{{result.results_num}}</td>
+        <td><a href="#" class="showResult" id="result{{result.test.id}}hierarchy{{h}}"><i class="icon-chevron-down"></i></a></td>
+        </tr>
+        {% endfor%}
+        </tbody>
+        </table>
+        </fieldset>
+        {% endfor %}
+    {%endif%}
+
+<script>
+
+    $(document).on('click', ".pagination a", function(e){
+        e.preventDefault();
+        re=new RegExp("tr\-pagination\-([0-9]*|[A-z]*)\-hierarchy\-([0-9]|[A-z]*)");
+        r=re.exec($(this).closest('tr').attr('id'));
+
+        result_id = r[1];
+        hierarchy_id = r[2];
+        $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
+        $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
+        page = parseInt($(this).attr('class'));
+        offset = ((page-1)*50)
+
+        $("#tr"+result_id+"h"+hierarchy_id).after('<tr id="tr-pagination-'+ result_id +'-hierarchy-'+hierarchy_id+'" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="'+(page-1)+'" href="#">Prev</a></li><li><a class="'+page+'" href="#">'+page+'</a></li><li><a class="'+(page+1)+'" href="#">'+(page+1)+'</a></li><li><a class="'+(page+2)+'" href="#">'+(page+2)+'</a></li><li><a class="'+(page+3)+'" href="#">'+(page+3)+'</a></li><li><a class="'+(page+4)+'" href="#">'+(page+4)+'</a></li><li><a class="'+(page+1)+'" href="#">Next</a></li></ul></div></td></tr><tr id="tr-result-' + result_id + '"><td class="results" colspan="5"><span class="muted loading_data">Loading data...</span></td></tr>');
+
+        $('.loading_data').show();
+        $.getJSON("/api/publishers/{{organisation.name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
+            var items = [];
+            $.each(data["results"], function(key, val){
+                if (val == '1') {
+                    var status="PASS";
+                    var statusclass="success";
+                } else {
+                    var status="FAIL";
+                    var statusclass="error";
+                }
+                items.push('<tr id="' + val + '" class="' + statusclass + '"><td><a href="http://beta.openaidsearch.org/explore-detail/?id=' + key + '">'+key+'</a></td><td>' + status + '</td></tr>');
+            });
+            $('<table/>', {
+                html: items.join('')
+              }).appendTo("#tr-result-"+result_id+" td.results");
+            $("#tr-result-"+result_id).slideDown("slow");
+            $('.loading_data').hide();
+        });
+
+    });
+    var showAllTests;
+    $("#showAllTests").click(function(e){
+        e.preventDefault();
+        $(".condition-hidden").toggle();
+        if (showAllTests == true) {
+            showAllTests = false;
+            $(this).text("Show all tests");
+        } else {
+            showAllTests = true;
+            $(this).text("Show only relevant tests");
+        }
+    });
+    var page = 1;
+    $(".showResult").click(function(e){
+        if ($(this).hasClass("visible")) {
+            e.preventDefault();
+
+            re=new RegExp("result([0-9]*)hierarchy([0-9]|[A-z]*)");
+            r=re.exec(this.id);
+
+            result_id = r[1]
+            hierarchy_id=r[2]
+
+            $(this).removeClass("visible").html('<i class="icon-chevron-down"></i>');
+            $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
+            $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
+        } else {
+            e.preventDefault();
+
+            re=new RegExp("result([0-9]*)hierarchy([0-9]|[A-z]*)");
+            r=re.exec(this.id);
+            result_id = r[1]
+            hierarchy_id=r[2]
+
+            offset = ((page-1)*50)
+
+            $("#tr"+result_id+"h"+hierarchy_id).after('<tr id="tr-pagination-'+ result_id +'-hierarchy-'+hierarchy_id+'" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="'+(page-1)+'" href="#">Prev</a></li><li><a class="'+page+'" href="#">'+page+'</a></li><li><a class="'+(page+1)+'" href="#">'+(page+1)+'</a></li><li><a class="'+(page+2)+'" href="#">'+(page+2)+'</a></li><li><a class="'+(page+3)+'" href="#">'+(page+3)+'</a></li><li><a class="'+(page+4)+'" href="#">'+(page+4)+'</a></li><li><a class="'+(page+1)+'" href="#">Next</a></li></ul></div></td></tr><tr id="tr-result-' + result_id + '"><td class="results" colspan="5"><span class="muted loading_data">Loading data...</span></td></tr>');
+            $('.loading_data').show();
+            $.getJSON("/api/publishers/{{organisation.name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
+                var items = [];
+                $.each(data["results"], function(key, val){
+                    if (val == '1') {
+                        var status="PASS";
+                        var statusclass="success";
+                    } else {
+                        var status="FAIL";
+                        var statusclass="error";
+                    }
+                    items.push('<tr id="' + val + '" class="' + statusclass + '"><td><a href="http://beta.openaidsearch.org/explore-detail/?id=' + key + '">'+key+'</a></td><td>' + status + '</td></tr>');
+                });
+                $('<table/>', {
+                    html: items.join('')
+                  }).appendTo("#tr-result-"+result_id+" td.results");
+                $("#tr-result-"+result_id).slideDown("slow");
+                $('.loading_data').hide();
+            });
+            $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
+    }
+    });
+</script>
+
+{% endblock %}
