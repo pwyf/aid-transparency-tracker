@@ -55,7 +55,6 @@ def setup_organisations(pkg_id):
              'condition': cond})
 
 def teardown_func():
-    iatidq.models.Result.query.delete()
     db.session.commit()
     pass
 
@@ -133,6 +132,13 @@ def _test_example_tests(publisher, country):
     from iatidq import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
+
+    # FIXME: THIS IS A TOTAL HACK
+    iatidq.models.Result.query.delete()
+    iatidq.models.AggregateResult.query.delete()
+    db.session.commit()
+
+
     from iatidq.testrun import start_new_testrun
     runtime = start_new_testrun()
 
@@ -183,9 +189,6 @@ def _test_example_tests(publisher, country):
     print observed_test_ids
     assert set(expected_test_ids) == set(observed_test_ids)
 
-    iatidq.models.Result.query.delete()
-    iatidq.models.AggregateResult.query.delete()
-    db.session.commit()
 
 
 
