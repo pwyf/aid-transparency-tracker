@@ -15,6 +15,7 @@ import iatidq.dqimporttests
 import iatidq.dqindicators
 import iatidq.test_queue
 import iatidq.dqcodelists
+import iatidq.dqorganisations
 
 from iatidq import db
 import lxml.etree
@@ -36,6 +37,22 @@ def setup_func():
     print  >>sys.stderr, "about to commit in setup"
     db.session.commit()
     print  >>sys.stderr, "committed"
+
+def setup_organisations(pkg_id):
+    org_data = [ 
+        ('USAID', 'US-1', 
+         '''participating-org[@role="Extending"][@ref="US-1"]'''),
+        ('MCC', 'US-18',
+         '''participating-org[@role="Extending"][@ref="US-18"]'''),
+        ]
+    for name, code, cond in org_data:
+        organisation = iatidq.dqorganisations.addOrganisation(
+            {'organisation_name': name,
+             'organisation_code': code})
+        iatidq.dqorganisations.addOrganisationPackage(
+            {'organisation_id': organisation.id,
+             'package_id': pkg_id,
+             'condition': cond})
 
 def teardown_func():
     db.session.commit()
@@ -75,12 +92,9 @@ def test_refresh():
     pkg = pkgs[0]
     assert pkg.package_name == package_name
 
-def _test_example_tests():
-    publisher = 'worldbank'
-    country = 'tz'
+def _test_example_tests(publisher, country):
     package_name = '-'.join([publisher, country])
-
-    log("starting")
+    xml_filename = os.path.join("unittests", "artefacts", package_name + '.xml')
 
     # check there's nothing in the db
     pgs = get_packagegroups_by_name(publisher)
@@ -88,32 +102,20 @@ def _test_example_tests():
     pkgs = get_packages_by_name(package_name)
     assert len(pkgs) == 0
 
-    log("about to add something")
-
     # do refresh
     iatidq.dqregistry.refresh_package_by_name(package_name)
 
-    log("about to import hardcoded")
-
     iatidq.dqimporttests.hardcodedTests()
-
-    log("loading foxpath tests")
-
-    log("#tests: %d" % iatidq.models.Test.query.count())
 
     # load foxpath tests
     os.chdir(parent)
     iatidq.dqimporttests.importTestsFromFile(
         filename="tests/sample_tests.csv")
 
-    log("#tests: %d" % iatidq.models.Test.query.count())
-
     print "Importing indicators"
     iatidq.dqindicators.importIndicatorsFromFile(
         "test_pwyf2013",
         "tests/sample_tests.csv")
-
-    log("loading indicators")
 
     iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
                                                             "tests/indicators.csv")
@@ -130,7 +132,12 @@ def _test_example_tests():
     from iatidq import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
-    log("#tests: %d" % iatidq.models.Test.query.count())
+
+    # FIXME: THIS IS A TOTAL HACK
+    iatidq.models.Result.query.delete()
+    iatidq.models.AggregateResult.query.delete()
+    db.session.commit()
+
 
     from iatidq.testrun import start_new_testrun
     runtime = start_new_testrun()
@@ -138,13 +145,19 @@ def _test_example_tests():
     results = iatidq.models.Result.query.all()
     assert len(results) == 0
 
-    pkg = get_packages_by_name('worldbank-tz')[0]
+    pkg = get_packages_by_name(package_name)[0]
 
     log(pkg.package_name)
 
+    package_id = pkg.id
+    ## this is a hack on a stick
+    if publisher == 'unitedstates':
+        setup_organisations(package_id)
+
+
     assert iatidq.test_queue.check_file(test_functions, 
                codelists,
-               "unittests/artefacts/worldbank-tz.xml",
+               xml_filename,
                runtime.id,
                pkg.id,
                context=None)
@@ -176,10 +189,21 @@ def _test_example_tests():
     print observed_test_ids
     assert set(expected_test_ids) == set(observed_test_ids)
 
+
+
+
 @nose.with_setup(setup_func, teardown_func)
 def test_example_tests():
-    return _test_example_tests()
+    data = [ ('worldbank', 'tz'),
+             ('unitedstates', 'tz') 
+             ]
+
+    #data = [ data[1] ]
+
+    for publisher, country in data:
+        yield _test_example_tests, publisher, country
 
 if __name__ == '__main__':
     setup_func()
     test_example_tests()
+

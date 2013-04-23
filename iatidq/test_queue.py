@@ -29,6 +29,7 @@ def get_organisations_for_testing(package_id):
     conditions = []
     conditions_specified = False
     packageorganisations = dqpackages.packageOrganisations(package_id)
+
     if packageorganisations:
         for packageorganisation in packageorganisations:
             # add organisations to be tested;
@@ -37,20 +38,21 @@ def get_organisations_for_testing(package_id):
 
             organisations.append({
             'organisation_id': organisation_id,
-            'activities_xpath': "//iati-activity/["+condition+"]"
+            'activities_xpath': "//iati-activity[%s]" % condition
                             })
             if condition is not "":
                 conditions_specified = True
                 conditions.append(condition)
 
-        remainder_xpath = "//iati-activity/[not("+conditions.join(" or ")+")]"
+        conditions_str = " or ".join(conditions)
+        remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
 
     # If conditions have been specified, then
     # run the tests again without an organisation
     # But exclude those activities that have already
     # been included above.
 
-    if (packageorganisations is None): 
+    if (not packageorganisations): 
         organisations.append({
         'organisation_id': None,
         'activities_xpath': "//iati-activity"
@@ -69,7 +71,8 @@ def test_type(test_name):
         return ""
 
 def test_activity(runtime_id, package_id, result_identifier, 
-                  result_hierarchy, data, test_functions, codelists):
+                  result_hierarchy, data, test_functions, codelists,
+                  organisation_id):
 
     xmldata = etree.fromstring(data)
 
@@ -83,6 +86,7 @@ def test_activity(runtime_id, package_id, result_identifier,
         newresult.result_data = the_result
         newresult.result_identifier = result_identifier
         newresult.result_hierarchy = result_hierarchy
+        newresult.organisation_id = organisation_id
         db.session.add(newresult)
 
     # | test_result == True  -> 1
@@ -144,7 +148,7 @@ def check_file(test_functions, codelists, file_name,
                 return None
             return hierarchy
 
-        def run_test_activity(activity):
+        def run_test_activity(organisation_id, activity):
             result_hierarchy = get_result_hierarchy(activity)
             
             result_identifier = activity.find('iati-identifier').text.decode()
@@ -153,10 +157,19 @@ def check_file(test_functions, codelists, file_name,
             res = test_activity(runtime_id, package_id, 
                                 result_identifier, result_hierarchy,
                                 activity_data, test_functions, 
-                                codelists)
+                                codelists, organisation_id)
             db.session.commit()
-        activities = data.findall('iati-activity')
-        [ run_test_activity(activity) for activity in activities ]
+
+        assert len(organisations) > 0
+        for organisation in organisations:
+            org_activities = data.xpath(organisation['activities_xpath'])
+            org_id = organisation['organisation_id']
+
+            [ run_test_activity(org_id, activity) 
+              for activity in org_activities ]
+            
+            
+
 
         print "Aggregating results..."
         dqprocessing.aggregate_results(runtime_id, package_id)
