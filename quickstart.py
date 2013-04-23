@@ -205,7 +205,7 @@ def main():
                  action="store_true",
                  default=False,
                  help="Import organisations. Will try to create and assign organisations to existing packages.")
-    p.add_option("--create_aggregation_types", dest="create_aggregation_types",
+    p.add_option("--create-aggregation-types", dest="create_aggregation_types",
                  action="store_true",
                  default=False,
                  help="Create basic aggregation types.")
