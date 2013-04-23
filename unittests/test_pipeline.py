@@ -153,13 +153,13 @@ def _test_example_tests(publisher, country):
     from iatidq import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
-
-    all_ag = create_aggregation_types({})
-
     # FIXME: THIS IS A TOTAL HACK
     iatidq.models.Result.query.delete()
     iatidq.models.AggregateResult.query.delete()
+    iatidq.models.AggregationType.query.delete()
     db.session.commit()
+
+    all_ag = create_aggregation_types({})
 
 
     from iatidq.testrun import start_new_testrun
@@ -202,7 +202,8 @@ def _test_example_tests(publisher, country):
         'description/text() has more than 40 characters?',
         'description/@type exists?',
         'title/text() exists?',
-        'title/text() has more than 10 characters?'
+        'title/text() has more than 10 characters?',
+        """activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"""
         ]
 
     expected_test_ids = [ i.id for i in iatidq.models.Test.query.filter(
