@@ -136,7 +136,7 @@ def _test_example_tests():
     results = iatidq.models.Result.query.all()
     assert len(results) == 0
 
-    pkg = get_packages_by_name('worldbank-tz')[0]
+    pkg = get_packages_by_name(package_name)[0]
 
     log(pkg.package_name)
 
