@@ -17,9 +17,9 @@
     <th>Registry ID</th><th>Name</th>
     </thead>
     <tbody>
-	{% for pk in pkgs %}
+	{% for package in packages %}
     <tr>
-	<td><input type="hidden" name="package" value="{{pk.package_name}}" /><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td><td>{{ pk.package_title }}</td>
+	<td><input type="hidden" name="package" value="{{package.package_name}}" /><a href="{{url_for('packages', package_name=package.package_name)}}">{{ package.package_name }}</a></td><td>{{ package.package_title }}</td>
     </tr>
 	{% endfor %}
     </tbody>

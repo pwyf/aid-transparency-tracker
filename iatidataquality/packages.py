@@ -86,19 +86,19 @@ def package_aggregation(p, latest_runtime):
                 ).all()
                    
 @app.route("/packages/")
-@app.route("/packages/<id>/")
-@app.route("/packages/<id>/runtimes/<runtime_id>/")
-def packages(id=None, runtime_id=None):
-    if id is None:
-        pkgs = Package.query.filter_by(active=True).order_by(
+@app.route("/packages/<package_name>/")
+@app.route("/packages/<package_name>/runtimes/<runtime_id>/")
+def packages(package_name=None, runtime_id=None):
+    if package_name is None:
+        packages = Package.query.filter_by(active=True).order_by(
             Package.package_name).all()
-        return render_template("packages.html", pkgs=pkgs)
+        return render_template("packages.html", packages=packages)
 
     # Get package data
-    p = db.session.query(Package,
+    package = db.session.query(Package,
                          PackageGroup
-                         ).filter(Package.package_name == id
-                                  ).join(PackageGroup).first()
+                         ).filter(Package.package_name == package_name
+                                  ).outerjoin(PackageGroup).first()
 
     def get_pconditions():
         return {}
@@ -118,9 +118,9 @@ def packages(id=None, runtime_id=None):
 
     # Get list of runtimes
     try:
-        runtimes = db.session.query(Result.runtime_id,
+        runtimes = db.session.query(AggregateResult.runtime_id,
                                     Runtime.runtime_datetime
-            ).filter(Result.package_id==p[0].id
+            ).filter(AggregateResult.package_id==package.Package.id
             ).distinct(
             ).join(Runtime
             ).all()
@@ -130,23 +130,23 @@ def packages(id=None, runtime_id=None):
     def get_latest_runtime():
         if runtime_id:
             # If a runtime is specified in the request, get the data
-            return (db.session.query(Runtime).\
-                        filter(Runtime.id==runtime_id
-                               ).first(), False)
+            return (db.session.query(Runtime
+                        ).filter(Runtime.id==runtime_id
+                        ).first(), False)
         else:
             # Select the highest runtime; then get data for that one
-            return (db.session.query(Runtime).\
-                        filter(Result.package_id==p[0].id
-                               ).join(Result).\
-                        order_by(Runtime.id.desc()).first(),
-                    True)
+            runtime = db.session.query(Runtime,
+                                    func.max(Runtime.id)
+                    ).join(AggregateResult
+                    ).group_by(Runtime.id
+                    ).filter(AggregateResult.package_id==package.Package.id
+                    ).first()
+            return runtime.Runtime, True
 
     latest_runtime, latest = get_latest_runtime()
 
     if latest_runtime:
-        aggregate_results = package_aggregation(p, latest_runtime)
-
-        flat_results = aggregate_results
+        aggregate_results = package_aggregation(package, latest_runtime)
 
         aggregate_results = aggregation.agr_results(aggregate_results, 
                                                     pconditions)
@@ -156,10 +156,10 @@ def packages(id=None, runtime_id=None):
         flat_results = None
         latest_runtime = None
 
-    organisations = dqpackages.packageOrganisations(p[0].id)
+    organisations = dqpackages.packageOrganisations(package.Package.id)
  
-    return render_template("package.html", p=p, runtimes=runtimes, 
+    return render_template("package.html", package=package, runtimes=runtimes, 
                            results=aggregate_results, 
                            latest_runtime=latest_runtime, latest=latest, 
-                           pconditions=pconditions, flat_results=flat_results,
+                           pconditions=pconditions,
 organisations=organisations)
