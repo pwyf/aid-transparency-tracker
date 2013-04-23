@@ -17,6 +17,7 @@ from lxml import etree
 import re
 
 from iatidq import db
+import test_level
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
@@ -110,7 +111,10 @@ def test_activity(runtime_id, package_id, result_identifier,
 
     test_exists = lambda t: t.id in test_functions
     tests = itertools.ifilter(test_exists, tests)
-    
+
+    is_activity_test = lambda t: t.test_level == test_level.ACTIVITY
+    activity_tests = itertools.ifilter(is_activity_test, tests)
+
     [ execute_and_record(test) for test in tests ]
 
     return "Success"
