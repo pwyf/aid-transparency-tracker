@@ -91,10 +91,9 @@ def publisher_detail(id=None):
             ).order_by(Package.package_name).all()
 
     aggregate_results = _publisher_detail(p_group)
-    latest_runtime=1
 
     txt = render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
-                           results=aggregate_results, runtime=latest_runtime)
+                           results=aggregate_results)
     return txt
 
 @app.route("/publishers/<id>/detail.json")
