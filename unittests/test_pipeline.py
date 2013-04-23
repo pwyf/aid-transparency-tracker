@@ -80,40 +80,26 @@ def _test_example_tests():
     country = 'tz'
     package_name = '-'.join([publisher, country])
 
-    log("starting")
-
     # check there's nothing in the db
     pgs = get_packagegroups_by_name(publisher)
     assert len(pgs) == 0
     pkgs = get_packages_by_name(package_name)
     assert len(pkgs) == 0
 
-    log("about to add something")
-
     # do refresh
     iatidq.dqregistry.refresh_package_by_name(package_name)
 
-    log("about to import hardcoded")
-
     iatidq.dqimporttests.hardcodedTests()
-
-    log("loading foxpath tests")
-
-    log("#tests: %d" % iatidq.models.Test.query.count())
 
     # load foxpath tests
     os.chdir(parent)
     iatidq.dqimporttests.importTestsFromFile(
         filename="tests/sample_tests.csv")
 
-    log("#tests: %d" % iatidq.models.Test.query.count())
-
     print "Importing indicators"
     iatidq.dqindicators.importIndicatorsFromFile(
         "test_pwyf2013",
         "tests/sample_tests.csv")
-
-    log("loading indicators")
 
     iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
                                                             "tests/indicators.csv")
@@ -129,8 +115,6 @@ def _test_example_tests():
     test_functions = tf()
     from iatidq import dqcodelists
     codelists = dqcodelists.generateCodelists()
-
-    log("#tests: %d" % iatidq.models.Test.query.count())
 
     from iatidq.testrun import start_new_testrun
     runtime = start_new_testrun()
