@@ -187,8 +187,8 @@ def _test_example_tests(publisher, country):
     
     observed_test_ids = [ i.test_id for i in aggtest_results ]
 
-    print expected_test_ids
-    print observed_test_ids
+    print "expected test ids: ", expected_test_ids
+    print "observed test ids: ", observed_test_ids
     assert set(expected_test_ids) == set(observed_test_ids)
 
 
