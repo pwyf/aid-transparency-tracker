@@ -17,6 +17,8 @@ import iatidq.test_queue
 import iatidq.dqcodelists
 import iatidq.dqorganisations
 import iatidq.test_level as test_level
+import iatidq.dqaggregationtypes
+import iatidq.dqtests
 
 from iatidq import db
 import lxml.etree
@@ -93,6 +95,21 @@ def test_refresh():
     pkg = pkgs[0]
     assert pkg.package_name == package_name
 
+def create_aggregation_types(options):
+    print "Adding an aggregation type for all data"
+    iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
+                                                'description': '',
+                                                'test_id': None,
+                                                'test_result':'1'})
+    print "Adding an aggregation type for current data"
+    currentdata_test = iatidq.dqtests.test_by_test_name(
+        "activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"
+        )
+    iatidq.dqaggregationtypes.addAggregationType({'name':'Current data',
+                                                'description': '',
+                                                'test_id':currentdata_test.id,
+                                                'test_result':'1'})
+
 def _test_example_tests(publisher, country):
     package_name = '-'.join([publisher, country])
     xml_filename = os.path.join("unittests", "artefacts", package_name + '.xml')
@@ -134,6 +151,8 @@ def _test_example_tests(publisher, country):
     from iatidq import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
+
+    create_aggregation_types({})
 
     # FIXME: THIS IS A TOTAL HACK
     iatidq.models.Result.query.delete()

@@ -1,7 +1,8 @@
-test_name,test_description,indicator_name,indicator_description,level
+test_name,test_description,indicator_name,indicator_description,test_level
 "description/text() exists?",Description,description,description,1
 "description/text() has more than 40 characters?","Description, more than 40 chars",description,description,1
 "description/@type exists?","Description type",description,description,1
 "description/@type is on list DescriptionType?","Description type is on the IATI Description Type codelist",description,description,1
 "title/text() exists?",Title,title,title,1
 "title/text() has more than 10 characters?","Title, more than 10 chars",title,title,1
+activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?,Basic tests,basic,Current data,1
