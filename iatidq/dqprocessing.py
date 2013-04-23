@@ -42,12 +42,14 @@ def aggregate_results(runtime, package_id):
         ).filter(models.Result.runtime_id==runtime
         ).filter(models.Result.package_id==package_id
         ).join(models.Result
-        ).group_by(models.Result.package_id, models.Result.result_hierarchy, models.Test, models.Result.result_data
+        ).group_by(models.Result.package_id, 
+                   models.Result.result_hierarchy, 
+                   models.Test, 
+                   models.Result.result_data
         ).all()
 
     aresults = dqfunctions.aggregate_percentages(data)
         
-    result_number = 0
     for aresult in aresults:
         a = models.AggregateResult()
         a.runtime_id = runtime
