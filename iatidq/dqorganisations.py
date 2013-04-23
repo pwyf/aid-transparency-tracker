@@ -171,3 +171,70 @@ def addFeedback(data):
         return feedback
     else:
         return False
+
+def _organisation_detail_ungrouped(organisation):
+    return db.session.query(Indicator,
+                                     Test,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(Organisation.id==organisation.id)
+
+def _organisation_detail(organisation):
+    aggregate_results = _organisation_detail_ungrouped(organisation)\
+        .group_by(Indicator,
+                   AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
+        ).all()
+
+    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
+            ).all()
+
+    db.session.commit()
+    return aggregation.agr_results(aggregate_results, 
+                                   conditions=pconditions, 
+                                   mode="publisher")
+
+def _organisation_indicators(organisation, aggregation_type=None):
+    aggregate_results = db.session.query(Indicator,
+                                     Test,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(Organisation.organisation_code==organisation.organisation_code
+        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
+        ).group_by(AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   Indicator,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num,
+                   AggregateResult.package_id
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
+        ).all()
+
+    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
+            ).all()
+
+    return aggregation.agr_results(aggregate_results, 
+                                                conditions=pconditions, 
+                                                mode="publisher_indicators")
+

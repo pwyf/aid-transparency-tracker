@@ -17,6 +17,8 @@ import iatidq.test_queue
 import iatidq.dqcodelists
 import iatidq.dqorganisations
 import iatidq.test_level as test_level
+import iatidq.dqaggregationtypes
+import iatidq.dqtests
 
 from iatidq import db
 import lxml.etree
@@ -93,6 +95,23 @@ def test_refresh():
     pkg = pkgs[0]
     assert pkg.package_name == package_name
 
+def create_aggregation_types(options):
+    print "Adding an aggregation type for all data"
+    all_ag = iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
+                                                'description': '',
+                                                'test_id': None,
+                                                'test_result':'1'})
+    assert all_ag
+    print "Adding an aggregation type for current data"
+    currentdata_test = iatidq.dqtests.test_by_test_name(
+        "activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"
+        )
+    iatidq.dqaggregationtypes.addAggregationType({'name':'Current data',
+                                                'description': '',
+                                                'test_id':currentdata_test.id,
+                                                'test_result':'1'})
+    return all_ag
+
 def _test_example_tests(publisher, country):
     package_name = '-'.join([publisher, country])
     xml_filename = os.path.join("unittests", "artefacts", package_name + '.xml')
@@ -134,11 +153,13 @@ def _test_example_tests(publisher, country):
     from iatidq import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
-
     # FIXME: THIS IS A TOTAL HACK
     iatidq.models.Result.query.delete()
     iatidq.models.AggregateResult.query.delete()
+    iatidq.models.AggregationType.query.delete()
     db.session.commit()
+
+    all_ag = create_aggregation_types({})
 
 
     from iatidq.testrun import start_new_testrun
@@ -168,7 +189,9 @@ def _test_example_tests(publisher, country):
     assert len(results) > 0
     print >>sys.stderr, len(results)
 
-    aggtest_results = iatidq.models.AggregateResult.query.all()
+    aggtest_results = iatidq.models.AggregateResult.query.filter(
+        AggregateResult.aggregateresulttype_id == all_ag.id
+        ).all()
     for result in aggtest_results:
         assert result.runtime_id == runtime.id
         assert result.package_id == pkg.id
@@ -179,7 +202,8 @@ def _test_example_tests(publisher, country):
         'description/text() has more than 40 characters?',
         'description/@type exists?',
         'title/text() exists?',
-        'title/text() has more than 10 characters?'
+        'title/text() has more than 10 characters?',
+        """activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"""
         ]
 
     expected_test_ids = [ i.id for i in iatidq.models.Test.query.filter(
@@ -187,8 +211,8 @@ def _test_example_tests(publisher, country):
     
     observed_test_ids = [ i.test_id for i in aggtest_results ]
 
-    print expected_test_ids
-    print observed_test_ids
+    print "expected test ids: ", expected_test_ids
+    print "observed test ids: ", observed_test_ids
     assert set(expected_test_ids) == set(observed_test_ids)
 
 

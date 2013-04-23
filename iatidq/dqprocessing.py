@@ -27,7 +27,7 @@ def aggregate_results(runtime, package_id):
             ).filter(models.AggregateResult.runtime_id==runtime
             ).filter(models.AggregateResult.package_id==package_id
             ).first()
-    
+
     if check_existing_results:
         status = "Already aggregated"
         aresults = "None"
@@ -45,24 +45,58 @@ def aggregate_results(runtime, package_id):
 
     organisation_ids = get_organisation_ids()
 
+    aresults = []
+
     for agg_type in agg_types:
         if len(organisation_ids) > 0:
-            return aggregate_results_orgs(runtime, package_id, 
+            data = aggregate_results_orgs(runtime, package_id, 
                                           organisation_ids, agg_type)
         else:
-            return aggregate_results_single_org(runtime, package_id, agg_type)
+            data = aggregate_results_single_org(runtime, package_id, agg_type)
+        aresults += data["data"]
 
-def get_results(agg_type):
-    results = models.Result.query.filter(
-        models.Result.test_id == agg_type.id
+    return {"status": status, "data": aresults}
+
+def get_results(runtime, package_id, agg_type):
+    if agg_type.test_id is not None:
+        results = models.Result.query.filter(
+            models.Result.test_id == agg_type.test_id
+            ).filter(
+            models.Result.result_data == '1'
+            )
+    else:
+        results = models.Result.query
+
+    results = results.filter(
+        models.Result.runtime_id == runtime
         ).filter(
-        models.Result.result_identifier == '1'
+        models.Result.package_id == package_id
         ).all()
-    
+
+    result_identifiers = set([r.result_identifier for r in results])
+
+    results = models.Result.query.filter(
+        models.Result.runtime_id == runtime
+        ).filter(
+        models.Result.package_id == package_id
+        ).filter(
+        models.Result.result_identifier.in_(result_identifiers)
+        ).all()
+
+    results2 = models.Result.query.filter(
+        models.Result.runtime_id == runtime
+        ).filter(
+        models.Result.package_id == package_id
+        ).filter(
+        models.Result.result_identifier == None
+        ).all()
+
+    results += results2
     return set([r.id for r in results])
 
 def aggregate_results_single_org(runtime, package_id, agg_type):
-    result_ids = get_results(agg_type)
+    status = "Updating"
+    result_ids = get_results(runtime, package_id, agg_type)
 
     data = db.session.query(models.Test,
                 models.Result.result_data,
@@ -96,7 +130,10 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
 
 def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
     status = "Updating"
-    result_ids = get_results(agg_type)
+    result_ids = get_results(runtime, package_id, agg_type)
+
+    print "org"
+    print agg_type
 
     data = db.session.query(models.Test,
                 models.Result.result_data,
@@ -106,6 +143,7 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
                 models.Result.organisation_id
         ).filter(models.Result.runtime_id==runtime
         ).filter(models.Result.package_id==package_id
+        ).filter(models.Result.id.in_(result_ids)
         ).join(models.Result
         ).group_by(models.Result.package_id, 
                    models.Result.result_hierarchy, 
@@ -125,6 +163,7 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
         a.results_data = aresult["percentage_passed"]
         a.results_num = aresult["total_results"]
         a.organisation_id = aresult["organisation_id"]
+        a.aggregateresulttype_id = agg_type.id
         db.session.add(a)
     
     return {"status": status, "data": aresults}

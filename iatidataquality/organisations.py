@@ -36,40 +36,6 @@ from iatidq.models import *
 import StringIO
 import unicodecsv
 
-def _organisation_detail_ungrouped(organisation):
-    return db.session.query(Indicator,
-                                     Test,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(Organisation.id==organisation.id)
-
-def _organisation_detail(organisation):
-    aggregate_results = _organisation_detail_ungrouped(organisation)\
-        .group_by(Indicator,
-                   AggregateResult.result_hierarchy, 
-                   Test, 
-                   AggregateResult.package_id,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
-        ).all()
-
-    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
-            ).all()
-
-    db.session.commit()
-    return aggregation.agr_results(aggregate_results, 
-                                   conditions=pconditions, 
-                                   mode="publisher")
-
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None, aggregation_type=None):
@@ -81,7 +47,8 @@ def organisations(organisation_code=None, aggregation_type=None):
         organisation = dqorganisations.organisations(organisation_code)
 
         try:
-            summary_data = _organisation_indicators_summary(organisation, aggregation_type)
+            summary_data = _organisation_indicators_summary(organisation, 
+                                                            aggregation_type)
         except Exception, e:
             summary_data = None
 
@@ -132,7 +99,8 @@ def organisation_publication(organisation_code=None, aggregation_type=None):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = _organisation_indicators(organisation, aggregation_type)
+    aggregate_results = dqorganisations._organisation_indicators(
+        organisation, aggregation_type)
 
     latest_runtime=1
 
@@ -141,7 +109,8 @@ def organisation_publication(organisation_code=None, aggregation_type=None):
                            results=aggregate_results, runtime=latest_runtime)
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
-def organisation_publication_detail(organisation_code=None, aggregation_type=None):
+def organisation_publication_detail(organisation_code=None, 
+                                    aggregation_type=None):
 
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
@@ -149,10 +118,11 @@ def organisation_publication_detail(organisation_code=None, aggregation_type=Non
     packages = dqorganisations.organisationPackages(
         organisation.organisation_code)
 
-    aggregate_results = _organisation_detail(organisation)
+    aggregate_results = dqorganisations._organisation_detail(organisation)
 
-    txt = render_template("organisation_detail.html", organisation=organisation, packages=packages, 
-                           results=aggregate_results)
+    txt = render_template("organisation_detail.html", 
+                          organisation=organisation, packages=packages, 
+                          results=aggregate_results)
     return txt
 
 @app.route("/organisations/publication.csv")
@@ -167,7 +137,8 @@ def all_organisations_publication_csv():
     organisations = Organisation.query.all()
     for organisation in organisations:
 
-        aggregate_results = _organisation_indicators(organisation)
+        aggregate_results = dqorganisations._organisation_indicators(
+            organisation)
 
         for resultid, result in aggregate_results.items():
             out.writerow({
@@ -188,7 +159,7 @@ def organisation_publication_csv(organisation_code=None):
     p_group = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = _organisation_indicators(p_group)
+    aggregate_results = dqorganisations._organisation_indicators(p_group)
 
     strIO = StringIO.StringIO()
     fieldnames = "organisation_name organisation_code indicator_name indicator_description percentage_passed num_results".split()
@@ -300,7 +271,8 @@ def organisationpackage_delete(organisation_code=None,
                             organisation_code=organisation_code))
 
 def _organisation_indicators_summary(organisation, aggregation_type=None):
-    summarydata = _organisation_indicators(organisation, aggregation_type)
+    summarydata = dqorganisations._organisation_indicators(organisation, 
+                                                            aggregation_type)
     # Create crude total score
     totalpct = 0.00
     totalindicators = 0
@@ -310,36 +282,3 @@ def _organisation_indicators_summary(organisation, aggregation_type=None):
     totalscore = totalpct/totalindicators
     return totalscore, totalindicators
     
-
-def _organisation_indicators(organisation, aggregation_type=None):
-    aggregate_results = db.session.query(Indicator,
-                                     Test,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(Organisation.organisation_code==organisation.organisation_code
-        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
-        ).group_by(AggregateResult.result_hierarchy, 
-                   Test, 
-                   AggregateResult.package_id,
-                   Indicator,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num,
-                   AggregateResult.package_id
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
-        ).all()
-
-    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
-            ).all()
-
-    return aggregation.agr_results(aggregate_results, 
-                                                conditions=pconditions, 
-                                                mode="publisher_indicators")
-
