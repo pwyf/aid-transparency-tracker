@@ -383,7 +383,8 @@ class OrganisationPackage(db.Model):
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
     package_id = Column(Integer, ForeignKey('package.id'))
     condition = Column(UnicodeText)
-    
+    __table_args__ = (UniqueConstraint('organisation_id', 'package_id', name='_organisation_package_uc'),
+                     )
     def setup(self,
                  organisation_id,
                  package_id,
