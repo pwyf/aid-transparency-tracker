@@ -51,17 +51,14 @@ def addTest(data):
     except TestNotFound:
         return False
 
-    if not checkTest:
-        test = models.Test()
-        test.setup(
-            name = data['name'],
-            description = data['description'],
-            test_group = "",
-            test_level = data['test_level'],
-            active = data['active']
-            )
-        db.session.add(test)
-        db.session.commit()
-        return test
-    else:
-        return False
+    test = models.Test()
+    test.setup(
+        name = data['name'],
+        description = data['description'],
+        test_group = "",
+        test_level = data['test_level'],
+        active = data['active']
+        )
+    db.session.add(test)
+    db.session.commit()
+    return test
