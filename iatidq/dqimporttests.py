@@ -66,7 +66,7 @@ def _importTests(fh, filename, level=1, local=True):
     print "Imported successfully"
     return True
 
-def importTestsFromFile(filename, level=1):
+def importTestsFromFile(filename, level):
     with file(filename) as fh:
         return _importTests(fh, filename, level=level, local=True)
 
