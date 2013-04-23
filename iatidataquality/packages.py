@@ -130,15 +130,15 @@ def packages(package_name=None, runtime_id=None):
     def get_latest_runtime():
         if runtime_id:
             # If a runtime is specified in the request, get the data
-            return (db.session.query(Runtime).\
-                        filter(Runtime.id==runtime_id
-                               ).first(), False)
+            return (db.session.query(Runtime
+                        ).filter(Runtime.id==runtime_id
+                        ).first(), False)
         else:
             # Select the highest runtime; then get data for that one
-            return (db.session.query(Runtime).\
-                        filter(Result.package_id==p[0].id
-                               ).join(Result).\
-                        order_by(Runtime.id.desc()).first(),
+            return (db.session.query(Runtime
+                        ).filter(Result.package_id==p[0].id
+                        ).join(Result
+                        ).order_by(Runtime.id.desc()).first(),
                     True)
 
     latest_runtime, latest = get_latest_runtime()
