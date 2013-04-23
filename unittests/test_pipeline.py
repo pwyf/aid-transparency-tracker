@@ -37,6 +37,20 @@ def setup_func():
     db.session.commit()
     print  >>sys.stderr, "committed"
 
+def setup_organisations(pkg_id):
+    org_data = [ 
+        ('USAID', 'US-1', 
+         '''participating-org[@role="Extending"][@ref="US-1"]'''),
+        ('MCC', 'US-18',
+         '''participating-org[@role="Extending"][@ref="US-18"]'''),
+        ]
+    for name, code, cond in org_data:
+        org_id = dqorganisations.addOrganisation({'organisation_name': name,
+                                                  'organisation_code': code})
+        dqorganisations.addOrganisationPackage({'organisation_id': org_id,
+                                                'package_id': pkg_id,
+                                                'condition': cond})
+
 def teardown_func():
     db.session.commit()
     pass
@@ -167,3 +181,4 @@ def test_example_tests():
 if __name__ == '__main__':
     setup_func()
     test_example_tests()
+
