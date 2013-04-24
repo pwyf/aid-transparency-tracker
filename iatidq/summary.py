@@ -272,20 +272,12 @@ def _agr_results(data, conditions=None, mode=None):
         indicators_tests = list(set(map(lambda x: (x[0]["id"], x[1].id), data)))
         packages = set(map(lambda x: (x[5]), data))
         d = dict(map(lambda x: ((x[4], x[1].id, x[5]),(x)), data))
+        summary = lambda h, t: sum_for_publishers(packages, d, h, t)
     else:
         d = dict(map(lambda x: ((x[4], x[1].id),(x)), data))
+        summary = lambda h, t: sum_default(d, h, t)
 
     out = {}
-
-    def _sum_for_publishers(h, t):
-        return sum_for_publishers(packages, d, h, t)
-    def _sum_default(h, t):
-        return sum_default(d, t, t)
-
-    if publisher_mode(mode):
-        summary = _sum_for_publishers
-    else:
-        summary = _sum_default
 
     return summarise_results(data, conditions, mode, hierarchies, 
                              tests, cdtns, indicators,
