@@ -245,12 +245,12 @@ def _agr_results(data, conditions=None, mode=None):
 
     if mode not in ["publisher_simple", "publisher_indicators"]:
         return out
+
+    simple_out = publisher_simple(out, cdtns)
+    if mode != "publisher_indicators":
+        return simple_out
     else:
-        simple_out = publisher_simple(out, cdtns)
-        if mode != "publisher_indicators":
-            return simple_out
-        else:
-            return publisher_indicators(indicators, indicators_tests, simple_out)
+        return publisher_indicators(indicators, indicators_tests, simple_out)
 
 def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):
