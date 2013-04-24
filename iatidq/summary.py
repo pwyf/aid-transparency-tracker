@@ -224,9 +224,11 @@ def _agr_results(data, conditions=None, mode=None):
     for h in hierarchies:
         for t in tests:
             if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
-                tdata = sum_for_publishers(h, t)
+                summary = sum_for_publishers
             else:
-                tdata = sum_default(h, t)
+                summary = sum_default
+
+            tdata = summary(h, t)
 
             if h not in out:
                 out[h] = {}
