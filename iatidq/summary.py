@@ -202,9 +202,7 @@ def _agr_results(data, conditions=None, mode=None):
             except KeyError:
                 pass
 
-    if mode not in ["publisher_simple", "publisher_indicators"]:
-        return out
-    else:
+    def publisher_simple(out, cdtns):
         simple_out = {}
         hierarchies = set(out)
         tests = set()
@@ -240,6 +238,12 @@ def _agr_results(data, conditions=None, mode=None):
                     "results_num": results_num
                     }
 
+        return simple_out
+
+    if mode not in ["publisher_simple", "publisher_indicators"]:
+        return out
+    else:
+        simple_out = publisher_simple(out, cdtns)
         if mode != "publisher_indicators":
             return simple_out
         else:
