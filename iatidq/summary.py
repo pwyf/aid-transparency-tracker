@@ -163,7 +163,9 @@ def _agr_results(data, conditions=None, mode=None):
                 if (out[h][t] == {}): del out[h][t]
             except KeyError:
                 pass
-    if mode in ["publisher_simple", "publisher_indicators"]:
+    if mode not in ["publisher_simple", "publisher_indicators"]:
+        return out
+    else:
         simple_out = {}
         hierarchies = set(out)
         tests = set()
@@ -235,8 +237,6 @@ def _agr_results(data, conditions=None, mode=None):
             #return indicators_out
         else:
             return simple_out
-    else:
-        return out
 
 def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):
