@@ -202,7 +202,7 @@ def _agr_results(data, conditions=None, mode=None):
                     "results_num": results_num
                     }
 
-        def publisher_indicators():
+        def publisher_indicators(simple_out):
             # get all tests which belong to a specific indicator
             # average the results for all tests in that indicator
             indicators_out = {}
@@ -241,7 +241,7 @@ def _agr_results(data, conditions=None, mode=None):
         if mode != "publisher_indicators":
             return simple_out
         else:
-            return publisher_indicators()
+            return publisher_indicators(simple_out)
 
 def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):
