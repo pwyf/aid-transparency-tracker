@@ -253,7 +253,7 @@ def _agr_results(data, conditions=None, mode=None):
                 tdata["condition"] = cdtns[key]
         return h, t, tdata
 
-    if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
+    if publisher_mode(mode):
         summary = sum_for_publishers
     else:
         summary = sum_default
