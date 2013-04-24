@@ -31,16 +31,16 @@ def aggregate_percentages(data):
     tests = set(map(lambda x: (x[FIELD_TEST].id), data))
 
     d = dict(map(lambda x: ((x[FIELD_STATUS],
+                             x[FIELD_PACKAGE],
                              x[FIELD_TEST].id,
-                             x[FIELD_HIERARCHY],
-                             x[FIELD_PACKAGE]
+                             x[FIELD_HIERARCHY]
                              ),(x[FIELD_RESULT])), data))
     out = []
     for p in packages:
         for t in tests:
             for h in hierarchies:
-                fail    = d.get((RESULT_FAILURE, t, h, p), 0)
-                success = d.get((RESULT_SUCCESS, t, h, p),.0)
+                fail    = d.get((RESULT_FAILURE, p, t, h), 0)
+                success = d.get((RESULT_SUCCESS, p, t, h),.0)
 
                 if 0 == fail + success:
                     continue
@@ -66,9 +66,9 @@ def aggregate_percentages_org(data):
     organisations = set(map(lambda x: (x[FIELD_ORGANISATION]), data))
 
     d = dict(map(lambda x: ((x[FIELD_STATUS],
+                             x[FIELD_PACKAGE],
                              x[FIELD_TEST].id,
                              x[FIELD_HIERARCHY],
-                             x[FIELD_PACKAGE],
                              x[FIELD_ORGANISATION]
                              ),(x[FIELD_RESULT])), data))
     out = []
@@ -76,8 +76,8 @@ def aggregate_percentages_org(data):
         for t in tests:
             for h in hierarchies:
                 for o in organisations:
-                    fail    = d.get((RESULT_FAILURE, t, h, p, o), 0)
-                    success = d.get((RESULT_SUCCESS, t, h, p, o), 0)
+                    fail    = d.get((RESULT_FAILURE, p, t, h, o), 0)
+                    success = d.get((RESULT_SUCCESS, p, t, h, o), 0)
 
                     if 0 == fail + success:
                         continue
