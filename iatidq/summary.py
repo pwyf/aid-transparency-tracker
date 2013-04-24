@@ -228,16 +228,16 @@ def _agr_results(data, conditions=None, mode=None):
             "result_hierarchy": data[4]
             }
 
+    def summaries(summary_f):
+        for h, t in itertools.product(hierarchies, tests):
+            yield summary_f(h, t)
+
     if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
         summary = sum_for_publishers
     else:
         summary = sum_default
 
-    def summaries():
-        for h, t in itertools.product(hierarchies, tests):
-            yield summary(h, t)
-
-    for tdata in summaries():
+    for tdata in summaries(summary):
         if h not in out:
             out[h] = {}
         if t not in out[h]:
