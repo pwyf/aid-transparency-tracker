@@ -35,10 +35,8 @@ def aggregate_percentages(data):
     for p in packages:
         for t in tests:
             for h in hierarchies:
-                try: fail = d[(t, RESULT_FAILURE, h, p)]
-                except: fail = 0
-                try: success = d[(t, RESULT_SUCCESS, h, p)]
-                except: success = 0
+                fail    = d.get((t, RESULT_FAILURE, h, p), 0)
+                success = d.get((t, RESULT_SUCCESS, h, p),.0)
                 try:
                     percentage = int((float(success)/(fail+success)) * 100)
                 except ZeroDivisionError:
@@ -69,10 +67,8 @@ def aggregate_percentages_org(data):
         for t in tests:
             for h in hierarchies:
                 for o in organisations:
-                    try: fail = d[(t, RESULT_FAILURE, h, p, o)]
-                    except: fail = 0
-                    try: success = d[(t, RESULT_SUCCESS, h, p, o)]
-                    except: success = 0
+                    fail    = d.get((t, RESULT_FAILURE, h, p, o), 0)
+                    success = d.get((t, RESULT_SUCCESS, h, p, o), 0)
                     try:
                         percentage = int((float(success)/(fail+success)) * 100)
                     except ZeroDivisionError:
