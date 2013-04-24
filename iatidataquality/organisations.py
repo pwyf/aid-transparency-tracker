@@ -274,7 +274,7 @@ def organisationpackage_delete(organisation_code=None,
     return redirect(url_for('organisation_edit', 
                             organisation_code=organisation_code))
 
-def _organisation_indicators_summary(organisation, aggregation_type=None):
+def _organisation_indicators_summary(organisation, aggregation_type=2):
     summarydata = dqorganisations._organisation_indicators(organisation, 
                                                             aggregation_type)
     # Create crude total score
