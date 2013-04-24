@@ -31,7 +31,6 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, dqtests
-import aggregation
 
 import StringIO
 import unicodecsv

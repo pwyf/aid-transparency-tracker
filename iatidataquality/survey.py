@@ -29,7 +29,6 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from iatidq import dqorganisations, dqindicators
-import aggregation
 
 from iatidq.models import *
 

@@ -30,7 +30,6 @@ sys.path.append(parent)
 
 from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
 from iatidq.models import *
-import aggregation
 
 import StringIO
 import unicodecsv
