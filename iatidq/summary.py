@@ -94,10 +94,9 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     #    indicators_out[testdata["indicator"]["id"]] = testdata
     #return indicators_out
 
-def make_summary(indicator, test_id, test_description, test_group,
+def make_summary(test_id, test_description, test_group,
                  results_pct, results_num):
     return {
-        "indicator": indicator,
         "test": {
             "id": test_id,
             "description": test_description,
@@ -132,14 +131,15 @@ def publisher_simple(out, cdtns):
             except KeyError:
                 pass
 
-        simple_out[t] = make_summary(
-            out[okhierarchy][t]['indicator'],
+        tmp = make_summary(
             out[okhierarchy][t]['test']["id"],
             out[okhierarchy][t]['test']["description"],
             out[okhierarchy][t]['test']["test_group"]
             (results_weighted_pct_average_numerator/results_num),
             results_num
             )
+        tmp["indicator"] = out[okhierarchy][t]['indicator']
+        simple_out[t] = tmp
     return simple_out
 
 def sum_for_publishers(packages, d, h, t):
@@ -165,13 +165,13 @@ def sum_for_publishers(packages, d, h, t):
         return {}
          
     tmp = make_summary(
-        ok_tdata[0],
         ok_tdata[1].id,
         ok_tdata[1].description,
         ok_tdata[1].test_group,
         int(float(total_pct/packages_in_hierarchy)),
         total_activities
         )
+    tmp["indicator"] = ok_tdata[0]
     tmp["result_hierarchy"] = total_activities
     return tmp
 
@@ -181,16 +181,14 @@ def sum_default(d, h, t):
     if data is None:
         return None
 
-    return {
-        "test": {
-            "id": data[1].id,
-            "description": data[1].description,
-            "test_group": data[1].test_group
-            },
-        "results_pct": data[2],
-        "results_num": data[3],
-        "result_hierarchy": data[4]
-        }
+    tmp = make_summary(
+        data[1].id,
+        data[1].description,
+        data[1].test_group
+        data[2],
+        data[3])
+    tmp["result_hierarchy"] = data[4]
+    return tmp
 
 def summarise_results(conditions, mode, hierarchies, 
                       tests, cdtns, indicators,
