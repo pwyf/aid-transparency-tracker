@@ -182,7 +182,8 @@ def _agr_results(data, conditions=None, mode=None):
                     ), conditions))
         
     if publisher_mode(mode):
-        indicators = set(map(lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"])), data))
+        ind_f = lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"]))
+        indicators = set(map(ind_f, data))
         indicators_tests = list(set(map(lambda x: (x[0]["id"], x[1].id), data)))
         packages = set(map(lambda x: (x[5]), data))
         d = dict(map(lambda x: ((x[4], x[1].id, x[5]),(x)), data))
