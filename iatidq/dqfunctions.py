@@ -29,6 +29,18 @@ def prepend(prefix, tup):
     return tuple([prefix] + list(tup))
 
 def _aggregate_percentages(data, dims):
+    """
+    'dims' contains a list of tuples of field names and the lambdas
+    used for extracting those fields from 'data'. These fields are
+    treated as dimensions in an n-dimensional hypercube
+
+    We generate list of the unique values in each considered dimension
+
+    We project the hypercube onto the selected dimensions by calculating
+    the cartesian product of these unique values, then mapping the
+    calc_percentage function across it
+    """
+
     def setmap(lam):
         return set(map(lam, data))
 
