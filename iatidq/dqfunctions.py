@@ -28,17 +28,6 @@ FIELD_ORGANISATION = 5
 def prepend(prefix, tup):
     return tuple([prefix] + list(tup))
 
-def aggregate_percentages(data):
-    # Aggregates results data for a specific runtime.
-
-    dims = [
-        ("package_id", lambda x: x[FIELD_PACKAGE]),
-        ("test_id",    lambda x: x[FIELD_TEST].id),
-        ("hierarchy",  lambda x: x[FIELD_HIERARCHY])
-        ]
-
-    return _aggregate_percentages(data, dims)
-
 def _aggregate_percentages(data, dims):
     dims_dict = dict(dims)
 
@@ -83,6 +72,17 @@ def _aggregate_percentages(data, dims):
     out = filter(lambda i: i is not None, out)
 
     return out
+
+def aggregate_percentages(data):
+    # Aggregates results data for a specific runtime.
+
+    dims = [
+        ("package_id", lambda x: x[FIELD_PACKAGE]),
+        ("test_id",    lambda x: x[FIELD_TEST].id),
+        ("hierarchy",  lambda x: x[FIELD_HIERARCHY])
+        ]
+
+    return _aggregate_percentages(data, dims)
 
 def aggregate_percentages_org(data):
     # Aggregates results data for a specific runtime.
