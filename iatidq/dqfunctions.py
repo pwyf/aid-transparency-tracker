@@ -30,7 +30,10 @@ def aggregate_percentages(data):
     hierarchies = set(map(lambda x: (x[FIELD_HIERARCHY]), data))
     tests = set(map(lambda x: (x[FIELD_TEST].id), data))
 
-    d = dict(map(lambda x: ((x[FIELD_TEST].id,x[FIELD_STATUS],x[FIELD_HIERARCHY],x[FIELD_PACKAGE]),(x[FIELD_RESULT])), data))
+    d = dict(map(lambda x: ((x[FIELD_TEST].id,
+                             x[FIELD_STATUS],
+                             x[FIELD_HIERARCHY],
+                             x[FIELD_PACKAGE]),(x[FIELD_RESULT])), data))
     out = []
     for p in packages:
         for t in tests:
@@ -61,7 +64,11 @@ def aggregate_percentages_org(data):
     tests = set(map(lambda x: (x[FIELD_TEST].id), data))
     organisations = set(map(lambda x: (x[FIELD_ORGANISATION]), data))
 
-    d = dict(map(lambda x: ((x[FIELD_TEST].id,x[FIELD_STATUS],x[FIELD_HIERARCHY],x[FIELD_PACKAGE],x[FIELD_ORGANISATION]),(x[FIELD_RESULT])), data))
+    d = dict(map(lambda x: ((x[FIELD_TEST].id,
+                             x[FIELD_STATUS],
+                             x[FIELD_HIERARCHY],
+                             x[FIELD_PACKAGE],
+                             x[FIELD_ORGANISATION]),(x[FIELD_RESULT])), data))
     out = []
     for p in packages:
         for t in tests:
