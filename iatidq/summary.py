@@ -231,27 +231,25 @@ def _agr_results(data, conditions=None, mode=None):
     else:
         summary = sum_default
 
-    for h in hierarchies():
-        for t in tests():
+    for h, t in itertools.product(hierarchies(), tests()):
+        tdata = summary(h, t)
 
-            tdata = summary(h, t)
+        if h not in out:
+            out[h] = {}
+        if t not in out[h]:
+            out[h][t] = {}
+        if tdata:
+            out[h][t] = tdata
 
-            if h not in out:
-                out[h] = {}
-            if t not in out[h]:
-                out[h][t] = {}
-            if tdata:
-                out[h][t] = tdata
+        if conditions:
+            key = (t,'activity hierarchy', str(h)) 
+            if key in cdtns:
+                out[h][t]["condition"] = cdtns[key]
 
-            if conditions:
-                key = (t,'activity hierarchy', str(h)) 
-                if key in cdtns:
-                    out[h][t]["condition"] = cdtns[key]
-
-            try:
-                if (out[h][t] == {}): del out[h][t]
-            except KeyError:
-                pass
+        try:
+            if (out[h][t] == {}): del out[h][t]
+        except KeyError:
+            pass
 
     if mode not in ["publisher_simple", "publisher_indicators"]:
         return out
