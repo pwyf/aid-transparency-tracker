@@ -132,70 +132,6 @@ def publisher_simple(out, cdtns):
 
     return simple_out
 
-def _agr_results(data, conditions=None, mode=None):
-    """
-        data variable looks like this:
-            models.Indicator,
-            models.Test,
-            models.AggregateResult.results_data, ## percentage
-            models.AggregateResult.results_num, ## total values
-            models.AggregateResult.result_hierarchy
-
-        conditions variable looks like this:
-            models.PublisherCondition.query.filter_by(publisher_id=p[1].id).all()
-
-            ======================================
-            id = Column(Integer, primary_key=True)
-            publisher_id = Column(Integer, ForeignKey('packagegroup.id'))
-            test_id = Column(Integer, ForeignKey('test.id'))
-            operation = Column(Integer) # show (1) or don't show (0) result
-            condition = Column(UnicodeText) # activity level, hierarchy 2
-            condition_value = Column(UnicodeText) # True, 2, etc.
-            description = Column(UnicodeText)
-            file = Column(UnicodeText)
-            line = Column(Integer)
-            active = Column(Boolean)
-            ======================================
-        mode can be:
-            None = package-specific
-            "publisher" = aggregate results for a whole publisher
-
-        TODO:
-            in publisher mode, allow weighting of data by package rather than number of activities.
-    """
-
-    def gen_hierarchies():
-        for i in set(map(lambda x: (x[4]), data)):
-            yield i
-    hierarchies = gen_hierarchies()
-
-    def gen_tests():
-        for i in set(map(lambda x: (x[1].id), data)):
-            yield i
-    tests = gen_tests()
-
-    cdtns = None
-    if conditions:
-        cdtns = dict(map(lambda x: (
-                    (x.test_id, x.condition, x.condition_value),
-                    (x.operation, x.description)
-                    ), conditions))
-        
-    if publisher_mode(mode):
-        ind_f = lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"]))
-        indicators = set(map(ind_f, data))
-        indicators_tests = list(set(map(lambda x: (x[0]["id"], x[1].id), data)))
-        packages = set(map(lambda x: (x[5]), data))
-        d = dict(map(lambda x: ((x[4], x[1].id, x[5]),(x)), data))
-    else:
-        d = dict(map(lambda x: ((x[4], x[1].id),(x)), data))
-
-    out = {}
-
-    return summarise_results(data, conditions, mode, hierarchies, 
-                             tests, cdtns, indicators,
-                             indicators_tests, packages, d, out)
-
 def summarise_results(data, conditions, mode, hierarchies, 
                       tests, cdtns, indicators,
                       indicators_tests, packages, d, out):
@@ -281,6 +217,70 @@ def summarise_results(data, conditions, mode, hierarchies,
         return simple_out
 
     return publisher_indicators(indicators, indicators_tests, simple_out)
+
+def _agr_results(data, conditions=None, mode=None):
+    """
+        data variable looks like this:
+            models.Indicator,
+            models.Test,
+            models.AggregateResult.results_data, ## percentage
+            models.AggregateResult.results_num, ## total values
+            models.AggregateResult.result_hierarchy
+
+        conditions variable looks like this:
+            models.PublisherCondition.query.filter_by(publisher_id=p[1].id).all()
+
+            ======================================
+            id = Column(Integer, primary_key=True)
+            publisher_id = Column(Integer, ForeignKey('packagegroup.id'))
+            test_id = Column(Integer, ForeignKey('test.id'))
+            operation = Column(Integer) # show (1) or don't show (0) result
+            condition = Column(UnicodeText) # activity level, hierarchy 2
+            condition_value = Column(UnicodeText) # True, 2, etc.
+            description = Column(UnicodeText)
+            file = Column(UnicodeText)
+            line = Column(Integer)
+            active = Column(Boolean)
+            ======================================
+        mode can be:
+            None = package-specific
+            "publisher" = aggregate results for a whole publisher
+
+        TODO:
+            in publisher mode, allow weighting of data by package rather than number of activities.
+    """
+
+    def gen_hierarchies():
+        for i in set(map(lambda x: (x[4]), data)):
+            yield i
+    hierarchies = gen_hierarchies()
+
+    def gen_tests():
+        for i in set(map(lambda x: (x[1].id), data)):
+            yield i
+    tests = gen_tests()
+
+    cdtns = None
+    if conditions:
+        cdtns = dict(map(lambda x: (
+                    (x.test_id, x.condition, x.condition_value),
+                    (x.operation, x.description)
+                    ), conditions))
+        
+    if publisher_mode(mode):
+        ind_f = lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"]))
+        indicators = set(map(ind_f, data))
+        indicators_tests = list(set(map(lambda x: (x[0]["id"], x[1].id), data)))
+        packages = set(map(lambda x: (x[5]), data))
+        d = dict(map(lambda x: ((x[4], x[1].id, x[5]),(x)), data))
+    else:
+        d = dict(map(lambda x: ((x[4], x[1].id),(x)), data))
+
+    out = {}
+
+    return summarise_results(data, conditions, mode, hierarchies, 
+                             tests, cdtns, indicators,
+                             indicators_tests, packages, d, out)
 
 def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):
