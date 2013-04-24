@@ -44,10 +44,13 @@ def _aggregate_percentages(data, dims):
         return set(map(lam, data))
 
     dim_names = [ i[0] for i in dims ]
+
+    def generate_dimension(dimension_name):
+        return setmap(dims_dict[dimension_name])
     
-    packages    = setmap(dims_dict["package_id"])
-    hierarchies = setmap(dims_dict["hierarchy"])
-    tests       = setmap(dims_dict["test_id"])
+    packages    = generate_dimension("package_id")
+    hierarchies = generate_dimension("hierarchy")
+    tests       = generate_dimension("test_id")
 
     def lookups(x):
         return tuple([ dims_dict[i](x) for i in dim_names ])
