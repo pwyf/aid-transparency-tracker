@@ -200,7 +200,9 @@ def _agr_results(data, conditions=None, mode=None):
                     "results_pct": (results_weighted_pct_average_numerator/results_num),
                     "results_num": results_num
                     }
-        if mode=="publisher_indicators":
+        if mode != "publisher_indicators":
+            return simple_out
+        else:
             # get all tests which belong to a specific indicator
             # average the results for all tests in that indicator
             indicators_out = {}
@@ -235,8 +237,6 @@ def _agr_results(data, conditions=None, mode=None):
             #for test, testdata in simple_out.items():
             #    indicators_out[testdata["indicator"]["id"]] = testdata
             #return indicators_out
-        else:
-            return simple_out
 
 def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):
