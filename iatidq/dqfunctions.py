@@ -82,7 +82,6 @@ def _aggregate_percentages(data, dims):
         return data
 
     for vector in itertools.product(packages, tests, hierarchies):
-        print >>sys.stderr, vector
         data = make_data(vector)
         out.append(data)
 
