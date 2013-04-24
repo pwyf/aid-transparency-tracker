@@ -16,6 +16,11 @@ def reform_dict(d):
 
     return dict([ (k1, inner(k1))
                    for k1 in set( k1 for k1, k2 in d.keys() ) ])
+    
+def publisher_mode(mode):
+    if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
+        return True
+    return False
 
 def pkg_test_percentages(data):
     # Returns results data - % for each hierarchy for each test, for a specific package in a specific runtime.
@@ -174,11 +179,6 @@ def _agr_results(data, conditions=None, mode=None):
                     (x.test_id, x.condition, x.condition_value),
                     (x.operation, x.description)
                     ), conditions))
-    
-    def publisher_mode(mode):
-        if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
-            return True
-        return False
         
     if publisher_mode(mode):
         indicators = set(map(lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"])), data))
