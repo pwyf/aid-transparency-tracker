@@ -13,6 +13,9 @@ import urllib2
 from iatidq import db
 import models
 
+RESULT_FAILURE = 0
+RESULT_SUCCESS = 1
+
 def aggregate_percentages(data):
     # Aggregates results data for a specific runtime.
 
@@ -25,9 +28,9 @@ def aggregate_percentages(data):
     for p in packages:
         for t in tests:
             for h in hierarchies:
-                try: fail = d[(t,0,h,p)]
+                try: fail = d[(t, RESULT_FAILURE, h, p)]
                 except: fail = 0
-                try: success = d[(t,1,h,p)]
+                try: success = d[(t, RESULT_SUCCESS, h, p)]
                 except: success = 0
                 try:
                     percentage = int((float(success)/(fail+success)) * 100)
@@ -59,9 +62,9 @@ def aggregate_percentages_org(data):
         for t in tests:
             for h in hierarchies:
                 for o in organisations:
-                    try: fail = d[(t,0,h,p,o)]
+                    try: fail = d[(t, RESULT_FAILURE, h, p, o)]
                     except: fail = 0
-                    try: success = d[(t,1,h,p,o)]
+                    try: success = d[(t, RESULT_SUCCESS, h, p, o)]
                     except: success = 0
                     try:
                         percentage = int((float(success)/(fail+success)) * 100)
