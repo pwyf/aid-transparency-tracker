@@ -255,18 +255,8 @@ def _agr_results(data, conditions=None, mode=None):
 
     summaries = (add_condition(i) for i in summaries(summary))
 
-    for h, t, tdata in summaries:
-        if h not in out:
-            out[h] = {}
-        if t not in out[h]:
-            out[h][t] = {}
-        if tdata:
-            out[h][t] = tdata
-
-        try:
-            if (out[h][t] == {}): del out[h][t]
-        except KeyError:
-            pass
+    tmp_out = dict([ ((h, t), tdata) for h, t, tdata in summaries ])
+    out = reform_dict(tmp_out)
 
     if mode not in ["publisher_simple", "publisher_indicators"]:
         return out
