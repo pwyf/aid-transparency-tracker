@@ -205,20 +205,19 @@ def _agr_results(data, conditions=None, mode=None):
     def sum_default(h, t):
         # return data for this single package
         data = d.get((h, t), None)
-        if data is not None:
-            tdata = {
-                "test": {
-                    "id": data[1].id,
-                    "description": data[1].description,
-                    "test_group": data[1].test_group
-                    },
-                "results_pct": data[2],
-                "results_num": data[3],
-                "result_hierarchy": data[4]
-                }
-        else:
-            tdata = None
-        return tdata
+        if data is None:
+            return None
+
+        return {
+            "test": {
+                "id": data[1].id,
+                "description": data[1].description,
+                "test_group": data[1].test_group
+                },
+            "results_pct": data[2],
+            "results_num": data[3],
+            "result_hierarchy": data[4]
+            }
 
     for h in hierarchies:
         for t in tests:
