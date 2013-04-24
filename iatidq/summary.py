@@ -169,56 +169,56 @@ def _agr_results(data, conditions=None, mode=None):
     out = {}
 
     def sum_for_publishers(h, t):
-                # aggregate data across multiple packages for a single publisher
+        # aggregate data across multiple packages for a single publisher
+        
+        # for each package, add percentage for each
+        total_pct = 0
+        total_activities = 0
+        total_packages = len(packages)
 
-                # for each package, add percentage for each
-                total_pct = 0
-                total_activities = 0
-                total_packages = len(packages)
-
-                # need below to only include packages that are in this hierarchy
-                packages_in_hierarchy = 0
-                for p in packages:
-                    try:
-                        ok_tdata = d[(h, t, p)]
-                        total_pct += ok_tdata[2] #percentage
-                        total_activities += ok_tdata[3] #total vals
-                        packages_in_hierarchy +=1
-                    except KeyError:
-                        pass
-                tdata = {}
-                if (total_activities>0):
-                    
-                    tdata = {
-                        "indicator": ok_tdata[0],
-                        "test": {
-                            "id": ok_tdata[1].id,
-                            "description": ok_tdata[1].description,
-                            "test_group": ok_tdata[1].test_group
-                            },
-                        "results_pct": int(float(total_pct/packages_in_hierarchy)),
-                        "results_num": total_activities,
-                        "result_hierarchy": total_activities
-                        }
-                return tdata
+        # need below to only include packages that are in this hierarchy
+        packages_in_hierarchy = 0
+        for p in packages:
+            try:
+                ok_tdata = d[(h, t, p)]
+                total_pct += ok_tdata[2] #percentage
+                total_activities += ok_tdata[3] #total vals
+                packages_in_hierarchy +=1
+            except KeyError:
+                pass
+        tdata = {}
+        if (total_activities>0):
+            
+            tdata = {
+                "indicator": ok_tdata[0],
+                "test": {
+                    "id": ok_tdata[1].id,
+                    "description": ok_tdata[1].description,
+                    "test_group": ok_tdata[1].test_group
+                    },
+                "results_pct": int(float(total_pct/packages_in_hierarchy)),
+                "results_num": total_activities,
+                "result_hierarchy": total_activities
+                }
+        return tdata
 
     def sum_default(h, t):
-                # return data for this single package
-                data = d.get((h, t), None)
-                if data is not None:
-                    tdata = {
-                        "test": {
-                            "id": data[1].id,
-                            "description": data[1].description,
-                            "test_group": data[1].test_group
-                            },
-                        "results_pct": data[2],
-                        "results_num": data[3],
-                        "result_hierarchy": data[4]
-                        }
-                else:
-                    tdata = None
-                return tdata
+        # return data for this single package
+        data = d.get((h, t), None)
+        if data is not None:
+            tdata = {
+                "test": {
+                    "id": data[1].id,
+                    "description": data[1].description,
+                    "test_group": data[1].test_group
+                    },
+                "results_pct": data[2],
+                "results_num": data[3],
+                "result_hierarchy": data[4]
+                }
+        else:
+            tdata = None
+        return tdata
 
     for h in hierarchies:
         for t in tests:
