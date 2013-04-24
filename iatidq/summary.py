@@ -233,9 +233,11 @@ def _agr_results(data, conditions=None, mode=None):
     else:
         summary = sum_default
 
-    for h, t in itertools.product(hierarchies, tests):
-        tdata = summary(h, t)
+    def summaries():
+        for h, t in itertools.product(hierarchies, tests):
+            yield summary(h, t)
 
+    for tdata in summaries():
         if h not in out:
             out[h] = {}
         if t not in out[h]:
