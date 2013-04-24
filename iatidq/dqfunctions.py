@@ -23,6 +23,9 @@ FIELD_RESULT = 3
 FIELD_PACKAGE = 4
 FIELD_ORGANISATION = 5
 
+def prepend(prefix, tup):
+    return tuple([prefix] + list(tup))
+
 def aggregate_percentages(data):
     # Aggregates results data for a specific runtime.
 
@@ -39,8 +42,9 @@ def aggregate_percentages(data):
     for p in packages:
         for t in tests:
             for h in hierarchies:
-                fail    = d.get((RESULT_FAILURE, p, t, h), 0)
-                success = d.get((RESULT_SUCCESS, p, t, h),.0)
+                dimensions = (p, t, h)
+                fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
+                success = d.get(prepend(RESULT_SUCCESS, dimensions),.0)
 
                 if 0 == fail + success:
                     continue
@@ -76,8 +80,9 @@ def aggregate_percentages_org(data):
         for t in tests:
             for h in hierarchies:
                 for o in organisations:
-                    fail    = d.get((RESULT_FAILURE, p, t, h, o), 0)
-                    success = d.get((RESULT_SUCCESS, p, t, h, o), 0)
+                    dimensions = (p, t, h, o)
+                    fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
+                    success = d.get(prepend(RESULT_SUCCESS, dimensions), 0)
 
                     if 0 == fail + success:
                         continue
