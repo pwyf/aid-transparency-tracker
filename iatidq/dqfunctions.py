@@ -42,15 +42,15 @@ def _aggregate_percentages(data, dims):
 
     def setmap(lam):
         return set(map(lam, data))
+
+    dim_names = ["package_id", "test_id", "hierarchy"]
     
     packages    = setmap(dims_dict["package_id"])
     hierarchies = setmap(dims_dict["hierarchy"])
     tests       = setmap(dims_dict["test_id"])
 
     def lookups(x):
-        return (dims_dict["package_id"](x),
-                dims_dict["test_id"](x),
-                dims_dict["hierarchy"](x))
+        return tuple([ dims_dict[i](x) for i in dim_names ])
 
     breakdown = lambda x: (
         prepend(x[FIELD_STATUS], lookups(x)),
