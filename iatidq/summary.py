@@ -150,13 +150,15 @@ def _agr_results(data, conditions=None, mode=None):
             in publisher mode, allow weighting of data by package rather than number of activities.
     """
 
-    def hierarchies():
+    def gen_hierarchies():
         for i in set(map(lambda x: (x[4]), data)):
             yield i
+    hierarchies = gen_hierarchies()
 
-    def tests():
+    def gen_tests():
         for i in set(map(lambda x: (x[1].id), data)):
             yield i
+    tests = gen_tests()
 
     cdtns = None
     if conditions:
@@ -231,7 +233,7 @@ def _agr_results(data, conditions=None, mode=None):
     else:
         summary = sum_default
 
-    for h, t in itertools.product(hierarchies(), tests()):
+    for h, t in itertools.product(hierarchies, tests):
         tdata = summary(h, t)
 
         if h not in out:
