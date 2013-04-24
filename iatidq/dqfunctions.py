@@ -43,7 +43,7 @@ def _aggregate_percentages(data, dims):
     def setmap(lam):
         return set(map(lam, data))
 
-    dim_names = ["package_id", "test_id", "hierarchy"]
+    dim_names = [ i[0] for i in dims ]
     
     packages    = setmap(dims_dict["package_id"])
     hierarchies = setmap(dims_dict["hierarchy"])
