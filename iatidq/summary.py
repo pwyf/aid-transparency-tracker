@@ -9,6 +9,14 @@
 
 import itertools
 
+def reform_dict(d):
+    def inner(k1):
+        return dict([ (k2, d[(k1, k2)]) for k2 in 
+                      map(lambda i: i[1], filter(lambda i: i[0] == k1, d.keys())) ])
+
+    return dict([ (k1, inner(k1))
+                   for k1 in set( k1 for k1, k2 in d.keys() ) ])
+
 def pkg_test_percentages(data):
     # Returns results data - % for each hierarchy for each test, for a specific package in a specific runtime.
     # Remove in future and revert to AggregateResult data.
