@@ -173,7 +173,7 @@ def _agr_results(data, conditions=None, mode=None):
         for t in tests:
             all_pcts = []
             tdata = {}
-            if (mode=="publisher") or (mode=="publisher_simple") or (mode=="publisher_indicators"):
+            if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
                 # aggregate data across multiple packages for a single publisher
 
                 # for each package, add percentage for each
