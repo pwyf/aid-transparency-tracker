@@ -78,6 +78,43 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     #    indicators_out[testdata["indicator"]["id"]] = testdata
     #return indicators_out
 
+def publisher_simple(out, cdtns):
+    simple_out = {}
+    hierarchies = set(out)
+    tests = set()
+    for h in hierarchies:
+        tests.update(set(out[h]))
+    for t in tests: 
+        results_pct = 0.0
+        results_num = 0.0
+        results_weighted_pct_average_numerator = 0.0
+        for hierarchy in hierarchies:
+            try:
+                key = (t,'activity hierarchy', str(hierarchy)) 
+                try:
+                    if ((cdtns) and (key in cdtns) and (cdtns[key][0]==0)):
+                        continue
+                except KeyError:
+                    pass
+                results_pct+= out[hierarchy][t]["results_pct"]
+                results_num+= out[hierarchy][t]["results_num"]
+                results_weighted_pct_average_numerator += (out[hierarchy][t]["results_pct"]*out[hierarchy][t]["results_num"])
+                okhierarchy = hierarchy
+            except KeyError:
+                pass
+
+        simple_out[t] = {
+            "indicator": out[okhierarchy][t]['indicator'],
+            "test": {
+                "id": out[okhierarchy][t]['test']["id"],
+                "description": out[okhierarchy][t]['test']["description"],
+                "test_group": out[okhierarchy][t]['test']["test_group"]
+                },
+            "results_pct": (results_weighted_pct_average_numerator/results_num),
+            "results_num": results_num
+            }
+
+    return simple_out
 
 def _agr_results(data, conditions=None, mode=None):
     """
@@ -201,44 +238,6 @@ def _agr_results(data, conditions=None, mode=None):
                 if (out[h][t] == {}): del out[h][t]
             except KeyError:
                 pass
-
-    def publisher_simple(out, cdtns):
-        simple_out = {}
-        hierarchies = set(out)
-        tests = set()
-        for h in hierarchies:
-            tests.update(set(out[h]))
-        for t in tests: 
-            results_pct = 0.0
-            results_num = 0.0
-            results_weighted_pct_average_numerator = 0.0
-            for hierarchy in hierarchies:
-                try:
-                    key = (t,'activity hierarchy', str(hierarchy)) 
-                    try:
-                        if ((cdtns) and (key in cdtns) and (cdtns[key][0]==0)):
-                            continue
-                    except KeyError:
-                        pass
-                    results_pct+= out[hierarchy][t]["results_pct"]
-                    results_num+= out[hierarchy][t]["results_num"]
-                    results_weighted_pct_average_numerator += (out[hierarchy][t]["results_pct"]*out[hierarchy][t]["results_num"])
-                    okhierarchy = hierarchy
-                except KeyError:
-                    pass
-
-            simple_out[t] = {
-                    "indicator": out[okhierarchy][t]['indicator'],
-                    "test": {
-                        "id": out[okhierarchy][t]['test']["id"],
-                        "description": out[okhierarchy][t]['test']["description"],
-                        "test_group": out[okhierarchy][t]['test']["test_group"]
-                        },
-                    "results_pct": (results_weighted_pct_average_numerator/results_num),
-                    "results_num": results_num
-                    }
-
-        return simple_out
 
     if mode not in ["publisher_simple", "publisher_indicators"]:
         return out
