@@ -70,14 +70,12 @@ def _aggregate_percentages(data, dims):
                     continue
                 percentage = int((float(success)/(fail+success)) * 100)
 
-                data = {}
                 data = {
-                    "test_id": t,
                     "percentage_passed": percentage,
                     "total_results": fail+success,
-                    "hierarchy": h,
-                    "package_id": p
-                }
+                    }
+                for i, dim in enumerate(dim_names):
+                    data[dim] = dimensions[i]
                 out.append(data)
     return out
 
