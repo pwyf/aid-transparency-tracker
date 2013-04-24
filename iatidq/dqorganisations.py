@@ -9,7 +9,6 @@
 
 from iatidq import db
 
-from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 
 import aggregation
