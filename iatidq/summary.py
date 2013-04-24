@@ -221,12 +221,13 @@ def _agr_results(data, conditions=None, mode=None):
             "result_hierarchy": data[4]
             }
 
+    if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
+        summary = sum_for_publishers
+    else:
+        summary = sum_default
+
     for h in hierarchies:
         for t in tests:
-            if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
-                summary = sum_for_publishers
-            else:
-                summary = sum_default
 
             tdata = summary(h, t)
 
