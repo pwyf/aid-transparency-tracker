@@ -81,9 +81,9 @@ def _aggregate_percentages(data, dims):
             data[dim] = dimensions[i]
         return data
 
-    for dimensions in itertools.product(packages, tests, hierarchies):
-        print >>sys.stderr, dimensions
-        data = make_data(dimensions)
+    for vector in itertools.product(packages, tests, hierarchies):
+        print >>sys.stderr, vector
+        data = make_data(vector)
         out.append(data)
 
     out = filter(lambda i: i is not None, out)
