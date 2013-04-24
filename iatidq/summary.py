@@ -7,6 +7,8 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
+import itertools
+
 def pkg_test_percentages(data):
     # Returns results data - % for each hierarchy for each test, for a specific package in a specific runtime.
     # Remove in future and revert to AggregateResult data.
