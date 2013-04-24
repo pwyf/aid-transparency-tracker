@@ -47,7 +47,6 @@ def _aggregate_percentages(data, dims):
         )
 
     d = dict(map(breakdown, data))
-    out = []
 
     def calc_percentages(dimensions):
         fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
