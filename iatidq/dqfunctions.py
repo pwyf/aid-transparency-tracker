@@ -49,7 +49,9 @@ def _aggregate_percentages(data, dims):
 
     breakdown = lambda x: (
         (x[FIELD_STATUS],
-         x[FIELD_PACKAGE], x[FIELD_TEST].id, x[FIELD_HIERARCHY]
+         dims_dict["package_id"](x),
+         dims_dict["test_id"](x),
+         dims_dict["hierarchy"](x)
          ),
         x[FIELD_RESULT]
         )
