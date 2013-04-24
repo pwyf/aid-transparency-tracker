@@ -10,6 +10,7 @@
 import json
 import urllib2
 import sys
+import itertools
 
 from iatidq import db
 import models
@@ -80,13 +81,10 @@ def _aggregate_percentages(data, dims):
             data[dim] = dimensions[i]
         return data
 
-    for p in packages:
-        for t in tests:
-            for h in hierarchies:
-                dimensions = (p, t, h)
-                print >>sys.stderr, dimensions
-                data = make_data(dimensions)
-                out.append(data)
+    for dimensions in itertools.product(packages, tests, hierarchies):
+        print >>sys.stderr, dimensions
+        data = make_data(dimensions)
+        out.append(data)
 
     out = filter(lambda i: i is not None, out)
     return out
