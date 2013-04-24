@@ -11,8 +11,9 @@ import itertools
 
 def reform_dict(d):
     def inner(k1):
+        matches_first = lambda i: i[0] == k1
         return dict([ (k2, d[(k1, k2)]) for k2 in 
-                      map(lambda i: i[1], filter(lambda i: i[0] == k1, d.keys())) ])
+                      map(lambda i: i[1], filter(matches_first, d.keys())) ])
 
     return dict([ (k1, inner(k1))
                    for k1 in set( k1 for k1, k2 in d.keys() ) ])
