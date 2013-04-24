@@ -9,7 +9,6 @@
 
 import json
 import urllib2
-import sys
 import itertools
 
 from iatidq import db
