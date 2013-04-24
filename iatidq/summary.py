@@ -168,11 +168,7 @@ def _agr_results(data, conditions=None, mode=None):
 
     out = {}
 
-
-    for h in hierarchies:
-        for t in tests:
-            tdata = {}
-            if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
+    def sum_for_publishers(h, t):
                 # aggregate data across multiple packages for a single publisher
 
                 # for each package, add percentage for each
@@ -190,6 +186,7 @@ def _agr_results(data, conditions=None, mode=None):
                         packages_in_hierarchy +=1
                     except KeyError:
                         pass
+                tdata = {}
                 if (total_activities>0):
                     
                     tdata = {
@@ -203,7 +200,9 @@ def _agr_results(data, conditions=None, mode=None):
                         "results_num": total_activities,
                         "result_hierarchy": total_activities
                         }
-            else:
+                return tdata
+
+    def sum_default(h, t):
                 # return data for this single package
                 data = d.get((h, t), None)
                 if data is not None:
@@ -219,7 +218,14 @@ def _agr_results(data, conditions=None, mode=None):
                         }
                 else:
                     tdata = None
+                return tdata
 
+    for h in hierarchies:
+        for t in tests:
+            if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
+                tdata = sum_for_publishers(h, t)
+            else:
+                tdata = sum_default(h, t)
             if h not in out:
                 out[h] = {}
 
