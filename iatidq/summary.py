@@ -148,7 +148,6 @@ def sum_for_publishers(packages, d, h, t):
     # for each package, add percentage for each
     total_pct = 0
     total_activities = 0
-    total_packages = len(packages)
 
     # need below to only include packages that are in this hierarchy
     packages_in_hierarchy = 0
