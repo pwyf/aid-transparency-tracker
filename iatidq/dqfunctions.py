@@ -16,14 +16,21 @@ import models
 RESULT_FAILURE = 0
 RESULT_SUCCESS = 1
 
+FIELD_TEST = 0
+FIELD_STATUS = 1
+FIELD_HIERARCHY = 2
+FIELD_RESULT = 3
+FIELD_PACKAGE = 4
+FIELD_ORGANISATION = 5
+
 def aggregate_percentages(data):
     # Aggregates results data for a specific runtime.
 
-    packages = set(map(lambda x: (x[4]), data))
-    hierarchies = set(map(lambda x: (x[2]), data))
-    tests = set(map(lambda x: (x[0].id), data))
+    packages = set(map(lambda x: (x[FIELD_PACKAGE]), data))
+    hierarchies = set(map(lambda x: (x[FIELD_HIERARCHY]), data))
+    tests = set(map(lambda x: (x[FIELD_TEST].id), data))
 
-    d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4]),(x[3])), data))
+    d = dict(map(lambda x: ((x[FIELD_TEST].id,x[FIELD_STATUS],x[FIELD_HIERARCHY],x[FIELD_PACKAGE]),(x[FIELD_RESULT])), data))
     out = []
     for p in packages:
         for t in tests:
@@ -51,12 +58,12 @@ def aggregate_percentages(data):
 def aggregate_percentages_org(data):
     # Aggregates results data for a specific runtime.
 
-    packages = set(map(lambda x: (x[4]), data))
-    hierarchies = set(map(lambda x: (x[2]), data))
-    tests = set(map(lambda x: (x[0].id), data))
-    organisations = set(map(lambda x: (x[5]), data))
+    packages = set(map(lambda x: (x[FIELD_PACKAGE]), data))
+    hierarchies = set(map(lambda x: (x[FIELD_HIERARCHY]), data))
+    tests = set(map(lambda x: (x[FIELD_TEST].id), data))
+    organisations = set(map(lambda x: (x[FIELD_ORGANISATION]), data))
 
-    d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4],x[5]),(x[3])), data))
+    d = dict(map(lambda x: ((x[FIELD_TEST].id,x[FIELD_STATUS],x[FIELD_HIERARCHY],x[FIELD_PACKAGE],x[FIELD_ORGANISATION]),(x[FIELD_RESULT])), data))
     out = []
     for p in packages:
         for t in tests:
