@@ -9,6 +9,7 @@
 
 import json
 import urllib2
+import sys
 
 from iatidq import db
 import models
@@ -62,24 +63,32 @@ def _aggregate_percentages(data, dims):
 
     d = dict(map(breakdown, data))
     out = []
+
+    def make_data(dimensions):
+        fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
+        success = d.get(prepend(RESULT_SUCCESS, dimensions),.0)
+
+        if 0 == fail + success:
+            return None
+        percentage = int((float(success)/(fail+success)) * 100)
+
+        data = {
+            "percentage_passed": percentage,
+            "total_results": fail+success,
+            }
+        for i, dim in enumerate(dim_names):
+            data[dim] = dimensions[i]
+        return data
+
     for p in packages:
         for t in tests:
             for h in hierarchies:
                 dimensions = (p, t, h)
-                fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
-                success = d.get(prepend(RESULT_SUCCESS, dimensions),.0)
-
-                if 0 == fail + success:
-                    continue
-                percentage = int((float(success)/(fail+success)) * 100)
-
-                data = {
-                    "percentage_passed": percentage,
-                    "total_results": fail+success,
-                    }
-                for i, dim in enumerate(dim_names):
-                    data[dim] = dimensions[i]
+                print >>sys.stderr, dimensions
+                data = make_data(dimensions)
                 out.append(data)
+
+    out = filter(lambda i: i is not None, out)
     return out
 
 def aggregate_percentages_org(data):
