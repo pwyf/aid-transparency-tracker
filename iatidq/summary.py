@@ -183,7 +183,7 @@ def sum_default(d, h, t):
         "result_hierarchy": data[4]
         }
 
-def summarise_results(data, conditions, mode, hierarchies, 
+def summarise_results(conditions, mode, hierarchies, 
                       tests, cdtns, indicators,
                       indicators_tests, packages, d, summary):
 
@@ -293,7 +293,7 @@ def _agr_results(data, conditions=None, mode=None):
 
         summary = lambda h, t: sum_default(d, h, t)
 
-    return summarise_results(data, conditions, mode, hierarchies, 
+    return summarise_results(conditions, mode, hierarchies, 
                              tests, cdtns, indicators,
                              indicators_tests, packages, d, summary)
 
