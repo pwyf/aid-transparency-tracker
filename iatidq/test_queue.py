@@ -115,7 +115,12 @@ def test_activity(runtime_id, package_id, result_identifier,
     is_activity_test = lambda t: t.test_level == test_level.ACTIVITY
     activity_tests = itertools.ifilter(is_activity_test, tests)
 
-    [ execute_and_record(test) for test in tests ]
+    [ execute_and_record(test) for test in activity_tests ]
+
+    is_transaction_test = lambda t: t.test_level == test_level.TRANSACTION
+    transaction_tests = itertools.ifilter(is_transaction_test, tests)
+
+    
 
     return "Success"
 
