@@ -7,7 +7,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 import iatidataquality
-import iatidataquality.aggregation
+import iatidq.aggregation
 
 import nose
 import nose.tools
@@ -33,7 +33,7 @@ def check_aggregation(config):
     with file('unittests/artefacts/output-%s.json' % suffix) as f:
         expected = f.read()
 
-    observed = iatidataquality.aggregation._agr_results(
+    observed = iatidq.aggregation._agr_results(
         data,
         conditions=None,
         mode=mode
