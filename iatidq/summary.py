@@ -164,6 +164,42 @@ def _agr_results(data, conditions=None, mode=None):
             except KeyError:
                 pass
 
+    def publisher_indicators(simple_out):
+        # get all tests which belong to a specific indicator
+        # average the results for all tests in that indicator
+        indicators_out = {}
+        for indicator, indicatordata in indicators:
+            indicators_out[indicator] = {}
+            indicator_test_data = []
+            results_pct = 0.0
+            results_num = 0.0
+            results_weighted_pct_average_numerator = 0.0
+            for test, testdata in simple_out.items():
+                try:
+                    testing = (indicator, test)
+                    if (testing in indicators_tests):
+                        results_pct+= simple_out[test]["results_pct"]
+                        results_num+= simple_out[test]["results_num"]
+                        results_weighted_pct_average_numerator += (simple_out[test]["results_pct"]*simple_out[test]["results_num"])
+                        oktest = test
+                        indicator_test_data.append(simple_out[test])
+                except KeyError:
+                    pass
+            indicators_out[indicator] = {
+                "indicator": {
+                    "id": indicator,
+                    "name": indicatordata[0],
+                    "description": indicatordata[1]
+                    },
+                "tests": indicator_test_data,
+                "results_pct": (results_weighted_pct_average_numerator/results_num),
+                "results_num": results_num
+                }
+        return indicators_out        
+        #for test, testdata in simple_out.items():
+        #    indicators_out[testdata["indicator"]["id"]] = testdata
+        #return indicators_out
+
     if mode not in ["publisher_simple", "publisher_indicators"]:
         return out
     else:
@@ -201,42 +237,6 @@ def _agr_results(data, conditions=None, mode=None):
                     "results_pct": (results_weighted_pct_average_numerator/results_num),
                     "results_num": results_num
                     }
-
-        def publisher_indicators(simple_out):
-            # get all tests which belong to a specific indicator
-            # average the results for all tests in that indicator
-            indicators_out = {}
-            for indicator, indicatordata in indicators:
-                indicators_out[indicator] = {}
-                indicator_test_data = []
-                results_pct = 0.0
-                results_num = 0.0
-                results_weighted_pct_average_numerator = 0.0
-                for test, testdata in simple_out.items():
-                    try:
-                        testing = (indicator, test)
-                        if (testing in indicators_tests):
-                            results_pct+= simple_out[test]["results_pct"]
-                            results_num+= simple_out[test]["results_num"]
-                            results_weighted_pct_average_numerator += (simple_out[test]["results_pct"]*simple_out[test]["results_num"])
-                            oktest = test
-                            indicator_test_data.append(simple_out[test])
-                    except KeyError:
-                        pass
-                indicators_out[indicator] = {
-                    "indicator": {
-                        "id": indicator,
-                        "name": indicatordata[0],
-                        "description": indicatordata[1]
-                    },
-                    "tests": indicator_test_data,
-                    "results_pct": (results_weighted_pct_average_numerator/results_num),
-                    "results_num": results_num
-                    }
-            return indicators_out        
-            #for test, testdata in simple_out.items():
-            #    indicators_out[testdata["indicator"]["id"]] = testdata
-            #return indicators_out
 
         if mode != "publisher_indicators":
             return simple_out
