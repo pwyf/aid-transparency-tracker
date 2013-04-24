@@ -37,11 +37,11 @@ def aggregate_percentages(data):
             for h in hierarchies:
                 fail    = d.get((t, RESULT_FAILURE, h, p), 0)
                 success = d.get((t, RESULT_SUCCESS, h, p),.0)
-                try:
-                    percentage = int((float(success)/(fail+success)) * 100)
-                except ZeroDivisionError:
-                    # Don't return data to DB if there are no results
+
+                if 0 == fail + success:
                     continue
+                percentage = int((float(success)/(fail+success)) * 100)
+
                 data = {}
                 data = {
                     "test_id": t,
@@ -69,11 +69,11 @@ def aggregate_percentages_org(data):
                 for o in organisations:
                     fail    = d.get((t, RESULT_FAILURE, h, p, o), 0)
                     success = d.get((t, RESULT_SUCCESS, h, p, o), 0)
-                    try:
-                        percentage = int((float(success)/(fail+success)) * 100)
-                    except ZeroDivisionError:
-                        # Don't return data to DB if there are no results
+
+                    if 0 == fail + success:
                         continue
+                    percentage = int((float(success)/(fail+success)) * 100)
+
                     data = {}
                     data = {
                         "test_id": t,
