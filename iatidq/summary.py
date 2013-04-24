@@ -7,6 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
+import operator
 import itertools
 
 def reform_dict(d):
