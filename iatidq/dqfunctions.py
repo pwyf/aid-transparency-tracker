@@ -47,11 +47,13 @@ def _aggregate_percentages(data, dims):
     hierarchies = setmap(dims_dict["hierarchy"])
     tests       = setmap(dims_dict["test_id"])
 
-    d = dict(map(lambda x: ((x[FIELD_STATUS],
+    breakdown = lambda x: ((x[FIELD_STATUS],
                              x[FIELD_PACKAGE],
                              x[FIELD_TEST].id,
                              x[FIELD_HIERARCHY]
-                             ),(x[FIELD_RESULT])), data))
+                             ),(x[FIELD_RESULT]))
+
+    d = dict(map(breakdown, data))
     out = []
     for p in packages:
         for t in tests:
