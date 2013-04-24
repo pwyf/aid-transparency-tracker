@@ -225,14 +225,14 @@ def _agr_results(data, conditions=None, mode=None):
                 tdata = sum_for_publishers(h, t)
             else:
                 tdata = sum_default(h, t)
+
             if h not in out:
                 out[h] = {}
-
             if t not in out[h]:
                 out[h][t] = {}
-
             if tdata:
                 out[h][t] = tdata
+
             if conditions:
                 key = (t,'activity hierarchy', str(h)) 
                 if key in cdtns:
