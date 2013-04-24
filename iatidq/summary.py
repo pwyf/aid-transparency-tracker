@@ -245,6 +245,14 @@ def _agr_results(data, conditions=None, mode=None):
     else:
         summary = sum_default
 
+    def add_condition(i):
+        h, t, tdata = i
+        if conditions:
+            key = (t, 'activity hierarchy', str(h))
+            if key in cdtns:
+                tdata["condition"] = cdtns[key]
+        return h, t, tdata
+
     for h, t, tdata in summaries(summary):
         if h not in out:
             out[h] = {}
@@ -252,11 +260,6 @@ def _agr_results(data, conditions=None, mode=None):
             out[h][t] = {}
         if tdata:
             out[h][t] = tdata
-
-        if conditions:
-            key = (t,'activity hierarchy', str(h)) 
-            if key in cdtns:
-                out[h][t]["condition"] = cdtns[key]
 
         try:
             if (out[h][t] == {}): del out[h][t]
