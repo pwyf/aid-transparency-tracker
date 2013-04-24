@@ -132,59 +132,60 @@ def publisher_simple(out, cdtns):
 
     return simple_out
 
+def sum_for_publishers(packages, d, h, t):
+    # aggregate data across multiple packages for a single publisher
+        
+    # for each package, add percentage for each
+    total_pct = 0
+    total_activities = 0
+    total_packages = len(packages)
+
+    # need below to only include packages that are in this hierarchy
+    packages_in_hierarchy = 0
+    for p in packages:
+        try:
+            ok_tdata = d[(h, t, p)]
+            total_pct += ok_tdata[2] #percentage
+            total_activities += ok_tdata[3] #total vals
+            packages_in_hierarchy +=1
+        except KeyError:
+            pass
+
+    if total_activities <= 0:
+        return {}
+            
+    return {
+        "indicator": ok_tdata[0],
+        "test": {
+            "id": ok_tdata[1].id,
+            "description": ok_tdata[1].description,
+            "test_group": ok_tdata[1].test_group
+            },
+        "results_pct": int(float(total_pct/packages_in_hierarchy)),
+        "results_num": total_activities,
+        "result_hierarchy": total_activities
+        }
+
+def sum_default(d, h, t):
+    # return data for this single package
+    data = d.get((h, t), None)
+    if data is None:
+        return None
+
+    return {
+        "test": {
+            "id": data[1].id,
+            "description": data[1].description,
+            "test_group": data[1].test_group
+            },
+        "results_pct": data[2],
+        "results_num": data[3],
+        "result_hierarchy": data[4]
+        }
+
 def summarise_results(data, conditions, mode, hierarchies, 
                       tests, cdtns, indicators,
-                      indicators_tests, packages, d, out):
-    def sum_for_publishers(h, t):
-        # aggregate data across multiple packages for a single publisher
-        
-        # for each package, add percentage for each
-        total_pct = 0
-        total_activities = 0
-        total_packages = len(packages)
-
-        # need below to only include packages that are in this hierarchy
-        packages_in_hierarchy = 0
-        for p in packages:
-            try:
-                ok_tdata = d[(h, t, p)]
-                total_pct += ok_tdata[2] #percentage
-                total_activities += ok_tdata[3] #total vals
-                packages_in_hierarchy +=1
-            except KeyError:
-                pass
-
-        if total_activities <= 0:
-            return {}
-            
-        return {
-            "indicator": ok_tdata[0],
-            "test": {
-                "id": ok_tdata[1].id,
-                "description": ok_tdata[1].description,
-                "test_group": ok_tdata[1].test_group
-                },
-            "results_pct": int(float(total_pct/packages_in_hierarchy)),
-            "results_num": total_activities,
-            "result_hierarchy": total_activities
-            }
-
-    def sum_default(h, t):
-        # return data for this single package
-        data = d.get((h, t), None)
-        if data is None:
-            return None
-
-        return {
-            "test": {
-                "id": data[1].id,
-                "description": data[1].description,
-                "test_group": data[1].test_group
-                },
-            "results_pct": data[2],
-            "results_num": data[3],
-            "result_hierarchy": data[4]
-            }
+                      indicators_tests, packages, d, out, summary):
 
     def summaries(summary_f):
         for h, t in itertools.product(hierarchies, tests):
@@ -198,10 +199,6 @@ def summarise_results(data, conditions, mode, hierarchies,
                 tdata["condition"] = cdtns[key]
         return h, t, tdata
 
-    if publisher_mode(mode):
-        summary = sum_for_publishers
-    else:
-        summary = sum_default
 
     summaries = (add_condition(i) for i in summaries(summary))
 
@@ -280,9 +277,19 @@ def _agr_results(data, conditions=None, mode=None):
 
     out = {}
 
+    def _sum_for_publishers(h, t):
+        return sum_for_publishers(packages, d, h, t)
+    def _sum_default(h, t):
+        return sum_default(d, t, t)
+
+    if publisher_mode(mode):
+        summary = _sum_for_publishers
+    else:
+        summary = _sum_default
+
     return summarise_results(data, conditions, mode, hierarchies, 
                              tests, cdtns, indicators,
-                             indicators_tests, packages, d, out)
+                             indicators_tests, packages, d, out, summary)
 
 def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):
