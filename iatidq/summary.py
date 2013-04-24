@@ -253,7 +253,9 @@ def _agr_results(data, conditions=None, mode=None):
                 tdata["condition"] = cdtns[key]
         return h, t, tdata
 
-    for h, t, tdata in summaries(summary):
+    summaries = (add_condition(i) for i in summaries(summary))
+
+    for h, t, tdata in summaries:
         if h not in out:
             out[h] = {}
         if t not in out[h]:
