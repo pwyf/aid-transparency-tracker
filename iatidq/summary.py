@@ -163,18 +163,17 @@ def sum_for_publishers(packages, d, h, t):
 
     if total_activities <= 0:
         return {}
-            
-    return {
-        "indicator": ok_tdata[0],
-        "test": {
-            "id": ok_tdata[1].id,
-            "description": ok_tdata[1].description,
-            "test_group": ok_tdata[1].test_group
-            },
-        "results_pct": int(float(total_pct/packages_in_hierarchy)),
-        "results_num": total_activities,
-        "result_hierarchy": total_activities
-        }
+         
+    tmp = make_summary(
+        ok_tdata[0],
+        ok_tdata[1].id,
+        ok_tdata[1].description,
+        ok_tdata[1].test_group,
+        int(float(total_pct/packages_in_hierarchy)),
+        total_activities
+        )
+    tmp["result_hierarchy"] = total_activities
+    return tmp
 
 def sum_default(d, h, t):
     # return data for this single package
