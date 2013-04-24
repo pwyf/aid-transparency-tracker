@@ -175,7 +175,7 @@ def _agr_results(data, conditions=None, mode=None):
                     (x.operation, x.description)
                     ), conditions))
     
-    if (mode=="publisher") or (mode=="publisher_simple") or (mode=="publisher_indicators"):
+    if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
         indicators = set(map(lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"])), data))
         indicators_tests = list(set(map(lambda x: (x[0]["id"], x[1].id), data)))
         packages = set(map(lambda x: (x[5]), data))
