@@ -163,7 +163,7 @@ def _agr_results(data, conditions=None, mode=None):
                 if (out[h][t] == {}): del out[h][t]
             except KeyError:
                 pass
-    if ((mode=="publisher_simple") or (mode=="publisher_indicators")):
+    if mode in ["publisher_simple", "publisher_indicators"]:
         simple_out = {}
         hierarchies = set(out)
         tests = set()
