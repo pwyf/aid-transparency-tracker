@@ -29,21 +29,18 @@ def prepend(prefix, tup):
     return tuple([prefix] + list(tup))
 
 def _aggregate_percentages(data, dims):
-    dims_dict = dict(dims)
-
     def setmap(lam):
         return set(map(lam, data))
-
-    dim_names = [ i[0] for i in dims ]
 
     def generate_dimension(dimension_name):
         return setmap(dims_dict[dimension_name])
 
-    dimension_lists = map(generate_dimension, dim_names)
-
     def lookups(x):
         return tuple([ dims_dict[i](x) for i in dim_names ])
 
+    dims_dict = dict(dims)
+    dim_names = [ i[0] for i in dims ]
+    dimension_lists = map(generate_dimension, dim_names)
     breakdown = lambda x: (
         prepend(x[FIELD_STATUS], lookups(x)),
         x[FIELD_RESULT]
