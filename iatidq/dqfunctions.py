@@ -43,9 +43,9 @@ def _aggregate_percentages(data, dims):
     def setmap(lam):
         return set(map(lam, data))
     
-    packages = setmap(dims_dict["package_id"])
+    packages    = setmap(dims_dict["package_id"])
     hierarchies = setmap(dims_dict["hierarchy"])
-    tests = setmap(dims_dict["test_id"])
+    tests       = setmap(dims_dict["test_id"])
 
     d = dict(map(lambda x: ((x[FIELD_STATUS],
                              x[FIELD_PACKAGE],
