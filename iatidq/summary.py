@@ -192,6 +192,13 @@ def _agr_results(data, conditions=None, mode=None):
 
     out = {}
 
+    return summarise_results(data, conditions, mode, hierarchies, 
+                             tests, cdtns, indicators,
+                             indicators_tests, packages, d, out)
+
+def summarise_results(data, conditions, mode, hierarchies, 
+                      tests, cdtns, indicators,
+                      indicators_tests, packages, d, out):
     def sum_for_publishers(h, t):
         # aggregate data across multiple packages for a single publisher
         
