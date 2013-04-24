@@ -28,7 +28,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, aggregation
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, summary
 
 from iatidq.models import *
 
@@ -77,7 +77,7 @@ def _publisher_detail(p_group):
     pconditions = {}
 
     db.session.commit()
-    return aggregation.agr_results(aggregate_results, 
+    return summary.agr_results(aggregate_results, 
                                    conditions=pconditions, 
                                    mode="publisher")
 
@@ -196,7 +196,7 @@ def publisher(id=None):
     #  organisation conditions.
     pconditions = {}
 
-    aggregate_results = aggregation.agr_results(aggregate_results, 
+    aggregate_results = summary.agr_results(aggregate_results, 
                                                 conditions=pconditions, 
                                                 mode="publisher_indicators")
     latest_runtime=1

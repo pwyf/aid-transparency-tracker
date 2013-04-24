@@ -28,7 +28,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, aggregation
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, summary
 
 from iatidq.models import *
 
@@ -147,7 +147,7 @@ def packages(package_name=None, runtime_id=None):
     if latest_runtime:
         aggregate_results = package_aggregation(package, latest_runtime)
 
-        aggregate_results = aggregation.agr_results(aggregate_results, 
+        aggregate_results = summary.agr_results(aggregate_results, 
                                                     pconditions)
     else:
         aggregate_results = None

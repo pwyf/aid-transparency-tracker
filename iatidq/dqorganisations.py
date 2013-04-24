@@ -11,7 +11,7 @@ from iatidq import db
 
 from sqlalchemy import func
 
-import aggregation
+import summary
 
 import models
 import csv
@@ -215,7 +215,7 @@ def _organisation_detail(organisation):
             ).all()
 
     db.session.commit()
-    return aggregation.agr_results(aggregate_results, 
+    return summary.agr_results(aggregate_results, 
                                    conditions=pconditions, 
                                    mode="publisher")
 
@@ -248,7 +248,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
     pconditions = models.OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
-    return aggregation.agr_results(aggregate_results, 
+    return summary.agr_results(aggregate_results, 
                                                 conditions=pconditions, 
                                                 mode="publisher_indicators")
 
