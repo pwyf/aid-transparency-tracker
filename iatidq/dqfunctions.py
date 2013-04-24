@@ -87,41 +87,14 @@ def aggregate_percentages(data):
 def aggregate_percentages_org(data):
     # Aggregates results data for a specific runtime.
 
-    packages = set(map(lambda x: (x[FIELD_PACKAGE]), data))
-    hierarchies = set(map(lambda x: (x[FIELD_HIERARCHY]), data))
-    tests = set(map(lambda x: (x[FIELD_TEST].id), data))
-    organisations = set(map(lambda x: (x[FIELD_ORGANISATION]), data))
+    dims = [
+        ("package_id", lambda x: x[FIELD_PACKAGE]),
+        ("test_id",    lambda x: x[FIELD_TEST].id),
+        ("hierarchy",  lambda x: x[FIELD_HIERARCHY]),
+        ("organisation_id", lambda x: x[FIELD_ORGANISATION])
+        ]
 
-    d = dict(map(lambda x: ((x[FIELD_STATUS],
-                             x[FIELD_PACKAGE],
-                             x[FIELD_TEST].id,
-                             x[FIELD_HIERARCHY],
-                             x[FIELD_ORGANISATION]
-                             ),(x[FIELD_RESULT])), data))
-    out = []
-    for p in packages:
-        for t in tests:
-            for h in hierarchies:
-                for o in organisations:
-                    dimensions = (p, t, h, o)
-                    fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
-                    success = d.get(prepend(RESULT_SUCCESS, dimensions), 0)
-
-                    if 0 == fail + success:
-                        continue
-                    percentage = int((float(success)/(fail+success)) * 100)
-
-                    data = {}
-                    data = {
-                        "test_id": t,
-                        "percentage_passed": percentage,
-                        "total_results": fail+success,
-                        "hierarchy": h,
-                        "package_id": p,
-                        "organisation_id": o
-                        }
-                    out.append(data)
-    return out
+    return _aggregate_percentages(data, dims)
 
 def add_test_status(package_id, status_id, commit=True):
     pstatus = models.PackageStatus()
