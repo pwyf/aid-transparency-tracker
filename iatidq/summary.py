@@ -265,16 +265,32 @@ def _agr_results(data, conditions=None, mode=None):
                     (x.test_id, x.condition, x.condition_value),
                     (x.operation, x.description)
                     ), conditions))
+
+    def setmap(lam):
+        return set(map(lam, data))
         
+    def dictmap(lam):
+        return dict(map(lam, data))
+
     if publisher_mode(mode):
         ind_f = lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"]))
-        indicators = set(map(ind_f, data))
-        indicators_tests = list(set(map(lambda x: (x[0]["id"], x[1].id), data)))
-        packages = set(map(lambda x: (x[5]), data))
-        d = dict(map(lambda x: ((x[4], x[1].id, x[5]),(x)), data))
+        indicators = setmap(ind_f)
+
+        ind_test_f = lambda x: (x[0]["id"], x[1].id)
+        indicators_tests = list(setmap(ind_test_f))
+
+        pkg_f = lambda x: x[5]
+        packages = setmap(pkg_f)
+
+        d_f = lambda x: ((x[4], x[1].id, x[5]),(x))
+        d = dictmap(d_f)
+
         summary = lambda h, t: sum_for_publishers(packages, d, h, t)
+
     else:
-        d = dict(map(lambda x: ((x[4], x[1].id),(x)), data))
+        d_f = lambda x: ((x[4], x[1].id),(x))
+        d = dictmap(d_f)
+
         summary = lambda h, t: sum_default(d, h, t)
 
     return summarise_results(data, conditions, mode, hierarchies, 
