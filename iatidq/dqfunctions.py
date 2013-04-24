@@ -49,10 +49,8 @@ def _aggregate_percentages(data, dims):
 
     def generate_dimension(dimension_name):
         return setmap(dims_dict[dimension_name])
-    
-    packages    = generate_dimension("package_id")
-    hierarchies = generate_dimension("hierarchy")
-    tests       = generate_dimension("test_id")
+
+    dimension_lists = map(generate_dimension, dim_names)
 
     def lookups(x):
         return tuple([ dims_dict[i](x) for i in dim_names ])
@@ -81,11 +79,9 @@ def _aggregate_percentages(data, dims):
             data[dim] = dimensions[i]
         return data
 
-    for vector in itertools.product(packages, tests, hierarchies):
-        data = make_data(vector)
-        out.append(data)
-
+    out = map(make_data, itertools.product(*dimension_lists))
     out = filter(lambda i: i is not None, out)
+
     return out
 
 def aggregate_percentages_org(data):
