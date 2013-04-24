@@ -94,6 +94,19 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     #    indicators_out[testdata["indicator"]["id"]] = testdata
     #return indicators_out
 
+def make_summary(indicator, test_id, test_description, test_group,
+                 results_pct, results_num):
+    return {
+        "indicator": indicator,
+        "test": {
+            "id": test_id,
+            "description": test_description,
+            "test_group": test_group
+            },
+        "results_pct": results_pct,
+        "results_num": results_num
+        }
+
 def publisher_simple(out, cdtns):
     simple_out = {}
     hierarchies = set(out)
@@ -119,17 +132,14 @@ def publisher_simple(out, cdtns):
             except KeyError:
                 pass
 
-        simple_out[t] = {
-            "indicator": out[okhierarchy][t]['indicator'],
-            "test": {
-                "id": out[okhierarchy][t]['test']["id"],
-                "description": out[okhierarchy][t]['test']["description"],
-                "test_group": out[okhierarchy][t]['test']["test_group"]
-                },
-            "results_pct": (results_weighted_pct_average_numerator/results_num),
-            "results_num": results_num
-            }
-
+        simple_out[t] = make_summary(
+            out[okhierarchy][t]['indicator'],
+            out[okhierarchy][t]['test']["id"],
+            out[okhierarchy][t]['test']["description"],
+            out[okhierarchy][t]['test']["test_group"]
+            (results_weighted_pct_average_numerator/results_num),
+            results_num
+            )
     return simple_out
 
 def sum_for_publishers(packages, d, h, t):
