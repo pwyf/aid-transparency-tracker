@@ -186,21 +186,21 @@ def _agr_results(data, conditions=None, mode=None):
                 packages_in_hierarchy +=1
             except KeyError:
                 pass
-        tdata = {}
-        if (total_activities>0):
+
+        if total_activities <= 0:
+            return {}
             
-            tdata = {
-                "indicator": ok_tdata[0],
-                "test": {
-                    "id": ok_tdata[1].id,
-                    "description": ok_tdata[1].description,
-                    "test_group": ok_tdata[1].test_group
-                    },
-                "results_pct": int(float(total_pct/packages_in_hierarchy)),
-                "results_num": total_activities,
-                "result_hierarchy": total_activities
-                }
-        return tdata
+        return {
+            "indicator": ok_tdata[0],
+            "test": {
+                "id": ok_tdata[1].id,
+                "description": ok_tdata[1].description,
+                "test_group": ok_tdata[1].test_group
+                },
+            "results_pct": int(float(total_pct/packages_in_hierarchy)),
+            "results_num": total_activities,
+            "result_hierarchy": total_activities
+            }
 
     def sum_default(h, t):
         # return data for this single package
