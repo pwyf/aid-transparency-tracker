@@ -185,7 +185,7 @@ def sum_default(d, h, t):
 
 def summarise_results(data, conditions, mode, hierarchies, 
                       tests, cdtns, indicators,
-                      indicators_tests, packages, d, out, summary):
+                      indicators_tests, packages, d, summary):
 
     def summaries(summary_f):
         for h, t in itertools.product(hierarchies, tests):
@@ -277,11 +277,9 @@ def _agr_results(data, conditions=None, mode=None):
         d = dict(map(lambda x: ((x[4], x[1].id),(x)), data))
         summary = lambda h, t: sum_default(d, h, t)
 
-    out = {}
-
     return summarise_results(data, conditions, mode, hierarchies, 
                              tests, cdtns, indicators,
-                             indicators_tests, packages, d, out, summary)
+                             indicators_tests, packages, d, summary)
 
 def agr_results(data, conditions=None, mode=None):
     def replace_first(tupl, newval):
