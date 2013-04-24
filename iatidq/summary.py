@@ -200,7 +200,7 @@ def _agr_results(data, conditions=None, mode=None):
                     "results_pct": (results_weighted_pct_average_numerator/results_num),
                     "results_num": results_num
                     }
-        if (mode=="publisher_indicators"):
+        if mode=="publisher_indicators":
             # get all tests which belong to a specific indicator
             # average the results for all tests in that indicator
             indicators_out = {}
