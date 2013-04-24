@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, dqfunctions, dqpackages
+from iatidq import db, aggregations, dqpackages
 import models
 from sqlalchemy import func
 
@@ -113,7 +113,7 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
                    models.Result.result_data
         ).all()
 
-    aresults = dqfunctions.aggregate_percentages(data)
+    aresults = aggregations.aggregate_percentages(data)
         
     for aresult in aresults:
         a = models.AggregateResult()
@@ -152,7 +152,7 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
                    models.Result.result_data
         ).all()
 
-    aresults = dqfunctions.aggregate_percentages_org(data)
+    aresults = aggregations.aggregate_percentages_org(data)
         
     for aresult in aresults:
         a = models.AggregateResult()
