@@ -171,7 +171,6 @@ def _agr_results(data, conditions=None, mode=None):
 
     for h in hierarchies:
         for t in tests:
-            all_pcts = []
             tdata = {}
             if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
                 # aggregate data across multiple packages for a single publisher
