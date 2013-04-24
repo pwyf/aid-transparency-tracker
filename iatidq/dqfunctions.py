@@ -18,7 +18,7 @@ def aggregate_percentages(data):
 
     packages = set(map(lambda x: (x[4]), data))
     hierarchies = set(map(lambda x: (x[2]), data))
-    tests = set(map(lambda x: (x[0].id, x[0].description, x[0].test_group), data))
+    tests = set(map(lambda x: (x[0].id,), data))
 
     d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4]),(x[3])), data))
     out = []
@@ -50,7 +50,7 @@ def aggregate_percentages_org(data):
 
     packages = set(map(lambda x: (x[4]), data))
     hierarchies = set(map(lambda x: (x[2]), data))
-    tests = set(map(lambda x: (x[0].id, x[0].description, x[0].test_group), data))
+    tests = set(map(lambda x: (x[0].id,), data))
     organisations = set(map(lambda x: (x[5]), data))
 
     d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4],x[5]),(x[3])), data))
