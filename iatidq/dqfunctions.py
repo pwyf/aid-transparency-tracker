@@ -52,7 +52,7 @@ def _aggregate_percentages(data, dims):
     d = dict(map(breakdown, data))
     out = []
 
-    def make_data(dimensions):
+    def calc_percentages(dimensions):
         fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
         success = d.get(prepend(RESULT_SUCCESS, dimensions),.0)
 
@@ -68,7 +68,7 @@ def _aggregate_percentages(data, dims):
             data[dim] = dimensions[i]
         return data
 
-    out = map(make_data, itertools.product(*dimension_lists))
+    out = map(calc_percentages, itertools.product(*dimension_lists))
     out = filter(lambda i: i is not None, out)
 
     return out
