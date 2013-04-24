@@ -163,6 +163,7 @@ def _agr_results(data, conditions=None, mode=None):
                 if (out[h][t] == {}): del out[h][t]
             except KeyError:
                 pass
+
     if mode not in ["publisher_simple", "publisher_indicators"]:
         return out
     else:
