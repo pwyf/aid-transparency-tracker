@@ -151,14 +151,16 @@ def sum_for_publishers(packages, d, h, t):
 
     # need below to only include packages that are in this hierarchy
     packages_in_hierarchy = 0
-    for p in packages:
-        try:
-            ok_tdata = d[(h, t, p)]
-            total_pct += ok_tdata[2] #percentage
-            total_activities += ok_tdata[3] #total vals
-            packages_in_hierarchy +=1
-        except KeyError:
-            pass
+
+    relevant = lambda p: (h, t, p) in d
+    relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
+
+    pct = lambda i: i[2]
+    activities = lambda i: i[3]
+
+    total_pct = reduce(operator.add, map(pct, relevant_data))
+    total_activities = reduce(operator.add, map(activities, relevant_data))
+    packages_in_hierarchy = len(relevant_data)
 
     if total_activities <= 0:
         return {}
@@ -183,7 +185,7 @@ def sum_default(d, h, t):
     tmp = make_summary(
         data[1].id,
         data[1].description,
-        data[1].test_group
+        data[1].test_group,
         data[2],
         data[3])
     tmp["result_hierarchy"] = data[4]
