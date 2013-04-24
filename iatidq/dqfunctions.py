@@ -18,16 +18,16 @@ def aggregate_percentages(data):
 
     packages = set(map(lambda x: (x[4]), data))
     hierarchies = set(map(lambda x: (x[2]), data))
-    tests = set(map(lambda x: (x[0].id,), data))
+    tests = set(map(lambda x: (x[0].id), data))
 
     d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4]),(x[3])), data))
     out = []
     for p in packages:
         for t in tests:
             for h in hierarchies:
-                try: fail = d[(t[0],0,h,p)]
+                try: fail = d[(t,0,h,p)]
                 except: fail = 0
-                try: success = d[(t[0],1,h,p)]
+                try: success = d[(t,1,h,p)]
                 except: success = 0
                 try:
                     percentage = int((float(success)/(fail+success)) * 100)
@@ -36,7 +36,7 @@ def aggregate_percentages(data):
                     continue
                 data = {}
                 data = {
-                    "test_id": t[0],
+                    "test_id": t,
                     "percentage_passed": percentage,
                     "total_results": fail+success,
                     "hierarchy": h,
@@ -50,7 +50,7 @@ def aggregate_percentages_org(data):
 
     packages = set(map(lambda x: (x[4]), data))
     hierarchies = set(map(lambda x: (x[2]), data))
-    tests = set(map(lambda x: (x[0].id,), data))
+    tests = set(map(lambda x: (x[0].id), data))
     organisations = set(map(lambda x: (x[5]), data))
 
     d = dict(map(lambda x: ((x[0].id,x[1],x[2],x[4],x[5]),(x[3])), data))
@@ -59,9 +59,9 @@ def aggregate_percentages_org(data):
         for t in tests:
             for h in hierarchies:
                 for o in organisations:
-                    try: fail = d[(t[0],0,h,p,o)]
+                    try: fail = d[(t,0,h,p,o)]
                     except: fail = 0
-                    try: success = d[(t[0],1,h,p,o)]
+                    try: success = d[(t,1,h,p,o)]
                     except: success = 0
                     try:
                         percentage = int((float(success)/(fail+success)) * 100)
@@ -70,7 +70,7 @@ def aggregate_percentages_org(data):
                         continue
                     data = {}
                     data = {
-                        "test_id": t[0],
+                        "test_id": t,
                         "percentage_passed": percentage,
                         "total_results": fail+success,
                         "hierarchy": h,
