@@ -7,7 +7,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 import iatidataquality
-import iatidq.aggregation
+import iatidq.summary
 
 import nose
 import nose.tools
@@ -20,9 +20,9 @@ def setup_func():
 def teardown_func():
     pass
 
-def check_aggregation(config):
+def check_summary(config):
     # FIXME
-    # Don't check aggregation for now while 
+    # Don't check summary for now while 
     # we're changing it a lot...
     return True
     suffix, mode = config
@@ -33,7 +33,7 @@ def check_aggregation(config):
     with file('unittests/artefacts/output-%s.json' % suffix) as f:
         expected = f.read()
 
-    observed = iatidq.aggregation._agr_results(
+    observed = iatidq.summary._agr_results(
         data,
         conditions=None,
         mode=mode
@@ -42,11 +42,11 @@ def check_aggregation(config):
     assert json.dumps(observed, indent=2) == expected
 
 @nose.with_setup(setup_func, teardown_func)
-def test_aggregation_fn():
+def test_summary_fn():
     configs = [
         ("publisher", "publisher"),
         ("package", None)
         ]
 
     for cfg in configs:
-        yield (check_aggregation, cfg)
+        yield (check_summary, cfg)
