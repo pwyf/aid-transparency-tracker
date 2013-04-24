@@ -240,11 +240,6 @@ def _agr_results(data, conditions=None, mode=None):
         for h, t in itertools.product(hierarchies, tests):
             yield h, t, summary_f(h, t)
 
-    if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
-        summary = sum_for_publishers
-    else:
-        summary = sum_default
-
     def add_condition(i):
         h, t, tdata = i
         if conditions:
@@ -252,6 +247,11 @@ def _agr_results(data, conditions=None, mode=None):
             if key in cdtns:
                 tdata["condition"] = cdtns[key]
         return h, t, tdata
+
+    if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
+        summary = sum_for_publishers
+    else:
+        summary = sum_default
 
     summaries = (add_condition(i) for i in summaries(summary))
 
