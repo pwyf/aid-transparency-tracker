@@ -29,9 +29,23 @@ def prepend(prefix, tup):
 def aggregate_percentages(data):
     # Aggregates results data for a specific runtime.
 
-    packages = set(map(lambda x: (x[FIELD_PACKAGE]), data))
-    hierarchies = set(map(lambda x: (x[FIELD_HIERARCHY]), data))
-    tests = set(map(lambda x: (x[FIELD_TEST].id), data))
+    dims = [
+        ("package_id", lambda x: x[FIELD_PACKAGE]),
+        ("test_id",    lambda x: x[FIELD_TEST].id),
+        ("hierarchy",  lambda x: x[FIELD_HIERARCHY])
+        ]
+
+    return _aggregate_percentages(data, dims)
+
+def _aggregate_percentages(data, dims):
+    dims_dict = dict(dims)
+
+    def setmap(lam):
+        return set(map(lam, data))
+    
+    packages = setmap(dims_dict["package_id"])
+    hierarchies = setmap(dims_dict["hierarchy"])
+    tests = setmap(dims_dict["test_id"])
 
     d = dict(map(lambda x: ((x[FIELD_STATUS],
                              x[FIELD_PACKAGE],
