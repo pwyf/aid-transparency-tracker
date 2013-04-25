@@ -150,7 +150,7 @@ def aggregate_results(options):
     iatidq.dqprocessing.aggregate_results(options.runtime_id, options.package_id)
 
 commands = {
-    "drop_all": drop_all,
+    "drop_db": drop_all,
     "init_db": init_db,
     "enroll_tests": enroll_tests,
     "clear_revisionid": clear_revisionid,
@@ -176,19 +176,11 @@ def main():
     p.add_option("--init-db", dest="init_db",
                   action="store_true",
                   help="Initialise DB")
-    p.add_option("--drop-db", dest="drop_all",
+    p.add_option("--drop-db", dest="drop_db",
                   action="store_true",
                   help="Delete DB")
     p.add_option("--enroll-tests", dest="enroll_tests",
                  help="Enroll a CSV file of tests")
-    p.add_option("--level", dest="level",
-                 type="int",
-                 default=1,
-                 help="Test level (e.g., 1 == Activity)")
-    p.add_option("--minimal-pkgs", dest="minimal_pkgs",
-                 action="store_true",
-                 default=False,
-                 help="Operate on a minimal set of packages")
     p.add_option("--activate-packages", dest="activate_packages",
                  action="store_true",
                  default=False,
@@ -205,17 +197,11 @@ def main():
                  action="store_true",
                  default=False,
                  help="Set a package to be tested (with --package)")
-    p.add_option("--package", dest="package_name",
-                 help="Set name of package to be tested")
-    p.add_option("--filename", dest="filename",
-                 help="Set filename of data to test")
-    p.add_option("--local_folder", dest="local_folder",
-                 help="Set local folder where data to test is stored")
-    p.add_option("--import_indicators", dest="import_indicators",
+    p.add_option("--import-indicators", dest="import_indicators",
                  action="store_true",
                  default=False,
                  help="Import indicators. Will try to assign indicators to existing tests.")
-    p.add_option("--import_organisations", dest="import_organisations",
+    p.add_option("--import-organisations", dest="import_organisations",
                  action="store_true",
                  default=False,
                  help="Import organisations. Will try to create and assign organisations to existing packages.")
@@ -238,6 +224,20 @@ def main():
     p.add_option("--package-id", dest="package_id",
                  type=int,
                  help="Package id (integer)")
+    p.add_option("--level", dest="level",
+                 type="int",
+                 default=1,
+                 help="Test level (e.g., 1 == Activity)")
+    p.add_option("--minimal-pkgs", dest="minimal_pkgs",
+                 action="store_true",
+                 default=False,
+                 help="Operate on a minimal set of packages")
+    p.add_option("--package", dest="package_name",
+                 help="Set name of package to be tested")
+    p.add_option("--filename", dest="filename",
+                 help="Set filename of data to test")
+    p.add_option("--local-folder", dest="local_folder",
+                 help="Set local folder where data to test is stored")
 
     options, args = p.parse_args()
 
