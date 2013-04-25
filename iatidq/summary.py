@@ -24,6 +24,8 @@ def publisher_mode(mode):
         return True
     return False
 
+
+## FIXME: the following function appears not to be used by anything
 def pkg_test_percentages(data):
     # Returns results data - % for each hierarchy for each test, for a specific package in a specific runtime.
     # Remove in future and revert to AggregateResult data.
