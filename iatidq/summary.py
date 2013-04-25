@@ -137,7 +137,7 @@ def publisher_simple(out, cdtns):
         tmp = make_summary(
             out[okhierarchy][t]['test']["id"],
             out[okhierarchy][t]['test']["description"],
-            out[okhierarchy][t]['test']["test_group"]
+            out[okhierarchy][t]['test']["test_group"],
             (results_weighted_pct_average_numerator/results_num),
             results_num
             )
