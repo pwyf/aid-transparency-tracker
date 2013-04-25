@@ -9,8 +9,16 @@
 
 import iatidq.models as models
 import foxpath
+import re
+import itertools
 
 from iatidq import db
+
+comment = re.compile('#')
+blank = re.compile('^$')
+
+def ignore_line(line):
+    return bool(comment.match(line) or blank.match(line))
 
 def get_active_tests():
     for test in models.Test.query.filter(models.Test.active == True).all():
@@ -18,6 +26,9 @@ def get_active_tests():
 
 def test_functions():
     try:
-        return foxpath.generate_test_functions(get_active_tests())
+        tests = get_active_tests()
+        tests = itertools.ifilter(lambda test: test.test_level == 1, tests)
+        tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
+        return foxpath.generate_test_functions(tests)
     finally:
         db.session.commit()
