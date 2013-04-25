@@ -70,10 +70,6 @@ def test_activity(runtime_id, package_id, result_identifier,
                   result_hierarchy, data, test_functions, codelists,
                   organisation_id):
 
-    xmldata = etree.fromstring(data)
-
-    tests = models.Test.query.filter(models.Test.active == True).all()
-
     def add_result(test_id, the_result):
         newresult = models.Result()
         newresult.runtime_id = runtime_id
@@ -88,7 +84,7 @@ def test_activity(runtime_id, package_id, result_identifier,
     # | test_result == True  -> 1
     # | test_result == False -> 0
     # | exception            -> 2 (exceptions aren't counted against publishers)
-    def execute_test(test_id, binary_test):
+    def execute_test(xmldata, test_id, binary_test):
         try:
             if binary_test:
                 data = {
@@ -101,22 +97,26 @@ def test_activity(runtime_id, package_id, result_identifier,
         except:
             return 2
 
-    def execute_and_record(test):
-        the_result = execute_test(test.id, binary_test(test.name))
+    def execute_and_record(xmldata, test):
+        the_result = execute_test(xmldata, test.id, binary_test(test.name))
         add_result(test.id, the_result)
 
-    test_exists = lambda t: t.id in test_functions
-    tests = itertools.ifilter(test_exists, tests)
+    def tests_by_level(level):
+        tests = models.Test.query.filter(models.Test.active == True,
+                                         models.Test.test_level == level).all()
 
-    is_activity_test = lambda t: t.test_level == test_level.ACTIVITY
-    activity_tests = itertools.ifilter(is_activity_test, tests)
+        test_exists = lambda t: t.id in test_functions
+        return itertools.ifilter(test_exists, tests)
 
-    [ execute_and_record(test) for test in activity_tests ]
+    xmldata = etree.fromstring(data)
+    activity_tests = tests_by_level(test_level.ACTIVITY)
 
-    is_transaction_test = lambda t: t.test_level == test_level.TRANSACTION
-    transaction_tests = itertools.ifilter(is_transaction_test, tests)
+    [ execute_and_record(xmldata, test) for test in activity_tests ]
 
-    
+    transaction_tests = tests_by_level(test_level.TRANSACTION)
+    #print xmldata
+    for data in xmldata.xpath("//transaction"):
+        [ execute_and_record(data, test) for test in transaction_tests ]
 
     return "Success"
 
