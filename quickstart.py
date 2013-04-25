@@ -181,14 +181,6 @@ def main():
                   help="Delete DB")
     p.add_option("--enroll-tests", dest="enroll_tests",
                  help="Enroll a CSV file of tests")
-    p.add_option("--level", dest="level",
-                 type="int",
-                 default=1,
-                 help="Test level (e.g., 1 == Activity)")
-    p.add_option("--minimal-pkgs", dest="minimal_pkgs",
-                 action="store_true",
-                 default=False,
-                 help="Operate on a minimal set of packages")
     p.add_option("--activate-packages", dest="activate_packages",
                  action="store_true",
                  default=False,
@@ -238,6 +230,14 @@ def main():
     p.add_option("--package-id", dest="package_id",
                  type=int,
                  help="Package id (integer)")
+    p.add_option("--level", dest="level",
+                 type="int",
+                 default=1,
+                 help="Test level (e.g., 1 == Activity)")
+    p.add_option("--minimal-pkgs", dest="minimal_pkgs",
+                 action="store_true",
+                 default=False,
+                 help="Operate on a minimal set of packages")
 
     options, args = p.parse_args()
 
