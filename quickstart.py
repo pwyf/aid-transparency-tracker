@@ -65,7 +65,7 @@ def init_db(options):
     iatidq.dqimporttests.hardcodedTests()
 
 def enroll_tests(options):
-    filename = options.enroll_tests.decode()
+    filename = options.filename.decode()
     result = iatidq.dqimporttests.importTestsFromFile(
         filename=filename, 
         level=options.level)
@@ -168,18 +168,24 @@ commands = {
 
 def main():
     p = optparse.OptionParser()
-    p.add_option("--refresh", dest="refresh", action="store_true",
+    p.add_option("--refresh", dest="refresh", 
+                 action="store_true",
+                 default=False,
                  help="Refresh")
     p.add_option("--clear-revisionid", dest="clear_revisionid", 
                  action="store_true",
+                 default=False,
                  help="Clear CKAN revision ids")
     p.add_option("--init-db", dest="init_db",
                   action="store_true",
                   help="Initialise DB")
     p.add_option("--drop-db", dest="drop_db",
-                  action="store_true",
-                  help="Delete DB")
+                 action="store_true",
+                 default=False,
+                 help="Delete DB")
     p.add_option("--enroll-tests", dest="enroll_tests",
+                 action="store_true",
+                 default=False,
                  help="Enroll a CSV file of tests")
     p.add_option("--activate-packages", dest="activate_packages",
                  action="store_true",
