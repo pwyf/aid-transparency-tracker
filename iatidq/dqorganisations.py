@@ -55,12 +55,24 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
                         ).all()
 
             if not packages:
-                continue
+                pass
             else:
                 for package in packages:
                     organisationpackage = addOrganisationPackage({
                                 "organisation_id" : organisation.id,
                                 "package_id" : package.id,
+                                "condition": condition
+                            })
+
+            packagegroups = models.PackageGroup.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
+                        ).all()
+            if not packagegroups:
+                continue
+            else:
+                for packagegroup in packagegroups:
+                    organisationpackagegroup = addOrganisationPackageGroup({
+                                "organisation_id" : organisation.id,
+                                "packagegroup_id" : packagegroup.id,
                                 "condition": condition
                             })
                 
