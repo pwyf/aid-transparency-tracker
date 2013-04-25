@@ -197,12 +197,6 @@ def main():
                  action="store_true",
                  default=False,
                  help="Set a package to be tested (with --package)")
-    p.add_option("--package", dest="package_name",
-                 help="Set name of package to be tested")
-    p.add_option("--filename", dest="filename",
-                 help="Set filename of data to test")
-    p.add_option("--local-folder", dest="local_folder",
-                 help="Set local folder where data to test is stored")
     p.add_option("--import-indicators", dest="import_indicators",
                  action="store_true",
                  default=False,
@@ -238,6 +232,12 @@ def main():
                  action="store_true",
                  default=False,
                  help="Operate on a minimal set of packages")
+    p.add_option("--package", dest="package_name",
+                 help="Set name of package to be tested")
+    p.add_option("--filename", dest="filename",
+                 help="Set filename of data to test")
+    p.add_option("--local-folder", dest="local_folder",
+                 help="Set local folder where data to test is stored")
 
     options, args = p.parse_args()
 
