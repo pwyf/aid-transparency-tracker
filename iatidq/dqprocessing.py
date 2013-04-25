@@ -135,9 +135,6 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
     status = "Updating"
     result_ids = get_results(runtime, package_id, agg_type)
 
-    print "org"
-    print agg_type
-
     data = db.session.query(models.Test,
                 models.Result.result_data,
                 models.Result.result_hierarchy,
