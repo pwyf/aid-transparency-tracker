@@ -122,24 +122,24 @@ basic,Basic tests,activity-date[@type='start-planned']/@iso-date or transaction-
 ,,result/indicator/period/period-start exists?,"Result, indicator, period covered, end",1
 ,,result/indicator/period/target exists?,"Result, indicator, period covered, target result",1
 ,,result/indicator/period/target/@value exists?,"Result, indicator, period covered, target result value",1
-,,transaction exists?,Financial transactions related to an activity,0
-,,transaction/@ref exists?,Financial transactions related to an activity - reference,0
-,,transaction/aid-type exists?,Transaction aid type,0
-,,transaction/provider-org exists?,"Transaction, provider org",0
-,,transaction/provider-org/@provider-activity-id exists?,"Transaction, provider org's IATI activity ID",0
-,,transaction/provider-org/@ref exists?,"Transaction, provider org's IATI organisation ID",0
-,,transaction/receiver-org exists?,"Transaction, receiver org",0
-,,transaction/receiver-org/@receiver-activity-id exists?,"Transaction, receiver org's IATI activity ID",0
-,,transaction/receiver-org/@ref exists?,"Transaction, received org's IATI organisation ID",0
-,,transaction/disbursement-channel exists?,"Transaction, disbursement channel",0
-,,transaction/value exists?,"Transaction, value",0
-,,transaction/finance-type exists?,"Transaction, finance type",0
-,,transaction/tied-status exists?,"Transaction, tied aid status",0
-,,transaction/transaction-date exists?,"Transaction, transaction date",0
-,,transaction/transaction-date/@iso-date exists?,"Transaction, transaction date iso-date",0
-,,transaction/transaction-date/@iso-date is a date?,"Transaction, transaction date iso-date is a date",0
-,,transaction/transaction-type exists?,"Transaction, transaction type",0
-,,transaction/description exists?,"Transaction, description",0
+,,transaction exists?,Financial transactions related to an activity,1
+,,@ref exists?,Financial transactions related to an activity - reference,0
+,,aid-type exists?,Transaction aid type,0
+,,provider-org exists?,"Transaction, provider org",0
+,,provider-org/@provider-activity-id exists?,"Transaction, provider org's IATI activity ID",0
+,,provider-org/@ref exists?,"Transaction, provider org's IATI organisation ID",0
+,,receiver-org exists?,"Transaction, receiver org",0
+,,receiver-org/@receiver-activity-id exists?,"Transaction, receiver org's IATI activity ID",0
+,,receiver-org/@ref exists?,"Transaction, received org's IATI organisation ID",0
+,,disbursement-channel exists?,"Transaction, disbursement channel",0
+,,value exists?,"Transaction, value",0
+,,finance-type exists?,"Transaction, finance type",0
+,,tied-status exists?,"Transaction, tied aid status",0
+,,transaction-date exists?,"Transaction, transaction date",0
+,,transaction-date/@iso-date exists?,"Transaction, transaction date iso-date",0
+,,transaction-date/@iso-date is a date?,"Transaction, transaction date iso-date is a date",0
+,,transaction-type exists?,"Transaction, transaction type",0
+,,description exists?,"Transaction, description",0
 ,,related-activity exists?,Related activity,1
 ,,related-activity/@type exists?,Related activity type,1
 ,,related-activity/@type is on list RelatedActivityType?,Related activity type is on related activity type codelist,1
