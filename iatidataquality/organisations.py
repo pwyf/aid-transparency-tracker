@@ -44,6 +44,7 @@ def organisations(organisation_code=None):
     template_args = {}
     if organisation_code is not None:
         organisation = dqorganisations.organisations(organisation_code)
+        packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
         try:
             summary_data = _organisation_indicators_summary(organisation, 
@@ -52,7 +53,8 @@ def organisations(organisation_code=None):
             summary_data = None
 
         template_args = dict(organisation=organisation, 
-                             summary_data=summary_data)
+                             summary_data=summary_data,
+                             packagegroups=packagegroups)
 
         return render_template("organisation.html", **template_args)
     else:
