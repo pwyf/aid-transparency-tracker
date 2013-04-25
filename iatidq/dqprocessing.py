@@ -75,13 +75,16 @@ def get_results(runtime, package_id, agg_type):
 
     result_identifiers = set([r.result_identifier for r in results])
 
-    results = models.Result.query.filter(
-        models.Result.runtime_id == runtime
-        ).filter(
-        models.Result.package_id == package_id
-        ).filter(
-        models.Result.result_identifier.in_(result_identifiers)
-        ).all()
+    if result_identifiers:
+        results = models.Result.query.filter(
+            models.Result.runtime_id == runtime
+            ).filter(
+            models.Result.package_id == package_id
+            ).filter(
+            models.Result.result_identifier.in_(result_identifiers)
+            ).all()
+    else:
+        results = []
 
     results2 = models.Result.query.filter(
         models.Result.runtime_id == runtime
