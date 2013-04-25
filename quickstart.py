@@ -183,6 +183,10 @@ def main():
                  action="store_true",
                  default=False,
                  help="Operate on a minimal set of packages")
+    p.add_option("--activate-packages", dest="activate_packages",
+                 action="store_true",
+                 default=False,
+                 help="Mark all packages as active")
     p.add_option("--download", dest="download",
                  action="store_true",
                  default=False,
