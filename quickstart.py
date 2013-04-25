@@ -189,7 +189,7 @@ def main():
                  action="store_true",
                  default=False,
                  help="Download packages")
-    p.add_option("--import_codelists", dest="import_codelists",
+    p.add_option("--import-codelists", dest="import_codelists",
                  action="store_true",
                  default=False,
                  help="Import codelists")
