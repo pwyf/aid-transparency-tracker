@@ -167,6 +167,8 @@ def check_file(test_functions, codelists, file_name,
                                 codelists, organisation_id)
             db.session.commit()
 
+        print "testing ..."
+
         assert len(organisations) > 0
         for organisation in organisations:
             org_activities = data.xpath(organisation['activities_xpath'])
@@ -175,12 +177,16 @@ def check_file(test_functions, codelists, file_name,
             [ run_test_activity(org_id, activity) 
               for activity in org_activities ]
 
+        print file_name
+
         print "Aggregating results..."
         dqprocessing.aggregate_results(runtime_id, package_id)
         print "Finished aggregating results"
         db.session.commit()    
+        print "committed to db"
 
         dqfunctions.add_test_status(package_id, 3, commit=True)
+        print "added test status"
         return True
     except Exception, e:
         print "Exception in check_file ", e

@@ -43,8 +43,9 @@ def aggregate_results(runtime, package_id):
     if len(agg_types) == 0:
         return {"status": status, "data": []}
 
+    print "getting org ids"
     organisation_ids = get_organisation_ids()
-
+    print organisation_ids
     aresults = []
 
     for agg_type in agg_types:
@@ -99,8 +100,9 @@ def get_results(runtime, package_id, agg_type):
 
 def aggregate_results_single_org(runtime, package_id, agg_type):
     status = "Updating"
+    print "getting result ids"
     result_ids = get_results(runtime, package_id, agg_type)
-
+    print "getting data"
     data = db.session.query(models.Test,
                 models.Result.result_data,
                 models.Result.result_hierarchy,
@@ -116,8 +118,13 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
                    models.Result.result_data
         ).all()
 
+    print "got data, len:"
+    print len(data)
+
+    print "calc percentages"
     aresults = aggregations.aggregate_percentages(data)
-        
+    print "finished calculating percentages"
+
     for aresult in aresults:
         a = models.AggregateResult()
         a.runtime_id = runtime

@@ -28,6 +28,7 @@ import iatidq.dqindicators
 import iatidq.dqorganisations
 import iatidq.dqaggregationtypes
 import iatidq.dqtests
+import iatidq.dqprocessing
 import iatidq.test_level as test_level
 import optparse
 import sys
@@ -143,6 +144,10 @@ def enqueue_test(options):
 
     iatidq.dqruntests.enqueue_package_for_test(options.filename,
                                                options.package_name)
+def aggregate_results(options):
+    assert options.runtime_id
+    assert options.package_id
+    iatidq.dqprocessing.aggregate_results(options.runtime_id, options.package_id)
 
 commands = {
     "drop_all": drop_all,
@@ -157,7 +162,8 @@ commands = {
     "enqueue_test": enqueue_test,
     "refresh": refresh,
     "activate_packages": activate_packages,
-    "create_aggregation_types": create_aggregation_types
+    "create_aggregation_types": create_aggregation_types,
+    "aggregate_results": aggregate_results
 }
 
 def main():
@@ -222,6 +228,16 @@ def main():
                  default=False,
                  help="""Quick setup. Will init db, add tests, add codelists, 
                       add indicators, refresh package data from Registry.""")
+    p.add_option("--aggregate-results", dest="aggregate_results",
+                 action="store_true",
+                 default=False,
+                 help="Trigger result aggregation")
+    p.add_option("--runtime-id", dest="runtime_id",
+                 type=int,
+                 help="Runtime id (integer)")
+    p.add_option("--package-id", dest="package_id",
+                 type=int,
+                 help="Package id (integer)")
 
     options, args = p.parse_args()
 
