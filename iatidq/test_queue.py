@@ -35,7 +35,10 @@ def get_organisations_for_testing(package_id):
         for packageorganisation in packageorganisations:
             # add organisations to be tested;
             organisation_id = packageorganisation.Organisation.id
-            condition = packageorganisation.OrganisationPackage.condition.strip()
+            condition = packageorganisation.OrganisationPackage.condition
+            if condition is None:
+                continue
+            condition = condition.strip()
 
             organisations.append({
             'organisation_id': organisation_id,
@@ -48,21 +51,17 @@ def get_organisations_for_testing(package_id):
         conditions_str = " or ".join(conditions)
         remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
 
-    # If conditions have been specified, then
-    # run the tests again without an organisation
-    # But exclude those activities that have already
-    # been included above.
+        if conditions_specified:
+            organisations.append({
+                    'organisation_id': None,
+                    'activities_xpath': remainder_xpath
+                    })
+    if len(organisations) == 0:
+        organisations.append({
+                'organisation_id': None,
+                'activities_xpath': "//iati-activity"
+                })
 
-    if (not packageorganisations): 
-        organisations.append({
-        'organisation_id': None,
-        'activities_xpath': "//iati-activity"
-        })
-    elif (conditions_specified is True):
-        organisations.append({
-        'organisation_id': None,
-        'activities_xpath': remainder_xpath
-        })
     return organisations
 
 def binary_test(test_name):
