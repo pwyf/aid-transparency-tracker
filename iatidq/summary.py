@@ -24,43 +24,6 @@ def publisher_mode(mode):
         return True
     return False
 
-
-## FIXME: the following function appears not to be used by anything
-def pkg_test_percentages(data):
-    # Returns results data - % for each hierarchy for each test, for a specific package in a specific runtime.
-    # Remove in future and revert to AggregateResult data.
-
-    hierarchies = set(map(lambda x: (x[2]), data))
-    tests = set(map(lambda x: (x[0].id, x[0].description, x[0].test_group), data))
-    
-    d = dict(map(lambda x: ((x[0].id,x[1],x[2]),(x[3])), data))
-    out = {}
-    for t in tests:
-        for h in hierarchies:
-            try: fail = d[(t[0],0,h)]
-            except: fail = 0
-            try: success = d[(t[0],1,h)]
-            except: success = 0
-            try:
-                percentage = int((float(success)/(fail+success)) * 100)
-            except ZeroDivisionError:
-                percentage = 0
-            data = {}
-            data = {
-                "id": t[0],
-                "name": t[1],
-                "percentage": percentage,
-                "total_results": fail+success,
-                "group": t[2]
-            }
-            try: out[h]
-            except KeyError: out[h] = {}
-            try: out[h][t]
-            except KeyError: out[h][t] = {}
-            out[h][t] = data
-    return out
-
-
 def publisher_indicators(indicators, indicators_tests, simple_out):
     # get all tests which belong to a specific indicator
     # average the results for all tests in that indicator
