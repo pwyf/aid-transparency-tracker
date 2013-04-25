@@ -150,7 +150,7 @@ def aggregate_results(options):
     iatidq.dqprocessing.aggregate_results(options.runtime_id, options.package_id)
 
 commands = {
-    "drop_all": drop_all,
+    "drop_db": drop_all,
     "init_db": init_db,
     "enroll_tests": enroll_tests,
     "clear_revisionid": clear_revisionid,
@@ -176,7 +176,7 @@ def main():
     p.add_option("--init-db", dest="init_db",
                   action="store_true",
                   help="Initialise DB")
-    p.add_option("--drop-db", dest="drop_all",
+    p.add_option("--drop-db", dest="drop_db",
                   action="store_true",
                   help="Delete DB")
     p.add_option("--enroll-tests", dest="enroll_tests",
