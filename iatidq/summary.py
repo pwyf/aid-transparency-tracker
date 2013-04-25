@@ -167,6 +167,8 @@ def sum_for_publishers(packages, d, h, t):
 
     if total_activities <= 0:
         return {}
+
+    ok_tdata = relevant_data[-1] ## FIXME: this is obviously wrong
          
     tmp = make_summary(
         ok_tdata[1].id,
