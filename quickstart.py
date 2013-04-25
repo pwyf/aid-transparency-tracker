@@ -209,13 +209,13 @@ def main():
                  help="Set name of package to be tested")
     p.add_option("--filename", dest="filename",
                  help="Set filename of data to test")
-    p.add_option("--local_folder", dest="local_folder",
+    p.add_option("--local-folder", dest="local_folder",
                  help="Set local folder where data to test is stored")
-    p.add_option("--import_indicators", dest="import_indicators",
+    p.add_option("--import-indicators", dest="import_indicators",
                  action="store_true",
                  default=False,
                  help="Import indicators. Will try to assign indicators to existing tests.")
-    p.add_option("--import_organisations", dest="import_organisations",
+    p.add_option("--import-organisations", dest="import_organisations",
                  action="store_true",
                  default=False,
                  help="Import organisations. Will try to create and assign organisations to existing packages.")
