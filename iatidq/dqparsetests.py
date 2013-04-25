@@ -11,6 +11,7 @@ import iatidq.models as models
 import foxpath
 import re
 import itertools
+import test_level
 
 from iatidq import db
 
@@ -27,7 +28,7 @@ def get_active_tests():
 def test_functions():
     try:
         tests = get_active_tests()
-        tests = itertools.ifilter(lambda test: test.test_level == 1, tests)
+        tests = itertools.ifilter(lambda test: test.test_level != test_level.FILE, tests)
         tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
         return foxpath.generate_test_functions(tests)
     finally:
