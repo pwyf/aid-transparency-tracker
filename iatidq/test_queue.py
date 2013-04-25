@@ -22,9 +22,6 @@ import test_level
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
 
-def aggregate_results(runtime, package_id):
-    return dqprocessing.aggregate_results(runtime, package_id)
-
 def get_organisations_for_testing(package_id):
     organisations = []
     conditions = []

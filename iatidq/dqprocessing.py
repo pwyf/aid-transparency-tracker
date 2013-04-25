@@ -9,7 +9,7 @@
 
 from iatidq import db, aggregations, dqpackages
 import models
-from sqlalchemy import func
+from sqlalchemy import func, distinct
 
 def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
     result = models.Result()
@@ -59,14 +59,20 @@ def aggregate_results(runtime, package_id):
     return {"status": status, "data": aresults}
 
 def get_results(runtime, package_id, agg_type):
+    print "results: lookup by aggtype"
+    print agg_type
+    print agg_type.test_id
+
     if agg_type.test_id is not None:
-        results = models.Result.query.filter(
+        results = db.session.query(distinct(models.Result.result_identifier)).filter(
             models.Result.test_id == agg_type.test_id
             ).filter(
             models.Result.result_data == '1'
             )
     else:
-        results = models.Result.query
+        results = db.session.query(distinct(models.Result.result_identifier))
+
+    print "results: filter by runtime,packageid"
 
     results = results.filter(
         models.Result.runtime_id == runtime
@@ -74,7 +80,12 @@ def get_results(runtime, package_id, agg_type):
         models.Result.package_id == package_id
         ).all()
 
-    result_identifiers = set([r.result_identifier for r in results])
+    print "doing distinct on result ids"
+
+    result_identifiers = results # set([r.result_identifier for r in results])
+
+    print "finished doing distinct"
+    print len(result_identifiers)
 
     if result_identifiers:
         results = models.Result.query.filter(
@@ -85,7 +96,10 @@ def get_results(runtime, package_id, agg_type):
             models.Result.result_identifier.in_(result_identifiers)
             ).all()
     else:
+        print "short cut"
         results = []
+
+    print "doing res2"
 
     results2 = models.Result.query.filter(
         models.Result.runtime_id == runtime
