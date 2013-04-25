@@ -65,7 +65,8 @@ def init_db(options):
     iatidq.dqimporttests.hardcodedTests()
 
 def enroll_tests(options):
-    filename = options.enroll_tests.decode()
+    assert options.filename
+    filename = options.filename.decode()
     result = iatidq.dqimporttests.importTestsFromFile(
         filename=filename, 
         level=options.level)
@@ -150,74 +151,36 @@ def aggregate_results(options):
     iatidq.dqprocessing.aggregate_results(options.runtime_id, options.package_id)
 
 commands = {
-    "drop_db": drop_all,
-    "init_db": init_db,
-    "enroll_tests": enroll_tests,
-    "clear_revisionid": clear_revisionid,
-    "import_codelists": import_codelists,
-    "download": download,
-    "import_indicators": import_indicators,
-    "import_organisations": import_organisations,
-    "setup": setup,
-    "enqueue_test": enqueue_test,
-    "refresh": refresh,
-    "activate_packages": activate_packages,
-    "create_aggregation_types": create_aggregation_types,
-    "aggregate_results": aggregate_results
+    "drop_db": (drop_all, "Delete DB"),
+    "init_db": (init_db, "Initialise DB"),
+    "enroll_tests": (enroll_tests, "Enroll a CSV file of tests"),
+    "clear_revisionid": (clear_revisionid, "Clear CKAN revision ids"),
+    "import_codelists": (import_codelists, "Import codelists"),
+    "download": (download, "Download packages"),
+    "import_indicators": (
+        import_indicators, 
+        "Import indicators. Will try to assign indicators to existing tests."),
+    "import_organisations": (
+        import_organisations, 
+        "Import organisations. Will try to create and assign organisations "
+        "to existing packages."),
+    "setup": (setup, """Quick setup. Will init db, add tests, add codelists, 
+                      add indicators, refresh package data from Registry."""),
+    "enqueue_test": (enqueue_test, "Set a package to be tested (with --package)"),
+    "refresh": (refresh, "Refresh"),
+    "activate_packages": (activate_packages, "Mark all packages as active"),
+    "create_aggregation_types": (create_aggregation_types, "Create basic aggregation types."),
+    "aggregate_results": (aggregate_results, "Trigger result aggregation")
 }
 
 def main():
     p = optparse.OptionParser()
-    p.add_option("--refresh", dest="refresh", action="store_true",
-                 help="Refresh")
-    p.add_option("--clear-revisionid", dest="clear_revisionid", 
-                 action="store_true",
-                 help="Clear CKAN revision ids")
-    p.add_option("--init-db", dest="init_db",
-                  action="store_true",
-                  help="Initialise DB")
-    p.add_option("--drop-db", dest="drop_db",
-                  action="store_true",
-                  help="Delete DB")
-    p.add_option("--enroll-tests", dest="enroll_tests",
-                 help="Enroll a CSV file of tests")
-    p.add_option("--activate-packages", dest="activate_packages",
-                 action="store_true",
-                 default=False,
-                 help="Mark all packages as active")
-    p.add_option("--download", dest="download",
-                 action="store_true",
-                 default=False,
-                 help="Download packages")
-    p.add_option("--import_codelists", dest="import_codelists",
-                 action="store_true",
-                 default=False,
-                 help="Import codelists")
-    p.add_option("--enqueue-test", dest="enqueue_test",
-                 action="store_true",
-                 default=False,
-                 help="Set a package to be tested (with --package)")
-    p.add_option("--import-indicators", dest="import_indicators",
-                 action="store_true",
-                 default=False,
-                 help="Import indicators. Will try to assign indicators to existing tests.")
-    p.add_option("--import-organisations", dest="import_organisations",
-                 action="store_true",
-                 default=False,
-                 help="Import organisations. Will try to create and assign organisations to existing packages.")
-    p.add_option("--create-aggregation-types", dest="create_aggregation_types",
-                 action="store_true",
-                 default=False,
-                 help="Create basic aggregation types.")
-    p.add_option("--setup", dest="setup",
-                 action="store_true",
-                 default=False,
-                 help="""Quick setup. Will init db, add tests, add codelists, 
-                      add indicators, refresh package data from Registry.""")
-    p.add_option("--aggregate-results", dest="aggregate_results",
-                 action="store_true",
-                 default=False,
-                 help="Trigger result aggregation")
+
+    for k, v in commands.iteritems():
+        handler, help_text = v
+        option_name = "--" + k.replace("_", "-")
+        p.add_option(option_name, dest=k, action="store_true", default=False, help=help_text)
+    
     p.add_option("--runtime-id", dest="runtime_id",
                  type=int,
                  help="Runtime id (integer)")
@@ -241,7 +204,8 @@ def main():
 
     options, args = p.parse_args()
 
-    for mode, handler in commands.iteritems():
+    for mode, handler_ in commands.iteritems():
+        handler, _ = handler_
         if getattr(options, mode, None):
             handler(options)
             return
