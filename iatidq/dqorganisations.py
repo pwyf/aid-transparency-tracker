@@ -67,7 +67,7 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
             packagegroups = models.PackageGroup.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
                         ).all()
             if not packagegroups:
-                continue
+                pass
             else:
                 for packagegroup in packagegroups:
                     organisationpackagegroup = addOrganisationPackageGroup({
@@ -75,6 +75,15 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
                                 "packagegroup_id" : packagegroup.id,
                                 "condition": condition
                             })
+            if (('packagegroup_name' in row) and (row['packagegroup_name'] != "")):
+                packagegroup = models.PackageGroup.query.filter(models.PackageGroup.name == row['packagegroup_name']
+                        ).first()
+                data = {
+                    'packagegroup_id': packagegroup.id,
+                    'organisation_id': organisation.id,
+                    'condition': condition
+                }
+                addOrganisationPackageFromPackageGroup(data)
                 
         print "Imported successfully"
         return True
