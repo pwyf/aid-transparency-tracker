@@ -30,6 +30,7 @@ import iatidq.dqaggregationtypes
 import iatidq.dqtests
 import iatidq.dqprocessing
 import iatidq.test_level as test_level
+import iatidq.inforesult
 import optparse
 import sys
 
@@ -145,6 +146,10 @@ def create_aggregation_types(options):
                                                 'test_id':currentdata_test.id,
                                                 'test_result':'1'})
 
+def create_inforesult_types(options):
+    print "Adding an aggregation type"
+    iatidq.inforesult.add_type("coverage", "Coverage")
+
 def setup_minimal(options):
     print "Creating DB"
     iatidq.db.create_all()
@@ -174,6 +179,9 @@ def setup_minimal(options):
 
     print "Creating aggregation types."
     create_aggregation_types(options)
+
+    create_inforesult_types(options)
+
     print "Setup complete."
     
     for organisation in default_minimal_organisations:
@@ -213,6 +221,7 @@ def setup(options):
     print "Adding organisations"
     iatidq.dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
     create_aggregation_types(options)
+    create_inforesult_types(options)
     print "Setup complete."
 
 def enqueue_test(options):
@@ -247,7 +256,8 @@ commands = {
     "activate_packages": (activate_packages, "Mark all packages as active"),
     "create_aggregation_types": (create_aggregation_types, "Create basic aggregation types."),
     "aggregate_results": (aggregate_results, "Trigger result aggregation"),
-    "setup_minimal": (setup_minimal, "Quick minimal setup")
+    "setup_minimal": (setup_minimal, "Quick minimal setup"),
+    "create_inforesult_types": (create_inforesult_types, "Create basic infroresult types.")
 }
 
 def main():

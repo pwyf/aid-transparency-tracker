@@ -52,3 +52,10 @@ def info_results(package_id, runtime_id):
             yield (it.name, r.result_data)
 
     return dict([i for i in results()])
+
+def add_type(name, description):
+    it = models.InfoType()
+    it.name = name
+    it.description = description
+    db.session.add(it)
+    db.session.commit()
