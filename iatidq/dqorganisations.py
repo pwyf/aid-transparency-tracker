@@ -285,3 +285,14 @@ def _organisation_indicators(organisation, aggregation_type=2):
                                                 conditions=pconditions, 
                                                 mode="publisher_indicators")
 
+def _organisation_indicators_split(organisation, aggregation_type=2):
+    results = _organisation_indicators(organisation, aggregation_type)
+
+    zero = lambda kv: not kv[1]["results_pct"]
+    non_zero = lambda kv: kv[1]["results_pct"]
+
+    zero_results = dict(filter(zero, results.iteritems()))
+    non_zero_results = dict(filter(zero, results.iteritems()))
+
+    return { "zero": zero_results,
+             "non_zero": non_zero_results }
