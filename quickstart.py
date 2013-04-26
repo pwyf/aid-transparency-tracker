@@ -275,7 +275,7 @@ def main():
                  type="int",
                  default=1,
                  help="Test level (e.g., 1 == Activity)")
-    p.add_option("--minimal-pkgs", dest="minimal_pkgs",
+    p.add_option("--minimal", dest="minimal_pkgs",
                  action="store_true",
                  default=False,
                  help="Operate on a minimal set of packages")
