@@ -112,7 +112,8 @@ class Package(db.Model):
             self.source_url = source_url
 
     def __repr__(self):
-        return self.source_url+u", "+self.id
+        source_url = self.source_url or "None"
+        return source_url+u", "+str(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
