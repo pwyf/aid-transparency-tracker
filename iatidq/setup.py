@@ -17,6 +17,7 @@ import dqcodelists
 import test_level
 import dqaggregationtypes
 import dqtests
+import inforesult
 
 # FIXME: duplicated
 which_packages = [
@@ -58,6 +59,10 @@ default_minimal_organisations = [
             'package_name': 'dfid-tz'
             }            
         ]
+
+def create_inforesult_types(options):
+    print "Adding an aggregation type"
+    inforesult.add_type("coverage", "Coverage")
 
 def create_aggregation_types(options):
     print "Adding an aggregation type for all data"
