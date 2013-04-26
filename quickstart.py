@@ -204,28 +204,22 @@ def setup_packages():
     print "Refreshing package data from Registry"
     dqregistry.refresh_packages()
 
-def setup_minimal(options):
-    setup_common()
-
-    setup_packages_minimal()
-
-    print "Creating aggregation types."
-    create_aggregation_types(options)
-    create_inforesult_types(options)
-
-    setup_organisations_minimal()
-    print "Setup complete."
-
 def setup(options):
     setup_common()
 
-    setup_packages()
+    if options.minimal:
+        setup_packages_minimal()
+    else:
+        setup_packages()
 
-    print "Creating aggregation types."
     create_aggregation_types(options)
     create_inforesult_types(options)
 
-    setup_organisations()
+    if options.minimal():
+        setup_organisations_minimal()
+    else:
+        setup_organisations()
+
     print "Setup complete."
 
 def enqueue_test(options):
@@ -260,7 +254,6 @@ commands = {
     "activate_packages": (activate_packages, "Mark all packages as active"),
     "create_aggregation_types": (create_aggregation_types, "Create basic aggregation types."),
     "aggregate_results": (aggregate_results, "Trigger result aggregation"),
-    "setup_minimal": (setup_minimal, "Quick minimal setup"),
     "create_inforesult_types": (create_inforesult_types, "Create basic infroresult types.")
 }
 
