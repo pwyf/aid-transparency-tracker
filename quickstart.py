@@ -169,9 +169,7 @@ def setup_common():
     print "Importing codelists"
     iatidq.dqcodelists.importCodelists()
 
-def setup_minimal(options):
-    setup_common()
-
+def setup_packages_minimal():
     print "Creating packages"
     pkg_names = [i[0] for i in which_packages]
 
@@ -179,6 +177,11 @@ def setup_minimal(options):
         [ dqregistry.refresh_package_by_name(name) for name in pkg_names ]
     else:
         print "No packages are defined in quickstart"
+
+def setup_minimal(options):
+    setup_common()
+
+    setup_packages_minimal()
 
     print "Creating aggregation types."
     create_aggregation_types(options)
@@ -206,13 +209,16 @@ def setup_organisations_minimal():
             }
         iatidq.dqorganisations.addOrganisationPackage(organisationpackage_data)
 
+def setup_organisations():
+    print "Adding organisations"
+    iatidq.dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
+
 def setup(options):
     setup_common()
     print "Refreshing package data from Registry"
     dqregistry.refresh_packages()
-    print "Adding organisations"
-    iatidq.dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
 
+    setup_organisations()
     create_aggregation_types(options)
     create_inforesult_types(options)
 
