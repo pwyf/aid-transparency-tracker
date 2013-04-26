@@ -35,6 +35,14 @@ from iatidq.models import *
 import StringIO
 import unicodecsv
 
+def getTotalSpend(organisation_code):
+    organisations_file = 'tests/organisations_with_identifiers.csv'
+    organisations_data = unicodecsv.DictReader(file(organisations_file))
+    for organisation in organisations_data:
+        if organisation['organisation_code'] == organisation_code:
+            return organisation['organisation_spend']
+    return None
+
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
@@ -46,6 +54,15 @@ def organisations(organisation_code=None):
         organisation = dqorganisations.organisations(organisation_code)
         packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
+        coverage_total = getTotalSpend(organisation_code)
+        coverage_found = 10000
+        coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
+        coverage = {
+                    'total': coverage_total,
+                    'found': coverage_found,
+                    'pct': coverage_pct
+                }
+
         try:
             summary_data = _organisation_indicators_summary(organisation, 
                                                             aggregation_type)
@@ -54,7 +71,8 @@ def organisations(organisation_code=None):
 
         template_args = dict(organisation=organisation, 
                              summary_data=summary_data,
-                             packagegroups=packagegroups)
+                             packagegroups=packagegroups,
+                             coverage=coverage)
 
         return render_template("organisation.html", **template_args)
     else:
@@ -102,7 +120,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
         organisation_code=organisation_code).first_or_404()
 
     aggregate_results = dqorganisations._organisation_indicators(
-        organisation, aggregation_type)
+        organisation, aggregation_type)    
 
     latest_runtime=1
 
