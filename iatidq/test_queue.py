@@ -79,7 +79,6 @@ def test_activity(runtime_id, package_id, result_identifier,
         newresult.result_identifier = result_identifier
         newresult.result_hierarchy = result_hierarchy
         newresult.organisation_id = organisation_id
-        print "ghere"
         db.session.add(newresult)
 
     # | test_result == True  -> 1
