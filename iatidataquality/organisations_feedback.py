@@ -35,7 +35,6 @@ import unicodecsv
 import tempfile
 import spreadsheet
 
-test_list_location = "tests/activity_tests.csv"
 
 @app.route("/organisations/<organisation_code>/feedback/", methods=['POST', 'GET'])
 def organisations_feedback(organisation_code=None):

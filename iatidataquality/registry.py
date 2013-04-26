@@ -35,7 +35,6 @@ import unicodecsv
 import tempfile
 import spreadsheet
 
-test_list_location = "tests/activity_tests.csv"
 
 @app.route("/registry/refresh/")
 def registry_refresh():

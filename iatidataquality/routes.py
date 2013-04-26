@@ -23,8 +23,6 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-test_list_location = "tests/activity_tests.csv"
-
 
 class User(UserMixin):
     def __init__(self, name, id, active=True):
