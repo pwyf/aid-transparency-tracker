@@ -178,19 +178,6 @@ def setup_packages_minimal():
     else:
         print "No packages are defined in quickstart"
 
-def setup_minimal(options):
-    setup_common()
-
-    setup_packages_minimal()
-
-    print "Creating aggregation types."
-    create_aggregation_types(options)
-    create_inforesult_types(options)
-
-    print "Setup complete."
-    setup_organisations_minimal()
-    print "Complete"
-
 def setup_organisations_minimal():    
     for organisation in default_minimal_organisations:
         inserted_organisation = iatidq.dqorganisations.addOrganisation(
@@ -212,6 +199,19 @@ def setup_organisations_minimal():
 def setup_organisations():
     print "Adding organisations"
     iatidq.dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
+
+def setup_minimal(options):
+    setup_common()
+
+    setup_packages_minimal()
+
+    print "Creating aggregation types."
+    create_aggregation_types(options)
+    create_inforesult_types(options)
+
+    print "Setup complete."
+    setup_organisations_minimal()
+    print "Complete"
 
 def setup(options):
     setup_common()
