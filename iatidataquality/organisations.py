@@ -50,7 +50,7 @@ def getTotalSpend(organisation_code):
 def organisations(organisation_code=None):
 
     info_results = {
-        "coverage": "10001",
+        "coverage": "10002",
         "total_budget": "3p"
         }
     
@@ -58,15 +58,27 @@ def organisations(organisation_code=None):
 
     template_args = {}
     if organisation_code is not None:
-        packages = dqorganisations.organisationPackages(organisation_code)
+        org_packages = dqorganisations.organisationPackages(organisation_code)
 
         def get_info_results():
-            for p in packages:
-                results = {
-                    "coverage": int("10001"),
-                    "total_budget": "3p"
-                    }
-                yield results["coverage"]
+            print "gir"
+            for _, p in org_packages:
+                print p
+                package_id = p.package_id
+                from sqlalchemy import func
+                runtime = db.session.query(
+                    func.max(Result.runtime_id)).filter(
+                    Result.package_id == package_id
+                    ).first()
+                import iatidq.inforesult
+                runtime, = runtime
+                results = iatidq.inforesult.info_results(package_id, runtime)
+                print results
+                #results = {
+                #    "coverage": int("10001"),
+                #    "total_budget": "3p"
+                #    }
+                yield int(results["coverage"])
 
         info_results["coverage"] = \
             reduce(operator.add, [ir for ir in get_info_results()], 0)
@@ -88,6 +100,8 @@ def organisations(organisation_code=None):
                                                             aggregation_type)
         except Exception, e:
             summary_data = None
+
+        summary_data = "suppress"
 
         template_args = dict(organisation=organisation, 
                              summary_data=summary_data,
