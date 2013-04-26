@@ -200,6 +200,10 @@ def setup_organisations():
     print "Adding organisations"
     iatidq.dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
 
+def setup_packages():
+    print "Refreshing package data from Registry"
+    dqregistry.refresh_packages()
+
 def setup_minimal(options):
     setup_common()
 
@@ -209,19 +213,19 @@ def setup_minimal(options):
     create_aggregation_types(options)
     create_inforesult_types(options)
 
-    print "Setup complete."
     setup_organisations_minimal()
-    print "Complete"
+    print "Setup complete."
 
 def setup(options):
     setup_common()
-    print "Refreshing package data from Registry"
-    dqregistry.refresh_packages()
 
-    setup_organisations()
+    setup_packages()
+
+    print "Creating aggregation types."
     create_aggregation_types(options)
     create_inforesult_types(options)
 
+    setup_organisations()
     print "Setup complete."
 
 def enqueue_test(options):
