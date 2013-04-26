@@ -47,6 +47,11 @@ def getTotalSpend(organisation_code):
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
 
+    info_results = {
+        "coverage": "10001",
+        "total_budget": "3p"
+        }
+    
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
 
     template_args = {}
@@ -55,7 +60,7 @@ def organisations(organisation_code=None):
         packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
         coverage_total = getTotalSpend(organisation_code)
-        coverage_found = 10000
+        coverage_found = info_results["coverage"]
         coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
         coverage = {
                     'total': coverage_total,
