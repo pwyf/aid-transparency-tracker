@@ -292,7 +292,7 @@ def _organisation_indicators_split(organisation, aggregation_type=2):
     non_zero = lambda kv: kv[1]["results_pct"]
 
     zero_results = dict(filter(zero, results.iteritems()))
-    non_zero_results = dict(filter(zero, results.iteritems()))
+    non_zero_results = dict(filter(non_zero, results.iteritems()))
 
     return { "zero": zero_results,
              "non_zero": non_zero_results }
