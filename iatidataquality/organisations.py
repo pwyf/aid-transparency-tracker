@@ -148,8 +148,8 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = dqorganisations._organisation_indicators(
-        organisation, aggregation_type)    
+    aggregate_results = dqorganisations._organisation_indicators_split(
+        organisation, aggregation_type)
 
     latest_runtime=1
 
