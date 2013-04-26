@@ -18,7 +18,6 @@
 
 import iatidq
 
-from iatidq import models, dqregistry 
 import iatidq.dqfunctions
 import iatidq.dqimporttests
 import iatidq.dqdownload
@@ -31,6 +30,7 @@ import iatidq.dqtests
 import iatidq.dqprocessing
 import iatidq.test_level as test_level
 import iatidq.inforesult
+import iatidq.setup
 import optparse
 import sys
 
@@ -150,77 +150,6 @@ def create_inforesult_types(options):
     print "Adding an aggregation type"
     iatidq.inforesult.add_type("coverage", "Coverage")
 
-def setup_common():
-    print "Creating DB"
-    iatidq.db.create_all()
-    print "Adding hardcoded tests"
-    iatidq.dqimporttests.hardcodedTests()
-    print "Importing tests"
-    iatidq.dqimporttests.importTestsFromFile(
-        default_tests_filename,
-        test_level.ACTIVITY)
-    print "Importing indicators"
-    iatidq.dqindicators.importIndicatorsFromFile(
-        default_indicator_group_name,
-        default_tests_filename)
-    print "Importing indicator descriptions"
-    iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
-                                                            "tests/indicators.csv")
-    print "Importing codelists"
-    iatidq.dqcodelists.importCodelists()
-
-def setup_packages_minimal():
-    print "Creating packages"
-    pkg_names = [i[0] for i in which_packages]
-
-    if pkg_names is not None:
-        [ dqregistry.refresh_package_by_name(name) for name in pkg_names ]
-    else:
-        print "No packages are defined in quickstart"
-
-def setup_organisations_minimal():    
-    for organisation in default_minimal_organisations:
-        inserted_organisation = iatidq.dqorganisations.addOrganisation(
-            organisation)
-        if inserted_organisation is False:
-            inserted_organisation = iatidq.dqorganisations.organisations(
-                organisation['organisation_code'])
-        thepackage = models.Package.query.filter_by(
-            package_name=organisation['package_name']
-                ).first()
-        
-        organisationpackage_data = {
-            "organisation_id": inserted_organisation.id, 
-            "package_id": thepackage.id,
-            "condition": organisation["condition"]
-            }
-        iatidq.dqorganisations.addOrganisationPackage(organisationpackage_data)
-
-def setup_organisations():
-    print "Adding organisations"
-    iatidq.dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
-
-def setup_packages():
-    print "Refreshing package data from Registry"
-    dqregistry.refresh_packages()
-
-def setup(options):
-    setup_common()
-
-    if options.minimal:
-        setup_packages_minimal()
-    else:
-        setup_packages()
-
-    create_aggregation_types(options)
-    create_inforesult_types(options)
-
-    if options.minimal():
-        setup_organisations_minimal()
-    else:
-        setup_organisations()
-
-    print "Setup complete."
 
 def enqueue_test(options):
     assert options.package_name
@@ -232,6 +161,9 @@ def aggregate_results(options):
     assert options.runtime_id
     assert options.package_id
     iatidq.dqprocessing.aggregate_results(options.runtime_id, options.package_id)
+
+def setup(options):
+    iatidq.setup.setup(options)
 
 commands = {
     "drop_db": (drop_all, "Delete DB"),
