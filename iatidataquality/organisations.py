@@ -287,3 +287,10 @@ def _organisation_indicators_summary(organisation, aggregation_type=2):
     totalscore = totalpct/totalindicators
     return totalscore, totalindicators
     
+
+@app.route('/tmp/inforesult/')
+def tmp_inforesult():
+    import json
+    from iatidq import inforesult
+
+    return json.dumps(inforesult.info_results(1, 4), indent=2)
