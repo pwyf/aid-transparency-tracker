@@ -56,7 +56,7 @@ def _aggregate_percentages(data, dims):
 
     def calc_percentages(dimensions):
         fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
-        success = d.get(prepend(RESULT_SUCCESS, dimensions),.0)
+        success = d.get(prepend(RESULT_SUCCESS, dimensions), 0)
 
         if 0 == fail + success:
             return None
