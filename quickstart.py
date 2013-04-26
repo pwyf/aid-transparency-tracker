@@ -150,7 +150,7 @@ def create_inforesult_types(options):
     print "Adding an aggregation type"
     iatidq.inforesult.add_type("coverage", "Coverage")
 
-def setup_minimal(options):
+def setup_common():
     print "Creating DB"
     iatidq.db.create_all()
     print "Adding hardcoded tests"
@@ -168,6 +168,9 @@ def setup_minimal(options):
                                                             "tests/indicators.csv")
     print "Importing codelists"
     iatidq.dqcodelists.importCodelists()
+
+def setup_minimal(options):
+    setup_common()
 
     print "Creating packages"
     pkg_names = [i[0] for i in which_packages]
@@ -199,23 +202,7 @@ def setup_minimal(options):
     print "Complete"
 
 def setup(options):
-    print "Creating DB"
-    iatidq.db.create_all()
-    print "Adding hardcoded tests"
-    iatidq.dqimporttests.hardcodedTests()
-    print "Importing tests"
-    iatidq.dqimporttests.importTestsFromFile(
-        default_tests_filename,
-        test_level.ACTIVITY)
-    print "Importing indicators"
-    iatidq.dqindicators.importIndicatorsFromFile(
-        default_indicator_group_name,
-        default_tests_filename)
-    print "Importing indicator descriptions"
-    iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
-                                                            "tests/indicators.csv")
-    print "Importing codelists"
-    iatidq.dqcodelists.importCodelists()
+    setup_common()
     print "Refreshing package data from Registry"
     dqregistry.refresh_packages()
     print "Adding organisations"
