@@ -14,7 +14,7 @@ def package_status(package_id):
     return models.PackageStatus.query.filter_by(package_id=package_id).order_by("runtime_datetime desc").first()
 
 def packages(package_id=None):
-    if id is not None:
+    if package_id is not None:
         return models.Package.query.filter_by(id=package_id).order_by(models.Package.package_name).first()
     else:
         return models.Package.query.order_by(models.Package.package_name).all()
