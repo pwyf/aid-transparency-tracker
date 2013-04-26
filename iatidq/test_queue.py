@@ -33,17 +33,17 @@ def get_organisations_for_testing(package_id):
             # add organisations to be tested;
             organisation_id = packageorganisation.Organisation.id
             condition = packageorganisation.OrganisationPackage.condition
-            if condition is None:
-                continue
-            condition = condition.strip()
+            if condition is not None:
+                condition = "["+condition.strip()+"]"
+                conditions_specified = True
+                conditions.append(condition)
+            else:
+                condition = ""
 
             organisations.append({
             'organisation_id': organisation_id,
-            'activities_xpath': "//iati-activity[%s]" % condition
+            'activities_xpath': "//iati-activity%s" % condition
                             })
-            if condition is not "":
-                conditions_specified = True
-                conditions.append(condition)
 
         conditions_str = " or ".join(conditions)
         remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
