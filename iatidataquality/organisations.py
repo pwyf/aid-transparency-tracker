@@ -24,6 +24,8 @@ import os
 import sys
 import json
 
+import operator
+
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
@@ -56,6 +58,19 @@ def organisations(organisation_code=None):
 
     template_args = {}
     if organisation_code is not None:
+        packages = dqorganisations.organisationPackages(organisation_code)
+
+        def get_info_results():
+            for p in packages:
+                results = {
+                    "coverage": int("10001"),
+                    "total_budget": "3p"
+                    }
+                yield results["coverage"]
+
+        info_results["coverage"] = \
+            reduce(operator.add, [ir for ir in get_info_results()], 0)
+
         organisation = dqorganisations.organisations(organisation_code)
         packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
