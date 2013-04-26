@@ -78,7 +78,7 @@ def refresh(options):
     pkg_names = None
     if options.package_name:
         pkg_names = [options.package_name]
-    elif options.minimal_pkgs:
+    elif options.minimal:
         pkg_names = [i[0] for i in which_packages]
 
     if pkg_names is not None:
@@ -112,7 +112,7 @@ def import_codelists(options):
     iatidq.dqcodelists.importCodelists()
 
 def download(options):
-    if options.minimal_pkgs:
+    if options.minimal:
         for package_name, _ in which_packages:
             iatidq.dqdownload.run(package_name=package_name)
     else:
@@ -275,7 +275,7 @@ def main():
                  type="int",
                  default=1,
                  help="Test level (e.g., 1 == Activity)")
-    p.add_option("--minimal", dest="minimal_pkgs",
+    p.add_option("--minimal", dest="minimal",
                  action="store_true",
                  default=False,
                  help="Operate on a minimal set of packages")
