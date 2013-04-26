@@ -101,8 +101,7 @@ def create_aggregation_types(options):
     iatidq.setup.create_aggregation_types(options)
 
 def create_inforesult_types(options):
-    print "Adding an aggregation type"
-    iatidq.inforesult.add_type("coverage", "Coverage")
+    iatidq.setup.create_inforesult_types(options)
 
 
 def enqueue_test(options):
