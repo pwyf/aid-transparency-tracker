@@ -63,7 +63,6 @@ def organisations(organisation_code=None):
         def get_info_results():
             print "gir"
             for _, p in org_packages:
-                print p
                 package_id = p.package_id
                 from sqlalchemy import func
                 runtime = db.session.query(
@@ -73,13 +72,9 @@ def organisations(organisation_code=None):
                 import iatidq.inforesult
                 runtime, = runtime
                 results = iatidq.inforesult.info_results(package_id, runtime)
-                print results
-                #results = {
-                #    "coverage": int("10001"),
-                #    "total_budget": "3p"
-                #    }
-                yield int(results["coverage"])
-
+                if "coverage" in results:
+                    yield int(results["coverage"])
+                
         info_results["coverage"] = \
             reduce(operator.add, [ir for ir in get_info_results()], 0)
 
