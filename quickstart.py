@@ -41,39 +41,6 @@ which_packages = [
     (u'unitedstates-tz', True)
     ]
 
-default_tests_filename="tests/tests.csv"
-default_indicator_group_name="pwyf2013"
-default_minimal_organisations = [
-            {
-            'organisation_name': 'World Bank',
-            'organisation_code': '44002',
-            'packagegroup_name': 'worldbank',
-            'condition': None,
-            'package_name': 'worldbank-tz'
-            },
-            {
-            'organisation_name': 'USAID',
-            'organisation_code': 'US-1',
-            'packagegroup_name': 'unitedstates',
-            'condition': 'participating-org[@role="Extending"][@ref="US-1"]',
-            'package_name': 'unitedstates-tz'
-            },
-            {
-            'organisation_name': 'MCC',
-            'organisation_code': 'US-18',
-            'packagegroup_name': 'unitedstates',
-            'condition': 'participating-org[@role="Extending"][@ref="US-18"]',
-            'package_name': 'unitedstates-tz'
-            },
-            {
-            'organisation_name': 'UK, DFID',
-            'organisation_code': 'GB-1',
-            'packagegroup_name': 'dfid',
-            'condition': None,
-            'package_name': 'dfid-tz'
-            }            
-        ]
-
 def refresh(options):
     pkg_names = None
     if options.package_name:
