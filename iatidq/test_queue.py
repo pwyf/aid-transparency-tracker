@@ -237,6 +237,9 @@ def run_info_results(package_id, runtime_id, file_name):
             try:
                 result = lam(file_name)
             except:
+                import sys
+                import traceback
+                traceback.print_exc()
                 result = None
             add_info_result(it.id, result)
 
