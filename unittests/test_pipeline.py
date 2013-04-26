@@ -19,6 +19,7 @@ import iatidq.dqorganisations
 import iatidq.test_level as test_level
 import iatidq.dqaggregationtypes
 import iatidq.dqtests
+import iatidq.setup
 
 from iatidq import db
 import lxml.etree
@@ -41,7 +42,7 @@ def setup_func():
     db.session.commit()
     print  >>sys.stderr, "committed"
 
-def setup_organisations(pkg_id):
+def __setup_organisations(pkg_id):
     org_data = [ 
         ('USAID', 'US-1', 
          '''participating-org[@role="Extending"][@ref="US-1"]'''),
@@ -117,13 +118,14 @@ def _test_example_tests(publisher, country):
     xml_filename = os.path.join("unittests", "artefacts", package_name + '.xml')
 
     # check there's nothing in the db
-    pgs = get_packagegroups_by_name(publisher)
-    assert len(pgs) == 0
-    pkgs = get_packages_by_name(package_name)
-    assert len(pkgs) == 0
+    #pgs = get_packagegroups_by_name(publisher)
+    #assert len(pgs) == 0
+    #pkgs = get_packages_by_name(package_name)
+    #assert len(pkgs) == 0
 
     # do refresh
-    iatidq.dqregistry.refresh_package_by_name(package_name)
+    #iatidq.dqregistry.refresh_package_by_name(package_name)
+    iatidq.setup.setup_packages_minimal()
 
     iatidq.dqimporttests.hardcodedTests()
 
@@ -174,9 +176,9 @@ def _test_example_tests(publisher, country):
 
     package_id = pkg.id
     ## this is a hack on a stick
-    if publisher == 'unitedstates':
-        setup_organisations(package_id)
-
+    #if publisher == 'unitedstates':
+    #    setup_organisations(package_id)
+    iatidq.setup.setup_organisations_minimal()
 
     assert iatidq.test_queue.check_file(test_functions, 
                codelists,
