@@ -23,11 +23,19 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqindicators
+from iatidq import dqindicators, dqsurveys, dqorganisations
 
 from iatidq.models import *
 
 import unicodecsv
+import json
+import json
+
+
+@app.route("/survey/create/", methods=["GET", "POST"])
+@app.route("/survey/<organisation_code>/create/", methods=["GET", "POST"])
+def create_survey(organisation_code=None):
+    return "You're trying to create a survey"
 
 def get_old_organisation_id(organisation_code='GB-1'):
     old_organisation_file = 'tests/2012_2013_organisation_mapping.csv'
@@ -76,13 +84,64 @@ def get_organisation_results(organisation_code, newindicators):
 @app.route("/organisations/<organisation_code>/survey/create/", methods=["GET", "POST"])
 def organisation_survey(organisation_code=None):
     if request.method=='POST':
-        return "You're trying to submit data"
+        indicators = request.form.getlist('indicator')
+        if 'save' in request.form:
+            operation = "save"
+        elif 'submit' in request.form:
+            operation = "submit"
+        organisation = dqorganisations.organisations(organisation_code)
+        
+        #FIXME: basic survey setup needs to go elsewhere
+
+        publishedstatus = [{'name': 'Always',
+          'class': 'success'},
+         {'name': 'Sometimes',
+          'class': 'warning'},
+         {'name': 'Not published',
+          'class': 'important'}]
+        
+        for ps in publishedstatus:
+            dqsurveys.addPublishedStatus({
+                    'name': ps["name"],
+                    'publishedstatus_class': ps["class"]
+                    })
+        
+        workflowType = dqsurveys.addWorkflowType({'name': 'creation'})
+        workflow = dqsurveys.addWorkflow({
+                    'name': 'Researcher',
+                    'leadsto': workflowType.id,
+                    'workflow_type': workflowType.id
+                    })
+        currentworkflow_id = workflow.id
+        currentworkflow_deadline = datetime.utcnow()
+
+        organisationsurvey = dqsurveys.createSurvey({
+                    'organisation_id': organisation.id, 
+                    'currentworkflow_id': currentworkflow_id,
+                    'currentworkflow_deadline': currentworkflow_deadline,
+                    'indicators': indicators
+                    })
+
+        for indicator in indicators:
+            data = {
+                'organisationsurvey_id': organisationsurvey.id,
+                'indicator_id': indicator,
+                'workflow_id': currentworkflow_id,
+                'published_status': request.form.get(indicator+"-published"),
+                'published_source': request.form.get(indicator+"-source"),
+                'published_comment': request.form.get(indicator+"-comments"),   
+                'published_accepted': None
+            }
+            surveydata = dqsurveys.addSurveyData(data)
+        flash('Successfully submitted survey data', 'success')
+        return redirect(url_for("organisations", organisation_code=organisation_code))
     else:
         organisation = Organisation.query.filter_by(
             organisation_code=organisation_code).first_or_404()
 
         indicators = dqindicators.indicators("pwyf2013")
         twentytwelvedata=get_organisation_results(organisation_code, indicators)
+        publishedstatuses = dqsurveys.publishedStatus()
 
         publication_status= {
                         '4': {
@@ -110,9 +169,9 @@ def organisation_survey(organisation_code=None):
                             'class': ''
                         }
                     }
-
-        return render_template("organisation_survey_create.html", 
+        return render_template("survey_create.html", 
                                organisation=organisation,
                                indicators=indicators,
                                twentytwelvedata=twentytwelvedata,
-                               publication_status=publication_status)
+                               publication_status=publication_status,
+                               publishedstatuses=publishedstatuses)
