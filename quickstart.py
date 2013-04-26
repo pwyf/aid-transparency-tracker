@@ -98,19 +98,7 @@ def import_organisations(options):
         print "Error: please provide a filename"
 
 def create_aggregation_types(options):
-    print "Adding an aggregation type for all data"
-    iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
-                                                'description': '',
-                                                'test_id': None,
-                                                'test_result':'1'})
-    print "Adding an aggregation type for current data"
-    currentdata_test = iatidq.dqtests.test_by_test_name(
-        "activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"
-        )
-    iatidq.dqaggregationtypes.addAggregationType({'name':'Current data',
-                                                'description': '',
-                                                'test_id':currentdata_test.id,
-                                                'test_result':'1'})
+    iatidq.setup.create_aggregation_types(options)
 
 def create_inforesult_types(options):
     print "Adding an aggregation type"
