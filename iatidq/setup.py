@@ -144,7 +144,7 @@ def setup(options):
     create_aggregation_types(options)
     create_inforesult_types(options)
 
-    if options.minimal():
+    if options.minimal:
         setup_organisations_minimal()
     else:
         setup_organisations()
