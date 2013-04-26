@@ -36,11 +36,42 @@ import sys
 which_packages = [
     (u'worldbank-tz', True),
     (u'unops-tz', True),
-    (u'dfid-tz', True)
+    (u'dfid-tz', True),
+    (u'unitedstates-tz', True)
     ]
 
 default_tests_filename="tests/tests.csv"
 default_indicator_group_name="pwyf2013"
+default_minimal_organisations = [
+            {
+            'organisation_name': 'World Bank',
+            'organisation_code': '44002',
+            'packagegroup_name': 'worldbank',
+            'condition': "",
+            'package_name': 'worldbank-tz'
+            },
+            {
+            'organisation_name': 'USAID',
+            'organisation_code': 'US-1',
+            'packagegroup_name': 'unitedstates',
+            'condition': 'participating-org[@role="Extending"][@ref="US-1"]',
+            'package_name': 'unitedstates-tz'
+            },
+            {
+            'organisation_name': 'MCC',
+            'organisation_code': 'US-18',
+            'packagegroup_name': 'unitedstates',
+            'condition': 'participating-org[@role="Extending"][@ref="US-18"]',
+            'package_name': 'unitedstates-tz'
+            },
+            {
+            'organisation_name': 'UK, DFID',
+            'organisation_code': 'GB-1',
+            'packagegroup_name': 'dfid',
+            'condition': "",
+            'package_name': 'dfid-tz'
+            }            
+        ]
 
 def refresh(options):
     pkg_names = None
@@ -114,6 +145,51 @@ def create_aggregation_types(options):
                                                 'test_id':currentdata_test.id,
                                                 'test_result':'1'})
 
+def setup_minimal(options):
+    print "Creating DB"
+    iatidq.db.create_all()
+    print "Adding hardcoded tests"
+    iatidq.dqimporttests.hardcodedTests()
+    print "Importing tests"
+    iatidq.dqimporttests.importTestsFromFile(
+        default_tests_filename,
+        test_level.ACTIVITY)
+    print "Importing indicators"
+    iatidq.dqindicators.importIndicatorsFromFile(
+        default_indicator_group_name,
+        default_tests_filename)
+    print "Importing indicator descriptions"
+    iatidq.dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
+                                                            "tests/indicators.csv")
+    print "Importing codelists"
+    iatidq.dqcodelists.importCodelists()
+
+    print "Creating packages"
+    pkg_names = [i[0] for i in which_packages]
+
+    if pkg_names is not None:
+        [ dqregistry.refresh_package_by_name(name) for name in pkg_names ]
+    else:
+        print "No packages are defined in quickstart"
+
+    print "Creating aggregation types."
+    create_aggregation_types(options)
+    print "Setup complete."
+    
+    for organisation in default_minimal_organisations:
+        inserted_organisation = iatidq.dqorganisations.addOrganisation(organisation)
+        if inserted_organisation is False:
+            inserted_organisation = iatidq.dqorganisations.organisations(organisation['organisation_code'])
+        thepackage = models.Package.query.filter_by(package_name=organisation['package_name']
+                ).first()
+        
+        organisationpackage_data = {"organisation_id": inserted_organisation.id, 
+                                                       "package_id": thepackage.id,
+                                                       "condition": organisation["condition"]
+                                                    }
+        iatidq.dqorganisations.addOrganisationPackage(organisationpackage_data)
+    print "Complete"
+
 def setup(options):
     print "Creating DB"
     iatidq.db.create_all()
@@ -170,7 +246,8 @@ commands = {
     "refresh": (refresh, "Refresh"),
     "activate_packages": (activate_packages, "Mark all packages as active"),
     "create_aggregation_types": (create_aggregation_types, "Create basic aggregation types."),
-    "aggregate_results": (aggregate_results, "Trigger result aggregation")
+    "aggregate_results": (aggregate_results, "Trigger result aggregation"),
+    "setup_minimal": (setup_minimal, "Quick minimal setup")
 }
 
 def main():
