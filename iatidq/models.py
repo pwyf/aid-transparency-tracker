@@ -133,6 +133,11 @@ class Result(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+db.Index('result_runpack', 
+         Result.runtime_id, Result.package_id, Result.result_identifier)
+db.Index('result_test',
+         Result.test_id)
+
 class AggregateResult(db.Model):
     __tablename__='aggregateresult'
     id = Column(Integer,primary_key=True)
