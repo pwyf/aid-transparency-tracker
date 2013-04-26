@@ -56,7 +56,7 @@
         <th>Detail</th>
         </thead>
         <tbody>
-        {% for indicator, result in results.items() %}
+        {% for indicator, result in results.non_zero.items() %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
                 <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
@@ -84,6 +84,81 @@
 	        <td><a href="{{url_for('tests', id=testdata["test"]["id"])}}">{{ testdata["test"]["description"] }}</a>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
             <td class="pct">{{testdata.results_pct|round|int}}</td>
             <td>{{testdata["results_num"]|round|int}}</td>
+            <td></td>
+            </tr>
+            {% endfor %}
+        {%endfor%}
+        </tbody>
+        </table>
+        </fieldset>
+
+        <fieldset>
+        <h3>Not published to IATI</h3>
+        <p class="lead">Each indicator not published to IATI, but published elsewhere (e.g. on your website) scores a maximum of 50 points</p>
+        <h4>Scoring criteria</h4>
+        <p>For each indicator, points are received if that indicator is <label class="label label-success">Always published</label>. The points received depend on the format the information is available in.</p>
+        <ul>
+            <li>10 points: PDF file</li>
+            <li>30 points: Website</li>
+            <li>50 points: CSV, Excel, XML, or other structured, machine-readable format</li>
+        </ul>
+        <p>If published, documents receive the full 50 points, since it would not make sense for the information to be provided in a structured format.</p>
+            
+        <div class="alert alert-info">
+            <h4>Why is IATI data scored more highly?</h4>
+            <p>IATI is the only standard for publishing comparable, timely and easily re-usable data, which are critical components of aid transparency.</p>
+            <p><a class="btn btn-info">Learn more &raquo;</a></p>
+        </div>
+        <table class="table" id="results">
+        <thead>
+        <th>Indicator</th>
+        <th><span class="th_test hidden">Test</span></th>
+        <th>IATI data</th>
+        <th>Published</th>
+        <th>Format</th>
+        <th>Score</th>
+        <th>Detail</th>
+        </thead>
+        <tbody>
+        {% for indicator, result in results.zero.items() %}
+            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        Description of the indicator goes here. <a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">Details &raquo;</a>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+	        <td></td>
+            <td><span class="label label-inverse">NOT FOUND</span></td>
+            {% set surveydata = true %}
+            {% if surveydata %}
+            <td><span class="label label-success">Always published</span> <a class="btn btn-mini">Edit &raquo;</a></td>
+            <td>Website</td>
+            <td>50</td>
+            {% else %}
+            <td colspan="3">
+            <b>No survey data yet.</b>
+            </td>
+            {% endif %}
+            <td><a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down"></i></a></td>
+            </tr>
+            
+            {% for testdata in result["tests"] %}
+            <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
+            <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
+	        <td><a href="{{url_for('tests', id=testdata["test"]["id"])}}">{{ testdata["test"]["description"] }}</a>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
+            <td class="pct">{{testdata.results_pct|round|int}}</td>
+            <td>{{testdata["results_num"]|round|int}}</td>
+            <td></td>
+            <td></td>
             <td></td>
             </tr>
             {% endfor %}
