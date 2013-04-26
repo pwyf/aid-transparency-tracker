@@ -486,6 +486,17 @@ class OrganisationSurvey(db.Model):
     currentworkflow_id = Column(Integer, ForeignKey('workflow.id'))
     currentworkflow_deadline = Column(DateTime)
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
+    
+    def setup(self,
+                 organisation_id,
+                 currentworkflow_id,
+                 currentworkflow_deadline=None,
+                 id=None):
+        self.organisation_id = organisation_id
+        self.currentworkflow_id = currentworkflow_id
+        self.currentworkflow_deadline = currentworkflow_deadline
+        if id is not None:
+            self.id = id
 
 class OrganisationSurveyData(db.Model):
     __tablename__ = 'organisationsurveydata'
@@ -497,6 +508,27 @@ class OrganisationSurveyData(db.Model):
     published_source = Column(UnicodeText)
     published_comment = Column(UnicodeText)
     published_accepted = Column(Integer)
+    
+    def setup(self,
+                 organisationsurvey_id,
+                 indicator_id,
+                 workflow_id=None,
+                 published_status=None,
+                 published_source=None,
+                 published_comment=None,
+                 published_accepted=None,
+                 id=None):
+        self.organisationsurvey_id = organisationsurvey_id
+        self.workflow_id = workflow_id
+        self.indicator_id = indicator_id
+        self.published_status = published_status
+        self.published_source = published_source
+        self.published_comment = published_comment
+        self.published_accepted = published_accepted
+
+        if id is not None:
+            self.id = id
+
 
 class PublishedStatus(db.Model):
     __tablename__ = 'publishedstatus'
@@ -504,20 +536,48 @@ class PublishedStatus(db.Model):
     name = Column(UnicodeText)
     publishedstatus_class = Column(UnicodeText)
     
+    def setup(self,
+                 name,
+                 publishedstatus_class,
+                 id=None):
+        self.name = name
+        self.publishedstatus_class = publishedstatus_class
+        if id is not None:
+            self.id = id
+    
 class Workflow(db.Model):
     __tablename__='workflow'
     id = Column(Integer,primary_key=True)
     name = Column(UnicodeText)
     leadsto = Column(Integer, ForeignKey('workflowtype.id'))
     workflow_type = Column(Integer, ForeignKey('workflowtype.id'))
+    
+    def setup(self,
+                 name,
+                 leadsto,
+                 workflow_type=None,
+                 id=None):
+        self.name = name
+        self.leadsto = leadsto
+        self.workflow_type = workflow_type
+        if id is not None:
+            self.id = id
 
 # WorkflowType: define what sort of workflow this should be.
 #   Will initially be hardcoded but this should make it easier
 #   to expand and define later.
 class WorkflowType(db.Model):
     __tablename__='workflowtype'
+
     id = Column(Integer,primary_key=True)
     name = Column(UnicodeText)
+    
+    def setup(self,
+                 name,
+                 id=None):
+        self.name = name
+        if id is not None:
+            self.id = id
 
 class WorkflowNotification(db.Model):
     __tablename__='workflownotifications'
