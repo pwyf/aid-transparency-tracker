@@ -47,7 +47,7 @@ default_minimal_organisations = [
             'organisation_name': 'World Bank',
             'organisation_code': '44002',
             'packagegroup_name': 'worldbank',
-            'condition': "",
+            'condition': None,
             'package_name': 'worldbank-tz'
             },
             {
@@ -68,7 +68,7 @@ default_minimal_organisations = [
             'organisation_name': 'UK, DFID',
             'organisation_code': 'GB-1',
             'packagegroup_name': 'dfid',
-            'condition': "",
+            'condition': None,
             'package_name': 'dfid-tz'
             }            
         ]
