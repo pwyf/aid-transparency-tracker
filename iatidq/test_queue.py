@@ -34,7 +34,7 @@ def get_organisations_for_testing(package_id):
             organisation_id = packageorganisation.Organisation.id
             condition = packageorganisation.OrganisationPackage.condition
             if condition is not None:
-                condition = "["+condition.strip()+"]"
+                condition = "[" + condition.strip() + "]"
                 conditions_specified = True
                 conditions.append(condition)
             else:
@@ -188,6 +188,8 @@ def check_file(test_functions, codelists, file_name,
         print "added test status"
         return True
     except Exception, e:
+        import traceback
+        traceback.print_exc()
         print "Exception in check_file ", e
         raise
 
