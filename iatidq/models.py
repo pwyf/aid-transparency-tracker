@@ -438,13 +438,6 @@ class InfoType(db.Model):
     name = Column(UnicodeText)
     description = Column(UnicodeText)
 
-    def __init__(self, man_auto, source_url):
-        self.man_auto = man_auto
-        self.source_url = source_url
-
-    def __repr__(self):
-        return self.source_url, self.id
-
 ## USERS
 
 class User(db.Model):

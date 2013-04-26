@@ -7,6 +7,8 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
+from iatidq import db
+
 from lxml import etree
 
 import models
@@ -29,9 +31,9 @@ def infotest1(filename):
             except:
                 pass
 
-    total = sum([ i for i in int() ])
+    total = sum([ i for i in ints() ])
 
-    return "result1"
+    return str(total)
 
 
 def infotest2(filename):
@@ -39,14 +41,14 @@ def infotest2(filename):
 
 
 def info_results(package_id, runtime_id):
-    info_results = models.InfoResult.query.filter(
+    info_results = db.session.query(models.InfoResult, models.InfoType).filter(
         models.InfoResult.package_id == package_id
         ).filter(
         models.InfoResult.runtime_id == runtime_id
         ).all()
 
     def results():
-        for r in info_results:
-            yield (r.info_id, r.result_data)
+        for r, it in info_results:
+            yield (it.name, r.result_data)
 
     return dict([i for i in results()])
