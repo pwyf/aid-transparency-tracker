@@ -38,21 +38,25 @@
             </td>
         </tr>
         <tr id="tr{{indicator.id}}">
-        <td>Researcher</td>
+        <td>Researcher<input type="hidden" name="indicator" value="{{indicator.id}}" /></td>
         <td>
-        <label for="{{indicator.id}}-always"><input type="radio" name="{{indicator.name}}" id="{{indicator.id}}-always"> Always</input><br /><span class="muted">Published for all projects</span></label>
-        <label for="{{indicator.id}}-sometimes"><input type="radio" name="{{indicator.name}}" id="{{indicator.id}}-sometimes"> Sometimes</input><br /><span class="muted">Published for some projects</span></label>
-        <label for="{{indicator.id}}-not"><input type="radio" name="{{indicator.name}}" id="{{indicator.id}}-not"> Not published</input><br /><span class="muted">Not published</span></label>
+        {% for publishedstatus in publishedstatuses %}
+        <label for="{{indicator.id}}-published-{{publishedstatus.id}}">
+        <input type="radio" name="{{indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.id}}-published-{{publishedstatus.id}}"> {{publishedstatus.name}}</input>
+        <br />
+        <span class="muted">{{publishedstatus.name}}</span></label>
+        {% endfor %}
         </td>
 
-        <td><textarea></textarea></td>
+        <td><textarea name"{{indicator.id}}-source"></textarea></td>
 
-        <td><textarea></textarea></td>
+        <td><textarea name"{{indicator.id}}-comments"></textarea></td>
         </tr>
     {% endfor %}
     </tbody>
     </table>
-    <input type="submit" class="btn btn-success" value="Update Tracker data" />
+    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" /> Submit data (you cannot edit this survey once it's been submitted)</label>
+    <label for="submit" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save to database, but don't submit yet</label>
 
     </form>
 {% endblock %}
