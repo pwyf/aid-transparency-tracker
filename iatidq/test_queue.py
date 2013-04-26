@@ -182,6 +182,8 @@ def check_file(test_functions, codelists, file_name,
         db.session.commit()    
         print "committed to db"
 
+        run_info_results(package_id, runtime_id, file_name)
+
         dqfunctions.add_test_status(package_id, 3, commit=True)
         print "added test status"
         return True
@@ -209,3 +211,34 @@ def run_test_queue():
 
     for body in queue.handle_queue_generator(download_queue):
         dequeue_download(body, test_functions, codelists)
+
+def run_info_results(package_id, runtime_id, file_name):
+    import inforesult
+
+    def add_info_result(info_id, result_data):
+        ir = models.InfoResult()
+        ir.runtime_id = runtime_id
+        ir.package_id = package_id
+        ir.info_id = info_id
+        ir.result_data = result_data
+        db.session.add(ir)
+
+    def info_lam_by_name(name):
+        hack = { 
+            'coverage': lambda fn: inforesult.infotest1(fn),
+            'total_budget': lambda fn: inforesult.infotest2(fn)
+            }
+        return hack[name]
+
+    try:
+        info_types = models.InfoType.query.all()
+        for it in info_types:
+            lam = info_lam_by_name(it.name)
+            try:
+                result = lam(file_name)
+            except:
+                result = None
+            add_info_result(it.id, result)
+
+    finally:
+        db.session.commit()
