@@ -188,16 +188,20 @@ def setup_minimal(options):
     print "Setup complete."
     
     for organisation in default_minimal_organisations:
-        inserted_organisation = iatidq.dqorganisations.addOrganisation(organisation)
+        inserted_organisation = iatidq.dqorganisations.addOrganisation(
+            organisation)
         if inserted_organisation is False:
-            inserted_organisation = iatidq.dqorganisations.organisations(organisation['organisation_code'])
-        thepackage = models.Package.query.filter_by(package_name=organisation['package_name']
+            inserted_organisation = iatidq.dqorganisations.organisations(
+                organisation['organisation_code'])
+        thepackage = models.Package.query.filter_by(
+            package_name=organisation['package_name']
                 ).first()
         
-        organisationpackage_data = {"organisation_id": inserted_organisation.id, 
-                                                       "package_id": thepackage.id,
-                                                       "condition": organisation["condition"]
-                                                    }
+        organisationpackage_data = {
+            "organisation_id": inserted_organisation.id, 
+            "package_id": thepackage.id,
+            "condition": organisation["condition"]
+            }
         iatidq.dqorganisations.addOrganisationPackage(organisationpackage_data)
     print "Complete"
 
