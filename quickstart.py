@@ -28,7 +28,6 @@ import iatidq.dqorganisations
 import iatidq.dqaggregationtypes
 import iatidq.dqtests
 import iatidq.dqprocessing
-import iatidq.test_level as test_level
 import iatidq.inforesult
 import iatidq.setup
 import optparse

@@ -14,6 +14,7 @@ import dqimporttests
 import dqorganisations
 import dqindicators
 import dqcodelists
+import test_level
 
 # FIXME: duplicated
 which_packages = [
