@@ -1,0 +1,55 @@
+{% set active_page='surveys'%}{% extends "layout.html" %}
+{% block title %}Admin &raquo; Surveys{% endblock %}
+{% block content %}
+    <h1>Survey admin</h1>
+
+    <h3>Workflows</h3>
+    <table class="table">
+    <thead>
+    <th>Name</th><th>Workflow type</th>
+    </thead>
+    <tbody>
+    {% for workflow in workflows %}
+    <tr>
+    <td>{{workflow.Workflow.name}}</td><td>{{workflow.WorkflowType.name}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    <h3>Published statuses</h3>
+    <table class="table">
+    <thead>
+    <th>Name</th><th>Class</th>
+    </thead>
+    <tbody>
+    {% for publishedstatus in publishedstatuses %}
+    <tr>
+    <td>{{publishedstatus.name}}</td><td>{{publishedstatus.publishedstatus_class}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    <h3>Surveys</h3>
+    <table class="table" id="surveys">
+    <thead>
+    <th>Organisation</th><th>Current workflow</th><th>Change workflow</th><th>View</th>
+    </thead>
+    <tbody>
+    {% for survey in surveys %}
+    <tr>
+    <td>{{survey.Organisation.organisation_name}}</td><td>{{survey.Workflow.name}}</td>
+    <td>
+    <select name="workflows-{{survey.OrganisationSurvey.id}}">
+    {% for workflow in workflows %}
+    <option value="{{workflow.Workflow.id}}"{% if workflow.Workflow.id==survey.OrganisationSurvey.currentworkflow_id %} selected{%endif%}>{{workflow.Workflow.name}}</option>
+    {% endfor %}
+    </select>
+    </td>
+    <td><a href="{{url_for('organisation_survey', organisation_code=survey.Organisation.organisation_code)}}">View &raquo;</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}

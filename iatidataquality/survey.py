@@ -31,9 +31,18 @@ import unicodecsv
 import json
 import json
 
+@app.route("/surveys/admin/")
+def surveys_admin():
+    surveys = dqsurveys.surveys()
+    workflows = dqsurveys.workflows()
+    publishedstatuses=dqsurveys.publishedStatus()
+    return render_template("surveys_admin.html", 
+                           workflows=workflows,
+                           publishedstatuses=publishedstatuses,
+                           surveys=surveys)
 
-@app.route("/survey/create/", methods=["GET", "POST"])
-@app.route("/survey/<organisation_code>/create/", methods=["GET", "POST"])
+@app.route("/surveys/create/", methods=["GET", "POST"])
+@app.route("/surveys/<organisation_code>/create/", methods=["GET", "POST"])
 def create_survey(organisation_code=None):
     return "You're trying to create a survey"
 
@@ -81,14 +90,31 @@ def get_organisation_results(organisation_code, newindicators):
             }
     return data
 
-@app.route("/organisations/<organisation_code>/survey/create/", methods=["GET", "POST"])
+@app.route("/organisations/<organisation_code>/survey/")
 def organisation_survey(organisation_code=None):
+    organisation = dqorganisations.organisations(organisation_code)
+    survey = dqsurveys.getSurvey(organisation_code)
+    return render_template("survey.html", 
+                           organisation=organisation,
+                           survey=survey)
+
+def getTimeRemainingNotice(deadline):
+    time_remaining = ((deadline.date())-(datetime.utcnow().date()))
+    if time_remaining.days >1:
+        time_remaining_notice = "You have " + str(time_remaining.days) + " days to submit your response."
+    else:
+        time_remaining_notice = "Today is the last day for making any changes to your survey."
+    return time_remaining_notice
+
+@app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
+def organisation_survey_edit(organisation_code=None, workflow_name=None):
+    workflow = dqsurveys.workflows(workflow_name)
+    if not workflow:
+        flash('That workflow does not exist.', 'error')
+        return abort(404)
+    
     if request.method=='POST':
         indicators = request.form.getlist('indicator')
-        if 'save' in request.form:
-            operation = "save"
-        elif 'submit' in request.form:
-            operation = "submit"
         organisation = dqorganisations.organisations(organisation_code)
         
         #FIXME: basic survey setup needs to go elsewhere
@@ -133,13 +159,24 @@ def organisation_survey(organisation_code=None):
                 'published_accepted': None
             }
             surveydata = dqsurveys.addSurveyData(data)
-        flash('Successfully submitted survey data', 'success')
+        
+        if 'submit' in request.form:
+            # save data, change currentworkflow_id to leadsto
+            dqsurvey.advanceSurvey(organisationsurvey)
+            flash('Successfully submitted survey data', 'success')
+        else:
+            time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
+
+            flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+
         return redirect(url_for("organisations", organisation_code=organisation_code))
     else:
         organisation = Organisation.query.filter_by(
             organisation_code=organisation_code).first_or_404()
 
         indicators = dqindicators.indicators("pwyf2013")
+        org_indicators = dqorganisations._organisation_indicators_split(
+        organisation, 2)["zero"]
         twentytwelvedata=get_organisation_results(organisation_code, indicators)
         publishedstatuses = dqsurveys.publishedStatus()
 
@@ -169,9 +206,12 @@ def organisation_survey(organisation_code=None):
                             'class': ''
                         }
                     }
-        return render_template("survey_create.html", 
+        template_path = "_survey_"+workflow.WorkflowType.name+".html"
+        return render_template(template_path, 
                                organisation=organisation,
                                indicators=indicators,
+                               org_indicators = org_indicators,
                                twentytwelvedata=twentytwelvedata,
                                publication_status=publication_status,
-                               publishedstatuses=publishedstatuses)
+                               publishedstatuses=publishedstatuses,
+                               workflow=workflow)

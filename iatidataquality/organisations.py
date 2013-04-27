@@ -30,7 +30,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqorganisations, dqpackages, dqaggregationtypes
+from iatidq import dqorganisations, dqpackages, dqaggregationtypes, dqsurveys
 
 from iatidq.models import *
 
@@ -151,6 +151,13 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
     aggregate_results = dqorganisations._organisation_indicators_split(
         organisation, aggregation_type)
 
+    surveydata = dqsurveys.getSurveyData(organisation_code)
+    published_status = dqsurveys.publishedStatus()
+
+    published_status_by_id = dict(map(lambda x: (x.id, x), published_status))
+    published_status_by_id[None] = {'name': 'Unknown',
+                                    'publishedstatus_class': 'label-inverse'}
+
     latest_runtime=1
 
     return render_template("organisation_indicators.html", 
@@ -158,7 +165,9 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                            results=aggregate_results, 
                            runtime=latest_runtime,
                            all_aggregation_types=all_aggregation_types,
-                           aggregation_type=aggregation_type)
+                           aggregation_type=aggregation_type,
+                           surveydata=surveydata,
+                           published_status=published_status_by_id)
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
 def organisation_publication_detail(organisation_code=None, 

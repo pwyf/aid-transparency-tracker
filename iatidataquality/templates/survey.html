@@ -1,0 +1,58 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}Survey &raquo; {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+{% block content %}
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#tests").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+    <h1>Survey for {{organisation.organisation_name}} <code>{{organisation.organisation_code}}</code></h1>
+    {% if survey %}
+    <p class="lead">Survey currently in {{survey.Workflow.name}} mode; 25% complete.</p>
+    <div class="progress">
+        <div class="bar" data-width="25"></div>
+    </div>
+    {% else %}
+    <p class="lead">No survey has been created for this organisation yet.</p>
+    <p><a class="btn btn-success" href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name='create')}}"><i class="icon-plus icon-white"></i> <b>Create survey &raquo;</b></a></p>
+
+    {%endif%}
+    <h3>Activity log</h3>
+    <table class="table">
+    <thead>
+    <th>Type</th><th>Date</th><th>Activity</th><th>User</th><th>Workflow</th><th></th>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Completed</td><td>2013-04-26</td><td>Survey created</td><td>Mark Brough</td><td>Researcher</td><td><a href="">View &raquo;</a></td>
+    </tr>
+    <tr class="muted">
+    <td>Expected</td><td>2013-05-26</td><td>Donor responds</td><td>USAID staff</td><td>Donor review</td><td><a href="">View &raquo;</a></td>
+    </tr>
+    </tbody>
+    </table>
+    <h3>Users</h3>
+    <p class="lead">The following users have access to this survey:</p>
+    <table class="table">
+    <thead>
+    <th>Name</th><th>Organisation</th><th>User type</th><th>Workflow</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Mark Brough</td><td>Publish What You Fund</td><td>Researcher</td><td>Researcher</td>
+    </tr>
+    <tr>
+    <td>USAID staff</td><td>USAID</td><td>Donor</td><td>Review</td>
+    </tr>
+    </tbody>
+    </table>
+<script type="text/javascript">
+    $(".bar").each(function(e){
+        width = $(this).attr('data-width');
+        if (width > 0) {
+            $(this).width(width+'%');
+        }
+    });
+</script>
+{% endblock %}

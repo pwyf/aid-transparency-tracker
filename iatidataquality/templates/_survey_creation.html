@@ -1,0 +1,54 @@
+{% extends "survey_edit.html" %}
+{% block survey %}
+	<h3>Please provide data for {{org_indicators|count}} indicators.<code>{{workflow.Workflow.name}}</code></h3>
+    <div class="alert alert-info">
+        <h4>Check and correct last year's data</h4>
+        <p>To save time, the form has been populated with 2012 data. Please make sure you check each indicator carefully as the website may have broken, or other data may now be available.</p>
+    </div>
+    
+    <form action="" method="post">
+
+    <table class="table" id="indicators">
+
+    <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th>Evidence</th><th>Comments</th></thead>
+
+    <tbody>
+    {% for i, indicator in org_indicators.items() %}
+        <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
+            <td rowspan="2"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.indicator.name)}}">{{indicator.indicator.description}}</a></td>
+            <td><span class="muted">2012</span></td>
+            <td>
+            <span class="badge badge-{{publication_status[twentytwelvedata[indicator.indicator.name].result].class}}" title="Researcher's initial assessment">{{ publication_status[twentytwelvedata[indicator.indicator.name].result].text }}</span>
+            </td>
+
+            <td>
+            {{twentytwelvedata[indicator.indicator.name].result_evidence}}
+            </td>
+
+            <td>
+            {{twentytwelvedata[indicator.indicator.name].result_comments}}
+            </td>
+        </tr>
+        <tr id="tr{{indicator.indicator.id}}">
+        <td>Researcher<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>
+        {% for publishedstatus in publishedstatuses %}
+        <label for="{{indicator.indicator.id}}-published-{{publishedstatus.id}}">
+        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"> {{publishedstatus.name}}</input>
+        <br />
+        <span class="muted">{{publishedstatus.name}}</span></label>
+        {% endfor %}
+        </td>
+
+        <td><textarea name"{{indicator.indicator.id}}-source"></textarea></td>
+
+        <td><textarea name"{{indicator.indicator.id}}-comments"></textarea></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" /> Submit data (you cannot edit this survey once it's been submitted)</label>
+    <label for="submit" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save to database, but don't submit yet</label>
+
+    </form>
+{% endblock %}

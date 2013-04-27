@@ -56,6 +56,31 @@ def publishedStatus():
     checkPS = models.PublishedStatus.query.all()
     return checkPS
 
+def surveys():
+    surveys = db.session.query(models.OrganisationSurvey,
+                               models.Workflow,
+                               models.Organisation
+            ).join(models.Workflow
+            ).join(models.Organisation
+            ).all()
+    return surveys
+
+def getSurvey(organisation_code):
+    survey = db.session.query(models.OrganisationSurvey,
+                              models.Workflow).filter(models.Organisation.organisation_code==organisation_code
+            ).join(models.Workflow
+            ).join(models.Organisation
+            ).first()
+    return survey
+
+def getSurveyData(organisation_code):
+    surveyData = models.OrganisationSurveyData.query.filter(models.Organisation.organisation_code==organisation_code
+            ).join(models.OrganisationSurvey
+            ).join(models.Organisation
+            ).all()
+    surveyDataByIndicator = dict(map(lambda x: (x.indicator_id, x), surveyData))
+    return surveyDataByIndicator
+
 def addPublishedStatus(data):
     checkPS = models.PublishedStatus.query.filter_by(name=data["name"]
                 ).first()
@@ -98,6 +123,42 @@ def addWorkflowType(data):
         return newWT
     else:
         return checkWT
+
+def workflows(workflow_name=None):
+    if workflow_name:
+        checkW = db.session.query(models.Workflow,
+                                  models.WorkflowType
+            ).filter_by(name=workflow_name
+            ).join(models.WorkflowType, models.WorkflowType.id==models.Workflow.workflow_type
+            ).first()
+    else:
+        checkW = db.session.query(models.Workflow,
+                                  models.WorkflowType
+            ).join(models.WorkflowType, models.WorkflowType.id==models.Workflow.workflow_type
+            ).all()
+    if checkW:
+        return checkW
+    else:
+        return None
+
+def workflow_by_id(workflow_id):
+    checkW = db.session.query(models.Workflow
+            ).filter_by(id=workflow_id
+            ).first()
+    return checkW
+
+def advanceSurvey(organisationsurvey):
+    # receives an OrganisationSurvey object
+    # updates currentworkflow_id to leadsto value
+    checkS=models.OrganisationSurvey.query.filter_by(id=organisationsurvey.id
+            ).first()
+    checkW = workflow_by_id(organisationsurvey.currentworkflow_id)
+    if checkS and checkW:
+        checkS.currentworkflow_id=checkW.leadsto
+        db.session.add(checkS)
+        db.session.commit()
+    else:
+        return False
 
 def addWorkflow(data):
     checkW = models.Workflow.query.filter_by(name=data["name"]

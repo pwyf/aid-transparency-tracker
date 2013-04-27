@@ -549,7 +549,7 @@ class Workflow(db.Model):
     __tablename__='workflow'
     id = Column(Integer,primary_key=True)
     name = Column(UnicodeText)
-    leadsto = Column(Integer, ForeignKey('workflowtype.id'))
+    leadsto = Column(Integer, ForeignKey('workflow.id'))
     workflow_type = Column(Integer, ForeignKey('workflowtype.id'))
     
     def setup(self,
