@@ -29,7 +29,14 @@ def get_organisations_for_testing(package_id):
     conditions = []
     packageorganisations = dqpackages.packageOrganisations(package_id)
 
-    if packageorganisations:
+    dummy = [{
+            'organisation_id': None,
+            'activities_xpath': "//iati-activity"
+            }]
+
+    if not packageorganisations:
+        return dummy
+    else:
         for packageorganisation in packageorganisations:
             # add organisations to be tested;
             organisation_id = packageorganisation.Organisation.id
@@ -56,10 +63,7 @@ def get_organisations_for_testing(package_id):
 
     if organisations:
         return organisations
-    return [{
-            'organisation_id': None,
-            'activities_xpath': "//iati-activity"
-            }]
+    return dummy
 
 def binary_test(test_name):
     if re.compile("(\S*) is on list (\S*)").match(test_name):
