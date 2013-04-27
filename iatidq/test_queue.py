@@ -72,10 +72,11 @@ def test_activity(runtime_id, package_id, result_identifier,
     xmldata = etree.fromstring(data)
 
     activity_tests = tests_by_level(test_level.ACTIVITY)
+    transaction_tests = tests_by_level(test_level.TRANSACTION)
+
     for xmldata in [xmldata]:
         [ execute_and_record(xmldata, test) for test in activity_tests ]
 
-    transaction_tests = tests_by_level(test_level.TRANSACTION)
     for data in xmldata.xpath("//transaction"):
         [ execute_and_record(data, test) for test in transaction_tests ]
 
