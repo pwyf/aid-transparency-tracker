@@ -31,9 +31,16 @@ import unicodecsv
 import json
 import json
 
+@app.route("/surveys/admin/")
+def surveys_admin():
+    workflows = dqsurveys.workflows()
+    publishedstatuses=dqsurveys.publishedStatus()
+    return render_template("surveys_admin.html", 
+                           workflows=workflows,
+                           publishedstatuses=publishedstatuses)
 
-@app.route("/survey/create/", methods=["GET", "POST"])
-@app.route("/survey/<organisation_code>/create/", methods=["GET", "POST"])
+@app.route("/surveys/create/", methods=["GET", "POST"])
+@app.route("/surveys/<organisation_code>/create/", methods=["GET", "POST"])
 def create_survey(organisation_code=None):
     return "You're trying to create a survey"
 
@@ -81,8 +88,16 @@ def get_organisation_results(organisation_code, newindicators):
             }
     return data
 
-@app.route("/organisations/<organisation_code>/survey/create/", methods=["GET", "POST"])
+@app.route("/organisations/<organisation_code>/survey/")
 def organisation_survey(organisation_code=None):
+    organisation = dqorganisations.organisations(organisation_code)
+    survey = dqsurveys.getSurvey(organisation_code)
+    return render_template("survey.html", 
+                           organisation=organisation,
+                           survey=survey)
+
+@app.route("/organisations/<organisation_code>/survey/create/", methods=["GET", "POST"])
+def organisation_survey_create(organisation_code=None):
     if request.method=='POST':
         indicators = request.form.getlist('indicator')
         if 'save' in request.form:
@@ -140,6 +155,8 @@ def organisation_survey(organisation_code=None):
             organisation_code=organisation_code).first_or_404()
 
         indicators = dqindicators.indicators("pwyf2013")
+        org_indicators = dqorganisations._organisation_indicators_split(
+        organisation, 2)["zero"]
         twentytwelvedata=get_organisation_results(organisation_code, indicators)
         publishedstatuses = dqsurveys.publishedStatus()
 
@@ -172,6 +189,7 @@ def organisation_survey(organisation_code=None):
         return render_template("survey_create.html", 
                                organisation=organisation,
                                indicators=indicators,
+                               org_indicators = org_indicators,
                                twentytwelvedata=twentytwelvedata,
                                publication_status=publication_status,
                                publishedstatuses=publishedstatuses)
