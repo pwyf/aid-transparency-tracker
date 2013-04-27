@@ -1,0 +1,33 @@
+{% set active_page='surveys'%}{% extends "layout.html" %}
+{% block title %}Admin &raquo; Surveys{% endblock %}
+{% block content %}
+    <h1>Survey admin</h1>
+
+    <h3>Workflows</h3>
+    <table class="table">
+    <thead>
+    <th>Name</th><th>Workflow type</th>
+    </thead>
+    <tbody>
+    {% for workflow in workflows %}
+    <tr>
+    <td>{{workflow.Workflow.name}}</td><td>{{workflow.WorkflowType.name}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    <h3>Published statuses</h3>
+    <table class="table">
+    <thead>
+    <th>Name</th><th>Class</th>
+    </thead>
+    <tbody>
+    {% for publishedstatus in publishedstatuses %}
+    <tr>
+    <td>{{publishedstatus.name}}</td><td>{{publishedstatus.publishedstatus_class}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}
