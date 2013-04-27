@@ -22,6 +22,8 @@ import test_level
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
 
+class InvalidXPath(Exception): pass
+
 def get_organisations_for_testing(package_id):
     organisations = []
     conditions = []
@@ -168,7 +170,11 @@ def check_file(test_functions, codelists, file_name,
 
         assert len(organisations) > 0
         for organisation in organisations:
-            org_activities = data.xpath(organisation['activities_xpath'])
+            xp = organisation['activities_xpath']
+            try:
+                org_activities = data.xpath(xp)
+            except etree.XPathEvalError:
+                raise InvalidXPath(xp)
             org_id = organisation['organisation_id']
 
             [ run_test_activity(org_id, activity) 
