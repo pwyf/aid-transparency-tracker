@@ -30,6 +30,7 @@ import iatidq.dqtests
 import iatidq.dqprocessing
 import iatidq.inforesult
 import iatidq.setup
+import iatidq.dqregistry as dqregistry
 import optparse
 import sys
 
