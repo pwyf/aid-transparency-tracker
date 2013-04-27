@@ -163,7 +163,7 @@ class AggregationType(db.Model):
     id = Column(Integer,primary_key=True)
     name = Column(UnicodeText, nullable=False)
     description = Column(UnicodeText)
-    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
+    test_id = Column(Integer, ForeignKey('test.id'))
     test_result = Column(Integer, nullable=False)
     active = Column(Integer)
 
