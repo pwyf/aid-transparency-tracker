@@ -30,4 +30,26 @@
     {% endfor %}
     </tbody>
     </table>
+
+    <h3>Surveys</h3>
+    <table class="table" id="surveys">
+    <thead>
+    <th>Organisation</th><th>Current workflow</th><th>Change workflow</th><th>View</th>
+    </thead>
+    <tbody>
+    {% for survey in surveys %}
+    <tr>
+    <td>{{survey.Organisation.organisation_name}}</td><td>{{survey.Workflow.name}}</td>
+    <td>
+    <select name="workflows-{{survey.OrganisationSurvey.id}}">
+    {% for workflow in workflows %}
+    <option value="{{workflow.Workflow.id}}"{% if workflow.Workflow.id==survey.OrganisationSurvey.currentworkflow_id %} selected{%endif%}>{{workflow.Workflow.name}}</option>
+    {% endfor %}
+    </select>
+    </td>
+    <td><a href="{{url_for('organisation_survey', organisation_code=survey.Organisation.organisation_code)}}">View &raquo;</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
 {% endblock %}
