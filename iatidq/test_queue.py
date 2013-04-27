@@ -18,6 +18,7 @@ import re
 
 from iatidq import db
 import test_level
+import test_result
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
@@ -54,9 +55,13 @@ def test_activity(runtime_id, package_id, result_identifier,
                 }
             else:
                 data = xmldata
-            return int(test_functions[test_id](data))
+
+            if test_functions[test_id](data)):
+                return test_result.PASS
+            else:
+                return test_result.FAIL
         except:
-            return 2
+            return test_result.ERROR
 
     def execute_and_record(xmldata, test):
         the_result = execute_test(xmldata, test.id, binary_test(test.name))
