@@ -45,9 +45,6 @@ def test_activity(runtime_id, package_id, result_identifier,
         newresult.organisation_id = organisation_id
         db.session.add(newresult)
 
-    # | test_result == True  -> 1
-    # | test_result == False -> 0
-    # | exception            -> 2 (exceptions aren't counted against publishers)
     def execute_test(xmldata, test_id, binary_test):
         try:
             if binary_test:
@@ -73,12 +70,12 @@ def test_activity(runtime_id, package_id, result_identifier,
         return itertools.ifilter(test_exists, tests)
 
     xmldata = etree.fromstring(data)
-    activity_tests = tests_by_level(test_level.ACTIVITY)
 
-    [ execute_and_record(xmldata, test) for test in activity_tests ]
+    activity_tests = tests_by_level(test_level.ACTIVITY)
+    for xmldata in [xmldata]:
+        [ execute_and_record(xmldata, test) for test in activity_tests ]
 
     transaction_tests = tests_by_level(test_level.TRANSACTION)
-    #print xmldata
     for data in xmldata.xpath("//transaction"):
         [ execute_and_record(data, test) for test in transaction_tests ]
 
