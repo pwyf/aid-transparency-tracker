@@ -15,7 +15,7 @@
     </div>
     {% else %}
     <p class="lead">No survey has been created for this organisation yet.</p>
-    <p><a class="btn btn-success" href="{{url_for('organisation_survey_create', organisation_code=organisation.organisation_code)}}"><i class="icon-plus icon-white"></i> <b>Create survey &raquo;</b></a></p>
+    <p><a class="btn btn-success" href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name='create')}}"><i class="icon-plus icon-white"></i> <b>Create survey &raquo;</b></a></p>
 
     {%endif%}
     <h3>Activity log</h3>
