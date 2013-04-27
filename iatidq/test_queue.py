@@ -100,7 +100,6 @@ def check_file(test_functions, codelists, file_name,
                                            xml_parsed)
         db.session.commit()
 
-
         if not xml_parsed:
             print "XML parse failed"
             return False

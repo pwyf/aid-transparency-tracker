@@ -184,8 +184,7 @@ def _test_example_tests(publisher, country):
                codelists,
                xml_filename,
                runtime.id,
-               pkg.id,
-               context=None)
+               pkg.id)
 
     results = iatidq.models.Result.query.all()
     assert len(results) > 0
