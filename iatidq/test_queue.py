@@ -125,15 +125,12 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
           for activity in org_activities ]
         
     organisations = dqpackages.get_organisations_for_testing(package_id)
-    print "testing ..."
-
     assert len(organisations) > 0
+
     for organisation in organisations:
         run_tests_for_organisation(organisation)
 
-    print "Aggregating results..."
     dqprocessing.aggregate_results(runtime_id, package_id)
-    print "Finished aggregating results"
     db.session.commit()    
 
     run_info_results(package_id, runtime_id, data)
