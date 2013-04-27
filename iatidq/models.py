@@ -366,8 +366,10 @@ class OrganisationConditionFeedback(db.Model):
 class Organisation(db.Model):
     __tablename__ = 'organisation'
     id = Column(Integer, primary_key=True)
-    organisation_name = Column(UnicodeText)
-    organisation_code = Column(UnicodeText)
+    organisation_name = Column(UnicodeText, nullable=False)
+    organisation_code = Column(UnicodeText, nullable=False)
+    __table_args__ = (UniqueConstraint('organisation_name'),
+                      UniqueConstraint('organisation_code'))
     # organisation_code is also used to communicate
     # with implementation schedules
     
