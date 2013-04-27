@@ -125,11 +125,6 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
           for activity in org_activities ]
         
     organisations = dqpackages.get_organisations_for_testing(package_id)
-        #TODO: Implement for each organisation.
-        # This is a bit crude because it only works for
-        # iati-activities, and not organisation files.
-        # But it's sufficient for now.
-
     print "testing ..."
 
     assert len(organisations) > 0
