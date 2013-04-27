@@ -340,8 +340,9 @@ class IndicatorTest(db.Model):
 class OrganisationCondition(db.Model):
     __tablename__ = 'organisationcondition'
     id = Column(Integer, primary_key=True)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'))
-    test_id = Column(Integer, ForeignKey('test.id'))
+    organisation_id = Column(Integer, ForeignKey('organisation.id'),
+                             nullable=False)
+    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
     operation = Column(Integer) # show (1) or don't show (0) result
     condition = Column(UnicodeText) # activity level, hierarchy 2
     condition_value = Column(UnicodeText) # True, 2, etc.
