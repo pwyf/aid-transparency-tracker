@@ -53,13 +53,13 @@ def get_organisations_for_testing(package_id):
                     'organisation_id': None,
                     'activities_xpath': remainder_xpath
                     })
-    if len(organisations) == 0:
-        organisations.append({
+    if not organisations:
+        return [{
                 'organisation_id': None,
                 'activities_xpath': "//iati-activity"
-                })
-
-    return organisations
+                }]
+    else:
+        return organisations
 
 def binary_test(test_name):
     if re.compile("(\S*) is on list (\S*)").match(test_name):
