@@ -246,9 +246,9 @@ class Codelist(db.Model):
 class CodelistCode(db.Model):
     __tablename__ = 'codelistcode'
     id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
-    code = Column(UnicodeText)
-    codelist_id = Column(Integer, ForeignKey('codelist.id'))
+    name = Column(UnicodeText, nullable=False)
+    code = Column(UnicodeText, nullable=False)
+    codelist_id = Column(Integer, ForeignKey('codelist.id'), nullable=False)
     source = Column(UnicodeText)
 
     def setup(self,
@@ -273,7 +273,7 @@ class CodelistCode(db.Model):
 class IndicatorGroup(db.Model):
     __tablename__ = 'indicatorgroup'
     id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
+    name = Column(UnicodeText, nullable=False)
     description = Column(UnicodeText)
 
     def setup(self,
@@ -294,9 +294,10 @@ class IndicatorGroup(db.Model):
 class Indicator(db.Model):
     __tablename__ = 'indicator'
     id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
+    name = Column(UnicodeText, nullable=False)
     description = Column(UnicodeText)
-    indicatorgroup_id = Column(Integer, ForeignKey('indicatorgroup.id'))
+    indicatorgroup_id = Column(Integer, ForeignKey('indicatorgroup.id'),
+                               nullable=False)
 
     def setup(self,
                  name,
