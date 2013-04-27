@@ -150,7 +150,7 @@ def check_file(test_functions, codelists, file_name,
         db.session.commit()    
         print "committed to db"
 
-        run_info_results(package_id, runtime_id, file_name)
+        run_info_results(package_id, runtime_id, data)
 
         dqfunctions.add_test_status(package_id, 3, commit=True)
         print "added test status"
@@ -181,7 +181,7 @@ def run_test_queue():
     for body in queue.handle_queue_generator(download_queue):
         dequeue_download(body, test_functions, codelists)
 
-def run_info_results(package_id, runtime_id, file_name):
+def run_info_results(package_id, runtime_id, xmldata):
     import inforesult
 
     def add_info_result(info_id, result_data):
@@ -204,7 +204,7 @@ def run_info_results(package_id, runtime_id, file_name):
         for it in info_types:
             lam = info_lam_by_name(it.name)
             try:
-                result = lam(file_name)
+                result = lam(xmldata)
             except:
                 import sys
                 import traceback

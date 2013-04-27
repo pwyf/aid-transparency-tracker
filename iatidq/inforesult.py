@@ -14,11 +14,7 @@ from lxml import etree
 import models
 import itertools
 
-def parse_xml(file_name):
-    return etree.parse(file_name)
-
-def infotest1(filename):
-    data = parse_xml(filename)
+def infotest1(data):
 
     def values():
         for t in data.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]/value"""):
@@ -36,7 +32,7 @@ def infotest1(filename):
     return str(total)
 
 
-def infotest2(filename):
+def infotest2(data):
     return "result2"
 
 
