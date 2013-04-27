@@ -100,11 +100,6 @@ def check_file(test_functions, codelists, file_name,
                                            xml_parsed)
         db.session.commit()
 
-        organisations = dqpackages.get_organisations_for_testing(package_id)
-        #TODO: Implement for each organisation.
-        # This is a bit crude because it only works for
-        # iati-activities, and not organisation files.
-        # But it's sufficient for now.
 
         if not xml_parsed:
             print "XML parse failed"
@@ -127,6 +122,12 @@ def check_file(test_functions, codelists, file_name,
                                 activity_data, test_functions, 
                                 codelists, organisation_id)
             db.session.commit()
+
+        organisations = dqpackages.get_organisations_for_testing(package_id)
+        #TODO: Implement for each organisation.
+        # This is a bit crude because it only works for
+        # iati-activities, and not organisation files.
+        # But it's sufficient for now.
 
         print "testing ..."
 
