@@ -116,6 +116,13 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
             return data.xpath(xp)
         except etree.XPathEvalError:
             raise InvalidXPath(xp)
+
+    def run_tests_for_organisation(organisation):
+        org_activities = get_activities(organisation)
+        org_id = organisation['organisation_id']
+
+        [ run_test_activity(org_id, activity) 
+          for activity in org_activities ]
         
     organisations = dqpackages.get_organisations_for_testing(package_id)
         #TODO: Implement for each organisation.
@@ -127,11 +134,7 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     assert len(organisations) > 0
     for organisation in organisations:
-        org_activities = get_activities(organisation)
-        org_id = organisation['organisation_id']
-
-        [ run_test_activity(org_id, activity) 
-          for activity in org_activities ]
+        run_tests_for_organisation(organisation)
 
     print "Aggregating results..."
     dqprocessing.aggregate_results(runtime_id, package_id)
