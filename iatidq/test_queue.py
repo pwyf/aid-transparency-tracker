@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import sys, os, json, ckan, urllib2
+import sys, os, json, ckan
 import itertools
 from datetime import date, datetime
 import models, dqprocessing, dqparsetests, dqpackages
