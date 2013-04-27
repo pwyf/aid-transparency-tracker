@@ -21,36 +21,36 @@
     <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th>Evidence</th><th>Comments</th></thead>
 
     <tbody>
-    {% for i, indicator in org_indicators %}
+    {% for i, indicator in org_indicators.items() %}
         <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
-            <td rowspan="2"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.name)}}">{{indicator.description}}</a></td>
+            <td rowspan="2"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.indicator.name)}}">{{indicator.description}}</a></td>
             <td><span class="muted">2012</span></td>
             <td>
-            <span class="badge badge-{{publication_status[twentytwelvedata[indicator.name].result].class}}" title="Researcher's initial assessment">{{ publication_status[twentytwelvedata[indicator.name].result].text }}</span>
+            <span class="badge badge-{{publication_status[twentytwelvedata[indicator.indicator.name].result].class}}" title="Researcher's initial assessment">{{ publication_status[twentytwelvedata[indicator.indicator.name].result].text }}</span>
             </td>
 
             <td>
-            {{twentytwelvedata[indicator.name].result_evidence}}
+            {{twentytwelvedata[indicator.indicator.name].result_evidence}}
             </td>
 
             <td>
-            {{twentytwelvedata[indicator.name].result_comments}}
+            {{twentytwelvedata[indicator.indicator.name].result_comments}}
             </td>
         </tr>
-        <tr id="tr{{indicator.id}}">
-        <td>Researcher<input type="hidden" name="indicator" value="{{indicator.id}}" /></td>
+        <tr id="tr{{indicator.indicator.id}}">
+        <td>Researcher<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
         {% for publishedstatus in publishedstatuses %}
-        <label for="{{indicator.id}}-published-{{publishedstatus.id}}">
-        <input type="radio" name="{{indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.id}}-published-{{publishedstatus.id}}"> {{publishedstatus.name}}</input>
+        <label for="{{indicator.indicator.id}}-published-{{publishedstatus.id}}">
+        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"> {{publishedstatus.name}}</input>
         <br />
         <span class="muted">{{publishedstatus.name}}</span></label>
         {% endfor %}
         </td>
 
-        <td><textarea name"{{indicator.id}}-source"></textarea></td>
+        <td><textarea name"{{indicator.indicator.id}}-source"></textarea></td>
 
-        <td><textarea name"{{indicator.id}}-comments"></textarea></td>
+        <td><textarea name"{{indicator.indicator.id}}-comments"></textarea></td>
         </tr>
     {% endfor %}
     </tbody>
