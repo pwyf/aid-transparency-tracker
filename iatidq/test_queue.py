@@ -91,21 +91,7 @@ def parse_xml(file_name):
     except etree.XMLSyntaxError:
         return False, None
 
-def check_file(test_functions, codelists, file_name, 
-                runtime_id, package_id):
-    try:
-        xml_parsed, data = parse_xml(file_name)
-
-        print file_name
-
-        dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, 
-                                           xml_parsed)
-        db.session.commit()
-
-        if not xml_parsed:
-            print "XML parse failed"
-            return False
-
+def check_data(runtime_id, package_id, test_functions, codelists, data):
         def get_result_hierarchy(activity):
             hierarchy = activity.get('hierarchy', default=None)
             if hierarchy is "":
@@ -154,6 +140,24 @@ def check_file(test_functions, codelists, file_name,
 
         dqfunctions.add_test_status(package_id, 3, commit=True)
         print "added test status"
+
+def check_file(test_functions, codelists, file_name, 
+                runtime_id, package_id):
+    try:
+        xml_parsed, data = parse_xml(file_name)
+
+        print file_name
+
+        dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, 
+                                           xml_parsed)
+        db.session.commit()
+
+        if not xml_parsed:
+            print "XML parse failed"
+            return False
+
+        check_data(runtime_id, package_id, test_functions, codelists, data)
+
         return True
     except Exception, e:
         import traceback
