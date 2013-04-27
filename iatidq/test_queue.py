@@ -82,7 +82,7 @@ def test_activity(runtime_id, package_id, result_identifier,
         (transaction_tests, transaction_data)
         ]
 
-    for data, tests in test_and_sources:
+    for data, tests in tests_and_sources:
         [ execute_and_record(data, test) for test in tests ]
 
     return "Success"
