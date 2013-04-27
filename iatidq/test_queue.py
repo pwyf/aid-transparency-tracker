@@ -56,7 +56,7 @@ def test_activity(runtime_id, package_id, result_identifier,
             else:
                 data = xmldata
 
-            if test_functions[test_id](data)):
+            if test_functions[test_id](data):
                 return test_result.PASS
             else:
                 return test_result.FAIL
