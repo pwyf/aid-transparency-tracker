@@ -27,7 +27,6 @@ class InvalidXPath(Exception): pass
 def get_organisations_for_testing(package_id):
     organisations = []
     conditions = []
-    conditions_specified = False
     packageorganisations = dqpackages.packageOrganisations(package_id)
 
     if packageorganisations:
@@ -37,7 +36,6 @@ def get_organisations_for_testing(package_id):
             condition = packageorganisation.OrganisationPackage.condition
             if condition is not None:
                 condition = "[" + condition.strip() + "]"
-                conditions_specified = True
                 conditions.append(condition)
             else:
                 condition = ""
@@ -50,7 +48,7 @@ def get_organisations_for_testing(package_id):
         conditions_str = " or ".join(conditions)
         remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
 
-        if conditions_specified:
+        if conditions:
             organisations.append({
                     'organisation_id': None,
                     'activities_xpath': remainder_xpath
