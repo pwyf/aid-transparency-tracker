@@ -143,11 +143,12 @@ db.Index('result_test',
 class AggregateResult(db.Model):
     __tablename__='aggregateresult'
     id = Column(Integer,primary_key=True)
-    runtime_id=Column(Integer, ForeignKey('runtime.id'))
-    package_id = Column(Integer, ForeignKey('package.id'))
+    runtime_id=Column(Integer, ForeignKey('runtime.id'), nullable=False)
+    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
-    aggregateresulttype_id = Column(Integer, ForeignKey('aggregationtype.id'))
-    test_id = Column(Integer, ForeignKey('test.id'))
+    aggregateresulttype_id = Column(Integer, ForeignKey('aggregationtype.id'),
+                                    nullable=False)
+    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
     result_hierarchy = Column(Integer)
     results_data = Column(Float)
     results_num = Column(Integer)
