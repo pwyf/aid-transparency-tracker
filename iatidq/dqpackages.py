@@ -53,3 +53,48 @@ def packageOrganisations(package_id):
         return packageorganisations
     else:
         return False
+
+def get_organisations_for_testing(package_id):
+    organisations = []
+    conditions = []
+    conditions_unbracketed = []
+    packageorganisations = packageOrganisations(package_id)
+
+    dummy = [{
+            'organisation_id': None,
+            'activities_xpath': "//iati-activity"
+            }]
+
+    if not packageorganisations:
+        return dummy
+
+    for packageorganisation in packageorganisations:
+        # add organisations to be tested;
+        organisation_id = packageorganisation.Organisation.id
+        condition = packageorganisation.OrganisationPackage.condition
+        if condition is not None:
+            condition_unbracketed = condition.strip()
+            condition = "[" + condition_unbracketed + "]"
+            conditions.append(condition)
+            conditions_unbracketed.append(condition_unbracketed)
+        else:
+            condition_unbracketed = ""
+            condition = ""
+
+        organisations.append({
+                'organisation_id': organisation_id,
+                'activities_xpath': "//iati-activity%s" % condition
+                })
+
+    conditions_str = " or ".join(conditions_unbracketed)
+    remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
+
+    if conditions:
+        organisations.append({
+                'organisation_id': None,
+                'activities_xpath': remainder_xpath
+                })
+
+    if organisations:
+        return organisations
+    return dummy

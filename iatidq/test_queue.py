@@ -24,50 +24,6 @@ download_queue='iati_tests_queue'
 
 class InvalidXPath(Exception): pass
 
-def get_organisations_for_testing(package_id):
-    organisations = []
-    conditions = []
-    conditions_unbracketed = []
-    packageorganisations = dqpackages.packageOrganisations(package_id)
-
-    dummy = [{
-            'organisation_id': None,
-            'activities_xpath': "//iati-activity"
-            }]
-
-    if not packageorganisations:
-        return dummy
-
-    for packageorganisation in packageorganisations:
-        # add organisations to be tested;
-        organisation_id = packageorganisation.Organisation.id
-        condition = packageorganisation.OrganisationPackage.condition
-        if condition is not None:
-            condition_unbracketed = condition.strip()
-            condition = "[" + condition_unbracketed + "]"
-            conditions.append(condition)
-            conditions_unbracketed.append(condition_unbracketed)
-        else:
-            condition_unbracketed = ""
-            condition = ""
-
-        organisations.append({
-                'organisation_id': organisation_id,
-                'activities_xpath': "//iati-activity%s" % condition
-                })
-
-    conditions_str = " or ".join(conditions_unbracketed)
-    remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
-
-    if conditions:
-        organisations.append({
-                'organisation_id': None,
-                'activities_xpath': remainder_xpath
-                })
-
-    if organisations:
-        return organisations
-    return dummy
 
 def binary_test(test_name):
     if re.compile("(\S*) is on list (\S*)").match(test_name):
@@ -144,7 +100,7 @@ def check_file(test_functions, codelists, file_name,
                                            xml_parsed)
         db.session.commit()
 
-        organisations = get_organisations_for_testing(package_id)
+        organisations = dqpackages.get_organisations_for_testing(package_id)
         #TODO: Implement for each organisation.
         # This is a bit crude because it only works for
         # iati-activities, and not organisation files.
