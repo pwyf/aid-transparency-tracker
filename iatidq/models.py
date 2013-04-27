@@ -94,8 +94,7 @@ class Package(db.Model):
     package_license = Column(UnicodeText)
     package_metadata_created = Column(UnicodeText)
     package_metadata_modified = Column(UnicodeText)
-    package_group = Column(Integer, ForeignKey('packagegroup.id'),
-                           nullable=False)
+    package_group = Column(Integer, ForeignKey('packagegroup.id'))
     package_activity_from = Column(UnicodeText)
     package_activity_to = Column(UnicodeText)
     package_activity_count = Column(UnicodeText)
