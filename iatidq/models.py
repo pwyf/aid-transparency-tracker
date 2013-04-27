@@ -319,8 +319,8 @@ class Indicator(db.Model):
 class IndicatorTest(db.Model):
     __tablename__ = 'indicatortest'
     id = Column(Integer, primary_key=True)
-    indicator_id = Column(Integer, ForeignKey('indicator.id'))
-    test_id = Column(Integer, ForeignKey('test.id'))
+    indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
+    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
 
     def setup(self,
                  indicator_id,
