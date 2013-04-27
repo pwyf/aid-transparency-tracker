@@ -92,54 +92,54 @@ def parse_xml(file_name):
         return False, None
 
 def check_data(runtime_id, package_id, test_functions, codelists, data):
-        def get_result_hierarchy(activity):
-            hierarchy = activity.get('hierarchy', default=None)
-            if hierarchy is "":
-                return None
-            return hierarchy
+    def get_result_hierarchy(activity):
+        hierarchy = activity.get('hierarchy', default=None)
+        if hierarchy is "":
+            return None
+        return hierarchy
 
-        def run_test_activity(organisation_id, activity):
-            result_hierarchy = get_result_hierarchy(activity)
+    def run_test_activity(organisation_id, activity):
+        result_hierarchy = get_result_hierarchy(activity)
             
-            result_identifier = activity.find('iati-identifier').text.decode()
-            activity_data = etree.tostring(activity)
+        result_identifier = activity.find('iati-identifier').text.decode()
+        activity_data = etree.tostring(activity)
+        
+        res = test_activity(runtime_id, package_id, 
+                            result_identifier, result_hierarchy,
+                            activity_data, test_functions, 
+                            codelists, organisation_id)
+        db.session.commit()
 
-            res = test_activity(runtime_id, package_id, 
-                                result_identifier, result_hierarchy,
-                                activity_data, test_functions, 
-                                codelists, organisation_id)
-            db.session.commit()
-
-        organisations = dqpackages.get_organisations_for_testing(package_id)
+    organisations = dqpackages.get_organisations_for_testing(package_id)
         #TODO: Implement for each organisation.
         # This is a bit crude because it only works for
         # iati-activities, and not organisation files.
         # But it's sufficient for now.
 
-        print "testing ..."
+    print "testing ..."
 
-        assert len(organisations) > 0
-        for organisation in organisations:
-            xp = organisation['activities_xpath']
-            try:
-                org_activities = data.xpath(xp)
-            except etree.XPathEvalError:
-                raise InvalidXPath(xp)
-            org_id = organisation['organisation_id']
+    assert len(organisations) > 0
+    for organisation in organisations:
+        xp = organisation['activities_xpath']
+        try:
+            org_activities = data.xpath(xp)
+        except etree.XPathEvalError:
+            raise InvalidXPath(xp)
+        org_id = organisation['organisation_id']
 
-            [ run_test_activity(org_id, activity) 
-              for activity in org_activities ]
+        [ run_test_activity(org_id, activity) 
+          for activity in org_activities ]
 
-        print "Aggregating results..."
-        dqprocessing.aggregate_results(runtime_id, package_id)
-        print "Finished aggregating results"
-        db.session.commit()    
-        print "committed to db"
+    print "Aggregating results..."
+    dqprocessing.aggregate_results(runtime_id, package_id)
+    print "Finished aggregating results"
+    db.session.commit()    
+    print "committed to db"
 
-        run_info_results(package_id, runtime_id, data)
+    run_info_results(package_id, runtime_id, data)
 
-        dqfunctions.add_test_status(package_id, 3, commit=True)
-        print "added test status"
+    dqfunctions.add_test_status(package_id, 3, commit=True)
+    print "added test status"
 
 def check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id):
