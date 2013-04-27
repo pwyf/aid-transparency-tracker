@@ -96,6 +96,8 @@ def check_file(test_functions, codelists, file_name,
     try:
         xml_parsed, data = parse_xml(file_name)
 
+        print file_name
+
         dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, 
                                            xml_parsed)
         db.session.commit()
@@ -141,8 +143,6 @@ def check_file(test_functions, codelists, file_name,
 
             [ run_test_activity(org_id, activity) 
               for activity in org_activities ]
-
-        print file_name
 
         print "Aggregating results..."
         dqprocessing.aggregate_results(runtime_id, package_id)
