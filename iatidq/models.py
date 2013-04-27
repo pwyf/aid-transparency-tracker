@@ -390,8 +390,9 @@ class Organisation(db.Model):
 class OrganisationPackage(db.Model):
     __tablename__ = 'organisationpackage'
     id = Column(Integer, primary_key=True)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'))
-    package_id = Column(Integer, ForeignKey('package.id'))
+    organisation_id = Column(Integer, ForeignKey('organisation.id'),
+                             nullable=False)
+    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
     condition = Column(UnicodeText)
     __table_args__ = (UniqueConstraint('organisation_id', 'package_id', name='_organisation_package_uc'),
                      )
