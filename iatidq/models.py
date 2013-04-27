@@ -357,7 +357,7 @@ class OrganisationCondition(db.Model):
 class OrganisationConditionFeedback(db.Model):
     __tablename__ ='organisationconditionfeedback'
     id = Column(Integer, primary_key=True)
-    organisation_id = Column(UnicodeText)
+    organisation_id = Column(UnicodeText, nullable=False)
     uses = Column(UnicodeText)
     element = Column(UnicodeText)
     where = Column(UnicodeText)
@@ -412,10 +412,13 @@ class OrganisationPackage(db.Model):
 class OrganisationPackageGroup(db.Model):
     __tablename__ = 'organisationpackagegroup'
     id = Column(Integer, primary_key=True)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'))
-    packagegroup_id = Column(Integer, ForeignKey('packagegroup.id'))
+    organisation_id = Column(Integer, ForeignKey('organisation.id'),
+                             nullable=False)
+    packagegroup_id = Column(Integer, ForeignKey('packagegroup.id'),
+                             nullable=False)
     condition = Column(UnicodeText)
-    
+    __table_args__ = (UniqueConstraint('organisation_id', 'packagegroup_id'),)
+
     def setup(self,
                  organisation_id,
                  packagegroup_id,
