@@ -19,6 +19,7 @@ import re
 from iatidq import db
 import test_level
 import test_result
+import package_status
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
@@ -143,7 +144,7 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     run_info_results(package_id, runtime_id, data)
 
-    dqfunctions.add_test_status(package_id, 3, commit=True)
+    dqfunctions.add_test_status(package_id, package_status.TESTED, commit=True)
 
 def check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id):

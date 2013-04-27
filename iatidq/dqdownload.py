@@ -15,8 +15,9 @@ from iatidq import db
 
 import models
 from dqfunctions import add_test_status, packages_from_registry
-
+import package_status
 import testrun
+import package_status
 
 download_queue = 'iati_download_queue'
 
@@ -46,7 +47,7 @@ def get_package(pkg, package, runtime_id):
         enqueue_download(package, runtime_id)
     else:
         print "Package", pkg["name"], "is already the latest version"
-        add_test_status(package.id, 4)
+        add_test_status(package.id, package_status.UP_TO_DATE)
 
 def download_packages(runtime):
     # Check registry for packages list
@@ -69,7 +70,7 @@ def download_packages(runtime):
             if package.package_revision_id != registry_packages[name]:
                 # need to add status here, because otherwise the status could 
                 # be written to DB after the package has finished testing
-                add_test_status(package.id, 1, commit=True)
+                add_test_status(package.id, package_status.NEW, commit=True)
                 testing_packages.append(package.id)
                 enqueue_download(package, runtime.id)
         except KeyError:
@@ -81,14 +82,14 @@ def download_packages(runtime):
 def download_package(runtime, package_name):
     package = models.Package.query.filter_by(
         package_name=package_name).first()
-    add_test_status(package.id, 1)
+    add_test_status(package.id, package_status.NEW)
 
     registry = ckanclient.CkanClient(base_location=CKANurl)  
 
     pkg = registry.package_entity_get(package.package_name)
 
     if pkg['revision_id'] == package.package_revision_id:
-        add_test_status(package.id, 4)
+        add_test_status(package.id, package_status.UP_TO_DATE)
     else:
         get_package(pkg, package, runtime.id)
 
