@@ -74,11 +74,16 @@ def test_activity(runtime_id, package_id, result_identifier,
     activity_tests = tests_by_level(test_level.ACTIVITY)
     transaction_tests = tests_by_level(test_level.TRANSACTION)
 
-    for xmldata in [xmldata]:
-        [ execute_and_record(xmldata, test) for test in activity_tests ]
+    activity_data = xmldata
+    transaction_data = xmldata.xpath("//transaction")
 
-    for data in xmldata.xpath("//transaction"):
-        [ execute_and_record(data, test) for test in transaction_tests ]
+    tests_and_sources = [
+        (activity_tests, activity_data),
+        (transaction_tests, transaction_data)
+        ]
+
+    for data, tests in test_and_sources:
+        [ execute_and_record(data, test) for test in tests ]
 
     return "Success"
 
