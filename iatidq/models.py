@@ -88,7 +88,7 @@ class Package(db.Model):
     man_auto = Column(UnicodeText)
     source_url = Column(UnicodeText)
     package_ckan_id = Column(UnicodeText)
-    package_name = Column(UnicodeText)
+    package_name = Column(UnicodeText, nullable=False)
     package_title = Column(UnicodeText)
     package_license_id = Column(UnicodeText)
     package_license = Column(UnicodeText)
@@ -103,7 +103,8 @@ class Package(db.Model):
     package_verified = Column(UnicodeText)  
     package_filetype = Column(UnicodeText)  
     package_revision_id = Column(UnicodeText)    
-    active = Column(Boolean)    
+    active = Column(Boolean)
+    __table_args__ = (UniqueConstraint('package_name'),)
 
     def __init__(self, man_auto=None, source_url=None):
         if man_auto is not None:
