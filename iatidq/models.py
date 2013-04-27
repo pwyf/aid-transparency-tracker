@@ -190,12 +190,12 @@ class AggregationType(db.Model):
 class Test(db.Model):
     __tablename__ = 'test'
     id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
-    description = Column(UnicodeText)
+    name = Column(UnicodeText, nullable=False)
+    description = Column(UnicodeText, nullable=False)
     test_group = Column(UnicodeText)
     file = Column(UnicodeText)
     line = Column(Integer)
-    test_level = Column(Integer)
+    test_level = Column(Integer, nullable=False)
     active = Column(Boolean)
 
     def setup(self,
@@ -224,7 +224,7 @@ class Test(db.Model):
 class Codelist(db.Model):
     __tablename__ = 'codelist'
     id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
+    name = Column(UnicodeText, nullable=False)
     description = Column(UnicodeText)
     source = Column(UnicodeText)
 
