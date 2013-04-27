@@ -20,6 +20,7 @@ from iatidq import db
 import test_level
 import test_result
 import package_status
+import hardcoded_test
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
@@ -153,8 +154,8 @@ def check_file(test_functions, codelists, file_name,
 
         print file_name
 
-        dqprocessing.add_hardcoded_result(-3, runtime_id, package_id, 
-                                           xml_parsed)
+        dqprocessing.add_hardcoded_result(hardcoded_test.VALID_XML, 
+                                          runtime_id, package_id, xml_parsed)
         db.session.commit()
 
         if not xml_parsed:

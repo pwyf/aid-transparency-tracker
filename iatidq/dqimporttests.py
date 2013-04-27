@@ -14,25 +14,29 @@ import unicodecsv
 import util
 
 import test_level
+import hardcoded_test
 
 def hardcodedTests():
     hardcoded_tests = [
-        (-2, u'url_exists', u"Check that the xml file actually exists."),
-        (-3, u'valid_xml', u"Check that xml is well structured"),
-        (-4, u'schema_conformance', u"Check that xml conforms to schema")
+        (hardcoded_test.URL_EXISTS, 
+         u'url_exists', u"Check that the xml file actually exists."),
+        (hardcoded_test.VALID_XML, 
+         u'valid_xml', u"Check that xml is well structured"),
+        (hardcoded_test.SCHEMA_CONFORMANCE,
+         u'schema_conformance', u"Check that xml conforms to schema")
     ]
 
-    for hardcoded_test in hardcoded_tests:
-        if models.Test.query.filter(models.Test.id==hardcoded_test[0]).first():
+    for hc_test in hardcoded_tests:
+        if models.Test.query.filter(models.Test.id==hc_test[0]).first():
             continue
         test = models.Test()
         test.setup(
-            name = hardcoded_test[1],
-            description = hardcoded_test[2],
+            name = hc_test[1],
+            description = hc_test[2],
             test_group = None,
             test_level = 2,
             active = True,
-            id = hardcoded_test[0]
+            id = hc_test[0]
             )
         db.session.add(test)
     db.session.commit()

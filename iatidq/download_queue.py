@@ -15,6 +15,7 @@ from dqregistry import create_package_group, setup_package_group
 from util import report_error, download_file
 
 from iatidq import db, app
+import hardcoded_test
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
@@ -67,7 +68,8 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
 
     db.session.add(package)
     db.session.commit()
-    add_hardcoded_result(-2, runtime_id, package.id, success)
+    add_hardcoded_result(hardcoded_test.URL_EXISTS, 
+                         runtime_id, package.id, success)
     db.session.commit()
 
 def manage_download(path, url):
