@@ -1,12 +1,6 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
 {% block title %}Survey &raquo; {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
 {% block content %}
-   <script src="/static/jquery.tablesorter.min.js"></script>
-    <script >
-    $(function() {
-    $("table#tests").tablesorter({ sortList: [[0,0]] });
-    });
-    </script>
     <h1>Create survey for {{organisation.organisation_name}} <code>{{organisation.organisation_code}}</code></h1>
 	<h3>Please provide data for {{org_indicators|count}} indicators.</h3>
     <div class="alert alert-info">
@@ -16,7 +10,7 @@
     
     <form action="" method="post">
 
-    <table class="table" id="results">
+    <table class="table" id="indicators">
 
     <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th>Evidence</th><th>Comments</th></thead>
 
