@@ -41,9 +41,9 @@ def get_organisations_for_testing(package_id):
                 condition = ""
 
             organisations.append({
-            'organisation_id': organisation_id,
-            'activities_xpath': "//iati-activity%s" % condition
-                            })
+                    'organisation_id': organisation_id,
+                    'activities_xpath': "//iati-activity%s" % condition
+                    })
 
         conditions_str = " or ".join(conditions)
         remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
@@ -53,6 +53,7 @@ def get_organisations_for_testing(package_id):
                     'organisation_id': None,
                     'activities_xpath': remainder_xpath
                     })
+
     if organisations:
         return organisations
     return [{
