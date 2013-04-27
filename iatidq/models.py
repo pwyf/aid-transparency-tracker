@@ -17,8 +17,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class PackageStatus(db.Model):
     __tablename__ = 'packagestatus'
     id = Column(Integer, primary_key=True)
-    package_id = Column(Integer, ForeignKey('package.id'))
-    status = Column(Integer)
+    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
+    status = Column(Integer, nullable=False)
     runtime_datetime = Column(DateTime)
 
     def __init__(self):
@@ -33,7 +33,7 @@ class PackageStatus(db.Model):
 class Runtime(db.Model):
     __tablename__ = 'runtime'
     id = Column(Integer, primary_key=True)
-    runtime_datetime = Column(DateTime)
+    runtime_datetime = Column(DateTime, nullable=False)
 
     def __init__(self):
         self.runtime_datetime = datetime.utcnow()
@@ -47,7 +47,7 @@ class PackageGroup(db.Model):
     __tablename__ = 'packagegroup'
     id = Column(Integer, primary_key=True)
     man_auto = Column(UnicodeText)
-    name = Column(UnicodeText)
+    name = Column(UnicodeText, nullable=False)
     ckan_id = Column(UnicodeText)
     revision_id = Column(UnicodeText)
     title = Column(UnicodeText)
