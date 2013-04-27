@@ -138,14 +138,13 @@
             </td>
 	        <td></td>
             <td><span class="label label-inverse">NOT FOUND</span></td>
-            {% set surveydata = true %}
             {% if surveydata %}
-            <td><span class="label label-success">Always published</span> <a class="btn btn-mini">Edit &raquo;</a></td>
-            <td>Website</td>
-            <td>50</td>
+            <td><span class="label label-{{published_status[surveydata[result.indicator.id].published_status].publishedstatus_class}}">{{published_status[surveydata[result.indicator.id].published_status].name}}</span> <a class="btn btn-mini">Edit &raquo;</a></td>
+            <td></td>
+            <td></td>
             {% else %}
             <td colspan="3">
-            <b>No survey data yet.</b>
+            No survey data yet.
             </td>
             {% endif %}
             <td><a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down"></i></a></td>
