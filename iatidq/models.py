@@ -438,15 +438,15 @@ class OrganisationPackageGroup(db.Model):
 class InfoResult(db.Model):
     __tablename__ = 'info_result'
     id = Column(Integer, primary_key=True)
-    runtime_id = Column(Integer, ForeignKey('runtime.id'))
-    package_id = Column(Integer, ForeignKey('package.id'))
-    info_id = Column(Integer, ForeignKey('info_type.id'))
+    runtime_id = Column(Integer, ForeignKey('runtime.id'), nullable=False)
+    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
+    info_id = Column(Integer, ForeignKey('info_type.id'), nullable=False)
     result_data = Column(UnicodeText)
     
 class InfoType(db.Model):
     __tablename__ = 'info_type'
     id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
+    name = Column(UnicodeText, nullable=False)
     description = Column(UnicodeText)
 
 ## USERS
