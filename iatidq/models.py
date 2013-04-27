@@ -123,10 +123,10 @@ class Package(db.Model):
 class Result(db.Model):
     __tablename__ = 'result'
     id = Column(Integer, primary_key=True)
-    runtime_id = Column(Integer, ForeignKey('runtime.id'))
-    package_id = Column(Integer, ForeignKey('package.id'))
+    runtime_id = Column(Integer, ForeignKey('runtime.id'), nullable=False)
+    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
-    test_id = Column(Integer, ForeignKey('test.id'))
+    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
     result_data = Column(Integer)
     result_identifier = Column(UnicodeText)
     result_hierarchy = Column(Integer)
