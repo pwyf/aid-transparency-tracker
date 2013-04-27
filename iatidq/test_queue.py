@@ -110,6 +110,13 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
                             codelists, organisation_id)
         db.session.commit()
 
+    def get_activities(organisation):
+        xp = organisation['activities_xpath']
+        try:
+            return data.xpath(xp)
+        except etree.XPathEvalError:
+            raise InvalidXPath(xp)
+        
     organisations = dqpackages.get_organisations_for_testing(package_id)
         #TODO: Implement for each organisation.
         # This is a bit crude because it only works for
@@ -120,11 +127,7 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     assert len(organisations) > 0
     for organisation in organisations:
-        xp = organisation['activities_xpath']
-        try:
-            org_activities = data.xpath(xp)
-        except etree.XPathEvalError:
-            raise InvalidXPath(xp)
+        org_activities = get_activities(organisation)
         org_id = organisation['organisation_id']
 
         [ run_test_activity(org_id, activity) 
@@ -134,12 +137,10 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
     dqprocessing.aggregate_results(runtime_id, package_id)
     print "Finished aggregating results"
     db.session.commit()    
-    print "committed to db"
 
     run_info_results(package_id, runtime_id, data)
 
     dqfunctions.add_test_status(package_id, 3, commit=True)
-    print "added test status"
 
 def check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id):
