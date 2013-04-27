@@ -92,7 +92,7 @@ def parse_xml(file_name):
         return False, None
 
 def check_file(test_functions, codelists, file_name, 
-                runtime_id, package_id, context=None):
+                runtime_id, package_id):
     try:
         xml_parsed, data = parse_xml(file_name)
 
@@ -168,8 +168,7 @@ def dequeue_download(body, test_functions, codelists):
                    codelists,
                    args['filename'],
                    args['runtime_id'],
-                   args['package_id'],
-                   args['context'])
+                   args['package_id'])
     except Exception, e:
         print "Exception in dequeue_download", e
 
