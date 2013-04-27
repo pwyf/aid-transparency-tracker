@@ -161,10 +161,10 @@ class AggregateResult(db.Model):
 class AggregationType(db.Model):
     __tablename__ = 'aggregationtype'
     id = Column(Integer,primary_key=True)
-    name = Column(UnicodeText)
+    name = Column(UnicodeText, nullable=False)
     description = Column(UnicodeText)
-    test_id = Column(Integer, ForeignKey('test.id'))
-    test_result = Column(Integer)
+    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
+    test_result = Column(Integer, nullable=False)
     active = Column(Integer)
 
     def setup(self,
