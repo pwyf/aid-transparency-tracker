@@ -142,7 +142,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         
         if 'submit' in request.form:
             # save data, change currentworkflow_id to leadsto
-            dqsurvey.advanceSurvey(organisationsurvey)
+            dqsurveys.advanceSurvey(organisationsurvey)
             flash('Successfully submitted survey data', 'success')
         else:
             time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
@@ -153,6 +153,8 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     else:
         organisation = Organisation.query.filter_by(
             organisation_code=organisation_code).first_or_404()
+
+        surveydata = dqsurveys.getSurveyData(organisation_code, workflow_name)
 
         indicators = dqindicators.indicators("pwyf2013")
         org_indicators = dqorganisations._organisation_indicators_split(
@@ -194,4 +196,5 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                                twentytwelvedata=twentytwelvedata,
                                publication_status=publication_status,
                                publishedstatuses=publishedstatuses,
-                               workflow=workflow)
+                               workflow=workflow,
+                               surveydata=surveydata)
