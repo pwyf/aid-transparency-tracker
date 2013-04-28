@@ -189,7 +189,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         twentytwelvedata=get_organisation_results(organisation_code, indicators)
         publishedstatuses = dqsurveys.publishedStatus()
 
-        publication_status= {
+        old_publication_status= {
             '4': {
                 'text': 'Always published',
                 'class': 'success'
@@ -221,7 +221,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                                indicators=indicators,
                                org_indicators = org_indicators,
                                twentytwelvedata=twentytwelvedata,
-                               publication_status=publication_status,
+                               old_publication_status=old_publication_status,
                                publishedstatuses=publishedstatuses,
                                workflow=workflow,
                                surveydata=surveydata)

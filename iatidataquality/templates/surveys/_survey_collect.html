@@ -25,7 +25,7 @@
             <td rowspan="2"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.indicator.name)}}">{{indicator.indicator.description}}</a></td>
             <td><span class="muted">2012</span></td>
             <td>
-            <span class="badge badge-{{publication_status[twentytwelvedata[indicator.indicator.name].result].class}}" title="Researcher's initial assessment">{{ publication_status[twentytwelvedata[indicator.indicator.name].result].text }}</span>
+            <span class="badge badge-{{old_publication_status[twentytwelvedata[indicator.indicator.name].result].class}}" title="Researcher's initial assessment">{{ old_publication_status[twentytwelvedata[indicator.indicator.name].result].text }}</span>
             </td>
 
             <td class="restrict_text">
