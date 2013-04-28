@@ -40,20 +40,9 @@ def tests_by_level(test_functions, level):
     test_exists = lambda t: t.id in test_functions
     return itertools.ifilter(test_exists, tests)
 
-def test_activity(runtime_id, package_id, result_identifier, 
+def _test_activity(runtime_id, package_id, result_identifier, 
                   result_hierarchy, data, test_functions, codelists,
-                  organisation_id):
-
-    def add_result(test_id, the_result):
-        newresult = models.Result()
-        newresult.runtime_id = runtime_id
-        newresult.package_id = package_id
-        newresult.test_id = test_id
-        newresult.result_data = the_result
-        newresult.result_identifier = result_identifier
-        newresult.result_hierarchy = result_hierarchy
-        newresult.organisation_id = organisation_id
-        db.session.add(newresult)
+                  organisation_id, add_result):
 
     def reformat_test_data(xmldata, binary_test):
         if binary_test:
@@ -94,6 +83,25 @@ def test_activity(runtime_id, package_id, result_identifier,
 
     for tests, data in tests_and_sources:
         [ execute_and_record(data, test) for test in tests ]
+
+def test_activity(runtime_id, package_id, result_identifier, 
+                  result_hierarchy, data, test_functions, codelists,
+                  organisation_id):
+
+    def add_result(test_id, the_result):
+        newresult = models.Result()
+        newresult.runtime_id = runtime_id
+        newresult.package_id = package_id
+        newresult.test_id = test_id
+        newresult.result_data = the_result
+        newresult.result_identifier = result_identifier
+        newresult.result_hierarchy = result_hierarchy
+        newresult.organisation_id = organisation_id
+        db.session.add(newresult)
+
+    return _test_activity(runtime_id, package_id, result_identifier, 
+                  result_hierarchy, data, test_functions, codelists,
+                  organisation_id, add_result)
 
 def parse_xml(file_name):
     try:
