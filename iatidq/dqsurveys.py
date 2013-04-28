@@ -18,7 +18,92 @@ import csv
 import util
 import unicodecsv
 
-def createSurvey(data):
+def getIDorNone(sqlalchemy_object):
+    if sqlalchemy_object is not None:
+        return sqlalchemy_object.Workflow.id
+    else:
+        return None
+
+def setupSurvey():
+    the_publishedstatuses = [{'name': 'Always',
+      'publishedstatus_class': 'success'},
+     {'name': 'Sometimes',
+      'publishedstatus_class': 'warning'},
+     {'name': 'Not published',
+      'publishedstatus_class': 'important'}]
+
+    for the_publishedstatus in the_publishedstatuses:
+        addPublishedStatus(the_publishedstatus)
+
+    # workflowtypes define what sort of template is
+    # displayed to the user at that workflow stage
+
+    the_workflowTypes = [
+    {'name': 'collect',
+     'title': 'Initial data collection'},
+    {'name': 'send',
+     'title': 'Send to next step'},
+    {'name': 'review',
+     'title': 'Review initial assessment'},
+    {'name': 'finalreview',
+     'title': "Review donor's review"},
+    {'name': 'comment',
+     'title': 'Agree/disagree and provide comments on current assessment'},
+    {'name': 'agreereview',
+     'title': 'Review all comments and reviews and make final decision'},
+    {'name': 'finalised',
+     'title': 'Survey finalised'}
+    ]
+    for the_workflowType in the_workflowTypes:    
+        addWorkflowType(the_workflowType)
+    
+    # Workflows need to be created and then 
+    # updated with the leadsto attribute.
+    # They define what happens to the survey
+    # at each step.
+
+    the_workflows = [
+    {'name': 'researcher',
+     'title': 'Researcher',
+     'workflow_type': workflowTypes('collect').id,
+     'leadsto': getIDorNone(workflows('send'))},
+    {'name': 'send',
+     'title': 'Send to donor',
+     'workflow_type': workflowTypes('send').id,
+     'leadsto': getIDorNone(workflows('donorreview'))},
+    {'name': 'donorreview',
+     'title': 'Donor review',
+     'workflow_type': workflowTypes('review').id,
+     'leadsto': getIDorNone(workflows('pwyfreview'))},
+    {'name': 'pwyfreview',
+     'title': 'PWYF review',
+     'workflow_type': workflowTypes('review').id,
+     'leadsto': getIDorNone(workflows('donorcomments'))},
+    {'name': 'donorcomments',
+     'title': 'Donor comments',
+     'workflow_type': workflowTypes('comment').id,
+     'leadsto': getIDorNone(workflows('pwyffinal'))},
+    {'name': 'pwyffinal',
+     'title': 'PWYF final review',
+     'workflow_type': workflowTypes('finalreview').id,
+     'leadsto': getIDorNone(workflows('finalised'))},
+    {'name': 'finalised',
+     'title': 'Survey finalised',
+     'workflow_type': workflowTypes('finalised').id,
+     'leadsto': None},
+    {'name': 'finalised',
+     'title': 'Survey finalised',
+     'workflow_type': workflowTypes('finalised').id,
+     'leadsto': None}
+    ]
+    for the_workflow in the_workflows:
+        addWorkflow(the_workflow)
+
+    # This will correct leadsto values
+    for the_workflow in the_workflows:
+        updateWorkflow(the_workflow)
+
+def getOrCreateSurvey(data):
     checkS = models.OrganisationSurvey.query.filter_by(organisation_id=data["organisation_id"]).first()
     if not checkS:
         newS = models.OrganisationSurvey()
@@ -141,6 +226,17 @@ def workflows(workflow_name=None):
     else:
         return None
 
+def workflowTypes(workflowtype_name=None):
+    if workflowtype_name:
+        checkWT = models.WorkflowType.query.filter_by(name=workflowtype_name
+            ).first()
+    else:
+        checkWT = models.WorkflowType.query.all()
+    if checkWT:
+        return checkWT
+    else:
+        return None
+
 def workflow_by_id(workflow_id):
     checkW = db.session.query(models.Workflow
             ).filter_by(id=workflow_id
@@ -175,3 +271,16 @@ def addWorkflow(data):
         return newW
     else:
         return checkW
+
+def updateWorkflow(data):
+    checkW = models.Workflow.query.filter_by(name=data["name"]
+                ).first()
+    if checkW:
+        checkW.name = data["name"],
+        checkW.leadsto = data["leadsto"],
+        checkW.workflow_type = data["workflow_type"]
+        db.session.add(checkW)
+        db.session.commit()
+        return checkW
+    else:
+        return None
