@@ -155,7 +155,16 @@ def addSurveyData(data):
         db.session.commit()
         return newSD
     else:
-        return False
+        checkSD.organisationsurvey_id = data["organisationsurvey_id"],
+        checkSD.workflow_id = data["workflow_id"],
+        checkSD.indicator_id = data["indicator_id"],
+        checkSD.published_status = data["published_status"],
+        checkSD.published_source = data["published_source"],
+        checkSD.published_comment = data["published_comment"],
+        checkSD.published_accepted = data["published_accepted"]
+        db.session.add(checkSD)
+        db.session.commit()
+        return checkSD
 
 def publishedStatus():
     checkPS = models.PublishedStatus.query.all()
