@@ -41,15 +41,15 @@
         <td>
         {% for i, publishedstatus in publishedstatuses.items() %}
         <label for="{{indicator.indicator.id}}-published-{{publishedstatus.id}}">
-        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"{% if surveydata and surveydata[indicator.indicator.id].published_status == publishedstatus.id %} checked{%endif%}> {{publishedstatus.name}}</input>
+        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"{% if surveydata and surveydata.researcher[indicator.indicator.id].published_status == publishedstatus.id %} checked{%endif%}> {{publishedstatus.name}}</input>
         <br />
         <span class="muted">{{publishedstatus.name}}</span></label>
         {% endfor %}
         </td>
 
-        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{surveydata[indicator.indicator.id].published_source}}{%endif%}</textarea></td>
+        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].published_source}}{%endif%}</textarea></td>
 
-        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{surveydata[indicator.indicator.id].published_comment}}{%endif%}</textarea></td>
+        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].published_comment}}{%endif%}</textarea></td>
         </tr>
     {% endfor %}
     </tbody>
