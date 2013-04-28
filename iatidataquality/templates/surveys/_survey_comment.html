@@ -20,7 +20,7 @@
     <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
 
     <tbody>
-    {% set rows = surveydata|count+1 %}
+    {% set rows = surveydata|count %}
     {% for i, indicator in org_indicators.items() %}
         {% set data = surveydata['researcher'] %}
         <tr class="indicator{{indicator.indicator.id}}">
@@ -66,7 +66,7 @@
             </td>
         </tr>
         {% endif %}
-        {% set data = surveydata['donorcomments'] %}
+        {% set data = surveydata[workflow.Workflow.name] %}
         <tr id="tr{{indicator.indicator.id}}">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
@@ -88,7 +88,7 @@
     {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
     <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" /> Submit data (you cannot edit this survey once it's been submitted)</label>
     {%endif%}
-    <label for="submit" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save changes</label>
+    <label for="save" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save changes</label>
 
     </form>
 {% endblock %}
