@@ -56,15 +56,14 @@ def test_activity(runtime_id, package_id, result_identifier,
         db.session.add(newresult)
 
     def execute_test(xmldata, test_id, binary_test):
-        try:
-            if binary_test:
-                data = {
-                    "activity": xmldata,
-                    "lists": codelists
+        if binary_test:
+            data = {
+                "activity": xmldata,
+                "lists": codelists
                 }
-            else:
-                data = xmldata
-
+        else:
+            data = xmldata
+        try:
             if test_functions[test_id](data):
                 return test_result.PASS
             else:
