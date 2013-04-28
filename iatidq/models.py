@@ -559,17 +559,20 @@ class Workflow(db.Model):
     __tablename__='workflow'
     id = Column(Integer,primary_key=True)
     name = Column(UnicodeText)
+    title = Column(UnicodeText)
     leadsto = Column(Integer, ForeignKey('workflow.id'))
     workflow_type = Column(Integer, ForeignKey('workflowtype.id'))
     duration = Column(Integer)
     
     def setup(self,
                  name,
+                 title,
                  leadsto,
                  workflow_type=None,
                  duration=None,
                  id=None):
         self.name = name
+        self.title = title
         self.leadsto = leadsto
         self.workflow_type = workflow_type
         self.duration = duration
