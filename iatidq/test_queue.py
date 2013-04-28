@@ -66,13 +66,13 @@ def test_elements(xml_fragment, test_functions, codelists, add_result):
         add_result(test.id, the_result)
 
 
-    xmldata = etree.fromstring(xml_fragment)
+    elements = etree.fromstring(xml_fragment)
 
     activity_tests = tests_by_level(test_functions, test_level.ACTIVITY)
     transaction_tests = tests_by_level(test_functions, test_level.TRANSACTION)
 
-    activity_data = xmldata
-    transaction_data = xmldata.xpath("//transaction")
+    activity_data = elements
+    transaction_data = elements.xpath("//transaction")
 
     tests_and_sources = [
         (activity_tests, activity_data),
