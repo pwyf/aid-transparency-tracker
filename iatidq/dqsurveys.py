@@ -187,11 +187,19 @@ def getSurvey(organisation_code):
             ).first()
     return survey
 
-def getSurveyData(organisation_code):
-    surveyData = models.OrganisationSurveyData.query.filter(models.Organisation.organisation_code==organisation_code
-            ).join(models.OrganisationSurvey
-            ).join(models.Organisation
-            ).all()
+def getSurveyData(organisation_code, workflow_name=None):
+    if workflow_name:
+        surveyData = models.OrganisationSurveyData.query.filter(models.Organisation.organisation_code==organisation_code
+                ).filter(models.Workflow.name==workflow_name
+                ).join(models.OrganisationSurvey
+                ).join(models.Workflow
+                ).join(models.Organisation
+                ).all()
+    else:
+        surveyData = models.OrganisationSurveyData.query.filter(models.Organisation.organisation_code==organisation_code
+                ).join(models.OrganisationSurvey
+                ).join(models.Organisation
+                ).all()        
     surveyDataByIndicator = dict(map(lambda x: (x.indicator_id, x), surveyData))
     return surveyDataByIndicator
 
