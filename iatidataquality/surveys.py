@@ -188,6 +188,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         organisation, 2)["zero"]
         twentytwelvedata=get_organisation_results(organisation_code, indicators)
         publishedstatuses = dqsurveys.publishedStatus()
+        publishedstatuses = dict(map(lambda ps: (ps.id, ps), publishedstatuses))
 
         old_publication_status= {
             '4': {
@@ -217,11 +218,13 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         }
         template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
         return render_template(template_path, 
-                               organisation=organisation,
-                               indicators=indicators,
-                               org_indicators = org_indicators,
-                               twentytwelvedata=twentytwelvedata,
-                               old_publication_status=old_publication_status,
-                               publishedstatuses=publishedstatuses,
-                               workflow=workflow,
-                               surveydata=surveydata)
+           organisation=organisation,
+           indicators=indicators,
+           org_indicators = org_indicators,
+           twentytwelvedata=twentytwelvedata,
+           old_publication_status=old_publication_status,
+           publishedstatuses=publishedstatuses,
+           workflow=workflow,
+           surveydata=surveydata,
+           surveydata_allworkflows=surveydata_allworkflows,
+           organisationsurvey=organisationsurvey)
