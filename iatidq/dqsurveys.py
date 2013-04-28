@@ -17,6 +17,7 @@ import models
 import csv
 import util
 import unicodecsv
+import datetime
 
 def getIDorNone(sqlalchemy_object):
     if sqlalchemy_object is not None:
@@ -121,11 +122,11 @@ def getOrCreateSurvey(data):
     if not checkS:
         newS = models.OrganisationSurvey()
 
-        workflow = workflows('collect')
-        currentworkflow_id = workflow.id
-        deadline_days = datetime.timedelta(days=workflow.duration)
+        workflow = workflows('researcher')
+        currentworkflow_id = workflow.Workflow.id
+        deadline_days = datetime.timedelta(days=workflow.Workflow.duration)
 
-        currentworkflow_deadline = datetime.utcnow()+deadline_days
+        currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
 
         newS.setup(
             organisation_id = data["organisation_id"],
@@ -205,13 +206,24 @@ def getSurveyData(organisation_code, workflow_name=None):
 
 def getSurveyDataAllWorkflows(organisation_code):
     surveyData = db.session.query(models.OrganisationSurveyData,
+                models.PublishedStatus,
                 models.Workflow).filter(models.Organisation.organisation_code==organisation_code
+                ).join(models.PublishedStatus
                 ).join(models.OrganisationSurvey
                 ).join(models.Organisation
                 ).join(models.Workflow, (models.OrganisationSurveyData.workflow_id==models.Workflow.id)
                 ).all()
-    surveyDataByIndicatorByWorkflow = dict(map(lambda x: ((x.Workflow.name, x.OrganisationSurveyData.indicator_id), x), surveyData))
-    return surveyDataByIndicatorByWorkflow
+
+    workflows = set(map(lambda x: x.Workflow.name, surveyData))
+    indicators = set(map(lambda x: x.OrganisationSurveyData.indicator_id, surveyData))
+    out = {}
+    for w in workflows:
+        out[w] = {}
+        for i in indicators:
+            out[w][i] = {}
+    for data in surveyData:
+        out[data.Workflow.name][data.OrganisationSurveyData.indicator_id] = data
+    return out
     
 
 def addPublishedStatus(data):
