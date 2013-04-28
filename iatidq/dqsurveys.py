@@ -66,35 +66,48 @@ def setupSurvey():
     {'name': 'researcher',
      'title': 'Researcher',
      'workflow_type': workflowTypes('collect').id,
-     'leadsto': getIDorNone(workflows('send'))},
+     'leadsto': getIDorNone(workflows('send')),
+     'duration': 14},
     {'name': 'send',
      'title': 'Send to donor',
      'workflow_type': workflowTypes('send').id,
-     'leadsto': getIDorNone(workflows('donorreview'))},
+     'leadsto': getIDorNone(workflows('donorreview')),
+     'duration': 2},
     {'name': 'donorreview',
      'title': 'Donor review',
      'workflow_type': workflowTypes('review').id,
-     'leadsto': getIDorNone(workflows('pwyfreview'))},
+     'leadsto': getIDorNone(workflows('pwyfreview')),
+     'duration': 21},
     {'name': 'pwyfreview',
      'title': 'PWYF review',
      'workflow_type': workflowTypes('review').id,
-     'leadsto': getIDorNone(workflows('donorcomments'))},
+     'leadsto': getIDorNone(workflows('donorcomments')),
+     'duration': 14},
     {'name': 'donorcomments',
      'title': 'Donor comments',
      'workflow_type': workflowTypes('comment').id,
-     'leadsto': getIDorNone(workflows('pwyffinal'))},
+     'leadsto': getIDorNone(workflows('pwyffinal')),
+     'duration': 7},
     {'name': 'pwyffinal',
      'title': 'PWYF final review',
      'workflow_type': workflowTypes('finalreview').id,
-     'leadsto': getIDorNone(workflows('finalised'))},
+     'leadsto': getIDorNone(workflows('finalised')),
+     'duration': 14},
     {'name': 'finalised',
      'title': 'Survey finalised',
      'workflow_type': workflowTypes('finalised').id,
-     'leadsto': None},
+     'leadsto': None,
+     'duration': 14},
     {'name': 'finalised',
      'title': 'Survey finalised',
      'workflow_type': workflowTypes('finalised').id,
-     'leadsto': None}
+     'leadsto': None,
+     'duration': None},
+    {'name': 'cso',
+     'title': 'CSO review',
+     'workflow_type': workflowTypes('comment').id,
+     'leadsto': None,
+     'duration': None}
     ]
     for the_workflow in the_workflows:
         addWorkflow(the_workflow)
@@ -271,7 +284,8 @@ def addWorkflow(data):
         newW.setup(
             name = data["name"],
             leadsto = data["leadsto"],
-            workflow_type = data["workflow_type"]
+            workflow_type = data["workflow_type"],
+            duration = data["duration"]
         )
         db.session.add(newW)
         db.session.commit()
@@ -285,7 +299,8 @@ def updateWorkflow(data):
     if checkW:
         checkW.name = data["name"],
         checkW.leadsto = data["leadsto"],
-        checkW.workflow_type = data["workflow_type"]
+        checkW.workflow_type = data["workflow_type"],
+        checkW.duration = data["duration"]
         db.session.add(checkW)
         db.session.commit()
         return checkW
