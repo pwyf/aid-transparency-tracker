@@ -106,14 +106,8 @@ def getTimeRemainingNotice(deadline):
         time_remaining_notice = "Today is the last day for making any changes to your survey."
     return time_remaining_notice
 
-def _survey_process_collect(organisation_code, workflow):
+def _survey_process_collect(organisation, workflow, request, organisationsurvey):
     indicators = request.form.getlist('indicator')
-    organisation = dqorganisations.organisations(organisation_code)
-
-    organisationsurvey = dqsurveys.getOrCreateSurvey({
-                'organisation_id': organisation.id,
-                'indicators': indicators
-                })
 
     workflow_id = workflow.Workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
@@ -131,13 +125,24 @@ def _survey_process_collect(organisation_code, workflow):
         surveydata = dqsurveys.addSurveyData(data)
     
     if 'submit' in request.form:
+        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
         # save data, change currentworkflow_id to leadsto
-        dqsurveys.advanceSurvey(organisationsurvey)
-        flash('Successfully submitted survey data', 'success')
+            dqsurveys.advanceSurvey(organisationsurvey)
+            flash('Successfully submitted survey data', 'success')
+        else:
+            flash("Your survey data was updated.", 'warning')
     else:
         time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
 
         flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+
+def _survey_process_send(organisation, workflow, request, submit, organisationsurvey):
+    indicators = request.form.getlist('indicator')
+
+    #FIXME: need to actually send
+
+    dqsurveys.advanceSurvey(organisationsurvey)
+    flash('Successfully sent survey to donor.', 'success')
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
@@ -148,12 +153,20 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     if not workflow:
         flash('That workflow does not exist.', 'error')
         return abort(404)
+
+    organisation = dqorganisations.organisations(organisation_code)
+    organisationsurvey = dqsurveys.getOrCreateSurvey({
+                'organisation_id': organisation.id
+                })
     
     if request.method=='POST':
         if (workflow.WorkflowType.name=='collect'):
-            _survey_process_collect(organisation_code, workflow)
+            _survey_process_collect(organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='send':
-            return "send"
+            if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
+                _survey_process_send(organisation_code, workflow, request, organisationsurvey)
+            else:
+                flash("Not possible to send survey to donor because it's not at the current stage in the workflow. Maybe you didn't submit the data, or maybe you already sent it to the donor?", 'error')
         elif workflow.WorkflowType.name=='review':
             return "review"
         elif workflow.WorkflowType.name=='comment':
