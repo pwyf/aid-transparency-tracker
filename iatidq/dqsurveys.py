@@ -325,7 +325,8 @@ def addWorkflow(data):
             name = data["name"],
             leadsto = data["leadsto"],
             workflow_type = data["workflow_type"],
-            duration = data["duration"]
+            duration = data["duration"],
+            title = data["title"]
         )
         db.session.add(newW)
         db.session.commit()
@@ -340,7 +341,8 @@ def updateWorkflow(data):
         checkW.name = data["name"],
         checkW.leadsto = data["leadsto"],
         checkW.workflow_type = data["workflow_type"],
-        checkW.duration = data["duration"]
+        checkW.duration = data["duration"],
+        checkW.title = data["title"]
         db.session.add(checkW)
         db.session.commit()
         return checkW
