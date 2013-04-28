@@ -72,9 +72,9 @@
         {% endfor %}
         </td>
 
-        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
+        <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
 
-        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
         </tr>
 
     {% endfor %}
@@ -83,7 +83,7 @@
     {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
     <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" /> Submit data (you cannot edit this survey once it's been submitted)</label>
     {%endif%}
-    <label for="submit" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save changes</label>
+    <label for="save" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save changes</label>
 
     </form>
 {% endblock %}
