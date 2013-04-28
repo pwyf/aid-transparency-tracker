@@ -165,7 +165,65 @@ def _survey_process_review(organisation, workflow, request, organisationsurvey):
 
         flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
 
-def _survey_process_send(organisation, workflow, request, submit, organisationsurvey):
+def _survey_process_finalreview(organisation, workflow, request, organisationsurvey):
+    indicators = request.form.getlist('indicator')
+    workflow_id = workflow.Workflow.id
+    currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
+
+    for indicator in indicators:
+        data = {
+            'organisationsurvey_id': organisationsurvey.id,
+            'indicator_id': indicator,
+            'workflow_id': workflow_id,
+            'published_status': request.form.get(indicator+"-published"),
+            'published_source': request.form.get(indicator+"-source"),
+            'published_comment': request.form.get(indicator+"-comments"),   
+            'published_accepted': request.form.get(indicator+"-agree")
+        }
+        surveydata = dqsurveys.addSurveyData(data)
+    
+    if 'submit' in request.form:
+        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
+        # save data, change currentworkflow_id to leadsto
+            dqsurveys.advanceSurvey(organisationsurvey)
+            flash('Successfully submitted survey data', 'success')
+        else:
+            flash("Your survey data was updated.", 'warning')
+    else:
+        time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
+
+        flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+
+def _survey_process_comment(organisation, workflow, request, organisationsurvey):
+    indicators = request.form.getlist('indicator')
+    workflow_id = workflow.Workflow.id
+    currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
+
+    for indicator in indicators:
+        data = {
+            'organisationsurvey_id': organisationsurvey.id,
+            'indicator_id': indicator,
+            'workflow_id': workflow_id,
+            'published_status': None,
+            'published_source': None,
+            'published_comment': request.form.get(indicator+"-comments"),   
+            'published_accepted': request.form.get(indicator+"-agree")
+        }
+        surveydata = dqsurveys.addSurveyData(data)
+    
+    if 'submit' in request.form:
+        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
+        # save data, change currentworkflow_id to leadsto
+            dqsurveys.advanceSurvey(organisationsurvey)
+            flash('Successfully submitted survey data', 'success')
+        else:
+            flash("Your survey data was updated.", 'warning')
+    else:
+        time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
+
+        flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+
+def _survey_process_send(organisation, workflow, request, organisationsurvey):
     indicators = request.form.getlist('indicator')
 
     #FIXME: need to actually send
@@ -199,9 +257,9 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         elif workflow.WorkflowType.name=='review':
             _survey_process_review(organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='comment':
-            return "comment"
+            _survey_process_comment(organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='finalreview':
-            return "finalreview"
+            _survey_process_finalreview(organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='finalised':
             return "finalised"
         return redirect(url_for("organisations", organisation_code=organisation_code))
