@@ -1,0 +1,94 @@
+{% extends "surveys/survey_edit.html" %}
+{% block survey %}
+
+    <style type="text/css">
+        th.restrict_text, td.restrict_text { 
+            max-width:40px; 
+            word-wrap:break-word;
+        }
+    </style>
+	<h3>Please check the assessment for {{org_indicators|count}} indicators.<code>{{workflow.Workflow.name}}</code></h3>
+    <div class="alert alert-info">
+        <h4>Guidelines</h4>
+        <p>Details about how to answer this component go here.</p>
+    </div>
+    
+    <form action="" method="post">
+
+    <table class="table" id="indicators">
+
+    <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
+
+    <tbody>
+    {% set rows = surveydata|count+1 %}
+    {% for i, indicator in org_indicators.items() %}
+        {% set data = surveydata['researcher'] %}
+        <tr class="indicator{{indicator.indicator.id}}">
+            <td rowspan="{{rows}}"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.indicator.name)}}">{{indicator.indicator.description}}</a></td>
+            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td>
+            <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.name}}</span>
+            </td>
+            <td class="restrict_text">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% if surveydata.donorreview %}
+        {% set data = surveydata['donorreview'] %}
+        <tr>
+            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td>
+            <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.name}}</span>
+            </td>
+            <td class="restrict_text">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% if surveydata.pwyfreview %}
+        {% set data = surveydata['pwyfreview'] %}
+        <tr>
+            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td>
+            <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.name}}</span>
+            </td>
+            <td class="restrict_text">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% set data = surveydata['donorcomments'] %}
+        <tr id="tr{{indicator.indicator.id}}">
+        <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>
+        <label for="{{indicator.indicator.id}}-agree-1">
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.accepted == 0) %} checked{%endif%}> Agree</input>
+        <br />
+        <span class="muted">Agree</span></label>
+        <label for="{{indicator.indicator.id}}-agree-0">
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.accepted == 0 %} checked{%endif%}> Disagree</input>
+        <br />
+        <span class="muted">Disagree</span></label>
+        </td>
+        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </table>
+    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
+    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" /> Submit data (you cannot edit this survey once it's been submitted)</label>
+    {%endif%}
+    <label for="submit" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save changes</label>
+
+    </form>
+{% endblock %}
