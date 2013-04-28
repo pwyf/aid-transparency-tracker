@@ -190,11 +190,11 @@ def getSurvey(organisation_code):
 def getSurveyData(organisation_code, workflow_name=None):
     if workflow_name:
         surveyData = models.OrganisationSurveyData.query.filter(models.Organisation.organisation_code==organisation_code
-                ).filter(models.Workflow.name==workflow_name
-                ).join(models.OrganisationSurvey
-                ).join(models.Workflow
-                ).join(models.Organisation
-                ).all()
+        ).filter(models.Workflow.name==workflow_name
+        ).join(models.OrganisationSurvey
+        ).join(models.Organisation
+        ).join(models.Workflow, (models.OrganisationSurveyData.workflow_id==models.Workflow.id)
+        ).all()
     else:
         surveyData = models.OrganisationSurveyData.query.filter(models.Organisation.organisation_code==organisation_code
                 ).join(models.OrganisationSurvey
@@ -202,6 +202,17 @@ def getSurveyData(organisation_code, workflow_name=None):
                 ).all()        
     surveyDataByIndicator = dict(map(lambda x: (x.indicator_id, x), surveyData))
     return surveyDataByIndicator
+
+def getSurveyDataAllWorkflows(organisation_code):
+    surveyData = db.session.query(models.OrganisationSurveyData,
+                models.Workflow).filter(models.Organisation.organisation_code==organisation_code
+                ).join(models.OrganisationSurvey
+                ).join(models.Organisation
+                ).join(models.Workflow, (models.OrganisationSurveyData.workflow_id==models.Workflow.id)
+                ).all()
+    surveyDataByIndicatorByWorkflow = dict(map(lambda x: ((x.Workflow.name, x.OrganisationSurveyData.indicator_id), x), surveyData))
+    return surveyDataByIndicatorByWorkflow
+    
 
 def addPublishedStatus(data):
     checkPS = models.PublishedStatus.query.filter_by(name=data["name"]
