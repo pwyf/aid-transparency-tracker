@@ -208,7 +208,7 @@ def getSurveyDataAllWorkflows(organisation_code):
     surveyData = db.session.query(models.OrganisationSurveyData,
                 models.PublishedStatus,
                 models.Workflow).filter(models.Organisation.organisation_code==organisation_code
-                ).join(models.PublishedStatus
+                ).outerjoin(models.PublishedStatus
                 ).join(models.OrganisationSurvey
                 ).join(models.Organisation
                 ).join(models.Workflow, (models.OrganisationSurveyData.workflow_id==models.Workflow.id)
