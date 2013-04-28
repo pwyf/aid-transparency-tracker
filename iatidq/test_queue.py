@@ -93,8 +93,6 @@ def test_activity(runtime_id, package_id, result_identifier,
     for tests, data in tests_and_sources:
         [ execute_and_record(data, test) for test in tests ]
 
-    return "Success"
-
 def parse_xml(file_name):
     try:
         data = etree.parse(file_name)
@@ -115,10 +113,10 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
         result_identifier = activity.find('iati-identifier').text.decode()
         activity_data = etree.tostring(activity)
         
-        res = test_activity(runtime_id, package_id, 
-                            result_identifier, result_hierarchy,
-                            activity_data, test_functions, 
-                            codelists, organisation_id)
+        test_activity(runtime_id, package_id, 
+                      result_identifier, result_hierarchy,
+                      activity_data, test_functions, 
+                      codelists, organisation_id)
         db.session.commit()
 
     def get_activities(organisation):
