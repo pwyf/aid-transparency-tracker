@@ -136,6 +136,35 @@ def _survey_process_collect(organisation, workflow, request, organisationsurvey)
 
         flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
 
+def _survey_process_review(organisation, workflow, request, organisationsurvey):
+    indicators = request.form.getlist('indicator')
+    workflow_id = workflow.Workflow.id
+    currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
+
+    for indicator in indicators:
+        data = {
+            'organisationsurvey_id': organisationsurvey.id,
+            'indicator_id': indicator,
+            'workflow_id': workflow_id,
+            'published_status': request.form.get(indicator+"-published"),
+            'published_source': request.form.get(indicator+"-source"),
+            'published_comment': request.form.get(indicator+"-comments"),   
+            'published_accepted': None
+        }
+        surveydata = dqsurveys.addSurveyData(data)
+    
+    if 'submit' in request.form:
+        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
+        # save data, change currentworkflow_id to leadsto
+            dqsurveys.advanceSurvey(organisationsurvey)
+            flash('Successfully submitted survey data', 'success')
+        else:
+            flash("Your survey data was updated.", 'warning')
+    else:
+        time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
+
+        flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+
 def _survey_process_send(organisation, workflow, request, submit, organisationsurvey):
     indicators = request.form.getlist('indicator')
 
@@ -168,7 +197,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
             else:
                 flash("Not possible to send survey to donor because it's not at the current stage in the workflow. Maybe you didn't submit the data, or maybe you already sent it to the donor?", 'error')
         elif workflow.WorkflowType.name=='review':
-            return "review"
+            _survey_process_review(organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='comment':
             return "comment"
         elif workflow.WorkflowType.name=='finalreview':
@@ -225,6 +254,5 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
            old_publication_status=old_publication_status,
            publishedstatuses=publishedstatuses,
            workflow=workflow,
-           surveydata=surveydata,
-           surveydata_allworkflows=surveydata_allworkflows,
+           surveydata=surveydata_allworkflows,
            organisationsurvey=organisationsurvey)
