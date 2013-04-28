@@ -41,7 +41,7 @@ def tests_by_level(test_functions, level):
     return itertools.ifilter(test_exists, tests)
 
 def _test_elements(test_functions, codelists, add_result,
-                  tests_and_sources):
+                  tests, data):
 
     def reformat_test_data(xmldata, binary_test):
         if binary_test:
@@ -66,8 +66,7 @@ def _test_elements(test_functions, codelists, add_result,
         the_result = execute_test(xmldata, test.id, binary_test(test.name))
         add_result(test.id, the_result)
 
-    for tests, data in tests_and_sources:
-        [ execute_and_record(data, test) for test in tests ]
+    [ execute_and_record(data, test) for test in tests ]
 
 def test_elements(xml_fragment, test_functions, codelists, add_result):
 
@@ -84,8 +83,9 @@ def test_elements(xml_fragment, test_functions, codelists, add_result):
         (transaction_tests, transaction_data)
         ]
     
-    return _test_elements(test_functions, codelists, add_result,
-                          tests_and_sources)
+    for tests, data in tests_and_sources:
+        return _test_elements(test_functions, codelists, add_result,
+                              tests, data)
 
 def test_activity(runtime_id, package_id, result_identifier, 
                   result_hierarchy, data, test_functions, codelists,
