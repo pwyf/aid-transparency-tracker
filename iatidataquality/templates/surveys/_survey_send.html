@@ -1,0 +1,17 @@
+{% extends "surveys/survey_edit.html" %}
+{% block survey %}
+
+    <style type="text/css">
+        th.restrict_text, td.restrict_text { 
+            max-width:40px; 
+            word-wrap:break-word;
+        }
+    </style>
+	<h3>Confirm send data to donor.<code>{{workflow.Workflow.name}}</code></h3>
+    
+    <form action="" method="post">
+    
+    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Send" name="submit" /> Send to donor</label>
+
+    </form>
+{% endblock %}

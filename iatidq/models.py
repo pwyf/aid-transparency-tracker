@@ -561,15 +561,18 @@ class Workflow(db.Model):
     name = Column(UnicodeText)
     leadsto = Column(Integer, ForeignKey('workflow.id'))
     workflow_type = Column(Integer, ForeignKey('workflowtype.id'))
+    duration = Column(Integer)
     
     def setup(self,
                  name,
                  leadsto,
                  workflow_type=None,
+                 duration=None,
                  id=None):
         self.name = name
         self.leadsto = leadsto
         self.workflow_type = workflow_type
+        self.duration = duration
         if id is not None:
             self.id = id
 

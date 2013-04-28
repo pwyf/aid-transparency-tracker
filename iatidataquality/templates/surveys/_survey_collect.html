@@ -1,5 +1,12 @@
-{% extends "survey_edit.html" %}
+{% extends "surveys/survey_edit.html" %}
 {% block survey %}
+
+    <style type="text/css">
+        th.restrict_text, td.restrict_text { 
+            max-width:40px; 
+            word-wrap:break-word;
+        }
+    </style>
 	<h3>Please provide data for {{org_indicators|count}} indicators.<code>{{workflow.Workflow.name}}</code></h3>
     <div class="alert alert-info">
         <h4>Check and correct last year's data</h4>
@@ -10,7 +17,7 @@
 
     <table class="table" id="indicators">
 
-    <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th>Evidence</th><th>Comments</th></thead>
+    <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
 
     <tbody>
     {% for i, indicator in org_indicators.items() %}
@@ -21,11 +28,11 @@
             <span class="badge badge-{{publication_status[twentytwelvedata[indicator.indicator.name].result].class}}" title="Researcher's initial assessment">{{ publication_status[twentytwelvedata[indicator.indicator.name].result].text }}</span>
             </td>
 
-            <td>
+            <td class="restrict_text">
             {{twentytwelvedata[indicator.indicator.name].result_evidence}}
             </td>
 
-            <td>
+            <td class="restrict_text">
             {{twentytwelvedata[indicator.indicator.name].result_comments}}
             </td>
         </tr>
@@ -34,15 +41,15 @@
         <td>
         {% for publishedstatus in publishedstatuses %}
         <label for="{{indicator.indicator.id}}-published-{{publishedstatus.id}}">
-        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"> {{publishedstatus.name}}</input>
+        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"{% if surveydata and surveydata[indicator.indicator.id].published_status == publishedstatus.id %} checked{%endif%}> {{publishedstatus.name}}</input>
         <br />
         <span class="muted">{{publishedstatus.name}}</span></label>
         {% endfor %}
         </td>
 
-        <td><textarea name"{{indicator.indicator.id}}-source"></textarea></td>
+        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{surveydata[indicator.indicator.id].published_source}}{%endif%}</textarea></td>
 
-        <td><textarea name"{{indicator.indicator.id}}-comments"></textarea></td>
+        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{surveydata[indicator.indicator.id].published_comment}}{%endif%}</textarea></td>
         </tr>
     {% endfor %}
     </tbody>

@@ -36,7 +36,7 @@ def surveys_admin():
     surveys = dqsurveys.surveys()
     workflows = dqsurveys.workflows()
     publishedstatuses=dqsurveys.publishedStatus()
-    return render_template("surveys_admin.html", 
+    return render_template("surveys/surveys_admin.html", 
                            workflows=workflows,
                            publishedstatuses=publishedstatuses,
                            surveys=surveys)
@@ -94,7 +94,7 @@ def get_organisation_results(organisation_code, newindicators):
 def organisation_survey(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
     survey = dqsurveys.getSurvey(organisation_code)
-    return render_template("survey.html", 
+    return render_template("surveys/survey.html", 
                            organisation=organisation,
                            survey=survey)
 
@@ -108,6 +108,9 @@ def getTimeRemainingNotice(deadline):
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
+    # FIXME: should probably go in setup
+    dqsurveys.setupSurvey()
+
     workflow = dqsurveys.workflows(workflow_name)
     if not workflow:
         flash('That workflow does not exist.', 'error')
@@ -116,43 +119,20 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     if request.method=='POST':
         indicators = request.form.getlist('indicator')
         organisation = dqorganisations.organisations(organisation_code)
-        
-        #FIXME: basic survey setup needs to go elsewhere
 
-        publishedstatus = [{'name': 'Always',
-          'class': 'success'},
-         {'name': 'Sometimes',
-          'class': 'warning'},
-         {'name': 'Not published',
-          'class': 'important'}]
-        
-        for ps in publishedstatus:
-            dqsurveys.addPublishedStatus({
-                    'name': ps["name"],
-                    'publishedstatus_class': ps["class"]
-                    })
-        
-        workflowType = dqsurveys.addWorkflowType({'name': 'creation'})
-        workflow = dqsurveys.addWorkflow({
-                    'name': 'Researcher',
-                    'leadsto': workflowType.id,
-                    'workflow_type': workflowType.id
-                    })
-        currentworkflow_id = workflow.id
-        currentworkflow_deadline = datetime.utcnow()
-
-        organisationsurvey = dqsurveys.createSurvey({
-                    'organisation_id': organisation.id, 
-                    'currentworkflow_id': currentworkflow_id,
-                    'currentworkflow_deadline': currentworkflow_deadline,
+        organisationsurvey = dqsurveys.getOrCreateSurvey({
+                    'organisation_id': organisation.id,
                     'indicators': indicators
                     })
+
+        workflow_id = workflow.Workflow.id
+        currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
         for indicator in indicators:
             data = {
                 'organisationsurvey_id': organisationsurvey.id,
                 'indicator_id': indicator,
-                'workflow_id': currentworkflow_id,
+                'workflow_id': workflow_id,
                 'published_status': request.form.get(indicator+"-published"),
                 'published_source': request.form.get(indicator+"-source"),
                 'published_comment': request.form.get(indicator+"-comments"),   
@@ -162,7 +142,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         
         if 'submit' in request.form:
             # save data, change currentworkflow_id to leadsto
-            dqsurvey.advanceSurvey(organisationsurvey)
+            dqsurveys.advanceSurvey(organisationsurvey)
             flash('Successfully submitted survey data', 'success')
         else:
             time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
@@ -173,6 +153,9 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     else:
         organisation = Organisation.query.filter_by(
             organisation_code=organisation_code).first_or_404()
+
+        surveydata = dqsurveys.getSurveyData(organisation_code, workflow_name)
+        surveydata_allworkflows = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
         indicators = dqindicators.indicators("pwyf2013")
         org_indicators = dqorganisations._organisation_indicators_split(
@@ -206,7 +189,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                             'class': ''
                         }
                     }
-        template_path = "_survey_"+workflow.WorkflowType.name+".html"
+        template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
         return render_template(template_path, 
                                organisation=organisation,
                                indicators=indicators,
@@ -214,4 +197,5 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                                twentytwelvedata=twentytwelvedata,
                                publication_status=publication_status,
                                publishedstatuses=publishedstatuses,
-                               workflow=workflow)
+                               workflow=workflow,
+                               surveydata=surveydata)

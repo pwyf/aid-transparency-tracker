@@ -25,4 +25,4 @@ import registry
 import packages
 import indicators
 import aggregationtypes
-import survey
+import surveys
