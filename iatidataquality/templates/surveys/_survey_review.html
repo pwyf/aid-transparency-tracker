@@ -1,0 +1,63 @@
+{% extends "surveys/survey_edit.html" %}
+{% block survey %}
+
+    <style type="text/css">
+        th.restrict_text, td.restrict_text { 
+            max-width:40px; 
+            word-wrap:break-word;
+        }
+    </style>
+	<h3>Please check data for {{org_indicators|count}} indicators.<code>{{workflow.Workflow.name}}</code></h3>
+    <div class="alert alert-info">
+        <h4>Guidelines</h4>
+        <p>Details about how to answer this component go here.</p>
+    </div>
+    
+    <form action="" method="post">
+
+    <table class="table" id="indicators">
+
+    <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
+
+    <tbody>
+    {% for i, indicator in org_indicators.items() %}
+        <tr>
+            <td rowspan="2"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.indicator.name)}}">{{indicator.indicator.description}}</a></td>
+            <td><span class="muted">Researcher</span></td>
+            <td>
+            <span class="badge badge-{{surveydata_allworkflows['researcher'][indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{surveydata_allworkflows['researcher'][indicator.indicator.id].PublishedStatus.name}}</span>
+            </td>
+
+            <td class="restrict_text">
+            {{surveydata_allworkflows['researcher'][indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+
+            <td class="restrict_text">
+            {{surveydata_allworkflows['researcher'][indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        <tr id="tr{{indicator.indicator.id}}">
+        <td>Donor review<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>
+        {% for i, publishedstatus in publishedstatuses.items() %}
+        <label for="{{indicator.indicator.id}}-published-{{publishedstatus.id}}">
+        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"{% if surveydata and surveydata[indicator.indicator.id].published_status == publishedstatus.id %} checked{%endif%}> {{publishedstatus.name}}</input>
+        <br />
+        <span class="muted">{{publishedstatus.name}}</span></label>
+        {% endfor %}
+        </td>
+
+        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{surveydata[indicator.indicator.id].published_source}}{%endif%}</textarea></td>
+
+        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{surveydata[indicator.indicator.id].published_comment}}{%endif%}</textarea></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
+    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" /> Submit data (you cannot edit this survey once it's been submitted)</label>
+    {%endif%}
+    <label for="submit" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save changes</label>
+
+    </form>
+{% endblock %}
