@@ -108,6 +108,9 @@ def getTimeRemainingNotice(deadline):
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
+    # FIXME: should probably go in setup
+    dqsurveys.setupSurvey()
+
     workflow = dqsurveys.workflows(workflow_name)
     if not workflow:
         flash('That workflow does not exist.', 'error')
@@ -116,37 +119,16 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     if request.method=='POST':
         indicators = request.form.getlist('indicator')
         organisation = dqorganisations.organisations(organisation_code)
-        
-        #FIXME: basic survey setup needs to go elsewhere
 
-        publishedstatus = [{'name': 'Always',
-          'class': 'success'},
-         {'name': 'Sometimes',
-          'class': 'warning'},
-         {'name': 'Not published',
-          'class': 'important'}]
-        
-        for ps in publishedstatus:
-            dqsurveys.addPublishedStatus({
-                    'name': ps["name"],
-                    'publishedstatus_class': ps["class"]
-                    })
-        
-        workflowType = dqsurveys.addWorkflowType({'name': 'creation'})
-        workflow = dqsurveys.addWorkflow({
-                    'name': 'Researcher',
-                    'leadsto': workflowType.id,
-                    'workflow_type': workflowType.id
-                    })
-        currentworkflow_id = workflow.id
-        currentworkflow_deadline = datetime.utcnow()
-
-        organisationsurvey = dqsurveys.createSurvey({
+        organisationsurvey = dqsurveys.getOrCreateSurvey({
                     'organisation_id': organisation.id, 
                     'currentworkflow_id': currentworkflow_id,
                     'currentworkflow_deadline': currentworkflow_deadline,
                     'indicators': indicators
                     })
+
+        currentworkflow_id = organisationsurvey.currentworkflow_id
+        currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
         for indicator in indicators:
             data = {
