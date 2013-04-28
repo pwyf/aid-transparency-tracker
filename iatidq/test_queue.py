@@ -33,6 +33,13 @@ def binary_test(test_name):
         return True
     return False
 
+def tests_by_level(test_functions, level):
+    tests = models.Test.query.filter(models.Test.active == True,
+                                     models.Test.test_level == level).all()
+
+    test_exists = lambda t: t.id in test_functions
+    return itertools.ifilter(test_exists, tests)
+
 def test_activity(runtime_id, package_id, result_identifier, 
                   result_hierarchy, data, test_functions, codelists,
                   organisation_id):
@@ -69,17 +76,11 @@ def test_activity(runtime_id, package_id, result_identifier,
         the_result = execute_test(xmldata, test.id, binary_test(test.name))
         add_result(test.id, the_result)
 
-    def tests_by_level(level):
-        tests = models.Test.query.filter(models.Test.active == True,
-                                         models.Test.test_level == level).all()
-
-        test_exists = lambda t: t.id in test_functions
-        return itertools.ifilter(test_exists, tests)
 
     xmldata = etree.fromstring(data)
 
-    activity_tests = tests_by_level(test_level.ACTIVITY)
-    transaction_tests = tests_by_level(test_level.TRANSACTION)
+    activity_tests = tests_by_level(test_functions, test_level.ACTIVITY)
+    transaction_tests = tests_by_level(test_functions, test_level.TRANSACTION)
 
     activity_data = xmldata
     transaction_data = xmldata.xpath("//transaction")
