@@ -48,7 +48,7 @@ def test_activity(runtime_id, package_id, result_identifier,
         newresult = models.Result()
         newresult.runtime_id = runtime_id
         newresult.package_id = package_id
-        newresult.test_id = test.id
+        newresult.test_id = test_id
         newresult.result_data = the_result
         newresult.result_identifier = result_identifier
         newresult.result_hierarchy = result_hierarchy
