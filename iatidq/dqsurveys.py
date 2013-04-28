@@ -107,10 +107,17 @@ def getOrCreateSurvey(data):
     checkS = models.OrganisationSurvey.query.filter_by(organisation_id=data["organisation_id"]).first()
     if not checkS:
         newS = models.OrganisationSurvey()
+
+        workflow = workflows('collect')
+        currentworkflow_id = workflow.id
+        deadline_days = datetime.timedelta(days=workflow.duration)
+
+        currentworkflow_deadline = datetime.utcnow()+deadline_days
+
         newS.setup(
             organisation_id = data["organisation_id"],
-            currentworkflow_id = data["currentworkflow_id"],
-            currentworkflow_deadline = data["currentworkflow_deadline"]
+            currentworkflow_id = currentworkflow_id,
+            currentworkflow_deadline = currentworkflow_deadline
         )
         db.session.add(newS)
         db.session.commit()
