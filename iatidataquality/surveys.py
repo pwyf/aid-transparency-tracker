@@ -36,7 +36,7 @@ def surveys_admin():
     surveys = dqsurveys.surveys()
     workflows = dqsurveys.workflows()
     publishedstatuses=dqsurveys.publishedStatus()
-    return render_template("surveys_admin.html", 
+    return render_template("surveys/surveys_admin.html", 
                            workflows=workflows,
                            publishedstatuses=publishedstatuses,
                            surveys=surveys)
@@ -94,7 +94,7 @@ def get_organisation_results(organisation_code, newindicators):
 def organisation_survey(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
     survey = dqsurveys.getSurvey(organisation_code)
-    return render_template("survey.html", 
+    return render_template("surveys/survey.html", 
                            organisation=organisation,
                            survey=survey)
 
@@ -206,7 +206,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                             'class': ''
                         }
                     }
-        template_path = "_survey_"+workflow.WorkflowType.name+".html"
+        template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
         return render_template(template_path, 
                                organisation=organisation,
                                indicators=indicators,
