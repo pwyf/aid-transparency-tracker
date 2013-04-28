@@ -40,9 +40,7 @@ def tests_by_level(test_functions, level):
     test_exists = lambda t: t.id in test_functions
     return itertools.ifilter(test_exists, tests)
 
-def _test_activity(runtime_id, package_id, result_identifier, 
-                  result_hierarchy, data, test_functions, codelists,
-                  organisation_id, add_result):
+def _test_activity(data, test_functions, codelists, add_result):
 
     def reformat_test_data(xmldata, binary_test):
         if binary_test:
@@ -99,9 +97,7 @@ def test_activity(runtime_id, package_id, result_identifier,
         newresult.organisation_id = organisation_id
         db.session.add(newresult)
 
-    return _test_activity(runtime_id, package_id, result_identifier, 
-                  result_hierarchy, data, test_functions, codelists,
-                  organisation_id, add_result)
+    return _test_activity(data, test_functions, codelists, add_result)
 
 def parse_xml(file_name):
     try:
