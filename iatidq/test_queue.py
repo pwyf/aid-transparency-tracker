@@ -40,7 +40,7 @@ def tests_by_level(test_functions, level):
     test_exists = lambda t: t.id in test_functions
     return itertools.ifilter(test_exists, tests)
 
-def test_elements(data, test_functions, codelists, add_result):
+def test_elements(xml_fragment, test_functions, codelists, add_result):
 
     def reformat_test_data(xmldata, binary_test):
         if binary_test:
@@ -66,7 +66,7 @@ def test_elements(data, test_functions, codelists, add_result):
         add_result(test.id, the_result)
 
 
-    xmldata = etree.fromstring(data)
+    xmldata = etree.fromstring(xml_fragment)
 
     activity_tests = tests_by_level(test_functions, test_level.ACTIVITY)
     transaction_tests = tests_by_level(test_functions, test_level.TRANSACTION)
