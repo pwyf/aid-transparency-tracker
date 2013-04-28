@@ -152,24 +152,29 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     dqfunctions.add_test_status(package_id, package_status.TESTED, commit=True)
 
+def unguarded_check_file(test_functions, codelists, file_name, 
+                runtime_id, package_id):
+    xml_parsed, data = parse_xml(file_name)
+
+    print file_name
+
+    dqprocessing.add_hardcoded_result(hardcoded_test.VALID_XML, 
+                                      runtime_id, package_id, xml_parsed)
+    db.session.commit()
+
+    if not xml_parsed:
+        print "XML parse failed"
+        return False
+
+    check_data(runtime_id, package_id, test_functions, codelists, data)
+
+    return True
+
 def check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id):
     try:
-        xml_parsed, data = parse_xml(file_name)
-
-        print file_name
-
-        dqprocessing.add_hardcoded_result(hardcoded_test.VALID_XML, 
-                                          runtime_id, package_id, xml_parsed)
-        db.session.commit()
-
-        if not xml_parsed:
-            print "XML parse failed"
-            return False
-
-        check_data(runtime_id, package_id, test_functions, codelists, data)
-
-        return True
+        return unguarded_check_file(test_functions, codelists, file_name, 
+                                    runtime_id, package_id)
     except Exception, e:
         import traceback
         traceback.print_exc()
