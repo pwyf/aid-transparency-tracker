@@ -125,14 +125,14 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                     'indicators': indicators
                     })
 
-        currentworkflow_id = organisationsurvey.currentworkflow_id
+        workflow_id = workflow.Workflow.id
         currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
         for indicator in indicators:
             data = {
                 'organisationsurvey_id': organisationsurvey.id,
                 'indicator_id': indicator,
-                'workflow_id': currentworkflow_id,
+                'workflow_id': workflow_id,
                 'published_status': request.form.get(indicator+"-published"),
                 'published_source': request.form.get(indicator+"-source"),
                 'published_comment': request.form.get(indicator+"-comments"),   
@@ -155,6 +155,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
             organisation_code=organisation_code).first_or_404()
 
         surveydata = dqsurveys.getSurveyData(organisation_code, workflow_name)
+        surveydata_allworkflows = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
         indicators = dqindicators.indicators("pwyf2013")
         org_indicators = dqorganisations._organisation_indicators_split(
