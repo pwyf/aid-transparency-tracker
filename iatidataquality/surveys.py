@@ -106,6 +106,39 @@ def getTimeRemainingNotice(deadline):
         time_remaining_notice = "Today is the last day for making any changes to your survey."
     return time_remaining_notice
 
+def _survey_process_collect(organisation_code, workflow):
+    indicators = request.form.getlist('indicator')
+    organisation = dqorganisations.organisations(organisation_code)
+
+    organisationsurvey = dqsurveys.getOrCreateSurvey({
+                'organisation_id': organisation.id,
+                'indicators': indicators
+                })
+
+    workflow_id = workflow.Workflow.id
+    currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
+
+    for indicator in indicators:
+        data = {
+            'organisationsurvey_id': organisationsurvey.id,
+            'indicator_id': indicator,
+            'workflow_id': workflow_id,
+            'published_status': request.form.get(indicator+"-published"),
+            'published_source': request.form.get(indicator+"-source"),
+            'published_comment': request.form.get(indicator+"-comments"),   
+            'published_accepted': None
+        }
+        surveydata = dqsurveys.addSurveyData(data)
+    
+    if 'submit' in request.form:
+        # save data, change currentworkflow_id to leadsto
+        dqsurveys.advanceSurvey(organisationsurvey)
+        flash('Successfully submitted survey data', 'success')
+    else:
+        time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
+
+        flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
     # FIXME: should probably go in setup
@@ -117,38 +150,18 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         return abort(404)
     
     if request.method=='POST':
-        indicators = request.form.getlist('indicator')
-        organisation = dqorganisations.organisations(organisation_code)
-
-        organisationsurvey = dqsurveys.getOrCreateSurvey({
-                    'organisation_id': organisation.id,
-                    'indicators': indicators
-                    })
-
-        workflow_id = workflow.Workflow.id
-        currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
-
-        for indicator in indicators:
-            data = {
-                'organisationsurvey_id': organisationsurvey.id,
-                'indicator_id': indicator,
-                'workflow_id': workflow_id,
-                'published_status': request.form.get(indicator+"-published"),
-                'published_source': request.form.get(indicator+"-source"),
-                'published_comment': request.form.get(indicator+"-comments"),   
-                'published_accepted': None
-            }
-            surveydata = dqsurveys.addSurveyData(data)
-        
-        if 'submit' in request.form:
-            # save data, change currentworkflow_id to leadsto
-            dqsurveys.advanceSurvey(organisationsurvey)
-            flash('Successfully submitted survey data', 'success')
-        else:
-            time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
-
-            flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
-
+        if (workflow.WorkflowType.name=='collect'):
+            _survey_process_collect(organisation_code, workflow)
+        elif workflow.WorkflowType.name=='send':
+            return "send"
+        elif workflow.WorkflowType.name=='review':
+            return "review"
+        elif workflow.WorkflowType.name=='comment':
+            return "comment"
+        elif workflow.WorkflowType.name=='finalreview':
+            return "finalreview"
+        elif workflow.WorkflowType.name=='finalised':
+            return "finalised"
         return redirect(url_for("organisations", organisation_code=organisation_code))
     else:
         organisation = Organisation.query.filter_by(
@@ -164,31 +177,31 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         publishedstatuses = dqsurveys.publishedStatus()
 
         publication_status= {
-                        '4': {
-                            'text': 'Always published',
-                            'class': 'success'
-                        },
-                        '3':  {
-                            'text': 'Sometimes published',
-                            'class': 'warning'
-                        },
-                        '2':  {
-                            'text': 'Collected',
-                            'class': 'important'
-                        },
-                        '1':  {
-                            'text': 'Not collected',
-                            'class': 'inverse'
-                        },
-                        '0':  {
-                            'text': 'Unknown',
-                            'class': ''
-                        },
-                        "": {
-                            'text': '',
-                            'class': ''
-                        }
-                    }
+            '4': {
+                'text': 'Always published',
+                'class': 'success'
+            },
+            '3':  {
+                'text': 'Sometimes published',
+                'class': 'warning'
+            },
+            '2':  {
+                'text': 'Collected',
+                'class': 'important'
+            },
+            '1':  {
+                'text': 'Not collected',
+                'class': 'inverse'
+            },
+            '0':  {
+                'text': 'Unknown',
+                'class': ''
+            },
+            "": {
+                'text': '',
+                'class': ''
+            }
+        }
         template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
         return render_template(template_path, 
                                organisation=organisation,
