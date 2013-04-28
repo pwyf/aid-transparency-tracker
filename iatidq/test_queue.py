@@ -55,14 +55,17 @@ def test_activity(runtime_id, package_id, result_identifier,
         newresult.organisation_id = organisation_id
         db.session.add(newresult)
 
-    def execute_test(xmldata, test_id, binary_test):
+    def reformat_test_data(xmldata, binary_test):
         if binary_test:
-            data = {
+            return {
                 "activity": xmldata,
                 "lists": codelists
                 }
         else:
-            data = xmldata
+            return xmldata
+
+    def execute_test(xmldata, test_id, binary_test):
+        data = reformat_test_data(xmldata, binary_test)
         try:
             if test_functions[test_id](data):
                 return test_result.PASS
