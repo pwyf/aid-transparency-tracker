@@ -121,9 +121,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         organisation = dqorganisations.organisations(organisation_code)
 
         organisationsurvey = dqsurveys.getOrCreateSurvey({
-                    'organisation_id': organisation.id, 
-                    'currentworkflow_id': currentworkflow_id,
-                    'currentworkflow_deadline': currentworkflow_deadline,
+                    'organisation_id': organisation.id,
                     'indicators': indicators
                     })
 
