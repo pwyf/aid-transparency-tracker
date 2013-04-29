@@ -29,19 +29,26 @@ def importOrganisationPackagesFromFile(filename, organisation_c=None, organisati
         return _importOrganisationPackages(organisation_c, organisation_n, fh, True)
 
 def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
+    def get_checkp_code_name():
+        if organisation_c is None:
+            return (
+                organisations(row['organisation_code']),
+                row['organisation_code'],
+                row['organisation_name']
+                )
+        return (
+            organisations(organisation_c),
+            organisation_c,
+            organisation_n
+            )
+
     data = unicodecsv.DictReader(fh)
 
     for row in data:
         condition = checkCondition(row)
 
-        if organisation_c is None:
-            checkP = organisations(row['organisation_code'])
-            organisation_code = row['organisation_code']
-            organisation_name = row['organisation_name']
-        else:
-            checkP = organisations(organisation_c)
-            organisation_code = organisation_c
-            organisation_name = organisation_n
+        checkP, organisation_code, organisation_name = get_checkp_code_name()
+
         if checkP:
             organisation = checkP
         else:
