@@ -83,7 +83,8 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
                     "condition": condition
                     })
 
-        if (('packagegroup_name' in row) and (row['packagegroup_name'] != "")):
+        pg_name = row.get('packagegroup_name', "")
+        if pg_name != '':
             packagegroup = models.PackageGroup.query.filter(
                 models.PackageGroup.name == row['packagegroup_name']
                 ).first()
