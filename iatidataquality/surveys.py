@@ -47,7 +47,8 @@ def create_survey(organisation_code=None):
     return "You're trying to create a survey"
 
 def get_old_organisation_id(organisation_code='GB-1'):
-    old_organisation_file = 'tests/2012_2013_organisation_mapping.csv'
+    path = app.config["DATA_STORAGE_DIR"]
+    old_organisation_file = os.path.join(path, '2012_2013_organisation_mapping.csv')
 
     old_organisation_data = unicodecsv.DictReader(file(old_organisation_file))
     for row in old_organisation_data:
@@ -55,7 +56,8 @@ def get_old_organisation_id(organisation_code='GB-1'):
             return row['2012_id']
 
 def get_old_indicators():
-    old_indicators_file = 'tests/2012_indicators.csv'
+    path = app.config["DATA_STORAGE_DIR"]
+    old_indicators_file = os.path.join(path, '2012_indicators.csv')
     old_indicators_data = unicodecsv.DictReader(file(old_indicators_file))
 
     indicator_data = {}
@@ -68,7 +70,7 @@ def get_organisation_results(organisation_code, newindicators):
     old_organisation_id = get_old_organisation_id(organisation_code)
     indicators = get_old_indicators()
 
-    old_results_file = 'tests/2012_results.csv'
+    old_results_file = os.path.join(path, '2012_results.csv')
     old_results_data = unicodecsv.DictReader(file(old_results_file))
 
     data = {}

@@ -108,3 +108,12 @@ There are two ways to run tests:
 For either, make sure you have the backend running:
 
     python tests_backend.py
+
+Survey component 
+================
+
+The survey component currently requires the existence of three files (could be abstracted in future). Move them from the tests directory to the DATA_STORAGE_DIR you specified in config.py. E.g., if you set the directory to be /home/me/data/:
+    
+    cp tests/2012_2013_organisation_mapping.csv /home/me/data/
+    cp tests/2012_indicators.csv /home/me/data/
+    cp tests/2012_results.csv /home/me/data/
