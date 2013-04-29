@@ -50,27 +50,22 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
                                           "organisation_code": organisation_code
                                         })
             print organisation_code
-            packages = models.Package.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
+            for package in models.Package.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
                         ).join(models.PackageGroup
-                        ).all()
-
-            if packages:
-                for package in packages:
-                    organisationpackage = addOrganisationPackage({
+                        ).all():
+                        organisationpackage = addOrganisationPackage({
                                 "organisation_id" : organisation.id,
                                 "package_id" : package.id,
                                 "condition": condition
-                            })
+                                })
 
-            packagegroups = models.PackageGroup.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
-                        ).all()
-            if packagegroups:
-                for packagegroup in packagegroups:
-                    organisationpackagegroup = addOrganisationPackageGroup({
-                                "organisation_id" : organisation.id,
-                                "packagegroup_id" : packagegroup.id,
-                                "condition": condition
-                            })
+            for packagegroup in models.PackageGroup.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
+                        ).all():
+                organisationpackagegroup = addOrganisationPackageGroup({
+                        "organisation_id" : organisation.id,
+                        "packagegroup_id" : packagegroup.id,
+                        "condition": condition
+                        })
             if (('packagegroup_name' in row) and (row['packagegroup_name'] != "")):
                 packagegroup = models.PackageGroup.query.filter(models.PackageGroup.name == row['packagegroup_name']
                         ).first()
