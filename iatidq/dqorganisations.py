@@ -60,6 +60,11 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
             models.PackageGroup.publisher_iati_id==organisation_code
             ).all()
 
+    def get_packagegroup_by_name(pg_name):
+        return models.PackageGroup.query.filter(
+            models.PackageGroup.name == pg_name
+            ).first()
+
     checkP, organisation_code, organisation_name = get_checkp_code_name()
 
     data = unicodecsv.DictReader(fh)
@@ -68,32 +73,40 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
         condition = checkCondition(row)
         organisation = get_organisation(checkP)
 
-        print organisation_code
-        for package in get_packages(organisation_code):
+        def add_org_package(package):
             addOrganisationPackage({
                     "organisation_id" : organisation.id,
                     "package_id" : package.id,
                     "condition": condition
                     })
-
-        for packagegroup in get_packagegroup(organisation_code):
+            
+        def add_org_packagegroup(packagegroup):
             addOrganisationPackageGroup({
                     "organisation_id" : organisation.id,
                     "packagegroup_id" : packagegroup.id,
                     "condition": condition
                     })
 
-        pg_name = row.get('packagegroup_name', "")
-        if pg_name != '':
-            packagegroup = models.PackageGroup.query.filter(
-                models.PackageGroup.name == row['packagegroup_name']
-                ).first()
+        def add_org_package_from_pg(packagegroup):
             data = {
                 'packagegroup_id': packagegroup.id,
                 'organisation_id': organisation.id,
                 'condition': condition
                 }
             addOrganisationPackageFromPackageGroup(data)
+
+        print organisation_code
+
+        for package in get_packages(organisation_code):
+            add_org_package(package)
+
+        for packagegroup in get_packagegroup(organisation_code):
+            add_org_packagegroup(packagegroup)
+
+        pg_name = row.get('packagegroup_name', "")
+        if pg_name != '':
+            packagegroup = get_packagegroup_by_name(pg_name)
+            add_org_package_from_pg(packagegroup)
                 
     print "Imported successfully"
     return True
