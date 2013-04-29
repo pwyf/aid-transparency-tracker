@@ -42,12 +42,12 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
             organisation_n
             )
 
+    checkP, organisation_code, organisation_name = get_checkp_code_name()
+
     data = unicodecsv.DictReader(fh)
 
     for row in data:
         condition = checkCondition(row)
-
-        checkP, organisation_code, organisation_name = get_checkp_code_name()
 
         if checkP:
             organisation = checkP
