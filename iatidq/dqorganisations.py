@@ -70,14 +70,14 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
 
         print organisation_code
         for package in get_packages(organisation_code):
-            organisationpackage = addOrganisationPackage({
+            addOrganisationPackage({
                     "organisation_id" : organisation.id,
                     "package_id" : package.id,
                     "condition": condition
                     })
 
         for packagegroup in get_packagegroup(organisation_code):
-            organisationpackagegroup = addOrganisationPackageGroup({
+            addOrganisationPackageGroup({
                     "organisation_id" : organisation.id,
                     "packagegroup_id" : packagegroup.id,
                     "condition": condition
