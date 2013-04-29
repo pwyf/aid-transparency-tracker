@@ -29,28 +29,28 @@ def importOrganisationPackagesFromFile(filename, organisation_c=None, organisati
         return _importOrganisationPackages(organisation_c, organisation_n, fh, True)
 
 def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
+    data = unicodecsv.DictReader(fh)
 
-        data = unicodecsv.DictReader(fh)
+    for row in data:
+        condition = checkCondition(row)
 
-        for row in data:
-            condition = checkCondition(row)
-
-            if organisation_c is None:
-                checkP = organisations(row['organisation_code'])
-                organisation_code = row['organisation_code']
-                organisation_name = row['organisation_name']
-            else:
-                checkP = organisations(organisation_c)
-                organisation_code = organisation_c
-                organisation_name = organisation_n
-            if checkP:
-                organisation = checkP
-            else:
-                organisation = addOrganisation({"organisation_name": organisation_name,
-                                          "organisation_code": organisation_code
-                                        })
-            print organisation_code
-            for package in models.Package.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
+        if organisation_c is None:
+            checkP = organisations(row['organisation_code'])
+            organisation_code = row['organisation_code']
+            organisation_name = row['organisation_name']
+        else:
+            checkP = organisations(organisation_c)
+            organisation_code = organisation_c
+            organisation_name = organisation_n
+        if checkP:
+            organisation = checkP
+        else:
+            organisation = addOrganisation(
+                {"organisation_name": organisation_name,
+                 "organisation_code": organisation_code
+                 })
+        print organisation_code
+        for package in models.Package.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
                         ).join(models.PackageGroup
                         ).all():
                         organisationpackage = addOrganisationPackage({
@@ -59,25 +59,26 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
                                 "condition": condition
                                 })
 
-            for packagegroup in models.PackageGroup.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
+        for packagegroup in models.PackageGroup.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
                         ).all():
                 organisationpackagegroup = addOrganisationPackageGroup({
                         "organisation_id" : organisation.id,
                         "packagegroup_id" : packagegroup.id,
                         "condition": condition
                         })
-            if (('packagegroup_name' in row) and (row['packagegroup_name'] != "")):
-                packagegroup = models.PackageGroup.query.filter(models.PackageGroup.name == row['packagegroup_name']
-                        ).first()
-                data = {
-                    'packagegroup_id': packagegroup.id,
-                    'organisation_id': organisation.id,
-                    'condition': condition
+        if (('packagegroup_name' in row) and (row['packagegroup_name'] != "")):
+            packagegroup = models.PackageGroup.query.filter(
+                models.PackageGroup.name == row['packagegroup_name']
+                ).first()
+            data = {
+                'packagegroup_id': packagegroup.id,
+                'organisation_id': organisation.id,
+                'condition': condition
                 }
-                addOrganisationPackageFromPackageGroup(data)
+            addOrganisationPackageFromPackageGroup(data)
                 
-        print "Imported successfully"
-        return True
+    print "Imported successfully"
+    return True
 
 def organisations(organisation_code=None):
     if organisation_code is None:
