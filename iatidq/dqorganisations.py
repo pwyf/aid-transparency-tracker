@@ -90,10 +90,9 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
 
 def organisations(organisation_code=None):
     if organisation_code is None:
-        organisations = models.Organisation.query.all()
+        return models.Organisation.query.all()
     else:
-        organisations = models.Organisation.query.filter_by(organisation_code=organisation_code).first()
-    return organisations
+        return models.Organisation.query.filter_by(organisation_code=organisation_code).first()
 
 def organisationPackages(organisation_code=None):
     if organisation_code is not None:
