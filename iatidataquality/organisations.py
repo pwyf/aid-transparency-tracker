@@ -38,7 +38,9 @@ import StringIO
 import unicodecsv
 
 def getTotalSpend(organisation_code):
-    organisations_file = 'tests/organisations_with_identifiers.csv'
+
+    path = app.config["DATA_STORAGE_DIR"]
+    organisations_file = os.path.join(path, 'organisations_with_identifiers.csv')
     organisations_data = unicodecsv.DictReader(file(organisations_file))
     for organisation in organisations_data:
         if organisation['organisation_code'] == organisation_code:

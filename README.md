@@ -117,3 +117,4 @@ The survey component currently requires the existence of three files (could be a
     cp tests/2012_2013_organisation_mapping.csv /home/me/data/
     cp tests/2012_indicators.csv /home/me/data/
     cp tests/2012_results.csv /home/me/data/
+    cp tests/organisations_with_identifiers.csv /home/me/data/
