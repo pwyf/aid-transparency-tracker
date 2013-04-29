@@ -90,22 +90,21 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
 
 def organisations(organisation_code=None):
     if organisation_code is None:
-        organisations = models.Organisation.query.all()
+        return models.Organisation.query.all()
     else:
-        organisations = models.Organisation.query.filter_by(organisation_code=organisation_code).first()
-    return organisations
+        return models.Organisation.query.filter_by(organisation_code=organisation_code).first()
 
 def organisationPackages(organisation_code=None):
-    if organisation_code is not None:
-        organisationpackages = db.session.query(models.Package,
-                                             models.OrganisationPackage
-                        ).filter(models.Organisation.organisation_code==organisation_code
+    if organisation_code is None:
+        return False
+
+    return db.session.query(models.Package,
+                            models.OrganisationPackage
+                        ).filter(
+                        models.Organisation.organisation_code==organisation_code
                         ).join(models.OrganisationPackage
                         ).join(models.Organisation
                         ).all()
-        return organisationpackages
-    else:
-        return False
 
 def organisationPackageGroups(organisation_code=None):
     if organisation_code is not None:
