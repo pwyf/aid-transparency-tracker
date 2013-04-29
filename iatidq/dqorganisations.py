@@ -42,20 +42,22 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
             organisation_n
             )
 
+    def get_organisation(checkP):
+        if checkP:
+            return checkP
+        return addOrganisation(
+            {"organisation_name": organisation_name,
+             "organisation_code": organisation_code
+             })
+    
     checkP, organisation_code, organisation_name = get_checkp_code_name()
 
     data = unicodecsv.DictReader(fh)
 
     for row in data:
         condition = checkCondition(row)
+        organisation = get_organisation(checkP)
 
-        if checkP:
-            organisation = checkP
-        else:
-            organisation = addOrganisation(
-                {"organisation_name": organisation_name,
-                 "organisation_code": organisation_code
-                 })
         print organisation_code
         for package in models.Package.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
                         ).join(models.PackageGroup
