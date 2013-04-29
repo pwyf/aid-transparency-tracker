@@ -70,6 +70,8 @@ def get_organisation_results(organisation_code, newindicators):
     old_organisation_id = get_old_organisation_id(organisation_code)
     indicators = get_old_indicators()
 
+    path = app.config["DATA_STORAGE_DIR"]
+
     old_results_file = os.path.join(path, '2012_results.csv')
     old_results_data = unicodecsv.DictReader(file(old_results_file))
 
