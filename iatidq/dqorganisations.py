@@ -95,7 +95,9 @@ def organisations(organisation_code=None):
         return models.Organisation.query.filter_by(organisation_code=organisation_code).first()
 
 def organisationPackages(organisation_code=None):
-    if organisation_code is not None:
+    if organisation_code is None:
+        return False
+    else:
         organisationpackages = db.session.query(models.Package,
                                              models.OrganisationPackage
                         ).filter(models.Organisation.organisation_code==organisation_code
@@ -103,8 +105,6 @@ def organisationPackages(organisation_code=None):
                         ).join(models.Organisation
                         ).all()
         return organisationpackages
-    else:
-        return False
 
 def organisationPackageGroups(organisation_code=None):
     if organisation_code is not None:
