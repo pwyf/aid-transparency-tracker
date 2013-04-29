@@ -97,14 +97,14 @@ def organisations(organisation_code=None):
 def organisationPackages(organisation_code=None):
     if organisation_code is None:
         return False
-    else:
-        organisationpackages = db.session.query(models.Package,
-                                             models.OrganisationPackage
-                        ).filter(models.Organisation.organisation_code==organisation_code
+
+    return db.session.query(models.Package,
+                            models.OrganisationPackage
+                        ).filter(
+                        models.Organisation.organisation_code==organisation_code
                         ).join(models.OrganisationPackage
                         ).join(models.Organisation
                         ).all()
-        return organisationpackages
 
 def organisationPackageGroups(organisation_code=None):
     if organisation_code is not None:
