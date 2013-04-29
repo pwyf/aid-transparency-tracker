@@ -50,6 +50,11 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
              "organisation_code": organisation_code
              })
     
+    def get_packages(organisation_code):
+        return models.Package.query.filter(
+            models.PackageGroup.publisher_iati_id==organisation_code
+            ).join(models.PackageGroup).all()
+
     checkP, organisation_code, organisation_name = get_checkp_code_name()
 
     data = unicodecsv.DictReader(fh)
@@ -59,9 +64,7 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
         organisation = get_organisation(checkP)
 
         print organisation_code
-        for package in models.Package.query.filter(models.PackageGroup.publisher_iati_id==organisation_code
-                        ).join(models.PackageGroup
-                        ).all():
+        for package in get_packages():
                         organisationpackage = addOrganisationPackage({
                                 "organisation_id" : organisation.id,
                                 "package_id" : package.id,
