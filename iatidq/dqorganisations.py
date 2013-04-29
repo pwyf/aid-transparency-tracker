@@ -70,18 +70,19 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
 
         print organisation_code
         for package in get_packages(organisation_code):
-                        organisationpackage = addOrganisationPackage({
-                                "organisation_id" : organisation.id,
-                                "package_id" : package.id,
-                                "condition": condition
-                                })
+            organisationpackage = addOrganisationPackage({
+                    "organisation_id" : organisation.id,
+                    "package_id" : package.id,
+                    "condition": condition
+                    })
 
         for packagegroup in get_packagegroup(organisation_code):
-                organisationpackagegroup = addOrganisationPackageGroup({
-                        "organisation_id" : organisation.id,
-                        "packagegroup_id" : packagegroup.id,
-                        "condition": condition
-                        })
+            organisationpackagegroup = addOrganisationPackageGroup({
+                    "organisation_id" : organisation.id,
+                    "packagegroup_id" : packagegroup.id,
+                    "condition": condition
+                    })
+
         if (('packagegroup_name' in row) and (row['packagegroup_name'] != "")):
             packagegroup = models.PackageGroup.query.filter(
                 models.PackageGroup.name == row['packagegroup_name']
