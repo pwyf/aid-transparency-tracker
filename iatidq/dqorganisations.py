@@ -244,17 +244,17 @@ def deleteOrganisationPackage(organisation_code, package_name, organisationpacka
 def addFeedback(data):
     checkF=models.OrganisationConditionFeedback.query.filter_by(uses=data["uses"], element=data["element"], where=data["where"]
             ).first()
-    if not checkF:
-        feedback = models.OrganisationConditionFeedback()
-        feedback.organisation_id=data["organisation_id"]
-        feedback.uses=data["uses"]
-        feedback.element=data["element"]
-        feedback.where=data["where"]
-        db.session.add(feedback)
-        db.session.commit()
-        return feedback
-    else:
+    if checkF:
         return False
+
+    feedback = models.OrganisationConditionFeedback()
+    feedback.organisation_id=data["organisation_id"]
+    feedback.uses=data["uses"]
+    feedback.element=data["element"]
+    feedback.where=data["where"]
+    db.session.add(feedback)
+    db.session.commit()
+    return feedback
 
 def _organisation_detail_ungrouped(organisation):
     return db.session.query(models.Indicator,
