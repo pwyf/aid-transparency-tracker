@@ -17,6 +17,7 @@ from models import *
 import csv
 import util
 import unicodecsv
+import dqindicators
 
 def checkCondition(row):
     pg_cond = row.get('packagegroup_condition', '')
@@ -331,6 +332,11 @@ def _organisation_indicators(organisation, aggregation_type=2):
 
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
+    if not results:
+        indicators = dqindicators.indicators("pwyf2013")
+        indicators_restructured = dict(map(lambda x: (x.id, {'indicator': x }), indicators))
+        return {"zero": indicators_restructured,
+                "non_zero": {}}
 
     zero = lambda kv: not kv[1]["results_pct"]
     non_zero = lambda kv: kv[1]["results_pct"]
