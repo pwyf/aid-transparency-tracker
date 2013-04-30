@@ -242,8 +242,10 @@ def deleteOrganisationPackage(organisation_code, package_name, organisationpacka
         return False
 
 def addFeedback(data):
-    checkF=models.OrganisationConditionFeedback.query.filter_by(uses=data["uses"], element=data["element"], where=data["where"]
-            ).first()
+    checkF=models.OrganisationConditionFeedback.query.filter_by(
+        uses=data["uses"], element=data["element"], where=data["where"]
+        ).first()
+
     if checkF:
         return False
 
