@@ -85,13 +85,11 @@ def organisations(organisation_code=None):
                     'pct': coverage_pct
                 }
 
-        try:
-            summary_data = _organisation_indicators_summary(organisation, 
+        #try:
+        summary_data = _organisation_indicators_summary(organisation, 
                                                             aggregation_type)
-        except Exception, e:
-            summary_data = None
-
-        summary_data = "suppress"
+        #except Exception, e:
+        #    summary_data = None
 
         template_args = dict(organisation=organisation, 
                              summary_data=summary_data,
@@ -329,14 +327,18 @@ def organisationpackage_delete(organisation_code=None,
 def _organisation_indicators_summary(organisation, aggregation_type=2):
     summarydata = dqorganisations._organisation_indicators(organisation, 
                                                             aggregation_type)
+
     # Create crude total score
     totalpct = 0.00
     totalindicators = 0
-    for indicator, indicatordata in summarydata.items():
-        totalpct += indicatordata['results_pct']
-        totalindicators +=1
-    totalscore = totalpct/totalindicators
-    return totalscore, totalindicators
+    if summarydata:
+        for indicator, indicatordata in summarydata.items():
+            totalpct += indicatordata['results_pct']
+            totalindicators +=1
+        totalscore = totalpct/totalindicators
+        return totalscore, totalindicators
+    else:
+        return None
     
 
 @app.route('/tmp/inforesult/<package_code>/<runtime_id>')
