@@ -20,7 +20,7 @@ import unicodecsv
 
 def update_model(src, dst, keys):
     for key in keys:
-        setattr(dst, getattr(dst, key))
+        setattr(dst, key, getattr(dst, key))
 
 def checkCondition(row):
     pg_cond = row.get('packagegroup_condition', '')
@@ -161,6 +161,7 @@ def addOrganisation(data):
         organisation_name = data["organisation_name"],
         organisation_code = data["organisation_code"]
         )
+#    update_model(data, newP, ["organisation_name", "organisation_code"])
     db.session.add(newP)
     db.session.commit()
     return newP
