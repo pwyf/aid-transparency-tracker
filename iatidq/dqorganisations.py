@@ -13,7 +13,7 @@ from sqlalchemy import func
 
 import summary
 
-import models
+from models import *
 import csv
 import util
 import unicodecsv
@@ -54,18 +54,18 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
              })
     
     def get_packages(organisation_code):
-        return models.Package.query.filter(
-            models.PackageGroup.publisher_iati_id==organisation_code
-            ).join(models.PackageGroup).all()
+        return Package.query.filter(
+            PackageGroup.publisher_iati_id==organisation_code
+            ).join(PackageGroup).all()
 
     def get_packagegroup(organisation_code):
-        return models.PackageGroup.query.filter(
-            models.PackageGroup.publisher_iati_id==organisation_code
+        return PackageGroup.query.filter(
+            PackageGroup.publisher_iati_id==organisation_code
             ).all()
 
     def get_packagegroup_by_name(pg_name):
-        return models.PackageGroup.query.filter(
-            models.PackageGroup.name == pg_name
+        return PackageGroup.query.filter(
+            PackageGroup.name == pg_name
             ).first()
 
     checkP, organisation_code, organisation_name = get_checkp_code_name()
@@ -116,43 +116,43 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
 
 def organisations(organisation_code=None):
     if organisation_code is None:
-        return models.Organisation.query.all()
+        return Organisation.query.all()
     else:
-        return models.Organisation.query.filter_by(
+        return Organisation.query.filter_by(
             organisation_code=organisation_code).first()
 
 def organisationPackages(organisation_code=None):
     if organisation_code is None:
         return False
 
-    return db.session.query(models.Package,
-                            models.OrganisationPackage
+    return db.session.query(Package,
+                            OrganisationPackage
                         ).filter(
-                        models.Organisation.organisation_code==organisation_code
-                        ).join(models.OrganisationPackage
-                        ).join(models.Organisation
+                        Organisation.organisation_code==organisation_code
+                        ).join(OrganisationPackage
+                        ).join(Organisation
                         ).all()
 
 def organisationPackageGroups(organisation_code=None):
     if organisation_code is None:
         return False
 
-    return db.session.query(models.PackageGroup,
-                            models.OrganisationPackageGroup
-            ).filter(models.Organisation.organisation_code==organisation_code
-            ).join(models.OrganisationPackageGroup
-            ).join(models.Organisation
+    return db.session.query(PackageGroup,
+                            OrganisationPackageGroup
+            ).filter(Organisation.organisation_code==organisation_code
+            ).join(OrganisationPackageGroup
+            ).join(Organisation
             ).all()
 
 def addOrganisation(data):
     organisation_code = data["organisation_code"]
-    checkP = models.Organisation.query.filter_by(
+    checkP = Organisation.query.filter_by(
         organisation_code=organisation_code).first()
 
     if checkP:
         return False
 
-    newP = models.Organisation()
+    newP = Organisation()
     newP.setup(
         organisation_name = data["organisation_name"],
         organisation_code = data["organisation_code"]
@@ -162,7 +162,7 @@ def addOrganisation(data):
     return newP
 
 def updateOrganisation(organisation_code, data):
-    checkP = models.Organisation.query.filter_by(
+    checkP = Organisation.query.filter_by(
         organisation_code=organisation_code).first()
 
     if checkP is None:
@@ -175,14 +175,14 @@ def updateOrganisation(organisation_code, data):
     return checkP
 
 def addOrganisationPackage(data):
-    checkPP=models.OrganisationPackage.query.filter_by(
+    checkPP=OrganisationPackage.query.filter_by(
         organisation_id=data['organisation_id'], package_id=data['package_id']
                 ).first()
 
     if checkPP is not None:
         return False
 
-    newPP = models.OrganisationPackage()
+    newPP = OrganisationPackage()
     newPP.setup(
         organisation_id = data["organisation_id"],
         package_id = data["package_id"],
@@ -193,7 +193,7 @@ def addOrganisationPackage(data):
     return newPP
 
 def addOrganisationPackageGroup(data):
-    checkPG = models.OrganisationPackageGroup.query.filter_by(
+    checkPG = OrganisationPackageGroup.query.filter_by(
         organisation_id=data['organisation_id'], 
         packagegroup_id=data['packagegroup_id']
                 ).first()
@@ -202,7 +202,7 @@ def addOrganisationPackageGroup(data):
         # Confirm that it's already been added
         return checkPG
 
-    newPG = models.OrganisationPackageGroup()
+    newPG = OrganisationPackageGroup()
     newPG.setup(
         organisation_id = data["organisation_id"],
         packagegroup_id = data["packagegroup_id"],
@@ -213,7 +213,7 @@ def addOrganisationPackageGroup(data):
     return newPG
 
 def addOrganisationPackageFromPackageGroup(data):
-    packages = models.Package.query.filter_by(
+    packages = Package.query.filter_by(
         package_group=data['packagegroup_id']
         ).all()
     count_packages = 0
@@ -235,7 +235,7 @@ def addOrganisationPackageFromPackageGroup(data):
 def deleteOrganisationPackage(organisation_code, package_name, 
                               organisationpackage_id):
 
-    checkPP = models.OrganisationPackage.query.filter_by(
+    checkPP = OrganisationPackage.query.filter_by(
         id=organisationpackage_id).first()
 
     if not checkPP:
@@ -246,14 +246,14 @@ def deleteOrganisationPackage(organisation_code, package_name,
     return checkPP
 
 def addFeedback(data):
-    checkF=models.OrganisationConditionFeedback.query.filter_by(
+    checkF=OrganisationConditionFeedback.query.filter_by(
         uses=data["uses"], element=data["element"], where=data["where"]
         ).first()
 
     if checkF:
         return False
 
-    feedback = models.OrganisationConditionFeedback()
+    feedback = OrganisationConditionFeedback()
     feedback.organisation_id=data["organisation_id"]
     feedback.uses=data["uses"]
     feedback.element=data["element"]
@@ -263,32 +263,32 @@ def addFeedback(data):
     return feedback
 
 def _organisation_detail_ungrouped(organisation):
-    return db.session.query(models.Indicator,
-                                     models.Test,
-                                     models.AggregateResult.results_data,
-                                     models.AggregateResult.results_num,
-                                     models.AggregateResult.result_hierarchy,
-                                     models.AggregateResult.package_id,
-                                     func.max(models.AggregateResult.runtime_id)
-        ).filter(models.Organisation.id==organisation.id)
+    return db.session.query(Indicator,
+                                     Test,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(Organisation.id==organisation.id)
 
 def _organisation_detail(organisation):
     aggregate_results = _organisation_detail_ungrouped(organisation)\
-        .group_by(models.Indicator,
-                   models.AggregateResult.result_hierarchy, 
-                   models.Test, 
-                   models.AggregateResult.package_id,
-                   models.AggregateResult.results_data,
-                   models.AggregateResult.results_num
-        ).join(models.IndicatorTest
-        ).join(models.Test
-        ).join(models.AggregateResult
-        ).join(models.Package
-        ).join(models.OrganisationPackage
-        ).join(models.Organisation
+        .group_by(Indicator,
+                   AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
         ).all()
 
-    pconditions = models.OrganisationCondition.query.filter_by(organisation_id=organisation.id
+    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
     db.session.commit()
@@ -297,32 +297,32 @@ def _organisation_detail(organisation):
                                    mode="publisher")
 
 def _organisation_indicators(organisation, aggregation_type=2):
-    aggregate_results = db.session.query(models.Indicator,
-                                     models.Test,
-                                     models.AggregateResult.results_data,
-                                     models.AggregateResult.results_num,
-                                     models.AggregateResult.result_hierarchy,
-                                     models.AggregateResult.package_id,
-                                     func.max(models.AggregateResult.runtime_id)
-        ).filter(models.Organisation.organisation_code==organisation.organisation_code
-        ).filter(models.AggregateResult.aggregateresulttype_id == aggregation_type
-        ).filter(models.AggregateResult.organisation_id == organisation.id
-        ).group_by(models.AggregateResult.result_hierarchy, 
-                   models.Test, 
-                   models.AggregateResult.package_id,
-                   models.Indicator,
-                   models.AggregateResult.results_data,
-                   models.AggregateResult.results_num,
-                   models.AggregateResult.package_id
-        ).join(models.IndicatorTest
-        ).join(models.Test
-        ).join(models.AggregateResult
-        ).join(models.Package
-        ).join(models.OrganisationPackage
-        ).join(models.Organisation
+    aggregate_results = db.session.query(Indicator,
+                                     Test,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(Organisation.organisation_code==organisation.organisation_code
+        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
+        ).filter(AggregateResult.organisation_id == organisation.id
+        ).group_by(AggregateResult.result_hierarchy, 
+                   Test, 
+                   AggregateResult.package_id,
+                   Indicator,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num,
+                   AggregateResult.package_id
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
         ).all()
 
-    pconditions = models.OrganisationCondition.query.filter_by(organisation_id=organisation.id
+    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
     return summary.agr_results(aggregate_results, 
