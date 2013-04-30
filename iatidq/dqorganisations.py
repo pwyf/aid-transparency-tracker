@@ -18,6 +18,10 @@ import csv
 import util
 import unicodecsv
 
+def update_model(src, dst, keys):
+    for key in keys:
+        setattr(dst, getattr(dst, key))
+
 def checkCondition(row):
     pg_cond = row.get('packagegroup_condition', '')
     if pg_cond != '':
