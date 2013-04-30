@@ -134,16 +134,15 @@ def organisationPackages(organisation_code=None):
                         ).all()
 
 def organisationPackageGroups(organisation_code=None):
-    if organisation_code is not None:
-        organisationpackagegroups = db.session.query(models.PackageGroup,
-                                             models.OrganisationPackageGroup
-                        ).filter(models.Organisation.organisation_code==organisation_code
-                        ).join(models.OrganisationPackageGroup
-                        ).join(models.Organisation
-                        ).all()
-        return organisationpackagegroups
-    else:
+    if organisation_code is None:
         return False
+
+    return db.session.query(models.PackageGroup,
+                            models.OrganisationPackageGroup
+            ).filter(models.Organisation.organisation_code==organisation_code
+            ).join(models.OrganisationPackageGroup
+            ).join(models.Organisation
+            ).all()
 
 def addOrganisation(data):
     checkP = models.Organisation.query.filter_by(organisation_code=data["organisation_code"]).first()
