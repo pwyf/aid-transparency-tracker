@@ -387,13 +387,13 @@ class Organisation(db.Model):
     def setup(self,
                  organisation_name,
                  organisation_code,
-                 organisation_total_spend,
-                 organisation_total_spend_source,
-                 organisation_currency,
-                 organisation_currency_conversion,
-                 organisation_currency_conversion_source,
-                 organisation_largest_recipient,
-                 organisation_largest_recipient_source,
+                 organisation_total_spend=None,
+                 organisation_total_spend_source=None,
+                 organisation_currency=None,
+                 organisation_currency_conversion=None,
+                 organisation_currency_conversion_source=None,
+                 organisation_largest_recipient=None,
+                 organisation_largest_recipient_source=None,
                  id=None):
         self.organisation_name = organisation_name
         self.organisation_code = organisation_code
