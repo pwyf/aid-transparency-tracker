@@ -37,16 +37,6 @@ from iatidq.models import *
 import StringIO
 import unicodecsv
 
-def getTotalSpend(organisation_code):
-
-    path = app.config["DATA_STORAGE_DIR"]
-    organisations_file = os.path.join(path, 'organisations_with_identifiers.csv')
-    organisations_data = unicodecsv.DictReader(file(organisations_file))
-    for organisation in organisations_data:
-        if organisation['organisation_code'] == organisation_code:
-            return organisation['organisation_spend']
-    return None
-
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
@@ -83,7 +73,10 @@ def organisations(organisation_code=None):
         organisation = dqorganisations.organisations(organisation_code)
         packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
-        coverage_total = getTotalSpend(organisation_code)
+        # coverage_total = organisation.organisation_total_spend
+        coverage_total = 1000
+        # FIXME: use organisation_total_spend 
+        # when data is imported to db
         coverage_found = info_results["coverage"]
         coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
         coverage = {
