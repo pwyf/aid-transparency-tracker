@@ -376,6 +376,7 @@ class Organisation(db.Model):
     organisation_total_spend_source = Column(UnicodeText)
     organisation_currency = Column(UnicodeText)
     organisation_currency_conversion = Column(Float(precision=4))
+    organisation_currency_conversion_source = Column(UnicodeText)
     organisation_largest_recipient = Column(UnicodeText)
     organisation_largest_recipient_source = Column(UnicodeText)
     __table_args__ = (UniqueConstraint('organisation_name'),
@@ -390,6 +391,7 @@ class Organisation(db.Model):
                  organisation_total_spend_source,
                  organisation_currency,
                  organisation_currency_conversion,
+                 organisation_currency_conversion_source,
                  organisation_largest_recipient,
                  organisation_largest_recipient_source,
                  id=None):
@@ -398,6 +400,7 @@ class Organisation(db.Model):
         self.organisation_total_spend = organisation_total_spend,
         self.organisation_currency = organisation_currency,
         self.organisation_currency_conversion = organisation_currency_conversion,
+        self.organisation_currency_conversion_source = organisation_currency_conversion_source,
         self.organisation_largest_recipient = organisation_largest_recipient
         if id is not None:
             self.id = id
