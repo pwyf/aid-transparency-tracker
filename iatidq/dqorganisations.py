@@ -193,21 +193,24 @@ def addOrganisationPackage(data):
     return newPP
 
 def addOrganisationPackageGroup(data):
-    checkPG=models.OrganisationPackageGroup.query.filter_by(organisation_id=data['organisation_id'], packagegroup_id=data['packagegroup_id']
+    checkPG = models.OrganisationPackageGroup.query.filter_by(
+        organisation_id=data['organisation_id'], 
+        packagegroup_id=data['packagegroup_id']
                 ).first()
-    if (checkPG is None):
-        newPG = models.OrganisationPackageGroup()
-        newPG.setup(
-            organisation_id = data["organisation_id"],
-            packagegroup_id = data["packagegroup_id"],
-            condition = data["condition"]
-        )
-        db.session.add(newPG)
-        db.session.commit()
-        return newPG
-    else:
+
+    if checkPG is not None:
         # Confirm that it's already been added
         return checkPG
+
+    newPG = models.OrganisationPackageGroup()
+    newPG.setup(
+        organisation_id = data["organisation_id"],
+        packagegroup_id = data["packagegroup_id"],
+        condition = data["condition"]
+        )
+    db.session.add(newPG)
+    db.session.commit()
+    return newPG
 
 def addOrganisationPackageFromPackageGroup(data):
     packages = models.Package.query.filter_by(package_group=data['packagegroup_id']
