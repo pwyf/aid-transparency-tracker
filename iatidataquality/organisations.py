@@ -331,14 +331,15 @@ def _organisation_indicators_summary(organisation, aggregation_type=2):
     # Create crude total score
     totalpct = 0.00
     totalindicators = 0
-    if summarydata:
-        for indicator, indicatordata in summarydata.items():
-            totalpct += indicatordata['results_pct']
-            totalindicators +=1
-        totalscore = totalpct/totalindicators
-        return totalscore, totalindicators
-    else:
+
+    if not summarydata:
         return None
+
+    for indicator, indicatordata in summarydata.items():
+        totalpct += indicatordata['results_pct']
+        totalindicators +=1
+    totalscore = totalpct/totalindicators
+    return totalscore, totalindicators
     
 
 @app.route('/tmp/inforesult/<package_code>/<runtime_id>')
