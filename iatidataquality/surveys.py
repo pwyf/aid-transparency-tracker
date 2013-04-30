@@ -98,9 +98,11 @@ def get_organisation_results(organisation_code, newindicators):
 def organisation_survey(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
     survey = dqsurveys.getSurvey(organisation_code)
+    workflows = dqsurveys.workflows()
     return render_template("surveys/survey.html", 
                            organisation=organisation,
-                           survey=survey)
+                           survey=survey,
+                           workflows=workflows)
 
 def getTimeRemainingNotice(deadline):
     time_remaining = ((deadline.date())-(datetime.utcnow().date()))
