@@ -335,9 +335,9 @@ def _organisation_indicators_summary(organisation, aggregation_type=2):
     if not summarydata:
         return None
 
-    for indicator, indicatordata in summarydata.items():
-        totalpct += indicatordata['results_pct']
-        totalindicators +=1
+    percentages = [ i["results_pct"] for i in summarydata.values() ]
+    totalpct = reduce(operator.add, percentages, 0)
+    totalindicators = len(percentages)
     totalscore = totalpct/totalindicators
     return totalscore, totalindicators
     
