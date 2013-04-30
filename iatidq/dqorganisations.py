@@ -213,9 +213,11 @@ def addOrganisationPackageGroup(data):
     return newPG
 
 def addOrganisationPackageFromPackageGroup(data):
-    packages = models.Package.query.filter_by(package_group=data['packagegroup_id']
-            ).all()
+    packages = models.Package.query.filter_by(
+        package_group=data['packagegroup_id']
+        ).all()
     count_packages = 0
+
     for package in packages:
         packagedata = {
             'organisation_id': data['organisation_id'],
@@ -224,6 +226,7 @@ def addOrganisationPackageFromPackageGroup(data):
         }
         if addOrganisationPackage(packagedata):
             count_packages+=1
+
     if count_packages >0:
         return count_packages
     else:
