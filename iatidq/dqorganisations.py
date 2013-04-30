@@ -175,20 +175,22 @@ def updateOrganisation(organisation_code, data):
     return checkP
 
 def addOrganisationPackage(data):
-    checkPP=models.OrganisationPackage.query.filter_by(organisation_id=data['organisation_id'], package_id=data['package_id']
+    checkPP=models.OrganisationPackage.query.filter_by(
+        organisation_id=data['organisation_id'], package_id=data['package_id']
                 ).first()
-    if (checkPP is None):
-        newPP = models.OrganisationPackage()
-        newPP.setup(
-            organisation_id = data["organisation_id"],
-            package_id = data["package_id"],
-            condition = data["condition"]
-        )
-        db.session.add(newPP)
-        db.session.commit()
-        return newPP
-    else:
+
+    if checkPP is not None:
         return False
+
+    newPP = models.OrganisationPackage()
+    newPP.setup(
+        organisation_id = data["organisation_id"],
+        package_id = data["package_id"],
+        condition = data["condition"]
+        )
+    db.session.add(newPP)
+    db.session.commit()
+    return newPP
 
 def addOrganisationPackageGroup(data):
     checkPG=models.OrganisationPackageGroup.query.filter_by(organisation_id=data['organisation_id'], packagegroup_id=data['packagegroup_id']
