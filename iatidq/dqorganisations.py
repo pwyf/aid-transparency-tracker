@@ -162,15 +162,17 @@ def addOrganisation(data):
     return newP
 
 def updateOrganisation(organisation_code, data):
-    checkP = models.Organisation.query.filter_by(organisation_code=organisation_code).first()
-    if (checkP is not None):
-        checkP.organisation_code = data["organisation_code"]
-        checkP.organisation_name = data["organisation_code"]
-        db.session.add(checkP)
-        db.session.commit()
-        return checkP
-    else:
+    checkP = models.Organisation.query.filter_by(
+        organisation_code=organisation_code).first()
+
+    if checkP is None:
         return False
+
+    checkP.organisation_code = data["organisation_code"]
+    checkP.organisation_name = data["organisation_code"]
+    db.session.add(checkP)
+    db.session.commit()
+    return checkP
 
 def addOrganisationPackage(data):
     checkPP=models.OrganisationPackage.query.filter_by(organisation_id=data['organisation_id'], package_id=data['package_id']
