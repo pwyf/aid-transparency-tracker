@@ -232,14 +232,18 @@ def addOrganisationPackageFromPackageGroup(data):
     else:
         return False
 
-def deleteOrganisationPackage(organisation_code, package_name, organisationpackage_id):
-    checkPP = models.OrganisationPackage.query.filter_by(id=organisationpackage_id).first()
-    if checkPP:
-        db.session.delete(checkPP)
-        db.session.commit()
-        return checkPP
-    else:
+def deleteOrganisationPackage(organisation_code, package_name, 
+                              organisationpackage_id):
+
+    checkPP = models.OrganisationPackage.query.filter_by(
+        id=organisationpackage_id).first()
+
+    if not checkPP:
         return False
+
+    db.session.delete(checkPP)
+    db.session.commit()
+    return checkPP
 
 def addFeedback(data):
     checkF=models.OrganisationConditionFeedback.query.filter_by(
