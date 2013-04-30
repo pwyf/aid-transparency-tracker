@@ -24,9 +24,12 @@ def checkCondition(row):
         return pg_cond
     return None
 
-def importOrganisationPackagesFromFile(filename, organisation_c=None, organisation_n=None):
+def importOrganisationPackagesFromFile(filename, 
+                                       organisation_c=None, 
+                                       organisation_n=None):
     with file(filename) as fh:
-        return _importOrganisationPackages(organisation_c, organisation_n, fh, True)
+        return _importOrganisationPackages(organisation_c, organisation_n, 
+                                           fh, True)
 
 def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
     def get_checkp_code_name():
@@ -115,7 +118,8 @@ def organisations(organisation_code=None):
     if organisation_code is None:
         return models.Organisation.query.all()
     else:
-        return models.Organisation.query.filter_by(organisation_code=organisation_code).first()
+        return models.Organisation.query.filter_by(
+            organisation_code=organisation_code).first()
 
 def organisationPackages(organisation_code=None):
     if organisation_code is None:
