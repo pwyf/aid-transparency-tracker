@@ -19,10 +19,10 @@ import util
 import unicodecsv
 
 def checkCondition(row):
-    if (('packagegroup_condition' in row) and (row['packagegroup_condition']!='')):
-        return row['packagegroup_condition']
-    else:
-        return None
+    pg_cond = row.get('packagegroup_condition', '')
+    if pg_cond != '':
+        return pg_cond
+    return None
 
 def importOrganisationPackagesFromFile(filename, organisation_c=None, organisation_n=None):
     with file(filename) as fh:
