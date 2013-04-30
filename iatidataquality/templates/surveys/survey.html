@@ -24,12 +24,11 @@
     <th>Type</th><th>Date</th><th>Activity</th><th>User</th><th>Workflow</th><th></th>
     </thead>
     <tbody>
+    {% for workflow in workflows %}
     <tr>
-    <td>Completed</td><td>2013-04-26</td><td>Survey created</td><td>Mark Brough</td><td>Researcher</td><td><a href="">View &raquo;</a></td>
+    <td>STATUS</td><td>DATE</td><td>MESSAGE</td><td>USER</td><td>{{workflow.Workflow.title}}</td><td><a href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name=workflow.Workflow.name)}}">View &raquo;</a></td>
     </tr>
-    <tr class="muted">
-    <td>Expected</td><td>2013-05-26</td><td>Donor responds</td><td>USAID staff</td><td>Donor review</td><td><a href="">View &raquo;</a></td>
-    </tr>
+    {% endfor %}
     </tbody>
     </table>
     <h3>Users</h3>

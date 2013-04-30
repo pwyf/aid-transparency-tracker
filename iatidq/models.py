@@ -372,6 +372,13 @@ class Organisation(db.Model):
     id = Column(Integer, primary_key=True)
     organisation_name = Column(UnicodeText, nullable=False)
     organisation_code = Column(UnicodeText, nullable=False)
+    organisation_total_spend = Column(Float(precision=2))
+    organisation_total_spend_source = Column(UnicodeText)
+    organisation_currency = Column(UnicodeText)
+    organisation_currency_conversion = Column(Float(precision=4))
+    organisation_currency_conversion_source = Column(UnicodeText)
+    organisation_largest_recipient = Column(UnicodeText)
+    organisation_largest_recipient_source = Column(UnicodeText)
     __table_args__ = (UniqueConstraint('organisation_name'),
                       UniqueConstraint('organisation_code'))
     # organisation_code is also used to communicate
@@ -380,9 +387,21 @@ class Organisation(db.Model):
     def setup(self,
                  organisation_name,
                  organisation_code,
+                 organisation_total_spend=None,
+                 organisation_total_spend_source=None,
+                 organisation_currency=None,
+                 organisation_currency_conversion=None,
+                 organisation_currency_conversion_source=None,
+                 organisation_largest_recipient=None,
+                 organisation_largest_recipient_source=None,
                  id=None):
         self.organisation_name = organisation_name
         self.organisation_code = organisation_code
+        self.organisation_total_spend = organisation_total_spend,
+        self.organisation_currency = organisation_currency,
+        self.organisation_currency_conversion = organisation_currency_conversion,
+        self.organisation_currency_conversion_source = organisation_currency_conversion_source,
+        self.organisation_largest_recipient = organisation_largest_recipient
         if id is not None:
             self.id = id
 
