@@ -145,18 +145,21 @@ def organisationPackageGroups(organisation_code=None):
             ).all()
 
 def addOrganisation(data):
-    checkP = models.Organisation.query.filter_by(organisation_code=data["organisation_code"]).first()
-    if not checkP:
-        newP = models.Organisation()
-        newP.setup(
-            organisation_name = data["organisation_name"],
-            organisation_code = data["organisation_code"]
-        )
-        db.session.add(newP)
-        db.session.commit()
-        return newP
-    else:
+    organisation_code = data["organisation_code"]
+    checkP = models.Organisation.query.filter_by(
+        organisation_code=organisation_code).first()
+
+    if checkP:
         return False
+
+    newP = models.Organisation()
+    newP.setup(
+        organisation_name = data["organisation_name"],
+        organisation_code = data["organisation_code"]
+        )
+    db.session.add(newP)
+    db.session.commit()
+    return newP
 
 def updateOrganisation(organisation_code, data):
     checkP = models.Organisation.query.filter_by(organisation_code=organisation_code).first()
