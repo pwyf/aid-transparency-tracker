@@ -29,6 +29,7 @@ which_packages = [
     ]
 
 default_tests_filename="tests/tests.csv"
+default_infotypes_filename="tests/infotypes.csv"
 default_indicator_group_name="pwyf2013"
 default_minimal_organisations = [
             {
@@ -70,7 +71,9 @@ default_minimal_organisations = [
 
 def create_inforesult_types(options):
     print "Adding an info result type"
-    inforesult.add_type("coverage", "Coverage")
+    inforesult.importInfoTypesFromFile(
+        default_infotypes_filename,
+        test_level.ACTIVITY)
 
 def create_aggregation_types(options):
     print "Adding an aggregation type for all data"
