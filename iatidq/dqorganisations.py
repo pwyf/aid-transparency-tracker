@@ -331,9 +331,47 @@ def _organisation_indicators(organisation, aggregation_type=2):
     pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
-    return summary.agr_results(aggregate_results, 
+    data = summary.agr_results(aggregate_results, 
                                                 conditions=pconditions, 
                                                 mode="publisher_indicators")
+    
+    # Sorry, this is really crude
+    inforesults = _organisation_indicators_inforesults(organisation)
+    for inforesult in inforesults:
+        try:
+            data[inforesult.Indicator.id]
+        except KeyError:
+            data[inforesult.Indicator.id]={}
+        data[inforesult.Indicator.id]={
+            'results_num': 1,
+            'results_pct': inforesult.result_data,
+            'indicator': {
+                'description': inforesult.Indicator.description,
+                'name': inforesult.Indicator.name,
+                'id': inforesult.Indicator.id,
+                'indicatorgroup_id': inforesult.Indicator.indicatorgroup_id
+            },
+            'tests': {}
+        }
+    return data
+
+def _organisation_indicators_inforesults(organisation):
+    inforesult_data = db.session.query(Indicator,
+                                     InfoType,
+                                     InfoResult.package_id,
+                                     InfoResult.result_data,
+                                     func.max(InfoResult.runtime_id)
+        ).filter(InfoResult.organisation_id==organisation.id
+        ).join(IndicatorInfoType
+        ).join(InfoType
+        ).join(InfoResult
+        ).group_by(Indicator,
+                   InfoType,
+                   InfoResult.result_data,
+                   InfoResult.package_id,
+                   InfoType.id
+        ).all()
+    return inforesult_data
 
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
