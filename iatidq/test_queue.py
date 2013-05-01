@@ -163,7 +163,8 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
     def run_test_organisation(organisation_id, 
                 org_organisation_data):
         
-        run_info_results(package_id, runtime_id, org_organisation_data, test_level.ORGANISATION)
+        run_info_results(package_id, runtime_id, org_organisation_data, 
+                test_level.ORGANISATION, organisation_id)
         organisation_data = etree.tostring(org_organisation_data)
 
         test_organisation(runtime_id, package_id, 
@@ -185,6 +186,9 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
         [ run_test_activity(org_id, activity) 
           for activity in org_activities ]
 
+        if len(org_activities)>0:
+            run_info_results(package_id, runtime_id, data, 
+                test_level.ACTIVITY, org_id)
         org_organisations_data = data.xpath('//iati-organisation')
 
         [ run_test_organisation(org_id, org_organisation_data) for 
@@ -199,7 +203,6 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
     dqprocessing.aggregate_results(runtime_id, package_id)
     db.session.commit()    
 
-    run_info_results(package_id, runtime_id, data, test_level.ACTIVITY)
 
     dqfunctions.add_test_status(package_id, package_status.TESTED, commit=True)
 
@@ -252,7 +255,7 @@ def run_test_queue():
     for body in queue.handle_queue_generator(download_queue):
         dequeue_download(body, test_functions, codelists)
 
-def run_info_results(package_id, runtime_id, xmldata, level):
+def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
     import inforesult
     import inforesult_orgtests
 
@@ -260,6 +263,7 @@ def run_info_results(package_id, runtime_id, xmldata, level):
         ir = models.InfoResult()
         ir.runtime_id = runtime_id
         ir.package_id = package_id
+        ir.organisation_id = organisation_id
         ir.info_id = info_id
         ir.result_data = result_data
         db.session.add(ir)
