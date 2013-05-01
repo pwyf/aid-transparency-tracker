@@ -13,6 +13,7 @@ from lxml import etree
 
 import models
 import itertools
+import unicodecsv
 
 def inforesult_total_disbursements_commitments(data):
     def values():
@@ -51,7 +52,6 @@ def inforesult_total_disbursements_commitments_current(data):
 
     return str(total)
 
-
 def info_results(package_id, runtime_id):
     info_results = db.session.query(models.InfoResult, models.InfoType).filter(
         models.InfoResult.package_id == package_id
@@ -76,3 +76,32 @@ def add_type(name, description):
         return it
     else:
         return checkIRT
+
+def returnLevel(row, level):
+    if (('infotype_level' in row) and (row['infotype_level'] != "")):
+        return row['infotype_level']
+    else:
+        return level
+
+def _importInfoTypesFromFile(fh, filename, level=1, local=True):
+    data = unicodecsv.DictReader(fh)
+
+    for row in data:
+        infotype = models.InfoType.query.filter(models.InfoType.name==row['infotype_name']).first()
+
+        if not infotype:
+            infotype = models.InfoType()
+
+        infotype.setup(
+            name = row['infotype_name'],
+            level = returnLevel(row, level),
+            description = row['infotype_description']
+            )
+        db.session.add(infotype)
+    db.session.commit()
+    print "Imported successfully"
+    return True
+
+def importInfoTypesFromFile(filename, level):
+    with file(filename) as fh:
+        return _importInfoTypesFromFile(fh, filename, level=level, local=True)
