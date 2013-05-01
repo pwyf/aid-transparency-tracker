@@ -104,6 +104,36 @@ def test_activity(runtime_id, package_id, result_identifier,
 
     return test_elements(data, test_functions, codelists, add_result)
 
+def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
+
+    organisation_data = etree.fromstring(xml_fragment)
+
+    organisation_tests = tests_by_level(test_functions, test_level.ORGANISATION)
+
+    tests_and_sources = [
+        (organisation_tests, organisation_data)
+        ]
+    
+    for tests, data in tests_and_sources:
+        return _test_elements(test_functions, codelists, add_result,
+                              tests, data)
+
+def test_organisation(runtime_id, package_id, data, test_functions, codelists,
+                  organisation_id):
+    
+    def add_result(test_id, the_result):
+        newresult = models.Result()
+        newresult.runtime_id = runtime_id
+        newresult.package_id = package_id
+        newresult.test_id = test_id
+        newresult.result_data = the_result
+        newresult.result_identifier = None
+        newresult.result_hierarchy = None
+        newresult.organisation_id = organisation_id
+        db.session.add(newresult)
+
+    return test_organisation_data(data, test_functions, codelists, add_result)    
+
 def parse_xml(file_name):
     try:
         data = etree.parse(file_name)
@@ -130,6 +160,15 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
                       codelists, organisation_id)
         db.session.commit()
 
+    def run_test_organisation(organisation_id, 
+                org_organisation_data):
+        organisation_data = etree.tostring(org_organisation_data)
+
+        test_organisation(runtime_id, package_id, 
+                organisation_data, test_functions, 
+                codelists, organisation_id)
+        db.session.commit()
+
     def get_activities(organisation):
         xp = organisation['activities_xpath']
         try:
@@ -143,6 +182,11 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
         [ run_test_activity(org_id, activity) 
           for activity in org_activities ]
+
+        org_organisations_data = data.xpath('//iati-organisation')
+
+        [ run_test_organisation(org_id, org_organisation_data) for 
+            org_organisation_data in org_organisations_data]
         
     organisations = dqpackages.get_organisations_for_testing(package_id)
     assert len(organisations) > 0
