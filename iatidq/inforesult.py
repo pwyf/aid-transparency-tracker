@@ -8,14 +8,13 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 from iatidq import db
-
+import datetime
 from lxml import etree
 
 import models
 import itertools
 
-def infotest1(data):
-
+def inforesult_total_disbursements_commitments(data):
     def values():
         for t in data.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]/value"""):
             yield t.text
@@ -31,9 +30,26 @@ def infotest1(data):
 
     return str(total)
 
+def inforesult_total_disbursements_commitments_current(data):
+    oneyear_ago = (datetime.datetime.utcnow()-datetime.timedelta(days=365))
+    
+    def values():
+        for t in data.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]"""):
+            transaction_date = t.find('transaction-date').get('iso-date')
+            transaction_date_date = datetime.datetime.strptime(transaction_date, "%Y-%m-%d")
+            if transaction_date_date > oneyear_ago:
+                yield t.find('value').text
 
-def infotest2(data):
-    return "result2"
+    def ints():
+        for v in values():
+            try:
+                yield int(v)
+            except:
+                pass
+
+    total = sum([ i for i in ints() ])
+
+    return str(total)
 
 
 def info_results(package_id, runtime_id):
@@ -50,8 +66,13 @@ def info_results(package_id, runtime_id):
     return dict([i for i in results()])
 
 def add_type(name, description):
-    it = models.InfoType()
-    it.name = name
-    it.description = description
-    db.session.add(it)
-    db.session.commit()
+    checkIRT = models.InfoType.query.filter(name=name).first()
+    if not checkIRT:
+        it = models.InfoType()
+        it.name = name
+        it.description = description
+        db.session.add(it)
+        db.session.commit()
+        return it
+    else:
+        return checkIRT
