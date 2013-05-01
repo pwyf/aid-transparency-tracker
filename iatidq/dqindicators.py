@@ -54,13 +54,13 @@ def importIndicators():
     filename = 'tests/tests.csv'
     indicatorgroup_id = 'pwyf2013'
     with file(filename) as fh:
-        return _importIndicators(indicatorgroup_name, fh, True)
+        return _importIndicators(indicatorgroup_name, fh, True, False)
 
-def importIndicatorsFromFile(indicatorgroup_name, filename):
+def importIndicatorsFromFile(indicatorgroup_name, filename, infotype=False):
     with file(filename) as fh:
-        return _importIndicators(indicatorgroup_name, fh, True)
+        return _importIndicators(indicatorgroup_name, fh, True, infotype)
 
-def _importIndicators(indicatorgroup_name, fh, local):
+def _importIndicators(indicatorgroup_name, fh, local, infotype):
     checkIG = indicatorGroups(indicatorgroup_name)
     if checkIG:
         indicatorgroup = checkIG
@@ -72,28 +72,51 @@ def _importIndicators(indicatorgroup_name, fh, local):
     data = unicodecsv.DictReader(fh)
 
     for row in data:
-        test = models.Test.query.filter(models.Test.name==row['test_name']).first()
-
-        if not test:
-            continue
-        
-        indicator_name = row['indicator_name']
-        if (indicator_name == ""):
-            continue
-        
-        checkI = indicators(indicatorgroup_name, indicator_name)
-        if checkI:
-            indicator = checkI
+        if infotype:
+            infotype = models.InfoType.query.filter(models.InfoType.name==row['infotype_name']).first()
+            if not infotype:
+                continue
+            
+            indicator_name = row['indicator_name']
+            if (indicator_name == ""):
+                continue
+            
+            checkI = indicators(indicatorgroup_name, indicator_name)
+            if checkI:
+                indicator = checkI
+            else:
+                indicator = addIndicator({
+                                "name" : indicator_name,
+                                "description" : "",
+                                "indicatorgroup_id" : indicatorgroup.id
+                            })
+            addIndicatorInfoType({
+                                "infotype_id" : infotype.id,
+                                "indicator_id" : indicator.id
+                            })
         else:
-            indicator = addIndicator({
-                            "name" : indicator_name,
-                            "description" : "",
-                            "indicatorgroup_id" : indicatorgroup.id
-                        })
-        addIndicatorTest({
-                            "test_id" : test.id,
-                            "indicator_id" : indicator.id
-                        })
+            test = models.Test.query.filter(models.Test.name==row['test_name']).first()
+
+            if not test:
+                continue
+            
+            indicator_name = row['indicator_name']
+            if (indicator_name == ""):
+                continue
+            
+            checkI = indicators(indicatorgroup_name, indicator_name)
+            if checkI:
+                indicator = checkI
+            else:
+                indicator = addIndicator({
+                                "name" : indicator_name,
+                                "description" : "",
+                                "indicatorgroup_id" : indicatorgroup.id
+                            })
+            addIndicatorTest({
+                                "test_id" : test.id,
+                                "indicator_id" : indicator.id
+                            })
             
     print "Imported successfully"
     return True
@@ -232,6 +255,20 @@ def addIndicatorTest(data):
         db.session.add(newIT)
         db.session.commit()
         return newIT
+    else:
+        return False
+
+def addIndicatorInfoType(data):
+    checkIIT = models.IndicatorInfoType.query.filter_by(infotype_id=data["infotype_id"], indicator_id=data["indicator_id"]).first()
+    if not checkIIT:
+        newIIT = models.IndicatorInfoType()
+        newIIT.setup(
+            infotype_id = data["infotype_id"],
+            indicator_id = data["indicator_id"]
+        )
+        db.session.add(newIIT)
+        db.session.commit()
+        return newIIT
     else:
         return False
 
