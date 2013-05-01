@@ -69,7 +69,7 @@ default_minimal_organisations = [
         ]
 
 def create_inforesult_types(options):
-    print "Adding an aggregation type"
+    print "Adding an info result type"
     inforesult.add_type("coverage", "Coverage")
 
 def create_aggregation_types(options):
