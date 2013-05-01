@@ -85,11 +85,11 @@ def organisations(organisation_code=None):
                     'pct': coverage_pct
                 }
 
-        #try:
-        summary_data = _organisation_indicators_summary(organisation, 
-                                                            aggregation_type)
-        #except Exception, e:
-        #    summary_data = None
+        try:
+            summary_data = _organisation_indicators_summary(organisation, 
+                          aggregation_type)
+        except Exception, e:
+            summary_data = None
 
         template_args = dict(organisation=organisation, 
                              summary_data=summary_data,
