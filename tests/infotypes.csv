@@ -1,0 +1,6 @@
+indicator_name,indicator_description,inforesult_name,inforesult_description,inforesult_level
+total-budget,Total budget,total_budgets_available,Number of years of forward budgets,3
+country-budgets,Country budget,total_country_budgets,Number of years of forward budgets at country level as a proportion of total budget,3
+country-strategy,Country strategy,country_strategy_papers,Number of currently funded countries for which there is a country strategy paper,3
+,,coverage,Total of disbursements and expenditure,1
+,,coverage_current,Total of disbursements and expenditure in the last year,1
