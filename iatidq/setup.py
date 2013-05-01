@@ -155,6 +155,11 @@ def setup(options):
     create_aggregation_types(options)
     create_inforesult_types(options)
 
+    # associate with inforesults
+    dqindicators.importIndicatorsFromFile(
+        default_indicator_group_name,
+        default_infotypes_filename, True)
+
     if options.minimal:
         setup_organisations_minimal()
     else:
