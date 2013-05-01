@@ -331,8 +331,23 @@ class IndicatorTest(db.Model):
         if id is not None:
             self.id = id
 
-    def __repr__(self):
-        return self.name+u', '+unicode(self.id)
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+class IndicatorInfoType(db.Model):
+    __tablename__ = 'indicatorinfotype'
+    id = Column(Integer, primary_key=True)
+    indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
+    infotype_id = Column(Integer, ForeignKey('info_type.id'), nullable=False)
+
+    def setup(self,
+                 indicator_id,
+                 infotype_id,
+                 id=None):
+        self.indicator_id = indicator_id
+        self.infotype_id = infotype_id
+        if id is not None:
+            self.id = id
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
