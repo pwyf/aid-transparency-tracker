@@ -27,3 +27,12 @@ tied-aid-status,Tied Aid Status
 title,Title
 unique-id,Unique ID
 basic,Basic tests
+budget-identifier,Budget Identifier
+strategy,Organisation strategy
+annual-report,Annual report
+allocation,Allocation policy
+procurement-policy,Procurement policy
+audit,Audit
+country-strategy,Country strategy
+total-budget,Total budget
+country-budgets,Disaggregated country budgets
