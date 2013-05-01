@@ -24,7 +24,8 @@ which_packages = [
     (u'worldbank-tz', True),
     (u'unops-tz', True),
     (u'dfid-tz', True),
-    (u'unitedstates-tz', True)
+    (u'unitedstates-tz', True),
+    (u'dfid-org', True)
     ]
 
 default_tests_filename="tests/tests.csv"
@@ -57,7 +58,14 @@ default_minimal_organisations = [
             'packagegroup_name': 'dfid',
             'condition': None,
             'package_name': 'dfid-tz'
-            }            
+            },
+            {
+            'organisation_name': 'UK, DFID',
+            'organisation_code': 'GB-1',
+            'packagegroup_name': 'dfid',
+            'condition': None,
+            'package_name': 'dfid-org'
+            }         
         ]
 
 def create_inforesult_types(options):
