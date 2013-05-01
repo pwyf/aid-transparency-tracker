@@ -58,16 +58,16 @@ def organisations(organisation_code=None):
                 package_id = p.package_id
                 from sqlalchemy import func
                 runtime = db.session.query(
-                    func.max(Result.runtime_id)).filter(
-                    Result.package_id == package_id
+                    func.max(InfoResult.runtime_id)).filter(
+                    InfoResult.package_id == package_id
                     ).first()
                 import iatidq.inforesult
                 runtime, = runtime
                 results = iatidq.inforesult.info_results(package_id, runtime)
                 if "coverage" in results:
-                    yield int(results["coverage"])
+                    yield int(results["coverage_current"])
                 
-        info_results["coverage"] = \
+        info_results["coverage_current"] = \
             reduce(operator.add, [ir for ir in get_info_results()], 0)
 
         organisation = dqorganisations.organisations(organisation_code)
@@ -77,7 +77,7 @@ def organisations(organisation_code=None):
         coverage_total = 1000
         # FIXME: use organisation_total_spend 
         # when data is imported to db
-        coverage_found = info_results["coverage"]
+        coverage_found = info_results["coverage_current"]
         coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
         coverage = {
                     'total': coverage_total,
