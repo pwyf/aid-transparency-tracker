@@ -467,6 +467,7 @@ class InfoType(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText, nullable=False)
     description = Column(UnicodeText)
+    level = Column(Integer, nullable=False)
 
 ## USERS
 
