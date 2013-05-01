@@ -5,8 +5,8 @@ import re
 #   asdb-org.xml; minbuza_nl-organisation.xml; dfid-org.xml; 
 #   acdi_cida-org.xml; bmz-org.xml
 # ausaid-org.xml is empty
-filename = 'data/acdi_cida-org.xml'
-doc = etree.parse(filename)
+"""filename = 'data/acdi_cida-org.xml'
+doc = etree.parse(filename)"""
 
 def fixVal(value):
     try:
@@ -204,11 +204,11 @@ def total_budgets_available(doc):
             available+=1
     return (float(available)/3.0)*100
 
-print "Total budgets..."
+"""print "Total budgets..."
 print total_budgets_available(doc)
 
 print "Total country budgets..."    
 print total_country_budgets_single_result(doc)
 
 print "Country strategy papers"
-print country_strategy_papers(doc)
+print country_strategy_papers(doc)"""
