@@ -162,6 +162,8 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     def run_test_organisation(organisation_id, 
                 org_organisation_data):
+        
+        run_info_results(package_id, runtime_id, org_organisation_data, test_level.ORGANISATION)
         organisation_data = etree.tostring(org_organisation_data)
 
         test_organisation(runtime_id, package_id, 
@@ -197,7 +199,7 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
     dqprocessing.aggregate_results(runtime_id, package_id)
     db.session.commit()    
 
-    run_info_results(package_id, runtime_id, data)
+    run_info_results(package_id, runtime_id, data, test_level.ACTIVITY)
 
     dqfunctions.add_test_status(package_id, package_status.TESTED, commit=True)
 
@@ -250,8 +252,9 @@ def run_test_queue():
     for body in queue.handle_queue_generator(download_queue):
         dequeue_download(body, test_functions, codelists)
 
-def run_info_results(package_id, runtime_id, xmldata):
+def run_info_results(package_id, runtime_id, xmldata, level):
     import inforesult
+    import inforesult_orgtests
 
     def add_info_result(info_id, result_data):
         ir = models.InfoResult()
@@ -263,13 +266,17 @@ def run_info_results(package_id, runtime_id, xmldata):
 
     def info_lam_by_name(name):
         hack = { 
-            'coverage': lambda fn: inforesult.infotest1(fn),
-            'total_budget': lambda fn: inforesult.infotest2(fn)
+            'coverage': lambda fn: inforesult.inforesult_total_disbursements_commitments(fn),
+            'coverage_current': lambda fn: inforesult.inforesult_total_disbursements_commitments_current(fn),
+            'total_budgets_available': lambda fn: inforesult_orgtests.total_budgets_available(fn),
+            'total_country_budgets': lambda fn: inforesult_orgtests.total_country_budgets_single_result(fn),
+            'country_strategy_papers': lambda fn: inforesult_orgtests.country_strategy_papers(fn)
             }
         return hack[name]
 
     try:
-        info_types = models.InfoType.query.all()
+        info_types = models.InfoType.query.filter_by(level=level
+                ).all()
         for it in info_types:
             lam = info_lam_by_name(it.name)
             try:
