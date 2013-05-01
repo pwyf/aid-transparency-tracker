@@ -5,7 +5,7 @@ import re
 #   asdb-org.xml; minbuza_nl-organisation.xml; dfid-org.xml; 
 #   acdi_cida-org.xml; bmz-org.xml
 # ausaid-org.xml is empty
-filename = 'data/asdb-org.xml'
+filename = 'data/acdi_cida-org.xml'
 doc = etree.parse(filename)
 
 def fixVal(value):
@@ -19,6 +19,11 @@ def fixVal(value):
     except ValueError:
         pass
     return int(value.replace('.0',''))    
+
+def date_later_than_now(date):
+    if datetime.datetime.strptime(date, "%Y-%m-%d") > datetime.datetime.utcnow():
+        return True
+    return False
 
 def budget_within_year_scope(budget_end, year):
 
@@ -40,11 +45,11 @@ def budget_within_year_scope(budget_end, year):
 
 def total_future_budgets(doc):
 
-    # Checks if budgets are available for each of
+    # Checks if total budgets are available for each of
     # the next three years.
 
     total_budgets = doc.xpath("//total-budget[period-end/@iso-date]")
-    years = [1, 2, 3]
+    years = [0, 1, 2, 3]
     out = {}
 
     def get_budget_per_year(year, out, total_budget):
@@ -81,13 +86,13 @@ def total_country_budgets(doc, totalbudgets):
     budgetdata = { 
         'summary': {
             'num_countries': 0, 
-            'total_amount': {1:0, 2:0, 3:0}, 
-            'total_pct': {1:0.00,2:0.00,3:0.00}, 
+            'total_amount': {0:0, 1:0, 2:0, 3:0}, 
+            'total_pct': {0:0.00, 1:0.00,2:0.00,3:0.00}, 
             'total_pct_all_years': 0.00
         },
         'countries': {}
     }
-    years = [1, 2, 3]
+    years = [0, 1, 2, 3]
 
     def get_country_data(budget, budgetdata, year):
         country = budget.find('recipient-country').get('code')
@@ -108,12 +113,8 @@ def total_country_budgets(doc, totalbudgets):
         return [get_country_data(budget, budgetdata, 
             year) for budget in recipient_country_budgets]
 
-    def make_country_budget_per_year(years, budgetdata, 
-        recipient_country_budgets):
-        return [make_country_budget(year, budgetdata, 
+    [make_country_budget(year, budgetdata, 
         recipient_country_budgets) for year in years]
-
-    make_country_budget_per_year(years, budgetdata, recipient_country_budgets)
 
     def generate_total_years_data(budgetdata, year):
         total_countries = budgetdata['summary']['total_amount'][year]
@@ -121,21 +122,32 @@ def total_country_budgets(doc, totalbudgets):
         try:
             budgetdata['summary']['total_pct'][year] = ((float(total_countries)/float(total_all))*100)
         except ZeroDivisionError:
+            # Use current year's budget
+            pass
+        try:
+            budgetdata['summary']['total_pct'][year] = ((float(total_countries)/float(totalbudgets[0]['amount']))*100)
+        except ZeroDivisionError:
             budgetdata['summary']['total_pct'][year] = 0.00
         budgetdata['summary']['num_countries'] = len(budgetdata['countries'])
         return budgetdata
     
     data = [generate_total_years_data(budgetdata, year) for year in years]
 
-    total_pcts=budgetdata['summary']['total_pct'].values()
-    # Return average of 3 years
+    total_pcts = budgetdata['summary']['total_pct'].items()
+
+    # For scoring, restrict to forward years (year >=1)
+    total_pcts = dict(filter(lambda x: x[0]>=1, total_pcts))
+    total_pcts = total_pcts.values()
+
+    # Return average of 3 forward years
     budgetdata['summary']['total_pct_all_years'] = (reduce(lambda x, y: float(x) + float(y), total_pcts) / float(len(total_pcts)))
     return budgetdata
 
 def total_country_budgets_single_result(doc):
     return total_country_budgets(doc, total_future_budgets(doc))['summary']['total_pct_all_years']
 
-def country_strategy_papers(doc, countries):
+def country_strategy_papers(doc):
+    countries = all_countries(doc)
 
     # Is there a country strategy paper for each 
     # country? (Based on the list of countries that
@@ -148,19 +160,18 @@ def country_strategy_papers(doc, countries):
     strategy_papers = doc.xpath("//document-link[category/@code]")
 
     for code, name in countries.items():
-        for strategy_paper in strategy_papers:
-            title = strategy_paper.find('title').text
-            if re.compile("(.*)"+name+"(.*)").match(title):
-                try:
-                    countries.pop(code)
-                except Exception:
-                    pass
+        # Some donors have not provided the name of the country; the
+        # country code could theoretically be looked up to find the 
+        # name of the country
+        if name is not None:
+            for strategy_paper in strategy_papers:
+                title = strategy_paper.find('title').text
+                if re.compile("(.*)"+name+"(.*)").match(title):
+                    try:
+                        countries.pop(code)
+                    except Exception:
+                        pass
     return 100-(float(len(countries))/float(total_countries))*100
-
-def date_later_than_now(date):
-    if datetime.datetime.strptime(date, "%Y-%m-%d") > datetime.datetime.utcnow():
-        return True
-    return False
 
 def all_countries(doc):
 
@@ -181,11 +192,23 @@ def all_countries(doc):
             countries[code] = name
     return countries
 
+def total_budgets_available(doc):
+    future_years = total_future_budgets(doc)
+    # Only look for future years >=1, i.e. exclude
+    # current year.
+    future_years = dict(filter(lambda x: x[0]>=1, future_years.items()))
+
+    available = 0
+    for year, data in future_years.items():
+        if data['available'] == True:
+            available+=1
+    return (float(available)/3.0)*100
+
 print "Total budgets..."
-print total_future_budgets(doc)
+print total_budgets_available(doc)
 
 print "Total country budgets..."    
 print total_country_budgets_single_result(doc)
 
 print "Country strategy papers"
-print country_strategy_papers(doc, all_countries(doc))
+print country_strategy_papers(doc)
