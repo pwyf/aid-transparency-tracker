@@ -216,3 +216,8 @@ basic,Basic tests,activity-date[@type='start-planned']/@iso-date or transaction-
 ,,participating-org[@role='funding']/@ref exists?,"Funding organisation, ref",1
 ,,participating-org[@role='funding']/@ref is on list OrganisationIdentifier?,"Funding organisation, ref is on the IATI organisation identifier codelist",1
 ,,reporting-org/@ref is on list OrganisationIdentifier?,"Reporting organisation, ref is on the IATI organisation identifier codelist",1
+budget-identifier,Budget Identifier,country-budget exists?,"Budget identifier, administrative/functional classification",1
+budget-identifier,Budget Identifier,capital-spend exists?,"Budget identifier, economic classification",1
+,,country-budget/budget-item exists?,"Budget identifier, administrative/functional classification, at least one budget item",1
+,,country-budget/budget-item/@code exists?,"Budget identifier, administrative/functional classification, code provided",1
+,,capital-spend/@percent exists?,"Budget identifier, economic classification, percent amount",
