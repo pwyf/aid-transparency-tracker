@@ -353,6 +353,22 @@ def _organisation_indicators(organisation, aggregation_type=2):
             },
             'tests': {}
         }
+    # make sure indicators are complete
+    indicators = dqindicators.indicators("pwyf2013")
+    for indicator in indicators:
+        if indicator.id not in data:
+            data[indicator.id] = {
+            'results_num': 0,
+            'results_pct': 0,
+            'indicator': {
+                'description': indicator.description,
+                'name': indicator.name,
+                'id': indicator.id,
+                'indicatorgroup_id': indicator.indicatorgroup_id
+            },
+            'tests': {}
+        }
+    
     return data
 
 def _organisation_indicators_inforesults(organisation):
