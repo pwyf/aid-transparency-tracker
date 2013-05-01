@@ -17,4 +17,4 @@ class TestWeb(unittest.TestCase):
     def test1(self):
         rv = self.app.get('/organisations/GB-1/')
         print rv.data
-        assert "Average score" in rv.data
+        assert "Publication" in rv.data
