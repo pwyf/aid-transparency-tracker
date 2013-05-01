@@ -469,6 +469,17 @@ class InfoType(db.Model):
     description = Column(UnicodeText)
     level = Column(Integer, nullable=False)
 
+    def setup(self,
+                 name,
+                 level,
+                 description=None,
+                 id=None):
+        self.name = name
+        self.level = level
+        self.description = description
+        if id is not None:
+            self.id = id
+
 ## USERS
 
 class User(db.Model):
