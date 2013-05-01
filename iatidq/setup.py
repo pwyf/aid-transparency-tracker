@@ -70,7 +70,7 @@ default_minimal_organisations = [
         ]
 
 def create_inforesult_types(options):
-    print "Adding an info result type"
+    print "Adding info result types"
     inforesult.importInfoTypesFromFile(
         default_infotypes_filename,
         test_level.ACTIVITY)
