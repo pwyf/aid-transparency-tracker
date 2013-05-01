@@ -475,7 +475,8 @@ class InfoResult(db.Model):
     runtime_id = Column(Integer, ForeignKey('runtime.id'), nullable=False)
     package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
     info_id = Column(Integer, ForeignKey('info_type.id'), nullable=False)
-    result_data = Column(UnicodeText)
+    organisation_id = Column(Integer, ForeignKey('organisation.id'))
+    result_data = Column(Float)
     
 class InfoType(db.Model):
     __tablename__ = 'info_type'
