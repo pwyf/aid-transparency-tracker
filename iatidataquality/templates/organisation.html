@@ -17,7 +17,7 @@
         </div>
         <div class="span6 publication">
             <h1>Publication</h1>
-            {% if summary_data is not none %}
+            {% if summary_data[0]>0 %}
             <p><i class="icon icon-ok"></i> IATI data found</p>
             <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}% (for {{summary_data[1]}} indicators)</p>
             <p><i class="icon icon-info-sign"></i> Please tell us about the way you structure your data</p>
