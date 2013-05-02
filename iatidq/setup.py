@@ -83,7 +83,7 @@ def create_aggregation_types(options):
                                            'test_result':'1'})
     print "Adding an aggregation type for current data"
     currentdata_test = dqtests.test_by_test_name(
-        "activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"
+        "activity-date[@type='end-planned']/@iso-date or activity-date[@type='end-planned']/text() or activity-date[@type='end-actual']/@iso-date or activity-date[@type='end-actual']/text() is less than 13 months ago?"
         )
     dqaggregationtypes.addAggregationType({'name':'Current data',
                                            'description': '',
