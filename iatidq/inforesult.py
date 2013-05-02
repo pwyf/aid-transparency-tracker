@@ -58,11 +58,12 @@ def inforesult_total_disbursements_commitments_current(data):
 
     return str(total)
 
-def info_results(package_id, runtime_id):
+def info_results(package_id, runtime_id, organisation_id):
     info_results = db.session.query(models.InfoResult, models.InfoType).filter(
         models.InfoResult.package_id == package_id
         ).filter(
-        models.InfoResult.runtime_id == runtime_id
+        models.InfoResult.runtime_id == runtime_id,
+        models.InfoResult.organisation_id == organisation_id
         ).all()
 
     def results():
