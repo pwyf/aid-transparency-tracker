@@ -20,7 +20,7 @@ def inforesult_total_disbursements_commitments(data):
         # Data will be a list of iati-activities, generated
         # by an xpath expression
         for d in data:
-            for t in d.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]/value"""):
+            for t in d.xpath("""transaction[transaction-type[@code="D" or @code="E"]]/value"""):
                 yield t.text
 
     def ints():
@@ -31,7 +31,6 @@ def inforesult_total_disbursements_commitments(data):
                 pass
 
     total = sum([ i for i in ints() ])
-
     return str(total)
 
 def inforesult_total_disbursements_commitments_current(data):
@@ -41,7 +40,7 @@ def inforesult_total_disbursements_commitments_current(data):
         # Data will be a list of iati-activities, generated
         # by an xpath expression
         for d in data:
-            for t in d.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]"""):
+            for t in d.xpath("""transaction[transaction-type[@code="D" or @code="E"]]"""):
                 transaction_date = t.find('transaction-date').get('iso-date')
                 transaction_date_date = datetime.datetime.strptime(transaction_date, "%Y-%m-%d")
                 if transaction_date_date > oneyear_ago:
