@@ -38,17 +38,16 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
         data = {}
         data['name']=row['name']
         data['description']=row['description']
+        data['indicator_type']=row['indicator_type']
+        data['indicator_category_name']=row['indicator_category_name']
+        data['indicator_subcategory_name']=row['indicator_subcategory_name']
         data['indicatorgroup_id']=indicatorgroup.id
 
         checkI = indicators(indicatorgroup_name, data['name'])
         if checkI:
             indicator = updateIndicator(indicatorgroup_name, data['name'], data)
         else:
-            indicator = addIndicator({
-                            "name" : data["name"],
-                            "description" : "",
-                            "indicatorgroup_id" : indicatorgroup.id
-                        })
+            indicator = addIndicator(data)
 
 def importIndicators():
     filename = 'tests/tests.csv'
@@ -190,7 +189,10 @@ def addIndicator(data):
         newI.setup(
             name = data["name"],
             description = data["description"],
-            indicatorgroup_id = data["indicatorgroup_id"]
+            indicatorgroup_id = data.get('indicatorgroup_id'),
+            indicator_type = data.get("indicator_type"),
+            indicator_category_name = data.get("indicator_category_name"),
+            indicator_subcategory_name = data.get("indicator_subcategory_name")
         )
         db.session.add(newI)
         db.session.commit()
@@ -208,6 +210,9 @@ def updateIndicator(indicatorgroup, indicator, data):
         checkI.name = data["name"]
         checkI.description = data["description"]
         checkI.indicatorgroup_id = int(data["indicatorgroup_id"])
+        checkI.indicator_type = data.get("indicator_type")
+        checkI.indicator_category_name = data.get("indicator_category_name")
+        checkI.indicator_subcategory_name = data.get("indicator_subcategory_name")
         db.session.add(checkI)
         db.session.commit()
         return checkI
