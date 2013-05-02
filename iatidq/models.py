@@ -313,6 +313,7 @@ class Indicator(db.Model):
                  indicator_subcategory_name,
                  id=None):
         self.name = name
+        self.description = description
         self.longdescription = longdescription
         self.indicatorgroup_id = indicatorgroup_id
         self.indicator_type = indicator_type
