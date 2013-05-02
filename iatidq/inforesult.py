@@ -54,7 +54,6 @@ def inforesult_total_disbursements_commitments_current(data):
                 pass
 
     total = sum([ i for i in ints() ])
-
     return str(total)
 
 def info_results(package_id, runtime_id, organisation_id):
