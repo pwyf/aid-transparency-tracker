@@ -187,7 +187,7 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
           for activity in org_activities ]
 
         if len(org_activities)>0:
-            run_info_results(package_id, runtime_id, data, 
+            run_info_results(package_id, runtime_id, org_activities, 
                 test_level.ACTIVITY, org_id)
         org_organisations_data = data.xpath('//iati-organisation')
 
