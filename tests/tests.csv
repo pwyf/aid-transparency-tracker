@@ -78,8 +78,8 @@ results,Results,document-link/category[@code='A08'] exists?,"Document - Results,
 mou,MoU,document-link/category[@code='A09'] exists?,Document - Memorandum of understanding document,1
 tenders,Tenders,document-link/category[@code='A10'] exists?,Document - Tender,1
 contracts,Contracts,document-link/category[@code='A11'] exists?,Document - Contract,1
-,,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?,Current data,1
-,,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 4 months ago?,Activities with data in last 4 months,1
+,,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?,Activities with data in last year,1
+,,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 4 months ago?,Activities with data in last quarter,1
 ,,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 2 months ago?,Activities with data in last month,1
 ,,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 1 month ago?,Activities with data less than one month old,1
 ,,@hierarchy exists?,IATI Activity hierarchy,1
@@ -229,3 +229,4 @@ allocation,Allocation policy,document-link/category[@code='B04'] exists?,Allocat
 procurement-policy,Procurement policy,document-link/category[@code='B05'] exists?,Procurement policy,3
 audit,Audit,document-link/category[@code='B06'] exists?,Audit,3
 country-strategy,Country Strategy,document-link/category[@code='B03'] exists?,Country strategy paper,3
+,,activity-date[@type='end-planned']/@iso-date or activity-date[@type='end-planned']/text() or activity-date[@type='end-actual']/@iso-date or activity-date[@type='end-actual']/text() is less than 13 months ago?,Current data,1
