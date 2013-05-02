@@ -38,6 +38,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
         data = {}
         data['name']=row['name']
         data['description']=row['description']
+        data['longdescription']=row['longdescription']
         data['indicator_type']=row['indicator_type']
         data['indicator_category_name']=row['indicator_category_name']
         data['indicator_subcategory_name']=row['indicator_subcategory_name']
@@ -197,6 +198,7 @@ def addIndicator(data):
         newI.setup(
             name = data["name"],
             description = data["description"],
+            longdescription = data.get("longdescription"),
             indicatorgroup_id = data.get('indicatorgroup_id'),
             indicator_type = data.get("indicator_type"),
             indicator_category_name = data.get("indicator_category_name"),
@@ -221,6 +223,7 @@ def updateIndicator(indicatorgroup, indicator, data):
         checkI.indicator_type = data.get("indicator_type")
         checkI.indicator_category_name = data.get("indicator_category_name")
         checkI.indicator_subcategory_name = data.get("indicator_subcategory_name")
+        checkI.longdescription = data.get("longdescription")
         db.session.add(checkI)
         db.session.commit()
         return checkI
