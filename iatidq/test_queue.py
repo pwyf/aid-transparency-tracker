@@ -76,7 +76,7 @@ def test_elements(xml_fragment, test_functions, codelists, add_result):
     transaction_tests = tests_by_level(test_functions, test_level.TRANSACTION)
 
     activity_data = elements
-    transaction_data = elements.xpath("//transaction")
+    transaction_data = elements.xpath("transaction")
 
     tests_and_sources = [
         (activity_tests, activity_data),
