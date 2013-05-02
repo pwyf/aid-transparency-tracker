@@ -5,7 +5,8 @@
    <script src="/static/jquery.tablesorter.min.js"></script>
     <script >
     $(function() {
-    $("table#results").tablesorter({ sortList: [[0,0]] });
+    $("table#results_iati").tablesorter({ sortList: [[0,0],[1,0],[2,0]] });
+    $("table#results_noniati").tablesorter({ sortList: [[0,0],[1,0],[2,0]] });
     });
 
     </script>
@@ -47,7 +48,7 @@
         <fieldset>
         <h3>Published to IATI</h3>
         <p class="lead">Each indicator published to IATI scores a maximum of 100 points</p>
-        <table class="table" id="results">
+        <table class="table" id="results_iati">
         <thead>
         <th>Category</th>
         <th>Subgroup</th>
@@ -69,7 +70,7 @@
                         <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
                     </div>
                     <div class="modal-body">
-                        Description of the indicator goes here. <a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">Details &raquo;</a>
+                        {{result.indicator.longdescription}}<!--<a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">Details &raquo;</a>-->
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -117,7 +118,7 @@
             <p>IATI is the only standard for publishing comparable, timely and easily re-usable data, which are critical components of aid transparency.</p>
             <p><a class="btn btn-info">Learn more &raquo;</a></p>
         </div>
-        <table class="table" id="results">
+        <table class="table" id="results_noniati">
         <thead>
         <th>Category</th>
         <th>Subgroup</th>
@@ -141,7 +142,7 @@
                         <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
                     </div>
                     <div class="modal-body">
-                        Description of the indicator goes here. <a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">Details &raquo;</a>
+                        {{result.indicator.longdescription}} <!--<a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">Details &raquo;</a>-->
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
