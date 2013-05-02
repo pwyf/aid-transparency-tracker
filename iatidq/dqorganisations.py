@@ -368,7 +368,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
             'tests': {}
         }
     # make sure indicators are complete
-    indicators = dqindicators.indicators("pwyf2013")
+    indicators = dqindicators.indicators_subset("pwyf2013", "publication")
     for indicator in indicators:
         if indicator.id not in data:
             data[indicator.id] = {
