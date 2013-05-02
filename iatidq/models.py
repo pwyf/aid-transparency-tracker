@@ -296,6 +296,7 @@ class Indicator(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText, nullable=False)
     description = Column(UnicodeText)
+    longdescription = Column(UnicodeText)
     indicatorgroup_id = Column(Integer, ForeignKey('indicatorgroup.id'),
                                nullable=False)
     indicator_type = Column(UnicodeText)
@@ -305,13 +306,14 @@ class Indicator(db.Model):
     def setup(self,
                  name,
                  description,
+                 longdescription,
                  indicatorgroup_id,
                  indicator_type,
                  indicator_category_name,
                  indicator_subcategory_name,
                  id=None):
         self.name = name
-        self.description = description
+        self.longdescription = longdescription
         self.indicatorgroup_id = indicatorgroup_id
         self.indicator_type = indicator_type
         self.indicator_category_name = indicator_category_name
