@@ -17,8 +17,11 @@ import unicodecsv
 
 def inforesult_total_disbursements_commitments(data):
     def values():
-        for t in data.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]/value"""):
-            yield t.text
+        # Data will be a list of iati-activities, generated
+        # by an xpath expression
+        for d in data:
+            for t in d.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]/value"""):
+                yield t.text
 
     def ints():
         for v in values():
@@ -35,11 +38,14 @@ def inforesult_total_disbursements_commitments_current(data):
     oneyear_ago = (datetime.datetime.utcnow()-datetime.timedelta(days=365))
     
     def values():
-        for t in data.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]"""):
-            transaction_date = t.find('transaction-date').get('iso-date')
-            transaction_date_date = datetime.datetime.strptime(transaction_date, "%Y-%m-%d")
-            if transaction_date_date > oneyear_ago:
-                yield t.find('value').text
+        # Data will be a list of iati-activities, generated
+        # by an xpath expression
+        for d in data:
+            for t in d.xpath("""//transaction[transaction-type[@code="D" or @code="E"]]"""):
+                transaction_date = t.find('transaction-date').get('iso-date')
+                transaction_date_date = datetime.datetime.strptime(transaction_date, "%Y-%m-%d")
+                if transaction_date_date > oneyear_ago:
+                    yield t.find('value').text
 
     def ints():
         for v in values():
