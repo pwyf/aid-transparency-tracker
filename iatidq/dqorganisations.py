@@ -29,6 +29,12 @@ def checkCondition(row):
         return pg_cond
     return None
 
+def checkNum(value):
+    try:
+        return float(value)
+    except Exception:
+        return None
+
 def importOrganisationPackagesFromFile(filename):
     with file(filename) as fh:
         return _importOrganisationPackages(fh, True)
@@ -46,7 +52,14 @@ def _importOrganisationPackages(fh, local):
             return checkOrg
         return addOrganisation(
             {"organisation_name": row["organisation_name"],
-             "organisation_code": row["organisation_code"]
+             "organisation_code": row["organisation_code"],
+             "organisation_total_spend": row["organisation_total_spend"],
+             "organisation_total_spend_source": row["organisation_total_spend_source"],
+             "organisation_currency": row["organisation_currency"],
+             "organisation_currency_conversion": row["organisation_currency_conversion"],
+             "organisation_currency_conversion_source": row["organisation_currency_conversion_source"],
+             "organisation_largest_recipient": row["organisation_largest_recipient"],
+             "organisation_largest_recipient_source": row["organisation_largest_recipient_source"]
              })
     
     def get_packages(organisation_code):
@@ -154,7 +167,14 @@ def addOrganisation(data):
     newP = Organisation()
     newP.setup(
         organisation_name = data["organisation_name"],
-        organisation_code = data["organisation_code"]
+        organisation_code = data["organisation_code"],
+        organisation_total_spend = checkNum(data["organisation_total_spend"]),
+        organisation_total_spend_source = data["organisation_total_spend_source"],
+        organisation_currency = data["organisation_currency"],
+        organisation_currency_conversion = checkNum(data["organisation_currency_conversion"]),
+        organisation_currency_conversion_source = data["organisation_currency_conversion_source"],
+        organisation_largest_recipient = data["organisation_largest_recipient"],
+        organisation_largest_recipient_source = data["organisation_largest_recipient_source"]
         )
 #    update_model(data, newP, ["organisation_name", "organisation_code"])
     db.session.add(newP)
