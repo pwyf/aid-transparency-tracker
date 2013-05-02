@@ -52,7 +52,8 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
                 "description": indicatordata[1],
                 "indicator_type": indicatordata[2],
                 "indicator_category_name": indicatordata[3],
-                "indicator_subcategory_name": indicatordata[4]
+                "indicator_subcategory_name": indicatordata[4],
+                "longdescription": indicatordata[5]
                 },
             "tests": indicator_test_data,
             "results_pct": (results_weighted_pct_average_numerator/results_num),
@@ -256,7 +257,7 @@ def _agr_results(data, conditions=None, mode=None):
         return dict(map(lam, data))
 
     if publisher_mode(mode):
-        ind_f = lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"], x[0]["indicator_type"], x[0]["indicator_category_name"], x[0]["indicator_subcategory_name"]))
+        ind_f = lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"], x[0]["indicator_type"], x[0]["indicator_category_name"], x[0]["indicator_subcategory_name"], x[0]["longdescription"]))
         indicators = setmap(ind_f)
 
         ind_test_f = lambda x: (x[0]["id"], x[1].id)
