@@ -63,15 +63,15 @@ def organisations(organisation_code=None):
                     ).first()
                 import iatidq.inforesult
                 runtime, = runtime
-                results = iatidq.inforesult.info_results(package_id, runtime)
+                results = iatidq.inforesult.info_results(package_id, runtime, organisation.id)
                 if "coverage" in results:
                     yield int(results["coverage_current"])
-                
-        info_results["coverage_current"] = \
-            reduce(operator.add, [ir for ir in get_info_results()], 0)
 
         organisation = dqorganisations.organisations(organisation_code)
         packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
+                
+        info_results["coverage_current"] = \
+            reduce(operator.add, [ir for ir in get_info_results()], 0)
 
         # coverage_total = organisation.organisation_total_spend
         coverage_total = 1000
