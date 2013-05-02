@@ -42,8 +42,6 @@ import unicodecsv
 def organisations(organisation_code=None):
 
     info_results = {
-        "coverage": "10002",
-        "total_budget": "3p"
         }
     
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
@@ -74,16 +72,24 @@ def organisations(organisation_code=None):
             reduce(operator.add, [ir for ir in get_info_results()], 0)
 
         # coverage_total = organisation.organisation_total_spend
-        coverage_total = 1000
         # FIXME: use organisation_total_spend 
         # when data is imported to db
+        coverage_total = (organisation.organisation_total_spend)*1000000
         coverage_found = info_results["coverage_current"]
-        coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
-        coverage = {
-                    'total': coverage_total,
-                    'found': coverage_found,
-                    'pct': coverage_pct
-                }
+
+        if (coverage_total and coverage_found):
+            coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
+            coverage = {
+                        'total': coverage_total,
+                        'found': coverage_found,
+                        'pct': coverage_pct
+                    }
+        else:
+            coverage = {
+                        'total': None,
+                        'found': None,
+                        'pct': None
+            }
 
         try:
             summary_data = _organisation_indicators_summary(organisation, 
@@ -339,6 +345,7 @@ def _organisation_indicators_summary(organisation, aggregation_type=2):
     totalpct = reduce(operator.add, percentages, 0.0)
     totalindicators = len(percentages)
     totalscore = totalpct/totalindicators
+
     return totalscore, totalindicators
     
 
