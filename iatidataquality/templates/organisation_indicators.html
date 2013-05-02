@@ -49,6 +49,8 @@
         <p class="lead">Each indicator published to IATI scores a maximum of 100 points</p>
         <table class="table" id="results">
         <thead>
+        <th>Category</th>
+        <th>Subgroup</th>
         <th>Indicator</th>
         <th><span class="th_test hidden">Test</span></th>
         <th>% Passed</th>
@@ -58,6 +60,8 @@
         <tbody>
         {% for indicator, result in results.non_zero.items() %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td>{{result.indicator.indicator_category_name|title}}</td>
+            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
             <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
                 <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -80,6 +84,8 @@
 
             {% for testdata in result["tests"] %}
             <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
+            <td><span class="hidden">{{result.indicator.indicator_category_name|title}}</span></td>
+            <td><span class="hidden">{{result.indicator.indicator_subcategory_name|title}}</span></td>
             <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
 	        <td><a href="{{url_for('tests', id=testdata["test"]["id"])}}">{{ testdata["test"]["description"] }}</a>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
             <td class="pct">{{testdata.results_pct|round|int}}</td>
@@ -113,6 +119,8 @@
         </div>
         <table class="table" id="results">
         <thead>
+        <th>Category</th>
+        <th>Subgroup</th>
         <th>Indicator</th>
         <th><span class="th_test hidden">Test</span></th>
         <th>IATI data</th>
@@ -124,6 +132,8 @@
         <tbody>
         {% for indicator, result in results.zero.items() %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td>{{result.indicator.indicator_category_name|title}}</td>
+            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
             <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
                 <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -154,6 +164,8 @@
             
             {% for testdata in result["tests"] %}
             <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
+            <td><span class="hidden">{{result.indicator.indicator_category_name|title}}</span></td>
+            <td><span class="hidden">{{result.indicator.indicator_subcategory_name|title}}</span></td>
             <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
 	        <td><a href="{{url_for('tests', id=testdata["test"]["id"])}}">{{ testdata["test"]["description"] }}</a>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
             <td class="pct">{{testdata.results_pct|round|int}}</td>
