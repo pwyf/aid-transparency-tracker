@@ -29,33 +29,24 @@ def checkCondition(row):
         return pg_cond
     return None
 
-def importOrganisationPackagesFromFile(filename, 
-                                       organisation_c=None, 
-                                       organisation_n=None):
+def importOrganisationPackagesFromFile(filename):
     with file(filename) as fh:
-        return _importOrganisationPackages(organisation_c, organisation_n, 
-                                           fh, True)
+        return _importOrganisationPackages(fh, True)
 
-def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
-    def get_checkp_code_name():
-        if organisation_c is None:
-            return (
-                organisations(row['organisation_code']),
-                row['organisation_code'],
-                row['organisation_name']
-                )
-        return (
-            organisations(organisation_c),
-            organisation_c,
-            organisation_n
-            )
+def _importOrganisationPackages(fh, local):
+    def get_check_org(row):
+        checkOrg = organisations(row['organisation_code'])
+        if checkOrg:
+            return checkOrg
+        else:
+            return None
 
-    def get_organisation(checkP):
-        if checkP:
-            return checkP
+    def get_organisation(checkOrg, row):
+        if checkOrg:
+            return checkOrg
         return addOrganisation(
-            {"organisation_name": organisation_name,
-             "organisation_code": organisation_code
+            {"organisation_name": row["organisation_name"],
+             "organisation_code": row["organisation_code"]
              })
     
     def get_packages(organisation_code):
@@ -73,13 +64,15 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
             PackageGroup.name == pg_name
             ).first()
 
-    checkP, organisation_code, organisation_name = get_checkp_code_name()
-
     data = unicodecsv.DictReader(fh)
 
     for row in data:
+
+        checkOrg = get_check_org(row)
+
         condition = checkCondition(row)
-        organisation = get_organisation(checkP)
+        organisation = get_organisation(checkOrg, row)
+        organisation_code = organisation.organisation_code
 
         def add_org_package(package):
             addOrganisationPackage({
@@ -114,7 +107,8 @@ def _importOrganisationPackages(organisation_c, organisation_n, fh, local):
         pg_name = row.get('packagegroup_name', "")
         if pg_name != '':
             packagegroup = get_packagegroup_by_name(pg_name)
-            add_org_package_from_pg(packagegroup)
+            if packagegroup is not None:
+                add_org_package_from_pg(packagegroup)
                 
     print "Imported successfully"
     return True
