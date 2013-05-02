@@ -127,6 +127,14 @@ def indicatorGroups(indicatorgroup=None):
         indicatorgroups = models.IndicatorGroup.query.filter_by(name=indicatorgroup).first()
     return indicatorgroups
 
+def indicators_subset(indicatorgroup=None, indicator_type=None):
+    indicators = db.session.query(models.Indicator
+                ).filter(models.IndicatorGroup.name==indicatorgroup
+                ).filter(models.Indicator.indicator_type==indicator_type
+                ).join(models.IndicatorGroup
+                ).all()
+    return indicators
+
 def indicators(indicatorgroup=None, indicator=None):
     if indicator is None:
         indicators = db.session.query(models.Indicator
