@@ -366,7 +366,8 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 'indicatorgroup_id': inforesult.Indicator.indicatorgroup_id,
                 'indicator_type': inforesult.Indicator.indicator_type,
                 'indicator_category_name': inforesult.Indicator.indicator_category_name,
-                'indicator_subcategory_name': inforesult.Indicator.indicator_subcategory_name
+                'indicator_subcategory_name': inforesult.Indicator.indicator_subcategory_name,
+                'longdescription': inforesult.Indicator.longdescription
             },
             'tests': {}
         }
@@ -384,7 +385,8 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 'indicatorgroup_id': indicator.indicatorgroup_id,
                 'indicator_type': indicator.indicator_type,
                 'indicator_category_name': indicator.indicator_category_name,
-                'indicator_subcategory_name': indicator.indicator_subcategory_name
+                'indicator_subcategory_name': indicator.indicator_subcategory_name,
+                'longdescription': indicator.longdescription
             },
             'tests': {}
         }
