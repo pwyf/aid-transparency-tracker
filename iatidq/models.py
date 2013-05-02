@@ -298,15 +298,24 @@ class Indicator(db.Model):
     description = Column(UnicodeText)
     indicatorgroup_id = Column(Integer, ForeignKey('indicatorgroup.id'),
                                nullable=False)
+    indicator_type = Column(UnicodeText)
+    indicator_category_name = Column(UnicodeText)
+    indicator_subcategory_name = Column(UnicodeText)
 
     def setup(self,
                  name,
                  description,
                  indicatorgroup_id,
+                 indicator_type,
+                 indicator_category_name,
+                 indicator_subcategory_name,
                  id=None):
         self.name = name
         self.description = description
         self.indicatorgroup_id = indicatorgroup_id
+        self.indicator_type = indicator_type
+        self.indicator_category_name = indicator_category_name
+        self.indicator_subcategory_name = indicator_subcategory_name
         if id is not None:
             self.id = id
 
