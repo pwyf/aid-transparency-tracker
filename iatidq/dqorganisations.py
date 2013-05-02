@@ -363,7 +363,10 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 'description': inforesult.Indicator.description,
                 'name': inforesult.Indicator.name,
                 'id': inforesult.Indicator.id,
-                'indicatorgroup_id': inforesult.Indicator.indicatorgroup_id
+                'indicatorgroup_id': inforesult.Indicator.indicatorgroup_id,
+                'indicator_type': inforesult.Indicator.indicator_type,
+                'indicator_category_name': inforesult.Indicator.indicator_category_name,
+                'indicator_subcategory_name': inforesult.Indicator.indicator_subcategory_name
             },
             'tests': {}
         }
@@ -378,7 +381,10 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 'description': indicator.description,
                 'name': indicator.name,
                 'id': indicator.id,
-                'indicatorgroup_id': indicator.indicatorgroup_id
+                'indicatorgroup_id': indicator.indicatorgroup_id,
+                'indicator_type': indicator.indicator_type,
+                'indicator_category_name': indicator.indicator_category_name,
+                'indicator_subcategory_name': indicator.indicator_subcategory_name
             },
             'tests': {}
         }
@@ -405,11 +411,15 @@ def _organisation_indicators_inforesults(organisation):
 
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
+    
+    commitment_data = dqindicators.indicators_subset("pwyf2013", "commitment")
+    commitment = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
     if not results:
         indicators = dqindicators.indicators("pwyf2013")
         indicators_restructured = dict(map(lambda x: (x.id, {'indicator': x }), indicators))
         return {"zero": indicators_restructured,
-                "non_zero": {}}
+                "non_zero": {},
+                "commitment": commitment}
 
     zero = lambda kv: not kv[1]["results_pct"]
     non_zero = lambda kv: kv[1]["results_pct"]
@@ -418,4 +428,5 @@ def _organisation_indicators_split(organisation, aggregation_type=2):
     non_zero_results = dict(filter(non_zero, results.iteritems()))
 
     return { "zero": zero_results,
-             "non_zero": non_zero_results }
+             "non_zero": non_zero_results,
+             "commitment": commitment}
