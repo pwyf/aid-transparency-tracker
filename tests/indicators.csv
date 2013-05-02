@@ -1,40 +1,40 @@
-name,description,indicator_type,indicator_category_name,indicator_subcategory_name
-dates-actual,Actual dates,publication,activity,basic
-expenditure-actual,Actual expenditure,publication,activity,financial
-aid-type,Aid Type,publication,activity,classifications
-budget,Budget Docs,publication,activity,related-documents
-collaboration-type,Collaboration Type,publication,activity,classifications
-conditions,Conditions,publication,activity,performance
-contact-details,Contact details,publication,activity,basic
-contracts,Contracts,publication,activity,related-documents
-current-status,Current Status,publication,activity,basic
-description,Description,publication,activity,basic
-evaluations,Evaluations,publication,activity,related-documents
-finance-type,Finance Type,publication,activity,classifications
-flow-type,Flow Type,publication,activity,classifications
-impact-appraisals,Impact Appraisals,publication,activity,performance
-implementer,Implementer,publication,activity,basic
-mou,MoU,publication,activity,related-documents
-objectives,Objectives,publication,activity,related-documents
-cost-overall,Overall cost,publication,activity,financial
-dates-planned,Planned dates,publication,activity,basic
-expenditure-planned,Planned expenditure,publication,activity,financial
-results,Results,publication,activity,performance
-sector,Sector,publication,activity,classifications
-location,Sub-national location,publication,activity,classifications
-tenders,Tenders,publication,activity,related-documents
-tied-aid-status,Tied Aid Status,publication,activity,classifications
-title,Title,publication,activity,basic
-unique-id,Unique ID,publication,activity,basic
-budget-identifier,Budget Identifier,publication,activity,financial
-strategy,Organisation strategy,publication,organisation,planning
-annual-report,Annual report,publication,organisation,planning
-allocation,Allocation policy,publication,organisation,planning
-procurement-policy,Procurement policy,publication,organisation,planning
-audit,Audit,publication,organisation,financial
-country-strategy,Country strategy,publication,organisation,planning
-total-budget,Total budget,publication,organisation,financial
-country-budgets,Country budgets,publication,organisation,financial
-foia,FOIA,commitment,,
-accessibility,Accessibility,commitment,,
-implementation-schedules,Implementation schedules,commitment,,
+name,description,indicator_type,indicator_category_name,indicator_subcategory_name,longdescription
+dates-actual,Actual dates,publication,activity,basic,
+expenditure-actual,Actual expenditure,publication,activity,financial,
+aid-type,Aid Type,publication,activity,classifications,
+budget,Budget Docs,publication,activity,related-documents,
+collaboration-type,Collaboration Type,publication,activity,classifications,
+conditions,Conditions,publication,activity,performance,
+contact-details,Contact details,publication,activity,basic,
+contracts,Contracts,publication,activity,related-documents,
+current-status,Current Status,publication,activity,basic,
+description,Description,publication,activity,basic,
+evaluations,Evaluations,publication,activity,related-documents,
+finance-type,Finance Type,publication,activity,classifications,
+flow-type,Flow Type,publication,activity,classifications,
+impact-appraisals,Impact Appraisals,publication,activity,performance,
+implementer,Implementer,publication,activity,basic,
+mou,MoU,publication,activity,related-documents,
+objectives,Objectives,publication,activity,related-documents,
+cost-overall,Overall cost,publication,activity,financial,
+dates-planned,Planned dates,publication,activity,basic,
+expenditure-planned,Planned expenditure,publication,activity,financial,
+results,Results,publication,activity,performance,
+sector,Sector,publication,activity,classifications,
+location,Sub-national location,publication,activity,classifications,
+tenders,Tenders,publication,activity,related-documents,
+tied-aid-status,Tied Aid Status,publication,activity,classifications,
+title,Title,publication,activity,basic,
+unique-id,Unique ID,publication,activity,basic,
+budget-identifier,Budget Identifier,publication,activity,financial,
+strategy,Organisation strategy,publication,organisation,planning,
+annual-report,Annual report,publication,organisation,planning,
+allocation,Allocation policy,publication,organisation,planning,
+procurement-policy,Procurement policy,publication,organisation,planning,
+audit,Audit,publication,organisation,financial,
+country-strategy,Country strategy,publication,organisation,planning,
+total-budget,Total budget,publication,organisation,financial,
+country-budgets,Country budgets,publication,organisation,financial,
+foia,FOIA,commitment,,,
+accessibility,Accessibility,commitment,,,
+implementation-schedules,Implementation schedules,commitment,,,
