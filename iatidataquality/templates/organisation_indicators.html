@@ -20,7 +20,7 @@
         <div class="row">
             <div class="span12">
                 <h2>An initial assessment of your publication is below.</h2>
-                <p class="lead">IATI data and non-IATI data are both scored in the Index, but IATI data is scored higher, to reflect the importance of international comparability of data, and because it is available in a machine-readable format. In both cases, projects must be current (ongoing, or ended less than one year ago).</p>
+                <p class="lead">IATI data and non-IATI data are both scored in the Index, but IATI data is scored higher, to reflect the importance of international comparability of data, and because it is available in a machine-readable format. In both cases, activities must be current (ongoing, or ended less than one year ago).</p>
             </div>
         </div>
         <hr />
@@ -42,7 +42,7 @@
                 <h5>Guidelines</h5>
                 <ul>
                     <li>Check our initial assessment of the information we found on your website.</li>
-                    <li>You only need to do this if you aren't publishing that indiciator to IATI.</li>
+                    <li>You only need to do this if you aren't publishing that indicator to IATI.</li>
                     <li>You can do this by clicking <a class="btn btn-mini">Edit</a> alongside each indicator, or by clicking <a class="btn btn-mini">Review survey data</a>.</li>
                 </ul>
             </div>
@@ -74,18 +74,18 @@
             </form>
         </div>
         <h3>Published to IATI</h3>
-        <p class="lead">Each indicator published to IATI scores a maximum of 100 points</p>
+        <p class="lead">Each indicator published to IATI can score up to 100 points</p>
 
         <h4>Scoring criteria</h4>
         <p>For each indicator found in your IATI data:</p>
         <ul>
-            <li>50 points are received for publication</li>
-            <li>50 points are received depending on the quality of the publication</li>
+            <li>50 points are received for publication in an accessible format</li>
+            <li>50 points are received depending on the quality of the IATI publication</li>
             <li>Quality of the publication is determined by running a series of automated tests on your data, which you can see with the <i class="icon icon-chevron-down"></i> icon</li>
         </ul>
         <div class="alert alert-info">
             <h3>Frequency of publication</h3>
-            <p class="lead">It looks like you publish less than quarterly, so the maximum you can score for IATI data is 95 points. The total points for each indicator have been adjusted accordingly.</p>
+            <p class="lead">It looks like you publish less often than quarterly, so the maximum you can score for IATI data is 95 points. The total points for each indicator have been adjusted accordingly.</p>
         </div>
         {% set freq=0.9 %}
         <table class="table" id="results_iati">
@@ -119,10 +119,45 @@
                 </div>
             </td>
 	        <td></td>
-            <td class="pct">{{result.results_pct|round|int}}</td>
-            <td>{{(result.results_pct|round|int*freq/2)+50}}</td>
+            <td class="pct muted">{{result.results_pct|round|int}}</td>
+            <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{(result.results_pct|round|int*freq/2)+50}}</a>
+
+                <div id="calculation{{result.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Score calculation for {{result.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>IATI data quality</td><td>{{result.results_pct|round|int}}%</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>IATI frequency</td><td>x {{freq}}</td><td>Publishing less than quarterly</td>
+                        </tr>
+                        <tr class="info">
+                            <td colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td><b>IATI points</b></td><td>{{result.results_pct|round|int*freq/2}}</td><td></td>
+                        </tr>
+                        <tr>
+                            <td><b>Publication format points</b></td><td>50.0</td><td></td>
+                        </tr>
+                        <tr class="success">
+                            <td><b>Total points</b></td><td>{{(result.results_pct|round|int*freq/2)+50}}</td><td></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
             <td></td>
-            <td><a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down"></i></a></td>
+            <td><a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a></td>
             </tr>
 
             {% for testdata in result["tests"] %}
@@ -147,7 +182,7 @@
         <hr />
         <fieldset>
         <h3>Not published to IATI</h3>
-        <p class="lead">Each indicator not published to IATI, but published elsewhere (e.g. on your website) scores a maximum of 50 points</p>
+        <p class="lead">Each indicator not published to IATI, but published elsewhere (e.g. on your website) can score up to 50 points</p>
         <h4>Scoring criteria</h4>
         <p>For each indicator, points are received if that indicator is <label class="label label-success">Always published</label>. The points received depend on the format the information is available in.</p>
         <ul>
