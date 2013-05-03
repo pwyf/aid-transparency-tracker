@@ -27,8 +27,8 @@
             <ul class="nav">
               <li{% if active_page == "index" %} class="active"{%endif%}><a href="/">Home</a></li>
               <li{% if active_page == "organisations" %} class="active"{%endif%}><a href="{{url_for('organisations')}}">Organisations</a></li>
-              <li{% if active_page == "publishers" %} class="active"{%endif%}><a href="{{url_for('publishers')}}">Publishers</a></li>
-              <li{% if active_page == "packages" %} class="active"{%endif%}><a href="{{url_for('packages')}}">Packages</a></li>
+              <!--<li{% if active_page == "publishers" %} class="active"{%endif%}><a href="{{url_for('publishers')}}">Publishers</a></li>
+              <li{% if active_page == "packages" %} class="active"{%endif%}><a href="{{url_for('packages')}}">Packages</a></li>-->
               <li{% if active_page == "tests" %} class="active"{%endif%}><a href="{{url_for('tests')}}">Tests</a></li>
               <!--<li><a href="#about">About</a></li>
               <li><a href="#contact">Contact</a></li>-->
@@ -56,8 +56,8 @@
 
   <div class="container">
     {% if active_page != "index" %}
-    <div class="alert alert-error alert-block"><h4>Watch out!</h4>
-    <p>This site is super alpha and just for testing; the content should not be relied on.</p>
+    <div class="alert alert-info alert-block">
+    <p><b>This site is in beta.</b> Please get in touch if you have feedback or notice any bugs.</p>
     </div>
     {%endif%}
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -76,14 +76,21 @@
     <footer class="footer">
     <div class="container">
     <div class="pull-left">
-        <p>Released under the <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL v3.0 License</a>.</p>
-        <p><a href="https://github.com/markbrough/IATI-Data-Quality">Source code on Github</a></p>
-    </div>
-    <div class="pull-right">
+        <p>A project of <a href="http://publishwhatyoufund.org">Publish What You Fund</a>, the global campaign for aid transparency</p>
+        <p><a href="https://github.com/markbrough/IATI-Data-Quality">Source code on Github</a>, released under the <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL v3.0 License</a>.</p>
+        <p><a href="http://aidtransparency.net">International Aid Transparency Initiative (IATI)</a></p>
         <p><a href="http://iatiregistry.org">IATI Registry</a></p>
         <p><a href="http://iatistandard.org">IATI Standard</a></p>
-        <p><a href="http://twitter.github.com/bootstrap">Bootstrap from Twitter</a></p>
-        <p><a href="http://tablesorter.com/docs/">JQuery TableSorter</a></p>
+    </div>
+    <div class="pull-right">
+        <p>Uses some great open source code:</p>
+        <ul>
+            <li><a href="http://twitter.github.com/bootstrap">Bootstrap from Twitter</a></li>
+            <li><a href="http://tablesorter.com/docs/">JQuery TableSorter</a></li>
+            <li><a href="http://reclinejs.com/">ReclineJS</a>, by <a href="http://okfn.org">OKFN</a></li>
+            <li><a href="https://github.com/Bjwebb/iati-implementationxml">iati-implementationxml</a>, by <a href="http://twitter.com/bjwebb67">Ben Webb</a></li>
+        </ul>
+        <p>With thanks to <a href="http://twitter.com/mk270">Martin Keegan</a>, <a href="http://twitter.com/bjwebb67">Ben Webb</a>,<br /><a href="http://twitter.com/caprenter">David Carpenter</a>, and many more.</p>
     </div>
     </div></footer>
 </body>
