@@ -105,6 +105,8 @@ def create_aggregation_types(options):
 def create_inforesult_types(options):
     iatidq.setup.create_inforesult_types(options)
 
+def updatefrequency(options):
+    iatidq.dqorganisations.downloadOrganisationFrequency()
 
 def enqueue_test(options):
     assert options.package_name
@@ -127,6 +129,7 @@ commands = {
     "clear_revisionid": (clear_revisionid, "Clear CKAN revision ids"),
     "import_codelists": (import_codelists, "Import codelists"),
     "download": (download, "Download packages"),
+    "updatefrequency": (updatefrequency, "Update frequency"),
     "import_indicators": (
         import_indicators, 
         "Import indicators. Will try to assign indicators to existing tests."),
