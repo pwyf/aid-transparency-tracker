@@ -9,20 +9,18 @@
     <div class="row">
         <div class="span6 commitment">
             <h1>Commitment</h1>
-            <p class="foundschedule"><i class="icon icon-refresh"></i> Checking for implementation schedule...</p>
-            <p class="ambition"></p>
-            <p>
+            <p class="foundschedule muted"><i class="icon icon-refresh"></i> Checking for implementation schedule...</p>
+            <p class="approach"></p>
+            <p class="elements"></p>
             <p class="review"></p>
-            </p>
         </div>
         <div class="span6 publication">
             <h1>Publication</h1>
             {% if summary_data[0]>0 %}
             <p><i class="icon icon-ok"></i> IATI data found</p>
             <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}% (for {{summary_data[1]}} indicators)</p>
-            <p><i class="icon icon-info-sign"></i> Please tell us about the way you structure your data</p>
-            <p><i class="icon icon-refresh"></i> Publishing frequency: <span id="publisher_frequency">Checking frequency...</span></p>
-            <p><i class="icon {% if coverage.pct > 50 %}icon-ok{% else %}icon-remove{%endif%}"></i> Coverage: <span id="publisher_coverage">{{coverage.pct}}% ({{coverage.found}} out of {{coverage.total}})</span></p>
+            <p><i class="icon icon-refresh"></i> Publishing frequency: <span id="publisher_frequency" class="muted">checking frequency...</span></p>
+            <p><i class="icon {% if coverage.pct > 50 %}icon-ok{% else %}icon-remove{%endif%}"></i> Coverage: <span id="publisher_coverage">{{coverage.pct}}%<!-- ({{coverage.found}} out of {{coverage.total}})--></span></p>
             <p>
             <a class="btn btn-success" href="{{url_for('organisation_publication', organisation_code=organisation.organisation_code)}}">Review Publication »</a> <a class="btn btn-mini" href="{{url_for('organisation_publication_csv', organisation_code=organisation.organisation_code)}}"><i class="icon-download"></i> Data (CSV)</a>
             {% else %}
@@ -32,6 +30,29 @@
             </p>
         </div>
     </div>    
+    <hr />
+    <div class="row">
+        <div class="span5">
+        <h3>Timeline</h3>
+        <table class="table">
+        <tbody>
+        <tr class="success">
+            <td><b>May 1st</b></td><td>Data collection begins</td><td><i class="icon-arrow-left"></i></td>
+        </tr>
+        <tr>
+            <td><b>June 30th</b></td><td>Surveys finalised</td><td></td>
+        </tr>
+        <tr>
+            <td><b>July 31st</b></td><td>Final check of IATI data</td><td></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        <div class="span5 offset1">
+            <h3>Why include IATI data?</h3>
+            <p class="lead">IATI is the only international standard for publishing comparable, timely and easily re-usable data, which are critical components of aid transparency.</p>
+        </div>
+    </div>
     <script type="text/javascript">
         var success = false;
         jQuery().ready(function() { 
@@ -56,23 +77,31 @@
                 } else {
                     title_data = "unknown";
                 }
-                jQuery("#publisher_frequency").html(title_data);
+                jQuery("#publisher_frequency").html(title_data).removeClass('muted');
             });
 
             var url = "http://tracker.publishwhatyoufund.org"; 
             jQuery.getJSON(url+"/api/organisations/{{organisation.organisation_code}}" + "?callback=?", null, function(org) { 
                 success = true;
-                var group = org['scores']['group'];
-                var group_code = org['scores']['group_code'];
-                if (group=="Ambitious") {
-                    var icon_class = "icon-ok";
-                } else if (group=="Moderately ambitious") {
-                    var icon_class = "icon-minus";
-                } else {
-                    var icon_class = "icon-remove";
+                var approach = org['scores']['approach'];
+                if (approach==100){
+                    var approach_text = '<i class="icon icon-ok"></i> Open license and at least quarterly publication';
+                } else if (approach==50) {
+                    var approach_text = '<i class="icon icon-minus"></i> Only one of open license or quarterly publication';
+                } else if (approach==0) {
+                    var approach_text = '<i class="icon icon-remove"></i> Neither open license nor quarterly publication';
                 }
-                jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found');
-                jQuery(".commitment .ambition").html('<i class="icon '+icon_class+'"></i> <span class="label '+group_code+'">'+group+'</span>'); 
+                var elements = org['scores']['elements'];
+                if (elements>=60){
+                    var elements_text = '<i class="icon icon-ok"></i> '+elements+'% of fields';
+                } else if (elements>=40) {
+                    var elements_text = '<i class="icon icon-minus"></i> '+elements+'% of fields';
+                } else if (elements>=0) {
+                    var elements_text = '<i class="icon icon-remove"></i> '+elements+'% of fields';
+                }
+                jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found').removeClass('muted');
+                jQuery(".commitment .approach").html(approach_text);
+                jQuery(".commitment .elements").html(elements_text);
                 jQuery(".commitment .review").html('<a class="btn btn-success" href="http://tracker.publishwhatyoufund.org/organisations/{{organisation.organisation_code}}">Review Commitment »</a>');
             });
         });
@@ -82,7 +111,8 @@
             {
                 // Handle error
                 jQuery(".commitment .foundschedule").html('<i class="icon icon-remove"></i> No implementation schedule found');
-                jQuery(".commitment .ambition").html('');
+                jQuery(".commitment .approach").html('');
+                jQuery(".commitment .elements").html('');
                 jQuery(".commitment .review").html('<a class="btn btn-warning" href="http://tracker.publishwhatyoufund.org/about/">Create an Implementation schedule »</a>');
             }
         }, 5000);
