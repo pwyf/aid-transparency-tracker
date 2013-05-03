@@ -149,7 +149,8 @@ def indicators_edit(indicatorgroup=None, indicator=None):
         data = {
             'name': request.form['name'],
             'description': request.form['description'],
-            'indicatorgroup_id': request.form['indicatorgroup_id']
+            'indicatorgroup_id': request.form['indicatorgroup_id'],
+            'longdescription': request.form['longdescription']
         }
         indicator = dqindicators.updateIndicator(indicatorgroup, indicator, data)
         flash('Successfully updated Indicator', 'success')
