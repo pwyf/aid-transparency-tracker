@@ -54,6 +54,17 @@ def packageOrganisations(package_id):
     else:
         return False
 
+def packageGroupOrganisations(packagegroup_name):
+    if packagegroup_name is not None:
+        packagegrouporganisations = db.session.query(models.Organisation
+                        ).filter(models.PackageGroup.name==packagegroup_name
+                        ).join(models.OrganisationPackageGroup
+                        ).join(models.PackageGroup
+                        ).all()
+        return packagegrouporganisations
+    else:
+        return False
+
 def get_organisations_for_testing(package_id):
     organisations = []
     conditions = []
