@@ -200,4 +200,7 @@ def setup(options):
     else:
         setup_organisations()
 
+    print "Getting organisation frequency"
+    dqorganisations.downloadOrganisationFrequency()
+
     print "Setup complete."
