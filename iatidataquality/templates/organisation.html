@@ -19,7 +19,7 @@
             {% if summary_data[0]>0 %}
             <p><i class="icon icon-ok"></i> IATI data found</p>
             <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}% (for {{summary_data[1]}} indicators)</p>
-            <p><i class="icon icon-refresh"></i> Publishing frequency: <span id="publisher_frequency" class="muted">checking frequency...</span></p>
+            <p><i class="icon icon-refresh"></i> Publishing frequency: <span title="{{organisation.frequency_comment}}">{{organisation.frequency}}</span></p>
             <!--<p><i class="icon {% if coverage.pct > 50 %}icon-ok{% else %}icon-remove{%endif%}"></i> Coverage: <span id="publisher_coverage">{{coverage.pct}}% ({{coverage.found}} out of {{coverage.total}})</span></p>-->
             <p>
             <a class="btn btn-success" href="{{url_for('organisation_publication', organisation_code=organisation.organisation_code)}}">Review Publication »</a> <a class="btn btn-mini" href="{{url_for('organisation_publication_csv', organisation_code=organisation.organisation_code)}}"><i class="icon-download"></i> Data (CSV)</a>
@@ -59,29 +59,6 @@
     <script type="text/javascript">
         var success = false;
         jQuery().ready(function() { 
-
-            {% if packagegroups %}
-            {% set packagegroup = packagegroups[0].PackageGroup.name %}
-            {% else %}
-            {% set packagegroup = "" %}
-            {% endif %}
-            var packagegroup_name="{{packagegroup}}";
-            var url_publisher_summary = "https://views.scraperwiki.com/run/iati_registry_frequency_views/?packagegroup_name="
-
-            jQuery.getJSON(url_publisher_summary + packagegroup_name + "&callback=?", null, function(data) {
-                if (jQuery.inArray("timeliness", data)) {
-                    var updates = data['timeliness'];
-                    if (updates === undefined) {
-                        updates = "unknown";
-                    } else {
-                        updates = updates;
-                    }
-                    var title_data = updates;
-                } else {
-                    title_data = "unknown";
-                }
-                jQuery("#publisher_frequency").html(title_data).removeClass('muted');
-            });
 
             var url = "http://tracker.publishwhatyoufund.org"; 
             jQuery.getJSON(url+"/api/organisations/{{organisation.organisation_code}}" + "?callback=?", null, function(org) { 
