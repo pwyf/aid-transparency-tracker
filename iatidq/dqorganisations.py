@@ -18,6 +18,11 @@ import csv
 import util
 import unicodecsv
 import dqindicators
+import dqpackages
+import urllib2
+import datetime
+
+ORG_FREQUENCY_API_URL = "https://api.scraperwiki.com/api/1.0/datastore/sqlite?format=csv&name=iati_registry_updater_frequency_check&query=select+*+from+%60packagegroups_dates_data%60&apikey="
 
 def update_model(src, dst, keys):
     for key in keys:
@@ -125,6 +130,68 @@ def _importOrganisationPackages(fh, local):
                 
     print "Imported successfully"
     return True
+
+def downloadOrganisationFrequency():
+    fh = urllib2.urlopen(ORG_FREQUENCY_API_URL)
+    return _updateOrganisationFrequency(fh)
+
+def downloadOrganisationFrequencyFromFile():
+    filename = 'tests/iati_registry_updater_frequency_check.csv'
+    with file(filename) as fh:
+        return _updateOrganisationFrequency(fh)
+
+def _updateOrganisationFrequency(fh):
+    def check_data_last_four_months(packagegroup_name, packagegroups):
+        fourmonths_ago = (datetime.datetime.utcnow()-datetime.timedelta(days=4*30)).date()
+        lastfourmonth_dates = filter(lambda d: d>fourmonths_ago, packagegroups[packagegroup_name])
+        return len(lastfourmonth_dates)
+
+    def check_data_avg_months_to_publication(packagegroup_name, packagegroups):
+        earliest_date = min(packagegroups[packagegroup_name])
+        earliest_date_days_ago=(datetime.datetime.utcnow().date()-earliest_date).days
+        number_months_changes = len(packagegroups[packagegroup_name])
+        avg_days_per_change = earliest_date_days_ago/number_months_changes
+        return avg_days_per_change
+
+    def generate_data():
+        data = unicodecsv.DictReader(fh)
+        packagegroups = {}
+        for row in data:
+            try:
+                packagegroups[row['packagegroup_name']].append((datetime.date(year=int(row['year']), month=int(row['month']), day=1)))
+            except KeyError:
+                packagegroups[row['packagegroup_name']] = []
+                packagegroups[row['packagegroup_name']].append((datetime.date(year=int(row['year']), month=int(row['month']), day=1)))
+        return packagegroups
+
+    def get_frequency():
+        packagegroups = generate_data()
+        for packagegroup in sorted(packagegroups.keys()):
+            lastfour = check_data_last_four_months(packagegroup, packagegroups)
+            avgmonths = check_data_avg_months_to_publication(packagegroup, packagegroups)
+            if lastfour >=3:
+                frequency = "monthly"
+                comment = "Updated " + str(lastfour) + " times in the last 4 months"
+            elif avgmonths<31:
+                frequency = "monthly"
+                comment = "Updated on average every " + str(avgmonths) + " days"
+            elif avgmonths<93:
+                frequency = "quarterly"
+                comment = "Updated on average every " + str(avgmonths) + " days"
+            else:
+                frequency = "less than quarterly"
+                comment = "Updated on average every " + str(avgmonths) + " days"
+            yield packagegroup, frequency, comment
+
+    for packagegroup, frequency, comment in get_frequency():
+        organisations = dqpackages.packageGroupOrganisations(packagegroup)
+        if not organisations:
+            continue
+        for organisation in organisations:
+            organisation.frequency=frequency
+            organisation.frequency_comment=comment
+            db.session.add(organisation)
+            db.session.commit()
 
 def organisations(organisation_code=None):
     if organisation_code is None:
