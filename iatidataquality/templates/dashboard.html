@@ -1,38 +1,60 @@
 {% set active_page='index'%}{% extends "layout.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
+<style>
+.black {
+    color:#000000;
+    font-size:75px;
+}
+</style>
     <div class="jumbotron">
-    <h1>IATI Data Quality browser</h1>
-    <p class="lead">This is a testing site for a forthcoming IATI Data Quality tool. It's under active development, so you shouldn't rely on any of the information contained in here.</p>
-    <!--<p>
-    <a class="btn btn-success btn-large">
-    Learn more
-    </a>
-    </p>-->
+    <h1>Plan. <span class="black">Publish.</span></h1>
+    <p class="lead">Donors have released plans to publish more information about their aid activities.</p>
+    <p class="lead">Want to see the big picture? Put the pieces together. Browse the plans.</p>
     </div>
+    <hr />
     <div class="row">
         <div class="span6">
-            <h1>Publishers</h1>
-            <p>See data from organisations that have published to IATI already</p>
+            <h1>Organisations</h1>
+            <p class="lead">See plans from individual organisations</p>
             <p>
-            <a class="btn" href="{{url_for('publishers')}}">Publishers »</a>
+            <a class="btn btn-primary" href="">Organisations »</a>
             </p>
         </div>
         <div class="span6">
-            <h1>Packages</h1>
-            <p>See data from a specific package published to IATI</p>
+            <h1>Fields</h1>
+            <p class="lead">See data fields across all organisations' plans</p>
             <p>
-            <a class="btn" href="{{url_for('packages')}}">Packages »</a>
+            <a class="btn btn-primary" href="">Fields »</a>
             </p>
         </div>
     </div>
     <div class="row">
         <div class="span6">
-            <h1>Tests</h1>
-            <p>See currently active tests, and add your own</p>
+            <h1>Timeline</h1>
+            <p class="lead">Use the timeline to see a graph of publication over time for different fields</p>
             <p>
-            <a class="btn" href="{{url_for('tests')}}">Tests »</a>
+            <a class="btn btn-primary" href="">Timeline »</a>
             </p>
+        </div>
+        <div class="span6">
+            <h1>Report</h1>
+            <p class="lead">Download a report containing our initial analysis of implementation schedules</p>
+            <p>
+            <a class="btn btn-primary" href="http://www.publishwhatyoufund.org/files/2013/03/Comparative-analysis-of-the-common-standard-implementation-schedules-Mar-13.docx">Get the report »</a>
+            </p>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="span6 offset3 alert-warning alert">
+            <h1>Data verification</h1>
+            <p class="lead">Donors and CSO partners can log in to confirm their data is correct.</p>
+            <form class="form-inline">
+            <input type="text" class="input-small" placeholder="Username">
+            <input type="password" class="input-small" placeholder="Password">
+            <button type="submit" class="btn">Sign in</button>
+            </form>
         </div>
     </div>
 
