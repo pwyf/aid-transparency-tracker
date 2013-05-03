@@ -406,6 +406,8 @@ class Organisation(db.Model):
     organisation_currency_conversion_source = Column(UnicodeText)
     organisation_largest_recipient = Column(UnicodeText)
     organisation_largest_recipient_source = Column(UnicodeText)
+    frequency = Column(UnicodeText)
+    frequency_comment = Column(UnicodeText)
     __table_args__ = (UniqueConstraint('organisation_name'),
                       UniqueConstraint('organisation_code'))
     # organisation_code is also used to communicate
