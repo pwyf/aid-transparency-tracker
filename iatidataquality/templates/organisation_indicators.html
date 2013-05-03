@@ -83,11 +83,15 @@
             <li>50 points are received depending on the quality of the IATI publication</li>
             <li>Quality of the publication is determined by running a series of automated tests on your data, which you can see with the <i class="icon icon-chevron-down"></i> icon</li>
         </ul>
+        {% if organisation.frequency == "less than quarterly" %}
         <div class="alert alert-info">
             <h3>Frequency of publication</h3>
             <p class="lead">It looks like you publish less often than quarterly, so the maximum you can score for IATI data is 95 points. The total points for each indicator have been adjusted accordingly.</p>
         </div>
         {% set freq=0.9 %}
+        {% else %}
+        {% set freq=1.0 %}
+        {% endif %}
         <table class="table" id="results_iati">
         <thead>
         <th>Category</th>
@@ -134,7 +138,7 @@
                             <td>IATI data quality</td><td>{{result.results_pct|round|int}}%</td><td></td>
                         </tr>
                         <tr>
-                            <td>IATI frequency</td><td>x {{freq}}</td><td>Publishing less than quarterly</td>
+                            <td>IATI frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
                         </tr>
                         <tr class="info">
                             <td colspan="3"></td>
