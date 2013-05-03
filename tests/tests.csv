@@ -1,55 +1,55 @@
 indicator_name,indicator_description,test_name,test_description,test_level
 sector,Sector,sector exists?,Sector ,1
-sector,Sector,sector/@percentage exists?,"Sector, percentage",1
-sector,Sector,sector/@percentage is a positiveInteger?,"Sector, valid number",1
+,,sector/@percentage exists?,"Sector, percentage",1
+,,sector/@percentage is a positiveInteger?,"Sector, valid number",1
 sector,Sector,sector/@code exists?,"Sector, code",1
-sector,Sector,sector/@code is on list Sector?,"Sector, code on Sector codelist",1
-sector,Sector,sector/@vocabulary exists?,"Sector, vocabulary",1
-sector,Sector,sector/@vocabulary is on list Vocabulary?,"Sector, vocabulary on Sector vocabulary list",1
-implementer,Implementer,participating-org exists?,Participating organisation,1
-implementer,Implementer,participating-org/@type exists?,"Participating organisation, type",1
-implementer,Implementer,participating-org/@type is on list OrganisationType?,"Participating organisation, type is on the IATI organisation type codelist",1
-implementer,Implementer,participating-org/@role exists?,"Participating organisation, role",1
-implementer,Implementer,participating-org/@role is on list OrganisationRole?,"Participating organisation, role is on the IATI organisation role codelist",1
-implementer,Implementer,participating-org/@ref exists?,"Participating organisation, ref",1
-implementer,Implementer,participating-org/@ref is on list OrganisationIdentifier?,"Participating organisation, ref is on the IATI organisation identifier codelist",1
+,,sector/@code is on list Sector?,"Sector, code on Sector codelist",1
+,,sector/@vocabulary exists?,"Sector, vocabulary",1
+,,sector/@vocabulary is on list Vocabulary?,"Sector, vocabulary on Sector vocabulary list",1
+,,participating-org exists?,Participating organisation,1
+,,participating-org/@type exists?,"Participating organisation, type",1
+,,participating-org/@type is on list OrganisationType?,"Participating organisation, type is on the IATI organisation type codelist",1
+,,participating-org/@role exists?,"Participating organisation, role",1
+,,participating-org/@role is on list OrganisationRole?,"Participating organisation, role is on the IATI organisation role codelist",1
+,,participating-org/@ref exists?,"Participating organisation, ref",1
+,,participating-org/@ref is on list OrganisationIdentifier?,"Participating organisation, ref is on the IATI organisation identifier codelist",1
 unique-id,Unique ID,iati-identifier exists?,Unique IATI Identifier,1
 tied-aid-status,Tied Aid Status,default-tied-status exists?,Tied aid status,1
 expenditure-planned,Planned expenditure,planned-disbursement exists?,Planned disbursement ,1
-expenditure-planned,Planned expenditure,planned-disbursement/@updated exists?,"Planned disbursement, updated date",1
-expenditure-planned,Planned expenditure,planned-disbursement/@updated is a date?,"Planned disbursement, updated date is a valid date",1
-expenditure-planned,Planned expenditure,planned-disbursement/period-end exists?,"Planned disbursement, period start",1
-expenditure-planned,Planned expenditure,planned-disbursement/period-start exists?,"Planned disbursement, period end",1
-expenditure-planned,Planned expenditure,planned-disbursement/value exists?,"Planned disbursement, amount",1
+,,planned-disbursement/@updated exists?,"Planned disbursement, updated date",1
+,,planned-disbursement/@updated is a date?,"Planned disbursement, updated date is a valid date",1
+,,planned-disbursement/period-end exists?,"Planned disbursement, period start",1
+,,planned-disbursement/period-start exists?,"Planned disbursement, period end",1
+,,planned-disbursement/value exists?,"Planned disbursement, amount",1
 contact-details,Contact details,contact-info exists?,Contact information for the activity ,1
-contact-details,Contact details,contact-info/email exists?,Contact email,1
-contact-details,Contact details,contact-info/organisation exists?,Contact organisation,1
-contact-details,Contact details,contact-info/mailing-address exists?,Contact mailing address,1
-contact-details,Contact details,contact-info/person-name exists?,Contact person name ,1
-contact-details,Contact details,contact-info/telephone exists?,Contact telephone number ,1
+,,contact-info/email exists?,Contact email,1
+,,contact-info/organisation exists?,Contact organisation,1
+,,contact-info/mailing-address exists?,Contact mailing address,1
+,,contact-info/person-name exists?,Contact person name ,1
+,,contact-info/telephone exists?,Contact telephone number ,1
 collaboration-type,Collaboration Type,collaboration-type exists?,Collaboration type ,1
 current-status,Current Status,activity-status exists?,Activity status ,1
 results,Results,result exists?,Result,1
 finance-type,Finance Type,default-finance-type exists?,Default finance type ,1
 aid-type,Aid Type,default-aid-type exists?,Default aid type ,1
 description,Description,description/text() exists?,Description,1
-description,Description,description/@type exists?,Description type,1
-description,Description,description/@type is on list DescriptionType?,Description type is on the IATI Description Type codelist,1
+,,description/@type exists?,Description type,1
+,,description/@type is on list DescriptionType?,Description type is on the IATI Description Type codelist,1
 flow-type,Flow Type,default-flow-type exists?,Flow type,1
-flow-type,Flow Type,transaction/flow-type exists?,Transaction flow type,1
+,,transaction/flow-type exists?,Transaction flow type,1
 title,Title,title/text() exists?,Title,1
 conditions,Conditions,conditions exists?,Conditions,1
-conditions,Conditions,conditions/@attached exists?,Conditions attached,1
-conditions,Conditions,conditions/@attached is a boolean?,Conditions attached is properly formatted,1
-conditions,Conditions,conditions/condition exists?,"Conditions, individual condition exists",1
-conditions,Conditions,conditions/condition/@type exists?,"Conditions, individual condition has a type",1
-conditions,Conditions,conditions/condition/@type is on list ConditionType?,"Conditions, individual condition is on condition type codelist",1
+,,conditions/@attached exists?,Conditions attached,1
+,,conditions/@attached is a boolean?,Conditions attached is properly formatted,1
+,,conditions/condition exists?,"Conditions, individual condition exists",1
+,,conditions/condition/@type exists?,"Conditions, individual condition has a type",1
+,,conditions/condition/@type is on list ConditionType?,"Conditions, individual condition is on condition type codelist",1
 cost-overall,Overall cost,budget exists?,Budget,1
-cost-overall,Overall cost,budget/@type exists?,Budget type,1
-cost-overall,Overall cost,budget/@type is on list BudgetType?,Budget type is on budget type codelist,1
-cost-overall,Overall cost,budget/period-end exists?,Budget period end,1
-cost-overall,Overall cost,budget/period-start exists?,Budget period start,1
-cost-overall,Overall cost,budget/value exists?,Budget value,1
+,,budget/@type exists?,Budget type,1
+,,budget/@type is on list BudgetType?,Budget type is on budget type codelist,1
+,,budget/period-end exists?,Budget period end,1
+,,budget/period-start exists?,Budget period start,1
+,,budget/value exists?,Budget value,1
 location,Sub-national location,location exists?,Location (sub-national),1
 location,Sub-national location,location/coordinates exists?,Location (sub-national) coordinates,1
 title,Title,title/text() has more than 10 characters?,"Title, more than 10 chars",1
@@ -60,11 +60,11 @@ dates-planned,Planned dates,activity-date[@type='end-planned'] exists?,Activity 
 dates-actual,Actual dates,activity-date[@type='start-actual'] exists?,Activity date actual start date,1
 dates-actual,Actual dates,activity-date[@type='end-actual'] exists?,Activity date actual end date,1
 implementer,Implementer,participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?,Implementing organisation,1
-implementer,Implementer,participating-org[@role='implementing']/@type exists?,"Implementing organisation, type",1
-implementer,Implementer,participating-org[@role='implementing']/@type is on list OrganisationType?,"Implementing organisation, type is on the IATI organisation type codelist",1
-implementer,Implementer,participating-org[@role='implementing']/@role is on list OrganisationRole?,"Implementing organisation, role is on the IATI organisation role codelist",1
+,,participating-org[@role='implementing']/@type exists?,"Implementing organisation, type",1
+,,participating-org[@role='implementing']/@type is on list OrganisationType?,"Implementing organisation, type is on the IATI organisation type codelist",1
+,,participating-org[@role='implementing']/@role is on list OrganisationRole?,"Implementing organisation, role is on the IATI organisation role codelist",1
 implementer,Implementer,participating-org[@role='implementing']/@ref exists?,"Implementing organisation, ref",1
-implementer,Implementer,participating-org[@role='implementing']/@ref is on list OrganisationIdentifier?,"Implementing organisation, ref is on the IATI organisation identifier codelist",1
+,,participating-org[@role='implementing']/@ref is on list OrganisationIdentifier?,"Implementing organisation, ref is on the IATI organisation identifier codelist",1
 sector,Sector,sector exists more than 1 time?,"Sector, more than once",1
 expenditure-planned,Planned expenditure,transaction/transaction-type[@code='C'] or transaction/transaction-type[@code='c'] exists?,Commitments,1
 expenditure-actual,Actual expenditure,transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='d'] exists?,Disbursements,1
