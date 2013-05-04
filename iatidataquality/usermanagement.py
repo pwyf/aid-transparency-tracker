@@ -8,7 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
+    session, redirect, url_for, escape, Response, abort, send_file, current_app
 from flask.ext.login import (LoginManager, current_user, login_required,
                             login_user, logout_user, UserMixin, AnonymousUser,
                             confirm_login, fresh_login_required)
@@ -64,6 +64,8 @@ def login():
             remember = request.form.get("remember", "no") == "yes"
             if login_user(user, remember=remember):
                 flash("Logged in!", "success")
+                identity_changed.send(current_app._get_current_object(),
+                          identity=Identity(user.id))
                 return redirect(request.args.get("next") or url_for("home"))
             else:
                 flash("Sorry, but you could not log in.", "error")
@@ -75,5 +77,14 @@ def login():
 @login_required
 def logout():
     logout_user()
+
+    # Remove session keys set by Flask-Principal
+    for key in ('identity.name', 'identity.auth_type'):
+        session.pop(key, None)
+
+    # Tell Flask-Principal the user is anonymous
+    identity_changed.send(current_app._get_current_object(),
+                          identity=AnonymousIdentity())
+
     flash('Logged out', 'success')
     return redirect(request.args.get('next') or '/')
