@@ -513,41 +513,29 @@ class InfoType(db.Model):
 ## USERS
 
 class User(db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'dquser'
     id = Column(Integer, primary_key=True)
     username = Column(UnicodeText)
-    first_name = Column(UnicodeText)
-    last_name = Column(UnicodeText)
+    name = Column(UnicodeText)
     email_address = Column(UnicodeText)
     reset_password_key = Column(UnicodeText)
     pw_hash = db.Column(String(255))
 
-    def __init__(self, username, password, first_name, last_name, email_address):
+    def setup(self,
+                 username,
+                 password,
+                 name,
+                 email_address=None,
+                 id=None):
         self.username = username
         self.pw_hash = generate_password_hash(password)
+        self.name = name
+        self.email_address = email_address
+        if id is not None:
+            self.id = id
     
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
-
-    def __repr__(self):
-        return self.username, self.id, self.password2
-
-class UserOption(db.Model):
-    __tablename__ = 'useroption'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
-    option_id = Column(Integer, ForeignKey('option.id'))
-    # basically two different values are permitted
-    # given different names for clarity
-    useroption_value = Column(UnicodeText)
-    useroption_qualifier = Column(UnicodeText)
-
-# Option: e.g. permission_view, survey_access
-class Option(db.Model):
-    __tablename__ = 'option'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
-    qualifier_required = Column(Integer)
 
 ## ORGANISATION SURVEYS
 
