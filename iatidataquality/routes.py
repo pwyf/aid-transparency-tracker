@@ -13,13 +13,6 @@ from flask import Flask, render_template, flash, request, Markup, \
 from iatidataquality import app
 from iatidataquality import db
 
-import os
-import sys
-
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
 @app.route("/")
 def home():
     return render_template("dashboard.html")
