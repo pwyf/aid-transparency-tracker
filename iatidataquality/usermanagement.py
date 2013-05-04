@@ -17,34 +17,16 @@ from flask.ext.principal import Principal, Identity, AnonymousIdentity, \
 
 from iatidataquality import app
 from iatidataquality import db
+from iatidq import dqusers
 
-import os
-import sys
-
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-
-class User(UserMixin):
-    def __init__(self, name, id, active=True):
-        self.name = name
-        self.id = id
-        self.active = active
-
-    def is_active(self):
-        return self.active
+make_users = dqusers.addUser({
+                    'username': 'mark',
+                    'password': '1234',
+                    'name': 'mark'
+                    })
 
 class Anonymous(AnonymousUser):
     name = u"Anonymous"
-
-
-USERS = {
-    1: User(u"admin", 1),
-    3: User(u"notadmin", 3, False),
-}
-
-USER_NAMES = dict((u.name, u) for u in USERS.itervalues())
 
 login_manager = LoginManager()
 
@@ -55,29 +37,28 @@ login_manager.refresh_view = "reauth"
 
 @login_manager.user_loader
 def load_user(id):
-    return USERS.get(int(id))
+    return dqusers.user(id)
 
 login_manager.setup_app(app)
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == "POST" and "username" in request.form:
-        username = request.form["username"]
-        if username in USER_NAMES:
+        user = dqusers.user_by_username(request.form["username"])
+        if (user and user.check_password(request.form["password"])):
             remember = request.form.get("remember", "no") == "yes"
-            if login_user(USER_NAMES[username], remember=remember):
+            if login_user(user, remember=remember):
                 flash("Logged in!", "success")
-                return redirect(request.args.get("next") or url_for("index"))
+                return redirect(request.args.get("next") or url_for("home"))
             else:
                 flash("Sorry, but you could not log in.", "error")
         else:
-            flash(u"Invalid username.", "error")
+            flash(u"Invalid username or password.", "error")
     return render_template("login.html")
 
 @app.route('/logout/')
 @login_required
 def logout():
-    # Remove the user information from the session
     logout_user()
     flash('Logged out', 'success')
     return redirect(request.args.get('next') or '/')
