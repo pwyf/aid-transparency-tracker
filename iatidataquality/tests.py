@@ -12,9 +12,12 @@ from flask import Flask, render_template, flash, request, Markup, \
 from flask.ext.login import (LoginManager, current_user, login_required,
                             login_user, logout_user, UserMixin, AnonymousUser,
                             confirm_login, fresh_login_required)
+from flask.ext.principal import identity_loaded, Permission, RoleNeed, \
+     UserNeed
 
 from iatidataquality import app
 from iatidataquality import db
+import usermanagement
 
 import iatidq.test_level as test_level
 
@@ -40,8 +43,9 @@ def tests(id=None):
         return render_template("tests.html", tests=tests)
 
 @app.route("/tests/<id>/edit/", methods=['GET', 'POST'])
-@login_required
+@usermanagement.perms_required('tests', 'edit', '<id>')
 def tests_editor(id=None):
+
     if (request.method == 'POST'):
         test = dqtests.tests(id)
         data = {
@@ -60,7 +64,7 @@ def tests_editor(id=None):
     return render_template("test_editor.html", test=test)
 
 @app.route("/tests/<id>/delete/")
-@login_required
+@usermanagement.perms_required('tests', 'delete', '<id>')
 def tests_delete(id=None):
     if id is not None:
         if dqtests.deleteTest(id):
