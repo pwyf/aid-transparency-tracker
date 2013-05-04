@@ -14,11 +14,14 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import (LoginManager, current_user, login_required,
                             login_user, logout_user, UserMixin, AnonymousUser,
                             confirm_login, fresh_login_required)
+from flask.ext.principal import identity_loaded, Permission, RoleNeed, \
+     UserNeed
 from sqlalchemy import func
 from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
+import usermanagement
 
 import os
 import sys
@@ -35,6 +38,7 @@ import unicodecsv
 
 @app.route("/aggregationtypes/")
 @app.route("/aggregationtypes/<aggregationtype_id>/")
+@usermanagement.perms_required()
 def aggregationtypes(aggregationtype_id=None):
     ats=dqaggregationtypes.aggregationTypes()
     return render_template("aggregation_types.html", aggregationtypes=ats)
@@ -64,6 +68,7 @@ def get_aggregation_type(aggregationtype_id):
 
 @app.route("/aggregationtypes/new/", methods=['POST', 'GET'])
 @app.route("/aggregationtypes/<aggregationtype_id>/edit/", methods=['POST', 'GET'])
+@usermanagement.perms_required()
 def aggregationtypes_edit(aggregationtype_id=None):
     aggregationtype = get_aggregation_type(aggregationtype_id)
 
