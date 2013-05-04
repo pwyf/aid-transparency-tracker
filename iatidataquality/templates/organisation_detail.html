@@ -35,7 +35,15 @@
 
     {% if results %}
     <div class="pull-right testruns">
-        <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
+        <form action="" method="GET" id="aggregation_type_form" class="form-inline">
+            <a id="showAllTests" class="btn" href="#">Show all tests</a>
+            <a href="{{url_for('organisation_publication_detail', organisation_code=organisation.organisation_code)}}" class="btn">Detail</a> 
+            <select name="aggregation_type" id="aggregation_type">
+                {% for agt in all_aggregation_types %}
+                <option value="{{agt.AggregationType.id}}"{% if agt.AggregationType.id==aggregation_type %} selected{%endif%}>{{agt.AggregationType.name}}</option>
+                {% endfor %}
+            </select>
+        </form>
     </div>
     <h2>Results</h2>
     <div class="clearer">&nbsp;</div>
@@ -62,7 +70,7 @@
         {% endfor %}
     {%endif%}
 
-<script>
+<script type="text/javascript">
 
     $(document).on('click', ".pagination a", function(e){
         e.preventDefault();
@@ -157,6 +165,10 @@
             });
             $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
     }
+    });
+
+    $('#aggregation_type').change(function(){
+        $('#aggregation_type_form').submit();
     });
 </script>
 
