@@ -19,11 +19,33 @@ from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
 
-make_users = dqusers.addUser({
-                    'username': 'mark',
-                    'password': '1234',
-                    'name': 'mark'
-                    })
+
+users = [{
+        'username': 'mark',
+        'password': '1234',
+        'name': 'Mark',
+        'permissions': [{
+            'permission_name': 'admin',
+            'permission_method': 'full'
+            }]
+        },
+        {
+        'username': 'fred',
+        'password': '1234',
+        'name': 'Fred',
+        'permissions': [{
+            'permission_name': 'tests',
+            'permission_method': 'edit',
+            'permission_value': '1'
+            }]
+        }]
+for user in users:
+    dqusers.addUser(user)
+    the_user = dqusers.user_by_username(user['username'])
+    for permission in user['permissions']:
+        
+        permission["user_id"]=the_user.id
+        dqusers.addUserPermission(permission)
 
 class Anonymous(AnonymousUser):
     name = u"Anonymous"
