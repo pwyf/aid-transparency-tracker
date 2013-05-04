@@ -349,7 +349,8 @@ def addFeedback(data):
     db.session.commit()
     return feedback
 
-def _organisation_detail_ungrouped(organisation):
+
+def _organisation_detail_ungrouped(organisation, aggregation_type):
     return db.session.query(Indicator,
                                      Test,
                                      AggregateResult.results_data,
@@ -357,10 +358,11 @@ def _organisation_detail_ungrouped(organisation):
                                      AggregateResult.result_hierarchy,
                                      AggregateResult.package_id,
                                      func.max(AggregateResult.runtime_id)
-        ).filter(Organisation.id==organisation.id)
+        ).filter(Organisation.id==organisation.id
+        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type)
 
-def _organisation_detail(organisation):
-    aggregate_results = _organisation_detail_ungrouped(organisation)\
+def _organisation_detail(organisation, aggregation_type):
+    aggregate_results = _organisation_detail_ungrouped(organisation, aggregation_type)\
         .group_by(Indicator,
                    AggregateResult.result_hierarchy, 
                    Test, 
