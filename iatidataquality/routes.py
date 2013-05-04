@@ -62,7 +62,7 @@ login_manager.setup_app(app)
 def home():
     return render_template("dashboard.html")
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == "POST" and "username" in request.form:
         username = request.form["username"]
