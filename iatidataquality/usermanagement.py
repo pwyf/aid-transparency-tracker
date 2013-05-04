@@ -67,33 +67,37 @@ login_manager.login_view = "login"
 def load_user(id):
     return dqusers.user(id)
 
+def role_permission(rolename):
+    return Permission(RoleNeed(rolename))
+
 TestNeed = namedtuple('test', ['method', 'value'])
 EditTestNeed = partial(TestNeed, 'edit')
-admin_permission = Permission(RoleNeed('admin'))
-
-def check_perms(name, method=None, value=None):
-    if admin_permission.can():
-        return True
-    if (name == 'tests'):
-        if ((method=='edit') or (method=='delete')):
-            return EditTestPermission(value).can()
-    return False
-
-def perms_required(name, method=None, value=None):
-    def wrap(f):
-        def wrapped_f(*args, **kwargs):
-            if name == 'tests':
-                if not check_perms(name, method, kwargs['id']):
-                    flash('You must log in to access that page.', 'error')
-                    return redirect(url_for('home'))
-            return f(*args, **kwargs)
-        return wrapped_f
-    return wrap
 
 class EditTestPermission(Permission):
     def __init__(self, test_id):
         need = EditTestNeed(unicode(test_id))
         super(EditTestPermission, self).__init__(need)
+
+def check_perms(name, method=None, kwargs=None):
+    #check to see if 
+    if role_permission('admin').can():
+        return True
+    if (name == 'tests'):
+        value = kwargs['id']
+        if ((method=='edit') or (method=='delete')):
+            return EditTestPermission(value).can()
+    return False
+
+def perms_required(name=None, method=None, value=None):
+    def wrap(f):
+        @wraps(f)
+        def wrapped_f(*args, **kwargs):
+            if not check_perms(name, method, kwargs):
+                flash('You must log in to access that page.', 'error')
+                return redirect(url_for('home'))
+            return f(*args, **kwargs)
+        return wrapped_f
+    return wrap
 
 @identity_loaded.connect_via(app)
 def on_identity_loaded(sender, identity):
