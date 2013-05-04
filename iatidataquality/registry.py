@@ -37,11 +37,13 @@ import spreadsheet
 
 
 @app.route("/registry/refresh/")
+@usermanagement.perms_required()
 def registry_refresh():
     dqregistry.refresh_packages()
     return "Refreshed"
 
 @app.route("/registry/download/")
+@usermanagement.perms_required()
 def registry_download():
     dqdownload.run()
     return "Downloading"
