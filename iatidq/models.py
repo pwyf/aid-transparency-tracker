@@ -537,6 +537,18 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
 
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        return self.id
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
+
 class UserPermissions(db.Model):
     __tablename__ = 'userpermission'
     id = Column(Integer, primary_key=True)
