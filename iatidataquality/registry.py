@@ -9,32 +9,15 @@
 
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
-import StringIO
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import (LoginManager, current_user, login_required,
-                            login_user, logout_user, UserMixin, AnonymousUser,
-                            confirm_login, fresh_login_required)
 from sqlalchemy import func
 from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
 
-import os
-import sys
-import json
-
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
 from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
-
-import StringIO
-import unicodecsv
-import tempfile
-import spreadsheet
-
+import usermanagement
 
 @app.route("/registry/refresh/")
 @usermanagement.perms_required()
