@@ -47,21 +47,14 @@ for user in users:
         permission["user_id"]=the_user.id
         dqusers.addUserPermission(permission)
 
-class Anonymous(AnonymousUser):
-    name = u"Anonymous"
-
+Principal(app)
 login_manager = LoginManager()
-
-login_manager.anonymous_user = Anonymous
+login_manager.setup_app(app)
 login_manager.login_view = "login"
-login_manager.login_message = u"Please log in to access this page."
-login_manager.refresh_view = "reauth"
 
 @login_manager.user_loader
 def load_user(id):
     return dqusers.user(id)
-
-login_manager.setup_app(app)
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():
