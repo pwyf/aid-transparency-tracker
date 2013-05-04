@@ -58,4 +58,9 @@ def addUserPermission(data):
         db.session.add(newP)
         db.session.commit()
         return newP
-    return None    
+    return None
+
+def userPermissions(user_id):
+    checkP = models.UserPermission.query.filter_by(user_id=user_id
+            ).all()
+    return checkP
