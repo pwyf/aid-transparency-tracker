@@ -94,7 +94,7 @@ def perms_required(name=None, method=None, value=None):
         def wrapped_f(*args, **kwargs):
             if not check_perms(name, method, kwargs):
                 flash('You must log in to access that page.', 'error')
-                return redirect(url_for('home'))
+                return redirect(url_for('login', next=request.path))
             return f(*args, **kwargs)
         return wrapped_f
     return wrap
