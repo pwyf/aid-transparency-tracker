@@ -76,6 +76,7 @@ def tests_delete(id=None):
         flash('No test ID provided', 'error')
         return redirect(url_for('tests'))
 
+@usermanagement.perms_required('tests', 'new', '<id>')
 @app.route("/tests/new/", methods=['GET', 'POST'])
 @login_required
 def tests_new():
