@@ -77,6 +77,14 @@ def login():
             flash(u"Invalid username.", "error")
     return render_template("login.html")
 
+@app.route('/logout/')
+@login_required
+def logout():
+    # Remove the user information from the session
+    logout_user()
+    flash('Logged out', 'success')
+    return redirect(request.args.get('next') or '/')
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
