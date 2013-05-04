@@ -9,11 +9,7 @@
 
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
-from flask.ext.login import (LoginManager, current_user, login_required,
-                            login_user, logout_user, UserMixin, AnonymousUser,
-                            confirm_login, fresh_login_required)
-from flask.ext.principal import identity_loaded, Permission, RoleNeed, \
-     UserNeed
+from flask.ext.login import login_required
 
 from iatidataquality import app
 from iatidataquality import db
@@ -45,7 +41,6 @@ def tests(id=None):
 @app.route("/tests/<id>/edit/", methods=['GET', 'POST'])
 @usermanagement.perms_required('tests', 'edit', '<id>')
 def tests_editor(id=None):
-
     if (request.method == 'POST'):
         test = dqtests.tests(id)
         data = {
@@ -76,8 +71,8 @@ def tests_delete(id=None):
         flash('No test ID provided', 'error')
         return redirect(url_for('tests'))
 
-@usermanagement.perms_required('tests', 'new', '<id>')
 @app.route("/tests/new/", methods=['GET', 'POST'])
+@usermanagement.perms_required('tests', 'new')
 @login_required
 def tests_new():
     if (request.method == 'POST'):
