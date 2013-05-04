@@ -9,27 +9,22 @@
 
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
-from flask.ext.login import (LoginManager, current_user, login_required,
-                            login_user, logout_user, UserMixin, AnonymousUser,
-                            confirm_login, fresh_login_required)
 
 from iatidataquality import app
 from iatidataquality import db
 
 import os
 import sys
+import unicodecsv
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from iatidq import dqindicators, dqsurveys, dqorganisations
-
 from iatidq.models import *
 
-import unicodecsv
-import json
-import json
+import usermanagement
 
 @app.route("/surveys/admin/")
 def surveys_admin():
