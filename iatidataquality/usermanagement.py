@@ -47,7 +47,7 @@ for user in users:
         permission["user_id"]=the_user.id
         dqusers.addUserPermission(permission)
 
-Principal(app)
+principals = Principal(app)
 login_manager = LoginManager()
 login_manager.setup_app(app)
 login_manager.login_view = "login"
