@@ -234,9 +234,7 @@ def _survey_process_send(organisation, workflow, request, organisationsurvey):
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
-    # FIXME: should probably go in setup
-    dqsurveys.setupSurvey()
-
+    
     workflow = dqsurveys.workflows(workflow_name)
     if not workflow:
         flash('That workflow does not exist.', 'error')

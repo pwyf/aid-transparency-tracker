@@ -18,6 +18,7 @@ import test_level
 import dqaggregationtypes
 import dqtests
 import inforesult
+import dqsurveys
 
 # FIXME: duplicated
 which_packages = [
@@ -202,5 +203,7 @@ def setup(options):
 
     print "Getting organisation frequency"
     dqorganisations.downloadOrganisationFrequency()
+    print "Setting up survey"
+    dqsurveys.setupSurvey()
 
     print "Setup complete."
