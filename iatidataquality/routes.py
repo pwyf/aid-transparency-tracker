@@ -12,6 +12,8 @@ from flask import Flask, render_template, flash, request, Markup, \
 from flask.ext.login import (LoginManager, current_user, login_required,
                             login_user, logout_user, UserMixin, AnonymousUser,
                             confirm_login, fresh_login_required)
+from flask.ext.principal import Principal, Identity, AnonymousIdentity, \
+     identity_changed
 
 from iatidataquality import app
 from iatidataquality import db
