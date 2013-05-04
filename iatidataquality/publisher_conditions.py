@@ -9,13 +9,10 @@
 
 from flask import render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
-import StringIO
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import (LoginManager, current_user, login_required,
                             login_user, logout_user, UserMixin, AnonymousUser,
                             confirm_login, fresh_login_required)
-from sqlalchemy import func
-from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
@@ -32,9 +29,8 @@ from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpack
 from iatidq.models import *
 
 import StringIO
-import unicodecsv
-import tempfile
-import spreadsheet
+
+import usermanagement
 
 def get_pc(pc_id):
     return db.session.query(
@@ -95,6 +91,7 @@ def update_organisation_condition(pc_id):
     db.session.commit()
 
 @app.route("/organisation_conditions/<id>/edit/", methods=['GET', 'POST'])
+@usermanagement.perms_required()
 def organisation_conditions_editor(id=None):
     organisations = Organisation.query.order_by(
         Organisation.organisation_code).all()
@@ -112,6 +109,7 @@ def organisation_conditions_editor(id=None):
                                pc=pc, organisations=organisations, tests=tests)
 
 @app.route("/organisation_conditions/new/", methods=['GET', 'POST'])
+@usermanagement.perms_required()
 def organisation_conditions_new(id=None):
     organisations = Organisation.query.order_by(
         Organisation.organisation_code).all()
@@ -201,6 +199,7 @@ def ipc_step3():
 
 @app.route("/organisation_conditions/import/step<step>", methods=['GET', 'POST'])
 @app.route("/organisation_conditions/import/", methods=['GET', 'POST'])
+@usermanagement.perms_required()
 def import_organisation_conditions(step=None):
     # Step=1: form; submit to step2
     # 
