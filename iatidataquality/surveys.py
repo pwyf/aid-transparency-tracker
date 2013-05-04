@@ -27,6 +27,7 @@ from iatidq.models import *
 import usermanagement
 
 @app.route("/surveys/admin/")
+@usermanagement.perms_required()
 def surveys_admin():
     surveys = dqsurveys.surveys()
     workflows = dqsurveys.workflows()
@@ -90,6 +91,7 @@ def get_organisation_results(organisation_code, newindicators):
     return data
 
 @app.route("/organisations/<organisation_code>/survey/")
+@usermanagement.perms_required('survey', 'view')
 def organisation_survey(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
     survey = dqsurveys.getSurvey(organisation_code)
