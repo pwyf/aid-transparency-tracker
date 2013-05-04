@@ -21,3 +21,5 @@ psycopg2
 unicodecsv
 openpyxl
 Flask-Login
+flask-principal
+blinker
