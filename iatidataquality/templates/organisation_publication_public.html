@@ -1,0 +1,153 @@
+{% set active_page='publishers'%}{% extends "layout.html" %}
+{% block title %}{{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+{% block content %}
+
+   <script src="/static/jquery.tablesorter.min.js"></script>
+    <script >
+    $(function() {
+    $("table#packages").tablesorter({ sortList: [[0,0]] });
+    $("table#results").tablesorter({ sortList: [[0,0]] });
+    });
+
+    </script>
+    <div class="pull-right">
+        <button type="button" class="btn" data-toggle="collapse" data-target="#packages_div">
+        <i class="icon-file"></i> <b>Packages</b>
+        </button>
+    </div>
+	<h1>{{organisation.organisation_name}}</h1>
+
+    <div id="packages_div" class="collapse">
+    <h2>Packages</h2>
+    <table class="table" id="packages">
+    <thead>
+    <th>Registry ID</th><th>Name</th><th>Country</th><th>License</th>
+    </thead>
+    <tbody>
+	{% for package in packages %}
+    <tr>
+	<td><a href="{{url_for('packages', package_name=package.Package.package_name)}}">{{ package.Package.package_name }}</a></td><td>{{ package.Package.package_title }}</td><td>{{ package.Package.package_country }}</td><td>{{ package.Package.package_license }}</td><!--<td></td>-->
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+    </div>
+    {% if not packages %}
+        <p class="lead">No IATI data found for this organisation:</p>
+    {% else %}
+        <div class="pull-right">
+            <form action="" method="GET" id="aggregation_type_form" class="form-inline"><a href="{{url_for('organisation_publication_detail', organisation_code=organisation.organisation_code)}}" class="btn">Detail</a> 
+                <select name="aggregation_type" id="aggregation_type">
+                    {% for agt in all_aggregation_types %}
+                    <option value="{{agt.AggregationType.id}}"{% if agt.AggregationType.id==aggregation_type %} selected{%endif%}>{{agt.AggregationType.name}}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        <p class="lead">The following results are based on the IATI data found for this organisation. All donors are being provided with the opportunity to check and comment on this initial assessment, which will feed into the Aid Transparency Index to be published in October 2013.</p>
+        <table class="table" id="results">
+        <thead>
+        <th>Category</th>
+        <th>Subgroup</th>
+        <th>Indicator</th>
+        <th><span class="th_test hidden">Test</span></th>
+        <th>% Passed</th>
+        <th><span class="th_test hidden">Total results</span></th>
+        <th>Detail</th>
+        </thead>
+        <tbody>
+        {% for indicator, result in results.items() %}
+            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td>{{result.indicator.indicator_category_name|title}}</td>
+            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{result.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+	        <td></td>
+            <td class="pct">{{result.results_pct|round|int}}</td>
+            <td></td>
+            <td><a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a></td>
+            </tr>
+
+            {% for testdata in result["tests"] %}
+            <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
+            <td><span class="hidden">{{result.indicator.indicator_category_name|title}}</span></td>
+            <td><span class="hidden">{{result.indicator.indicator_subcategory_name|title}}</span></td>
+            <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
+	        <td><a href="{{url_for('tests', id=testdata["test"]["id"])}}">{{ testdata["test"]["description"] }}</a>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
+            <td class="pct">{{testdata.results_pct|round|int}}</td>
+            <td>{{testdata["results_num"]|round|int}}</td>
+            <td></td>
+            </tr>
+            {% endfor %}
+        {% else %}
+        <tr><td colspan="5"><b>No IATI data found.</b></td></tr>
+        {%endfor%}
+        </tbody>
+        </table>
+    {%endif%}
+
+<script type="text/javascript">
+
+    var showAllTests;
+    $("#showAllTests").click(function(e){
+        e.preventDefault();
+        $(".condition-hidden").toggle();
+        if (showAllTests == true) {
+            showAllTests = false;
+            $(this).text("Show all tests");
+        } else {
+            showAllTests = true;
+            $(this).text("Show only relevant tests");
+        }
+    });
+    $(".showTests").click(function(e){
+        if ($(this).hasClass("visible")) {
+            e.preventDefault();
+
+            re=new RegExp("showindicator-([0-9]*)");
+            r=re.exec(this.id);
+            indicator_id = r[1]
+
+            $(this).closest("tr").removeClass("success");
+            $(this).removeClass("visible").html('<i class="icon-chevron-down"></i>');
+            $(".group-"+indicator_id).hide();
+            $(".th_test").addClass('hidden');
+
+        } else {
+            e.preventDefault();
+
+            re=new RegExp("showindicator-([0-9]*)");
+            r=re.exec(this.id);
+            indicator_id = r[1]
+            $(this).closest("tr").addClass("success");
+            $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
+            $(".group-"+indicator_id).show().removeClass('hidden');
+            $(".th_test").removeClass('hidden');
+    }
+    });
+
+    $(".scrollto").click(function(e){
+        e.preventDefault();
+        scrollto = $(this).attr('href');
+        $("html, body").animate(
+                {scrollTop: $(scrollto).offset().top},'slow'
+        );
+    });
+    $('#aggregation_type').change(function(){
+        $('#aggregation_type_form').submit();
+    });
+</script>
+
+{% endblock %}
