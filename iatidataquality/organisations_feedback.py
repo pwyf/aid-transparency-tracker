@@ -9,7 +9,6 @@
 
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
-import StringIO
 from flask.ext.sqlalchemy import SQLAlchemy
 
 from iatidataquality import app
@@ -17,10 +16,6 @@ from iatidataquality import db
 
 from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
 
-import StringIO
-import unicodecsv
-import tempfile
-import spreadsheet
 import usermanagement
 
 @app.route("/organisations/<organisation_code>/feedback/", methods=['POST', 'GET'])
