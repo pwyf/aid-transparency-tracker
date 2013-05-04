@@ -244,8 +244,29 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     organisationsurvey = dqsurveys.getOrCreateSurvey({
                 'organisation_id': organisation.id
                 })
+
+    permission_name = "survey_"+workflow_name
+    permission_value=organisation_code
+    allowed_to_edit = usermanagement.check_perms(permission_name, 
+                    "edit", 
+                    permission_value)
+
+    allowed_to_view = usermanagement.check_perms(permission_name, 
+                    "view", 
+                    permission_value)
     
+    if not allowed_to_view:
+        flash("Sorry, you do not have permission to view that survey", 'error')
+        return redirect(url_for('organisation_survey_edit', 
+                    organisation_code=organisation_code, 
+                    workflow_name=workflow_name))
     if request.method=='POST':
+        if not allowed_to_edit:
+            flash("Sorry, you do not have permission to update that survey", 'error')
+            return redirect(url_for('organisation_survey_edit', 
+                        organisation_code=organisation_code, 
+                        workflow_name=workflow_name))
+        
         if (workflow.WorkflowType.name=='collect'):
             _survey_process_collect(organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='send':
@@ -312,4 +333,5 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
            publishedstatuses=publishedstatuses,
            workflow=workflow,
            surveydata=surveydata_allworkflows,
-           organisationsurvey=organisationsurvey)
+           organisationsurvey=organisationsurvey,
+           allowed_to_edit=allowed_to_edit)
