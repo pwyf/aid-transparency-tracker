@@ -38,5 +38,24 @@ def addUser(data):
         )
         db.session.add(newU)
         db.session.commit()
-        return user
+        return newU
     return None
+
+def addUserPermission(data):
+    checkP = models.UserPermission.query.filter_by(user_id=data["user_id"],
+                permission_name=data["permission_name"],
+                permission_method=data.get("permission_method"),
+                permission_value=data.get("permission_value")
+                ).first()
+    if not checkP:
+        newP = models.UserPermission()
+        newP.setup(
+            user_id = data["user_id"],
+            permission_name=data["permission_name"],
+            permission_method=data.get("permission_method"),
+            permission_value=data.get("permission_value")
+        )
+        db.session.add(newP)
+        db.session.commit()
+        return newP
+    return None    
