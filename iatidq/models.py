@@ -537,6 +537,14 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
 
+class UserPermissions(db.Model):
+    __tablename__ = 'userpermission'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('dquser.id'))
+    permission_name = Column(UnicodeText) # survey_donorreview
+    permission_method = Column(UnicodeText) # edit
+    permission_value = Column(UnicodeText) # 1
+
 ## ORGANISATION SURVEYS
 
 class OrganisationSurvey(db.Model):
