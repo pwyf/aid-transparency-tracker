@@ -32,7 +32,7 @@ def addUser(data):
         newU = models.User()
         newU.setup(
             username = data["username"],
-            password = app.config["ADMIN_PASSWORD"],
+            password = data["password"],
             name = data.get('name'),
             email_address = data.get('name')
         )
