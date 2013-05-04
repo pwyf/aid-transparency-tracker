@@ -32,12 +32,10 @@ from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpack
 
 from iatidq.models import *
 
-import StringIO
-import unicodecsv
-import tempfile
-import spreadsheet
+import usermanagement
 
 @app.route("/packages/manage/", methods=['GET', 'POST'])
+@usermanagement.perms_required()
 def packages_manage():
     if request.method != 'POST':
         pkgs = Package.query.order_by(Package.package_name).all()
