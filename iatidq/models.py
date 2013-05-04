@@ -549,13 +549,26 @@ class User(db.Model):
     def is_authenticated(self):
         return True
 
-class UserPermissions(db.Model):
+class UserPermission(db.Model):
     __tablename__ = 'userpermission'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('dquser.id'))
     permission_name = Column(UnicodeText) # survey_donorreview
     permission_method = Column(UnicodeText) # edit
     permission_value = Column(UnicodeText) # 1
+
+    def setup(self,
+                 user_id,
+                 permission_name,
+                 permission_method=None,
+                 permission_value=None,
+                 id=None):
+        self.user_id = user_id
+        self.permission_name = permission_name
+        self.permission_method = permission_method
+        self.permission_value = permission_value
+        if id is not None:
+            self.id = id
 
 ## ORGANISATION SURVEYS
 
