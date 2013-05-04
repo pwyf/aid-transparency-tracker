@@ -13,8 +13,11 @@ from flask.ext.login import (LoginManager, current_user, login_required,
                             login_user, logout_user, UserMixin, AnonymousUser,
                             confirm_login, fresh_login_required)
 from flask.ext.principal import Principal, Identity, AnonymousIdentity, \
-     identity_changed
+     identity_changed, identity_loaded, Permission, RoleNeed, \
+     UserNeed
 
+from collections import namedtuple
+from functools import partial, wraps
 from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
@@ -37,6 +40,14 @@ users = [{
             'permission_name': 'tests',
             'permission_method': 'edit',
             'permission_value': '1'
+            },{
+            'permission_name': 'tests',
+            'permission_method': 'edit',
+            'permission_value': '2'
+            },{
+            'permission_name': 'tests',
+            'permission_method': 'edit',
+            'permission_value': '3'
             }]
         }]
 for user in users:
@@ -55,6 +66,52 @@ login_manager.login_view = "login"
 @login_manager.user_loader
 def load_user(id):
     return dqusers.user(id)
+
+TestNeed = namedtuple('test', ['method', 'value'])
+EditTestNeed = partial(TestNeed, 'edit')
+admin_permission = Permission(RoleNeed('admin'))
+
+def check_perms(name, method=None, value=None):
+    if admin_permission.can():
+        return True
+    if (name == 'tests'):
+        if ((method=='edit') or (method=='delete')):
+            return EditTestPermission(value).can()
+    return False
+
+def perms_required(name, method=None, value=None):
+    def wrap(f):
+        def wrapped_f(*args, **kwargs):
+            if name == 'tests':
+                if not check_perms(name, method, kwargs['id']):
+                    flash('You must log in to access that page.', 'error')
+                    return redirect(url_for('home'))
+            return f(*args, **kwargs)
+        return wrapped_f
+    return wrap
+
+class EditTestPermission(Permission):
+    def __init__(self, test_id):
+        need = EditTestNeed(unicode(test_id))
+        super(EditTestPermission, self).__init__(need)
+
+@identity_loaded.connect_via(app)
+def on_identity_loaded(sender, identity):
+    # Set the identity user object
+    identity.user = current_user
+    permissions = dqusers.userPermissions(identity.id)
+
+    if hasattr(current_user, 'id'):
+        identity.provides.add(UserNeed(current_user.id))
+
+    def set_permissions(permission):
+        if (permission.permission_name=='tests' and permission.permission_method=='edit'):
+            identity.provides.add(EditTestNeed(unicode(permission.permission_value)))
+        if (permission.permission_name=='admin'):
+            identity.provides.add(RoleNeed(permission.permission_name))
+
+    for permission in permissions:
+        set_permissions(permission)
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():
