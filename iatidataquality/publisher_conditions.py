@@ -10,20 +10,9 @@
 from flask import render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import (LoginManager, current_user, login_required,
-                            login_user, logout_user, UserMixin, AnonymousUser,
-                            confirm_login, fresh_login_required)
 
 from iatidataquality import app
 from iatidataquality import db
-
-import os
-import sys
-import json
-
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
 
 from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
 from iatidq.models import *
