@@ -14,6 +14,7 @@ app = Flask(__name__.split('.')[0])
 app.config.from_pyfile('../config.py')
 db = SQLAlchemy(app)
 
+import usermanagement
 import api
 import routes
 import publishers
