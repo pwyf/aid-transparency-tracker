@@ -106,8 +106,12 @@ def organisations_index(organisation_code=None):
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
+    check_perms = usermanagement.check_perms('organisation', 'view')
     if organisation_code is not None:
-        return redirect(url_for('organisations_index', organisation_code=organisation_code))
+        if check_perms:
+            return redirect(url_for('organisations_index', organisation_code=organisation_code))
+        else:
+            return redirect(url_for('organisation_publication', organisation_code=organisation_code))
     else:
         organisations = dqorganisations.organisations()
 
@@ -146,37 +150,56 @@ def integerise(data):
 
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
+    check_perms = usermanagement.check_perms('organisation', 'view')
 
-    aggregation_type=integerise(request.args.get('aggregation_type', 2))
-    all_aggregation_types = dqaggregationtypes.aggregationTypes()
+    if check_perms:
+        aggregation_type=integerise(request.args.get('aggregation_type', 2))
+        all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
-    organisation = Organisation.query.filter_by(
-        organisation_code=organisation_code).first_or_404()
+        organisation = Organisation.query.filter_by(
+            organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = dqorganisations._organisation_indicators_split(
-        organisation, aggregation_type)
+        aggregate_results = dqorganisations._organisation_indicators_split(
+            organisation, aggregation_type)
 
-    surveydata = dqsurveys.getSurveyData(organisation_code)
-    published_status = dqsurveys.publishedStatus()
+        surveydata = dqsurveys.getSurveyData(organisation_code)
+        published_status = dqsurveys.publishedStatus()
 
-    published_status_by_id = dict(map(lambda x: (x.id, x), published_status))
-    published_status_by_id[None] = {'name': 'Unknown',
-                                    'publishedstatus_class': 'label-inverse'}
+        published_status_by_id = dict(map(lambda x: (x.id, x), published_status))
+        published_status_by_id[None] = {'name': 'Unknown',
+                                        'publishedstatus_class': 'label-inverse'}
 
-    latest_runtime=1
+        latest_runtime=1
 
-    return render_template("organisation_indicators.html", 
-                           organisation=organisation,
-                           results=aggregate_results, 
-                           runtime=latest_runtime,
-                           all_aggregation_types=all_aggregation_types,
-                           aggregation_type=aggregation_type,
-                           surveydata=surveydata,
-                           published_status=published_status_by_id)
+        return render_template("organisation_indicators.html", 
+                               organisation=organisation,
+                               results=aggregate_results, 
+                               runtime=latest_runtime,
+                               all_aggregation_types=all_aggregation_types,
+                               aggregation_type=aggregation_type,
+                               surveydata=surveydata,
+                               published_status=published_status_by_id)
+    else:
+        aggregation_type=integerise(request.args.get('aggregation_type', 2))
+        all_aggregation_types = dqaggregationtypes.aggregationTypes()
+
+        organisation = Organisation.query.filter_by(
+            organisation_code=organisation_code).first_or_404()
+
+        aggregate_results = dqorganisations._organisation_indicators(
+            organisation, aggregation_type)
+
+        packages = dqorganisations.organisationPackages(organisation_code)
+
+        return render_template("organisation_publication_public.html", 
+                               organisation=organisation,
+                               results=aggregate_results, 
+                               all_aggregation_types=all_aggregation_types,
+                               aggregation_type=aggregation_type,
+                               packages=packages)
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
-def organisation_publication_detail(organisation_code=None, 
-                                    aggregation_type=None):
+def organisation_publication_detail(organisation_code=None):
 
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
@@ -184,11 +207,16 @@ def organisation_publication_detail(organisation_code=None,
     packages = dqorganisations.organisationPackages(
         organisation.organisation_code)
 
-    aggregate_results = dqorganisations._organisation_detail(organisation)
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    all_aggregation_types = dqaggregationtypes.aggregationTypes()
+
+    aggregate_results = dqorganisations._organisation_detail(organisation, aggregation_type)
 
     txt = render_template("organisation_detail.html", 
                           organisation=organisation, packages=packages, 
-                          results=aggregate_results)
+                          results=aggregate_results,
+                           all_aggregation_types=all_aggregation_types,
+                           aggregation_type=aggregation_type)
     return txt
 
 @app.route("/organisations/publication.csv")
