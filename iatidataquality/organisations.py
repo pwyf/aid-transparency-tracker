@@ -36,73 +36,78 @@ from iatidq.models import *
 
 import StringIO
 import unicodecsv
+import usermanagement
 
-@app.route("/organisations/")
-@app.route("/organisations/<organisation_code>/")
-def organisations(organisation_code=None):
-
+@app.route("/organisations/<organisation_code>/index/")
+@usermanagement.perms_required('organisation', 'view')
+def organisations_index(organisation_code=None):
     info_results = {
         }
     
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
 
     template_args = {}
+    org_packages = dqorganisations.organisationPackages(organisation_code)
+
+    def get_info_results():
+        print "gir"
+        for _, p in org_packages:
+            package_id = p.package_id
+            from sqlalchemy import func
+            runtime = db.session.query(
+                func.max(InfoResult.runtime_id)).filter(
+                InfoResult.package_id == package_id
+                ).first()
+            import iatidq.inforesult
+            runtime, = runtime
+            results = iatidq.inforesult.info_results(package_id, runtime, organisation.id)
+            if "coverage" in results:
+                yield int(results["coverage_current"])
+
+    organisation = dqorganisations.organisations(organisation_code)
+    packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
+            
+    info_results["coverage_current"] = \
+        reduce(operator.add, [ir for ir in get_info_results()], 0)
+
+    # coverage_total = organisation.organisation_total_spend
+    # FIXME: use organisation_total_spend 
+    # when data is imported to db
+    coverage_total = (organisation.organisation_total_spend)*1000000
+    coverage_found = info_results["coverage_current"]
+
+    if (coverage_total and coverage_found):
+        coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
+        coverage = {
+                    'total': coverage_total,
+                    'found': coverage_found,
+                    'pct': coverage_pct
+                }
+    else:
+        coverage = {
+                    'total': None,
+                    'found': None,
+                    'pct': None
+        }
+
+    try:
+        summary_data = _organisation_indicators_summary(organisation, 
+                      aggregation_type)
+    except Exception, e:
+        summary_data = None
+
+    template_args = dict(organisation=organisation, 
+                         summary_data=summary_data,
+                         packagegroups=packagegroups,
+                         coverage=coverage)
+
+    return render_template("organisation.html", **template_args)
+
+@app.route("/organisations/")
+@app.route("/organisations/<organisation_code>/")
+def organisations(organisation_code=None):
     if organisation_code is not None:
-        org_packages = dqorganisations.organisationPackages(organisation_code)
-
-        def get_info_results():
-            print "gir"
-            for _, p in org_packages:
-                package_id = p.package_id
-                from sqlalchemy import func
-                runtime = db.session.query(
-                    func.max(InfoResult.runtime_id)).filter(
-                    InfoResult.package_id == package_id
-                    ).first()
-                import iatidq.inforesult
-                runtime, = runtime
-                results = iatidq.inforesult.info_results(package_id, runtime, organisation.id)
-                if "coverage" in results:
-                    yield int(results["coverage_current"])
-
-        organisation = dqorganisations.organisations(organisation_code)
-        packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
-                
-        info_results["coverage_current"] = \
-            reduce(operator.add, [ir for ir in get_info_results()], 0)
-
-        # coverage_total = organisation.organisation_total_spend
-        # FIXME: use organisation_total_spend 
-        # when data is imported to db
-        coverage_total = (organisation.organisation_total_spend)*1000000
-        coverage_found = info_results["coverage_current"]
-
-        if (coverage_total and coverage_found):
-            coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
-            coverage = {
-                        'total': coverage_total,
-                        'found': coverage_found,
-                        'pct': coverage_pct
-                    }
-        else:
-            coverage = {
-                        'total': None,
-                        'found': None,
-                        'pct': None
-            }
-
-        try:
-            summary_data = _organisation_indicators_summary(organisation, 
-                          aggregation_type)
-        except Exception, e:
-            summary_data = None
-
-        template_args = dict(organisation=organisation, 
-                             summary_data=summary_data,
-                             packagegroups=packagegroups,
-                             coverage=coverage)
-
-        return render_template("organisation.html", **template_args)
+        return redirect(url_for('organisations_index', organisation_code=organisation_code))
     else:
         organisations = dqorganisations.organisations()
 
@@ -111,6 +116,7 @@ def organisations(organisation_code=None):
         return render_template("organisations.html", **template_args)
 
 @app.route("/organisations/new/", methods=['GET','POST'])
+@usermanagement.perms_required()
 def organisation_new():
     organisation = None
     if request.method == 'POST':
@@ -244,6 +250,7 @@ def organisation_publication_csv(organisation_code=None):
                      as_attachment=True)
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
+@usermanagement.perms_required()
 def organisation_edit(organisation_code=None):
     
 
@@ -310,6 +317,7 @@ def organisation_edit(organisation_code=None):
         organisationpackages=organisationpackages)
 
 @app.route("/organisations/<organisation_code>/<package_name>/<organisationpackage_id>/delete/")
+@usermanagement.perms_required()
 def organisationpackage_delete(organisation_code=None, 
                                package_name=None, organisationpackage_id=None):
 
