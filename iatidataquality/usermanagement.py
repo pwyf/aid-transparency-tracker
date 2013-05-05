@@ -114,6 +114,8 @@ def check_perms(name, method=None, kwargs=None):
                 (method != 'delete') and 
                     (method != 'create')):
         return True
+    if not name:
+        return False
     if (name == 'tests'):
         value = kwargs['id']
         if ((method=='edit') or (method=='delete')):
