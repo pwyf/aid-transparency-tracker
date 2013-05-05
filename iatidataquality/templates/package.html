@@ -14,9 +14,7 @@
     $("table#results").tablesorter({ sortList: [[0,0]] });
     });
     </script>
-    <a href="" id="runTestsNow" class="btn pull-right">Check package</a>
 	<h1>{{package.package_title}}<code>{{package.package_name}}</code></h1>
-    <div class="status pull-right alert alert-info"><a href="#" class="checkStatusRefresh"><i class="icon-refresh"></i></a><span class="status_text"> Checking...</span></div>
     <table class="table" id="package">
     <tbody>
     <tr>
@@ -49,41 +47,6 @@
     {% if not results %}
         <div class="alert alert-danger">No test runs on this dataset yet.</div>
     {% else %}
-        {% if not latest %}
-        <div class="alert alert-block alert-latest">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <h4>Not showing the latest data.</h4>
-        Activity-level information is only available for the latest data.
-        <p><a class="btn btn-primary" href="{{url_for('packages', id=package.package_name)}}">Show latest</a></p>
-        </div>{% endif %}
-        
-        <div class="pull-right testruns">
-            <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
-            <a class="btn" href="#runtimesmodal" data-toggle="modal" role="button">Switch test run</a>
-            <div id="runtimesmodal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel">Display results from another runtime</h3>
-                </div>
-                <div class="modal-body">
-                    <table class="table" id="runtimes_table">
-                        <thead>
-                        <th>ID</th><th>Date</th>
-                        </thead>
-                        <tbody>
-                        {% for runtime in runtimes %}
-                        <tr>
-	                    <td><a href="{{url_for('packages', id=package.package_name, runtime_id=runtime.runtime_id)}}">{{runtime.runtime_id}}</a></td><td>{{ runtime.runtime_datetime }}</td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                 <div class="modal-footer">
-                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                </div>
-            </div>
-        </div>
         <h1>{% if latest %}Latest results{%else%}Runtime {{latest_runtime.id}}{%endif%} <code>{{latest_runtime.runtime_datetime}}</code></h1>
         {% for h, values in results.items() %}
         <div class="clearer">&nbsp;</div>
