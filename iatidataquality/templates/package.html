@@ -47,6 +47,9 @@
     {% if not results %}
         <div class="alert alert-danger">No test runs on this dataset yet.</div>
     {% else %}
+        <div class="pull-right testruns">
+            <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
+        </div>
         <h1>{% if latest %}Latest results{%else%}Runtime {{latest_runtime.id}}{%endif%} <code>{{latest_runtime.runtime_datetime}}</code></h1>
         {% for h, values in results.items() %}
         <div class="clearer">&nbsp;</div>
