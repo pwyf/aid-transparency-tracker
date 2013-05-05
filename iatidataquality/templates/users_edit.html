@@ -1,0 +1,33 @@
+{% set active_page='users'%}{% extends "layout.html" %}
+{% block title %}{% if user%}Edit{%else%}New{%endif%} Users{% endblock %}
+{% block content %}
+	{% if aggregationtype%}<h1>Edit user {{user.username}}</h1>
+    {% else %}<h1>New user</h1>{%endif%}
+    <form name="userupdate" method="post" action="">
+    <table class="table">
+    <thead>
+    <th>Item</th><th>Value</th>
+    </thead>
+    <tbody>
+    <tr>
+	<td>Username:</td><td><input type="text" name="username" value="{{ user.username }}"/></td>
+    </tr>
+    <tr>
+	<td>Name:</td><td><input type="text" name="name" value="{{ user.name }}"/></td>
+    </tr>
+    <tr>
+    <td>Email address:</td><td><textarea name="email_address">{{user.email_address}}</textarea></td>
+    </tr>
+    {% if not user %}
+    <tr>
+    <td>Password:</td><td><input type="text" name="password" /></td>
+    </tr>
+    {% endif %}
+    <tr>
+    <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
+    </tr>
+    </tbody>
+    </table>
+    </form>
+
+{% endblock %}
