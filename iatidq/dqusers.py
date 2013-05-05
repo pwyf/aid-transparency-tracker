@@ -251,6 +251,14 @@ def deleteUserPermission(permission_id):
         return True
     return None
 
+def deleteUser(username):
+    checkU = models.User.query.filter_by(username=username).first()
+    if checkU:
+        db.session.delete(checkU)
+        db.session.commit()
+        return True
+    return None
+
 def userPermissions(user_id):
     checkP = models.UserPermission.query.filter_by(user_id=user_id
             ).all()
