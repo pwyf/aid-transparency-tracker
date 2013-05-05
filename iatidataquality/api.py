@@ -251,8 +251,8 @@ def api_package_activities(package_name, test_id, hierarchy_id=None):
 @app.route('/api/publishers/<packagegroup_name>/tests/<test_id>/activities')
 @support_jsonp
 def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
-    if "offset" in request.args:
-        offset = request.args['offset']
+    if (("offset" in request.args) and (int(request.args['offset'])>=0)):
+        offset = int(request.args['offset'])
     else:
         offset = 0
     packagegroup = db.session.query(PackageGroup).filter(PackageGroup.name == packagegroup_name).first()
@@ -275,6 +275,7 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).group_by(Result.result_identifier
+            ).group_by(Result.result_data
             ).join(Package
             ).join(PackageGroup
             ).limit(50
