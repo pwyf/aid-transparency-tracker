@@ -570,6 +570,9 @@ class UserPermission(db.Model):
         if id is not None:
             self.id = id
 
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 ## ORGANISATION SURVEYS
 
 class OrganisationSurvey(db.Model):
