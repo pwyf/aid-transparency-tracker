@@ -10,6 +10,8 @@
 import contextlib
 import os
 import urllib2
+import json
+from flask import request, current_app
 
 @contextlib.contextmanager
 def report_error(success, failure):
@@ -33,3 +35,14 @@ def download_file(url, path):
         webFile = urllib2.urlopen(url)
         localFile.write(webFile.read())
         webFile.close()
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        return json.JSONEncoder.default(self, obj)
+
+def jsonify(*args, **kwargs):
+    return current_app.response_class(json.dumps(dict(*args, **kwargs),
+            indent=None if request.is_xhr else 2, cls=JSONEncoder),
+        mimetype='application/json')
