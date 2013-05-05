@@ -27,3 +27,4 @@ import packages
 import indicators
 import aggregationtypes
 import surveys
+import users
