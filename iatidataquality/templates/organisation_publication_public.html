@@ -78,8 +78,6 @@
 
             {% for testdata in result["tests"] %}
             <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
-            <td><span class="hidden">{{result.indicator.indicator_category_name|title}}</span></td>
-            <td><span class="hidden">{{result.indicator.indicator_subcategory_name|title}}</span></td>
             <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
 	        <td><a href="{{url_for('tests', id=testdata["test"]["id"])}}">{{ testdata["test"]["description"] }}</a>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
             <td class="pct">{{testdata.results_pct|round|int}}</td>
