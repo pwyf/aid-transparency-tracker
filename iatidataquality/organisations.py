@@ -219,9 +219,10 @@ def organisation_publication_detail(organisation_code=None):
     return txt
 
 @app.route("/organisations/publication.csv")
+@usermanagement.perms_required()
 def all_organisations_publication_csv():
     strIO = StringIO.StringIO()
-    fieldnames = "organisation_name organisation_code indicator_name indicator_description percentage_passed num_results".split()
+    fieldnames = "organisation_name organisation_code indicator_category_name indicator_subcategory_name indicator_name indicator_description percentage_passed num_results points".split()
     out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
     headers = {}
     for fieldname in fieldnames:
@@ -233,14 +234,26 @@ def all_organisations_publication_csv():
         aggregate_results = dqorganisations._organisation_indicators(
             organisation)
 
+        if (organisation.frequency == "less than quarterly"):
+            freq = 0.9
+        else:
+            freq = 1.0
+
         for resultid, result in aggregate_results.items():
+            if result['results_pct'] == 0:
+                points = str(0)
+            else:
+                points = str(((float(result['results_pct'])*freq)/2.0)+50)
             out.writerow({
                           "organisation_name": organisation.organisation_name, 
                           "organisation_code": organisation.organisation_code, 
-                          "indicator_name": result['indicator']['name'],
-                          "indicator_description": result['indicator']['description'], 
+                          "indicator_category_name": result['indicator']['indicator_category_name'],
+                          "indicator_subcategory_name": result['indicator']['indicator_subcategory_name'],
+                          "indicator_name": result['indicator']['description'],
+                          "indicator_description": result['indicator']['longdescription'], 
                           "percentage_passed": result['results_pct'], 
-                          "num_results": result['results_num']
+                          "num_results": result['results_num'],
+                          "points": points
                         })      
     strIO.seek(0)
     return send_file(strIO,
@@ -248,28 +261,40 @@ def all_organisations_publication_csv():
                          as_attachment=True)
 
 @app.route("/organisations/<organisation_code>/publication.csv")
+@usermanagement.perms_required('organisation', 'view')
 def organisation_publication_csv(organisation_code=None):
-    p_group = Organisation.query.filter_by(
+    organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = dqorganisations._organisation_indicators(p_group)
+    aggregate_results = dqorganisations._organisation_indicators(organisation)
 
     strIO = StringIO.StringIO()
-    fieldnames = "organisation_name organisation_code indicator_name indicator_description percentage_passed num_results".split()
+    fieldnames = "organisation_name organisation_code indicator_category_name indicator_subcategory_name indicator_name indicator_description percentage_passed num_results points".split()
     out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
     headers = {}
     for fieldname in fieldnames:
         headers[fieldname] = fieldname
     out.writerow(headers)
 
+    if (organisation.frequency == "less than quarterly"):
+        freq = 0.9
+    else:
+        freq = 1.0
     for resultid, result in aggregate_results.items():
+        if result['results_pct'] == 0:
+            points = str(0)
+        else:
+            points = str(((float(result['results_pct'])*freq)/2.0)+50)
         out.writerow({
-                      "organisation_name": p_group.organisation_name, 
-                      "organisation_code": p_group.organisation_code, 
-                      "indicator_name": result['indicator']['name'],
-                      "indicator_description": result['indicator']['description'], 
+                      "organisation_name": organisation.organisation_name, 
+                      "organisation_code": organisation.organisation_code, 
+                      "indicator_category_name": result['indicator']['indicator_category_name'],
+                      "indicator_subcategory_name": result['indicator']['indicator_subcategory_name'],
+                      "indicator_name": result['indicator']['description'], 
+                      "indicator_description": result['indicator']['longdescription'], 
                       "percentage_passed": result['results_pct'], 
-                      "num_results": result['results_num']
+                      "num_results": result['results_num'],
+                      "points": points
                     })      
     strIO.seek(0)
     return send_file(strIO,
