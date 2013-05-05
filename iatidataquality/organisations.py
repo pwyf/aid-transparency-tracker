@@ -139,7 +139,6 @@ def organisation_new():
             organisation = data
     return render_template("organisation_edit.html", organisation=organisation)
 
-
 def integerise(data):
     try:
         return int(data)
