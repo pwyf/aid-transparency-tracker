@@ -10,6 +10,186 @@
 from iatidq import db
 
 import models
+import unicodecsv
+
+def downloadUserData():
+    fh = urllib2.urlopen(ORG_FREQUENCY_API_URL)
+    return _updateOrganisationFrequency(fh)
+
+def importUserDataFromFile():
+    filename = 'tests/users.csv'
+    with file(filename) as fh:
+        return _importUserData(fh)
+
+def _importUserData(fh):
+
+    def getCreateUser(row):
+        username = row['username']
+        password = row['password']
+        name = row['name']
+        email_address = row['email_address']
+        organisation = row['organisation']
+
+        user = addUser({
+            'username': username,
+            'password': password,
+            'name': name,
+            'email_address': email_address,
+            'organisation': organisation
+        })
+        return user
+
+    def getCSOPermissions(organisation_id, 
+                role, active, primary, user, permissions):
+        if active == 'active':
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'cso',
+                'permission_method': 'role',
+                'permission_value': organisation_id
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'organisation',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'survey_pwyfreview',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'survey_donorcomments',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'survey_pwyffinal',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'survey_finalised',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            if primary == 'primary':
+                permissions.append({
+                    'user_id': user.id,
+                    'permission_name': 'survey_cso',
+                    'permission_method': 'edit',
+                    'permission_value': organisation_id
+                })
+        return permissions
+
+    def getDonorPermissions(organisation_id, 
+                role, active, primary, user, permissions):
+        if active == 'active':
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'organisation',
+                'permission_method': 'role',
+                'permission_value': ''
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'organisation',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'survey_donorreview',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'survey_donorcomments',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            permissions.append({
+                'user_id': user.id,
+                'permission_name': 'survey_finalised',
+                'permission_method': 'view',
+                'permission_value': organisation_id
+            })
+            if primary == 'primary':
+                permissions.append({
+                    'user_id': user.id,
+                    'permission_name': 'organisation',
+                    'permission_method': 'edit',
+                    'permission_value': organisation_id
+                })
+                permissions.append({
+                    'user_id': user.id,
+                    'permission_name': 'survey_donorreview',
+                    'permission_method': 'edit',
+                    'permission_value': organisation_id
+                })
+                permissions.append({
+                    'user_id': user.id,
+                    'permission_name': 'survey_donorcomments',
+                    'permission_method': 'edit',
+                    'permission_value': organisation_id
+                })
+                permissions.append({
+                    'user_id': user.id,
+                    'permission_name': 'survey_finalised',
+                    'permission_method': 'edit',
+                    'permission_value': organisation_id
+                })
+                permissions.append({
+                    'user_id': user.id,
+                    'permission_name': 'organisations_feedback',
+                    'permission_method': 'create',
+                    'permission_value': organisation_id
+                })
+        return permissions
+
+    def generate_permissions():
+        permissions = []
+        data = unicodecsv.DictReader(fh)
+        for row in data:
+
+            user=getCreateUser(row)
+            
+            organisation_id = row['organisation_id']
+            role = row['role']
+            active = row['active']
+            primary = row['primary']
+
+            if role == 'donor':
+                permissions = getDonorPermissions(organisation_id, 
+                        role, active, primary, user, permissions)
+            elif role == 'CSO':
+                permissions = getCSOPermissions(organisation_id, 
+                        role, active, primary, user, permissions)
+            elif role == 'admin':
+                permissions.append({
+                    'user_id': user.id,
+                    'permission_name': 'admin',
+                    'permission_method': 'role',
+                    'permission_value': ''
+                })
+            elif role == 'super':
+                permissions.append({
+                    'user_id': user.id,
+                    'permission_name': 'super',
+                    'permission_method': 'view',
+                    'permission_value': ''
+                })
+            
+        for permission in permissions:
+            addUserPermission(permission)
+
+    generate_permissions()
 
 def user(user_id=None):
     if user_id:
@@ -36,12 +216,13 @@ def addUser(data):
             username = data["username"],
             password = data["password"],
             name = data.get('name'),
-            email_address = data.get('name')
+            email_address = data.get('email_address'),
+            organisation = data.get('organisation')
         )
         db.session.add(newU)
         db.session.commit()
         return newU
-    return None
+    return checkU
 
 def addUserPermission(data):
     checkP = models.UserPermission.query.filter_by(user_id=data["user_id"],
