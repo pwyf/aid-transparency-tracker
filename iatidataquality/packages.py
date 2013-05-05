@@ -119,7 +119,7 @@ def packages(package_name=None, runtime_id=None):
         else:
             # Select the highest runtime; then get data for that one
             runtime = db.session.query(Runtime,
-                                    ncnc.max(Runtime.id)
+                                    func.max(Runtime.id)
                     ).join(AggregateResult
                     ).group_by(Runtime.id
                     ).filter(AggregateResult.package_id==package.Package.id
