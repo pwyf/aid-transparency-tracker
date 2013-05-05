@@ -55,7 +55,7 @@
         </thead>
         <tbody>
         {% for test, result in values.items() %}
-        {% if result %}
+        {% if result and result.test %}
         <tr id="tr{{result.test.id}}h{{h}}" class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
 	    <td><a href="{{url_for('tests', id=result.test.id)}}">{{ result.test.description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition[1]}}"></i>{%endif%}</td>
         <td class="pct">{{result.results_pct|round|int}}</td>
