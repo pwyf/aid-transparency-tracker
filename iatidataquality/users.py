@@ -38,10 +38,10 @@ def users_edit(username=None):
         user = dqusers.user_by_username(username)
         if request.method == 'POST':
             return "handling edit"
-            if aggregationtype:
+            if user:
                 flash('Successfully updated user.', 'success')
             else:
-                aggregationtype = {}
+                user = {}
                 flash('Could not update user.', 'error')
     else:
         if request.method == 'POST':
