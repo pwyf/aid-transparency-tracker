@@ -126,9 +126,7 @@ def on_identity_loaded(sender, identity):
             identity.provides.add(EditTestNeed(unicode(permission.permission_value)))
         if (permission.permission_name=='organisation' and permission.permission_method=='view'):
             identity.provides.add(ViewOrganisationNeed(unicode(permission.permission_value)))
-        if (permission.permission_name=='admin'):
-            identity.provides.add(RoleNeed(permission.permission_name))
-        if (permission.permission_name=='organisation' and permission.permission_method=='view'):
+        if (permission.permission_method=='role'):
             identity.provides.add(RoleNeed(permission.permission_name))
 
     for permission in permissions:
