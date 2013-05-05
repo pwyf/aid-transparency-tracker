@@ -29,5 +29,96 @@
     </tbody>
     </table>
     </form>
+    {% if user %}<a class="btn btn-success" href="#addPermission" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add permissions</b></a>
+    <h2>Permissions</h2>
+    <table class="table" id="permissions">
+    <thead>
+    <th>Permission name</th><th>Permission method</th><th>Permission value</th><th></th>
+    </thead>
+    <tbody>
+    {% for permission in permissions %}
+    <tr id="permission{{permission.id}}">
+    <td>{{permission.permission_name}}</td><td>{{permission.permission_method}}</td><td>{{permission.permission_value}}</td><td><a href="" class="deletepermission" data-permission-id="{{permission.id}}"><i class="icon-trash"></i></td></tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    {% endif %}
+    <div id="addPermission" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel" aria-hidden="true"> 
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <form method="post" action="">
+            <h3 id="addFeedbackModalLabel">Add permissions for {{user.username}}</h3>
+        </div>
+        <div class="modal-body">
+            <p>Add permissions to this user.</p>
+            <table class="table">
+            <tbody>
+            <tr>
+            <td>Name</td>
+            <td><select id="name">
+                <option value="organisation">Organisation</option>
+                <option value="survey">Survey</option>
+            </select></td>
+            </tr>
+            <tr>
+            <td>Method</td>
+            <td><select id="method">
+                <option value="view">View</option>
+                <option value="edit">Edit</option>
+            </select></td>
+            </tr>
+            <tr>
+            <td>Value</td>
+            <td> <input id="value" type="text" />
+            </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a id="addpermissionbtn" class="btn btn-success">Add permission</a>
+        </div>
+    </form>
+    </div>
+    <script type="text/javascript">
+        $(document).on("click", ".deletepermission", function(e){
+            e.preventDefault();
+            var permissionid = $(this).attr('data-permission-id');
+
+            delete_permissiondata = {
+                'permisison_id': permissionid
+            }
+            $.post('deletepermission/', delete_permissiondata, function(resultdata) {
+                if (resultdata['success']) {
+                    $("#permission"+permissionid).addClass('error').fadeOut();
+                } else {
+                    alert("Couldn't delete that permission.");
+                }
+            });
+        });
+        $("#addpermissionbtn").click(function(){
+
+            var name = $("#name option:selected").val();
+            var method = $("#method option:selected").val();
+            var value = $("#value").val();
+            permissiondata = {
+                'permission_name': name,
+                'permission_method': method,
+                'permission_value': value
+            }
+            $.post('addpermission/', permissiondata, function(resultdata) {
+                permission_id=resultdata.id;
+                if (!(resultdata['error'])) {
+                    $("#permissions tbody").append('<tr id="permission' + permission_id + '"><td><input type="hidden" name="permission" value="' + permission_id + '" /><input type="hidden" name="name' + permission_id + '" value="' + name + '" />' + name + '</td><td><input type="hidden" name="method' + permission_id + '" value="' + method + '" />' + method + '</td><td>' + value + '</td><input type="hidden" name="value' + permission_id + '" value="' + value + '" /></td><td><a href="" class="deletepermission" data-permission-id="' + permission_id + '"><i class="icon-trash"></i></td></tr>');
+                    $("#addPermission").modal('hide');
+                } else {
+                    alert("Couldn't add that permission. Maybe you're not authorised, or maybe that permission already exists?");
+                }
+            });
+        });
+
+    </script>
 
 {% endblock %}
