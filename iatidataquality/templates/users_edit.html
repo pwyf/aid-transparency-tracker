@@ -16,7 +16,10 @@
 	<td>Name:</td><td><input type="text" name="name" value="{{ user.name }}"/></td>
     </tr>
     <tr>
-    <td>Email address:</td><td><textarea name="email_address">{{user.email_address}}</textarea></td>
+    <td>Email address:</td><td><input type="text" name="email_address" value="{{user.email_address}}" /></td>
+    </tr>
+    <tr>
+    <td>Organisation:</td><td><input type="text" name="organisation" value="{{user.organisation}}" /></td>
     </tr>
     {% if not user %}
     <tr>
