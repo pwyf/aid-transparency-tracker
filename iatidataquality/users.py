@@ -95,3 +95,13 @@ def users_edit(username=None):
     return render_template("users_edit.html", 
                            user=user,
                            permissions=permissions)
+
+@app.route("/users/<username>/delete/")
+@usermanagement.perms_required()
+def users_delete(username=None):
+    if username:
+        user = dqusers.deleteUser(username)
+        flash('Successfully deleted user.', 'success')
+    else:
+        flash('No username provided.', 'error')
+    return redirect(url_for('users'))
