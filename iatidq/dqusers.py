@@ -16,7 +16,9 @@ def user(user_id=None):
         user = models.User.query.filter_by(id=user_id
                     ).first()
         return user
-    return None
+    else:
+        users = models.User.query.all()
+        return users
 
 def user_by_username(username=None):
     if username:
