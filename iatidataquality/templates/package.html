@@ -53,7 +53,7 @@
         <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
         <table class="table" id="results">
         <thead>
-        <th>Test</th><th>% Passed</th><th>Total results</th><th>Schedule</th>{% if latest %}<th>Details</th>{%endif%}
+        <th>Test</th><th>% Passed</th><th>Total results</th>{% if latest %}<th>Details</th>{%endif%}
         </thead>
         <tbody>
         {% for test, result in values.items() %}
@@ -61,7 +61,6 @@
 	    <td><a href="{{url_for('tests', id=result.test.id)}}">{{ result.test.description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition[1]}}"></i>{%endif%}</td>
         <td class="pct">{{result.results_pct|round|int}}</td>
         <td>{{result.results_num}}</td>
-        <td class="schedule"></td>
         {% if latest%}<td><a href="#" class="showResult" id="result{{result.test.id}}hierarchy{{h}}"><i class="icon-chevron-down"></i></a></td>{%endif%}
         </tr>
         {% endfor%}
