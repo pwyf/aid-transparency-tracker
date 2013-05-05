@@ -150,8 +150,8 @@ def integerise(data):
 
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
-    check_perms = usermanagement.check_perms('organisation', 'view')
-
+    check_perms = usermanagement.check_perms('organisation', 'view', {'organisation_code': organisation_code})
+    
     if check_perms:
         aggregation_type=integerise(request.args.get('aggregation_type', 2))
         all_aggregation_types = dqaggregationtypes.aggregationTypes()
