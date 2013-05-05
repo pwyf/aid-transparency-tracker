@@ -50,23 +50,23 @@ def package_aggregation(p, latest_runtime):
         Test,
         AggregateResult.results_data,
         AggregateResult.results_num,
-        AggregateResult.result_hierarchy
+        AggregateResult.result_hierarchy,
+        AggregateResult.package_id
         ).filter(
         AggregateResult.package_id==p[0].id,
         AggregateResult.runtime_id==latest_runtime.id
         ).group_by(
             AggregateResult.result_hierarchy, 
             Test,
+            AggregateResult.package_id,
+            Indicator,
             AggregateResult.results_data,
             AggregateResult.results_num,
-            Indicator
-            ).join(
-            IndicatorTest
-            ).join(
-                Test
-                ).join(
-                AggregateResult
-                ).all()
+            AggregateResult.package_id
+            ).join(IndicatorTest
+            ).join(Test
+            ).join(AggregateResult
+            ).all()
                    
 @app.route("/packages/")
 @app.route("/packages/<package_name>/")
@@ -97,7 +97,8 @@ def packages(package_name=None, runtime_id=None):
             return PublisherCondition.query.filter_by(
                 publisher_id=p[1].id).all()"""
 
-    pconditions = get_pconditions()
+    #pconditions = get_pconditions()
+    pconditions = {}
 
     # Get list of runtimes
     try:
@@ -132,7 +133,8 @@ def packages(package_name=None, runtime_id=None):
         aggregate_results = package_aggregation(package, latest_runtime)
 
         aggregate_results = summary.agr_results(aggregate_results, 
-                                                    pconditions)
+                                                   pconditions, 
+                                                mode="publisher")
     else:
         aggregate_results = None
         pconditions = None
