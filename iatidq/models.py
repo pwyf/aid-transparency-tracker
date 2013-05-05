@@ -521,6 +521,9 @@ class User(db.Model):
     reset_password_key = Column(UnicodeText)
     pw_hash = db.Column(String(255))
     organisation = Column(UnicodeText)
+    children = db.relationship("UserPermission",
+                    cascade="all, delete-orphan",
+                    passive_deletes=True)
 
     def setup(self,
                  username,
@@ -555,7 +558,7 @@ class User(db.Model):
 class UserPermission(db.Model):
     __tablename__ = 'userpermission'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('dquser.id'))
+    user_id = Column(Integer, ForeignKey('dquser.id', ondelete='CASCADE'))
     permission_name = Column(UnicodeText) # survey_donorreview
     permission_method = Column(UnicodeText) # edit
     permission_value = Column(UnicodeText) # 1
