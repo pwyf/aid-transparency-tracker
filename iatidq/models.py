@@ -520,17 +520,20 @@ class User(db.Model):
     email_address = Column(UnicodeText)
     reset_password_key = Column(UnicodeText)
     pw_hash = db.Column(String(255))
+    organisation = Column(UnicodeText)
 
     def setup(self,
                  username,
                  password,
                  name,
                  email_address=None,
+                 organisation=None,
                  id=None):
         self.username = username
         self.pw_hash = generate_password_hash(password)
         self.name = name
         self.email_address = email_address
+        self.organisation = organisation
         if id is not None:
             self.id = id
     
