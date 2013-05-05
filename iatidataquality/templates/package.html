@@ -135,6 +135,10 @@
             $(this).text("Show only relevant tests");
         }
     });
+
+    $('#aggregation_type').change(function(){
+        $('#aggregation_type_form').submit();
+    });
 </script>
 
 {% endblock %}
