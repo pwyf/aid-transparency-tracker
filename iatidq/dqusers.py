@@ -147,7 +147,7 @@ def _importUserData(fh):
                 })
                 permissions.append({
                     'user_id': user.id,
-                    'permission_name': 'organisations_feedback',
+                    'permission_name': 'organisation_feedback',
                     'permission_method': 'create',
                     'permission_value': organisation_id
                 })
