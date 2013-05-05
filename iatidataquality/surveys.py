@@ -248,7 +248,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                 })
 
     permission_name = "survey_"+workflow_name
-    permission_value=organisation_code
+    permission_value={'organisation_code': organisation_code}
     allowed_to_edit = usermanagement.check_perms(permission_name, 
                     "edit", 
                     permission_value)
@@ -259,9 +259,11 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     
     if not allowed_to_view:
         flash("Sorry, you do not have permission to view that survey", 'error')
-        return redirect(url_for('organisation_survey_edit', 
-                    organisation_code=organisation_code, 
-                    workflow_name=workflow_name))
+        if request.referrer is not None:
+            redir_to = request.referrer
+        else:
+            redir_to = url_for('home')
+        return redirect(redir_to)
     if request.method=='POST':
         if not allowed_to_edit:
             flash("Sorry, you do not have permission to update that survey", 'error')
