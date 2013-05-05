@@ -86,9 +86,33 @@ class ViewOrganisationPermission(Permission):
         need = ViewOrganisationNeed(unicode(organisation_code))
         super(ViewOrganisationPermission, self).__init__(need)
 
+EditOrganisationNeed = partial(OrganisationNeed, 'edit')
+
+class EditOrganisationPermission(Permission):
+    def __init__(self, organisation_code):
+        need = EditOrganisationNeed(unicode(organisation_code))
+        super(EditOrganisationPermission, self).__init__(need)
+
+OrganisationFeedbackNeed = namedtuple('organisation_feedback', ['method', 'value'])
+CreateOrganisationFeedbackNeed = partial(OrganisationFeedbackNeed, 'create')
+
+class CreateOrganisationFeedbackPermission(Permission):
+    def __init__(self, organisation_code):
+        need = CreateOrganisationFeedbackNeed(unicode(organisation_code))
+        super(CreateOrganisationFeedbackPermission, self).__init__(need)
+
+class SurveyPermission(Permission):
+    def __init__(self, name, method, value):
+        need = (unicode(name), unicode(method), unicode(value))
+        super(SurveyPermission, self).__init__(need)
+
 def check_perms(name, method=None, kwargs=None):
-    #check to see if 
     if role_permission('admin').can():
+        return True
+    if ((role_permission('super').can()) and 
+            (method != 'edit') and 
+                (method != 'delete') and 
+                    (method != 'create')):
         return True
     if (name == 'tests'):
         value = kwargs['id']
@@ -99,6 +123,20 @@ def check_perms(name, method=None, kwargs=None):
             value = kwargs['organisation_code']
             if (method=='view'):
                 return ViewOrganisationPermission(value).can()
+            if (method=='edit'):
+                return EditOrganisationPermission(value).can()
+    if (name == 'organisation_feedback'):
+        if kwargs:
+            value = kwargs['organisation_code']
+            if (method=='create'):
+                return CreateOrganisationFeedbackPermission(value).can()
+    if (name.startswith('survey')):
+        if kwargs:
+            value = kwargs['organisation_code']
+            return SurveyPermission(unicode(name), unicode(method), unicode(value)).can()
+        else:
+            value = ""
+            return SurveyPermission(name, method, value).can()
     return False
 
 def perms_required(name=None, method=None, value=None):
@@ -121,6 +159,9 @@ def on_identity_loaded(sender, identity):
     if hasattr(current_user, 'id'):
         identity.provides.add(UserNeed(current_user.id))
 
+    def set_survey_permissions(permission):
+        identity.provides.add((unicode(permission.permission_name), unicode(permission.permission_method), unicode(permission.permission_value)))
+
     def set_permissions(permission):
         if (permission.permission_name=='tests' and permission.permission_method=='edit'):
             identity.provides.add(EditTestNeed(unicode(permission.permission_value)))
@@ -128,6 +169,8 @@ def on_identity_loaded(sender, identity):
             identity.provides.add(ViewOrganisationNeed(unicode(permission.permission_value)))
         if (permission.permission_method=='role'):
             identity.provides.add(RoleNeed(permission.permission_name))
+        if (permission.permission_name.startswith('survey')):
+            set_survey_permissions(permission)
 
     for permission in permissions:
         set_permissions(permission)
