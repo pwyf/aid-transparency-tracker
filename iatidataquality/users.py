@@ -81,7 +81,8 @@ def users_edit(username=None):
                     'username': request.form['username'],
                     'password': request.form['password'],
                     'name': request.form['name'],
-                    'email_address': request.form['email_address']
+                    'email_address': request.form['email_address'],
+                    'organisation': request.form['organisation']
                     })
             if user:
                 flash('Successfully added new user', 'success')
