@@ -86,12 +86,9 @@ def organisation_conditions_editor(id=None):
         Organisation.organisation_code).all()
     tests = Test.query.order_by(Test.id).all()
     if request.method == 'POST':
-        if request.form['password'] == app.config["SECRET_PASSWORD"]:
-            update_organisation_condition(id)
-            flash('Updated', "success")
-            return redirect(url_for('organisation_conditions_editor', id=pc.id))
-        else:
-            flash('Incorrect password', "error")
+        update_organisation_condition(id)
+        flash('Updated', "success")
+        return redirect(url_for('organisation_conditions_editor', id=pc.id))
     else:
         pc = OrganisationCondition.query.filter_by(id=id).first_or_404()
         return render_template("organisation_condition_editor.html", 
@@ -113,14 +110,10 @@ def organisation_conditions_new(id=None):
     if (request.method == 'POST'):
         pc = OrganisationCondition()
         configure_organisation_condition(pc)
-        if (request.form['password'] == app.config["SECRET_PASSWORD"]):
-            db.session.add(pc)
-            db.session.commit()
-            flash('Created new condition', "success")
-            return redirect(url_for('organisation_conditions_editor', id=pc.id))
-        else:
-            flash('Incorrect password', "error")
-            template_args["pc"] = pc
+        db.session.add(pc)
+        db.session.commit()
+        flash('Created new condition', "success")
+        return redirect(url_for('organisation_conditions_editor', id=pc.id))
     else:
         return render_template("organisation_condition_editor.html", 
                                **template_args)
@@ -131,9 +124,6 @@ def ipc_step2():
         return
 
     from iatidq import dqimportpublisherconditions
-    if not (request.form['password'] == app.config["SECRET_PASSWORD"]):
-        flash('Wrong password', "error")
-        return render_template("import_organisation_conditions.html")
 
     def get_results():
         if request.form.get('local'):
