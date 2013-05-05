@@ -69,7 +69,7 @@
         </fieldset>
         {% endfor %}
     {% endif %}
-<script>
+<script type="text/javascript">
     
     $(".showResult").click(function(e){
         if ($(this).hasClass("visible")) {
@@ -112,73 +112,6 @@
             });
             $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
     }
-    });
-    $.getJSON("/api/publishers/{{group.publisher_iati_id}}", function(data){
-                var items = [];
-                if (data["data"]) {
-                    $.each(data["data"], function(key, val){
-                        element = val["element"];
-                        if (val["status_actual"] =='fp') { status = '<i class="icon-wrench" title="Future publication"></i>'; }
-                        if (val["status_actual"] =='uc') { status = '<i class="icon-remove" title="Uncompliant"></i>'; }
-                        if (val["status_actual"] =='fc') { status = '<i class="icon-ok" title="Fully compliant"></i>'; }
-                        if (val["status_actual"] =='up') { status = '<i class="icon-remove" title="Unable to publish"></i>'; }
-                        if (val["status_actual"] =='pc') { status = '<i class="icon-flag" title="Partially compliant"></i>'; }
-        
-                        $(".group-" + element + " td.schedule").html('<span title="' + val["publication_date"] + ': ' + val["notes"] + '">' + status + '</span>');
-                    });
-                }
-    });
-    function checkStatus(){
-        $(".status_text").html(" Checking...");
-        $.getJSON("/api/packages/status/{{package.id}}/", function(data){
-            status = data["status"];
-            if (status == 1) {
-                statustext = ' Now downloading (started at ' + data["runtime_datetime"] + ")";
-                var reCheckStatus = setTimeout(function(){checkStatus()}, 5000);
-            }
-            if (status == 2) {
-                statustext = ' Currently testing (started at ' + data["runtime_datetime"] + ")";
-                var reCheckStatus = setTimeout(function(){checkStatus()}, 5000);
-            }
-            if (status == 3) {
-                statustext = ' Last run at ' + data["runtime_datetime"];
-                statusicon = '<i class="icon-ok"></i>';
-                $(".checkStatusRefresh").html(statusicon);
-            }
-            if (status == 4) {
-                statustext = ' Last run at ' + data["runtime_datetime"] + ', no change';
-                statusicon = '<i class="icon-ok"></i>';
-                $(".checkStatusRefresh").html(statusicon);
-            }
-            if (status == "failed") {
-                statustext = ' No tests';
-                statusicon = '<i class="icon-remove"></i>';
-                $(".checkStatusRefresh").html(statusicon);
-            }
-            $(".status_text").html(statustext);
-        });
-    }
-    checkStatus();
-    $(".checkStatusRefresh").click(function(e){
-        e.preventDefault();
-        checkStatus();
-    });
-    $("#runTestsNow").click(function(e){
-        e.preventDefault();
-        $.getJSON("/api/packages/run/{{package.package_name}}/", function(data){
-            if (data['status'] == "ok"){
-                statustext = ' Now running...';
-                statusicon = '<i class="icon-refresh"></i>';
-                $(".checkStatusRefresh").html(statusicon);
-                $(".status_text").html(statustext);
-                var reCheckStatus = setTimeout(function(){checkStatus()}, 5000);
-            }
-        }).error(function(){
-            statustext = ' Did not run';
-            statusicon = '<i class="icon-remove"></i>';
-            $(".checkStatusRefresh").html(statusicon);
-            $(".status_text").html(statustext);
-        });
     });
     var showAllTests;
     $("#showAllTests").click(function(e){
