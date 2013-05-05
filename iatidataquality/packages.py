@@ -14,11 +14,19 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from iatidataquality import app
 from iatidataquality import db
 
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, summary
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, summary, dqaggregationtypes
 
 from iatidq.models import *
 
 import usermanagement
+
+def integerise(data):
+    try:
+        return int(data)
+    except ValueError:
+        return None
+    except TypeError:
+        return None
 
 @app.route("/packages/manage/", methods=['GET', 'POST'])
 @usermanagement.perms_required()
@@ -43,8 +51,7 @@ def packages_manage():
         flash("Updated packages", "success")
     return redirect(url_for('packages_manage'))
 
-
-def package_aggregation(p, latest_runtime):
+def package_aggregation(p, latest_runtime, aggregation_type):
     return db.session.query(
         Indicator,
         Test,
@@ -54,7 +61,8 @@ def package_aggregation(p, latest_runtime):
         AggregateResult.package_id
         ).filter(
         AggregateResult.package_id==p[0].id,
-        AggregateResult.runtime_id==latest_runtime.id
+        AggregateResult.runtime_id==latest_runtime.id,
+        AggregateResult.aggregateresulttype_id==aggregation_type
         ).group_by(
             AggregateResult.result_hierarchy, 
             Test,
@@ -129,8 +137,11 @@ def packages(package_name=None, runtime_id=None):
 
     latest_runtime, latest = get_latest_runtime()
 
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    all_aggregation_types = dqaggregationtypes.aggregationTypes()
+
     if latest_runtime:
-        aggregate_results = package_aggregation(package, latest_runtime)
+        aggregate_results = package_aggregation(package, latest_runtime, aggregation_type)
 
         aggregate_results = summary.agr_results(aggregate_results, 
                                                    pconditions, 
@@ -147,4 +158,6 @@ def packages(package_name=None, runtime_id=None):
                            results=aggregate_results, 
                            latest_runtime=latest_runtime, latest=latest, 
                            pconditions=pconditions,
-organisations=organisations)
+                           organisations=organisations,
+                           all_aggregation_types=all_aggregation_types,
+                           aggregation_type=aggregation_type,)
