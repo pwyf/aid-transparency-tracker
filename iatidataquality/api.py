@@ -309,3 +309,65 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
     else:
         return jsonify({"count": test_count, "results": test_results})
 
+@app.route('/api/organisations/<organisation_code>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
+@app.route('/api/organisations/<organisation_code>/tests/<test_id>/activities')
+@support_jsonp
+def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
+    if (("offset" in request.args) and (int(request.args['offset'])>=0)):
+        offset = int(request.args['offset'])
+    else:
+        offset = 0
+    organisation = Organisation.query.filter(Organisation.organisation_code==organisation_code
+                    ).first()
+
+    if (hierarchy_id):
+        if (hierarchy_id=="None"): hierarchy_id=None
+        test_count = db.session.query(func.count(Result.result_identifier)
+            ).filter(Organisation.organisation_code == organisation_code, 
+                     Result.test_id==test_id,
+                     Result.result_hierarchy==hierarchy_id
+            ).join(Package
+            ).join(OrganisationPackage
+            ).join(Organisation
+            ).all()
+        test_results = db.session.query(Result.result_identifier, 
+                                        Result.result_data,
+                                        func.max(Result.runtime_id)
+            ).filter(Organisation.organisation_code == organisation_code, 
+                     Result.test_id==test_id,
+                     Result.result_hierarchy==hierarchy_id
+            ).group_by(Result.result_identifier
+            ).group_by(Result.result_data
+            ).join(Package
+            ).join(OrganisationPackage
+            ).join(Organisation
+            ).limit(50
+            ).offset(offset
+            ).all()
+    else:
+        test_count = db.session.query(func.count(Result.result_identifier)
+            ).filter(Organisation.organisation_code == organisation_code, 
+                     Result.test_id==test_id
+            ).join(Package
+            ).join(OrganisationPackage
+            ).join(Organisation
+            ).all()
+        test_results = db.session.query(Result.result_identifier, 
+                                        Result.result_data,
+                                        func.count(Result.runtime_id)
+            ).filter(Organisation.organisation_code == organisation_code, 
+                     Result.test_id==test_id
+            ).group_by(Result.result_identifier
+            ).join(Package
+            ).join(OrganisationPackage
+            ).join(Organisation
+            ).limit(50
+            ).offset(offset
+            ).all()
+    
+    test_results = dict(map(lambda x: (x[0],x[1]), test_results))
+
+    if ((organisation_code == None) or (test_results==None)):
+        abort(404)
+    else:
+        return jsonify({"count": test_count, "results": test_results})
