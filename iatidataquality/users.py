@@ -15,7 +15,7 @@ from iatidataquality import app
 from iatidataquality import db
 import usermanagement
 
-from iatidq import dqusers
+from iatidq import dqusers, util
 
 import unicodecsv
 
@@ -30,12 +30,44 @@ def users(username=None):
         users=dqusers.user()
         return render_template("users.html", users=users)
 
+def returnOrNone(value):
+    if (value ==''):
+        return None
+    return value
+
+@app.route("/users/<username>/edit/addpermission/", methods=['POST'])
+@usermanagement.perms_required()
+def users_edit_addpermission(username):
+    user = dqusers.user_by_username(username)
+    data = {
+        'user_id': user.id,
+        'permission_name': request.form['permission_name'],
+        'permission_method': returnOrNone(request.form['permission_method']),
+        'permission_value': returnOrNone(request.form['permission_value'])
+    }
+    permission = dqusers.addUserPermission(data)
+    if permission:
+        return util.jsonify(permission.as_dict())
+    else:
+        return util.jsonify({"error": "Could not add permission"})
+
+@app.route("/users/<username>/edit/deletepermission/", methods=['POST'])
+@usermanagement.perms_required()
+def users_edit_deletepermission(username):
+    permission_id = request.form['permisison_id']
+    permission = dqusers.deleteUserPermission(permission_id)
+    if permission:
+        return util.jsonify({"success": "Deleted permission"})
+    else:
+        return util.jsonify({"error": "Could not delete permission"})
+
 @app.route("/users/new/", methods=['POST', 'GET'])
 @app.route("/users/<username>/edit/", methods=['POST', 'GET'])
 @usermanagement.perms_required()
 def users_edit(username=None):
     if username:
         user = dqusers.user_by_username(username)
+        permissions = dqusers.userPermissions(user.id)
         if request.method == 'POST':
             return "handling edit"
             if user:
@@ -57,6 +89,8 @@ def users_edit(username=None):
                 flash('Could not add user user', 'error')
         else:
             user = {}
+            permissions = {}
 
     return render_template("users_edit.html", 
-                           user=user)
+                           user=user,
+                           permissions=permissions)
