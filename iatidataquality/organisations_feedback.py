@@ -19,7 +19,7 @@ from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations
 import usermanagement
 
 @app.route("/organisations/<organisation_code>/feedback/", methods=['POST', 'GET'])
-@usermanagement.perms_required('organisations_feedback', 'create')
+@usermanagement.perms_required('organisation_feedback', 'create')
 def organisations_feedback(organisation_code=None):
     if (organisation_code is not None):
         organisation = dqorganisations.organisations(organisation_code)
