@@ -78,6 +78,14 @@ class EditTestPermission(Permission):
         need = EditTestNeed(unicode(test_id))
         super(EditTestPermission, self).__init__(need)
 
+OrganisationNeed = namedtuple('organisation', ['method', 'value'])
+ViewOrganisationNeed = partial(OrganisationNeed, 'view')
+
+class ViewOrganisationPermission(Permission):
+    def __init__(self, organisation_code):
+        need = ViewOrganisationNeed(unicode(organisation_code))
+        super(ViewOrganisationPermission, self).__init__(need)
+
 def check_perms(name, method=None, kwargs=None):
     #check to see if 
     if role_permission('admin').can():
@@ -86,6 +94,11 @@ def check_perms(name, method=None, kwargs=None):
         value = kwargs['id']
         if ((method=='edit') or (method=='delete')):
             return EditTestPermission(value).can()
+    if (name == 'organisation'):
+        if kwargs:
+            value = kwargs['organisation_code']
+            if (method=='view'):
+                return ViewOrganisationPermission(value).can()
     return False
 
 def perms_required(name=None, method=None, value=None):
@@ -111,7 +124,11 @@ def on_identity_loaded(sender, identity):
     def set_permissions(permission):
         if (permission.permission_name=='tests' and permission.permission_method=='edit'):
             identity.provides.add(EditTestNeed(unicode(permission.permission_value)))
+        if (permission.permission_name=='organisation' and permission.permission_method=='view'):
+            identity.provides.add(ViewOrganisationNeed(unicode(permission.permission_value)))
         if (permission.permission_name=='admin'):
+            identity.provides.add(RoleNeed(permission.permission_name))
+        if (permission.permission_name=='organisation' and permission.permission_method=='view'):
             identity.provides.add(RoleNeed(permission.permission_name))
 
     for permission in permissions:
