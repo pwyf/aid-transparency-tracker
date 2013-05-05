@@ -64,13 +64,15 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     #    indicators_out[testdata["indicator"]["id"]] = testdata
     #return indicators_out
 
-def make_summary(test_id, test_description, test_group,
-                 results_pct, results_num):
+def make_summary(test_id, test_name, test_description, test_group, 
+                 test_level, results_pct, results_num):
     return {
         "test": {
             "id": test_id,
+            "name": test_name,
             "description": test_description,
-            "test_group": test_group
+            "test_group": test_group,
+            "test_level": test_level
             },
         "results_pct": results_pct,
         "results_num": results_num
@@ -103,8 +105,10 @@ def publisher_simple(out, cdtns):
 
         tmp = make_summary(
             out[okhierarchy][t]['test']["id"],
+            out[okhierarchy][t]['test']["name"],
             out[okhierarchy][t]['test']["description"],
             out[okhierarchy][t]['test']["test_group"],
+            out[okhierarchy][t]['test']["test_level"],
             (results_weighted_pct_average_numerator/results_num),
             results_num
             )
@@ -143,8 +147,10 @@ def sum_for_publishers(packages, d, h, t):
          
     tmp = make_summary(
         ok_tdata[1].id,
+        ok_tdata[1].name,
         ok_tdata[1].description,
         ok_tdata[1].test_group,
+        ok_tdata[1].test_level,
         int(float(total_pct/packages_in_hierarchy)),
         total_activities
         )
@@ -160,8 +166,10 @@ def sum_default(d, h, t):
 
     tmp = make_summary(
         data[1].id,
+        data[1].name,
         data[1].description,
         data[1].test_group,
+        data[1].test_level,
         data[2],
         data[3])
     tmp["result_hierarchy"] = data[4]
