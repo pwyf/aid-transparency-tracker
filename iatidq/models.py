@@ -302,6 +302,7 @@ class Indicator(db.Model):
     indicator_type = Column(UnicodeText)
     indicator_category_name = Column(UnicodeText)
     indicator_subcategory_name = Column(UnicodeText)
+    indicator_ordinal = Column(Boolean)
 
     def setup(self,
                  name,
@@ -311,6 +312,7 @@ class Indicator(db.Model):
                  indicator_type,
                  indicator_category_name,
                  indicator_subcategory_name,
+                 indicator_ordinal=None,
                  id=None):
         self.name = name
         self.description = description
@@ -319,6 +321,7 @@ class Indicator(db.Model):
         self.indicator_type = indicator_type
         self.indicator_category_name = indicator_category_name
         self.indicator_subcategory_name = indicator_subcategory_name
+        self.indicator_ordinal = indicator_ordinal
         if id is not None:
             self.id = id
 
@@ -608,7 +611,9 @@ class OrganisationSurveyData(db.Model):
     published_status = Column(Integer, ForeignKey('publishedstatus.id'))
     published_source = Column(UnicodeText)
     published_comment = Column(UnicodeText)
+    published_format = Column(Integer, ForeignKey('publishedformat.id'))
     published_accepted = Column(Integer)
+    ordinal_value = Column(Integer)
     
     def setup(self,
                  organisationsurvey_id,
@@ -617,7 +622,9 @@ class OrganisationSurveyData(db.Model):
                  published_status=None,
                  published_source=None,
                  published_comment=None,
+                 published_format=None,
                  published_accepted=None,
+                 ordinal_value=None,
                  id=None):
         self.organisationsurvey_id = organisationsurvey_id
         self.workflow_id = workflow_id
@@ -625,24 +632,46 @@ class OrganisationSurveyData(db.Model):
         self.published_status = published_status
         self.published_source = published_source
         self.published_comment = published_comment
+        self.published_format = published_format
         self.published_accepted = published_accepted
+        self.ordinal_value = ordinal_value
 
         if id is not None:
             self.id = id
 
+class PublishedFormat(db.Model):
+    __tablename__ = 'publishedformat'
+    id = Column(Integer, primary_key=True)
+    name = Column(UnicodeText)
+    format_class = Column(UnicodeText)
+    format_value = Column(Float)
+    
+    def setup(self,
+                 name,
+                 format_class,
+                 format_value,
+                 id=None):
+        self.name = name
+        self.format_class = format_class
+        self.format_value = format_value
+        if id is not None:
+            self.id = id
 
 class PublishedStatus(db.Model):
     __tablename__ = 'publishedstatus'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)
     publishedstatus_class = Column(UnicodeText)
+    publishedstatus_value = Column(Float)
     
     def setup(self,
                  name,
                  publishedstatus_class,
+                 publishedstatus_value,
                  id=None):
         self.name = name
         self.publishedstatus_class = publishedstatus_class
+        self.publishedstatus_value = publishedstatus_value
         if id is not None:
             self.id = id
     
