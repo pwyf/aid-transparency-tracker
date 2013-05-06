@@ -134,7 +134,13 @@ def indicators_new(indicatorgroup=None):
         data = {
             'name': request.form['name'],
             'description': request.form['description'],
-            'indicatorgroup_id': request.form['indicatorgroup_id']
+            'indicatorgroup_id': request.form['indicatorgroup_id'],
+            'longdescription': request.form.get("longdescription"),
+            'indicator_type': request.form.get("indicator_type"),
+            'indicator_category_name': request.form.get("indicator_category_name"),
+            'indicator_subcategory_name': request.form.get("indicator_subcategory_name"),
+            'indicator_ordinal': request.form.get("indicator_ordinal", None),
+            'indicator_noformat': request.form.get("indicator_noformat", None)
         }
         indicator = dqindicators.addIndicator(data)
         if indicator:
@@ -154,7 +160,12 @@ def indicators_edit(indicatorgroup=None, indicator=None):
             'name': request.form['name'],
             'description': request.form['description'],
             'indicatorgroup_id': request.form['indicatorgroup_id'],
-            'longdescription': request.form['longdescription']
+            'longdescription': request.form['longdescription'],
+            'indicator_type': request.form.get("indicator_type"),
+            'indicator_category_name': request.form.get("indicator_category_name"),
+            'indicator_subcategory_name': request.form.get("indicator_subcategory_name"),
+            'indicator_ordinal': request.form.get("indicator_ordinal", None),
+            'indicator_noformat': request.form.get("indicator_noformat", None)
         }
         indicator = dqindicators.updateIndicator(indicatorgroup, indicator, data)
         flash('Successfully updated Indicator', 'success')
