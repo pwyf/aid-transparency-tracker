@@ -202,7 +202,9 @@ def addIndicator(data):
             indicatorgroup_id = data.get('indicatorgroup_id'),
             indicator_type = data.get("indicator_type"),
             indicator_category_name = data.get("indicator_category_name"),
-            indicator_subcategory_name = data.get("indicator_subcategory_name")
+            indicator_subcategory_name = data.get("indicator_subcategory_name"),
+            indicator_ordinal = data.get("indicator_ordinal", None),
+            indicator_noformat = data.get("indicator_noformat", None)
         )
         db.session.add(newI)
         db.session.commit()
@@ -219,11 +221,13 @@ def updateIndicator(indicatorgroup, indicator, data):
     if (checkI is not None):
         checkI.name = data["name"]
         checkI.description = data["description"]
+        checkI.longdescription = data.get("longdescription")
         checkI.indicatorgroup_id = int(data["indicatorgroup_id"])
         checkI.indicator_type = data.get("indicator_type")
         checkI.indicator_category_name = data.get("indicator_category_name")
         checkI.indicator_subcategory_name = data.get("indicator_subcategory_name")
-        checkI.longdescription = data.get("longdescription")
+        checkI.indicator_ordinal = data.get("indicator_ordinal", None)
+        checkI.indicator_noformat = data.get("indicator_noformat", None)
         db.session.add(checkI)
         db.session.commit()
         return checkI
