@@ -409,6 +409,9 @@ def _organisation_indicators(organisation, aggregation_type=2):
         ).join(Package
         ).join(OrganisationPackage
         ).join(Organisation
+        ).order_by(Indicator.indicator_type, 
+                   Indicator.indicator_category_name, 
+                   Indicator.indicator_subcategory_name
         ).all()
 
     pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
@@ -436,7 +439,9 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 'indicator_type': inforesult.Indicator.indicator_type,
                 'indicator_category_name': inforesult.Indicator.indicator_category_name,
                 'indicator_subcategory_name': inforesult.Indicator.indicator_subcategory_name,
-                'longdescription': inforesult.Indicator.longdescription
+                'longdescription': inforesult.Indicator.longdescription,
+                'indicator_noformat': indicator.indicator_noformat,
+                'indicator_ordinal': indicator.indicator_ordinal
             },
             'tests': {}
         }
@@ -455,7 +460,9 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 'indicator_type': indicator.indicator_type,
                 'indicator_category_name': indicator.indicator_category_name,
                 'indicator_subcategory_name': indicator.indicator_subcategory_name,
-                'longdescription': indicator.longdescription
+                'longdescription': indicator.longdescription,
+                'indicator_noformat': indicator.indicator_noformat,
+                'indicator_ordinal': indicator.indicator_ordinal
             },
             'tests': {}
         }
