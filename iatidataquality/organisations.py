@@ -89,6 +89,22 @@ def organisations_index(organisation_code=None):
                     'found': None,
                     'pct': None
         }
+    organisation_survey = dqsurveys.getSurvey(organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+    if organisation_survey:
+        if organisation_survey.Workflow.name in ['donorreview', 'pwyfreview']:
+            surveydata = surveydata["researcher"]
+            surveydata_workflow = 'donorreview'
+        elif organisation_survey.Workflow.name in ['donorcomments', 'pwyffinal']:
+            surveydata = surveydata["pwyfreview"]
+            surveydata_workflow = 'donorcomments'
+        elif organisation_survey.Workflow.name == 'finalised':
+            surveydata = surveydata["pwyffinal"]
+            surveydata_workflow = 'finalised'
+        else:
+            surveydata = None
+    else:
+        surveydata = None
 
     try:
         summary_data = _organisation_indicators_summary(organisation, 
@@ -99,7 +115,8 @@ def organisations_index(organisation_code=None):
     template_args = dict(organisation=organisation, 
                          summary_data=summary_data,
                          packagegroups=packagegroups,
-                         coverage=coverage)
+                         coverage=coverage,
+                         surveydata=surveydata)
 
     return render_template("organisation.html", **template_args)
 
