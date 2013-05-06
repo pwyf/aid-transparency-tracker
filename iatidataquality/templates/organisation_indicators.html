@@ -252,7 +252,7 @@
 	        <td></td>
             <td><span class="label label-inverse">NOT FOUND</span></td>
             {% if surveydata %}
-            <td><span class="label label-{{published_status[surveydata[result.indicator.id].published_status].publishedstatus_class}}">{{published_status[surveydata[result.indicator.id].published_status].name}}</span> <a class="btn btn-mini">Edit &raquo;</a></td>
+            <td><span class="label label-{{published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class}}">{{published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].name}}</span> <a class="btn btn-mini">Edit &raquo;</a></td>
             <td></td>
             <td></td>
             {% else %}
