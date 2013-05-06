@@ -19,6 +19,7 @@ import dqaggregationtypes
 import dqtests
 import inforesult
 import dqsurveys
+import dqusers
 
 # FIXME: duplicated
 which_packages = [
@@ -205,5 +206,17 @@ def setup(options):
     dqorganisations.downloadOrganisationFrequency()
     print "Setting up survey"
     dqsurveys.setupSurvey()
+    user = dqusers.addUser({'username': "admin",
+                            'password': "CHANGEME"
+                          })
+    permission = dqusers.addUserPermissions({
+                            'user_id': user.id,
+                            'permission_name': 'admin',
+                            'permission_method': 'role'
+                          })
+    if (user and permission):
+        print "Created a default user (admin) and password (CHANGEME). Please remember to change them!"
+    else:
+        print "Couldn't create a default user and password. Did you supply one in config.py?"
 
     print "Setup complete."
