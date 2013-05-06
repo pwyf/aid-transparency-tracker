@@ -121,7 +121,7 @@ def organisations_index(organisation_code=None):
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
 
-    return render_template("organisation.html", **template_args)
+    return render_template("organisation_index.html", **template_args)
 
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
