@@ -50,9 +50,9 @@
         <div class="span6 offset3 alert-warning alert">
             <h1>Data verification</h1>
             <p class="lead">Donors and CSO partners can log in to confirm their data is correct.</p>
-            <form class="form-inline">
-            <input type="text" class="input-small" placeholder="Username">
-            <input type="password" class="input-small" placeholder="Password">
+            <form class="form-inline" action="{{url_for('login')}}" method="post">
+            <input name="username" type="text" class="input-small" placeholder="Username">
+            <input name="password" type="password" class="input-small" placeholder="Password">
             <button type="submit" class="btn">Sign in</button>
             </form>
         </div>
