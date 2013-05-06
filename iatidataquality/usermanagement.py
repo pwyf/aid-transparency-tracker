@@ -22,42 +22,6 @@ from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
 
-
-users = [{
-        'username': 'mark',
-        'password': '1234',
-        'name': 'Mark',
-        'permissions': [{
-            'permission_name': 'admin',
-            'permission_method': 'role'
-            }]
-        },
-        {
-        'username': 'fred',
-        'password': '1234',
-        'name': 'Fred',
-        'permissions': [{
-            'permission_name': 'tests',
-            'permission_method': 'edit',
-            'permission_value': '1'
-            },{
-            'permission_name': 'tests',
-            'permission_method': 'edit',
-            'permission_value': '2'
-            },{
-            'permission_name': 'tests',
-            'permission_method': 'edit',
-            'permission_value': '3'
-            }]
-        }]
-for user in users:
-    dqusers.addUser(user)
-    the_user = dqusers.user_by_username(user['username'])
-    for permission in user['permissions']:
-        
-        permission["user_id"]=the_user.id
-        dqusers.addUserPermission(permission)
-
 principals = Principal(app)
 login_manager = LoginManager()
 login_manager.setup_app(app)
