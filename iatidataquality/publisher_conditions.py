@@ -10,6 +10,7 @@
 from flask import render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import current_user
 
 from iatidataquality import app
 from iatidataquality import db
@@ -57,10 +58,14 @@ def get_pcs():
 def organisation_conditions(id=None):
     if id is not None:
         pc = get_pc(id)
-        return render_template("organisation_condition.html", pc=pc)
+        return render_template("organisation_condition.html", pc=pc,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
     else:
         pcs = get_pcs()
-        return render_template("organisation_conditions.html", pcs=pcs)
+        return render_template("organisation_conditions.html", pcs=pcs,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 def configure_organisation_condition(pc):
     pc.description = request.form['description']
@@ -92,7 +97,11 @@ def organisation_conditions_editor(id=None):
     else:
         pc = OrganisationCondition.query.filter_by(id=id).first_or_404()
         return render_template("organisation_condition_editor.html", 
-                               pc=pc, organisations=organisations, tests=tests)
+                               pc=pc, 
+                               organisations=organisations, 
+                               tests=tests,
+                               admin=usermanagement.check_perms('admin'),
+                               loggedinuser=current_user)
 
 @app.route("/organisation_conditions/new/", methods=['GET', 'POST'])
 @usermanagement.perms_required()
@@ -104,7 +113,9 @@ def organisation_conditions_new(id=None):
     template_args = dict(
         pc={},
         organisations=organisations, 
-        tests=tests
+        tests=tests,
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user
         )
 
     if (request.method == 'POST'):
@@ -138,7 +149,10 @@ def ipc_step2():
         flash('Parsed conditions', "success")
         return render_template(
             "import_organisation_conditions_step2.html", 
-            results=results, step=step)
+            results=results, 
+            step=step,
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user)
     else:
         flash('There was an error importing your conditions', "error")
         return redirect(url_for('import_organisation_conditions'))
@@ -187,7 +201,9 @@ def import_organisation_conditions(step=None):
     elif (step=='3'):
         return ipc_step3()
     else:
-        return render_template("import_organisation_conditions.html")
+        return render_template("import_organisation_conditions.html",
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 @app.route("/organisation_conditions/export/")
 def export_organisation_conditions():

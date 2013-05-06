@@ -10,6 +10,7 @@
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 
+from flask.ext.login import current_user
 from iatidataquality import app
 from iatidataquality import db
 
@@ -35,7 +36,9 @@ def surveys_admin():
     return render_template("surveys/surveys_admin.html", 
                            workflows=workflows,
                            publishedstatuses=publishedstatuses,
-                           surveys=surveys)
+                           surveys=surveys,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
 @app.route("/surveys/create/", methods=["GET", "POST"])
 @app.route("/surveys/<organisation_code>/create/", methods=["GET", "POST"])
@@ -119,7 +122,9 @@ def organisation_survey(organisation_code=None):
                            workflows=workflows,
                            pct_complete=pct_complete,
                            surveydata=surveydata,
-                           users=users)
+                           users=users,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
 def getTimeRemainingNotice(deadline):
     time_remaining = ((deadline.date())-(datetime.utcnow().date()))
@@ -407,4 +412,6 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
            surveydata=surveydata_allworkflows,
            organisationsurvey=organisationsurvey,
            allowed_to_edit=allowed_to_edit,
-           publishedformats=publishedformats)
+           publishedformats=publishedformats,
+           admin=usermanagement.check_perms('admin'),
+           loggedinuser=current_user)

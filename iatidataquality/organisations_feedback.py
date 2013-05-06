@@ -10,11 +10,12 @@
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import current_user
 
 from iatidataquality import app
 from iatidataquality import db
 
-from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
+from iatidq import models, dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, dqusers
 
 import usermanagement
 
@@ -36,7 +37,10 @@ def organisations_feedback(organisation_code=None):
                 else:
                     flash("Couldn't add condition.", 'error')
         
-        return render_template("organisation_feedback.html", organisation=organisation)
+        return render_template("organisation_feedback.html", 
+             organisation=organisation,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
     else:
         flash('No organisation supplied', 'error')
         return redirect(url_for('organisations'))

@@ -9,7 +9,7 @@
 
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 
 from iatidataquality import app
 from iatidataquality import db
@@ -33,10 +33,14 @@ test_list_location = "tests/activity_tests.csv"
 def tests(id=None):
     if (id is not None):
         test = dqtests.tests(id)
-        return render_template("test.html", test=test)
+        return render_template("test.html", test=test,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
     else:
         tests = dqtests.tests()
-        return render_template("tests.html", tests=tests)
+        return render_template("tests.html", tests=tests,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 @app.route("/tests/<id>/edit/", methods=['GET', 'POST'])
 @usermanagement.perms_required('tests', 'edit', '<id>')
@@ -56,7 +60,9 @@ def tests_editor(id=None):
             flash("Couldn't update", "error")
     else:
         test = dqtests.tests(id)
-    return render_template("test_editor.html", test=test)
+    return render_template("test_editor.html", test=test,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 @app.route("/tests/<id>/delete/")
 @usermanagement.perms_required('tests', 'delete', '<id>')
@@ -90,7 +96,9 @@ def tests_new():
             flash('Unable to create. Maybe you already have a test using the same expression?', "error")
     else:
         test = {}
-    return render_template("test_editor.html", test=test)
+    return render_template("test_editor.html", test=test,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 
 @app.route("/tests/import/", methods=['GET', 'POST'])
@@ -111,4 +119,6 @@ def import_tests():
                 flash('There was an error importing your tests', "error")
         else:
             flash('Wrong password', "error")
-    return render_template("import_tests.html")
+    return render_template("import_tests.html",
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)

@@ -19,6 +19,7 @@ from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
+from iatidq import dqusers
 
 import os
 import sys
@@ -116,7 +117,9 @@ def organisations_index(organisation_code=None):
                          summary_data=summary_data,
                          packagegroups=packagegroups,
                          coverage=coverage,
-                         surveydata=surveydata)
+                         surveydata=surveydata,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
     return render_template("organisation.html", **template_args)
 
@@ -132,7 +135,9 @@ def organisations(organisation_code=None):
     else:
         organisations = dqorganisations.organisations()
 
-        template_args = dict(organisations=organisations)
+        template_args = dict(organisations=organisations,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
         return render_template("organisations.html", **template_args)
 
@@ -154,7 +159,9 @@ def organisation_new():
         else:
             flash("Couldn't add organisation", "error")
             organisation = data
-    return render_template("organisation_edit.html", organisation=organisation)
+    return render_template("organisation_edit.html", organisation=organisation,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
 def integerise(data):
     try:
@@ -218,7 +225,9 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                                surveydata=surveydata,
                                published_status=published_status_by_id,
                                published_format=publishedformats,
-                               surveydata_workflow=surveydata_workflow)
+                               surveydata_workflow=surveydata_workflow,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
     else:
         aggregation_type=integerise(request.args.get('aggregation_type', 2))
         all_aggregation_types = dqaggregationtypes.aggregationTypes()
@@ -236,7 +245,9 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                                results=aggregate_results, 
                                all_aggregation_types=all_aggregation_types,
                                aggregation_type=aggregation_type,
-                               packages=packages)
+                               packages=packages,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
 def organisation_publication_detail(organisation_code=None):
@@ -256,7 +267,9 @@ def organisation_publication_detail(organisation_code=None):
                           organisation=organisation, packages=packages, 
                           results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
-                           aggregation_type=aggregation_type)
+                           aggregation_type=aggregation_type,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
     return txt
 
 @app.route("/organisations/publication.csv")
@@ -407,7 +420,9 @@ def organisation_edit(organisation_code=None):
         organisation=organisation, 
         packages=packages, 
         packagegroups=packagegroups,
-        organisationpackages=organisationpackages)
+        organisationpackages=organisationpackages,
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user)
 
 @app.route("/organisations/<organisation_code>/<package_name>/<organisationpackage_id>/delete/")
 @usermanagement.perms_required()

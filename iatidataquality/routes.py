@@ -9,14 +9,20 @@
 
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
+from flask.ext.login import current_user
 
 from iatidataquality import app
 from iatidataquality import db
+import usermanagement
 
 @app.route("/")
 def home():
-    return render_template("dashboard.html")
+    return render_template("dashboard.html",
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('404.html'), 404
+    return render_template('404.html',
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user), 404

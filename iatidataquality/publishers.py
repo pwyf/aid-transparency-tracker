@@ -12,6 +12,7 @@ from flask import render_template, flash, request, Markup, \
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from datetime import datetime
+from flask.ext.login import current_user
 
 from iatidataquality import app
 from iatidataquality import db
@@ -39,7 +40,10 @@ def publishers():
         PackageGroup.name).all()
 
     pkgs = Package.query.order_by(Package.package_name).all()
-    return render_template("packagegroups.html", p_groups=p_groups, pkgs=pkgs)
+    return render_template("packagegroups.html", p_groups=p_groups, 
+             pkgs=pkgs,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 def _publisher_detail_ungrouped(p_group):
     return db.session.query(Indicator,
@@ -87,9 +91,10 @@ def publisher_detail(id=None):
 
     aggregate_results = _publisher_detail(p_group)
 
-    txt = render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
-                           results=aggregate_results)
-    return txt
+    return render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
+                           results=aggregate_results,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 @app.route("/publishers/<id>/detail.json")
 def publisher_detail_json(id=None):
@@ -201,5 +206,7 @@ def publisher(id=None):
         aggregate_results = None"""
 
     return render_template("publisher_indicators.html", p_group=p_group, pkgs=pkgs, 
-                           results=aggregate_results, runtime=latest_runtime)
+                           results=aggregate_results, runtime=latest_runtime,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 

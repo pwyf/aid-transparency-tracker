@@ -10,19 +10,22 @@
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import current_user
 
 from iatidataquality import app
 from iatidataquality import db
 import usermanagement
 
-from iatidq import dqtests, dqaggregationtypes
+from iatidq import dqtests, dqaggregationtypes, dqusers
 
 @app.route("/aggregationtypes/")
 @app.route("/aggregationtypes/<aggregationtype_id>/")
 @usermanagement.perms_required()
 def aggregationtypes(aggregationtype_id=None):
     ats=dqaggregationtypes.aggregationTypes()
-    return render_template("aggregation_types.html", aggregationtypes=ats)
+    return render_template("aggregation_types.html", aggregationtypes=ats,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 def get_aggregation_type(aggregationtype_id):
     def get_data():
@@ -62,4 +65,6 @@ def aggregationtypes_edit(aggregationtype_id=None):
 
     tests = dqtests.tests()
     return render_template("aggregation_types_edit.html", 
-                           aggregationtype=aggregationtype, tests=tests)
+                           aggregationtype=aggregationtype, tests=tests,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)

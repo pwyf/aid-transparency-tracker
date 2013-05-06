@@ -10,6 +10,7 @@
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import login_required, current_user
 
 from iatidataquality import app
 from iatidataquality import db
@@ -24,11 +25,12 @@ import unicodecsv
 @usermanagement.perms_required()
 def users(username=None):
     if username:
-        user=dqusers.user_by_username(username)
-        return render_template("user.html", user=user)
+        return redirect(url_for('users_edit', username=username))
     else:
         users=dqusers.user()
-        return render_template("users.html", users=users)
+        return render_template("users.html", users=users,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 def returnOrNone(value):
     if (value ==''):
@@ -94,7 +96,9 @@ def users_edit(username=None):
 
     return render_template("users_edit.html", 
                            user=user,
-                           permissions=permissions)
+                           permissions=permissions,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 @app.route("/users/<username>/delete/")
 @usermanagement.perms_required()

@@ -10,11 +10,12 @@
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import current_user
 
 from iatidataquality import app
 from iatidataquality import db
 
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, summary, dqaggregationtypes
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, summary, dqaggregationtypes, dqusers
 
 from iatidq.models import *
 
@@ -33,7 +34,10 @@ def integerise(data):
 def packages_manage():
     if request.method != 'POST':
         pkgs = Package.query.order_by(Package.package_name).all()
-        return render_template("packages_manage.html", pkgs=pkgs)
+        return render_template("packages_manage.html", 
+             pkgs=pkgs,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
     if "refresh" in request.form:
         dqregistry.refresh_packages()
@@ -83,7 +87,10 @@ def packages(package_name=None, runtime_id=None):
     if package_name is None:
         packages = Package.query.filter_by(active=True).order_by(
             Package.package_name).all()
-        return render_template("packages.html", packages=packages)
+        return render_template("packages.html", 
+             packages=packages,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
     # Get package data
     package = db.session.query(Package,
@@ -160,4 +167,6 @@ def packages(package_name=None, runtime_id=None):
                            pconditions=pconditions,
                            organisations=organisations,
                            all_aggregation_types=all_aggregation_types,
-                           aggregation_type=aggregation_type,)
+                           aggregation_type=aggregation_type,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)

@@ -30,29 +30,35 @@
           <a class="brand" href="/">Aid Transparency Tracker</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li{% if active_page == "index" %} class="active"{%endif%}><a href="/">Home</a></li>
+              <li{% if active_page == "index" %} class="active"{%endif%}><a href="{{url_for('home')}}">Home</a></li>
               <li{% if active_page == "organisations" %} class="active"{%endif%}><a href="{{url_for('organisations')}}">Organisations</a></li>
               <!--<li{% if active_page == "publishers" %} class="active"{%endif%}><a href="{{url_for('publishers')}}">Publishers</a></li>
               <li{% if active_page == "packages" %} class="active"{%endif%}><a href="{{url_for('packages')}}">Packages</a></li>-->
-              <li{% if active_page == "tests" %} class="active"{%endif%}><a href="{{url_for('tests')}}">Tests</a></li>
-              <!--<li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>-->
+              {% if admin %}<li{% if active_page == "tests" %} class="active"{%endif%}><a href="{{url_for('tests')}}">Tests</a></li>{% endif %}
             </ul>
             <ul class="nav pull-right">
+              {% if loggedinuser.username %}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Settings
+                {{loggedinuser.username}}
                 <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
+                  {% if admin %}
                   <li{% if active_page == "pc" %} class="active"{%endif%}><a href="{{url_for('organisation_conditions')}}">Organisation conditions</a></li>
                   <li{% if active_page == "import_tests" %} class="active"{%endif%}><a href="{{url_for('import_tests')}}">Import tests</a></li>
                   <li{% if active_page == "import_conditions" %} class="active"{%endif%}><a href="{{url_for('import_organisation_conditions')}}">Import organisation conditions</a></li>
                   <li{% if active_page == "registry_refresh" %} class="active"{%endif%}><a href="{{url_for('registry_refresh')}}">Refresh from Registry</a></li>
                   <li{% if active_page == "registry_download" %} class="active"{%endif%}><a href="{{url_for('registry_download')}}">Run tests</a></li>
                   <li{% if active_page == "indicators" %} class="active"{%endif%}><a href="{{url_for('indicatorgroups')}}">Indicators</a></li>
+                  <li{% if active_page == "users" %} class="active"{%endif%}><a href="{{url_for('users')}}">Users</a></li>
+                  {% endif %}
+                  <li><a href="{{url_for('logout')}}">Log out</a></li>
                 </ul>
               </li>
+              {% else %}
+              <li><a href="{{url_for('login')}}">Login</a></li>
+              {% endif %}
             </ul>
           </div><!--/.nav-collapse -->
         </div>

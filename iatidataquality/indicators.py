@@ -11,12 +11,13 @@ from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 import StringIO
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 from sqlalchemy import func
 from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
+from iatidq import dqusers
 import usermanagement
 
 import os
@@ -38,7 +39,9 @@ import spreadsheet
 @app.route("/indicators/")
 def indicatorgroups():
     indicatorgroups = dqindicators.indicatorGroups()
-    return render_template("indicatorgroups.html", indicatorgroups=indicatorgroups)
+    return render_template("indicatorgroups.html", indicatorgroups=indicatorgroups,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
 @app.route("/indicators/import/")
 @usermanagement.perms_required()
@@ -61,7 +64,9 @@ def indicatorgroups_edit(indicatorgroup=None):
         flash('Successfully updated IndicatorGroup', 'success')
     else:
         indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
-    return render_template("indicatorgroups_edit.html", indicatorgroup=indicatorgroup)
+    return render_template("indicatorgroups_edit.html", indicatorgroup=indicatorgroup,
+                 admin=usermanagement.check_perms('admin'),
+                 loggedinuser=current_user)
 
 @app.route("/indicators/<indicatorgroup>/delete/")
 @usermanagement.perms_required()
@@ -85,13 +90,20 @@ def indicatorgroups_new():
             flash("Couldn't add IndicatorGroup. Maybe one already exists with the same name?", 'error')
     else:
         indicatorgroup = None
-    return render_template("indicatorgroups_edit.html", indicatorgroup=indicatorgroup)
+    return render_template("indicatorgroups_edit.html", 
+                         indicatorgroup=indicatorgroup,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
 @app.route("/indicators/<indicatorgroup>/")
 def indicators(indicatorgroup=None):
     indicators = dqindicators.indicators(indicatorgroup)
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
-    return render_template("indicators.html", indicatorgroup=indicatorgroup, indicators=indicators)
+    return render_template("indicators.html", 
+                        indicatorgroup=indicatorgroup, 
+                        indicators=indicators,
+                        admin=usermanagement.check_perms('admin'),
+                        loggedinuser=current_user)
 
 @app.route("/indicators/<indicatorgroup>_tests.csv")
 @app.route("/indicators/<indicatorgroup>_<option>tests.csv")
@@ -149,7 +161,11 @@ def indicators_new(indicatorgroup=None):
             flash("Couldn't add Indicator. Maybe one already exists with the same name?", 'error')
     else:
         indicator = None
-    return render_template("indicator_edit.html", indicatorgroups=indicatorgroups, indicator=indicator)
+    return render_template("indicator_edit.html", 
+                         indicatorgroups=indicatorgroups, 
+                         indicator=indicator,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
 @app.route("/indicators/<indicatorgroup>/<indicator>/edit/", methods=['GET', 'POST'])
 @usermanagement.perms_required()
@@ -171,7 +187,11 @@ def indicators_edit(indicatorgroup=None, indicator=None):
         flash('Successfully updated Indicator', 'success')
     else:
         indicator = dqindicators.indicators(indicatorgroup, indicator)
-    return render_template("indicator_edit.html", indicatorgroups=indicatorgroups, indicator=indicator)
+    return render_template("indicator_edit.html", 
+                         indicatorgroups=indicatorgroups, 
+                         indicator=indicator,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
 @app.route("/indicators/<indicatorgroup>/<indicator>/delete/")
 @usermanagement.perms_required()
@@ -196,7 +216,13 @@ def indicatortests(indicatorgroup=None, indicator=None):
             else:
                 flash("Couldn't add test to your indicator.", 'error')
     indicatortests = dqindicators.indicatorTests(indicatorgroup.name, indicator.name)
-    return render_template("indicatortests.html", indicatorgroup=indicatorgroup, indicator=indicator, indicatortests=indicatortests, alltests=alltests)
+    return render_template("indicatortests.html", 
+                         indicatorgroup=indicatorgroup, 
+                         indicator=indicator, 
+                         indicatortests=indicatortests, 
+                         alltests=alltests,
+                         admin=usermanagement.check_perms('admin'),
+                         loggedinuser=current_user)
 
 @app.route("/indicators/<indicatorgroup>/<indicator>/<indicatortest>/delete/")
 @usermanagement.perms_required()

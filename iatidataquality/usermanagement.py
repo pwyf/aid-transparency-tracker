@@ -192,7 +192,9 @@ def login():
                 flash("Sorry, but you could not log in.", "error")
         else:
             flash(u"Invalid username or password.", "error")
-    return render_template("login.html")
+    return render_template("login.html",
+             admin=check_perms('admin'),
+             loggedinuser=current_user)
 
 @app.route('/logout/')
 @login_required
