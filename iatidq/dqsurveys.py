@@ -47,7 +47,7 @@ def setupSurvey():
       'name': 'machine-readable',
       'title': 'Machine-readable (CSV, Excel)',
       'format_class': 'success',
-      'format_value': 1 },
+      'format_value': 1.0 },
      {'name': 'website',
       'title': 'Website',
       'format_class': 'warning',
@@ -55,7 +55,11 @@ def setupSurvey():
      {'name': 'pdf',
       'title': 'PDF',
       'format_class': 'important',
-      'format_value': 0.3333}]
+      'format_value': 0.3333},
+     {'name': 'document',
+      'title': 'Document',
+      'format_class': 'success',
+      'format_value': 1.0}]
 
     for the_publishedformat in the_publishedformat:
         addPublishedFormat(the_publishedformat)
@@ -194,8 +198,15 @@ def publishedStatus():
     checkPS = models.PublishedStatus.query.all()
     return checkPS
 
-def publishedFormat():
-    checkPF = models.PublishedFormat.query.all()
+def publishedFormat(name=None):
+    if name is not None:
+        checkPF = models.PublishedFormat.query.filter(
+                models.PublishedFormat.name == name
+                ).first()
+    else:
+        checkPF = models.PublishedFormat.query.filter(
+                models.PublishedFormat.name != 'document'
+                ).all()
     return checkPF
 
 def surveys():
