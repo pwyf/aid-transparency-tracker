@@ -97,6 +97,7 @@ def get_organisation_results(organisation_code, newindicators):
 @usermanagement.perms_required('survey', 'view')
 def organisation_survey(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
+    make_sure_survey_exists = dqsurveys.getOrCreateSurvey({'organisation_id':organisation.id})
     survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
     workflows = dqsurveys.workflows()
