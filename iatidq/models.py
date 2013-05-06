@@ -646,15 +646,18 @@ class PublishedFormat(db.Model):
     __tablename__ = 'publishedformat'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)
+    title = Column(UnicodeText)
     format_class = Column(UnicodeText)
     format_value = Column(Float)
     
     def setup(self,
                  name,
+                 title,
                  format_class,
                  format_value,
                  id=None):
         self.name = name
+        self.title = title
         self.format_class = format_class
         self.format_value = format_value
         if id is not None:
@@ -664,15 +667,18 @@ class PublishedStatus(db.Model):
     __tablename__ = 'publishedstatus'
     id = Column(Integer, primary_key=True)
     name = Column(UnicodeText)
+    title = Column(UnicodeText)
     publishedstatus_class = Column(UnicodeText)
     publishedstatus_value = Column(Float)
     
     def setup(self,
                  name,
+                 title,
                  publishedstatus_class,
                  publishedstatus_value,
                  id=None):
         self.name = name
+        self.title = title
         self.publishedstatus_class = publishedstatus_class
         self.publishedstatus_value = publishedstatus_value
         if id is not None:
