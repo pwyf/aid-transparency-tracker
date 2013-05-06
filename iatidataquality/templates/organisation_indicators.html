@@ -208,6 +208,11 @@
         <a id="noniati"></a>
         <hr />
         <fieldset>
+        {% if surveydata %}
+        <div class="pull-right">
+        <a href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name=surveydata_workflow)}}" class="btn btn-primary">Review manually collected data</a>
+        </div>
+        {% endif %}
         <h3>Published in other formats</h3>
         <p class="lead">Each indicator not published to IATI, but published elsewhere (e.g. on your website) can score up to 50 points</p>
         <h4>Scoring criteria</h4>
@@ -315,7 +320,9 @@
         </tbody>
         </table>
         {% if surveydata %}
+        <div class="pull-right">
         <a href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name=surveydata_workflow)}}" class="btn btn-primary">Review manually collected data</a>
+        </div>
         {% endif %}
         </fieldset>
     {%endif%}
