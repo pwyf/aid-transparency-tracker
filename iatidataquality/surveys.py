@@ -301,6 +301,8 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         twentytwelvedata=get_organisation_results(organisation_code, indicators)
         publishedstatuses = dqsurveys.publishedStatus()
         publishedstatuses = dict(map(lambda ps: (ps.id, ps), publishedstatuses))
+        publishedformats = dqsurveys.publishedFormat()
+        publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
 
         old_publication_status= {
             '4': {
@@ -339,4 +341,5 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
            workflow=workflow,
            surveydata=surveydata_allworkflows,
            organisationsurvey=organisationsurvey,
-           allowed_to_edit=allowed_to_edit)
+           allowed_to_edit=allowed_to_edit,
+           publishedformats=publishedformats)
