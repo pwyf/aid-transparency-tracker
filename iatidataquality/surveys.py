@@ -116,14 +116,25 @@ def _survey_process_collect(organisation, workflow, request, organisationsurvey)
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
+        if request.form.get(indicator+"-ordinal_value"):
+            published_format= dqsurveys.publishedFormat('document').id
+            ordinal_value = request.form.get('ordinal_value')
+        elif request.form.get(indicator+"-noformat"):
+            published_format= dqsurveys.publishedFormat('document').id
+            ordinal_value = None
+        else:
+            published_format = request.form.get(indicator+"-publishedformat")
+            ordinal_value = None
         data = {
             'organisationsurvey_id': organisationsurvey.id,
             'indicator_id': indicator,
             'workflow_id': workflow_id,
             'published_status': request.form.get(indicator+"-published"),
             'published_source': request.form.get(indicator+"-source"),
-            'published_comment': request.form.get(indicator+"-comments"),   
-            'published_accepted': None
+            'published_comment': request.form.get(indicator+"-comments"),
+            'published_format': published_format,
+            'published_accepted': None,
+            'ordinal_value': ordinal_value
         }
         surveydata = dqsurveys.addSurveyData(data)
     
@@ -145,14 +156,25 @@ def _survey_process_review(organisation, workflow, request, organisationsurvey):
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
+        if request.form.get(indicator+"-ordinal_value"):
+            published_format= dqsurveys.publishedFormat('document').id
+            ordinal_value = request.form.get('ordinal_value')
+        elif request.form.get(indicator+"-noformat"):
+            published_format= dqsurveys.publishedFormat('document').id
+            ordinal_value = None
+        else:
+            published_format = request.form.get(indicator+"-publishedformat")
+            ordinal_value = None
         data = {
             'organisationsurvey_id': organisationsurvey.id,
             'indicator_id': indicator,
             'workflow_id': workflow_id,
             'published_status': request.form.get(indicator+"-published"),
             'published_source': request.form.get(indicator+"-source"),
-            'published_comment': request.form.get(indicator+"-comments"),   
-            'published_accepted': None
+            'published_comment': request.form.get(indicator+"-comments"),
+            'published_format': published_format,
+            'published_accepted': None,
+            'ordinal_value': ordinal_value
         }
         surveydata = dqsurveys.addSurveyData(data)
     
@@ -174,14 +196,25 @@ def _survey_process_finalreview(organisation, workflow, request, organisationsur
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
+        if request.form.get(indicator+"-ordinal_value"):
+            published_format= dqsurveys.publishedFormat('document').id
+            ordinal_value = request.form.get('ordinal_value')
+        elif request.form.get(indicator+"-noformat"):
+            published_format= dqsurveys.publishedFormat('document').id
+            ordinal_value = None
+        else:
+            published_format = request.form.get(indicator+"-publishedformat")
+            ordinal_value = None
         data = {
             'organisationsurvey_id': organisationsurvey.id,
             'indicator_id': indicator,
             'workflow_id': workflow_id,
             'published_status': request.form.get(indicator+"-published"),
             'published_source': request.form.get(indicator+"-source"),
-            'published_comment': request.form.get(indicator+"-comments"),   
-            'published_accepted': request.form.get(indicator+"-agree")
+            'published_comment': request.form.get(indicator+"-comments"),
+            'published_format': published_format,
+            'published_accepted': request.form.get(indicator+"-agree"),
+            'ordinal_value': ordinal_value
         }
         surveydata = dqsurveys.addSurveyData(data)
     
@@ -203,14 +236,25 @@ def _survey_process_comment(organisation, workflow, request, organisationsurvey)
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
+        if request.form.get(indicator+"-ordinal_value"):
+            published_format= dqsurveys.publishedFormat('document').id
+            ordinal_value = request.form.get('ordinal_value')
+        elif request.form.get(indicator+"-noformat"):
+            published_format= dqsurveys.publishedFormat('document').id
+            ordinal_value = None
+        else:
+            published_format = request.form.get(indicator+"-publishedformat")
+            ordinal_value = None
         data = {
             'organisationsurvey_id': organisationsurvey.id,
             'indicator_id': indicator,
             'workflow_id': workflow_id,
-            'published_status': None,
-            'published_source': None,
-            'published_comment': request.form.get(indicator+"-comments"),   
-            'published_accepted': request.form.get(indicator+"-agree")
+            'published_status': request.form.get(indicator+"-published"),
+            'published_source': request.form.get(indicator+"-source"),
+            'published_comment': request.form.get(indicator+"-comments"),
+            'published_format': published_format,
+            'published_accepted': request.form.get(indicator+"-agree"),
+            'ordinal_value': ordinal_value
         }
         surveydata = dqsurveys.addSurveyData(data)
     
