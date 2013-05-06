@@ -29,7 +29,7 @@ users = [{
         'name': 'Mark',
         'permissions': [{
             'permission_name': 'admin',
-            'permission_method': 'full'
+            'permission_method': 'role'
             }]
         },
         {
