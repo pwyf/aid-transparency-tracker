@@ -202,6 +202,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                 surveydata_workflow=None
         else:
             surveydata = None
+            surveydata_workflow=None
         published_status = dqsurveys.publishedStatus()
 
         published_status_by_id = dict(map(lambda x: (x.id, x), published_status))
