@@ -322,14 +322,14 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
 
     if (hierarchy_id):
         if (hierarchy_id=="None"): hierarchy_id=None
-        test_count = db.session.query(func.count(Result.result_identifier)
+        """test_count = db.session.query(func.count(Result.result_identifier)
             ).filter(Organisation.organisation_code == organisation_code, 
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).join(Package
             ).join(OrganisationPackage
             ).join(Organisation
-            ).all()
+            ).all()"""
         test_results = db.session.query(Result.result_identifier, 
                                         Result.result_data,
                                         func.max(Result.runtime_id)
@@ -345,16 +345,16 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
             ).offset(offset
             ).all()
     else:
-        test_count = db.session.query(func.count(Result.result_identifier)
+        """test_count = db.session.query(func.count(Result.result_identifier)
             ).filter(Organisation.organisation_code == organisation_code, 
                      Result.test_id==test_id
             ).join(Package
             ).join(OrganisationPackage
             ).join(Organisation
-            ).all()
+            ).all()"""
         test_results = db.session.query(Result.result_identifier, 
                                         Result.result_data,
-                                        func.count(Result.runtime_id)
+                                        func.max(Result.runtime_id)
             ).filter(Organisation.organisation_code == organisation_code, 
                      Result.test_id==test_id
             ).group_by(Result.result_identifier
