@@ -94,7 +94,7 @@
                 jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found').removeClass('muted');
                 jQuery(".commitment .approach").html(approach_text);
                 jQuery(".commitment .elements").html(elements_text);
-                jQuery(".commitment .review").html('<a class="btn btn-success" href="'url+'/plan/organisations/{{organisation.organisation_code}}">Review Commitment »</a>');
+                jQuery(".commitment .review").html('<a class="btn btn-success" href="'+url+'/plan/organisations/{{organisation.organisation_code}}">Review Commitment »</a>');
             });
         });
 
