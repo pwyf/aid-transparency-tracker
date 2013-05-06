@@ -51,6 +51,7 @@
                   <li{% if active_page == "registry_refresh" %} class="active"{%endif%}><a href="{{url_for('registry_refresh')}}">Refresh from Registry</a></li>
                   <li{% if active_page == "registry_download" %} class="active"{%endif%}><a href="{{url_for('registry_download')}}">Run tests</a></li>
                   <li{% if active_page == "indicators" %} class="active"{%endif%}><a href="{{url_for('indicatorgroups')}}">Indicators</a></li>
+                  <li{% if active_page == "packages" %} class="active"{%endif%}><a href="{{url_for('packages_manage')}}">Manage packages</a></li>
                   <li{% if active_page == "users" %} class="active"{%endif%}><a href="{{url_for('users')}}">Users</a></li>
                   {% endif %}
                   <li><a href="{{url_for('logout')}}">Log out</a></li>
