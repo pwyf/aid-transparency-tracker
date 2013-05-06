@@ -26,26 +26,34 @@ def getIDorNone(sqlalchemy_object):
         return None
 
 def setupSurvey():
-    the_publishedstatuses = [{'name': 'Always',
+    the_publishedstatuses = [
+     {'name': 'always',
+      'title': 'Always',
       'publishedstatus_class': 'success',
       'publishedstatus_value': 1 },
-     {'name': 'Sometimes',
+     {'name': 'sometimes',
+      'title': 'Sometimes',
       'publishedstatus_class': 'warning',
       'publishedstatus_value': 0},
-     {'name': 'Not published',
+     {'name': 'not published',
+      'title': 'Not published',
       'publishedstatus_class': 'important',
       'publishedstatus_value': 0}]
 
     for the_publishedstatus in the_publishedstatuses:
         addPublishedStatus(the_publishedstatus)
 
-    the_publishedformat = [{'name': 'Machine-readable (CSV, Excel)',
+    the_publishedformat = [{
+      'name': 'machine-readable',
+      'title': 'Machine-readable (CSV, Excel)',
       'format_class': 'success',
       'format_value': 1 },
-     {'name': 'Website',
+     {'name': 'website',
+      'title': 'Website',
       'format_class': 'warning',
       'format_value': 0.6666},
-     {'name': 'PDF',
+     {'name': 'pdf',
+      'title': 'PDF',
       'format_class': 'important',
       'format_value': 0.3333}]
 
@@ -264,6 +272,7 @@ def addPublishedFormat(data):
         newPF = models.PublishedFormat()
         newPF.setup(
             name = data["name"],
+            title = data["title"],
             format_class = data["format_class"],
             format_value = data["format_value"]
         )
@@ -280,6 +289,7 @@ def addPublishedStatus(data):
         newPS = models.PublishedStatus()
         newPS.setup(
             name = data["name"],
+            title = data["title"],
             publishedstatus_class = data["publishedstatus_class"],
             publishedstatus_value = data["publishedstatus_value"]
         )
