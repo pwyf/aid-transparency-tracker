@@ -126,7 +126,7 @@ def organisations_index(organisation_code=None):
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
-    check_perms = usermanagement.check_perms('organisation', 'view')
+    check_perms = usermanagement.check_perms('organisation', 'view', {'organisation_code':organisation_code})
     if organisation_code is not None:
         if check_perms:
             return redirect(url_for('organisations_index', organisation_code=organisation_code))
