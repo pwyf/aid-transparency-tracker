@@ -232,6 +232,16 @@
         </thead>
         <tbody>
         {% for indicator, result in results.zero.items() %}
+            {% if surveydata %}
+            {% if surveydata[result.indicator.id].PublishedStatus and surveydata[result.indicator.id].PublishedFormat %}
+            {% set points = (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value * surveydata[result.indicator.id].PublishedFormat.format_value * 50) %}
+            {% else %}
+            {% set points = 0 %}
+            {% endif %}
+            {% else %}
+            {% set points = "" %}
+            {% endif %}
+
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td>{{result.indicator.indicator_category_name|title}}</td>
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
@@ -252,9 +262,9 @@
 	        <td></td>
             <td><span class="label label-inverse">NOT FOUND</span></td>
             {% if surveydata %}
-            <td><span class="label label-{{published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class}}">{{published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].name}}</span> <a class="btn btn-mini">Edit &raquo;</a></td>
-            <td></td>
-            <td></td>
+            <td><span class="label label-{{published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class}}">{{published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].title}}</span></td>
+            <td><span class="label label-{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].format_class}}">{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].title}}</span></td>
+            <td>{{points}}</td>
             {% else %}
             <td colspan="3">
             No survey data yet.
@@ -305,7 +315,7 @@
         </tbody>
         </table>
         {% if surveydata %}
-        <a href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name='donorreview')}}" class="btn btn-primary">Review manually collected data</a>
+        <a href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name=surveydata_workflow)}}" class="btn btn-primary">Review manually collected data</a>
         {% endif %}
         </fieldset>
     {%endif%}
