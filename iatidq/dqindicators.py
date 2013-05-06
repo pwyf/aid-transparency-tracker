@@ -133,6 +133,9 @@ def indicators_subset(indicatorgroup=None, indicator_type=None):
                 ).filter(models.IndicatorGroup.name==indicatorgroup
                 ).filter(models.Indicator.indicator_type==indicator_type
                 ).join(models.IndicatorGroup
+                ).order_by(models.Indicator.indicator_type,
+                           models.Indicator.indicator_category_name,
+                           models.Indicator.indicator_subcategory_name
                 ).all()
     return indicators
 
@@ -141,12 +144,18 @@ def indicators(indicatorgroup=None, indicator=None):
         indicators = db.session.query(models.Indicator
                     ).filter(models.IndicatorGroup.name==indicatorgroup
                     ).join(models.IndicatorGroup
+                    ).order_by(models.Indicator.indicator_type,
+                               models.Indicator.indicator_category_name,
+                               models.Indicator.indicator_subcategory_name
                     ).all()
     else:
         indicators = db.session.query(models.Indicator
                     ).filter(models.IndicatorGroup.name==indicatorgroup,
                              models.Indicator.name==indicator
                     ).join(models.IndicatorGroup
+                    ).order_by(models.Indicator.indicator_type,
+                               models.Indicator.indicator_category_name,
+                               models.Indicator.indicator_subcategory_name
                     ).first()
     return indicators
 
