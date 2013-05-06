@@ -297,7 +297,8 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
 
         indicators = dqindicators.indicators("pwyf2013")
         org_indicators = dqorganisations._organisation_indicators_split(
-        organisation, 2)["zero"]
+        organisation, 2)
+        
         twentytwelvedata=get_organisation_results(organisation_code, indicators)
         publishedstatuses = dqsurveys.publishedStatus()
         publishedstatuses = dict(map(lambda ps: (ps.id, ps), publishedstatuses))
