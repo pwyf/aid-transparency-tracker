@@ -8,8 +8,14 @@
     });
 
     </script>
+    {% if admin %}
     <div class="pull-right"><a class="btn btn-success" href="{{url_for('organisation_new')}}"><i class="icon-plus icon-white"></i><b> New organisation</b></a></div>
-	<h1>Select an organisation</h1>
+    {% endif %}
+	<h1>Organisations</h1>
+    <p class="lead">Some data quality information is available on each 
+    organisation's page. We will be working with donors and CSOs to 
+    verify this data and will publish more detailed analysis in October 
+    2013 as part of the Aid Transparency Index.</p>
     <table class="table" id="organisations">
     <thead>
     <th>Organisation name</th>
