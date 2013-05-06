@@ -24,6 +24,8 @@ Copyright (C) 2012
 Installation
 ============
 
+You need RabbitMQ running for the tests processing to work. It's probably sensible to configure that before starting.
+
 Set up a virtualenv:
 
     virtualenv ./pyenv
@@ -40,6 +42,12 @@ Copy and edit the config.py.tmpl:
 
     cp config.py.tmpl config.py
 
+Run the setup script to populate the database (append ` --minimal` if you want to try it out with just a few packages):
+
+    python quickstart.py --setup
+
+This will also create a default username and password; please create a new user and then delete the default one!
+
 Run the server:
 
     python manage.py runserver
@@ -49,65 +57,18 @@ To get the download data and the tests running, run the backends (more details b
     python download_backend.py
     python tests_backend.py
 
-Import Scripts
-==============
-
-If you're having problems with creation of database tables then just run:
-
-    python manage.py runserver
-
-Import the tests to the database: run the server and go to (e.g.):
-
-    http://127.0.0.1:5000/tests/import/
-
-Provide the password and click "Import tests"
-
-Download IATI data
-==================
-
-This can now be accessed from the UI, or else from the command line
-
-1. Refresh all Packages from IATI Registry (via a nice UI + background process)
-2. Set "active" to True for some packages (via a nice UI)
-3. Check for all Packages where CKAN's revision_id is different from the Package's package_revision_id.
-
-You can do 1) and 2) automatically by running:
-
-    python quickstart.py
-
-    or via the browser interface, go to "Refresh from Registry"
-
-Then run 3) to update all CKAN metadata and download the file:
-
-    python download_iati_data.py
-
-    or via the  browser interface, go to "Download from Registry"
-
-In order for 3) to work, you need to have RabbitMQ running on your system and then run:
-
-    python download_backend.py
-
 You can also use `supervisor`:
 
-1. Rename the provided `supervisord.conf.tmpl` file to `supervisord.conf` to match your paths (especially the path to your virtualenv)
+1. Rename the provided `supervisord.conf.tmpl` file to `supervisord.conf`, and ensure it matches your paths (especially the path to your virtualenv)
 2. Run `supervisord -n` (Remove `-n` if you don't want to see the output, but it's probably useful for testing)
 
-Run tests
-=========
 
-There are two ways to run tests:
+Choose packages for activation
+==============================
 
-1. via the browser
+From the web interface, log in and from the top-right drop-down menu, click `manage packages`. Select the packages you want to activate and click `activate packages`. Then, you can click the drop-down menu again and choose `run tests`.
 
-    http://127.0.0.1:5000/runtests
-
-2. via the command line
-
-    python run_tests.py
-
-For either, make sure you have the backend running:
-
-    python tests_backend.py
+Remember, you need the download and tests backends working for this, which you could do directly with `./download_backend.py` or through supervisor.
 
 Survey component 
 ================
@@ -117,4 +78,3 @@ The survey component currently requires the existence of three files (could be a
     cp tests/2012_2013_organisation_mapping.csv /home/me/data/
     cp tests/2012_indicators.csv /home/me/data/
     cp tests/2012_results.csv /home/me/data/
-    cp tests/organisations_with_identifiers.csv /home/me/data/
