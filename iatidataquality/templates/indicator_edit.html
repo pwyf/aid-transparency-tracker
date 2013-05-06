@@ -27,6 +27,21 @@
         <td>Long description:</td><td><textarea name="longdescription">{{indicator.longdescription}}</textarea></td>
     </tr>
     <tr>
+        <td>Indicator type:</td><td><input type="text" name="indicator_type" value="{{indicator.indicator_type}}" /></td>
+    </tr>
+    <tr>
+        <td>Indicator category:</td><td><input type="text" name="indicator_category_name" value="{{indicator.indicator_category_name}}" /></td>
+    </tr>
+    <tr>
+        <td>Indicator subcategory:</td><td><input type="text" name="indicator_subcategory_name" value="{{indicator.indicator_subcategory_name}}" /></td>
+    </tr>
+    <tr>
+        <td>Ordinal:</td><td><input type="checkbox" name="indicator_ordinal" value="1" {% if indicator.indicator_ordinal %}checked{%endif%} /></td>
+    </tr>    
+    <tr>
+        <td>Ignore format:</td><td><input type="checkbox" name="indicator_noformat" value="1" {% if indicator.indicator_noformat %}checked{%endif%} /></td>
+    </tr>    
+    <tr>
     <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
     </tr>
     </tbody>
