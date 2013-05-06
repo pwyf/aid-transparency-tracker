@@ -199,6 +199,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                 surveydata_workflow = 'finalised'
             else:
                 surveydata = None
+                surveydata_workflow=None
         else:
             surveydata = None
         published_status = dqsurveys.publishedStatus()
