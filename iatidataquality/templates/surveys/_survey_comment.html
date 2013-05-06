@@ -17,6 +17,12 @@
     {% if not workflow.Workflow.name in surveydata %}
     {% set rows = rows+1 %}
     {% endif %}
+    {% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) %}
+    {% set rows = rows-1 %}
+    {% endif %}
+    {% if ('pwyffinal' in surveydata) %}
+    {% set rows = rows-1 %}
+    {% endif %}
     <form action="" method="post">
     <h2>Commitment indicators</h2>
     <table class="table" id="indicators">
@@ -106,11 +112,11 @@
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
         <label for="{{indicator.indicator.id}}-agree-1">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.accepted == 0) %} checked{%endif%}> Agree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0) %} checked{%endif%}> Agree</input>
         <br />
         <span class="muted">Agree</span></label>
         <label for="{{indicator.indicator.id}}-agree-0">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.accepted == 0 %} checked{%endif%}> Disagree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0 %} checked{%endif%}> Disagree</input>
         <br />
         <span class="muted">Disagree</span></label>
         </td>
@@ -188,7 +194,7 @@
         {% endif %}
         {% if (surveydata.donorcomments) and (workflow.Workflow.name != 'donorcomments') %}
         {% set data = surveydata['donorcomments'] %}
-{% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
         {% set accepted = 'Agree' %}
         {% set accepted_class = 'success' %}
         {% else %}
@@ -211,11 +217,11 @@
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
         <label for="{{indicator.indicator.id}}-agree-1">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.accepted == 0) %} checked{%endif%}> Agree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0) %} checked{%endif%}> Agree</input>
         <br />
         <span class="muted">Agree</span></label>
         <label for="{{indicator.indicator.id}}-agree-0">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.accepted == 0 %} checked{%endif%}> Disagree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0 %} checked{%endif%}> Disagree</input>
         <br />
         <span class="muted">Disagree</span></label>
         </td>
