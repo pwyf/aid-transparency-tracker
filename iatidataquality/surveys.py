@@ -118,7 +118,7 @@ def _survey_process_collect(organisation, workflow, request, organisationsurvey)
     for indicator in indicators:
         if request.form.get(indicator+"-ordinal_value"):
             published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = request.form.get('ordinal_value')
+            ordinal_value = request.form.get(indicator+"-ordinal_value")
         elif request.form.get(indicator+"-noformat"):
             published_format= dqsurveys.publishedFormat('document').id
             ordinal_value = None
@@ -158,7 +158,7 @@ def _survey_process_review(organisation, workflow, request, organisationsurvey):
     for indicator in indicators:
         if request.form.get(indicator+"-ordinal_value"):
             published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = request.form.get('ordinal_value')
+            ordinal_value = request.form.get(indicator+"-ordinal_value")
         elif request.form.get(indicator+"-noformat"):
             published_format= dqsurveys.publishedFormat('document').id
             ordinal_value = None
@@ -198,7 +198,7 @@ def _survey_process_finalreview(organisation, workflow, request, organisationsur
     for indicator in indicators:
         if request.form.get(indicator+"-ordinal_value"):
             published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = request.form.get('ordinal_value')
+            ordinal_value = request.form.get(indicator+"-ordinal_value")
         elif request.form.get(indicator+"-noformat"):
             published_format= dqsurveys.publishedFormat('document').id
             ordinal_value = None
@@ -238,7 +238,7 @@ def _survey_process_comment(organisation, workflow, request, organisationsurvey)
     for indicator in indicators:
         if request.form.get(indicator+"-ordinal_value"):
             published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = request.form.get('ordinal_value')
+            ordinal_value = request.form.get(indicator+"-ordinal_value")
         elif request.form.get(indicator+"-noformat"):
             published_format= dqsurveys.publishedFormat('document').id
             ordinal_value = None
