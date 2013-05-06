@@ -161,7 +161,9 @@ def addSurveyData(data):
             published_status = data["published_status"],
             published_source = data["published_source"],
             published_comment = data["published_comment"],
-            published_accepted = data["published_accepted"]
+            published_accepted = data["published_accepted"],
+            published_format = data.get("published_format"),
+            ordinal_value = data.get("ordinal_value")
         )
         db.session.add(newSD)
         db.session.commit()
@@ -173,7 +175,9 @@ def addSurveyData(data):
         checkSD.published_status = data["published_status"],
         checkSD.published_source = data["published_source"],
         checkSD.published_comment = data["published_comment"],
-        checkSD.published_accepted = data["published_accepted"]
+        checkSD.published_accepted = data["published_accepted"],
+        checkSD.published_format = data.get("published_format"),
+        checkSD.ordinal_value = data.get("ordinal_value")
         db.session.add(checkSD)
         db.session.commit()
         return checkSD
@@ -205,25 +209,38 @@ def getSurvey(organisation_code):
 
 def getSurveyData(organisation_code, workflow_name=None):
     if workflow_name:
-        surveyData = models.OrganisationSurveyData.query.filter(models.Organisation.organisation_code==organisation_code
+        surveyData = db.session.query(models.OrganisationSurveyData,
+                                      models.PublishedStatus,
+                                      models.PublishedFormat
+        ).filter(models.Organisation.organisation_code==organisation_code
         ).filter(models.Workflow.name==workflow_name
+        ).outerjoin(models.PublishedStatus
+        ).outerjoin(models.PublishedFormat
         ).join(models.OrganisationSurvey
         ).join(models.Organisation
         ).join(models.Workflow, (models.OrganisationSurveyData.workflow_id==models.Workflow.id)
         ).all()
     else:
-        surveyData = models.OrganisationSurveyData.query.filter(models.Organisation.organisation_code==organisation_code
-                ).join(models.OrganisationSurvey
-                ).join(models.Organisation
-                ).all()        
-    surveyDataByIndicator = dict(map(lambda x: (x.indicator_id, x), surveyData))
+        surveyData = db.session.query(models.OrganisationSurveyData,
+                                      models.PublishedStatus,
+                                      models.PublishedFormat
+        ).filter(models.Organisation.organisation_code==organisation_code
+        ).outerjoin(models.PublishedStatus
+        ).outerjoin(models.PublishedFormat
+        ).join(models.OrganisationSurvey
+        ).join(models.Organisation
+        ).all()        
+    surveyDataByIndicator = dict(map(lambda x: (x.OrganisationSurveyData.indicator_id, x), surveyData))
     return surveyDataByIndicator
 
 def getSurveyDataAllWorkflows(organisation_code):
     surveyData = db.session.query(models.OrganisationSurveyData,
-                models.PublishedStatus,
-                models.Workflow).filter(models.Organisation.organisation_code==organisation_code
+                                  models.PublishedStatus,
+                                  models.PublishedFormat,
+                                  models.Workflow
+                ).filter(models.Organisation.organisation_code==organisation_code
                 ).outerjoin(models.PublishedStatus
+                ).outerjoin(models.PublishedFormat
                 ).join(models.OrganisationSurvey
                 ).join(models.Organisation
                 ).join(models.Workflow, (models.OrganisationSurveyData.workflow_id==models.Workflow.id)
@@ -370,10 +387,10 @@ def updateWorkflow(data):
                 ).first()
     if checkW:
         checkW.name = data["name"],
-        checkW.leadsto = data["leadsto"],
+        checkW.title = data["title"],
         checkW.workflow_type = data["workflow_type"],
-        checkW.duration = data["duration"],
-        checkW.title = data["title"]
+        checkW.leadsto = data["leadsto"],
+        checkW.duration = data["duration"]
         db.session.add(checkW)
         db.session.commit()
         return checkW
