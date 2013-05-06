@@ -209,6 +209,10 @@ def publishedFormat(name=None):
                 ).all()
     return checkPF
 
+def publishedFormatsAll():
+    checkPF = models.PublishedFormat.query.all()
+    return checkPF
+
 def surveys():
     surveys = db.session.query(models.OrganisationSurvey,
                                models.Workflow,
