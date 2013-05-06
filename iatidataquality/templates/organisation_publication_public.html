@@ -33,7 +33,7 @@
     </table>
     </div>
     {% if not packages %}
-        <p class="lead">No IATI data found for this organisation:</p>
+        <p class="lead">No IATI data found for this organisation.</p>
     {% else %}
         <div class="pull-right">
             <form action="" method="GET" id="aggregation_type_form" class="form-inline"><a href="{{url_for('organisation_publication_detail', organisation_code=organisation.organisation_code)}}" class="btn">Detail</a> 
