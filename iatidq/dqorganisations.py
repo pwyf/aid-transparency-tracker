@@ -440,8 +440,8 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 'indicator_category_name': inforesult.Indicator.indicator_category_name,
                 'indicator_subcategory_name': inforesult.Indicator.indicator_subcategory_name,
                 'longdescription': inforesult.Indicator.longdescription,
-                'indicator_noformat': indicator.indicator_noformat,
-                'indicator_ordinal': indicator.indicator_ordinal
+                'indicator_noformat': inforesult.Indicator.indicator_noformat,
+                'indicator_ordinal': inforesult.Indicator.indicator_ordinal
             },
             'tests': {}
         }
