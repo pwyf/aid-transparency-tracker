@@ -7,22 +7,66 @@
             word-wrap:break-word;
         }
     </style>
-	<h3>Please provide data for {{org_indicators|count}} indicators.<code>{{workflow.Workflow.name}}</code></h3>
+	<h3>Please provide data for {{org_indicators.zero|count}} indicators.<code>{{workflow.Workflow.name}}</code></h3>
     <div class="alert alert-info">
         <h4>Check and correct last year's data</h4>
         <p>To save time, the form has been populated with 2012 data. Please make sure you check each indicator carefully as the website may have broken, or other data may now be available.</p>
     </div>
     
     <form action="" method="post">
-
+    <h2>Commitment indicators</h2>
     <table class="table" id="indicators">
+    <thead><th>Indicator</th><th>Responder</th><th>Score</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
 
+    <tbody>
+    {% for i, indicator in org_indicators["commitment"].items() %}
+        <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
+            <td><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
+                <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{indicator.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div></td>
+        <td>Researcher<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>
+        <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if surveydata %}surveydata.researcher[indicator.indicator.id].ordinal_data{%endif%}</textarea>
+        </td>
+
+        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].published_source}}{%endif%}</textarea></td>
+
+        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].published_comment}}{%endif%}</textarea></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    <hr />
+    <h2>Publication indicators</h2>
+    <table class="table" id="indicators">
     <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
 
     <tbody>
-    {% for i, indicator in org_indicators.items() %}
+    {% for i, indicator in org_indicators["zero"].items() %}
         <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
-            <td rowspan="2"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.indicator.name)}}">{{indicator.indicator.description}}</a></td>
+            <td rowspan="2"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
+                <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{indicator.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div></td>
             <td><span class="muted">2012</span></td>
             <td>
             <span class="badge badge-{{old_publication_status[twentytwelvedata[indicator.indicator.name].result].class}}" title="Researcher's initial assessment">{{ old_publication_status[twentytwelvedata[indicator.indicator.name].result].text }}</span>
@@ -41,10 +85,17 @@
         <td>
         {% for i, publishedstatus in publishedstatuses.items() %}
         <label for="{{indicator.indicator.id}}-published-{{publishedstatus.id}}">
-        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"{% if surveydata and surveydata.researcher[indicator.indicator.id].published_status == publishedstatus.id %} checked{%endif%}> {{publishedstatus.name}}</input>
-        <br />
-        <span class="muted">{{publishedstatus.name}}</span></label>
+        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"{% if surveydata and surveydata.researcher[indicator.indicator.id].published_status == publishedstatus.id %} checked{%endif%}> {{publishedstatus.title}}</input></label>
+        {% endfor %}<br />
+        {% if not indicator.indicator.indicator_noformat %}
+        <b>Format:</b>
+        {% for i, publishedformat in publishedformats.items() %}
+        <label for="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}">
+        <input type="radio" name="{{indicator.indicator.id}}-publishedformat" value="{{publishedformat.id}}" id="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}"{% if surveydata and surveydata.researcher[indicator.indicator.id].published_format == publishedstatus.id %} checked{%endif%}> {{publishedformat.title}}</input></label>
         {% endfor %}
+        {% else %}
+        <p>Format does not apply to this indicator, as it is a document.</p>
+        {% endif %}
         </td>
 
         <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].published_source}}{%endif%}</textarea></td>
