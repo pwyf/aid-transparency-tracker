@@ -263,3 +263,11 @@ def userPermissions(user_id):
     checkP = models.UserPermission.query.filter_by(user_id=user_id
             ).all()
     return checkP
+
+def surveyPermissions(organisation_code):
+    checkP = db.session.query(models.User, models.UserPermission
+            ).filter(models.UserPermission.permission_name.like("survey%")
+            ).filter(models.UserPermission.permission_value==organisation_code
+            ).join(models.UserPermission
+            ).all()
+    return checkP
