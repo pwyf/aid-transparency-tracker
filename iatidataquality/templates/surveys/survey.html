@@ -7,26 +7,28 @@
     $("table#tests").tablesorter({ sortList: [[0,0]] });
     });
     </script>
-    <h1>Survey for {{organisation.organisation_name}} <code>{{organisation.organisation_code}}</code></h1>
+    <h1>Survey for <a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
     {% if survey %}
-    <p class="lead">Survey currently in {{survey.Workflow.name}} mode; 25% complete.</p>
+    <p class="lead">Survey currently in {{survey.Workflow.title}} mode; {{pct_complete|int}}% complete.</p>
     <div class="progress">
-        <div class="bar" data-width="25"></div>
+        <div class="bar" data-width="{{pct_complete}}"></div>
     </div>
     {% else %}
     <p class="lead">No survey has been created for this organisation yet.</p>
     <p><a class="btn btn-success" href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name='create')}}"><i class="icon-plus icon-white"></i> <b>Create survey &raquo;</b></a></p>
 
     {%endif%}
-    <h3>Activity log</h3>
+    <h3>Expected activities</h3>
     <table class="table">
     <thead>
-    <th>Type</th><th>Date</th><th>Activity</th><th>User</th><th>Workflow</th><th></th>
+    <th>Type</th><th>Workflow</th><th></th>
     </thead>
     <tbody>
     {% for workflow in workflows %}
     <tr>
-    <td>STATUS</td><td>DATE</td><td>MESSAGE</td><td>USER</td><td>{{workflow.Workflow.title}}</td><td><a href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name=workflow.Workflow.name)}}">View &raquo;</a></td>
+    <td>{% if workflow.Workflow.id == survey.Workflow.id %}Ongoing{% else %}{% if workflow.Workflow.name in surveydata %}Complete{%else%}Expected{%endif%}{%endif%}</td>
+    <td>{{workflow.Workflow.title}}</td>
+    <td><a href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name=workflow.Workflow.name)}}">View &raquo;</a></td>
     </tr>
     {% endfor %}
     </tbody>
@@ -38,12 +40,11 @@
     <th>Name</th><th>Organisation</th><th>User type</th><th>Workflow</th>
     </thead>
     <tbody>
+    {% for user in users %}
     <tr>
-    <td>Mark Brough</td><td>Publish What You Fund</td><td>Researcher</td><td>Researcher</td>
+    <td><a href="{{url_for('users_edit', username=user.User.username)}}">{{user.User.name}}</a></td><td>{{user.User.organisation}}</td><td>{{user.UserPermission.permission_method}}</td><td>{{user.UserPermission.permission_name}}</td>
     </tr>
-    <tr>
-    <td>USAID staff</td><td>USAID</td><td>Donor</td><td>Review</td>
-    </tr>
+    {% endfor %}
     </tbody>
     </table>
 <script type="text/javascript">
