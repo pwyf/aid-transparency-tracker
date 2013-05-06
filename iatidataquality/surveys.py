@@ -21,7 +21,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqindicators, dqsurveys, dqorganisations
+from iatidq import dqindicators, dqsurveys, dqorganisations, dqusers
 from iatidq.models import *
 
 import usermanagement
@@ -95,11 +95,31 @@ def get_organisation_results(organisation_code, newindicators):
 def organisation_survey(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
     survey = dqsurveys.getSurvey(organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
     workflows = dqsurveys.workflows()
+    if survey.Workflow.name == 'researcher':
+        pct_complete = (1.0/7.0)*100
+    elif survey.Workflow.name == 'send':
+        pct_complete = (2.0/7.0)*100
+    elif survey.Workflow.name == 'donorreview':
+        pct_complete = (3.0/7.0)*100
+    elif survey.Workflow.name == 'pwyfreview':
+        pct_complete = (4.0/7.0)*100
+    elif survey.Workflow.name == 'donorcomments':
+        pct_complete = (5.0/7.0)*100
+    elif survey.Workflow.name == 'pwyffinal':
+        pct_complete = (6.0/7.0)*100
+    elif survey.Workflow.name == 'finalised':
+        pct_complete = (7.0/7.0)*100
+    users = dqusers.surveyPermissions(organisation_code)
+        
     return render_template("surveys/survey.html", 
                            organisation=organisation,
                            survey=survey,
-                           workflows=workflows)
+                           workflows=workflows,
+                           pct_complete=pct_complete,
+                           surveydata=surveydata,
+                           users=users)
 
 def getTimeRemainingNotice(deadline):
     time_remaining = ((deadline.date())-(datetime.utcnow().date()))
