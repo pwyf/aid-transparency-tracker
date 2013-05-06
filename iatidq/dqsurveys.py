@@ -27,14 +27,30 @@ def getIDorNone(sqlalchemy_object):
 
 def setupSurvey():
     the_publishedstatuses = [{'name': 'Always',
-      'publishedstatus_class': 'success'},
+      'publishedstatus_class': 'success',
+      'publishedstatus_value': 1 },
      {'name': 'Sometimes',
-      'publishedstatus_class': 'warning'},
+      'publishedstatus_class': 'warning',
+      'publishedstatus_value': 0},
      {'name': 'Not published',
-      'publishedstatus_class': 'important'}]
+      'publishedstatus_class': 'important',
+      'publishedstatus_value': 0}]
 
     for the_publishedstatus in the_publishedstatuses:
         addPublishedStatus(the_publishedstatus)
+
+    the_publishedformat = [{'name': 'Machine-readable (CSV, Excel)',
+      'format_class': 'success',
+      'format_value': 1 },
+     {'name': 'Website',
+      'format_class': 'warning',
+      'format_value': 0.6666},
+     {'name': 'PDF',
+      'format_class': 'important',
+      'format_value': 0.3333}]
+
+    for the_publishedformat in the_publishedformat:
+        addPublishedFormat(the_publishedformat)
 
     # workflowtypes define what sort of template is
     # displayed to the user at that workflow stage
@@ -93,11 +109,6 @@ def setupSurvey():
      'title': 'PWYF final review',
      'workflow_type': workflowTypes('finalreview').id,
      'leadsto': getIDorNone(workflows('finalised')),
-     'duration': 14},
-    {'name': 'finalised',
-     'title': 'Survey finalised',
-     'workflow_type': workflowTypes('finalised').id,
-     'leadsto': None,
      'duration': 14},
     {'name': 'finalised',
      'title': 'Survey finalised',
@@ -171,6 +182,10 @@ def publishedStatus():
     checkPS = models.PublishedStatus.query.all()
     return checkPS
 
+def publishedFormat():
+    checkPF = models.PublishedFormat.query.all()
+    return checkPF
+
 def surveys():
     surveys = db.session.query(models.OrganisationSurvey,
                                models.Workflow,
@@ -224,7 +239,22 @@ def getSurveyDataAllWorkflows(organisation_code):
     for data in surveyData:
         out[data.Workflow.name][data.OrganisationSurveyData.indicator_id] = data
     return out
-    
+
+def addPublishedFormat(data):
+    checkPF = models.PublishedFormat.query.filter_by(name=data["name"]
+                ).first()
+    if not checkPF:
+        newPF = models.PublishedFormat()
+        newPF.setup(
+            name = data["name"],
+            format_class = data["format_class"],
+            format_value = data["format_value"]
+        )
+        db.session.add(newPF)
+        db.session.commit()
+        return newPF
+    else:
+        return checkPF
 
 def addPublishedStatus(data):
     checkPS = models.PublishedStatus.query.filter_by(name=data["name"]
@@ -233,7 +263,8 @@ def addPublishedStatus(data):
         newPS = models.PublishedStatus()
         newPS.setup(
             name = data["name"],
-            publishedstatus_class = data["publishedstatus_class"]
+            publishedstatus_class = data["publishedstatus_class"],
+            publishedstatus_value = data["publishedstatus_value"]
         )
         db.session.add(newPS)
         db.session.commit()
