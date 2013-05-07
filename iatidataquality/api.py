@@ -370,4 +370,4 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
     if ((organisation_code == None) or (test_results==None)):
         abort(404)
     else:
-        return jsonify({"count": test_count, "results": test_results})
+        return jsonify({"results": test_results})
