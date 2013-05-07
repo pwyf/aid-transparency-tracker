@@ -25,10 +25,10 @@ table .purple{color:#7a43b6;border-bottom-color:#7a43b6;}
 table .headerSortUp.purple,table .headerSortDown.purple{background-color:#e2d5f0;}
 
 footer {
-    background-color: #F5F5F5;
+    background-color: #F9F9F9;
     border-top: 1px solid #E5E5E5;
     margin-top: 70px;
-    padding: 70px 0;
+    padding: 30px 0;
 }
 
 body {
@@ -56,7 +56,7 @@ body {
 
 /* Main marketing message and sign up button */
 .jumbotron {
-    margin: 60px 0;
+    margin: -20px 0 40px;
     text-align: center;
 }
 .jumbotron h1 {
@@ -66,4 +66,47 @@ body {
 .jumbotron .btn {
     font-size: 21px;
     padding: 14px 24px;
+}
+h1, .brand {
+    font-family: "Trebuchet MS";
+}
+.navbar a.brand {
+    -webkit-transition: all .2s ease-in-out;
+    -webkit-transition-property: all;
+    -webkit-transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-in-out;
+    -webkit-transition-delay: initial;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+.navbar a.brand:hover {
+    color:#000000;
+}
+.black {
+    color:#ffffff;
+    font-size:75px;
+}
+.masthead {
+    background: #365e93;
+    background: -moz-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
+    background: -webkit-gradient(linear,left bottom,right top,color-stop(0%,#365e93),color-stop(100%,#7c9ac4));
+    background: -webkit-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
+    background: -o-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
+    background: -ms-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
+    background: linear-gradient(45deg, #365e93 0%, #7c9ac4 100%) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#365e93',endColorstr='#7c9ac4',GradientType=1);
+    -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
+    -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
+    box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
+    padding:60px 0 30px;
+    margin-top:none;
+    top:0;
+    color:#ffffff;
+}
+.masthead a {
+    color:#ffffff;
+    font-weight:bold;
+}
+.masthead a:hover {
+    color:#ffffff;
 }
