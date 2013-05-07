@@ -75,26 +75,32 @@
             var url = ""; 
             jQuery.getJSON(url+"/plan/api/organisations/{{organisation.organisation_code}}" + "?callback=?", null, function(org) { 
                 success = true;
-                if (org['publisher']['publisher_code_actual'] != '{{organisation.organisation_code}}') {
-                    var schedulequalifier = ' (for ' + org['publisher']['publisher_actual'] + ')';
-                } else {
+                if (org['scores']['group'] == 'Under consideration'){
+                    var approach_text = '<i class="icon icon-info-sign"></i> It looks like IATI publication is under consideration.';
+                    var elements_text = '<i class="icon icon-question-sign"></i> Please let us know if there is an updated schedule';
                     var schedulequalifier = '';
-                }
-                var approach = org['scores']['approach'];
-                if (approach==100){
-                    var approach_text = '<i class="icon icon-ok"></i> Good publication approach: planning to publish under an open license and at least quarterly';
-                } else if (approach==50) {
-                    var approach_text = '<i class="icon icon-minus"></i> Moderate publication approach: planning to publish either under an open license or quarterly';
-                } else if (approach==0) {
-                    var approach_text = '<i class="icon icon-remove"></i> Poor publication approach: neither planning to publish under an open license nor quarterly';
-                }
-                var elements = org['scores']['elements'];
-                if (elements>=60){
-                    var elements_text = '<i class="icon icon-ok"></i> Planning to publish '+elements+'% of fields';
-                } else if (elements>=40) {
-                    var elements_text = '<i class="icon icon-minus"></i> Planning to publish '+elements+'% of fields';
-                } else if (elements>=0) {
-                    var elements_text = '<i class="icon icon-remove"></i> Planning to publish '+elements+'% of fields';
+                } else {
+                    if (org['publisher']['publisher_code_actual'] != '{{organisation.organisation_code}}') {
+                        var schedulequalifier = ' (for ' + org['publisher']['publisher_actual'] + ')';
+                    } else {
+                        var schedulequalifier = '';
+                    }
+                    var approach = org['scores']['approach'];
+                    if (approach==100){
+                        var approach_text = '<i class="icon icon-ok"></i> Good publication approach: planning to publish under an open license and at least quarterly';
+                    } else if (approach==50) {
+                        var approach_text = '<i class="icon icon-minus"></i> Moderate publication approach: planning to publish either under an open license or quarterly';
+                    } else if (approach==0) {
+                        var approach_text = '<i class="icon icon-remove"></i> Poor publication approach: neither planning to publish under an open license nor quarterly';
+                    }
+                    var elements = org['scores']['elements'];
+                    if (elements>=60){
+                        var elements_text = '<i class="icon icon-ok"></i> Planning to publish '+elements+'% of fields';
+                    } else if (elements>=40) {
+                        var elements_text = '<i class="icon icon-minus"></i> Planning to publish '+elements+'% of fields';
+                    } else if (elements>=0) {
+                        var elements_text = '<i class="icon icon-remove"></i> Planning to publish '+elements+'% of fields';
+                    }
                 }
                 jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found' + schedulequalifier).removeClass('muted');
                 jQuery(".commitment .approach").html(approach_text);
