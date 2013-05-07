@@ -142,7 +142,11 @@ def packages(package_name=None, runtime_id=None):
                     ).first()
             return runtime.Runtime, True
 
-    latest_runtime, latest = get_latest_runtime()
+    try:
+        latest_runtime, latest = get_latest_runtime()
+    except Exception:
+        latest_runtime = None
+        latest = None
 
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
