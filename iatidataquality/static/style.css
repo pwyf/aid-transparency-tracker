@@ -80,7 +80,7 @@ body {
     padding: 14px 24px;
 }
 h1, .brand {
-    font-family: "Trebuchet MS";
+    font-family: "Trebuchet MS","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .navbar a.brand {
     -webkit-transition: all .2s ease-in-out;
