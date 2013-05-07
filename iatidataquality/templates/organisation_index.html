@@ -75,6 +75,11 @@
             var url = ""; 
             jQuery.getJSON(url+"/plan/api/organisations/{{organisation.organisation_code}}" + "?callback=?", null, function(org) { 
                 success = true;
+                if (org['publisher']['publisher_code_actual'] != '{{organisation.organisation_code}}') {
+                    var schedulequalifier = ' (for ' + org['publisher']['publisher_actual'] + ')';
+                } else {
+                    var schedulequalifier = '';
+                }
                 var approach = org['scores']['approach'];
                 if (approach==100){
                     var approach_text = '<i class="icon icon-ok"></i> Open license and at least quarterly publication';
@@ -91,7 +96,7 @@
                 } else if (elements>=0) {
                     var elements_text = '<i class="icon icon-remove"></i> '+elements+'% of fields';
                 }
-                jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found').removeClass('muted');
+                jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found' + schedulequalifier).removeClass('muted');
                 jQuery(".commitment .approach").html(approach_text);
                 jQuery(".commitment .elements").html(elements_text);
                 jQuery(".commitment .review").html('<a class="btn btn-success" href="'+url+'/plan/organisations/{{organisation.organisation_code}}">Review Commitment »</a>');
