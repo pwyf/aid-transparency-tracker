@@ -151,7 +151,11 @@ def login():
                 flash("Logged in!", "success")
                 identity_changed.send(current_app._get_current_object(),
                           identity=Identity(user.id))
-                return redirect(request.args.get("next") or url_for("home"))
+                if request.args.get("next"):
+                    redir_url = request.script_root + request.args.get("next")
+                else:
+                    redir_url = url_for("home")
+                return redirect(redir_url)
             else:
                 flash("Sorry, but you could not log in.", "error")
         else:
@@ -174,4 +178,8 @@ def logout():
                           identity=AnonymousIdentity())
 
     flash('Logged out', 'success')
-    return redirect(request.args.get('next') or '/')
+    if request.args.get("next"):
+        redir_url = request.script_root + request.args.get("next")
+    else:
+        redir_url = url_for("home")
+    return redirect(redir_url)
