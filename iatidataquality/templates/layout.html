@@ -93,6 +93,15 @@
     <div class="alert alert-info alert-block">
     <p><b>This site is in beta.</b> Please get in touch if you have feedback or notice any bugs.</p>
     </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+              <div class="alert alert-{{category}} flashmessage">
+                <p>{{message}}</p>
+                </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
   {% endif %}
         {% block content %}
         {% endblock %}
