@@ -79,6 +79,10 @@
                     var approach_text = '<i class="icon icon-info-sign"></i> It looks like IATI publication is under consideration.';
                     var elements_text = '<i class="icon icon-question-sign"></i> Please let us know if there is an updated schedule';
                     var schedulequalifier = '';
+                } else if {
+                    var approach_text = '<i class="icon icon-info-sign"></i> It looks like you\'re not planning to publish to IATI.';
+                    var elements_text = '<i class="icon icon-question-sign"></i> Please let us know if there is an updated schedule';
+                    var schedulequalifier = '';
                 } else {
                     if (org['publisher']['publisher_code_actual'] != '{{organisation.organisation_code}}') {
                         var schedulequalifier = ' (for ' + org['publisher']['publisher_actual'] + ')';
