@@ -59,6 +59,18 @@ body {
     margin: -20px 0 40px;
     text-align: center;
 }
+/*.jumbotron:after {
+    content: '';
+    display: block;
+    position: absolute;
+    margin-top:40px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url(img/pwyf_medium.png) no-repeat top left;
+    opacity: 1;
+}*/
 .jumbotron h1 {
     font-size: 72px;
     line-height: 1;
