@@ -90,11 +90,11 @@
                 }
                 var elements = org['scores']['elements'];
                 if (elements>=60){
-                    var elements_text = '<i class="icon icon-ok"></i> '+elements+'% of fields';
+                    var elements_text = '<i class="icon icon-ok"></i> Planning to publish '+elements+'% of fields';
                 } else if (elements>=40) {
-                    var elements_text = '<i class="icon icon-minus"></i> '+elements+'% of fields';
+                    var elements_text = '<i class="icon icon-minus"></i> Planning to publish '+elements+'% of fields';
                 } else if (elements>=0) {
-                    var elements_text = '<i class="icon icon-remove"></i> '+elements+'% of fields';
+                    var elements_text = '<i class="icon icon-remove"></i> Planning to publish '+elements+'% of fields';
                 }
                 jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found' + schedulequalifier).removeClass('muted');
                 jQuery(".commitment .approach").html(approach_text);
