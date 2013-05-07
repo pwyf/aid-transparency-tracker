@@ -65,7 +65,7 @@ def organisations_index(organisation_code=None):
             if "coverage" in results:
                 try:
                     yield int(results["coverage_current"])
-                except TypError:
+                except TypeError:
                     yield 0
 
     organisation = dqorganisations.organisations(organisation_code)
