@@ -122,3 +122,13 @@ h1, .brand {
 .masthead a:hover {
     color:#ffffff;
 }
+
+/* Main marketing message and sign up button */
+.jumbotron-index {
+    margin: 40px 0 60px;
+    text-align: center;
+}
+.jumbotron-index h1 {
+    font-size: 80px;
+    line-height: 1;
+}
