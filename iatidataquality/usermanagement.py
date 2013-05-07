@@ -178,8 +178,5 @@ def logout():
                           identity=AnonymousIdentity())
 
     flash('Logged out', 'success')
-    if request.args.get("next"):
-        redir_url = request.script_root + request.args.get("next")
-    else:
-        redir_url = url_for("home")
+    redir_url = url_for("home")
     return redirect(redir_url)
