@@ -132,3 +132,30 @@ h1, .brand {
     font-size: 80px;
     line-height: 1;
 }
+
+.publish-branding {
+    background: #EA7F1E;
+    background: -moz-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
+    background: -webkit-gradient(linear,left bottom,right top,color-stop(0%,#365e93),color-stop(100%,#7c9ac4));
+    background: -webkit-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
+    background: -o-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
+    background: -ms-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
+    background: linear-gradient(45deg, #365e93 0%, #7c9ac4 100%) repeat scroll 0 0 transparent;
+    margin-top:none;
+    top:0;
+    color:#ffffff;
+}
+.publish-branding a.dropdown-toggle {
+    color:#ffffff !important;
+    text-shadow: 0 1px 0 #777777 !important;
+}
+.publish-branding.open a.dropdown-toggle {
+    background: #365e93 !important;
+}
+.navbar {
+    margin-bottom:19px;
+}
+.publish-branding .dropdown-toggle .caret {
+    border-bottom-color: #FFFFFF !important;
+    border-top-color: #FFFFFF !important;
+}
