@@ -89,7 +89,7 @@
         $("#tr"+result_id+"h"+hierarchy_id).after('<tr id="tr-pagination-'+ result_id +'-hierarchy-'+hierarchy_id+'" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="'+(page-1)+'" href="#">Prev</a></li><li><a class="'+page+'" href="#">'+page+'</a></li><li><a class="'+(page+1)+'" href="#">'+(page+1)+'</a></li><li><a class="'+(page+2)+'" href="#">'+(page+2)+'</a></li><li><a class="'+(page+3)+'" href="#">'+(page+3)+'</a></li><li><a class="'+(page+4)+'" href="#">'+(page+4)+'</a></li><li><a class="'+(page+1)+'" href="#">Next</a></li></ul></div></td></tr><tr id="tr-result-' + result_id + '"><td class="results" colspan="5"><span class="muted loading_data">Loading data...</span></td></tr>');
 
         $('.loading_data').show();
-        $.getJSON("/api/organisations/{{organisation.organisation_code}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
+        $.getJSON("/publish/api/organisations/{{organisation.organisation_code}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
             var items = [];
             $.each(data["results"], function(key, val){
                 if (val == '1') {
@@ -147,7 +147,7 @@
 
             $("#tr"+result_id+"h"+hierarchy_id).after('<tr id="tr-pagination-'+ result_id +'-hierarchy-'+hierarchy_id+'" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="'+(page-1)+'" href="#">Prev</a></li><li><a class="'+page+'" href="#">'+page+'</a></li><li><a class="'+(page+1)+'" href="#">'+(page+1)+'</a></li><li><a class="'+(page+2)+'" href="#">'+(page+2)+'</a></li><li><a class="'+(page+3)+'" href="#">'+(page+3)+'</a></li><li><a class="'+(page+4)+'" href="#">'+(page+4)+'</a></li><li><a class="'+(page+1)+'" href="#">Next</a></li></ul></div></td></tr><tr id="tr-result-' + result_id + '"><td class="results" colspan="5"><span class="muted loading_data">Loading data...</span></td></tr>');
             $('.loading_data').show();
-            $.getJSON("/api/organisations/{{organisation.organisation_code}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
+            $.getJSON("/publish/api/organisations/{{organisation.organisation_code}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
                 var items = [];
                 $.each(data["results"], function(key, val){
                     if (val == '1') {
