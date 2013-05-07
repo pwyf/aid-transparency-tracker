@@ -24,7 +24,7 @@
             <h1>Publication</h1>
             {% if summary_data[0]>0 %}
             <p><i class="icon icon-ok"></i> IATI data found</p>
-            <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}% (for {{summary_data[1]}} indicators)</p>
+            <p><i class="icon icon-info-sign"></i> Average score: {{summary_data[0]|int}}% (for {{summary_data[1]}} indicators - this is based only on the automated data checks, so it will increase during the survey process)</p>
             <p><i class="icon icon-refresh"></i> Publishing frequency: <span title="{{organisation.frequency_comment}}">{{organisation.frequency}}</span></p>
             <!--<p><i class="icon {% if coverage.pct > 50 %}icon-ok{% else %}icon-remove{%endif%}"></i> Coverage: <span id="publisher_coverage">{{coverage.pct}}% ({{coverage.found}} out of {{coverage.total}})</span></p>-->
             <p>
