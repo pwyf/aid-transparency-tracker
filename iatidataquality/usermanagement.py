@@ -165,7 +165,6 @@ def login():
              loggedinuser=current_user)
 
 @app.route('/logout/')
-@login_required
 def logout():
     logout_user()
 
