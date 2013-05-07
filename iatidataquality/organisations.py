@@ -63,7 +63,10 @@ def organisations_index(organisation_code=None):
             runtime, = runtime
             results = iatidq.inforesult.info_results(package_id, runtime, organisation.id)
             if "coverage" in results:
-                yield int(results["coverage_current"])
+                try:
+                    yield int(results["coverage_current"])
+                except TypError:
+                    yield 0
 
     organisation = dqorganisations.organisations(organisation_code)
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
