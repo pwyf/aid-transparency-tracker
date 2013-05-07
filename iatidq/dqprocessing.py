@@ -89,10 +89,8 @@ def get_results(runtime, package_id, agg_type):
 
     if result_identifiers:
         results = models.Result.query.filter(
-            models.Result.runtime_id == runtime
-            ).filter(
-            models.Result.package_id == package_id
-            ).filter(
+            models.Result.runtime_id == runtime,
+            models.Result.package_id == package_id,
             models.Result.result_identifier.in_(result_identifiers)
             ).all()
     else:
@@ -102,10 +100,8 @@ def get_results(runtime, package_id, agg_type):
     print "doing res2"
 
     results2 = models.Result.query.filter(
-        models.Result.runtime_id == runtime
-        ).filter(
-        models.Result.package_id == package_id
-        ).filter(
+        models.Result.runtime_id == runtime,
+        models.Result.package_id == package_id,
         models.Result.result_identifier == None
         ).all()
 
