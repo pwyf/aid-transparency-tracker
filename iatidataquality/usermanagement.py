@@ -133,6 +133,8 @@ def on_identity_loaded(sender, identity):
             identity.provides.add(EditTestNeed(unicode(permission.permission_value)))
         if (permission.permission_name=='organisation' and permission.permission_method=='view'):
             identity.provides.add(ViewOrganisationNeed(unicode(permission.permission_value)))
+        if (permission.permission_name=='organisation_feedback' and permission.permission_method=='create'):
+            identity.provides.add((unicode(permission.permission_name), unicode(permission.permission_method), unicode(permission.permission_value))
         if (permission.permission_method=='role'):
             identity.provides.add(RoleNeed(permission.permission_name))
         if (permission.permission_name.startswith('survey')):
