@@ -87,12 +87,12 @@
       </div>
     </div>
 
+  {% if active_page != "index" %}
   <div class="container">
-    {% if active_page != "index" %}
     <div class="alert alert-info alert-block">
     <p><b>This site is in beta.</b> Please get in touch if you have feedback or notice any bugs.</p>
     </div>
-    {%endif%}
+  {%endif%}
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category, message in messages %}
@@ -105,18 +105,19 @@
 
         {% block content %}
         {% endblock %}
+  {% if active_page != "index" %}
   </div>
+  {%endif%}
     <script type="text/javascript">
         $('.flashmessage').fadeIn('slow');
     </script>
     <footer class="footer">
     <div class="container">
     <div class="pull-left">
-        <p>A project of <a href="http://publishwhatyoufund.org">Publish What You Fund</a>, the global campaign for aid transparency</p>
+        <p><a href="http://publishwhatyoufund.org"><img src="{{url_for('static', filename='img/pwyf_small.png')}}" alt="A project of Publish What You Fund" /></a></p>
         <p><a href="https://github.com/markbrough/IATI-Data-Quality">Source code on Github</a>, released under the <a href="http://www.gnu.org/licenses/agpl-3.0.html">AGPL v3.0 License</a>.</p>
         <p><a href="http://aidtransparency.net">International Aid Transparency Initiative (IATI)</a></p>
-        <p><a href="http://iatiregistry.org">IATI Registry</a></p>
-        <p><a href="http://iatistandard.org">IATI Standard</a></p>
+        <p><a href="http://iatiregistry.org">IATI Registry</a> &ndash; <a href="http://iatistandard.org">IATI Standard</a></p>
     </div>
     <div class="pull-right">
         <p>Uses some great open source code:</p>

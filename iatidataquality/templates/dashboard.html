@@ -1,34 +1,31 @@
 {% set active_page='index'%}{% extends "layout.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<style>
-.black {
-    color:#000000;
-    font-size:75px;
-}
-</style>
-    <div class="jumbotron">
-    <h1><span class="black">Publish</span></h1>
-    <p class="lead">Donors have begun publishing more data about their aid activities.</p>
-    <p class="lead">You can find our initial assessment of the quality of this data here, and we'll release more in October as part of our <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/">2013 Aid Transparency Index</a>.</p>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="span6">
-            <h1>Organisations</h1>
-            <p class="lead">See data from individual organisations</p>
-            <p>
-            <a class="btn btn-primary" href="{{url_for('organisations')}}">Organisations »</a>
-            </p>
+    <div class="jumbotron masthead">
+        <div class="container">
+        <h1><span class="black">Publish</span></h1>
+        <p class="lead">Donors have begun publishing more data about their aid activities.</p>
+        <p class="lead">You can find our initial assessment of the quality of this data here, and we'll release more in October as part of our <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/">2013 Aid Transparency Index</a>.</p>
         </div>
-        <div class="span6">
-            <h1>Data verification</h1>
-            <p class="lead">Donors and CSO partners can log in to confirm their data is correct.</p>
-            <form class="form-inline" action="{{url_for('login')}}" method="post">
-            <input name="username" type="text" class="input-small" placeholder="Username">
-            <input name="password" type="password" class="input-small" placeholder="Password">
-            <button type="submit" class="btn">Sign in</button>
-            </form>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <h1>Organisations</h1>
+                <p class="lead">See data from individual organisations</p>
+                <p>
+                <a class="btn btn-primary" href="{{url_for('organisations')}}">Organisations »</a>
+                </p>
+            </div>
+            <div class="span6">
+                <h1>Data verification</h1>
+                <p class="lead">Donors and CSO partners can log in to confirm their data is correct.</p>
+                <form class="form-inline" action="{{url_for('login')}}" method="post">
+                <input name="username" type="text" class="input-small" placeholder="Username">
+                <input name="password" type="password" class="input-small" placeholder="Password">
+                <button type="submit" class="btn">Sign in</button>
+                </form>
+            </div>
         </div>
     </div>
 
