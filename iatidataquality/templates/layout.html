@@ -92,12 +92,11 @@
     <div class="alert alert-info alert-block">
     <p><b>This site is in beta.</b> Please get in touch if you have feedback or notice any bugs.</p>
     </div>
+  {% endif %}
         {% block content %}
         {% endblock %}
+  {% if active_page != "index" %}
   </div>
-  {% else %}
-        {% block content %}
-        {% endblock %}
   {%endif%}
     <script type="text/javascript">
         $('.flashmessage').fadeIn('slow');
