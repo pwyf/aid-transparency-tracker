@@ -103,7 +103,7 @@
             result_id = r[1]
             hierarchy_id=r[2]
             $("#tr"+result_id+"h"+hierarchy_id).after('<tr class="hidden-results-tr" id="tr-result-' + result_id + '"><td colspan="5"></td></tr>');
-            $.getJSON("/api/packages/{{package.package_name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities", function(data){
+            $.getJSON("/publish/api/packages/{{package.package_name}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities", function(data){
                 var items = [];
                 $.each(data, function(key, val){
                     if (val == '1') {
