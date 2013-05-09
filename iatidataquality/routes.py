@@ -33,10 +33,10 @@ def internal_server_error(e):
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user), 500
 
-@app.route('/about/data_quality')
+@app.route('/info/data_quality')
 def about_dq():
     return render_template("about_dq.html", loggedinuser=current_user)
 
-@app.route('/about/survey')
+@app.route('/info/survey')
 def about_survey():
     return render_template("about_survey.html", loggedinuser=current_user)
