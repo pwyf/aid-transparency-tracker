@@ -256,7 +256,7 @@ def updateOrganisation(organisation_code, data):
         return False
 
     checkP.organisation_code = data["organisation_code"]
-    checkP.organisation_name = data["organisation_code"]
+    checkP.organisation_name = data["organisation_name"]
     db.session.add(checkP)
     db.session.commit()
     return checkP
