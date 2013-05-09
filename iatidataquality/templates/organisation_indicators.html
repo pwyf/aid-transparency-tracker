@@ -21,14 +21,14 @@
             <div class="span12">
                 <h2>An initial assessment of your publication is below.</h2>
                 <p class="lead">A new graduated scoring methodology is used for some of the publication
-				data indicators. The scoring takes into account the format that the data is provided
+				data indicators in the 2013 Index. The scoring takes into account the format that the data is provided
 				in, depending on how accessible and comparable the information is.</p>
             </div>
         </div>
         <hr />
         <div class="row">
             <div class="span6">
-                <h4>Indicators published to IATI</h4>
+                <h4>Indicators published in IATI-XML format</h4>
                 <div class="pull-right"><a class="btn btn-mini scrollto" href="#iati"><b>Jump to indicators</b> <i class="icon-chevron-down"></i></a></div>
                 <p>Maximum score: 100 points</p>
                 <h5>Guidelines</h5>
@@ -76,40 +76,33 @@
             </form>
         </div>
         <h3>Published to IATI</h3>
-        <p class="lead">Each indicator published to IATI can score up
-        to 100 points based on the quality of the data.</p>
+        <p class="lead">Each indicator published in IATI-XML format can score up
+        to 100 points based on the quality of publication.</p>
 
 		<p>Quality of the publication is determined by running a
-		  series of automated tests on your data, which you can see
-		  with the <i class="icon icon-chevron-down"></i> icon. The
+		  series of automated tests on your IATI-XML data, which you can see
+		  with the <i class="icon icon-chevron-down"></i> icon. These
 		  data quality tests return a "pass" or "fail" result for each
-		  activity or organisation file included in donors' data
+		  activity or organisation file included in your data
 		  packages.</p>
 
         <h4>Scoring criteria</h4>
-        <p>For each indicator found in your IATI data:</p>
+        <p>For each indicator in IATI-XML format:</p>
         <ul>
             <li>50 points are received for publication in an
 			  accessible format, if there is at least one "pass"
 			  result on tests run for that indicator</li>
 
-            <li>50 points are received based on the percentage of a
-			  donor's total activities published to IATI which pass
-			  the data quality tests</li>
-
-			<li>For indicators scored based on quality and frequency of publication,
-			  publishing quarterly or frequently allows a donor to achieve the
-			  maximum score of 100 points, whereas a donor will be awarded 90%
-			  of the data quality score if information is published less often
-			  (up to once in twelve months).
-			</li>
+            <li>50 points are received based on the percentage of 
+			 your total activities published to IATI which pass the data quality tests and on the frequency of your publication</li>
         </ul>
+        <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
         {% if organisation.frequency == "less than quarterly" %}
         <div class="alert alert-info">
             <h3>Frequency of publication</h3>
             <p class="lead">It looks like you publish less often than
             quarterly, so the maximum you can score for IATI data is
-            95 points. The total points for each indicator have been
+            90 points. The total points for the relevant indicators have been
             adjusted accordingly.</p>
         </div>
         {% set freq=0.9 %}
@@ -238,15 +231,16 @@
         </div>
         {% endif %}
         <h3>Published in other formats</h3>
-        <p class="lead">Each indicator not published to IATI, but published elsewhere (e.g. on your website) can score up to 50 points</p>
+        <p class="lead">Each indicator not published in IATI-XML format, but published in other formats (e.g. on your website) can score up to 50 points</p>
         <h4>Scoring criteria</h4>
-        <p>For each indicator, points are received if that indicator is <label class="label label-success">Always published</label>. The points received depend on the format the information is available in.</p>
+        <p>For each indicator, points are received if that indicator is <label class="label label-success">Always published</label>. For indicators for which scores are graduated on the basis of format, the information is scored as follows:</p>
         <ul>
-            <li>10 points: PDF file</li>
-            <li>30 points: Website</li>
+            <li>16.67 points: PDF file</li>
+            <li>33.33 points: Website</li>
             <li>50 points: CSV, Excel, XML, or other structured, machine-readable format</li>
         </ul>
-        <p>If published, documents receive the full 50 points, since it would not make sense for the information to be provided in a structured format.</p>
+        <p>For indicators for indicators for which scores are graduated based on accesibility, information published in all non IATI-XML formats is awarded 50 points.</p>
+        <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
         <table class="table" id="results_noniati">
         <thead>
         <th>Category</th>
