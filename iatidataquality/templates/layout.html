@@ -45,11 +45,12 @@
             <ul class="nav">
               <li class="dropdown publish-branding">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <b>Publish</b>
+                <b>Home</b>
                 <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                   <li ><a href="/plan/">Plan</a></li>
+                  <li ><a href="/publish/">Publish</a></li>
                 </ul>
               </li>
               <li{% if active_page == "home" %} class="active"{%endif%}><a href="{{url_for('home')}}">Home</a></li>
