@@ -209,7 +209,7 @@ def setup(options):
     user = dqusers.addUser({'username': "admin",
                             'password': "CHANGEME"
                           })
-    permission = dqusers.addUserPermissions({
+    permission = dqusers.addUserPermission({
                             'user_id': user.id,
                             'permission_name': 'admin',
                             'permission_method': 'role'
