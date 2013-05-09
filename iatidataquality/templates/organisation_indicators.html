@@ -76,19 +76,34 @@
             </form>
         </div>
         <h3>Published to IATI</h3>
-        <p class="lead">Each indicator published to IATI can score up to 100 points</p>
+        <p class="lead">Each indicator published to IATI can score up
+        to 100 points based on the quality of the data.</p>
+
+		<p>Quality of the publication is determined by running a
+		  series of automated tests on your data, which you can see
+		  with the <i class="icon icon-chevron-down"></i> icon. The
+		  data quality tests return a "pass" or "fail" result for each
+		  activity or organisation file included in donors' data
+		  packages.</p>
 
         <h4>Scoring criteria</h4>
         <p>For each indicator found in your IATI data:</p>
         <ul>
-            <li>50 points are received for publication in an accessible format</li>
-            <li>50 points are received depending on the quality of the IATI publication</li>
-            <li>Quality of the publication is determined by running a series of automated tests on your data, which you can see with the <i class="icon icon-chevron-down"></i> icon</li>
+            <li>50 points are received for publication in an
+			  accessible format, if there is at least one "pass"
+			  result on tests run for that indicator</li>
+
+            <li>50 points are received based on the percentage of a
+			  donor's total activities published to IATI which pass
+			  the data quality tests</li>
         </ul>
         {% if organisation.frequency == "less than quarterly" %}
         <div class="alert alert-info">
             <h3>Frequency of publication</h3>
-            <p class="lead">It looks like you publish less often than quarterly, so the maximum you can score for IATI data is 95 points. The total points for each indicator have been adjusted accordingly.</p>
+            <p class="lead">It looks like you publish less often than
+            quarterly, so the maximum you can score for IATI data is
+            95 points. The total points for each indicator have been
+            adjusted accordingly.</p>
         </div>
         {% set freq=0.9 %}
         {% else %}
