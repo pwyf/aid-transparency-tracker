@@ -32,3 +32,11 @@ def internal_server_error(e):
     return render_template('500.html', error=e, 
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user), 500
+
+@app.route('/about/data_quality')
+def about_dq():
+    return render_template("about_dq.html", loggedinuser=current_user)
+
+@app.route('/about/survey')
+def about_survey():
+    return render_template("about_survey.html", loggedinuser=current_user)
