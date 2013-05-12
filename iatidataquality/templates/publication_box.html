@@ -20,9 +20,6 @@
 
             {% if surveydata %}
             <p><i class="icon icon-info-sign"></i> Survey data now available</p>
-            <p><a class="btn btn-success" 
-				  href="{{url_for('organisation_publication', 
-						organisation_code=organisation.organisation_code)}}">Review Publication »</a></p>
             {% else %}
 			<p>Survey data collection underway</p>
             {% endif %}
