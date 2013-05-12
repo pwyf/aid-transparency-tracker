@@ -15,7 +15,7 @@
     <p><a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', indicatorgroup=indicatorgroup.name)}}"><i class="icon-download"></i> <b>CSV of associated tests</b></a></p>
     <p><a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', indicatorgroup=indicatorgroup.name, option="no")}}"><i class="icon-download"></i> <b>CSV of unassociated tests</b></a></p>
     </div>
-	<h1>Indicator Group {{indicatorgroup.description}} <code>{{indicatorgroup.name}}</code></h1>
+	<h1>{{indicatorgroup.description}} <code>{{indicatorgroup.name}}</code></h1>
 	<h3>Indicators</h3>
     <table class="table" id="tests">
     <thead>
