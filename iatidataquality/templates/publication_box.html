@@ -14,14 +14,16 @@
 			  <i class="icon-download"></i> Data (CSV)</a>
             </p>
             {% else %}
-            {% if surveydata %}
             <p><i class="icon icon-remove"></i> No IATI data found</p>
+            <p><a class="btn btn-warning" href="http://aidtransparency.net">Publish to IATI »</a></p>
+            {% endif %}
+
+            {% if surveydata %}
             <p><i class="icon icon-info-sign"></i> Survey data now available</p>
             <p><a class="btn btn-success" 
 				  href="{{url_for('organisation_publication', 
 						organisation_code=organisation.organisation_code)}}">Review Publication »</a></p>
             {% else %}
-            <p><i class="icon icon-remove"></i> No IATI data found</p>
-            <p><a class="btn btn-warning" href="http://aidtransparency.net">Publish to IATI »</a></p>
+			<p>Survey data collection underway</p>
             {% endif %}
-            {% endif %}
+
