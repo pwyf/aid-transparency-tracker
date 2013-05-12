@@ -381,6 +381,14 @@
         );
     });
     $('#aggregation_type').change(function(){
+	    var agg_type = $('#aggregation_type_form select').val();
+	    if (agg_type == 1) {
+           // changing to all data
+	       alert("Switching to show all test results; this might include data from several years ago.");
+        } else {
+           // changing to current data
+           alert("Switching to show only data pertaining to the last thirteen months.");
+        }
         $('#aggregation_type_form').submit();
     });
 
