@@ -71,7 +71,6 @@ def users_edit(username=None):
         user = dqusers.user_by_username(username)
         permissions = dqusers.userPermissions(user.id)
         if request.method == 'POST':
-            return "handling edit"
             if user:
                 flash('Successfully updated user.', 'success')
             else:
