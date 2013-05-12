@@ -2,6 +2,34 @@
 {% block title %}About the Data Quality Tool{% endblock %}
 
 {% block content %}
-  <h1>About the Data Quality Tool</h1>
-  <p>TBD</p>
+<h1>Purpose</h1>
+  <p>Several organisations have started publishing information on their aid spending to the International Aid Transparency Initiative (IATI) Registry.  While a number of tools have been developed to explore, access and visualise data published to the Registry, at present, it is difficult to obtain an overall picture of the quality of the data being published to the Registry.</p>
+  <p>It is generally recognised by IATI publishers that there is room for improvement in the type and coverage of information being published to the Registry. In some cases, this is because of relatively minor problems inherent in the process of publishing information on large volumes of data, while in others, it relates to bigger problems of non-delivery on commitments and implementation schedules.</p>
+  <p>Given that the number of publishers is likely to rise significantly as organisations begin to publish in line with their commitments under the common standard, there is a clear need for a mechanism to provide feedback on the quality of the data to ensure that the ultimate purpose behind publishing to IATI is met – making timely, comprehensive, comparable and forward looking information on development cooperation available to all stakeholders. The Data Quality too has been developed in response to this need.</p>
+<hr />
+<h3>Methodology</h3>
+  <p>The quality of data published in IATI XML is assessed by running a series of tests on all activity and organisation data packages currently being published to the Registry. These tests have been designed to assess the availability, comprehensiveness and comparability of the information and to determine whether an organisation’s publication conforms to the IATI standard appropriately. Most of the tests have been derived directly from IATI schemas provide formats for reporting data on various fields to the IATI Registry. Some additional tests have been designed to ensure that data published in IATI XML is done in a manner which allows for comparison across donors.</p>
+  <p>For the purposes of the 2013 Index, tests are run against only those activities with planned or actual end dates within the previous 13 months. This is to ensure that the information gathered relates to the period being assessed in the Index, i.e. information published on or after April 1, 2012 or that relates to that period. These same tests can also be run against all IATI data published by an organisation. The Data Quality tool adopts an expansive approach to testing, whereby the tests run on the data are flexible and can be expanded in the future to potentially find out a large amount of comparative information about IATI data.</p>
+  <p>For a complete list of the tests being run for determining indicator scores for the 2013 Index, visit the ‘tests’ section of the Data Quality tool.</p>
+<hr />
+<h3>Results and aggregation</h3>
+  <p>The tool returns the following results for each test run on a given data package:
+  <ol>
+        <li>A pass or fail result for each file within a data package;</li>
+        <li>Percentage of activity or organisation files within a data package that have passed the test.</li>
+  </ol>
+  </p>
+  <P>The results also contain information on:
+   <ol>
+        <li>The test ID;</li>
+        <li>The data package ID;</li>
+        <li>The runtime ID;</li>
+        <li>The IATI activity identifier (where applicable)</li>
+  </ol>
+  </p>
+  <p>Test results are currently aggregated – based on the 2013 Aid Transparency Index indicators they pertain to – in order to produce scores for these indicators. The tests underlying the measurement of each indicator can be viewed by clicking on the indicator names in the publication page for the relevant organisation. Click <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/">here</a> for a detailed explanation of how data quality tests are used for scoring indicators in the 2013 Index.</p>
+<hr />
+<h3>Process</h3>
+  <p> Martin needs to provide text for this</p>
+<hr />
 {% endblock %}
