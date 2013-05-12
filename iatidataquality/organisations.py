@@ -254,7 +254,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
 
-def _organisation_publication_detail(organisation_code, aggregation_type):
+def _organisation_publication_detail(organisation_code, aggregation_type, is_admin):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
@@ -270,14 +270,15 @@ def _organisation_publication_detail(organisation_code, aggregation_type):
                           results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
-                         admin=usermanagement.check_perms('admin'),
+                         admin=is_admin,
                          loggedinuser=current_user)
     return txt
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
 def organisation_publication_detail(organisation_code=None):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
-    return _organisation_publication_detail(organisation_code, aggregation_type)
+    is_admin = usermanagement.check_perms('admin')
+    return _organisation_publication_detail(organisation_code, aggregation_type, is_admin)
 
 
 @app.route("/organisations/publication.csv")
