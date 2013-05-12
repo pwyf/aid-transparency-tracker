@@ -142,6 +142,7 @@ def on_identity_loaded(sender, identity):
 
     for permission in permissions:
         set_permissions(permission)
+    db.session.commit()
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():
