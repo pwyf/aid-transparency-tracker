@@ -256,6 +256,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
 def organisation_publication_detail(organisation_code=None):
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
 
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
@@ -263,7 +264,6 @@ def organisation_publication_detail(organisation_code=None):
     packages = dqorganisations.organisationPackages(
         organisation.organisation_code)
 
-    aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
     aggregate_results = dqorganisations._organisation_detail(organisation, aggregation_type)
