@@ -91,7 +91,7 @@ def check_perms(name, method=None, kwargs=None):
         return False
 
     if name == 'organisation':
-        if not kwards:
+        if not kwargs:
             return False
         value = kwargs['organisation_code']
         if method == 'view':
