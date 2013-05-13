@@ -92,19 +92,27 @@ def test_activity(runtime_id, package_id, result_identifier,
                   result_hierarchy, data, test_functions, codelists,
                   organisation_id):
 
-    def add_result(test_id, the_result):
-        with db.session.begin():
-            newresult = models.Result()
-            newresult.runtime_id = runtime_id
-            newresult.package_id = package_id
-            newresult.test_id = test_id
-            newresult.result_data = the_result
-            newresult.result_identifier = result_identifier
-            newresult.result_hierarchy = result_hierarchy
-            newresult.organisation_id = organisation_id
-            db.session.add(newresult)
+    results = []
 
-    return test_elements(data, test_functions, codelists, add_result)
+    def add_result(test_id, the_result):
+        results.append((test_id, the_result))
+
+    def add_results():
+        with db.session.begin():
+            for test_id, the_result in results:
+                newresult = models.Result()
+                newresult.runtime_id = runtime_id
+                newresult.package_id = package_id
+                newresult.test_id = test_id
+                newresult.result_data = the_result
+                newresult.result_identifier = result_identifier
+                newresult.result_hierarchy = result_hierarchy
+                newresult.organisation_id = organisation_id
+                db.session.add(newresult)
+
+    res = test_elements(data, test_functions, codelists, add_result)
+    add_results()
+    return res
 
 def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
 
@@ -123,19 +131,27 @@ def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
 def test_organisation(runtime_id, package_id, data, test_functions, codelists,
                   organisation_id):
     
-    def add_result(test_id, the_result):
-        with db.session.begin():
-            newresult = models.Result()
-            newresult.runtime_id = runtime_id
-            newresult.package_id = package_id
-            newresult.test_id = test_id
-            newresult.result_data = the_result
-            newresult.result_identifier = None
-            newresult.result_hierarchy = None
-            newresult.organisation_id = organisation_id
-            db.session.add(newresult)
+    results = []
 
-    return test_organisation_data(data, test_functions, codelists, add_result)    
+    def add_result(test_id, the_result):
+        results.append((test_id, the_result))
+
+    def add_results():
+        with db.session.begin():
+            for test_id, the_result in results:
+                newresult = models.Result()
+                newresult.runtime_id = runtime_id
+                newresult.package_id = package_id
+                newresult.test_id = test_id
+                newresult.result_data = the_result
+                newresult.result_identifier = None
+                newresult.result_hierarchy = None
+                newresult.organisation_id = organisation_id
+                db.session.add(newresult)
+
+    res = test_organisation_data(data, test_functions, codelists, add_result)
+    add_results()
+    return res
 
 def parse_xml(file_name):
     try:
