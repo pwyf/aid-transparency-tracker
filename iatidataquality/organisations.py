@@ -176,7 +176,9 @@ def integerise(data):
 
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
-    check_perms = usermanagement.check_perms('organisation', 'view', {'organisation_code': organisation_code})
+    check_perms = usermanagement.check_perms('organisation', 'view', 
+                                             {'organisation_code': 
+                                              organisation_code})
     
     if check_perms:
         aggregation_type=integerise(request.args.get('aggregation_type', 2))
@@ -191,10 +193,12 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
         organisation_survey = dqsurveys.getSurvey(organisation_code)
         surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
         if organisation_survey:
-            if organisation_survey.Workflow.name in ['donorreview', 'pwyfreview']:
+            if organisation_survey.Workflow.name in ['donorreview', 
+                                                     'pwyfreview']:
                 surveydata = surveydata["researcher"]
                 surveydata_workflow = 'donorreview'
-            elif organisation_survey.Workflow.name in ['donorcomments', 'pwyffinal']:
+            elif organisation_survey.Workflow.name in ['donorcomments',
+                                                       'pwyffinal']:
                 surveydata = surveydata["pwyfreview"]
                 surveydata_workflow = 'donorcomments'
             elif organisation_survey.Workflow.name == 'finalised':
@@ -208,16 +212,21 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
             surveydata_workflow=None
         published_status = dqsurveys.publishedStatus()
 
-        published_status_by_id = dict(map(lambda x: (x.id, x), published_status))
+        published_status_by_id = dict(map(lambda x: (x.id, x), 
+                                          published_status))
 
         publishedformats = dqsurveys.publishedFormatsAll()
         publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
 
-        published_status_by_id[None] = {'name': 'Unknown',
-                                        'publishedstatus_class': 'label-inverse'}
+        published_status_by_id[None] = {
+            'name': 'Unknown',
+            'publishedstatus_class': 'label-inverse'
+            }
 
-        publishedformats[None] = {'name': 'Unknown',
-                                        'format_class': 'label-inverse'}
+        publishedformats[None] = {
+            'name': 'Unknown',
+            'format_class': 'label-inverse'
+            }
 
         latest_runtime=1
 
