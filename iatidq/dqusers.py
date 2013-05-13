@@ -39,119 +39,61 @@ def _importUserData(fh):
         })
         return user
 
+    def perm(user, organisation_id, t):
+        name, method = t
+        return {
+            "user_id": user.id,
+            "permission_name": name,
+            "permission_method": method,
+            "permission_value": organisation_id
+            }
+
     def getCSOPermissions(organisation_id, 
                 role, active, primary, user, permissions):
+        perms = []
         if active == 'active':
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'cso',
-                'permission_method': 'role',
-                'permission_value': organisation_id
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'organisation',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'survey_pwyfreview',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'survey_donorcomments',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'survey_pwyffinal',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'survey_finalised',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
+            perms = [
+                ('cso', 'role'),
+                ('organisation', 'view'),
+                ('survey_pwyfreview', 'view'),
+                ('survey_donorcomments', 'view'),
+                ('survey_pwyffinal', 'view'),
+                ('survey_finalised', 'view')
+                ]
             if primary == 'primary':
-                permissions.append({
-                    'user_id': user.id,
-                    'permission_name': 'survey_cso',
-                    'permission_method': 'edit',
-                    'permission_value': organisation_id
-                })
-        return permissions
+                perms += [
+                    ('survey_cso', 'edit')
+                    ]
+
+        return [ perm(user, organisation_id, i) for i in perms ]
 
     def getDonorPermissions(organisation_id, 
                 role, active, primary, user, permissions):
-        if active == 'active':
-            permissions.append({
+        perms = []
+        permissions = [{
                 'user_id': user.id,
                 'permission_name': 'organisation',
                 'permission_method': 'role',
                 'permission_value': ''
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'organisation',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'survey_donorreview',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'survey_donorcomments',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
-            permissions.append({
-                'user_id': user.id,
-                'permission_name': 'survey_finalised',
-                'permission_method': 'view',
-                'permission_value': organisation_id
-            })
+            }]
+
+        if active == 'active':
+            perms = [
+                ('organisation', 'view'),
+                ('survey_donorreview', 'view'),
+                ('survey_donorcomments', 'view'),
+                ('survey_finalised', 'view')
+                ]
             if primary == 'primary':
-                permissions.append({
-                    'user_id': user.id,
-                    'permission_name': 'organisation',
-                    'permission_method': 'edit',
-                    'permission_value': organisation_id
-                })
-                permissions.append({
-                    'user_id': user.id,
-                    'permission_name': 'survey_donorreview',
-                    'permission_method': 'edit',
-                    'permission_value': organisation_id
-                })
-                permissions.append({
-                    'user_id': user.id,
-                    'permission_name': 'survey_donorcomments',
-                    'permission_method': 'edit',
-                    'permission_value': organisation_id
-                })
-                permissions.append({
-                    'user_id': user.id,
-                    'permission_name': 'survey_finalised',
-                    'permission_method': 'edit',
-                    'permission_value': organisation_id
-                })
-                permissions.append({
-                    'user_id': user.id,
-                    'permission_name': 'organisation_feedback',
-                    'permission_method': 'create',
-                    'permission_value': organisation_id
-                })
-        return permissions
+                perms += [
+                    ('organisation', 'edit'),
+                    ('survey_donorreview', 'edit'),
+                    ('survey_donorcomments', 'edit'),
+                    ('survey_finalised', 'edit'),
+                    ('organisation_feedback', 'create')
+                    ]
+
+        return permissions + [ perm(user, organisation_id, i) for i in perms ]
 
     def generate_permissions():
         permissions = []
