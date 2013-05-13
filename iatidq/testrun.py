@@ -11,7 +11,7 @@ from iatidq import db
 import models
 
 def start_new_testrun():
-    with db.session.begin:
+    with db.session.begin():
         newrun = models.Runtime()
         db.session.add(newrun)
     return newrun
