@@ -48,6 +48,8 @@ def refresh(options):
         pkg_names = [options.package_name]
     elif options.minimal:
         pkg_names = [i[0] for i in which_packages]
+    elif options.matching:
+        pkg_names = [i for i in dqregistry.matching_packages(options.matching)]
 
     if pkg_names is not None:
         [ dqregistry.refresh_package_by_name(name) for name in pkg_names ]
@@ -55,6 +57,10 @@ def refresh(options):
         dqregistry.refresh_packages()
 
 def activate_packages(options):
+    if options.matching:
+        which_packages = [(i, True) 
+                          for i in dqregistry.matching_packages(
+                options.matching)]
     dqregistry.activate_packages(which_packages, clear_revision_id=True)
 
 def drop_all(options):
@@ -175,6 +181,8 @@ def main():
                  help="Set filename of data to test")
     p.add_option("--local-folder", dest="local_folder",
                  help="Set local folder where data to test is stored")
+    p.add_option("--matching", dest="matching",
+                 help="Regular expression for matching packages")
 
     options, args = p.parse_args()
 
