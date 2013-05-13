@@ -592,9 +592,12 @@ class UserPermission(db.Model):
 class OrganisationSurvey(db.Model):
     __tablename__ = 'organisationsurvey'
     id = Column(Integer,primary_key=True)
-    currentworkflow_id = Column(Integer, ForeignKey('workflow.id'))
+    currentworkflow_id = Column(Integer, ForeignKey('workflow.id'), 
+                                nullable=False)
     currentworkflow_deadline = Column(DateTime)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'))
+    organisation_id = Column(Integer, ForeignKey('organisation.id'), 
+                             nullable=False)
+    __table_args__ = (UniqueConstraint('organisation_id',),)
     
     def setup(self,
                  organisation_id,
