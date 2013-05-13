@@ -51,7 +51,6 @@ def organisations_index(organisation_code=None):
     org_packages = dqorganisations.organisationPackages(organisation_code)
 
     def get_info_results():
-        print "gir"
         for _, p in org_packages:
             package_id = p.package_id
             from sqlalchemy import func
