@@ -74,36 +74,45 @@ class SurveyPermission(Permission):
 def check_perms(name, method=None, kwargs=None):
     if role_permission('admin').can():
         return True
-    if ((role_permission('super').can()) and 
-            (method != 'edit') and 
-                (method != 'delete') and 
-                    (method != 'create')):
+
+    restricted_methods = ['edit', 'delete', 'create']
+    edit_methods =       ['edit', 'delete']
+
+    if role_permission('super').can() and method not in restricted_methods:
         return True
+
     if not name:
         return False
-    if (name == 'tests'):
+
+    if name == 'tests':
         value = kwargs['id']
-        if ((method=='edit') or (method=='delete')):
+        if method in edit_methods:
             return EditTestPermission(value).can()
-    if (name == 'organisation'):
+
+    if name == 'organisation':
         if kwargs:
             value = kwargs['organisation_code']
-            if (method=='view'):
+            if method == 'view':
                 return ViewOrganisationPermission(value).can()
-            if (method=='edit'):
+            if method == 'edit':
                 return EditOrganisationPermission(value).can()
-    if (name == 'organisation_feedback'):
+
+    if name == 'organisation_feedback':
         if kwargs:
             value = kwargs['organisation_code']
-            if (method=='create'):
+            if method=='create':
                 return CreateOrganisationFeedbackPermission(value).can()
-    if (name.startswith('survey')):
+
+    if name.startswith('survey'):
         if kwargs:
             value = kwargs['organisation_code']
-            return SurveyPermission(unicode(name), unicode(method), unicode(value)).can()
+            return SurveyPermission(unicode(name), 
+                                    unicode(method), 
+                                    unicode(value)).can()
         else:
             value = ""
             return SurveyPermission(name, method, value).can()
+
     return False
 
 def perms_required(name=None, method=None, value=None):
