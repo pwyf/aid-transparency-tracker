@@ -72,6 +72,7 @@ class PackageGroup(db.Model):
     publisher_refs = Column(UnicodeText)
     publisher_constraints = Column(UnicodeText)
     publisher_data_quality = Column(UnicodeText)
+    __table_args__ = (UniqueConstraint('name',),)
 
     def __init__(self, man_auto=None, name=None):
         if man_auto is not None:
