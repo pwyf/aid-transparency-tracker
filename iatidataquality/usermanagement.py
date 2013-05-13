@@ -88,20 +88,25 @@ def check_perms(name, method=None, kwargs=None):
         value = kwargs['id']
         if method in edit_methods:
             return EditTestPermission(value).can()
+        return False
 
     if name == 'organisation':
-        if kwargs:
-            value = kwargs['organisation_code']
-            if method == 'view':
-                return ViewOrganisationPermission(value).can()
-            if method == 'edit':
-                return EditOrganisationPermission(value).can()
+        if not kwards:
+            return False
+        value = kwargs['organisation_code']
+        if method == 'view':
+            return ViewOrganisationPermission(value).can()
+        if method == 'edit':
+            return EditOrganisationPermission(value).can()
+        return False
 
     if name == 'organisation_feedback':
-        if kwargs:
-            value = kwargs['organisation_code']
-            if method=='create':
-                return CreateOrganisationFeedbackPermission(value).can()
+        if not kwargs:
+            return False
+        value = kwargs['organisation_code']
+        if method=='create':
+            return CreateOrganisationFeedbackPermission(value).can()
+        return False
 
     if name.startswith('survey'):
         if kwargs:
