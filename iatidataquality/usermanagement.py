@@ -58,7 +58,8 @@ class EditOrganisationPermission(Permission):
         need = EditOrganisationNeed(unicode(organisation_code))
         super(EditOrganisationPermission, self).__init__(need)
 
-OrganisationFeedbackNeed = namedtuple('organisation_feedback', ['method', 'value'])
+OrganisationFeedbackNeed = namedtuple('organisation_feedback', 
+                                      ['method', 'value'])
 CreateOrganisationFeedbackNeed = partial(OrganisationFeedbackNeed, 'create')
 
 class CreateOrganisationFeedbackPermission(Permission):
