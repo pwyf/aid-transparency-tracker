@@ -85,6 +85,7 @@ def create_package_group(group, handle_country=True):
     copy_pg_fields(pg, ckangroup)
 
     db.session.add(pg)
+    return pg
 
 # package: a sqla model; pkg: a ckan object
 def setup_package_group(package, pkg):
