@@ -12,6 +12,7 @@ import os
 import urllib2
 import json
 from flask import request, current_app
+import traceback
 
 @contextlib.contextmanager
 def report_error(success, failure):
@@ -22,6 +23,7 @@ def report_error(success, failure):
     except Exception, e:
         if failure is not None:
             print failure, e
+            print traceback.print_exc()
     finally:
         pass
 
