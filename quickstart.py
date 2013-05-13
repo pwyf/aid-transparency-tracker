@@ -125,6 +125,9 @@ def aggregate_results(options):
     assert options.package_id
     iatidq.dqprocessing.aggregate_results(options.runtime_id, options.package_id)
 
+def setup_organisations(options):
+    iatidq.setup.setup_organisations()
+
 def setup(options):
     iatidq.setup.setup(options)
 
@@ -150,7 +153,8 @@ commands = {
     "activate_packages": (activate_packages, "Mark all packages as active"),
     "create_aggregation_types": (create_aggregation_types, "Create basic aggregation types."),
     "aggregate_results": (aggregate_results, "Trigger result aggregation"),
-    "create_inforesult_types": (create_inforesult_types, "Create basic infroresult types.")
+    "create_inforesult_types": (create_inforesult_types, "Create basic infroresult types."),
+    "setup_organisations": (setup_organisations, "Setup organisations.")
 }
 
 def main():
