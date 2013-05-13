@@ -23,7 +23,7 @@ def report_error(success, failure):
     except Exception, e:
         if failure is not None:
             print failure, e
-            print traceback.print_exc()
+            #print traceback.print_exc()
     finally:
         pass
 
