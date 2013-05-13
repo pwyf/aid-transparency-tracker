@@ -521,7 +521,7 @@ class InfoType(db.Model):
 class User(db.Model):
     __tablename__ = 'dquser'
     id = Column(Integer, primary_key=True)
-    username = Column(UnicodeText)
+    username = Column(UnicodeText, nullable=False)
     name = Column(UnicodeText)
     email_address = Column(UnicodeText)
     reset_password_key = Column(UnicodeText)
@@ -530,6 +530,7 @@ class User(db.Model):
     children = db.relationship("UserPermission",
                     cascade="all, delete-orphan",
                     passive_deletes=True)
+    __table_args__ = (UniqueConstraint('username',),)
 
     def setup(self,
                  username,
@@ -608,16 +609,21 @@ class OrganisationSurvey(db.Model):
 class OrganisationSurveyData(db.Model):
     __tablename__ = 'organisationsurveydata'
     id = Column(Integer,primary_key=True)
-    organisationsurvey_id = Column(Integer, ForeignKey('organisationsurvey.id'))
-    indicator_id = Column(Integer, ForeignKey('indicator.id'))
-    workflow_id = Column(Integer, ForeignKey('workflow.id'))
+    organisationsurvey_id = Column(Integer, 
+                                   ForeignKey('organisationsurvey.id'),
+                                   nullable=False)
+    indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
+    workflow_id = Column(Integer, ForeignKey('workflow.id'), nullable=False)
     published_status = Column(Integer, ForeignKey('publishedstatus.id'))
     published_source = Column(UnicodeText)
     published_comment = Column(UnicodeText)
     published_format = Column(Integer, ForeignKey('publishedformat.id'))
     published_accepted = Column(Integer)
     ordinal_value = Column(Integer)
-    
+    __table_args__ = (UniqueConstraint('organisationsurvey_id',
+                                       'indicator_id',
+                                       'workflow_id'),)
+
     def setup(self,
                  organisationsurvey_id,
                  indicator_id,
