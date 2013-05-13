@@ -25,8 +25,7 @@ def load_packages(runtime, package_name=None):
     path = app.config["DATA_STORAGE_DIR"]
 
     def load_package(package):
-        dqfunctions.add_test_status(package.id, package_status.TO_DOWNLOAD, 
-                                    commit=True)
+        dqfunctions.add_test_status(package.id, package_status.TO_DOWNLOAD)
         filename = os.path.join(path, package.package_name + '.xml')
         # Run tests on file -> send to queue
         enqueue_download(filename, runtime, package.id, None)
