@@ -141,9 +141,9 @@ def on_identity_loaded(sender, identity):
         if (permission.permission_name.startswith('survey')):
             set_survey_permissions(permission)
 
-    with db.session.begin():
-        for permission in permissions:
-            set_permissions(permission)
+    #with db.session.begin():
+    for permission in permissions:
+        set_permissions(permission)
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():
