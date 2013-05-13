@@ -73,11 +73,11 @@ def info_results(package_id, runtime_id, organisation_id):
 def add_type(name, description):
     checkIRT = models.InfoType.query.filter(name=name).first()
     if not checkIRT:
-        it = models.InfoType()
-        it.name = name
-        it.description = description
-        db.session.add(it)
-        db.session.commit()
+        with db.session.begin():
+            it = models.InfoType()
+            it.name = name
+            it.description = description
+            db.session.add(it)
         return it
     else:
         return checkIRT
@@ -94,16 +94,17 @@ def _importInfoTypesFromFile(fh, filename, level=1, local=True):
     for row in data:
         infotype = models.InfoType.query.filter(models.InfoType.name==row['infotype_name']).first()
 
-        if not infotype:
-            infotype = models.InfoType()
+        with db.session.begin():
+            if not infotype:
+                infotype = models.InfoType()
 
-        infotype.setup(
-            name = row['infotype_name'],
-            level = returnLevel(row, level),
-            description = row['infotype_description']
-            )
-        db.session.add(infotype)
-    db.session.commit()
+            infotype.setup(
+                name = row['infotype_name'],
+                level = returnLevel(row, level),
+                description = row['infotype_description']
+                )
+            db.session.add(infotype)
+
     print "Imported successfully"
     return True
 

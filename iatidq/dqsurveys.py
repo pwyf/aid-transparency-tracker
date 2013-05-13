@@ -143,21 +143,21 @@ def setupSurvey():
 def getOrCreateSurvey(data):
     checkS = models.OrganisationSurvey.query.filter_by(organisation_id=data["organisation_id"]).first()
     if not checkS:
-        newS = models.OrganisationSurvey()
+        with db.session.begin():
+            newS = models.OrganisationSurvey()
 
-        workflow = workflows('researcher')
-        currentworkflow_id = workflow.Workflow.id
-        deadline_days = datetime.timedelta(days=workflow.Workflow.duration)
+            workflow = workflows('researcher')
+            currentworkflow_id = workflow.Workflow.id
+            deadline_days = datetime.timedelta(days=workflow.Workflow.duration)
 
-        currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
+            currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
 
-        newS.setup(
-            organisation_id = data["organisation_id"],
-            currentworkflow_id = currentworkflow_id,
-            currentworkflow_deadline = currentworkflow_deadline
-        )
-        db.session.add(newS)
-        db.session.commit()
+            newS.setup(
+                organisation_id = data["organisation_id"],
+                currentworkflow_id = currentworkflow_id,
+                currentworkflow_deadline = currentworkflow_deadline
+                )
+            db.session.add(newS)
         return newS
     else:
         return checkS
@@ -165,33 +165,33 @@ def getOrCreateSurvey(data):
 def addSurveyData(data):
     checkSD = models.OrganisationSurveyData.query.filter_by(organisationsurvey_id=data["organisationsurvey_id"], workflow_id=data["workflow_id"], indicator_id=data["indicator_id"]).first()
     if not checkSD:
-        newSD = models.OrganisationSurveyData()
-        newSD.setup(
-            organisationsurvey_id = data["organisationsurvey_id"],
-            workflow_id = data["workflow_id"],
-            indicator_id = data["indicator_id"],
-            published_status = data["published_status"],
-            published_source = data["published_source"],
-            published_comment = data["published_comment"],
-            published_accepted = data["published_accepted"],
-            published_format = data.get("published_format"),
-            ordinal_value = data.get("ordinal_value")
-        )
-        db.session.add(newSD)
-        db.session.commit()
+        with db.session.begin():
+            newSD = models.OrganisationSurveyData()
+            newSD.setup(
+                organisationsurvey_id = data["organisationsurvey_id"],
+                workflow_id = data["workflow_id"],
+                indicator_id = data["indicator_id"],
+                published_status = data["published_status"],
+                published_source = data["published_source"],
+                published_comment = data["published_comment"],
+                published_accepted = data["published_accepted"],
+                published_format = data.get("published_format"),
+                ordinal_value = data.get("ordinal_value")
+                )
+            db.session.add(newSD)
         return newSD
     else:
-        checkSD.organisationsurvey_id = data["organisationsurvey_id"],
-        checkSD.workflow_id = data["workflow_id"],
-        checkSD.indicator_id = data["indicator_id"],
-        checkSD.published_status = data["published_status"],
-        checkSD.published_source = data["published_source"],
-        checkSD.published_comment = data["published_comment"],
-        checkSD.published_accepted = data["published_accepted"],
-        checkSD.published_format = data.get("published_format"),
-        checkSD.ordinal_value = data.get("ordinal_value")
-        db.session.add(checkSD)
-        db.session.commit()
+        with db.session.begin():
+            checkSD.organisationsurvey_id = data["organisationsurvey_id"],
+            checkSD.workflow_id = data["workflow_id"],
+            checkSD.indicator_id = data["indicator_id"],
+            checkSD.published_status = data["published_status"],
+            checkSD.published_source = data["published_source"],
+            checkSD.published_comment = data["published_comment"],
+            checkSD.published_accepted = data["published_accepted"],
+            checkSD.published_format = data.get("published_format"),
+            checkSD.ordinal_value = data.get("ordinal_value")
+            db.session.add(checkSD)
         return checkSD
 
 def publishedStatus():
@@ -284,15 +284,15 @@ def addPublishedFormat(data):
     checkPF = models.PublishedFormat.query.filter_by(name=data["name"]
                 ).first()
     if not checkPF:
-        newPF = models.PublishedFormat()
-        newPF.setup(
-            name = data["name"],
-            title = data["title"],
-            format_class = data["format_class"],
-            format_value = data["format_value"]
-        )
-        db.session.add(newPF)
-        db.session.commit()
+        with db.session.begin():
+            newPF = models.PublishedFormat()
+            newPF.setup(
+                name = data["name"],
+                title = data["title"],
+                format_class = data["format_class"],
+                format_value = data["format_value"]
+                )
+            db.session.add(newPF)
         return newPF
     else:
         return checkPF
@@ -301,15 +301,15 @@ def addPublishedStatus(data):
     checkPS = models.PublishedStatus.query.filter_by(name=data["name"]
                 ).first()
     if not checkPS:
-        newPS = models.PublishedStatus()
-        newPS.setup(
-            name = data["name"],
-            title = data["title"],
-            publishedstatus_class = data["publishedstatus_class"],
-            publishedstatus_value = data["publishedstatus_value"]
-        )
-        db.session.add(newPS)
-        db.session.commit()
+        with db.session.begin():
+            newPS = models.PublishedStatus()
+            newPS.setup(
+                name = data["name"],
+                title = data["title"],
+                publishedstatus_class = data["publishedstatus_class"],
+                publishedstatus_value = data["publishedstatus_value"]
+                )
+            db.session.add(newPS)
         return newPS
     else:
         return checkPS
@@ -318,12 +318,12 @@ def addWorkflowType(data):
     checkWT = models.WorkflowType.query.filter_by(name=data["name"]
                 ).first()
     if not checkWT:
-        newWT = models.WorkflowType()
-        newWT.setup(
-            name = data["name"]
-        )
-        db.session.add(newWT)
-        db.session.commit()
+        with db.session.begin():
+            newWT = models.WorkflowType()
+            newWT.setup(
+                name = data["name"]
+                )
+            db.session.add(newWT)
         return newWT
     else:
         return checkWT
@@ -332,12 +332,12 @@ def addWorkflowType(data):
     checkWT = models.WorkflowType.query.filter_by(name=data["name"]
                 ).first()
     if not checkWT:
-        newWT = models.WorkflowType()
-        newWT.setup(
-            name = data["name"]
-        )
-        db.session.add(newWT)
-        db.session.commit()
+        with db.session.begin():
+            newWT = models.WorkflowType()
+            newWT.setup(
+                name = data["name"]
+                )
+            db.session.add(newWT)
         return newWT
     else:
         return checkWT
@@ -383,9 +383,9 @@ def advanceSurvey(organisationsurvey):
             ).first()
     checkW = workflow_by_id(organisationsurvey.currentworkflow_id)
     if checkS and checkW:
-        checkS.currentworkflow_id=checkW.leadsto
-        db.session.add(checkS)
-        db.session.commit()
+        with db.session.begin():
+            checkS.currentworkflow_id=checkW.leadsto
+            db.session.add(checkS)
     else:
         return False
 
@@ -393,16 +393,16 @@ def addWorkflow(data):
     checkW = models.Workflow.query.filter_by(name=data["name"]
                 ).first()
     if not checkW:
-        newW = models.Workflow()
-        newW.setup(
-            name = data["name"],
-            leadsto = data["leadsto"],
-            workflow_type = data["workflow_type"],
-            duration = data["duration"],
-            title = data["title"]
-        )
-        db.session.add(newW)
-        db.session.commit()
+        with db.session.begin():
+            newW = models.Workflow()
+            newW.setup(
+                name = data["name"],
+                leadsto = data["leadsto"],
+                workflow_type = data["workflow_type"],
+                duration = data["duration"],
+                title = data["title"]
+                )
+            db.session.add(newW)
         return newW
     else:
         return checkW
@@ -411,13 +411,13 @@ def updateWorkflow(data):
     checkW = models.Workflow.query.filter_by(name=data["name"]
                 ).first()
     if checkW:
-        checkW.name = data["name"],
-        checkW.title = data["title"],
-        checkW.workflow_type = data["workflow_type"],
-        checkW.leadsto = data["leadsto"],
-        checkW.duration = data["duration"]
-        db.session.add(checkW)
-        db.session.commit()
+        with db.session.begin():
+            checkW.name = data["name"],
+            checkW.title = data["title"],
+            checkW.workflow_type = data["workflow_type"],
+            checkW.leadsto = data["leadsto"],
+            checkW.duration = data["duration"]
+            db.session.add(checkW)
         return checkW
     else:
         return None

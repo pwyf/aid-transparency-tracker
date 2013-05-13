@@ -15,6 +15,7 @@ import json
 import ckanclient
 
 import util
+import autocommit
 
 from dqfunctions import packages_from_registry
 
@@ -84,8 +85,6 @@ def create_package_group(group, handle_country=True):
     copy_pg_fields(pg, ckangroup)
 
     db.session.add(pg)
-    db.session.commit()
-    return pg
 
 # package: a sqla model; pkg: a ckan object
 def setup_package_group(package, pkg):
@@ -112,18 +111,18 @@ def copy_pkg_attributes(pkg, package):
 # Don't get revision ID; 
 # empty var will trigger download of file elsewhere
 def refresh_package(package):
-    print package['name']
-    pkg = models.Package.query.filter_by(
-        package_name=package['name']).first()
-    if (pkg is None):
-        pkg = models.Package()
+    with db.session.begin():
+        print package['name']
+        pkg = models.Package.query.filter_by(
+            package_name=package['name']).first()
+        if (pkg is None):
+            pkg = models.Package()
 
-    copy_pkg_attributes(pkg, package)
-    setup_package_group(pkg, package)
+        copy_pkg_attributes(pkg, package)
+        setup_package_group(pkg, package)
 
-    pkg.man_auto = u'auto'
-    db.session.add(pkg)
-    db.session.commit()
+        pkg.man_auto = u'auto'
+        db.session.add(pkg)
 
 def refresh_package_by_name(package_name):
     registry = ckanclient.CkanClient(base_location=CKANurl)  
@@ -139,13 +138,13 @@ def refresh_packages():
         return _refresh_packages()
 
 def activate_packages(data, clear_revision_id=None):
-    for package_name, active in data:
-        pkg = models.Package.query.filter_by(package_name=package_name).first()
-        if (clear_revision_id is not None):
-            pkg.package_revision_id = u""
-        pkg.active = active
-        db.session.add(pkg)
-    db.session.commit()
+    with db.session.begin():
+        for package_name, active in data:
+            pkg = models.Package.query.filter_by(package_name=package_name).first()
+            if (clear_revision_id is not None):
+                pkg.package_revision_id = u""
+            pkg.active = active
+            db.session.add(pkg)
 
 if __name__ == "__main__":
     refresh_packages()

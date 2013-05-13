@@ -68,21 +68,21 @@ def organisation_conditions(id=None):
              loggedinuser=current_user)
 
 def configure_organisation_condition(pc):
-    pc.description = request.form['description']
-    pc.organisation_id = int(request.form['organisation_id'])
-    pc.test_id = int(request.form['test_id'])
-    pc.operation = int(request.form['operation'])
-    pc.condition = request.form['condition']
-    pc.condition_value = request.form['condition_value']
-    pc.file = request.form['file']
-    pc.line = int(request.form['line'])
-    pc.active = bool(request.form['active'])
-
+    with db.session.begin():
+        pc.description = request.form['description']
+        pc.organisation_id = int(request.form['organisation_id'])
+        pc.test_id = int(request.form['test_id'])
+        pc.operation = int(request.form['operation'])
+        pc.condition = request.form['condition']
+        pc.condition_value = request.form['condition_value']
+        pc.file = request.form['file']
+        pc.line = int(request.form['line'])
+        pc.active = bool(request.form['active'])
+        db.session.add(pc)
+        
 def update_organisation_condition(pc_id):
     pc = OrganisationCondition.query.filter_by(id=pc_id).first_or_404()
     configure_organisation_condition(pc)
-    db.session.add(pc)
-    db.session.commit()
 
 @app.route("/organisation_conditions/<id>/edit/", methods=['GET', 'POST'])
 @usermanagement.perms_required()
@@ -121,8 +121,6 @@ def organisation_conditions_new(id=None):
     if (request.method == 'POST'):
         pc = OrganisationCondition()
         configure_organisation_condition(pc)
-        db.session.add(pc)
-        db.session.commit()
         flash('Created new condition', "success")
         return redirect(url_for('organisation_conditions_editor', id=pc.id))
     else:
@@ -173,20 +171,20 @@ def import_pc_row(row):
         operation=operation, condition=condition, 
         condition_value=condition_value).first()
 
-    if (pc is None):
-        pc = OrganisationCondition()
+    with db.session.begin():
+        if (pc is None):
+            pc = OrganisationCondition()
         
-    pc.organisation_id=organisation_id
-    pc.test_id=test_id
-    pc.operation = operation
-    pc.condition = condition
-    pc.condition_value = condition_value
-    pc.description = pc_form_value('description')
-    db.session.add(pc)
+        pc.organisation_id=organisation_id
+        pc.test_id=test_id
+        pc.operation = operation
+        pc.condition = condition
+        pc.condition_value = condition_value
+        pc.description = pc_form_value('description')
+        db.session.add(pc)
 
 def ipc_step3():
     [ import_pc_row(row) for row in request.form.getlist('include') ]
-    db.session.commit()
     flash('Successfully updated organisation conditions', 'success')
     return redirect(url_for('organisation_conditions'))
 

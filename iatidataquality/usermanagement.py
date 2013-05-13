@@ -21,6 +21,7 @@ from functools import partial, wraps
 from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
+from iatidq import autocommit
 
 principals = Principal(app)
 login_manager = LoginManager()
@@ -140,9 +141,9 @@ def on_identity_loaded(sender, identity):
         if (permission.permission_name.startswith('survey')):
             set_survey_permissions(permission)
 
-    for permission in permissions:
-        set_permissions(permission)
-    db.session.commit()
+    with db.session.begin():
+        for permission in permissions:
+            set_permissions(permission)
 
 @app.route("/login/", methods=["GET", "POST"])
 def login():

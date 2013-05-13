@@ -22,6 +22,8 @@ import dqpackages
 import urllib2
 import datetime
 
+import autocommit
+
 ORG_FREQUENCY_API_URL = "https://api.scraperwiki.com/api/1.0/datastore/sqlite?format=csv&name=iati_registry_updater_frequency_check&query=select+*+from+%60packagegroups_dates_data%60&apikey="
 
 def update_model(src, dst, keys):
@@ -188,10 +190,10 @@ def _updateOrganisationFrequency(fh):
         if not organisations:
             continue
         for organisation in organisations:
-            organisation.frequency=frequency
-            organisation.frequency_comment=comment
-            db.session.add(organisation)
-            db.session.commit()
+            with db.session.begin():
+                organisation.frequency=frequency
+                organisation.frequency_comment=comment
+                db.session.add(organisation)
 
 def organisations(organisation_code=None):
     if organisation_code is None:
@@ -231,21 +233,21 @@ def addOrganisation(data):
     if checkP:
         return False
 
-    newP = Organisation()
-    newP.setup(
-        organisation_name = data["organisation_name"],
-        organisation_code = data["organisation_code"],
-        organisation_total_spend = checkNum(data["organisation_total_spend"]),
-        organisation_total_spend_source = data["organisation_total_spend_source"],
-        organisation_currency = data["organisation_currency"],
-        organisation_currency_conversion = checkNum(data["organisation_currency_conversion"]),
-        organisation_currency_conversion_source = data["organisation_currency_conversion_source"],
-        organisation_largest_recipient = data["organisation_largest_recipient"],
-        organisation_largest_recipient_source = data["organisation_largest_recipient_source"]
-        )
-#    update_model(data, newP, ["organisation_name", "organisation_code"])
-    db.session.add(newP)
-    db.session.commit()
+    with db.session.begin():
+        newP = Organisation()
+        newP.setup(
+            organisation_name = data["organisation_name"],
+            organisation_code = data["organisation_code"],
+            organisation_total_spend = checkNum(data["organisation_total_spend"]),
+            organisation_total_spend_source = data["organisation_total_spend_source"],
+            organisation_currency = data["organisation_currency"],
+            organisation_currency_conversion = checkNum(data["organisation_currency_conversion"]),
+            organisation_currency_conversion_source = data["organisation_currency_conversion_source"],
+            organisation_largest_recipient = data["organisation_largest_recipient"],
+            organisation_largest_recipient_source = data["organisation_largest_recipient_source"]
+            )
+    #    update_model(data, newP, ["organisation_name", "organisation_code"])
+        db.session.add(newP)
     return newP
 
 def updateOrganisation(organisation_code, data):
@@ -254,11 +256,10 @@ def updateOrganisation(organisation_code, data):
 
     if checkP is None:
         return False
-
-    checkP.organisation_code = data["organisation_code"]
-    checkP.organisation_name = data["organisation_name"]
-    db.session.add(checkP)
-    db.session.commit()
+    with db.session.begin():
+        checkP.organisation_code = data["organisation_code"]
+        checkP.organisation_name = data["organisation_name"]
+        db.session.add(checkP)
     return checkP
 
 def addOrganisationPackage(data):
@@ -268,15 +269,15 @@ def addOrganisationPackage(data):
 
     if checkPP is not None:
         return False
-
-    newPP = OrganisationPackage()
-    newPP.setup(
-        organisation_id = data["organisation_id"],
-        package_id = data["package_id"],
-        condition = data["condition"]
-        )
-    db.session.add(newPP)
-    db.session.commit()
+    
+    with db.session.begin():
+        newPP = OrganisationPackage()
+        newPP.setup(
+            organisation_id = data["organisation_id"],
+            package_id = data["package_id"],
+            condition = data["condition"]
+            )
+        db.session.add(newPP)
     return newPP
 
 def addOrganisationPackageGroup(data):
@@ -289,14 +290,14 @@ def addOrganisationPackageGroup(data):
         # Confirm that it's already been added
         return checkPG
 
-    newPG = OrganisationPackageGroup()
-    newPG.setup(
-        organisation_id = data["organisation_id"],
-        packagegroup_id = data["packagegroup_id"],
-        condition = data["condition"]
-        )
-    db.session.add(newPG)
-    db.session.commit()
+    with db.session.begin():
+        newPG = OrganisationPackageGroup()
+        newPG.setup(
+            organisation_id = data["organisation_id"],
+            packagegroup_id = data["packagegroup_id"],
+            condition = data["condition"]
+            )
+        db.session.add(newPG)
     return newPG
 
 def addOrganisationPackageFromPackageGroup(data):
@@ -328,8 +329,9 @@ def deleteOrganisationPackage(organisation_code, package_name,
     if not checkPP:
         return False
 
-    db.session.delete(checkPP)
-    db.session.commit()
+    with db.session.begin():
+        db.session.delete(checkPP)
+
     return checkPP
 
 def addFeedback(data):
@@ -340,13 +342,14 @@ def addFeedback(data):
     if checkF:
         return False
 
-    feedback = OrganisationConditionFeedback()
-    feedback.organisation_id=data["organisation_id"]
-    feedback.uses=data["uses"]
-    feedback.element=data["element"]
-    feedback.where=data["where"]
-    db.session.add(feedback)
-    db.session.commit()
+    with db.session.begin():
+        feedback = OrganisationConditionFeedback()
+        feedback.organisation_id=data["organisation_id"]
+        feedback.uses=data["uses"]
+        feedback.element=data["element"]
+        feedback.where=data["where"]
+        db.session.add(feedback)
+
     return feedback
 
 
@@ -380,7 +383,6 @@ def _organisation_detail(organisation, aggregation_type):
     pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
-    db.session.commit()
     return summary.agr_results(aggregate_results, 
                                    conditions=pconditions, 
                                    mode="publisher")

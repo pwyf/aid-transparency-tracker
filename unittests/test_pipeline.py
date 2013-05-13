@@ -38,9 +38,6 @@ def setup_func():
     print >>sys.stderr, "setting up"
     iatidq.db.drop_all()
     iatidq.db.create_all()
-    print  >>sys.stderr, "about to commit in setup"
-    db.session.commit()
-    print  >>sys.stderr, "committed"
 
 def __setup_organisations(pkg_id):
     org_data = [ 
@@ -59,7 +56,6 @@ def __setup_organisations(pkg_id):
              'condition': cond})
 
 def teardown_func():
-    db.session.commit()
     pass
 
 def get_packagegroups_by_name(name):
@@ -156,10 +152,10 @@ def _test_example_tests(publisher, country):
     codelists = dqcodelists.generateCodelists()
 
     # FIXME: THIS IS A TOTAL HACK
-    iatidq.models.Result.query.delete()
-    iatidq.models.AggregateResult.query.delete()
-    iatidq.models.AggregationType.query.delete()
-    db.session.commit()
+    with db.session.begin():
+        iatidq.models.Result.query.delete()
+        iatidq.models.AggregateResult.query.delete()
+        iatidq.models.AggregationType.query.delete()
 
     all_ag = create_aggregation_types({})
 

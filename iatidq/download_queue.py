@@ -11,11 +11,12 @@ import sys, os, json, ckan, ckanclient
 from datetime import date, datetime
 import models, dqruntests, queue
 from dqprocessing import add_hardcoded_result
-from dqregistry import create_package_group, setup_package_group
+from dqregistry import setup_package_group
 from util import report_error, download_file
 
 from iatidq import db, app
 import hardcoded_test
+import autocommit
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
@@ -56,21 +57,21 @@ def copy_package_fields(package, pkg):
             setattr(package, field_name, pkg["extras"][field])
 
 def metadata_to_db(pkg, package_name, success, runtime_id):
-    package = models.Package.query.filter_by(
-        package_name=package_name).first()
+    with db.session.begin():
+        package = models.Package.query.filter_by(
+            package_name=package_name).first()
 
-    package.man_auto = 'auto'
-    package.source_url = pkg['resources'][0]['url']
+        package.man_auto = 'auto'
+        package.source_url = pkg['resources'][0]['url']
 
-    copy_package_attributes(package, pkg)
-    setup_package_group(package, pkg)
-    copy_package_fields(package, pkg)
+        copy_package_attributes(package, pkg)
+        setup_package_group(package, pkg)
+        copy_package_fields(package, pkg)
 
-    db.session.add(package)
-    db.session.commit()
+        db.session.add(package)
+
     add_hardcoded_result(hardcoded_test.URL_EXISTS, 
                          runtime_id, package.id, success)
-    db.session.commit()
 
 def manage_download(path, url):
     # report_error mangles return values; so we don't use it here
@@ -100,8 +101,6 @@ def actually_save_file(package_name, orig_url, pkg, runtime_id):
     with report_error("  Package tested",
                       "  Couldn't test package %s" % package_name):
         dqruntests.start_testing(package_name)
-
-    db.session.commit()
 
 
 def save_file(package_id, package_name, runtime_id):

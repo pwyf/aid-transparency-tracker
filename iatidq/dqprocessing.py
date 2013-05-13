@@ -12,12 +12,13 @@ import models
 from sqlalchemy import func, distinct
 
 def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
-    result = models.Result()
-    result.test_id = test_id 
-    result.runtime_id = runtime_id
-    result.package_id = package_id
-    result.result_data = int(bool(result_data))
-    db.session.add(result)
+    with db.session.begin():
+        result = models.Result()
+        result.test_id = test_id 
+        result.runtime_id = runtime_id
+        result.package_id = package_id
+        result.result_data = int(bool(result_data))
+        db.session.add(result)
 
 def aggregate_results(runtime, package_id):
         # for each package, get results for this runtime

@@ -211,16 +211,16 @@ def addUser(data):
     checkU = models.User.query.filter_by(username=data["username"]
                 ).first()
     if not checkU:
-        newU = models.User()
-        newU.setup(
-            username = data["username"],
-            password = data["password"],
-            name = data.get('name'),
-            email_address = data.get('email_address'),
-            organisation = data.get('organisation')
-        )
-        db.session.add(newU)
-        db.session.commit()
+        with db.session.begin():
+            newU = models.User()
+            newU.setup(
+                username = data["username"],
+                password = data["password"],
+                name = data.get('name'),
+                email_address = data.get('email_address'),
+                organisation = data.get('organisation')
+                )
+            db.session.add(newU)
         return newU
     return checkU
 
@@ -231,31 +231,31 @@ def addUserPermission(data):
                 permission_value=data.get("permission_value")
                 ).first()
     if not checkP:
-        newP = models.UserPermission()
-        newP.setup(
-            user_id = data["user_id"],
-            permission_name=data["permission_name"],
-            permission_method=data.get("permission_method"),
-            permission_value=data.get("permission_value")
-        )
-        db.session.add(newP)
-        db.session.commit()
+        with db.session.begin():
+            newP = models.UserPermission()
+            newP.setup(
+                user_id = data["user_id"],
+                permission_name=data["permission_name"],
+                permission_method=data.get("permission_method"),
+                permission_value=data.get("permission_value")
+                )
+            db.session.add(newP)
         return newP
     return None
 
 def deleteUserPermission(permission_id):
     checkP = models.UserPermission.query.filter_by(id=permission_id).first()
     if checkP:
-        db.session.delete(checkP)
-        db.session.commit()
+        with db.session.begin():
+            db.session.delete(checkP)
         return True
     return None
 
 def deleteUser(username):
     checkU = models.User.query.filter_by(username=username).first()
     if checkU:
-        db.session.delete(checkU)
-        db.session.commit()
+        with db.session.begin():
+            db.session.delete(checkU)
         return True
     return None
 

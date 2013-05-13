@@ -162,13 +162,13 @@ def indicators(indicatorgroup=None, indicator=None):
 def addIndicatorGroup(data):
     checkIG = models.IndicatorGroup.query.filter_by(name=data["name"]).first()
     if not checkIG:
-        newIG = models.IndicatorGroup()
-        newIG.setup(
-            name = data["name"],
-            description = data["description"]
-        )
-        db.session.add(newIG)
-        db.session.commit()
+        with db.session.begin():
+            newIG = models.IndicatorGroup()
+            newIG.setup(
+                name = data["name"],
+                description = data["description"]
+                )
+            db.session.add(newIG)
         return newIG
     else:
         return False
@@ -176,10 +176,10 @@ def addIndicatorGroup(data):
 def updateIndicatorGroup(indicatorgroup, data):
     checkIG = models.IndicatorGroup.query.filter_by(name=indicatorgroup).first()
     if (checkIG is not None):
-        checkIG.name = data["name"]
-        checkIG.description = data["description"]
-        db.session.add(checkIG)
-        db.session.commit()
+        with db.session.begin():
+            checkIG.name = data["name"]
+            checkIG.description = data["description"]
+            db.session.add(checkIG)
         return checkIG
     else:
         return False
@@ -189,13 +189,15 @@ def deleteIndicatorGroup(indicatorgroup):
     checkIG = models.IndicatorGroup.query.filter_by(name=indicatorgroup).first()
     if (checkIG is not None):
         checkI = models.Indicator.query.filter_by(indicatorgroup_id=checkIG.id).all()
-        for I in checkI:
-            checkIT = models.IndicatorTest.query.filter_by(indicator_id=I.id).all()
-            for IT in checkIT:
-                db.session.delete(IT)
-            db.session.delete(I)
-        db.session.delete(checkIG)
-        db.session.commit()
+
+        with db.session.begin():
+            for I in checkI:
+                checkIT = models.IndicatorTest.query.filter_by(
+                    indicator_id=I.id).all()
+                for IT in checkIT:
+                    db.session.delete(IT)
+                db.session.delete(I)
+            db.session.delete(checkIG)
         return True
     else:
         return False
@@ -203,20 +205,20 @@ def deleteIndicatorGroup(indicatorgroup):
 def addIndicator(data):
     checkI = models.Indicator.query.filter_by(name=data["name"], indicatorgroup_id=data["indicatorgroup_id"]).first()
     if not checkI:
-        newI = models.Indicator()
-        newI.setup(
-            name = data["name"],
-            description = data["description"],
-            longdescription = data.get("longdescription"),
-            indicatorgroup_id = data.get('indicatorgroup_id'),
-            indicator_type = data.get("indicator_type"),
-            indicator_category_name = data.get("indicator_category_name"),
-            indicator_subcategory_name = data.get("indicator_subcategory_name"),
-            indicator_ordinal = data.get("indicator_ordinal", None),
-            indicator_noformat = data.get("indicator_noformat", None)
-        )
-        db.session.add(newI)
-        db.session.commit()
+        with db.session.begin():
+            newI = models.Indicator()
+            newI.setup(
+                name = data["name"],
+                description = data["description"],
+                longdescription = data.get("longdescription"),
+                indicatorgroup_id = data.get('indicatorgroup_id'),
+                indicator_type = data.get("indicator_type"),
+                indicator_category_name = data.get("indicator_category_name"),
+                indicator_subcategory_name = data.get("indicator_subcategory_name"),
+                indicator_ordinal = data.get("indicator_ordinal", None),
+                indicator_noformat = data.get("indicator_noformat", None)
+                )
+            db.session.add(newI)
         return newI
     else:
         return False
@@ -228,17 +230,17 @@ def updateIndicator(indicatorgroup, indicator, data):
                 ).join(models.IndicatorGroup
                 ).first()
     if (checkI is not None):
-        checkI.name = data["name"]
-        checkI.description = data["description"]
-        checkI.longdescription = data.get("longdescription")
-        checkI.indicatorgroup_id = int(data["indicatorgroup_id"])
-        checkI.indicator_type = data.get("indicator_type")
-        checkI.indicator_category_name = data.get("indicator_category_name")
-        checkI.indicator_subcategory_name = data.get("indicator_subcategory_name")
-        checkI.indicator_ordinal = data.get("indicator_ordinal", None)
-        checkI.indicator_noformat = data.get("indicator_noformat", None)
-        db.session.add(checkI)
-        db.session.commit()
+        with db.session.begin():
+            checkI.name = data["name"]
+            checkI.description = data["description"]
+            checkI.longdescription = data.get("longdescription")
+            checkI.indicatorgroup_id = int(data["indicatorgroup_id"])
+            checkI.indicator_type = data.get("indicator_type")
+            checkI.indicator_category_name = data.get("indicator_category_name")
+            checkI.indicator_subcategory_name = data.get("indicator_subcategory_name")
+            checkI.indicator_ordinal = data.get("indicator_ordinal", None)
+            checkI.indicator_noformat = data.get("indicator_noformat", None)
+            db.session.add(checkI)
         return checkI
     else:
         return False
@@ -250,12 +252,12 @@ def deleteIndicator(indicatorgroup, indicator):
                 ).join(models.IndicatorGroup
                 ).first()
     if (checkI is not None):
-        checkIT = models.IndicatorTest.query.filter_by(indicator_id=checkI.id).all()
-        for IT in checkIT:
-            db.session.delete(IT)
+        with db.session.begin():
+            checkIT = models.IndicatorTest.query.filter_by(indicator_id=checkI.id).all()
+            for IT in checkIT:
+                db.session.delete(IT)
 
-        db.session.delete(checkI)
-        db.session.commit()
+            db.session.delete(checkI)
         return True
     else:
         return False
@@ -276,13 +278,13 @@ def indicatorTests(indicatorgroup_name, indicator_name):
 def addIndicatorTest(data):
     checkIT = models.IndicatorTest.query.filter_by(test_id=data["test_id"], indicator_id=data["indicator_id"]).first()
     if not checkIT:
-        newIT = models.IndicatorTest()
-        newIT.setup(
-            indicator_id = data["indicator_id"],
-            test_id = data["test_id"]
-        )
-        db.session.add(newIT)
-        db.session.commit()
+        with db.session.begin():
+            newIT = models.IndicatorTest()
+            newIT.setup(
+                indicator_id = data["indicator_id"],
+                test_id = data["test_id"]
+                )
+            db.session.add(newIT)
         return newIT
     else:
         return False
@@ -290,13 +292,13 @@ def addIndicatorTest(data):
 def addIndicatorInfoType(data):
     checkIIT = models.IndicatorInfoType.query.filter_by(infotype_id=data["infotype_id"], indicator_id=data["indicator_id"]).first()
     if not checkIIT:
-        newIIT = models.IndicatorInfoType()
-        newIIT.setup(
-            infotype_id = data["infotype_id"],
-            indicator_id = data["indicator_id"]
-        )
-        db.session.add(newIIT)
-        db.session.commit()
+        with db.session.begin():
+            newIIT = models.IndicatorInfoType()
+            newIIT.setup(
+                infotype_id = data["infotype_id"],
+                indicator_id = data["indicator_id"]
+                )
+            db.session.add(newIIT)
         return newIIT
     else:
         return False
@@ -304,8 +306,8 @@ def addIndicatorInfoType(data):
 def deleteIndicatorTest(indicatortest_id):
     checkIT = models.IndicatorTest.query.filter_by(id=indicatortest_id).first()
     if checkIT:
-        db.session.delete(checkIT)
-        db.session.commit()
+        with db.session.begin():
+            db.session.delete(checkIT)
         return checkIT
     else:
         return False

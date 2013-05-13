@@ -21,6 +21,7 @@ import test_level
 import test_result
 import package_status
 import hardcoded_test
+import autocommit
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'
@@ -92,15 +93,16 @@ def test_activity(runtime_id, package_id, result_identifier,
                   organisation_id):
 
     def add_result(test_id, the_result):
-        newresult = models.Result()
-        newresult.runtime_id = runtime_id
-        newresult.package_id = package_id
-        newresult.test_id = test_id
-        newresult.result_data = the_result
-        newresult.result_identifier = result_identifier
-        newresult.result_hierarchy = result_hierarchy
-        newresult.organisation_id = organisation_id
-        db.session.add(newresult)
+        with db.session.begin():
+            newresult = models.Result()
+            newresult.runtime_id = runtime_id
+            newresult.package_id = package_id
+            newresult.test_id = test_id
+            newresult.result_data = the_result
+            newresult.result_identifier = result_identifier
+            newresult.result_hierarchy = result_hierarchy
+            newresult.organisation_id = organisation_id
+            db.session.add(newresult)
 
     return test_elements(data, test_functions, codelists, add_result)
 
@@ -122,15 +124,16 @@ def test_organisation(runtime_id, package_id, data, test_functions, codelists,
                   organisation_id):
     
     def add_result(test_id, the_result):
-        newresult = models.Result()
-        newresult.runtime_id = runtime_id
-        newresult.package_id = package_id
-        newresult.test_id = test_id
-        newresult.result_data = the_result
-        newresult.result_identifier = None
-        newresult.result_hierarchy = None
-        newresult.organisation_id = organisation_id
-        db.session.add(newresult)
+        with db.session.begin():
+            newresult = models.Result()
+            newresult.runtime_id = runtime_id
+            newresult.package_id = package_id
+            newresult.test_id = test_id
+            newresult.result_data = the_result
+            newresult.result_identifier = None
+            newresult.result_hierarchy = None
+            newresult.organisation_id = organisation_id
+            db.session.add(newresult)
 
     return test_organisation_data(data, test_functions, codelists, add_result)    
 
@@ -158,7 +161,6 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
                       result_identifier, result_hierarchy,
                       activity_data, test_functions, 
                       codelists, organisation_id)
-        db.session.commit()
 
     def run_test_organisation(organisation_id, 
                 org_organisation_data):
@@ -170,7 +172,6 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
         test_organisation(runtime_id, package_id, 
                 organisation_data, test_functions, 
                 codelists, organisation_id)
-        db.session.commit()
 
     def get_activities(organisation):
         xp = organisation['activities_xpath']
@@ -201,10 +202,9 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
         run_tests_for_organisation(organisation)
 
     dqprocessing.aggregate_results(runtime_id, package_id)
-    db.session.commit()    
 
 
-    dqfunctions.add_test_status(package_id, package_status.TESTED, commit=True)
+    dqfunctions.add_test_status(package_id, package_status.TESTED)
 
 def unguarded_check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id):
@@ -214,7 +214,6 @@ def unguarded_check_file(test_functions, codelists, file_name,
 
     dqprocessing.add_hardcoded_result(hardcoded_test.VALID_XML, 
                                       runtime_id, package_id, xml_parsed)
-    db.session.commit()
 
     if not xml_parsed:
         print "XML parse failed"
@@ -260,14 +259,15 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
     import inforesult_orgtests
 
     def add_info_result(info_id, result_data):
-        ir = models.InfoResult()
-        ir.runtime_id = runtime_id
-        ir.package_id = package_id
-        ir.organisation_id = organisation_id
-        ir.info_id = info_id
-        ir.result_data = result_data
-        db.session.add(ir)
-
+        with db.session.begin():
+            ir = models.InfoResult()
+            ir.runtime_id = runtime_id
+            ir.package_id = package_id
+            ir.organisation_id = organisation_id
+            ir.info_id = info_id
+            ir.result_data = result_data
+            db.session.add(ir)
+        
     def info_lam_by_name(name):
         hack = { 
             'coverage': lambda fn: inforesult.inforesult_total_disbursements_commitments(fn),
@@ -293,4 +293,4 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
             add_info_result(it.id, result)
 
     finally:
-        db.session.commit()
+        pass 

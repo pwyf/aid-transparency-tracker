@@ -32,18 +32,18 @@ def test_by_test_name(test_name=None):
 def updateTest(data):
     checkTest = tests(id=data['id'])
     if checkTest:
-        for k, v in data.items():
-            setattr(checkTest, k, v)
-        db.session.add(checkTest)
-        db.session.commit()
+        with db.session.begin():
+            for k, v in data.items():
+                setattr(checkTest, k, v)
+            db.session.add(checkTest)
         return checkTest
     else:
         return False
 
 def deleteTest(test_id):
-    checkTest = tests(test_id)
-    db.session.delete(checkTest)
-    db.session.commit()
+    with db.session.begin():
+        checkTest = tests(test_id)
+        db.session.delete(checkTest)
 
 def addTest(data):
     try:
@@ -51,14 +51,14 @@ def addTest(data):
     except TestNotFound:
         return False
 
-    test = models.Test()
-    test.setup(
-        name = data['name'],
-        description = data['description'],
-        test_group = "",
-        test_level = data['test_level'],
-        active = data['active']
-        )
-    db.session.add(test)
-    db.session.commit()
+    with db.session.begin():
+        test = models.Test()
+        test.setup(
+            name = data['name'],
+            description = data['description'],
+            test_group = "",
+            test_level = data['test_level'],
+            active = data['active']
+            )
+        db.session.add(test)
     return test

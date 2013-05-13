@@ -15,21 +15,20 @@ import json
 import uuid
 
 import iatidq.dqregistry
-
 from iatidq import db
 from iatidq import models
 
 def setup_func():
-    for pkg in models.Package.query.filter_by(
-        package_name="testbank-tz").all():
-        db.session.delete(pkg)
-    db.session.commit()
+    with db.session.begin():
+        for pkg in models.Package.query.filter_by(
+            package_name="testbank-tz").all():
+            db.session.delete(pkg)
 
 def teardown_func():
-    for pkg in models.Package.query.filter_by(
-        package_name="testbank-tz").all():
-        db.session.delete(pkg)
-    db.session.commit()
+    with db.session.begin():
+        for pkg in models.Package.query.filter_by(
+            package_name="testbank-tz").all():
+            db.session.delete(pkg)
 
 @nose.with_setup(setup_func, teardown_func)
 def test_change_title():

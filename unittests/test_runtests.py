@@ -12,6 +12,7 @@ import iatidq
 import iatidq.dqparsetests
 
 from iatidq import db
+
 import lxml.etree
 
 import nose
@@ -20,29 +21,29 @@ import nose.tools
 TEST_GROUP = "TEST_TEST"
 
 def setup_func():
-    tests = iatidq.models.Test.query.filter_by(
-        test_group=TEST_GROUP).all()
-    for test in tests:
-        db.session.delete(test)
-    db.session.commit()
+    with db.session.begin():
+        tests = iatidq.models.Test.query.filter_by(
+            test_group=TEST_GROUP).all()
+        for test in tests:
+            db.session.delete(test)
 
 def teardown_func():
-    tests = iatidq.models.Test.query.filter_by(
-        test_group=TEST_GROUP).all()
-    for test in tests:
-        db.session.delete(test)
-    db.session.commit()
+    with db.session.begin():
+        tests = iatidq.models.Test.query.filter_by(
+            test_group=TEST_GROUP).all()
+        for test in tests:
+            db.session.delete(test)
 
 def create_tst(name):
-    test = iatidq.models.Test(
-        name = name,
-        description = "Test FN",
-        test_group = TEST_GROUP,
-        test_level = 1,
-        active = True
-        )
-    db.session.add(test)
-    db.session.commit()
+    with db.session.begin():
+        test = iatidq.models.Test(
+            name = name,
+            description = "Test FN",
+            test_group = TEST_GROUP,
+            test_level = 1,
+            active = True
+            )
+        db.session.add(test)
     return test
 
 def check_against_files(test_str):

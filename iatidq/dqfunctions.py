@@ -12,25 +12,25 @@ import urllib2
 
 from iatidq import db
 import models
+import autocommit
 
-def add_test_status(package_id, status_id, commit=True):
-    pstatus = models.PackageStatus()
-    pstatus.package_id = package_id
-    pstatus.status = status_id
-    db.session.add(pstatus)
-    if (commit):
-        db.session.commit()
+def add_test_status(package_id, status_id):
+    with db.session.begin():
+        pstatus = models.PackageStatus()
+        pstatus.package_id = package_id
+        pstatus.status = status_id
+        db.session.add(pstatus)
 
 def clear_revisions():
-    for pkg in models.Package.query.filter(
-        models.Package.package_revision_id!=None, 
-        models.Package.active == True
-        ).all():
+    with db.session.begin():
+        for pkg in models.Package.query.filter(
+            models.Package.package_revision_id!=None, 
+            models.Package.active == True
+            ).all():
 
-        pkg.package_revision_id = None
+            pkg.package_revision_id = None
         
-        db.session.add(pkg)
-    db.session.commit()
+            db.session.add(pkg)
 
 def packages_from_registry(registry_url):
     offset = 0

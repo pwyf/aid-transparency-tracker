@@ -70,7 +70,7 @@ def download_packages(runtime):
             if package.package_revision_id != registry_packages[name]:
                 # need to add status here, because otherwise the status could 
                 # be written to DB after the package has finished testing
-                add_test_status(package.id, package_status.NEW, commit=True)
+                add_test_status(package.id, package_status.NEW)
                 testing_packages.append(package.id)
                 enqueue_download(package, runtime.id)
         except KeyError:

@@ -26,20 +26,20 @@ def hardcodedTests():
          u'schema_conformance', u"Check that xml conforms to schema")
     ]
 
-    for hc_test in hardcoded_tests:
-        if models.Test.query.filter(models.Test.id==hc_test[0]).first():
-            continue
-        test = models.Test()
-        test.setup(
-            name = hc_test[1],
-            description = hc_test[2],
-            test_group = None,
-            test_level = 2,
-            active = True,
-            id = hc_test[0]
-            )
-        db.session.add(test)
-    db.session.commit()
+    with db.session.begin():
+        for hc_test in hardcoded_tests:
+            if models.Test.query.filter(models.Test.id==hc_test[0]).first():
+                continue
+            test = models.Test()
+            test.setup(
+                name = hc_test[1],
+                description = hc_test[2],
+                test_group = None,
+                test_level = 2,
+                active = True,
+                id = hc_test[0]
+                )
+            db.session.add(test)
 
 def returnLevel(row, level):
     if (('test_level' in row) and (row['test_level'] != "")):
@@ -51,22 +51,24 @@ def _importTests(fh, filename, level=1, local=True):
     data = unicodecsv.DictReader(fh)
 
     for row in data:
-        test = models.Test.query.filter(models.Test.name==row['test_name']).first()
+        with db.session.begin():
+            test = models.Test.query.filter(
+                models.Test.name==row['test_name']).first()
 
-        if not test:
-            test = models.Test()
+            if not test:
+                test = models.Test()
 
-        test.setup(
-            name = row['test_name'],
-            description = row['test_description'],
-            test_group = row['indicator_name'],
-            test_level = returnLevel(row, level),
-            active = True
-            )
-        test.file = filename
-        test.line = data.line_num
-        db.session.add(test)
-    db.session.commit()
+            test.setup(
+                name = row['test_name'],
+                description = row['test_description'],
+                test_group = row['indicator_name'],
+                test_level = returnLevel(row, level),
+                active = True
+                )
+            test.file = filename
+            test.line = data.line_num
+            db.session.add(test)
+
     print "Imported successfully"
     return True
 

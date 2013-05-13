@@ -27,16 +27,16 @@ def aggregationTypes(aggregationtype_id=None):
 def addAggregationType(data):
     checkAT = models.AggregationType.query.filter_by(name=data["name"]).first()
     if not checkAT:
-        newAT = models.AggregationType()
-        newAT.setup(
-            name = data["name"],
-            description = data["description"],
-            test_id = data["test_id"],
-            test_result = data["test_result"],
-            active = 1
-        )
-        db.session.add(newAT)
-        db.session.commit()
+        with db.session.begin():
+            newAT = models.AggregationType()
+            newAT.setup(
+                name = data["name"],
+                description = data["description"],
+                test_id = data["test_id"],
+                test_result = data["test_result"],
+                active = 1
+                )
+            db.session.add(newAT)
         return newAT
     else:
         return False
@@ -44,12 +44,12 @@ def addAggregationType(data):
 def updateAggregationType(aggregationtype_id, data):
     checkAT = models.AggregationType.query.filter_by(id=aggregationtype_id).first()
     if (checkAT is not None):
-        checkAT.name = data["name"]
-        checkAT.description = data["description"]
-        checkAT.test_id = data["test_id"]
-        checkAT.test_result = data["test_result"]
-        db.session.add(checkAT)
-        db.session.commit()
+        with db.session.begin():
+            checkAT.name = data["name"]
+            checkAT.description = data["description"]
+            checkAT.test_id = data["test_id"]
+            checkAT.test_result = data["test_result"]
+            db.session.add(checkAT)
         return checkAT
     else:
         return False

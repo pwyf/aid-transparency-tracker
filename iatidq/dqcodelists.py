@@ -15,6 +15,7 @@ import urllib2
 import lxml.etree
 
 import util
+import autocommit
 
 CODELIST_API = "http://data.aidinfolabs.org/data/%s"
 
@@ -29,36 +30,44 @@ def generateCodelists():
 
 def handle_row(codelist, codelist_url, crow):
     #print crow
-    codelistcode = models.CodelistCode.query.filter_by(
-        code=crow['code'], codelist_id=codelist.id).first()
+    with db.session.begin():
+        codelistcode = models.CodelistCode.query.filter_by(
+            code=crow['code'], codelist_id=codelist.id).first()
 
-    if not codelistcode:
-        codelistcode = models.CodelistCode()
-    codelistcode.setup(
-        name = crow['name'],
-        code = crow['code'],
-        codelist_id = codelist.id
-        )
-    codelistcode.source = codelist_url
-    db.session.add(codelistcode)
+        if not codelistcode:
+            codelistcode = models.CodelistCode()
+        codelistcode.setup(
+            name = crow['name'],
+            code = crow['code'],
+            codelist_id = codelist.id
+            )
+        codelistcode.source = codelist_url
 
 def handle_codelist(codelists_url, row):
-    codelist = models.Codelist.query.filter(
-        models.Codelist.name==row['name']).first()
+    with db.session.begin():
+        codelist = models.Codelist.query.filter(
+            models.Codelist.name==row['name']).first()
 
-    if not codelist:
-        codelist = models.Codelist()
-    codelist.setup(
-        name = row['name'],
-        description = row['description']
-        )
-    codelist.source = codelists_url
-    db.session.add(codelist)
-    db.session.commit()
+        if not codelist:
+            codelist = models.Codelist()
+        codelist.setup(
+            name = row['name'],
+            description = row['description']
+            )
+        codelist.source = codelists_url
+        db.session.add(codelist)
         
     codelist_url = (CODELIST_API % ("codelist/" + row['name'] + ".csv"))
 
     f = urllib2.urlopen(codelist_url)
+
+    data = f.read()
+    if len(data) == 0:
+        print "warning: zero-length codelist at %s" % codelist_url
+        return
+
+    f = urllib2.urlopen(codelist_url)
+
     codelist_data = unicodecsv.DictReader(f)
 
     [ handle_row(codelist, codelist_url, crow) for crow in codelist_data ]
@@ -82,7 +91,6 @@ def importCodelists():
 
     [ handle_codelist(codelists_url, row) for row in codelists_data ]
 
-    db.session.commit()
     print "Imported successfully"
     return True
 
