@@ -93,14 +93,7 @@ def get_organisation_results(organisation_code, newindicators):
             }
     return data
 
-@app.route("/organisations/<organisation_code>/survey/")
-@usermanagement.perms_required('survey', 'view')
-def organisation_survey(organisation_code=None):
-    organisation = dqorganisations.organisations(organisation_code)
-    make_sure_survey_exists = dqsurveys.getOrCreateSurvey({'organisation_id':organisation.id})
-    survey = dqsurveys.getSurvey(organisation_code)
-    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-    workflows = dqsurveys.workflows()
+def completion_percentage(survey):
     if survey.Workflow.name == 'researcher':
         pct_complete = (1.0/7.0)*100
     elif survey.Workflow.name == 'send':
@@ -115,6 +108,18 @@ def organisation_survey(organisation_code=None):
         pct_complete = (6.0/7.0)*100
     elif survey.Workflow.name == 'finalised':
         pct_complete = (7.0/7.0)*100
+    ## FIXME: this can NameError
+    return pct_complete
+
+@app.route("/organisations/<organisation_code>/survey/")
+@usermanagement.perms_required('survey', 'view')
+def organisation_survey(organisation_code=None):
+    organisation = dqorganisations.organisations(organisation_code)
+    make_sure_survey_exists = dqsurveys.getOrCreateSurvey({'organisation_id':organisation.id})
+    survey = dqsurveys.getSurvey(organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+    workflows = dqsurveys.workflows()
+    pct_complete = completion_percentage(survey)
     users = dqusers.surveyPermissions(organisation_code)
         
     return render_template("surveys/survey.html", 
