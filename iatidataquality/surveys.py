@@ -284,23 +284,21 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                                           permission_value)
     allowed_to_edit = allowed("edit")
     allowed_to_view = allowed("view")
-    
-    if not allowed_to_view:
+
+    def no_permission():
         flash("Sorry, you do not have permission to view that survey", 'error')
         if request.referrer is not None:
             redir_to = request.referrer
         else:
             redir_to = url_for('home')
         return redirect(redir_to)
+    
+    if not allowed_to_view:
+        return no_permission()
 
     if request.method=='POST':
         if not allowed_to_edit:
-            flash("Sorry, you do not have permission to update that survey", 'error')
-            if request.referrer is not None:
-                redir_to = request.referrer
-            else:
-                redir_to = url_for('home')
-            return redirect(redir_to)
+            return no_permission()
 
         if (workflow.WorkflowType.name=='collect'):
             _survey_process_collect(organisation, workflow, request, organisationsurvey)
