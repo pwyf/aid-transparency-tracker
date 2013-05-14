@@ -254,7 +254,8 @@ def organisation_survey_view(organisation_code, workflow,
     #indicator_names_2013 = [i.name for i in indicators]
     indicator_names_2013 = [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
 
-    twentytwelvedata=get_organisation_results(organisation_code, indicator_names_2013)
+    twentytwelvedata=get_organisation_results(organisation_code, 
+                                              indicator_names_2013)
     publishedstatuses = dqsurveys.publishedStatus()
     publishedstatuses = dict(map(lambda ps: (ps.id, ps), publishedstatuses))
     publishedformats = dqsurveys.publishedFormat()
