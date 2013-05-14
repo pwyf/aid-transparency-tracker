@@ -140,9 +140,8 @@ def getTimeRemainingNotice(deadline):
         time_remaining_notice = "Today is the last day for making any changes to your survey."
     return time_remaining_notice
 
-def _survey_process_collect(organisation, workflow, request, organisationsurvey):
+def __survey_process(organisation, workflow, request, organisationsurvey, published_accepted):
     indicators = request.form.getlist('indicator')
-
     workflow_id = workflow.Workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
@@ -164,7 +163,7 @@ def _survey_process_collect(organisation, workflow, request, organisationsurvey)
             'published_source': request.form.get(indicator+"-source"),
             'published_comment': request.form.get(indicator+"-comments"),
             'published_format': published_format,
-            'published_accepted': None,
+            'published_accepted': published_accepted,
             'ordinal_value': ordinal_value
         }
         surveydata = dqsurveys.addSurveyData(data)
@@ -180,126 +179,20 @@ def _survey_process_collect(organisation, workflow, request, organisationsurvey)
         time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
 
         flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+
+def _survey_process_collect(organisation, workflow, request, organisationsurvey):
+    return __survey_process(organisation, workflow, request, organisationsurvey, None)
 
 def _survey_process_review(organisation, workflow, request, organisationsurvey):
-    indicators = request.form.getlist('indicator')
-    workflow_id = workflow.Workflow.id
-    currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
-
-    for indicator in indicators:
-        if request.form.get(indicator+"-ordinal_value"):
-            published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = request.form.get(indicator+"-ordinal_value")
-        elif request.form.get(indicator+"-noformat"):
-            published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = None
-        else:
-            published_format = request.form.get(indicator+"-publishedformat")
-            ordinal_value = None
-        data = {
-            'organisationsurvey_id': organisationsurvey.id,
-            'indicator_id': indicator,
-            'workflow_id': workflow_id,
-            'published_status': request.form.get(indicator+"-published"),
-            'published_source': request.form.get(indicator+"-source"),
-            'published_comment': request.form.get(indicator+"-comments"),
-            'published_format': published_format,
-            'published_accepted': None,
-            'ordinal_value': ordinal_value
-        }
-        surveydata = dqsurveys.addSurveyData(data)
-    
-    if 'submit' in request.form:
-        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
-        # save data, change currentworkflow_id to leadsto
-            dqsurveys.advanceSurvey(organisationsurvey)
-            flash('Successfully submitted survey data', 'success')
-        else:
-            flash("Your survey data was updated.", 'warning')
-    else:
-        time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
-
-        flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+    return __survey_process(organisation, workflow, request, organisationsurvey, None)
 
 def _survey_process_finalreview(organisation, workflow, request, organisationsurvey):
-    indicators = request.form.getlist('indicator')
-    workflow_id = workflow.Workflow.id
-    currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
-
-    for indicator in indicators:
-        if request.form.get(indicator+"-ordinal_value"):
-            published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = request.form.get(indicator+"-ordinal_value")
-        elif request.form.get(indicator+"-noformat"):
-            published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = None
-        else:
-            published_format = request.form.get(indicator+"-publishedformat")
-            ordinal_value = None
-        data = {
-            'organisationsurvey_id': organisationsurvey.id,
-            'indicator_id': indicator,
-            'workflow_id': workflow_id,
-            'published_status': request.form.get(indicator+"-published"),
-            'published_source': request.form.get(indicator+"-source"),
-            'published_comment': request.form.get(indicator+"-comments"),
-            'published_format': published_format,
-            'published_accepted': request.form.get(indicator+"-agree"),
-            'ordinal_value': ordinal_value
-        }
-        surveydata = dqsurveys.addSurveyData(data)
-    
-    if 'submit' in request.form:
-        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
-        # save data, change currentworkflow_id to leadsto
-            dqsurveys.advanceSurvey(organisationsurvey)
-            flash('Successfully submitted survey data', 'success')
-        else:
-            flash("Your survey data was updated.", 'warning')
-    else:
-        time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
-
-        flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+    return __survey_process(organisation, workflow, request, organisationsurvey, 
+                            request.form.get(indicator+"-agree"))
 
 def _survey_process_comment(organisation, workflow, request, organisationsurvey):
-    indicators = request.form.getlist('indicator')
-    workflow_id = workflow.Workflow.id
-    currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
-
-    for indicator in indicators:
-        if request.form.get(indicator+"-ordinal_value"):
-            published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = request.form.get(indicator+"-ordinal_value")
-        elif request.form.get(indicator+"-noformat"):
-            published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = None
-        else:
-            published_format = request.form.get(indicator+"-publishedformat")
-            ordinal_value = None
-        data = {
-            'organisationsurvey_id': organisationsurvey.id,
-            'indicator_id': indicator,
-            'workflow_id': workflow_id,
-            'published_status': request.form.get(indicator+"-published"),
-            'published_source': request.form.get(indicator+"-source"),
-            'published_comment': request.form.get(indicator+"-comments"),
-            'published_format': published_format,
-            'published_accepted': request.form.get(indicator+"-agree"),
-            'ordinal_value': ordinal_value
-        }
-        surveydata = dqsurveys.addSurveyData(data)
-    
-    if 'submit' in request.form:
-        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
-        # save data, change currentworkflow_id to leadsto
-            dqsurveys.advanceSurvey(organisationsurvey)
-            flash('Successfully submitted survey data', 'success')
-        else:
-            flash("Your survey data was updated.", 'warning')
-    else:
-        time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
-
-        flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+    return __survey_process(organisation, workflow, request, organisationsurvey, 
+                            request.form.get(indicator+"-agree"))
 
 def _survey_process_send(organisation, workflow, request, organisationsurvey):
     indicators = request.form.getlist('indicator')
