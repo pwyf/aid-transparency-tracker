@@ -176,22 +176,31 @@ def __survey_process(organisation, workflow, request, organisationsurvey, publis
         else:
             flash("Your survey data was updated.", 'warning')
     else:
-        time_remaining_notice = getTimeRemainingNotice(organisationsurvey.currentworkflow_deadline)
+        time_remaining_notice = getTimeRemainingNotice(
+            organisationsurvey.currentworkflow_deadline)
 
         flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
 
-def _survey_process_collect(organisation, workflow, request, organisationsurvey):
-    return __survey_process(organisation, workflow, request, organisationsurvey, None)
+def _survey_process_collect(organisation, workflow, 
+                            request, organisationsurvey):
+    return __survey_process(organisation, workflow, 
+                            request, organisationsurvey, None)
 
-def _survey_process_review(organisation, workflow, request, organisationsurvey):
-    return __survey_process(organisation, workflow, request, organisationsurvey, None)
+def _survey_process_review(organisation, workflow, 
+                           request, organisationsurvey):
+    return __survey_process(organisation, workflow, 
+                            request, organisationsurvey, None)
 
-def _survey_process_finalreview(organisation, workflow, request, organisationsurvey):
-    return __survey_process(organisation, workflow, request, organisationsurvey, 
+def _survey_process_finalreview(organisation, workflow,
+                                request, organisationsurvey):
+    return __survey_process(organisation, workflow, request, 
+                            organisationsurvey, 
                             request.form.get(indicator+"-agree"))
 
-def _survey_process_comment(organisation, workflow, request, organisationsurvey):
-    return __survey_process(organisation, workflow, request, organisationsurvey, 
+def _survey_process_comment(organisation, workflow, 
+                            request, organisationsurvey):
+    return __survey_process(organisation, workflow, 
+                            request, organisationsurvey, 
                             request.form.get(indicator+"-agree"))
 
 def _survey_process_send(organisation, workflow, request, organisationsurvey):
