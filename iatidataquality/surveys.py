@@ -238,7 +238,9 @@ old_publication_status= {
         }
     }
 
-def organisation_survey_view(organisation_code, workflow, workflow_name, organisationsurvey, allowed_to_edit):
+def organisation_survey_view(organisation_code, workflow, 
+                             workflow_name, organisationsurvey, 
+                             allowed_to_edit):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
