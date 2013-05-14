@@ -309,6 +309,33 @@ def _survey_process_send(organisation, workflow, request, organisationsurvey):
     dqsurveys.advanceSurvey(organisationsurvey)
     flash('Successfully sent survey to donor.', 'success')
 
+old_publication_status= {
+    '4': {
+        'text': 'Always published',
+        'class': 'success'
+        },
+    '3':  {
+        'text': 'Sometimes published',
+        'class': 'warning'
+        },
+    '2':  {
+        'text': 'Collected',
+        'class': 'important'
+        },
+    '1':  {
+        'text': 'Not collected',
+        'class': 'inverse'
+        },
+    '0':  {
+        'text': 'Unknown',
+        'class': ''
+        },
+    "": {
+        'text': '',
+        'class': ''
+        }
+    }
+
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
     
@@ -382,32 +409,6 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         publishedformats = dqsurveys.publishedFormat()
         publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
 
-        old_publication_status= {
-            '4': {
-                'text': 'Always published',
-                'class': 'success'
-            },
-            '3':  {
-                'text': 'Sometimes published',
-                'class': 'warning'
-            },
-            '2':  {
-                'text': 'Collected',
-                'class': 'important'
-            },
-            '1':  {
-                'text': 'Not collected',
-                'class': 'inverse'
-            },
-            '0':  {
-                'text': 'Unknown',
-                'class': ''
-            },
-            "": {
-                'text': '',
-                'class': ''
-            }
-        }
         template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
         return render_template(template_path, 
            organisation=organisation,
