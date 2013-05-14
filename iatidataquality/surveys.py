@@ -247,6 +247,15 @@ def organisation_survey_view(organisation_code, workflow, workflow_name, organis
     publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
 
     template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
+
+    print "-----"
+    old_indicator_names = twentytwelvedata.keys()
+    new_indicator_names = [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
+    for name in new_indicator_names:
+        if name not in old_indicator_names:
+            print "MISSING:", name
+        else:
+            print "PRESENT:", name
     return render_template(
         template_path, 
         organisation=organisation,
