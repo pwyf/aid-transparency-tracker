@@ -177,7 +177,8 @@ def __survey_process(organisation, workflow, request,
         time_remaining_notice = getTimeRemainingNotice(
             organisationsurvey.currentworkflow_deadline)
 
-        flash('Note: your survey has not yet been submitted. '+ time_remaining_notice, 'warning')
+        flash('Note: your survey has not yet been submitted. '
+              + time_remaining_notice, 'warning')
 
 def _survey_process_collect(organisation, workflow, 
                             request, organisationsurvey):
