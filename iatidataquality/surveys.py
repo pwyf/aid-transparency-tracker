@@ -140,9 +140,12 @@ def getTimeRemainingNotice(deadline):
     else:
         return "Today is the last day for making any changes to your survey."
 
-def __survey_process(organisation, workflow, request, organisationsurvey, published_accepted):
+def __survey_process(organisation, workflow, request, 
+                     organisationsurvey, published_accepted):
+
     indicators = request.form.getlist('indicator')
     print "INDICATORS: ", indicators
+
     workflow_id = workflow.Workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
