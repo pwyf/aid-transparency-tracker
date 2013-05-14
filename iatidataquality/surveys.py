@@ -251,6 +251,7 @@ def organisation_survey_view(organisation_code, workflow,
         organisation, 2)
 
     #indicator_names_2013 = [i.name for i in indicators]
+    print indicator_names_2013
     indicator_names_2013 = [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
 
     twentytwelvedata=get_organisation_results(organisation_code, 
@@ -266,11 +267,13 @@ def organisation_survey_view(organisation_code, workflow,
 
     template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
 
+    print "TEMPLATE PATH, ", template_path
+
     return render_template(
         template_path, 
         organisation=organisation,
         indicators=indicators,
-        org_indicators = org_indicators,
+        org_indicators=org_indicators,
         twentytwelvedata=twentytwelvedata,
         old_publication_status=old_publication_status,
         publishedstatuses=publishedstatuses,

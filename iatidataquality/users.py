@@ -93,6 +93,8 @@ def users_edit(username=None):
             user = {}
             permissions = {}
 
+    # permissions may be undefined! NameError!
+
     return render_template("users_edit.html", 
                            user=user,
                            permissions=permissions,
