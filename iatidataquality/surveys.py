@@ -301,21 +301,30 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
             return no_permission()
 
         if (workflow.WorkflowType.name=='collect'):
-            _survey_process_collect(organisation, workflow, request, organisationsurvey)
+            _survey_process_collect(
+                organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='send':
             if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
-                _survey_process_send(organisation_code, workflow, request, organisationsurvey)
+                _survey_process_send(
+                    organisation_code, workflow, request, organisationsurvey)
             else:
-                flash("Not possible to send survey to donor because it's not at the current stage in the workflow. Maybe you didn't submit the data, or maybe you already sent it to the donor?", 'error')
+                flash("Not possible to send survey to donor because it's "
+                      "not at the current stage in the workflow. "
+                      "Maybe you didn't submit the data, or maybe you "
+                      "already sent it to the donor?", 'error')
         elif workflow.WorkflowType.name=='review':
-            _survey_process_review(organisation, workflow, request, organisationsurvey)
+            _survey_process_review(
+                organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='comment':
-            _survey_process_comment(organisation, workflow, request, organisationsurvey)
+            _survey_process_comment(
+                organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='finalreview':
-            _survey_process_finalreview(organisation, workflow, request, organisationsurvey)
+            _survey_process_finalreview(
+                organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='finalised':
             return "finalised"
-        return redirect(url_for("organisations", organisation_code=organisation_code))
+        return redirect(url_for("organisations", 
+                                organisation_code=organisation_code))
 
     else:
         return organisation_survey_view(organisation_code, workflow, workflow_name, organisationsurvey, allowed_to_edit)
