@@ -198,6 +198,26 @@ def addSurveyData(data):
             db.session.add(checkSD)
         return checkSD
 
+def deleteSurveyData(organisation_code):
+    with db.session.begin():
+        for result in models.OrganisationSurveyData.query.join(
+            models.OrganisationSurvey
+            ).join(
+            models.Organisation
+            ).filter(
+            models.Organisation.organisation_code==organisation_code).all():
+
+            db.session.delete(result)
+    with db.session.begin():
+        survey = models.OrganisationSurvey.query.join(
+            models.Organisation
+            ).filter(
+            models.Organisation.organisation_code==organisation_code).first()
+        db.session.delete(survey) 
+        
+
+
+
 def publishedStatus():
     checkPS = models.PublishedStatus.query.all()
     return checkPS
