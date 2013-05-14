@@ -349,15 +349,14 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                 'organisation_id': organisation.id
                 })
 
-    permission_name = "survey_"+workflow_name
-    permission_value={'organisation_code': organisation_code}
-    allowed_to_edit = usermanagement.check_perms(permission_name, 
-                    "edit", 
-                    permission_value)
-
-    allowed_to_view = usermanagement.check_perms(permission_name, 
-                    "view", 
-                    permission_value)
+    def allowed(method):
+        permission_name = "survey_" + workflow_name
+        permission_value = {'organisation_code': organisation_code}
+        return usermanagement.check_perms(permission_name,
+                                          method,
+                                          permission_value)
+    allowed_to_edit = allowed("edit")
+    allowed_to_view = allowed("view")
     
     if not allowed_to_view:
         flash("Sorry, you do not have permission to view that survey", 'error')
