@@ -161,7 +161,7 @@ def __survey_process(organisation, workflow, request,
             'published_source': request.form.get(indicator+"-source"),
             'published_comment': request.form.get(indicator+"-comments"),
             'published_format': published_format,
-            'published_accepted': published_accepted,
+            'published_accepted': published_accepted(indicator),
             'ordinal_value': ordinal_value
         }
         surveydata = dqsurveys.addSurveyData(data)
@@ -180,27 +180,30 @@ def __survey_process(organisation, workflow, request,
         flash('Note: your survey has not yet been submitted. '
               + time_remaining_notice, 'warning')
 
+none = lambda i: None
+add_agree = lambda indicator: request.form.get(indicator + "-agree")
+
 def _survey_process_collect(organisation, workflow, 
-                            request, organisationsurvey):
+                            request, organisationsurvey, indicator):
     return __survey_process(organisation, workflow, 
-                            request, organisationsurvey, None)
+                            request, organisationsurvey, none)
 
 def _survey_process_review(organisation, workflow, 
-                           request, organisationsurvey):
+                           request, organisationsurvey, indicator):
     return __survey_process(organisation, workflow, 
-                            request, organisationsurvey, None)
+                            request, organisationsurvey, none)
 
 def _survey_process_finalreview(organisation, workflow,
-                                request, organisationsurvey):
+                                request, organisationsurvey, indicator):
     return __survey_process(organisation, workflow, request, 
                             organisationsurvey, 
-                            request.form.get(indicator+"-agree"))
+                            add_agree)
 
 def _survey_process_comment(organisation, workflow, 
-                            request, organisationsurvey):
+                            request, organisationsurvey, indicator):
     return __survey_process(organisation, workflow, 
                             request, organisationsurvey, 
-                            request.form.get(indicator+"-agree"))
+                            add_agree)
 
 def _survey_process_send(organisation, workflow, request, organisationsurvey):
     indicators = request.form.getlist('indicator')
@@ -343,7 +346,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                       "already sent it to the donor?", 'error')
         elif workflow_name in handlers:
             handlers[workflow_name](
-                organisation, workflow, request, organisationsurvey)
+                organisation, workflow, request, organisationsurvey, indicator)
         elif workflow_name == 'finalised':
             return "finalised"
         return redirect(url_for("organisations", 
