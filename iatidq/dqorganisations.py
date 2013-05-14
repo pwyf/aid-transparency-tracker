@@ -495,7 +495,7 @@ def _organisation_indicators_split(organisation, aggregation_type=2):
     commitment_data = dqindicators.indicators_subset("pwyf2013", "commitment")
     commitment = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
     if not results:
-        indicators = dqindicators.indicators("pwyf2013")
+        indicators = dqindicators.indicators("2013 Index")
         indicators_restructured = dict(map(lambda x: (x.id, {'indicator': x }), indicators))
         return {"zero": indicators_restructured,
                 "non_zero": {},
