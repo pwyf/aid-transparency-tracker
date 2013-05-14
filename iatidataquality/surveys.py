@@ -94,22 +94,13 @@ def get_organisation_results(organisation_code, newindicators):
     return data
 
 def completion_percentage(survey):
-    if survey.Workflow.name == 'researcher':
-        pct_complete = (1.0/7.0)*100
-    elif survey.Workflow.name == 'send':
-        pct_complete = (2.0/7.0)*100
-    elif survey.Workflow.name == 'donorreview':
-        pct_complete = (3.0/7.0)*100
-    elif survey.Workflow.name == 'pwyfreview':
-        pct_complete = (4.0/7.0)*100
-    elif survey.Workflow.name == 'donorcomments':
-        pct_complete = (5.0/7.0)*100
-    elif survey.Workflow.name == 'pwyffinal':
-        pct_complete = (6.0/7.0)*100
-    elif survey.Workflow.name == 'finalised':
-        pct_complete = (7.0/7.0)*100
-    ## FIXME: this can NameError
-    return pct_complete
+    stages = ['researcher', 'send', 'donorreview', 'pwyfreview',
+              'donorcomments', 'pwyffinal', 'finalised']
+
+    # can ValueError; used to raise NameError
+    idx = stages.index(survey.Workflow.name)
+
+    return float(idx + 1) / 7 * 100
 
 @app.route("/organisations/<organisation_code>/survey/")
 @usermanagement.perms_required('survey', 'view')
