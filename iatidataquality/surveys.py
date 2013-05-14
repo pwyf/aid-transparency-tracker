@@ -77,11 +77,11 @@ def get_organisation_results(organisation_code, newindicators):
     data = {}
 
     for d in old_results_data:
-        if (d["target_id"] == old_organisation_id):
+        if d["target_id"] == old_organisation_id:
             try:
                 question_id = int(d["question_id"])
-                d["newindicator_id"] = indicators[(int(d["question_id"]))]
-                data[indicators[(int(d["question_id"]))]] = d
+                d["newindicator_id"] = indicators[question_id]
+                data[indicators[question_id]] = d
             except KeyError:
                 pass
     for indicator in newindicators:
