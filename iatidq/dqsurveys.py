@@ -163,7 +163,11 @@ def getOrCreateSurvey(data):
         return checkS
 
 def addSurveyData(data):
-    checkSD = models.OrganisationSurveyData.query.filter_by(organisationsurvey_id=data["organisationsurvey_id"], workflow_id=data["workflow_id"], indicator_id=data["indicator_id"]).first()
+    checkSD = models.OrganisationSurveyData.query.filter_by(
+        organisationsurvey_id=data["organisationsurvey_id"], 
+        workflow_id=data["workflow_id"], 
+        indicator_id=data["indicator_id"]).first()
+
     if not checkSD:
         with db.session.begin():
             newSD = models.OrganisationSurveyData()
