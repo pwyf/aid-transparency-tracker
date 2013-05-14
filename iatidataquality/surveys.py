@@ -142,15 +142,17 @@ def __survey_process(organisation, workflow, request,
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
-        if request.form.get(indicator+"-ordinal_value"):
+
+        if request.form.get(indicator + "-ordinal_value"):
             published_format= dqsurveys.publishedFormat('document').id
-            ordinal_value = request.form.get(indicator+"-ordinal_value")
-        elif request.form.get(indicator+"-noformat"):
+            ordinal_value = request.form.get(indicator + "-ordinal_value")
+        elif request.form.get(indicator + "-noformat"):
             published_format= dqsurveys.publishedFormat('document').id
             ordinal_value = None
         else:
-            published_format = request.form.get(indicator+"-publishedformat")
+            published_format = request.form.get(indicator + "-publishedformat")
             ordinal_value = None
+
         data = {
             'organisationsurvey_id': organisationsurvey.id,
             'indicator_id': indicator,
