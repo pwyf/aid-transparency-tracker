@@ -300,7 +300,8 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                 redir_to = request.referrer
             else:
                 redir_to = url_for('home')
-        
+            return redirect(redir_to)
+
         if (workflow.WorkflowType.name=='collect'):
             _survey_process_collect(organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='send':
