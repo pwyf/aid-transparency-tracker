@@ -86,7 +86,7 @@ def get_organisation_results(organisation_code, newindicators):
                 pass
     for indicator_name in newindicators:
         try:
-            print data[indicator_name]
+            discard = data[indicator_name]
         except KeyError:
             data[indicator_name] = {
                 'result': ''
@@ -133,15 +133,16 @@ def organisation_survey(organisation_code=None):
                            loggedinuser=current_user)
 
 def getTimeRemainingNotice(deadline):
-    time_remaining = ((deadline.date())-(datetime.utcnow().date()))
-    if time_remaining.days >1:
-        time_remaining_notice = "You have " + str(time_remaining.days) + " days to submit your response."
+    remaining = deadline.date() - datetime.utcnow().date()
+
+    if remaining.days > 1:
+        return "You have %d days to submit your response." % remaining.days
     else:
-        time_remaining_notice = "Today is the last day for making any changes to your survey."
-    return time_remaining_notice
+        return "Today is the last day for making any changes to your survey."
 
 def __survey_process(organisation, workflow, request, organisationsurvey, published_accepted):
     indicators = request.form.getlist('indicator')
+    print "INDICATORS: ", indicators
     workflow_id = workflow.Workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
