@@ -214,8 +214,6 @@ def deleteSurveyData(organisation_code):
             ).filter(
             models.Organisation.organisation_code==organisation_code).first()
         db.session.delete(survey) 
-        
-
 
 
 def publishedStatus():
