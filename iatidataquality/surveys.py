@@ -249,7 +249,7 @@ def organisation_survey_view(organisation_code, workflow,
     surveydata = dqsurveys.getSurveyData(organisation_code, workflow_name)
     surveydata_allworkflows = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
-    indicators = dqindicators.indicators("pwyf2013")
+    indicators = dqindicators.indicators("2013 Index")
     org_indicators = dqorganisations._organisation_indicators_split(
         organisation, 2)
 

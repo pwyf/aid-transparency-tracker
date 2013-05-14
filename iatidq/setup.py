@@ -32,7 +32,7 @@ which_packages = [
 
 default_tests_filename="tests/tests.csv"
 default_infotypes_filename="tests/infotypes.csv"
-default_indicator_group_name="pwyf2013"
+default_indicator_group_name="2013 Index"
 default_minimal_organisations = [
             {
             'organisation_name': 'World Bank',
@@ -141,7 +141,7 @@ def setup_common():
         default_indicator_group_name,
         default_tests_filename)
     print "Importing indicator descriptions"
-    dqindicators.importIndicatorDescriptionsFromFile("pwyf2013", 
+    dqindicators.importIndicatorDescriptionsFromFile("2013 Index", 
                                                             "tests/indicators.csv")
     print "Importing codelists"
     dqcodelists.importCodelists()

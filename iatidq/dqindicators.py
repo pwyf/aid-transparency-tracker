@@ -15,7 +15,7 @@ import util
 import unicodecsv
 
 def importIndicatorDescriptions():
-    indicatorgroup_name = "pwyf2013"
+    indicatorgroup_name = "2013 Index"
     filename = 'tests/indicators.csv'
     return importIndicatorDescriptionsFromFile(indicatorgroup_name, filename)
 
@@ -52,7 +52,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
 
 def importIndicators():
     filename = 'tests/tests.csv'
-    indicatorgroup_id = 'pwyf2013'
+    indicatorgroup_id = '2013 Index'
     with file(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True, False)
 

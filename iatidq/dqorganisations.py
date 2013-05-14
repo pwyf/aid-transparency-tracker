@@ -448,7 +448,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
             'tests': {}
         }
     # make sure indicators are complete
-    indicators = dqindicators.indicators_subset("pwyf2013", "publication")
+    indicators = dqindicators.indicators_subset("2013 Index", "publication")
     for indicator in indicators:
         if indicator.id not in data:
             data[indicator.id] = {
@@ -492,7 +492,7 @@ def _organisation_indicators_inforesults(organisation):
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
-    commitment_data = dqindicators.indicators_subset("pwyf2013", "commitment")
+    commitment_data = dqindicators.indicators_subset("2013 Index", "commitment")
     commitment = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
     if not results:
         indicators = dqindicators.indicators("2013 Index")
