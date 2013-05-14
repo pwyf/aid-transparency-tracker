@@ -184,23 +184,23 @@ none = lambda i: None
 add_agree = lambda indicator: request.form.get(indicator + "-agree")
 
 def _survey_process_collect(organisation, workflow, 
-                            request, organisationsurvey, indicator):
+                            request, organisationsurvey):
     return __survey_process(organisation, workflow, 
                             request, organisationsurvey, none)
 
 def _survey_process_review(organisation, workflow, 
-                           request, organisationsurvey, indicator):
+                           request, organisationsurvey):
     return __survey_process(organisation, workflow, 
                             request, organisationsurvey, none)
 
 def _survey_process_finalreview(organisation, workflow,
-                                request, organisationsurvey, indicator):
+                                request, organisationsurvey):
     return __survey_process(organisation, workflow, request, 
                             organisationsurvey, 
                             add_agree)
 
 def _survey_process_comment(organisation, workflow, 
-                            request, organisationsurvey, indicator):
+                            request, organisationsurvey):
     return __survey_process(organisation, workflow, 
                             request, organisationsurvey, 
                             add_agree)
@@ -346,7 +346,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                       "already sent it to the donor?", 'error')
         elif workflow_name in handlers:
             handlers[workflow_name](
-                organisation, workflow, request, organisationsurvey, indicator)
+                organisation, workflow, request, organisationsurvey)
         elif workflow_name == 'finalised':
             return "finalised"
         return redirect(url_for("organisations", 
