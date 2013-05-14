@@ -334,6 +334,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         else:
             redir_to = url_for('home')
         return redirect(redir_to)
+
     if request.method=='POST':
         if not allowed_to_edit:
             flash("Sorry, you do not have permission to update that survey", 'error')
@@ -358,6 +359,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         elif workflow.WorkflowType.name=='finalised':
             return "finalised"
         return redirect(url_for("organisations", organisation_code=organisation_code))
+
     else:
         organisation = Organisation.query.filter_by(
             organisation_code=organisation_code).first_or_404()
