@@ -300,10 +300,15 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         if not allowed_to_edit:
             return no_permission()
 
-        if (workflow.WorkflowType.name=='collect'):
-            _survey_process_collect(
-                organisation, workflow, request, organisationsurvey)
-        elif workflow.WorkflowType.name=='send':
+        handlers = {
+            "collect": _survey_process_collect,
+            "send": _survey_process_send,
+            "review": _survey_process_review,
+            "comment": _survey_process_comment,
+            "finalreview": _survey_process_finalreview
+            }
+
+        if workflow.WorkflowType.name == "send":
             if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
                 _survey_process_send(
                     organisation_code, workflow, request, organisationsurvey)
@@ -312,14 +317,8 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                       "not at the current stage in the workflow. "
                       "Maybe you didn't submit the data, or maybe you "
                       "already sent it to the donor?", 'error')
-        elif workflow.WorkflowType.name=='review':
-            _survey_process_review(
-                organisation, workflow, request, organisationsurvey)
-        elif workflow.WorkflowType.name=='comment':
-            _survey_process_comment(
-                organisation, workflow, request, organisationsurvey)
-        elif workflow.WorkflowType.name=='finalreview':
-            _survey_process_finalreview(
+        elif workflow.WorkflowType.name in handlers:
+            handlers[workflow.WorkflowType.name](
                 organisation, workflow, request, organisationsurvey)
         elif workflow.WorkflowType.name=='finalised':
             return "finalised"
