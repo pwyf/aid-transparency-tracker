@@ -256,10 +256,14 @@ def organisation_survey_view(organisation_code, workflow,
 
     twentytwelvedata=get_organisation_results(organisation_code, 
                                               indicator_names_2013)
+
+    id_tuple = lambda p: (p.id, p)
+
     publishedstatuses = dqsurveys.publishedStatus()
-    publishedstatuses = dict(map(lambda ps: (ps.id, ps), publishedstatuses))
+    publishedstatuses = dict(map(id_tuple, publishedstatuses))
+
     publishedformats = dqsurveys.publishedFormat()
-    publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
+    publishedformats = dict(map(id_tuple, publishedformats))
 
     template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
 
