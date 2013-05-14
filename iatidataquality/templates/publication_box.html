@@ -1,6 +1,17 @@
 
             {% if summary_data and summary_data[0]>0 %}
             <p><i class="icon icon-ok"></i> IATI data found</p>
+            {% else %}
+            <p><i class="icon icon-remove"></i> No IATI data found</p>
+            {% endif %}
+
+            {% if surveydata %}
+            <p><i class="icon icon-info-sign"></i> Survey data now available</p>
+            {% else %}
+			<p>Survey data collection underway</p>
+            {% endif %}
+
+            {% if summary_data and summary_data[0]>0 %}
             <p><i class="icon icon-refresh"></i> Publishing frequency: 
 			  <span title="{{organisation.frequency_comment}}">{{organisation.frequency}}</span></p>
             <p>
@@ -13,14 +24,6 @@
 					 organisation_code=organisation.organisation_code)}}">
 			  <i class="icon-download"></i> Data (CSV)</a>
             </p>
-            {% else %}
-            <p><i class="icon icon-remove"></i> No IATI data found</p>
+			{% else %}
             <p><a class="btn btn-warning" href="http://aidtransparency.net">Publish to IATI »</a></p>
-            {% endif %}
-
-            {% if surveydata %}
-            <p><i class="icon icon-info-sign"></i> Survey data now available</p>
-            {% else %}
-			<p>Survey data collection underway</p>
-            {% endif %}
-
+			{% endif %}
