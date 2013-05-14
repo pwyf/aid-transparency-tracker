@@ -336,6 +336,39 @@ old_publication_status= {
         }
     }
 
+def organisation_survey_view(organisation_code, workflow, workflow_name, organisationsurvey, allowed_to_edit):
+        organisation = Organisation.query.filter_by(
+            organisation_code=organisation_code).first_or_404()
+
+        surveydata = dqsurveys.getSurveyData(organisation_code, workflow_name)
+        surveydata_allworkflows = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+
+        indicators = dqindicators.indicators("pwyf2013")
+        org_indicators = dqorganisations._organisation_indicators_split(
+        organisation, 2)
+        
+        twentytwelvedata=get_organisation_results(organisation_code, indicators)
+        publishedstatuses = dqsurveys.publishedStatus()
+        publishedstatuses = dict(map(lambda ps: (ps.id, ps), publishedstatuses))
+        publishedformats = dqsurveys.publishedFormat()
+        publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
+
+        template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
+        return render_template(template_path, 
+           organisation=organisation,
+           indicators=indicators,
+           org_indicators = org_indicators,
+           twentytwelvedata=twentytwelvedata,
+           old_publication_status=old_publication_status,
+           publishedstatuses=publishedstatuses,
+           workflow=workflow,
+           surveydata=surveydata_allworkflows,
+           organisationsurvey=organisationsurvey,
+           allowed_to_edit=allowed_to_edit,
+           publishedformats=publishedformats,
+           admin=usermanagement.check_perms('admin'),
+           loggedinuser=current_user)
+
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
     
@@ -392,34 +425,4 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         return redirect(url_for("organisations", organisation_code=organisation_code))
 
     else:
-        organisation = Organisation.query.filter_by(
-            organisation_code=organisation_code).first_or_404()
-
-        surveydata = dqsurveys.getSurveyData(organisation_code, workflow_name)
-        surveydata_allworkflows = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-
-        indicators = dqindicators.indicators("pwyf2013")
-        org_indicators = dqorganisations._organisation_indicators_split(
-        organisation, 2)
-        
-        twentytwelvedata=get_organisation_results(organisation_code, indicators)
-        publishedstatuses = dqsurveys.publishedStatus()
-        publishedstatuses = dict(map(lambda ps: (ps.id, ps), publishedstatuses))
-        publishedformats = dqsurveys.publishedFormat()
-        publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
-
-        template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
-        return render_template(template_path, 
-           organisation=organisation,
-           indicators=indicators,
-           org_indicators = org_indicators,
-           twentytwelvedata=twentytwelvedata,
-           old_publication_status=old_publication_status,
-           publishedstatuses=publishedstatuses,
-           workflow=workflow,
-           surveydata=surveydata_allworkflows,
-           organisationsurvey=organisationsurvey,
-           allowed_to_edit=allowed_to_edit,
-           publishedformats=publishedformats,
-           admin=usermanagement.check_perms('admin'),
-           loggedinuser=current_user)
+        return organisation_survey_view(organisation_code, workflow, workflow_name, organisationsurvey, allowed_to_edit)
