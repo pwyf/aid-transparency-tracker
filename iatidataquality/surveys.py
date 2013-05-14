@@ -251,7 +251,7 @@ def organisation_survey_view(organisation_code, workflow,
         organisation, 2)
 
     #indicator_names_2013 = [i.name for i in indicators]
-    print indicator_names_2013
+    print org_indicators["zero"]
     indicator_names_2013 = [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
 
     twentytwelvedata=get_organisation_results(organisation_code, 
