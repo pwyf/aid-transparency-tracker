@@ -250,6 +250,8 @@ def organisation_survey_view(organisation_code, workflow, workflow_name, organis
 
     print "-----"
     old_indicator_names = twentytwelvedata.keys()
+    print "#OLD: %d" % len(old_indicator_names)
+    print sorted(old_indicator_names)
     new_indicator_names = [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
     for name in new_indicator_names:
         if name not in old_indicator_names:
