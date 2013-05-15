@@ -39,11 +39,15 @@
     </td>
     <td>{{workflow.Workflow.title}}</td>
     <td>
+		{% if workflow.Workflow.id <= survey.Workflow.id %}
 	  <a href="{{url_for('organisation_survey_edit', 
 				 organisation_code=organisation.organisation_code, 
 				 workflow_name=workflow.Workflow.name)}}">
 		View &raquo;
 	  </a>
+		{% else %}
+	  Not yet available
+		{% endif %}
 	</td>
     </tr>
     {% endfor %}
