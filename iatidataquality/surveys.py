@@ -267,7 +267,8 @@ def organisation_survey_view(organisation_code, workflow,
         print indicator
         print indicator["indicator"]
         print indicator["indicator"].id
-        print surveydata_allworkflows[workflow_name][indicator["indicator"].id]
+        if 'donorreview' in surveydata_allworkflows:
+            print surveydata_allworkflows['donorreview'][indicator["indicator"].id]
 
     #indicator_names_2013 = [i.name for i in indicators]
     #print org_indicators["zero"]
