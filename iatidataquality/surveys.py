@@ -254,7 +254,7 @@ def organisation_survey_view(organisation_code, workflow,
     print "WORKFLOW %s" % workflow_name
     for k, v in surveydata_allworkflows.iteritems():
         print "WF %s # %d" % (k, len(v))
-        print v.keys()
+        print k, v
 
     indicators = dqindicators.indicators("2013 Index")
     org_indicators = dqorganisations._organisation_indicators_split(
