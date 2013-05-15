@@ -261,6 +261,14 @@ def organisation_survey_view(organisation_code, workflow,
         organisation, 2)
 
     print "OI(c) ", org_indicators["commitment"]
+
+    for i, indicator in org_indicators["commitment"].iteritems():
+        print "---"
+        print indicator
+        print indicator["indicator"]
+        print indicator["indicator"].id
+        print surveydata_allworkflows[workflow_name][indicator["indicator"].id]
+
     #indicator_names_2013 = [i.name for i in indicators]
     #print org_indicators["zero"]
     indicator_names_2013 = [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
