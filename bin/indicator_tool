@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+
+import sys
+from iatidq.models import *
+import iatidq.dqorganisations
+import pprint
+
+_, org = sys.argv
+
+o = Organisation.query.filter_by(organisation_code=org).first()
+
+print o
+
+ocs = iatidq.dqorganisations._organisation_indicators_split(o, 2)
+
+pprint.pprint(ocs)
+
+
+import iatidq.dqindicators
+
+print iatidq.dqindicators.indicators_subset('2013 Index', 'commitment')
