@@ -38,9 +38,13 @@
       {%endif%}
     </td>
     <td>{{workflow.Workflow.title}}</td>
-    <td><a href="{{url_for('organisation_survey_edit', 
+    <td>
+	  <a href="{{url_for('organisation_survey_edit', 
 				 organisation_code=organisation.organisation_code, 
-				 workflow_name=workflow.Workflow.name)}}">View &raquo;</a></td>
+				 workflow_name=workflow.Workflow.name)}}">
+		View &raquo;
+	  </a>
+	</td>
     </tr>
     {% endfor %}
     </tbody>
