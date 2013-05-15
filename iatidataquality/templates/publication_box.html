@@ -24,7 +24,7 @@
 			  <i class="icon-download"></i> Data (CSV)</a>
             </p>
 			{% else %}
-			{% if survey data %}
+			{% if surveydata %}
 			<!-- this is a dupe of the above, and should be a block or macro -->
 			<a class="btn btn-success" 
 			   href="{{url_for('organisation_publication', 
@@ -36,4 +36,5 @@
 			  <i class="icon-download"></i> Data (CSV)</a>
 			{% else %}
             <p><a class="btn btn-warning" href="http://aidtransparency.net">Publish to IATI »</a></p>
+			{% endif %}
 			{% endif %}
