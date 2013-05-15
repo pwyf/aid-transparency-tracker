@@ -375,7 +375,7 @@ def workflows(workflow_name=None):
         checkW = db.session.query(models.Workflow,
                                   models.WorkflowType
             ).join(models.WorkflowType, models.WorkflowType.id==models.Workflow.workflow_type
-            ).all()
+            ).order_by(models.Workflow.id).all()
     if checkW:
         return checkW
     else:
