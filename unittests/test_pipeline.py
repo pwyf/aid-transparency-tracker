@@ -216,7 +216,7 @@ def _test_example_tests(publisher, country):
 
 
 @nose.with_setup(setup_func, teardown_func)
-def test_example_tests():
+def test_samples():
     data = [ ('worldbank', 'tz'),
              ('unitedstates', 'tz') 
              ]
