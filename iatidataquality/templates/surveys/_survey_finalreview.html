@@ -21,7 +21,7 @@
     
     <form action="" method="post"><h2>Commitment indicators</h2>
     <table class="table" id="indicators">
-    <thead><th>Indicator</th><th>Responder</th><th>Score</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
+    <thead><th>Information item</th><th>Responder</th><th>Score</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
     <tbody>
     {% for i, indicator in org_indicators.commitment.items() %}<tr>
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
@@ -147,7 +147,7 @@
     <h2>Publication indicators</h2>
     <table class="table" id="indicators">
 
-    <thead><th>Indicator</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
+    <thead><th>Information item</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
 
     <tbody>
     
