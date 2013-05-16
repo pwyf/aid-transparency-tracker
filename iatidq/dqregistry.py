@@ -130,9 +130,12 @@ def refresh_package(package):
 
 def refresh_package_by_name(package_name):
     registry = ckanclient.CkanClient(base_location=CKANurl)  
-    package = registry.package_entity_get(package_name)
-    refresh_package(package)
-
+    try:
+        package = registry.package_entity_get(package_name)
+        refresh_package(package)
+    except ckanclient.CkanApiNotAuthorizedError:
+        print "Error 403 (Not authorised) when retrieving '%s'" % package_name
+        
 def _refresh_packages():
     [ refresh_package(package) 
       for package in packages_from_registry(REGISTRY_URL) ]
