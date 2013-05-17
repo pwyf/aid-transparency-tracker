@@ -11,12 +11,21 @@ sys.path.append(parent)
 
 from iatidq.models import *
 import iatidq.dqsurveys
+import iatidq.dqorganisations
 
 def clear_survey(options):
     organisation_code = options.organisation_code
     assert organisation_code
 
     iatidq.dqsurveys.deleteSurveyData(organisation_code)
+
+def list_packages(options):
+    organisation_code = options.organisation_code
+    assert organisation_code
+
+    for pkg in iatidq.dqorganisations.organisationPackages(
+        organisation_code=organisation_code):
+        print pkg
 
 def run():
     parser = optparse.OptionParser()
@@ -31,15 +40,17 @@ def run():
         print "Must specify a mode"
         sys.exit(1)
     
-    modes = ["clear-survey"]
+    modes = {
+        "clear-survey": clear_survey,
+        "list-packages", list_packages
+        }
 
-    if options.mode not in modes:
+    if options.mode not in modes::
         print "Mode must be one of:"
         for mode in modes:
             print "  ", mode
 
-    if options.mode == 'clear-survey':
-        clear_survey(options)
+    modes[options.mode](options)
 
 if __name__ == '__main__':
     run()

@@ -89,6 +89,9 @@ def download(options):
     if options.minimal:
         for package_name, _ in which_packages:
             iatidq.dqdownload.run(package_name=package_name)
+    elif options.matching:
+        for pkg_name in dqregistry.matching_packages(options.matching):
+            iatidq.dqdownload.run(package_name=pkg_name)
     else:
         iatidq.dqdownload.run()
 
