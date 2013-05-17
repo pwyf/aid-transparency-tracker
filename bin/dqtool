@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+
+import sys
+import os
+import optparse
+
+current = os.path.dirname(os.path.abspath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+
+
+from iatidq.models import *
+import iatidq.dqsurvey
+
+def clear_survey(options):
+    organisation_code = options.organsation_code
+    assert organsation_code
+
+    dqsurvey.deleteSurveyData(organsation_code)
+
+def run():
+    parser = optparse.OptionParser()
+    parser.add_option("--mode", dest="mode",
+                      action="store")
+    parser.add_option("--organisation", dest="organisation_code",
+                      action="store")
+
+    options, rest = parser.parse_args()
+
+    if not options.mode:
+        print "Must specify a mode"
+        sys.exit(1)
+    
+    modes = ["clear-survey"]
+
+    if options.mode not in modes:
+        print "Mode must be one of:"
+        for mode in modes:
+            print "  ", mode
+
+    if options.mode == 'clear-survey':
+        clear_survey(options)
+
+if __name__ == '__main__':
+    run()
