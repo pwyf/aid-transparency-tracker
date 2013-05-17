@@ -45,7 +45,7 @@ def run():
         "list-packages": list_packages
         }
 
-    if options.mode not in modes::
+    if options.mode not in modes:
         print "Mode must be one of:"
         for mode in modes:
             print "  ", mode
