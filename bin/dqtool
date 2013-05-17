@@ -16,7 +16,7 @@ def clear_survey(options):
     organisation_code = options.organisation_code
     assert organisation_code
 
-    dqsurveys.deleteSurveyData(organisation_code)
+    iatidq.dqsurveys.deleteSurveyData(organisation_code)
 
 def run():
     parser = optparse.OptionParser()
