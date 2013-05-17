@@ -249,29 +249,10 @@ def organisation_survey_view(organisation_code, workflow,
     surveydata = dqsurveys.getSurveyData(organisation_code, workflow_name)
     surveydata_allworkflows = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
-    #print surveydata_allworkflows
-
-    print "WORKFLOW %s" % workflow_name
-    for k, v in surveydata_allworkflows.iteritems():
-        print "WF %s # %d" % (k, len(v))
-        print k, v
-
     indicators = dqindicators.indicators("2013 Index")
     org_indicators = dqorganisations._organisation_indicators_split(
         organisation, 2)
 
-    print "OI(c) ", org_indicators["commitment"]
-
-    for i, indicator in org_indicators["commitment"].iteritems():
-        print "---"
-        print indicator
-        print indicator["indicator"]
-        print indicator["indicator"].id
-        if 'donorreview' in surveydata_allworkflows:
-            print surveydata_allworkflows['donorreview'][indicator["indicator"].id]
-
-    #indicator_names_2013 = [i.name for i in indicators]
-    #print org_indicators["zero"]
     indicator_names_2013 = [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
 
     twentytwelvedata=get_organisation_results(organisation_code, 
@@ -286,8 +267,6 @@ def organisation_survey_view(organisation_code, workflow,
     publishedformats = dict(map(id_tuple, publishedformats))
 
     template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
-
-    print "TEMPLATE PATH, ", template_path
 
     return render_template(
         template_path, 
