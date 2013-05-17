@@ -168,8 +168,8 @@ def addSurveyData(data):
         workflow_id=data["workflow_id"], 
         indicator_id=data["indicator_id"]).first()
 
-    if not checkSD:
-        with db.session.begin():
+    with db.session.begin():
+        if not checkSD:
             newSD = models.OrganisationSurveyData()
             newSD.setup(
                 organisationsurvey_id = data["organisationsurvey_id"],
@@ -183,9 +183,8 @@ def addSurveyData(data):
                 ordinal_value = data.get("ordinal_value")
                 )
             db.session.add(newSD)
-        return newSD
-    else:
-        with db.session.begin():
+            return newSD
+        else:
             checkSD.organisationsurvey_id = data["organisationsurvey_id"],
             checkSD.workflow_id = data["workflow_id"],
             checkSD.indicator_id = data["indicator_id"],
@@ -196,7 +195,7 @@ def addSurveyData(data):
             checkSD.published_format = data.get("published_format"),
             checkSD.ordinal_value = data.get("ordinal_value")
             db.session.add(checkSD)
-        return checkSD
+            return checkSD
 
 def deleteSurveyData(organisation_code):
     with db.session.begin():
