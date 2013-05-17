@@ -10,13 +10,13 @@ sys.path.append(parent)
 
 
 from iatidq.models import *
-import iatidq.dqsurvey
+import iatidq.dqsurveys
 
 def clear_survey(options):
     organisation_code = options.organsation_code
     assert organsation_code
 
-    dqsurvey.deleteSurveyData(organsation_code)
+    dqsurveys.deleteSurveyData(organsation_code)
 
 def run():
     parser = optparse.OptionParser()
