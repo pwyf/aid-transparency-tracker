@@ -12,6 +12,7 @@ sys.path.append(parent)
 from iatidq.models import *
 import iatidq.dqsurveys
 import iatidq.dqorganisations
+import iatidq.dqpackages
 
 def clear_survey(options):
     organisation_code = options.organisation_code
@@ -23,8 +24,14 @@ def list_packages(options):
     organisation_code = options.organisation_code
     assert organisation_code
 
-    for pkg in iatidq.dqorganisations.organisationPackages(
-        organisation_code=organisation_code):
+    ids = [ 
+        p.package_id for p in iatidq.dqorganisations.organisationPackages(
+            organisation_code=organisation_code) 
+        ]
+    packages = iatidq.dqpackages.packages()
+    packages = [ pkg for pkg in packages if pkg.id in ids ]
+
+    for pkg in packages:
         print pkg.package_name
 
 def run():
