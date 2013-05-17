@@ -13,10 +13,10 @@ from iatidq.models import *
 import iatidq.dqsurveys
 
 def clear_survey(options):
-    organisation_code = options.organsation_code
-    assert organsation_code
+    organisation_code = options.organisation_code
+    assert organisation_code
 
-    dqsurveys.deleteSurveyData(organsation_code)
+    dqsurveys.deleteSurveyData(organisation_code)
 
 def run():
     parser = optparse.OptionParser()
