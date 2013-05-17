@@ -13,6 +13,8 @@ from iatidq.models import *
 import iatidq.dqsurveys
 import iatidq.dqorganisations
 import iatidq.dqpackages
+import iatidq.dqregistry
+import iatidq.dqdownload
 
 def clear_survey(options):
     organisation_code = options.organisation_code
@@ -20,19 +22,27 @@ def clear_survey(options):
 
     iatidq.dqsurveys.deleteSurveyData(organisation_code)
 
+def get_package_names(organisation_code):
+    for p in iatidq.dqorganisations.organisationPackages(
+        organisation_code=organisation_code):
+        yield p.Package.package_name
+
 def list_packages(options):
     organisation_code = options.organisation_code
     assert organisation_code
 
-    ids = [ 
-        p.package_id for p in iatidq.dqorganisations.organisationPackages(
-            organisation_code=organisation_code) 
-        ]
-    packages = iatidq.dqpackages.packages()
-    packages = [ pkg for pkg in packages if pkg.id in ids ]
+    for p in get_package_names(organisation_code):
+        print p
 
-    for pkg in packages:
-        print pkg.package_name
+def reload_packages(options):
+    organisation_code = options.organisation_code
+    assert organisation_code
+
+    for p in get_package_names(organisation_code):
+        iatidq.dqregistry.refresh_package_by_name(p)
+        iatidq.dqregistry.activate_packages([(p, True)], clear_revision_id=True)
+        iatidq.dqdownload.run(package_name=p)
+
 
 def run():
     parser = optparse.OptionParser()
@@ -49,7 +59,8 @@ def run():
     
     modes = {
         "clear-survey": clear_survey,
-        "list-packages": list_packages
+        "list-packages": list_packages,
+        "reload-packages": reload_packages
         }
 
     if options.mode not in modes:
