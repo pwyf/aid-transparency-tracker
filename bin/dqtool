@@ -42,7 +42,7 @@ def run():
     
     modes = {
         "clear-survey": clear_survey,
-        "list-packages", list_packages
+        "list-packages": list_packages
         }
 
     if options.mode not in modes::
