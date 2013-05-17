@@ -213,32 +213,19 @@ def _survey_process_send(organisation, workflow, request, organisationsurvey):
     dqsurveys.advanceSurvey(organisationsurvey)
     flash('Successfully sent survey to donor.', 'success')
 
-old_publication_status= {
-    '4': {
-        'text': 'Always published',
-        'class': 'success'
-        },
-    '3':  {
-        'text': 'Sometimes published',
-        'class': 'warning'
-        },
-    '2':  {
-        'text': 'Collected',
-        'class': 'important'
-        },
-    '1':  {
-        'text': 'Not collected',
-        'class': 'inverse'
-        },
-    '0':  {
-        'text': 'Unknown',
-        'class': ''
-        },
-    "": {
-        'text': '',
-        'class': ''
-        }
-    }
+def get_old_publication_status():
+    pses = [
+        ('4', 'Always published', 'success'),
+        ('3', 'Sometimes published', 'warning'),
+        ('2', 'Collected', 'important'),
+        ('1', 'Not collected', 'inverse'),
+        ('',  'Unknown', '')
+        ]
+    struct = lambda ps: (ps[0], {
+            "text": ps[1], 
+            "class": ps[2] 
+            })
+    return dict(map(struct, pses))
 
 def organisation_survey_view(organisation_code, workflow, 
                              workflow_name, organisationsurvey, 
@@ -267,6 +254,8 @@ def organisation_survey_view(organisation_code, workflow,
     publishedformats = dict(map(id_tuple, publishedformats))
 
     template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
+
+    old_publication_status = get_old_publication_status()
 
     return render_template(
         template_path, 
