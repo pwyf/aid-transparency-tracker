@@ -25,7 +25,7 @@ def list_packages(options):
 
     for pkg in iatidq.dqorganisations.organisationPackages(
         organisation_code=organisation_code):
-        print pkg
+        print pkg.package_name
 
 def run():
     parser = optparse.OptionParser()
