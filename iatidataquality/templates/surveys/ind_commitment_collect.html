@@ -1,0 +1,25 @@
+{% macro ind_commitment(surveydata, indicator) %} 
+        <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
+            <td><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
+                <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{indicator.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div></td>
+        <td>Researcher<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>
+        <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_data}}{%endif%}</textarea>
+        </td>
+
+        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
+
+        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        </tr>
+{% endmacro %}

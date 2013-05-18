@@ -1,0 +1,57 @@
+{% macro ind_zero(
+    twentytwelvedata, 
+    old_publication_status, 
+    publishedstatuses, 
+    publishedformats, 
+    indicator
+) %}
+        <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
+            <td rowspan="2"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
+                <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{indicator.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div></td>
+            <td><span class="muted">2012</span></td>
+            <td>
+            <span class="badge badge-{{old_publication_status[twentytwelvedata[indicator.indicator.name].result].class}}" title="Researcher's initial assessment">{{ old_publication_status[twentytwelvedata[indicator.indicator.name].result].text }}</span>
+            </td>
+
+            <td class="restrict_text">
+            {{twentytwelvedata[indicator.indicator.name].result_evidence}}
+            </td>
+
+            <td class="restrict_text">
+            {{twentytwelvedata[indicator.indicator.name].result_comments}}
+            </td>
+        </tr>
+        <tr id="tr{{indicator.indicator.id}}">
+        <td>Researcher<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>
+        {% for i, publishedstatus in publishedstatuses.items() %}
+        <label for="{{indicator.indicator.id}}-published-{{publishedstatus.id}}">
+        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"{% if surveydata and surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_status == publishedstatus.id %} checked{%endif%}> {{publishedstatus.title}}</input></label>
+        {% endfor %}<br />
+        {% if not indicator.indicator.indicator_noformat %}
+        <b>Format:</b>
+        {% for i, publishedformat in publishedformats.items() %}
+        <label for="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}">
+        <input type="radio" name="{{indicator.indicator.id}}-publishedformat" value="{{publishedformat.id}}" id="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}"{% if surveydata and surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_format == publishedformat.id %} checked{%endif%}> {{publishedformat.title}}</input></label>
+        {% endfor %}
+        {% else %}
+        <p><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />Format does not apply to this indicator, as it is a document.</p>
+        {% endif %}
+        </td>
+
+        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
+
+        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        </tr>
+{% endmacro %}
