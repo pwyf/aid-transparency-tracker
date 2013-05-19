@@ -4,6 +4,17 @@
         import ind_zero as ind_zero %}
 {% extends "surveys/survey_edit.html" %}
 {% block survey %}
+    
+    {% set rows = surveydata|count %}
+    {% if not workflow.Workflow.name in surveydata %}
+    {% set rows = rows+1 %}
+    {% endif %}
+    {% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) %}
+    {% set rows = rows-1 %}
+    {% endif %}
+    {% if ('pwyffinal' in surveydata) %}
+    {% set rows = rows-1 %}
+    {% endif %}
 
     <style type="text/css">
         th.restrict_text, td.restrict_text { 
@@ -42,17 +53,7 @@
   		<p>A guide to reviewing this assessment can be found here.</p>
 		{% endif %}
     </div>
-    
-    {% set rows = surveydata|count %}
-    {% if not workflow.Workflow.name in surveydata %}
-    {% set rows = rows+1 %}
-    {% endif %}
-    {% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) %}
-    {% set rows = rows-1 %}
-    {% endif %}
-    {% if ('pwyffinal' in surveydata) %}
-    {% set rows = rows-1 %}
-    {% endif %}
+
     <form action="" method="post">
     <h2>Commitment</h2>
     <table class="table" id="indicators">
