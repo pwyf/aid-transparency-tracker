@@ -29,7 +29,7 @@
     <table class="table" id="indicators">
     <thead><th>Information item</th><th>Responder</th><th>Score</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
     <tbody>
-    {% for i, indicator in org_indicators.commitment.items() %}<tr>
+    {% for i, indicator in org_indicators["commitment"].items() %}<tr>
 		{{ ind_commitment(surveydata, rows, workflow, indicator) }}
 	{% endfor %}
     </tbody>
@@ -41,7 +41,7 @@
     <thead><th>Information item</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
 
     <tbody>
-    {% for i, indicator in org_indicators.zero.items() %}
+    {% for i, indicator in org_indicators["zero"].items() %}
 	    {{ ind_zero(surveydata, rows, publishedstatuses, publishedformats, workflow, indicator) }}
     {% endfor %}
     </tbody>
