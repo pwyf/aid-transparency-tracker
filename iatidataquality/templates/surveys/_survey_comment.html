@@ -3,19 +3,19 @@
 {% from "surveys/ind_zero_comment.html" 
         import ind_zero as ind_zero %}
 {% extends "surveys/survey_edit.html" %}
-{% block survey %}
-    
-    {% set rows = surveydata|count %}
-    {% if not workflow.Workflow.name in surveydata %}
-    {% set rows = rows+1 %}
-    {% endif %}
-    {% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) %}
-    {% set rows = rows-1 %}
-    {% endif %}
-    {% if ('pwyffinal' in surveydata) %}
-    {% set rows = rows-1 %}
-    {% endif %}
 
+{% set rows = surveydata|count %}
+{% if not workflow.Workflow.name in surveydata %}
+  {% set rows = rows+1 %}
+{% endif %}
+{% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) %}
+  {% set rows = rows-1 %}
+{% endif %}
+{% if ('pwyffinal' in surveydata) %}
+  {% set rows = rows-1 %}
+{% endif %}
+
+{% block survey %}
     <style type="text/css">
         th.restrict_text, td.restrict_text { 
             max-width:40px; 

@@ -3,20 +3,21 @@
 {% from "surveys/ind_zero_finalreview.html" 
         import ind_zero as ind_zero %}
 {% extends "surveys/survey_edit.html" %}
-{% block survey %}
 
+{% set rows = surveydata|count %}
+{% if not workflow.Workflow.name in surveydata %}
+  {% set rows = rows+2 %}
+{% else %}
+  {% set rows = rows+1 %}
+{% endif %}
+
+{% block survey %}
     <style type="text/css">
         th.restrict_text, td.restrict_text { 
             max-width:40px; 
             word-wrap:break-word;
         }
     </style>
-    {% set rows = surveydata|count %}
-    {% if not workflow.Workflow.name in surveydata %}
-    {% set rows = rows+2 %}
-    {% else %}
-    {% set rows = rows+1 %}
-    {% endif %}
 	<h3>Please check the assessment for 
 	  {{org_indicators.zero|count+org_indicators.commitment|count}} 
 	  information items.</h3>

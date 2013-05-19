@@ -4,14 +4,14 @@
         import ind_zero as ind_zero %}
 
 {% extends "surveys/survey_edit.html" %}
+
+{% if workflow.Workflow.name=='pwyfreview' %}
+  {% set rows = 3 %}
+{% else %}
+  {% set rows = 2 %}
+{% endif %}
+
 {% block survey %}
-
-    {% if workflow.Workflow.name=='pwyfreview' %}
-    {% set rows = 3 %}
-    {% else %}
-    {% set rows = 2 %}
-    {% endif %}
-
     <style type="text/css">
         th.restrict_text, td.restrict_text { 
             max-width:40px; 
