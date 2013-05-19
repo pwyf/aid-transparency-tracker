@@ -1,0 +1,96 @@
+{% macro ind_commitment(surveydata, rows, workflow, indicator) %}
+        <tr>
+            <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
+                <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{indicator.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div></td>
+            <td><span class="muted">Researcher</span></td>
+            <td>{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}
+            <td class="restrict_text">
+            {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% if surveydata.donorreview %}
+
+        <tr>
+            <td><span class="muted">Donor review</span></td>
+            <td>{{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
+            </td>
+            <td class="restrict_text">
+            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% if surveydata.pwyfreview %}
+
+        <tr>
+            <td><span class="muted">PWYF review</span></td>
+            <td>{{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
+            </td>
+            <td class="restrict_text">
+            {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% if (surveydata.donorcomments) and (workflow.Workflow.name != 'donorcomments') %}
+        {% set data = surveydata['donorcomments'] %}
+{% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% set accepted = 'Agree' %}
+        {% set accepted_class = 'success' %}
+        {% else %}
+        {% set accepted = 'Disagree' %}
+        {% set accepted_class = 'important' %}
+        {% endif %}
+        <tr>
+            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td>
+            <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+            </td>
+            <td class="restrict_text"></td>
+            <td class="restrict_text">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% if (workflow.Workflow.name == 'pwyfreview') and (surveydata.pwyfreview) %}
+        {% set data = surveydata.pwyfreview %}            
+        {% elif (workflow.Workflow.name == 'donorreview') and (surveydata.donorreview) %}
+        {% set data = surveydata.donorreview %}  
+        {% else %}
+        {% set data = surveydata.researcher %}  
+        {% endif %}
+        
+        {% set data = surveydata[workflow.Workflow.name] %}
+        <tr id="tr{{indicator.indicator.id}}">
+        <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>
+        <label for="{{indicator.indicator.id}}-agree-1">
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0) %} checked{%endif%}> Agree</input>
+        <br />
+        <span class="muted">Agree</span></label>
+        <label for="{{indicator.indicator.id}}-agree-0">
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0 %} checked{%endif%}> Disagree</input>
+        <br />
+        <span class="muted">Disagree</span></label>
+        </td>
+        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        </tr>
+{% endmacro %}
