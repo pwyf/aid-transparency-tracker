@@ -129,7 +129,7 @@
         {% endfor %}
         {% else %}
         <p><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />Format does not apply to this indicator, as it is a document.</p>
-        {% endif %}        
+        {% endif %}
         </td>
 
         <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
