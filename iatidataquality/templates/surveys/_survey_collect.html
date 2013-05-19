@@ -5,6 +5,8 @@
 {% extends "surveys/survey_edit.html" %}
 {% block survey %}
 
+{% set rows = 0 %}
+
     <style type="text/css">
         th.restrict_text, td.restrict_text { 
             max-width:40px; 
@@ -24,7 +26,7 @@
 
     <tbody>
     {% for i, indicator in org_indicators["commitment"].items() %}
-	  {{ ind_commitment(surveydata, indicator) }}
+      {{ ind_commitment(surveydata, rows, workflow, indicator) }}
     {% endfor %}
     </tbody>
     </table>
