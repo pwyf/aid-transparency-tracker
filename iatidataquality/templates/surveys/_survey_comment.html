@@ -38,7 +38,7 @@
     {% set rows = rows-1 %}
     {% endif %}
     <form action="" method="post">
-    <h2>Commitments?</h2>
+    <h2>Commitment</h2>
     <table class="table" id="indicators">
     <thead><th>Information item</th><th>Responder</th><th>Score</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
     <tbody>
@@ -55,7 +55,7 @@
 
     <tbody>
     {% for i, indicator in org_indicators['zero'].items() %}
-	 {{ ind_zero(surveydata, workflow, indicator) }}
+	 {{ ind_zero(surveydata, rows, workflow, indicator) }}
     {% endfor %}
     </tbody>
     </table>
