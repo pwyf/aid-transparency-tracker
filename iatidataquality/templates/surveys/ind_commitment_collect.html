@@ -1,4 +1,4 @@
-{% macro ind_commitment(surveydata, indicator) %} 
+{% macro ind_commitment(surveydata, rows, workflow, indicator) %} 
         <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
             <td><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
