@@ -1,10 +1,10 @@
 {% macro ind_zero(
   surveydata, 
   rows,
-  workflow,
-  indicator,
   publishedstatuses,
-  publishedformats
+  publishedformats,
+  workflow,
+  indicator
 ) %}
         <tr>
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
