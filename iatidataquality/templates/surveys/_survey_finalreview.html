@@ -17,11 +17,19 @@
     {% else %}
     {% set rows = rows+1 %}
     {% endif %}
-	<h3>Please check the assessment for {{org_indicators.zero|count+org_indicators.commitment|count}} information items.</h3>
+	<h3>Please check the assessment for 
+	  {{org_indicators.zero|count+org_indicators.commitment|count}} 
+	  information items.</h3>
     <div class="alert alert-info">
         <h4>Guidelines</h4>
-        <p>The final assessment below has been conducted based on a review of the evidence provided by the donor organisation and our CSO partner</p>
-        <p>As part of the data standardisation process, please check if the responses below are consistent with our scoring approach and methodology. Any change in response should be a result of this data standardisation process alone. No new information can be provided by the donor or our CSO partner at this time.</p>
+        <p>The final assessment below has been conducted based on a review 
+		  of the evidence provided by the donor organisation and our CSO 
+		  partner</p>
+        <p>As part of the data standardisation process, please check if
+		  the responses below are consistent with our scoring approach 
+		  and methodology. Any change in response should be a result of
+		  this data standardisation process alone. No new information can 
+		  be provided by the donor or our CSO partner at this time.</p>
     </div>
     
     <form action="" method="post">
