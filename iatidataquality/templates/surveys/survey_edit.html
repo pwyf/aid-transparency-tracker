@@ -2,6 +2,46 @@
 {% block title %}Survey &raquo; {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
 {% block content %}
     <h1>Survey for <a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
-	{% block survey %}
-    {% endblock %}
+    <style type="text/css">
+        th.restrict_text, td.restrict_text { 
+            max-width:40px; 
+            word-wrap:break-word;
+        }
+    </style>
+	<h3>{% block ask %}{% endblock ask %}</h3>
+    <div class="alert alert-info">
+	  {% block guidance %}
+	  {% endblock %}
+    </div>
+    
+    <form action="" method="post">
+    <h2>Commitment</h2>
+    <table class="table" id="indicators">
+    <thead><th>Information item</th><th>Responder</th><th>Score</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
+
+    <tbody>
+    {% for i, indicator in org_indicators["commitment"].items() %}
+      {{ ind_commitment(surveydata, rows, workflow, indicator) }}
+    {% endfor %}
+    </tbody>
+    </table>
+    <hr />
+    <h2>Publication</h2>
+    <table class="table" id="indicators">
+
+    <thead><th>Information item</th><th>Responder</th><th>Published?</th><th class="restrict_text">Evidence</th><th class="restrict_text">Comments</th></thead>
+
+    <tbody>
+    {% for i, indicator in org_indicators["zero"].items() %}
+      {{ ind_zero(surveydata, rows, twentytwelvedata, old_publication_status, publishedstatuses, publishedformats, workflow, indicator) }}
+    {% endfor %}
+    </tbody>
+    </table>
+    <!-- text below this line does not vary with workflow -->
+    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
+    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" /> Submit data (you cannot edit this survey once it's been submitted)</label>
+    {%endif%}
+    <label for="save" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save changes</label>
+
+    </form>
 {% endblock %}
