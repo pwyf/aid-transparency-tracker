@@ -1,9 +1,12 @@
 {% macro ind_zero(
-    twentytwelvedata, 
-    old_publication_status, 
-    publishedstatuses, 
-    publishedformats, 
-    indicator
+  surveydata,
+  rows,
+  twentytwelvedata,
+  old_publication_status,
+  publishedstatuses,
+  publishedformats,
+  workflow,
+  indicator
 ) %}
         <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
             <td rowspan="2"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>

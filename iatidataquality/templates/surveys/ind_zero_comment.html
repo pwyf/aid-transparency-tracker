@@ -1,4 +1,13 @@
-{% macro ind_zero(surveydata, rows, publishedstatuses, publishedformats, workflow, indicator) %}
+{% macro ind_zero(
+  surveydata,
+  rows,
+  twentytwelvedata,
+  old_publication_status,
+  publishedstatuses,
+  publishedformats,
+  workflow,
+  indicator
+) %}
         {% set data = surveydata['researcher'] %}
         <tr class="indicator{{indicator.indicator.id}}">
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
