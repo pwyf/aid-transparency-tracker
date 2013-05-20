@@ -245,11 +245,8 @@ def organisation_survey_view(organisation_code, workflow,
         [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
         )
 
-    publishedstatuses = dqsurveys.publishedStatus()
-    publishedstatuses = dict(map(id_tuple, publishedstatuses))
-
-    publishedformats = dqsurveys.publishedFormat()
-    publishedformats = dict(map(id_tuple, publishedformats))
+    publishedstatuses = dict(map(id_tuple, dqsurveys.publishedStatus()))
+    publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormat()))
 
     old_publication_status = get_old_publication_status()
 
