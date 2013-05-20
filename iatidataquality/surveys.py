@@ -33,12 +33,11 @@ def surveys_admin():
     surveys = dqsurveys.surveys()
     workflows = dqsurveys.workflows()
     publishedstatuses=dqsurveys.publishedStatus()
+    admin = usermanagement.check_perms('admin')
+    loggedinuser = current_user
+
     return render_template("surveys/surveys_admin.html", 
-                           workflows=workflows,
-                           publishedstatuses=publishedstatuses,
-                           surveys=surveys,
-                           admin=usermanagement.check_perms('admin'),
-                           loggedinuser=current_user)
+                           **locals())
 
 @app.route("/surveys/create/", methods=["GET", "POST"])
 @app.route("/surveys/<organisation_code>/create/", methods=["GET", "POST"])
@@ -106,23 +105,19 @@ def completion_percentage(survey):
 @usermanagement.perms_required('survey', 'view')
 def organisation_survey(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
-    make_sure_survey_exists = dqsurveys.getOrCreateSurvey(
-        {'organisation_id':organisation.id})
+    # make sure survey exists
+    dqsurveys.getOrCreateSurvey({'organisation_id':organisation.id})
+
     survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
     workflows = dqsurveys.workflows()
     pct_complete = completion_percentage(survey)
     users = dqusers.surveyPermissions(organisation_code)
-        
+    admin = usermanagement.check_perms('admin')
+    loggedinuser = current_user
+       
     return render_template("surveys/survey.html", 
-                           organisation=organisation,
-                           survey=survey,
-                           workflows=workflows,
-                           pct_complete=pct_complete,
-                           surveydata=surveydata,
-                           users=users,
-                           admin=usermanagement.check_perms('admin'),
-                           loggedinuser=current_user)
+                           **locals())
 
 def getTimeRemainingNotice(deadline):
     remaining = deadline.date() - datetime.utcnow().date()
@@ -227,25 +222,28 @@ def get_old_publication_status():
             })
     return dict(map(struct, pses))
 
+
+id_tuple = lambda p: (p.id, p)
+
 def organisation_survey_view(organisation_code, workflow, 
                              workflow_name, organisationsurvey, 
                              allowed_to_edit):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    surveydata = dqsurveys.getSurveyData(organisation_code, workflow_name)
-    surveydata_allworkflows = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+    # the next line may be being called for its side effects
+    dqsurveys.getSurveyData(organisation_code, workflow_name)
+
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
     indicators = dqindicators.indicators("2013 Index")
     org_indicators = dqorganisations._organisation_indicators_split(
         organisation, 2)
 
-    indicator_names_2013 = [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
-
-    twentytwelvedata=get_organisation_results(organisation_code, 
-                                              indicator_names_2013)
-
-    id_tuple = lambda p: (p.id, p)
+    twentytwelvedata=get_organisation_results(
+        organisation_code, 
+        [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
+        )
 
     publishedstatuses = dqsurveys.publishedStatus()
     publishedstatuses = dict(map(id_tuple, publishedstatuses))
@@ -253,25 +251,14 @@ def organisation_survey_view(organisation_code, workflow,
     publishedformats = dqsurveys.publishedFormat()
     publishedformats = dict(map(id_tuple, publishedformats))
 
-    template_path = "surveys/_survey_"+workflow.WorkflowType.name+".html"
-
     old_publication_status = get_old_publication_status()
 
+    admin = usermanagement.check_perms('admin')
+    loggedinuser = current_user
+
     return render_template(
-        template_path, 
-        organisation=organisation,
-        indicators=indicators,
-        org_indicators=org_indicators,
-        twentytwelvedata=twentytwelvedata,
-        old_publication_status=old_publication_status,
-        publishedstatuses=publishedstatuses,
-        workflow=workflow,
-        surveydata=surveydata_allworkflows,
-        organisationsurvey=organisationsurvey,
-        allowed_to_edit=allowed_to_edit,
-        publishedformats=publishedformats,
-        admin=usermanagement.check_perms('admin'),
-        loggedinuser=current_user)
+        "surveys/_survey_%s.html" % workflow.WorkflowType.name,
+        **locals())
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
