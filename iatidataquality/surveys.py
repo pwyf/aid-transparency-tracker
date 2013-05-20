@@ -290,7 +290,9 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     if not allowed_to_view:
         return no_permission()
 
-    if request.method=='POST':
+    if request.method != 'POST':
+        return organisation_survey_view(organisation_code, workflow, workflow_name, organisationsurvey, allowed_to_edit)
+    else:
         if not allowed_to_edit:
             return no_permission()
 
@@ -321,5 +323,3 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         return redirect(url_for("organisations", 
                                 organisation_code=organisation_code))
 
-    else:
-        return organisation_survey_view(organisation_code, workflow, workflow_name, organisationsurvey, allowed_to_edit)
