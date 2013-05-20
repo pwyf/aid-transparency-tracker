@@ -294,34 +294,34 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         return organisation_survey_view(
             organisation_code, workflow, 
             workflow_name, organisationsurvey, allowed_to_edit)
-    else:
-        if not allowed_to_edit:
-            return no_permission()
 
-        handlers = {
-            "collect": _survey_process_collect,
-            "send": _survey_process_send,
-            "review": _survey_process_review,
-            "comment": _survey_process_comment,
-            "finalreview": _survey_process_finalreview
-            }
+    if not allowed_to_edit:
+        return no_permission()
 
-        workflow_name = workflow.WorkflowType.name
+    handlers = {
+        "collect": _survey_process_collect,
+        "send": _survey_process_send,
+        "review": _survey_process_review,
+        "comment": _survey_process_comment,
+        "finalreview": _survey_process_finalreview
+        }
 
-        if workflow_name == "send":
-            if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
-                _survey_process_send(
-                    organisation_code, workflow, request, organisationsurvey)
-            else:
-                flash("Not possible to send survey to donor because it's "
-                      "not at the current stage in the workflow. "
-                      "Maybe you didn't submit the data, or maybe you "
-                      "already sent it to the donor?", 'error')
-        elif workflow_name in handlers:
-            handlers[workflow_name](
-                organisation, workflow, request, organisationsurvey)
-        elif workflow_name == 'finalised':
-            return "finalised"
-        return redirect(url_for("organisations", 
-                                organisation_code=organisation_code))
+    workflow_name = workflow.WorkflowType.name
+
+    if workflow_name == "send":
+        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
+            _survey_process_send(
+                organisation_code, workflow, request, organisationsurvey)
+        else:
+            flash("Not possible to send survey to donor because it's "
+                  "not at the current stage in the workflow. "
+                  "Maybe you didn't submit the data, or maybe you "
+                  "already sent it to the donor?", 'error')
+    elif workflow_name in handlers:
+        handlers[workflow_name](
+            organisation, workflow, request, organisationsurvey)
+    elif workflow_name == 'finalised':
+        return "finalised"
+    return redirect(url_for("organisations", 
+                            organisation_code=organisation_code))
 
