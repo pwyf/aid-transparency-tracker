@@ -15,7 +15,6 @@ import urllib2
 import lxml.etree
 
 import util
-import autocommit
 
 CODELIST_API = "http://data.aidinfolabs.org/data/%s"
 

@@ -12,7 +12,6 @@ import foxpath
 import re
 import itertools
 import test_level
-import autocommit
 
 from iatidq import db
 

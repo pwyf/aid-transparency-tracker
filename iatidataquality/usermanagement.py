@@ -21,7 +21,6 @@ from functools import partial, wraps
 from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
-from iatidq import autocommit
 
 principals = Principal(app)
 login_manager = LoginManager()

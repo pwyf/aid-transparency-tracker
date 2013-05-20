@@ -16,7 +16,6 @@ from util import report_error, download_file
 
 from iatidq import db, app
 import hardcoded_test
-import autocommit
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'

@@ -12,7 +12,6 @@ import urllib2
 
 from iatidq import db
 import models
-import autocommit
 
 def add_test_status(package_id, status_id):
     with db.session.begin():

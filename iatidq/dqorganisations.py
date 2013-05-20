@@ -22,8 +22,6 @@ import dqpackages
 import urllib2
 import datetime
 
-import autocommit
-
 ORG_FREQUENCY_API_URL = "https://api.scraperwiki.com/api/1.0/datastore/sqlite?format=csv&name=iati_registry_updater_frequency_check&query=select+*+from+%60packagegroups_dates_data%60&apikey="
 
 def update_model(src, dst, keys):
