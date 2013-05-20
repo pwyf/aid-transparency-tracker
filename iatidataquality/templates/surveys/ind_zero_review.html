@@ -1,3 +1,4 @@
+{% from "surveys/_published.html" import published as published %}
 {% macro ind_zero(
   surveydata,
   rows,
@@ -60,19 +61,7 @@
         <tr id="tr{{indicator.indicator.id}}">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
-        {% for i, publishedstatus in publishedstatuses.items() %}
-        <label for="{{indicator.indicator.id}}-published-{{publishedstatus.id}}">
-        <input type="radio" name="{{indicator.indicator.id}}-published" value="{{publishedstatus.id}}" id="{{indicator.indicator.id}}-published-{{publishedstatus.id}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_status == publishedstatus.id %} checked{%endif%}> {{publishedstatus.title}}</input></label>
-        {% endfor %}<br />
-        {% if not indicator.indicator.indicator_noformat %}
-        <b>Format:</b>
-        {% for i, publishedformat in publishedformats.items() %}
-        <label for="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}">
-        <input type="radio" name="{{indicator.indicator.id}}-publishedformat" value="{{publishedformat.id}}" id="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_format == publishedformat.id %} checked{%endif%}> {{publishedformat.title}}</input></label>
-        {% endfor %}
-        {% else %}
-        <p><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />Format does not apply to this indicator, as it is a document.</p>
-        {% endif %}
+          {{ published(data, publishedstatuses, publishedformats, indicator) }}
         </td>
 
         <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
