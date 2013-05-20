@@ -1,0 +1,8 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}Survey &raquo; {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+
+{% block content %}
+    <h1>Survey for <a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
+   {% block survey %}
+   {% endblock %}
+{% endblock %}
