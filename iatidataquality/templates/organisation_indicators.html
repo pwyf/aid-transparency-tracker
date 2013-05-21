@@ -404,7 +404,7 @@ $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-la
     $(document).on("click", ".confirmswitch", function(e){
         $("#dataConfirmModal").modal('hide');
         e.preventDefault();
-        $(this).val(chosen_aggregation_type);
+        $('#aggregation_type').val(chosen_aggregation_type);
         $('#aggregation_type_form').submit();
     });
 
