@@ -346,6 +346,25 @@ def all_organisations_publication_csv():
                          attachment_filename="dataqualityresults_all.csv",
                          as_attachment=True)
 
+def write_agg_csv_result(out, freq, result):
+    if result['results_pct'] == 0:
+        points = 0
+    else:
+        points = float(result['results_pct']) * freq / 2.0 + 50
+
+    i = result["indicator"]
+    out.writerow({
+            "organisation_name": organisation.organisation_name, 
+            "organisation_code": organisation.organisation_code, 
+            "indicator_category_name": i['indicator_category_name'],
+            "indicator_subcategory_name": i['indicator_subcategory_name'],
+            "indicator_name": i['description'], 
+            "indicator_description": i['longdescription'], 
+            "percentage_passed": result['results_pct'], 
+            "num_results": result['results_num'],
+            "points": str(points)
+            })      
+
 @app.route("/organisations/<organisation_code>/publication.csv")
 @usermanagement.perms_required('organisation', 'view')
 def organisation_publication_csv(organisation_code=None):
@@ -376,24 +395,10 @@ def organisation_publication_csv(organisation_code=None):
         freq = 0.9
     else:
         freq = 1.0
-    for resultid, result in aggregate_results.items():
-        if result['results_pct'] == 0:
-            points = 0
-        else:
-            points = float(result['results_pct']) * freq / 2.0 + 50
 
-        i = result["indicator"]
-        out.writerow({
-                "organisation_name": organisation.organisation_name, 
-                "organisation_code": organisation.organisation_code, 
-                "indicator_category_name": i['indicator_category_name'],
-                "indicator_subcategory_name": i['indicator_subcategory_name'],
-                "indicator_name": i['description'], 
-                "indicator_description": i['longdescription'], 
-                "percentage_passed": result['results_pct'], 
-                "num_results": result['results_num'],
-                "points": str(points)
-                })      
+    for resultid, result in aggregate_results.items():
+        write_agg_csv_result(out, freq, result)
+
     strIO.seek(0)
     filename = "dataqualityresults_%s.csv" % organisation_code
     return send_file(strIO,
