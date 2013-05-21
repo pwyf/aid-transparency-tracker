@@ -65,7 +65,30 @@
         {% for test, result in values.items() %}
         {% if result and result.test %}
         <tr id="tr{{result.test.id}}h{{h}}" class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
-	    <td><a href="{{url_for('tests', id=result.test.id)}}">{{ result.test.description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition[1]}}"></i>{%endif%}</td>
+	    <td><a href="#test{{result.test.id}}" role="button" data-toggle="modal">{{result.test.description}}</a>
+                <div id="test{{result.test.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="testHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="testHeader">Test: {{result.test.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>Each indicator in the 2013 Index can be comprised of several tests, which are automatically run on the data.</p>
+                        {% if result.test.test_level ==3 %}
+                        <p>This test is run on <b>organisation files</b>.</p>
+                        {% elif result.test.test_level ==2 %}
+                        <p>This test is run on <b>each package of data</b>.</p>
+                        {% elif result.test.test_level ==1 %}
+                        <p>This test is run for <b>each activity</b> in your data.</p>
+                        {% elif result.test.test_level ==0 %}
+                        <p>This test is run for <b>each transaction</b> in your data.</p>
+                        {% endif%}
+                        <p>The specific test expression is:</p>
+                        <code>{{result.test.name}}</code>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition[1]}}"></i>{%endif%}</td>
         <td class="pct">{{result.results_pct|round|int}}</td>
         <td>{{result.results_num}}</td>
         <td><a href="#" class="showResult" id="result{{result.test.id}}hierarchy{{h}}"><i class="icon-chevron-down"></i></a></td>
