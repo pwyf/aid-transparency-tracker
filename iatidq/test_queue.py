@@ -21,7 +21,6 @@ import test_level
 import test_result
 import package_status
 import hardcoded_test
-import autocommit
 
 # FIXME: this should be in config
 download_queue='iati_tests_queue'

@@ -15,7 +15,6 @@ import json
 import ckanclient
 
 import util
-import autocommit
 
 from dqfunctions import packages_from_registry
 

@@ -26,7 +26,6 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, summary
-from iatidq import autocommit
 
 from iatidq.models import *
 
