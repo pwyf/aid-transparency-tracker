@@ -429,11 +429,14 @@ def organisation_edit(organisation_code=None):
                 flash('Could not ensure that all packages in this package group will be added to this organisation', 'error')
                 
         if total:
-            flash('Successfully added ' + str(total) + ' packages to your organisation.', 
-                  'success')
+            flash(
+                'Successfully added %d packages to your organisation.' % total, 
+                'success')
         else:
-            flash("No packages were added to your organisation. This could be because you've already added all existing ones.", 
-                  'error')
+            flash(
+                "No packages were added to your organisation. This "
+                "could be because you've already added all existing ones.", 
+                'error')
 
     def update_organisation():
         data = {
