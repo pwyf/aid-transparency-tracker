@@ -117,6 +117,14 @@ def organisations_index(organisation_code=None):
 
     allowed_to_view_survey = usermanagement.check_perms("survey",
                                           "view")
+    allowed_to_edit_survey_researcher = usermanagement.check_perms("survey",
+                "edit",
+                organisation_code)
+    if (allowed_to_edit_survey_researcher and 
+        (organisation_survey.Workflow.name == 'researcher')):
+        show_researcher_button = True
+    else:
+        show_researcher_button = False
 
     template_args = dict(organisation=organisation, 
                          summary_data=summary_data,
@@ -125,7 +133,8 @@ def organisations_index(organisation_code=None):
                          surveydata=surveydata,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user,
-                         allowed_to_view_survey=allowed_to_view_survey)
+                         allowed_to_view_survey=allowed_to_view_survey,
+                         show_researcher_button=show_researcher_button)
 
     return render_template("organisation_index.html", **template_args)
 

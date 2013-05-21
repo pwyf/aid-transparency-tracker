@@ -7,7 +7,12 @@
         <a class="btn" href="{{url_for('organisation_edit', organisation_code=organisation.organisation_code)}}">Edit</a>
         {% endif %}
         {% if allowed_to_view_survey %}
-        <a class="btn" href="{{url_for('organisation_survey', organisation_code=organisation.organisation_code)}}">Survey</a>
+        <a class="btn" href="{{url_for('organisation_survey', organisation_code=organisation.organisation_code)}}">View survey</a>
+        {% endif %}
+        {% if show_researcher_button %}
+        <a class="btn" href="{{url_for('organisation_survey_edit', 
+                                        organisation_code=organisation.organisation_code, 
+                                        workflow_name='researcher')}}">Start survey</a>
         {% endif %}
     </div>
 
