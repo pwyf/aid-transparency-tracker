@@ -5,10 +5,22 @@
     <p class="lead">Please log in to access this area.</p>
     <div class="row">
         <div class="span6">
-		  <form method="POST">
-                Username: <input type="text" name="username"/><br/>
-                Password: <input type="password" name="password"/><br/>
-                <input type="submit" value="Log in"/>
+		  <form method="POST" class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="username">Username</label>
+                    <div class="controls">
+                        <input type="text" name="username" id="username"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                        <input type="password" name="password" id="password"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <input type="submit" value="Log in" class="btn"/>
+                </div>
             </form>
         </div>
     </div>
