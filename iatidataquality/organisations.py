@@ -119,7 +119,7 @@ def organisations_index(organisation_code=None):
                                           "view")
     allowed_to_edit_survey_researcher = usermanagement.check_perms("survey",
                 "edit",
-                organisation_code)
+                {"organisation_code": organisation_code})
     if (allowed_to_edit_survey_researcher and 
         (organisation_survey.Workflow.name == 'researcher')):
         show_researcher_button = True
