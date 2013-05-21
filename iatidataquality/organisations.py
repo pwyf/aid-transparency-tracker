@@ -186,18 +186,7 @@ def integerise(data):
     except TypeError:
         return None
 
-def organisation_publication_authorised(organisation_code, aggregation_type):
-    aggregation_type=integerise(request.args.get('aggregation_type', 2))
-    all_aggregation_types = dqaggregationtypes.aggregationTypes()
-
-    organisation = Organisation.query.filter_by(
-        organisation_code=organisation_code).first_or_404()
-
-    aggregate_results = dqorganisations._organisation_indicators_split(
-        organisation, aggregation_type)
-        
-    organisation_survey = dqsurveys.getSurvey(organisation_code)
-    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+def get_survey_data_and_workflow(organisation_survey, surveydata):
     if organisation_survey:
         if organisation_survey.Workflow.name in ['donorreview', 
                                                  'pwyfreview']:
@@ -216,6 +205,25 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
     else:
         surveydata = None
         surveydata_workflow=None
+
+    return surveydata, surveydata_workflow
+
+def organisation_publication_authorised(organisation_code, aggregation_type):
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    all_aggregation_types = dqaggregationtypes.aggregationTypes()
+
+    organisation = Organisation.query.filter_by(
+        organisation_code=organisation_code).first_or_404()
+
+    aggregate_results = dqorganisations._organisation_indicators_split(
+        organisation, aggregation_type)
+        
+    organisation_survey = dqsurveys.getSurvey(organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+
+    surveydata, surveydata_workflow = get_survey_data_and_workflow(
+        organisation_survey, surveydata)
+
     published_status = dqsurveys.publishedStatus()
 
     published_status_by_id = dict(map(lambda x: (x.id, x), 
