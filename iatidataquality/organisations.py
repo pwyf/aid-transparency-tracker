@@ -186,13 +186,7 @@ def integerise(data):
     except TypeError:
         return None
 
-@app.route("/organisations/<organisation_code>/publication/")
-def organisation_publication(organisation_code=None, aggregation_type=2):
-    check_perms = usermanagement.check_perms(
-        'organisation', 'view', {'organisation_code': organisation_code}
-        )
-    
-    if check_perms:
+def organisation_publication_authorised(organisation_code, aggregation_type):
         aggregation_type=integerise(request.args.get('aggregation_type', 2))
         all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
@@ -254,7 +248,8 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                                surveydata_workflow=surveydata_workflow,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
-    else:
+
+def organisation_publication_unauthorised(organisation_code, aggregation_type):
         aggregation_type=integerise(request.args.get('aggregation_type', 2))
         all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
@@ -274,6 +269,22 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
                                packages=packages,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
+
+@app.route("/organisations/<organisation_code>/publication/")
+def organisation_publication(organisation_code=None, aggregation_type=2):
+    check_perms = usermanagement.check_perms(
+        'organisation', 'view', {'organisation_code': organisation_code}
+        )
+    
+    if check_perms:
+        return organisation_publication_authorised(
+            organisation_code,
+            aggregation_type)
+    else:
+        return organisation_publication_unauthorised(
+            organisation_code,
+            aggregation_type)
+
 
 def _organisation_publication_detail(organisation_code, aggregation_type, is_admin):
     organisation = Organisation.query.filter_by(
