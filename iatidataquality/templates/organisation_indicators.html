@@ -378,11 +378,15 @@
                 {scrollTop: $(scrollto).offset().top},'slow'
         );
     });
-    $('#aggregation_type').change(function(){
-	    var agg_type = $('#aggregation_type_form select').val();
-	    if (agg_type == 1) {
+    var previous_aggregation_type;
+    var chosen_aggregation_type;
+    $('#aggregation_type').focus(function(){
+        previous_aggregation_type = this.value();
+    }).change(function(){
+        var agg_type = $('#aggregation_type_form select').val();
+        if (agg_type == 1) {
            // changing to all data
-	       var warning_text = "Switching to show all test results; this might include data from several years ago.";
+           var warning_text = "Switching to show all test results; this might include data from several years ago.";
         } else {
            // changing to current data
            var warning_text = "Switching to show only data pertaining to the last thirteen months.";
@@ -393,11 +397,14 @@ $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-la
         $('#dataConfirmModal').find('.modal-body').text(warning_text);
         $('#dataConfirmOK').addClass('confirmswitch');
         $('#dataConfirmModal').modal({show:true});
+        chosen_aggregation_type = $(this).val();
+        $(this).val(previous_aggregation_type);
         return false;
     });
     $(document).on("click", ".confirmswitch", function(e){
         $("#dataConfirmModal").modal('hide');
         e.preventDefault();
+        $(this).val(chosen_aggregation_type);
         $('#aggregation_type_form').submit();
     });
 
