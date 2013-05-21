@@ -368,9 +368,9 @@ def organisation_publication_csv(organisation_code=None):
         freq = 1.0
     for resultid, result in aggregate_results.items():
         if result['results_pct'] == 0:
-            points = str(0)
+            points = 0
         else:
-            points = str(((float(result['results_pct'])*freq)/2.0)+50)
+            points = ((float(result['results_pct'])*freq)/2.0)+50
         out.writerow({
                 "organisation_name": organisation.organisation_name, 
                 "organisation_code": organisation.organisation_code, 
@@ -380,7 +380,7 @@ def organisation_publication_csv(organisation_code=None):
                 "indicator_description": result['indicator']['longdescription'], 
                 "percentage_passed": result['results_pct'], 
                 "num_results": result['results_num'],
-                "points": points
+                "points": str(points)
                 })      
     strIO.seek(0)
     return send_file(strIO,
