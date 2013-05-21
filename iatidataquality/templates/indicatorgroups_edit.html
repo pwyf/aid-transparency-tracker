@@ -1,7 +1,7 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}{% if indicatorgroup%}Edit{%else%}New{%endif%} Indicator Group {{indicatorgroup.name}} &raquo; Indicators{% endblock %}
 {% block content %}
-	
+	<h1>{% if indicatorgroup %}Edit{%else%}New{%endif%} Indicator Group</h1>
     <form name="indicatorupdate" method="post" action="">
     <table class="table">
     <thead>
