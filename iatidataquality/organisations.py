@@ -397,51 +397,51 @@ def organisation_edit(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
 
     def add_packages():
-            def add_org_pkg(package):
-                condition = request.form['condition']
-                data = {
-                    'organisation_id': organisation.id,
-                    'package_id': package,
-                    'condition': condition
-                    }
-                if dqorganisations.addOrganisationPackage(data):
-                    flash('Successfully added package to your organisation.', 
-                          'success')
-                else:
-                    flash("Couldn't add package to your organisation.", 
-                          'error')
-
-            packages = request.form.getlist('package')
-            [ add_org_pkg(package) for package in packages ]
-
-    def add_packagegroup():
+        def add_org_pkg(package):
             condition = request.form['condition']
             data = {
                 'organisation_id': organisation.id,
-                'packagegroup_id': request.form['packagegroup'],
+                'package_id': package,
                 'condition': condition
-            }
-            add_packagegroups = dqorganisations.addOrganisationPackageFromPackageGroup(data)
-            if 'applyfuture' in request.form:
-                if dqorganisations.addOrganisationPackageGroup(data):
-                    flash('All future packages in this package group will be added to this organisation', 'success')
-                else:
-                    flash('Could not ensure that all packages in this package group will be added to this organisation', 'error')
-                
-            if add_packagegroups:
-                flash('Successfully added ' + str(add_packagegroups) + ' packages to your organisation.', 
+                }
+            if dqorganisations.addOrganisationPackage(data):
+                flash('Successfully added package to your organisation.', 
                       'success')
             else:
-                flash("No packages were added to your organisation. This could be because you've already added all existing ones.", 
+                flash("Couldn't add package to your organisation.", 
                       'error')
 
-    def update_organisation():
-            data = {
-                'organisation_code': request.form['organisation_code'],
-                'organisation_name': request.form['organisation_name']
+        packages = request.form.getlist('package')
+        [ add_org_pkg(package) for package in packages ]
+
+    def add_packagegroup():
+        condition = request.form['condition']
+        data = {
+            'organisation_id': organisation.id,
+            'packagegroup_id': request.form['packagegroup'],
+            'condition': condition
             }
-            organisation = dqorganisations.updateOrganisation(
-                organisation_code, data)
+        add_packagegroups = dqorganisations.addOrganisationPackageFromPackageGroup(data)
+        if 'applyfuture' in request.form:
+            if dqorganisations.addOrganisationPackageGroup(data):
+                flash('All future packages in this package group will be added to this organisation', 'success')
+            else:
+                flash('Could not ensure that all packages in this package group will be added to this organisation', 'error')
+                
+        if add_packagegroups:
+            flash('Successfully added ' + str(add_packagegroups) + ' packages to your organisation.', 
+                  'success')
+        else:
+            flash("No packages were added to your organisation. This could be because you've already added all existing ones.", 
+                  'error')
+
+    def update_organisation():
+        data = {
+            'organisation_code': request.form['organisation_code'],
+            'organisation_name': request.form['organisation_name']
+            }
+        organisation = dqorganisations.updateOrganisation(
+            organisation_code, data)
 
     if request.method == 'POST':
         if 'addpackages' in request.form:
