@@ -396,8 +396,7 @@ def organisation_edit(organisation_code=None):
     packagegroups = dqpackages.packageGroups()
     organisation = dqorganisations.organisations(organisation_code)
 
-    if request.method == 'POST':
-        if 'addpackages' in request.form:
+    def add_packages():
             def add_org_pkg(package):
                 condition = request.form['condition']
                 data = {
@@ -415,7 +414,7 @@ def organisation_edit(organisation_code=None):
             packages = request.form.getlist('package')
             [ add_org_pkg(package) for package in packages ]
 
-        elif 'addpackagegroup' in request.form:
+    def add_packagegroup():
             condition = request.form['condition']
             data = {
                 'organisation_id': organisation.id,
@@ -435,14 +434,22 @@ def organisation_edit(organisation_code=None):
             else:
                 flash("No packages were added to your organisation. This could be because you've already added all existing ones.", 
                       'error')
-                
-        elif 'updateorganisation' in request.form:
+
+    def update_organisation():
             data = {
                 'organisation_code': request.form['organisation_code'],
                 'organisation_name': request.form['organisation_name']
             }
             organisation = dqorganisations.updateOrganisation(
                 organisation_code, data)
+
+    if request.method == 'POST':
+        if 'addpackages' in request.form:
+            add_packages()
+        elif 'addpackagegroup' in request.form:
+            add_packagegroup()
+        elif 'updateorganisation' in request.form:
+            update_organisation()
 
     organisationpackages = dqorganisations.organisationPackages(
         organisation.organisation_code)
