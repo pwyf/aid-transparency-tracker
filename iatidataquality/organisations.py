@@ -176,14 +176,19 @@ def integerise(data):
         return None
 
 def get_survey_data_and_workflow(organisation_survey, surveydata):
+    data = {
+        "donorreview": ("researcher", 'donorreview'),
+        "pwyfreview": ("researcher", 'donorreview'),
+        "donorcomments": ("pwyfreview", 'donorcomments'),
+        "pwyffinal": ("pwyfreview", 'donorcomments'),
+        "finalised": ("pwyffinal", 'finalised')
+        }
+           
     if organisation_survey:
         workflow_name = organisation_survey.Workflow.name
-        if workflow_name in ['donorreview', 'pwyfreview']:
-            return (surveydata["researcher"], 'donorreview')
-        elif workflow_name in ['donorcomments', 'pwyffinal']:
-            return (surveydata["pwyfreview"], 'donorcomments')
-        elif workflow_name == 'finalised':
-            return (surveydata["pwyffinal"], 'finalised')
+        if workflow_name in data:
+            key, phase = data[workflow_name]
+            return (surveydata[key], phase)
     return (None, None)
 
 def organisation_publication_authorised(organisation_code, aggregation_type):
