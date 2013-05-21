@@ -3,7 +3,9 @@
 {% block content %}
 
     <div class="pull-right">
+        {% if admin %}
         <a class="btn" href="{{url_for('organisation_edit', organisation_code=organisation.organisation_code)}}">Edit</a>
+        {% endif %}
         <a class="btn" href="{{url_for('organisation_survey', organisation_code=organisation.organisation_code)}}">Survey</a>
     </div>
 
