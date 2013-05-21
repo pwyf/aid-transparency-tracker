@@ -179,23 +179,13 @@ def get_survey_data_and_workflow(organisation_survey, surveydata):
     if organisation_survey:
         if organisation_survey.Workflow.name in ['donorreview', 
                                                  'pwyfreview']:
-            surveydata = surveydata["researcher"]
-            surveydata_workflow = 'donorreview'
+            return (surveydata["researcher"], 'donorreview')
         elif organisation_survey.Workflow.name in ['donorcomments',
                                                    'pwyffinal']:
-            surveydata = surveydata["pwyfreview"]
-            surveydata_workflow = 'donorcomments'
+            return (surveydata["pwyfreview"], 'donorcomments')
         elif organisation_survey.Workflow.name == 'finalised':
-            surveydata = surveydata["pwyffinal"]
-            surveydata_workflow = 'finalised'
-        else:
-            surveydata = None
-            surveydata_workflow=None
-    else:
-        surveydata = None
-        surveydata_workflow=None
-
-    return surveydata, surveydata_workflow
+            return (surveydata["pwyffinal"], 'finalised')
+    return (None, None)
 
 def organisation_publication_authorised(organisation_code, aggregation_type):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
