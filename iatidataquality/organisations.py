@@ -187,88 +187,88 @@ def integerise(data):
         return None
 
 def organisation_publication_authorised(organisation_code, aggregation_type):
-        aggregation_type=integerise(request.args.get('aggregation_type', 2))
-        all_aggregation_types = dqaggregationtypes.aggregationTypes()
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
-        organisation = Organisation.query.filter_by(
-            organisation_code=organisation_code).first_or_404()
+    organisation = Organisation.query.filter_by(
+        organisation_code=organisation_code).first_or_404()
 
-        aggregate_results = dqorganisations._organisation_indicators_split(
-            organisation, aggregation_type)
+    aggregate_results = dqorganisations._organisation_indicators_split(
+        organisation, aggregation_type)
         
-        organisation_survey = dqsurveys.getSurvey(organisation_code)
-        surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-        if organisation_survey:
-            if organisation_survey.Workflow.name in ['donorreview', 
-                                                     'pwyfreview']:
-                surveydata = surveydata["researcher"]
-                surveydata_workflow = 'donorreview'
-            elif organisation_survey.Workflow.name in ['donorcomments',
-                                                       'pwyffinal']:
-                surveydata = surveydata["pwyfreview"]
-                surveydata_workflow = 'donorcomments'
-            elif organisation_survey.Workflow.name == 'finalised':
-                surveydata = surveydata["pwyffinal"]
-                surveydata_workflow = 'finalised'
-            else:
-                surveydata = None
-                surveydata_workflow=None
+    organisation_survey = dqsurveys.getSurvey(organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+    if organisation_survey:
+        if organisation_survey.Workflow.name in ['donorreview', 
+                                                 'pwyfreview']:
+            surveydata = surveydata["researcher"]
+            surveydata_workflow = 'donorreview'
+        elif organisation_survey.Workflow.name in ['donorcomments',
+                                                   'pwyffinal']:
+            surveydata = surveydata["pwyfreview"]
+            surveydata_workflow = 'donorcomments'
+        elif organisation_survey.Workflow.name == 'finalised':
+            surveydata = surveydata["pwyffinal"]
+            surveydata_workflow = 'finalised'
         else:
             surveydata = None
             surveydata_workflow=None
-        published_status = dqsurveys.publishedStatus()
+    else:
+        surveydata = None
+        surveydata_workflow=None
+    published_status = dqsurveys.publishedStatus()
 
-        published_status_by_id = dict(map(lambda x: (x.id, x), 
-                                          published_status))
+    published_status_by_id = dict(map(lambda x: (x.id, x), 
+                                      published_status))
 
-        publishedformats = dqsurveys.publishedFormatsAll()
-        publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
+    publishedformats = dqsurveys.publishedFormatsAll()
+    publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
 
-        published_status_by_id[None] = {
-            'name': 'Unknown',
-            'publishedstatus_class': 'label-inverse'
-            }
+    published_status_by_id[None] = {
+        'name': 'Unknown',
+        'publishedstatus_class': 'label-inverse'
+        }
 
-        publishedformats[None] = {
-            'name': 'Unknown',
-            'format_class': 'label-inverse'
-            }
+    publishedformats[None] = {
+        'name': 'Unknown',
+        'format_class': 'label-inverse'
+        }
 
-        latest_runtime=1
+    latest_runtime=1
 
-        return render_template("organisation_indicators.html", 
-                               organisation=organisation,
-                               results=aggregate_results, 
-                               runtime=latest_runtime,
-                               all_aggregation_types=all_aggregation_types,
-                               aggregation_type=aggregation_type,
-                               surveydata=surveydata,
-                               published_status=published_status_by_id,
-                               published_format=publishedformats,
-                               surveydata_workflow=surveydata_workflow,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+    return render_template("organisation_indicators.html", 
+                           organisation=organisation,
+                           results=aggregate_results, 
+                           runtime=latest_runtime,
+                           all_aggregation_types=all_aggregation_types,
+                           aggregation_type=aggregation_type,
+                           surveydata=surveydata,
+                           published_status=published_status_by_id,
+                           published_format=publishedformats,
+                           surveydata_workflow=surveydata_workflow,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
 def organisation_publication_unauthorised(organisation_code, aggregation_type):
-        aggregation_type=integerise(request.args.get('aggregation_type', 2))
-        all_aggregation_types = dqaggregationtypes.aggregationTypes()
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
-        organisation = Organisation.query.filter_by(
-            organisation_code=organisation_code).first_or_404()
+    organisation = Organisation.query.filter_by(
+        organisation_code=organisation_code).first_or_404()
 
-        aggregate_results = dqorganisations._organisation_indicators(
-            organisation, aggregation_type)
+    aggregate_results = dqorganisations._organisation_indicators(
+        organisation, aggregation_type)
 
-        packages = dqorganisations.organisationPackages(organisation_code)
+    packages = dqorganisations.organisationPackages(organisation_code)
 
-        return render_template("organisation_publication_public.html", 
-                               organisation=organisation,
-                               results=aggregate_results, 
-                               all_aggregation_types=all_aggregation_types,
-                               aggregation_type=aggregation_type,
-                               packages=packages,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+    return render_template("organisation_publication_public.html", 
+                           organisation=organisation,
+                           results=aggregate_results, 
+                           all_aggregation_types=all_aggregation_types,
+                           aggregation_type=aggregation_type,
+                           packages=packages,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
