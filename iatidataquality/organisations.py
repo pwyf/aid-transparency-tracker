@@ -115,13 +115,17 @@ def organisations_index(organisation_code=None):
     except Exception, e:
         summary_data = None
 
+    allowed_to_view_survey = usermanagement.check_perms("survey",
+                                          "view")
+
     template_args = dict(organisation=organisation, 
                          summary_data=summary_data,
                          packagegroups=packagegroups,
                          coverage=coverage,
                          surveydata=surveydata,
                          admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+                         loggedinuser=current_user,
+                         allowed_to_view_survey=allowed_to_view_survey)
 
     return render_template("organisation_index.html", **template_args)
 

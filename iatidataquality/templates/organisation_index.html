@@ -6,7 +6,9 @@
         {% if admin %}
         <a class="btn" href="{{url_for('organisation_edit', organisation_code=organisation.organisation_code)}}">Edit</a>
         {% endif %}
+        {% if allowed_to_view_survey %}
         <a class="btn" href="{{url_for('organisation_survey', organisation_code=organisation.organisation_code)}}">Survey</a>
+        {% endif %}
     </div>
 
     <div class="jumbotron jumbotron-index">
