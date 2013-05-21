@@ -370,7 +370,7 @@ def organisation_publication_csv(organisation_code=None):
         if result['results_pct'] == 0:
             points = 0
         else:
-            points = ((float(result['results_pct']) * freq) / 2.0) + 50
+            points = float(result['results_pct']) * freq / 2.0 + 50
         out.writerow({
                 "organisation_name": organisation.organisation_name, 
                 "organisation_code": organisation.organisation_code, 
