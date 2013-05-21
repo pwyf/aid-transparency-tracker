@@ -355,7 +355,17 @@ def organisation_publication_csv(organisation_code=None):
     aggregate_results = dqorganisations._organisation_indicators(organisation)
 
     strIO = StringIO.StringIO()
-    fieldnames = "organisation_name organisation_code indicator_category_name indicator_subcategory_name indicator_name indicator_description percentage_passed num_results points".split()
+    fieldnames = [
+        "organisation_name",
+        "organisation_code",
+        "indicator_category_name",
+        "indicator_subcategory_name",
+        "indicator_name",
+        "indicator_description",
+        "percentage_passed",
+        "num_results",
+        "points"
+        ]
     out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
     headers = {}
     for fieldname in fieldnames:
