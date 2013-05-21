@@ -177,13 +177,12 @@ def integerise(data):
 
 def get_survey_data_and_workflow(organisation_survey, surveydata):
     if organisation_survey:
-        if organisation_survey.Workflow.name in ['donorreview', 
-                                                 'pwyfreview']:
+        workflow_name = organisation_survey.Workflow.name
+        if workflow_name in ['donorreview', 'pwyfreview']:
             return (surveydata["researcher"], 'donorreview')
-        elif organisation_survey.Workflow.name in ['donorcomments',
-                                                   'pwyffinal']:
+        elif workflow_name in ['donorcomments', 'pwyffinal']:
             return (surveydata["pwyfreview"], 'donorcomments')
-        elif organisation_survey.Workflow.name == 'finalised':
+        elif workflow_name == 'finalised':
             return (surveydata["pwyffinal"], 'finalised')
     return (None, None)
 
