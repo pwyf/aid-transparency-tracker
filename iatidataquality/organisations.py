@@ -385,8 +385,9 @@ def organisation_publication_csv(organisation_code=None):
                 "points": str(points)
                 })      
     strIO.seek(0)
+    filename = "dataqualityresults_%s.csv" % organisation_code
     return send_file(strIO,
-                     attachment_filename="dataqualityresults_" + organisation_code + ".csv",
+                     attachment_filename=filename,
                      as_attachment=True)
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
