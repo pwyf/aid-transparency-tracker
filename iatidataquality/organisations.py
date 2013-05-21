@@ -398,8 +398,8 @@ def organisation_edit(organisation_code=None):
 
     if request.method == 'POST':
         if 'addpackages' in request.form:
-            condition = request.form['condition']
             def add_org_pkg(package):
+                condition = request.form['condition']
                 data = {
                     'organisation_id': organisation.id,
                     'package_id': package,
