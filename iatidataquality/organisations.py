@@ -130,20 +130,24 @@ def organisations_index(organisation_code=None):
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
-    check_perms = usermanagement.check_perms('organisation', 'view', {'organisation_code':organisation_code})
-    if organisation_code is not None:
-        if check_perms:
-            return redirect(url_for('organisations_index', organisation_code=organisation_code))
-        else:
-            return redirect(url_for('organisation_publication', organisation_code=organisation_code))
-    else:
-        organisations = dqorganisations.organisations()
+    check_perms = usermanagement.check_perms(
+        'organisation', 'view', {'organisation_code':organisation_code})
 
-        template_args = dict(organisations=organisations,
+    if organisation_code is not None:
+        template = {
+            True: 'organisations_index',
+            False: 'organisation_publication'
+            }[check_perms]
+
+        return redirect(url_for(template, organisation_code=organisation_code))
+
+    organisations = dqorganisations.organisations()
+
+    template_args = dict(organisations=organisations,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
 
-        return render_template("organisations.html", **template_args)
+    return render_template("organisations.html", **template_args)
 
 @app.route("/organisations/new/", methods=['GET','POST'])
 @usermanagement.perms_required()
