@@ -60,11 +60,11 @@ dates-planned,Planned dates,activity-date[@type='end-planned'] exists?,Activity 
 dates-actual,Actual dates,activity-date[@type='start-actual'] exists?,Activity date actual start date,1
 dates-actual,Actual dates,activity-date[@type='end-actual'] exists?,Activity date actual end date,1
 implementer,Implementer,participating-org[@role='implementing'] or participating-org[@role='Implementing'] exists?,Implementing organisation,1
-,,participating-org[@role='implementing']/@type exists?,"Implementing organisation, type",1
-,,participating-org[@role='implementing']/@type is on list OrganisationType?,"Implementing organisation, type is on the IATI organisation type codelist",1
-,,participating-org[@role='implementing']/@role is on list OrganisationRole?,"Implementing organisation, role is on the IATI organisation role codelist",1
-implementer,Implementer,participating-org[@role='implementing']/@ref exists?,"Implementing organisation, ref",1
-,,participating-org[@role='implementing']/@ref is on list OrganisationIdentifier?,"Implementing organisation, ref is on the IATI organisation identifier codelist",1
+,,participating-org[@role='Implementing']/@type exists?,"Implementing organisation, type",1
+,,participating-org[@role='Implementing']/@type is on list OrganisationType?,"Implementing organisation, type is on the IATI organisation type codelist",1
+,,participating-org[@role='Implementing']/@role is on list OrganisationRole?,"Implementing organisation, role is on the IATI organisation role codelist",1
+implementer,Implementer,participating-org[@role='Implementing']/@ref exists?,"Implementing organisation, ref",1
+,,participating-org[@role='Implementing']/@ref is on list OrganisationIdentifier?,"Implementing organisation, ref is on the IATI organisation identifier codelist",1
 sector,Sector,sector exists more than 1 time?,"Sector, more than once",1
 expenditure-planned,Planned expenditure,transaction/transaction-type[@code='C'] or transaction/transaction-type[@code='c'] exists?,Commitments,1
 expenditure-actual,Actual expenditure,transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='d'] exists?,Disbursements,1
@@ -83,7 +83,7 @@ contracts,Contracts,document-link/category[@code='A11'] exists?,Document - Contr
 ,,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 2 months ago?,Activities with data in last month,1
 ,,activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 1 month ago?,Activities with data less than one month old,1
 ,,@hierarchy exists?,IATI Activity hierarchy,1
-,,participating-org[@role='extending']/@type exists?,"Extending organisation, type",1
+,,participating-org[@role='Extending']/@type exists?,"Extending organisation, type",1
 ,,activity-date exists?,Activity date ,1
 ,,reporting-org exists?,Reporting organisation,1
 ,,reporting-org/@type exists?,"Reporting organisation, type",1
@@ -206,15 +206,15 @@ contracts,Contracts,document-link/category[@code='A11'] exists?,Document - Contr
 ,,recipient-region or recipient-country exists?,Recipient region or recipient country,1
 ,,only one of recipient-region or recipient-country exists?,Recipient region or recipient country (not both),1
 ,,document-link/category[@code='A03'] exists?,Document - Intended ultimate beneficiaries document,1
-,,participating-org[@role='extending']/@type is on list OrganisationType?,"Extending organisation, type is on the IATI organisation type codelist",1
-,,participating-org[@role='extending']/@role is on list OrganisationRole?,"Extending organisation, role is on the IATI organisation role codelist",1
-,,participating-org[@role='extending']/@ref exists?,"Extending organisation, ref",1
-,,participating-org[@role='extending']/@ref is on list OrganisationIdentifier?,"Extending organisation, ref is on the IATI organisation identifier codelist",1
-,,participating-org[@role='funding']/@type exists?,"Funding organisation, type",1
-,,participating-org[@role='funding']/@type is on list OrganisationType?,"Funding organisation, type is on the IATI organisation type codelist",1
-,,participating-org[@role='funding']/@role is on list OrganisationRole?,"Funding organisation, role is on the IATI organisation role codelist",1
-,,participating-org[@role='funding']/@ref exists?,"Funding organisation, ref",1
-,,participating-org[@role='funding']/@ref is on list OrganisationIdentifier?,"Funding organisation, ref is on the IATI organisation identifier codelist",1
+,,participating-org[@role='Extending']/@type is on list OrganisationType?,"Extending organisation, type is on the IATI organisation type codelist",1
+,,participating-org[@role='Extending']/@role is on list OrganisationRole?,"Extending organisation, role is on the IATI organisation role codelist",1
+,,participating-org[@role='Extending']/@ref exists?,"Extending organisation, ref",1
+,,participating-org[@role='Extending']/@ref is on list OrganisationIdentifier?,"Extending organisation, ref is on the IATI organisation identifier codelist",1
+,,participating-org[@role='Funding']/@type exists?,"Funding organisation, type",1
+,,participating-org[@role='Funding']/@type is on list OrganisationType?,"Funding organisation, type is on the IATI organisation type codelist",1
+,,participating-org[@role='Funding']/@role is on list OrganisationRole?,"Funding organisation, role is on the IATI organisation role codelist",1
+,,participating-org[@role='Funding']/@ref exists?,"Funding organisation, ref",1
+,,participating-org[@role='Funding']/@ref is on list OrganisationIdentifier?,"Funding organisation, ref is on the IATI organisation identifier codelist",1
 ,,reporting-org/@ref is on list OrganisationIdentifier?,"Reporting organisation, ref is on the IATI organisation identifier codelist",1
 budget-identifier,Budget Identifier,country-budget exists?,"Budget identifier, administrative/functional classification",1
 budget-identifier,Budget Identifier,capital-spend exists?,"Budget identifier, economic classification",1
