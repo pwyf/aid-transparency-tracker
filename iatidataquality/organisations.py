@@ -59,8 +59,6 @@ def get_info_results(org_packages, organisation):
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
-    info_results = {
-        }
     
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
 
