@@ -56,6 +56,25 @@ def get_info_results(org_packages, organisation):
         except TypeError:
             yield 0
 
+# FIXME: use organisation_total_spend when data is imported to db
+def get_coverage(organisation, info_results):
+    coverage_found = reduce(operator.add, irs, 0)
+    coverage_total = organisation.organisation_total_spend * 1000000
+
+    if (coverage_total and coverage_found):
+        coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
+        return {
+            'total': coverage_total,
+            'found': coverage_found,
+            'pct': coverage_pct
+            }
+    return {
+        'total': None,
+        'found': None,
+        'pct': None
+        }
+    
+
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
@@ -69,28 +88,8 @@ def organisations_index(organisation_code=None):
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
     irs = [ir for ir in get_info_results(org_packages, organisation)]
-    coverage_found = reduce(operator.add, irs, 0)
+    coverage = get_coverage(organisation, irs) 
 
-    
-
-    # coverage_total = organisation.organisation_total_spend
-    # FIXME: use organisation_total_spend 
-    # when data is imported to db
-    coverage_total = organisation.organisation_total_spend * 1000000
-
-    if (coverage_total and coverage_found):
-        coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
-        coverage = {
-                    'total': coverage_total,
-                    'found': coverage_found,
-                    'pct': coverage_pct
-                }
-    else:
-        coverage = {
-                    'total': None,
-                    'found': None,
-                    'pct': None
-        }
     organisation_survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
