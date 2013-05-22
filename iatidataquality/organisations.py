@@ -388,6 +388,23 @@ def organisation_publication_csv(organisation_code=None):
 
     return _org_pub_csv(organisations, filename)
 
+def add_packages(organisation):
+    def add_org_pkg(package):
+        condition = request.form['condition']
+        data = {
+            'organisation_id': organisation.id,
+            'package_id': package,
+            'condition': condition
+            }
+        if dqorganisations.addOrganisationPackage(data):
+            flash('Successfully added package to your organisation.', 
+                  'success')
+        else:
+            flash("Couldn't add package to your organisation.", 
+                  'error')
+
+    packages = request.form.getlist('package')
+    [ add_org_pkg(package) for package in packages ]
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 @usermanagement.perms_required()
@@ -398,23 +415,6 @@ def organisation_edit(organisation_code=None):
     packagegroups = dqpackages.packageGroups()
     organisation = dqorganisations.organisations(organisation_code)
 
-    def add_packages():
-        def add_org_pkg(package):
-            condition = request.form['condition']
-            data = {
-                'organisation_id': organisation.id,
-                'package_id': package,
-                'condition': condition
-                }
-            if dqorganisations.addOrganisationPackage(data):
-                flash('Successfully added package to your organisation.', 
-                      'success')
-            else:
-                flash("Couldn't add package to your organisation.", 
-                      'error')
-
-        packages = request.form.getlist('package')
-        [ add_org_pkg(package) for package in packages ]
 
     def add_packagegroup():
         condition = request.form['condition']
@@ -453,7 +453,7 @@ def organisation_edit(organisation_code=None):
 
     if request.method == 'POST':
         if 'addpackages' in request.form:
-            add_packages()
+            add_packages(organisation)
         elif 'addpackagegroup' in request.form:
             add_packagegroup()
         elif 'updateorganisation' in request.form:
