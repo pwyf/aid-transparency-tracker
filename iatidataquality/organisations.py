@@ -104,11 +104,13 @@ def organisations_index(organisation_code=None):
 
     summary_data = get_summary_data(organisation, aggregation_type)
 
-    allowed_to_view_survey = usermanagement.check_perms("survey",
-                                          "view")
-    allowed_to_edit_survey_researcher = usermanagement.check_perms("survey",
-                "edit",
-                {"organisation_code": organisation_code})
+    allowed_to_view_survey = usermanagement.check_perms(
+        "survey",
+        "view")
+    allowed_to_edit_survey_researcher = usermanagement.check_perms(
+        "survey",
+        "edit",
+        {"organisation_code": organisation_code})
 
     show_researcher_button = (
         allowed_to_edit_survey_researcher and 
