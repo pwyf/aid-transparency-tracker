@@ -350,9 +350,7 @@ csv_fieldnames = [
     "points"
     ]
 
-@app.route("/organisations/publication.csv")
-@usermanagement.perms_required()
-def all_organisations_publication_csv():
+def _org_pub_csv(organisations, filename):
     strIO = StringIO.StringIO()
     out = unicodecsv.DictWriter(strIO, fieldnames=csv_fieldnames)
     headers = {}
@@ -361,15 +359,20 @@ def all_organisations_publication_csv():
         headers[fieldname] = fieldname
     out.writerow(headers)
 
-    organisations = Organisation.query.all()
-
     for organisation in organisations:
         write_organisation_publications_csv(out, organisation)
 
     strIO.seek(0)
     return send_file(strIO,
-                         attachment_filename="dataqualityresults_all.csv",
-                         as_attachment=True)
+                     attachment_filename=filename,
+                     as_attachment=True)
+
+@app.route("/organisations/publication.csv")
+@usermanagement.perms_required()
+def all_organisations_publication_csv():
+    organisations = Organisation.query.all()
+    return _org_pub_csv(organisations, "dataqualityresults_all.csv")
+
 
 @app.route("/organisations/<organisation_code>/publication.csv")
 @usermanagement.perms_required('organisation', 'view')
@@ -377,22 +380,11 @@ def organisation_publication_csv(organisation_code=None):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    strIO = StringIO.StringIO()
-    out = unicodecsv.DictWriter(strIO, fieldnames=csv_fieldnames)
-
-    headers = {}
-
-    for fieldname in csv_fieldnames:
-        headers[fieldname] = fieldname
-    out.writerow(headers)
-
-    write_organisation_publications_csv(out, organisation)
-
-    strIO.seek(0)
+    organisations = [organisation]
     filename = "dataqualityresults_%s.csv" % organisation_code
-    return send_file(strIO,
-                     attachment_filename=filename,
-                     as_attachment=True)
+
+    return _org_pub_csv(organisations, filename)
+
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 @usermanagement.perms_required()
