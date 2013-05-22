@@ -12,12 +12,7 @@ from iatidq import db
 import models
 import unicodecsv
 
-def downloadUserData():
-    fh = urllib2.urlopen(ORG_FREQUENCY_API_URL)
-    return _updateOrganisationFrequency(fh)
-
-def importUserDataFromFile():
-    filename = 'tests/users.csv'
+def importUserDataFromFile(filename):
     with file(filename) as fh:
         return _importUserData(fh)
 
@@ -65,7 +60,8 @@ def _importUserData(fh):
                     ('survey_cso', 'edit')
                     ]
 
-        return [ perm(user, organisation_id, i) for i in perms ]
+        [ permissions.append(perm(user, organisation_id, i)) for i in perms ]
+        return permissions
 
     def getDonorPermissions(organisation_id, 
                 role, active, primary, user, permissions):
@@ -93,7 +89,8 @@ def _importUserData(fh):
                     ('organisation_feedback', 'create')
                     ]
 
-        return permissions + [ perm(user, organisation_id, i) for i in perms ]
+        [ permissions.append(perm(user, organisation_id, i)) for i in perms ]
+        return permissions
 
     def generate_permissions():
         permissions = []
@@ -127,6 +124,8 @@ def _importUserData(fh):
                     'permission_method': 'view',
                     'permission_value': ''
                 })
+            else:
+                print "Warning: no role provided, so could not add user for row %s" % row
             
         for permission in permissions:
             addUserPermission(permission)
@@ -150,10 +149,10 @@ def user_by_username(username=None):
     return None
 
 def addUser(data):
-    checkU = models.User.query.filter_by(username=data["username"]
-                ).first()
-    if not checkU:
-        with db.session.begin():
+    with db.session.begin():
+        checkU = models.User.query.filter_by(username=data["username"]
+                    ).first()
+        if not checkU:
             newU = models.User()
             newU.setup(
                 username = data["username"],
@@ -163,17 +162,17 @@ def addUser(data):
                 organisation = data.get('organisation')
                 )
             db.session.add(newU)
-        return newU
-    return checkU
+            return newU
+        return checkU
 
 def addUserPermission(data):
-    checkP = models.UserPermission.query.filter_by(user_id=data["user_id"],
-                permission_name=data["permission_name"],
-                permission_method=data.get("permission_method"),
-                permission_value=data.get("permission_value")
-                ).first()
-    if not checkP:
-        with db.session.begin():
+    with db.session.begin():
+        checkP = models.UserPermission.query.filter_by(user_id=data["user_id"],
+                    permission_name=data["permission_name"],
+                    permission_method=data.get("permission_method"),
+                    permission_value=data.get("permission_value")
+                    ).first()
+        if not checkP:
             newP = models.UserPermission()
             newP.setup(
                 user_id = data["user_id"],
@@ -182,8 +181,8 @@ def addUserPermission(data):
                 permission_value=data.get("permission_value")
                 )
             db.session.add(newP)
-        return newP
-    return None
+            return newP
+        return None
 
 def deleteUserPermission(permission_id):
     checkP = models.UserPermission.query.filter_by(id=permission_id).first()

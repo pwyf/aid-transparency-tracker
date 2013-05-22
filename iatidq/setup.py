@@ -33,6 +33,7 @@ which_packages = [
 default_tests_filename="tests/tests.csv"
 default_infotypes_filename="tests/infotypes.csv"
 default_indicator_group_name="2013 Index"
+default_userdata_filename='tests/users.csv'
 default_minimal_organisations = [
             {
             'organisation_name': 'World Bank',
@@ -218,5 +219,10 @@ def setup(options):
         print "Created a default user (admin) and password (CHANGEME). Please remember to change them!"
     else:
         print "Couldn't create a default user and password. Did you supply one in config.py?"
+    
+    print "Importing all users and creating permissions"
+    
+    dqusers.importUserDataFromFile(default_userdata_filename)
+    print "Finished importing users"
 
     print "Setup complete."
