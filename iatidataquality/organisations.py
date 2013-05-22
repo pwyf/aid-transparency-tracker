@@ -433,25 +433,20 @@ def add_packagegroup(organisation):
             "could be because you've already added all existing ones.", 
             'error')
 
+def update_organisation(organisation_code):
+    data = {
+        'organisation_code': request.form['organisation_code'],
+        'organisation_name': request.form['organisation_name']
+        }
+    organisation = dqorganisations.updateOrganisation(
+        organisation_code, data)
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 @usermanagement.perms_required()
 def organisation_edit(organisation_code=None):
-    
-
     packages = dqpackages.packages()
     packagegroups = dqpackages.packageGroups()
     organisation = dqorganisations.organisations(organisation_code)
-
-
-
-    def update_organisation():
-        data = {
-            'organisation_code': request.form['organisation_code'],
-            'organisation_name': request.form['organisation_name']
-            }
-        organisation = dqorganisations.updateOrganisation(
-            organisation_code, data)
 
     if request.method == 'POST':
         if 'addpackages' in request.form:
@@ -459,7 +454,7 @@ def organisation_edit(organisation_code=None):
         elif 'addpackagegroup' in request.form:
             add_packagegroup(organisation)
         elif 'updateorganisation' in request.form:
-            update_organisation()
+            update_organisation(organisation_code)
 
     organisationpackages = dqorganisations.organisationPackages(
         organisation.organisation_code)
