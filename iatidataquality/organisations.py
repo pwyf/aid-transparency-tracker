@@ -304,6 +304,26 @@ def organisation_publication_detail(organisation_code=None):
     return _organisation_publication_detail(organisation_code, aggregation_type, is_admin)
 
 
+def write_agg_csv_result(out, organisation, freq, result):
+    if result['results_pct'] == 0:
+        points = 0
+    else:
+        points = float(result['results_pct']) * freq / 2.0 + 50
+
+    i = result["indicator"]
+    out.writerow({
+            "organisation_name": organisation.organisation_name, 
+            "organisation_code": organisation.organisation_code, 
+            "indicator_category_name": i['indicator_category_name'],
+            "indicator_subcategory_name": i['indicator_subcategory_name'],
+            "indicator_name": i['description'], 
+            "indicator_description": i['longdescription'], 
+            "percentage_passed": result['results_pct'], 
+            "num_results": result['results_num'],
+            "points": str(points)
+            })      
+
+
 @app.route("/organisations/publication.csv")
 @usermanagement.perms_required()
 def all_organisations_publication_csv():
@@ -342,25 +362,6 @@ def all_organisations_publication_csv():
     return send_file(strIO,
                          attachment_filename="dataqualityresults_all.csv",
                          as_attachment=True)
-
-def write_agg_csv_result(out, organisation, freq, result):
-    if result['results_pct'] == 0:
-        points = 0
-    else:
-        points = float(result['results_pct']) * freq / 2.0 + 50
-
-    i = result["indicator"]
-    out.writerow({
-            "organisation_name": organisation.organisation_name, 
-            "organisation_code": organisation.organisation_code, 
-            "indicator_category_name": i['indicator_category_name'],
-            "indicator_subcategory_name": i['indicator_subcategory_name'],
-            "indicator_name": i['description'], 
-            "indicator_description": i['longdescription'], 
-            "percentage_passed": result['results_pct'], 
-            "num_results": result['results_num'],
-            "points": str(points)
-            })      
 
 @app.route("/organisations/<organisation_code>/publication.csv")
 @usermanagement.perms_required('organisation', 'view')
