@@ -406,6 +406,34 @@ def add_packages(organisation):
     packages = request.form.getlist('package')
     [ add_org_pkg(package) for package in packages ]
 
+def add_packagegroup(organisation):
+    condition = request.form['condition']
+    data = {
+        'organisation_id': organisation.id,
+        'packagegroup_id': request.form['packagegroup'],
+        'condition': condition
+        }
+    total = dqorganisations.addOrganisationPackageFromPackageGroup(data)
+    if 'applyfuture' in request.form:
+        if dqorganisations.addOrganisationPackageGroup(data):
+            flash(
+                'All future packages in this package group will be '
+                'added to this organisation', 'success')
+        else:
+            flash(
+                'Could not ensure that all packages in this package '
+                'group will be added to this organisation', 'error')
+    if total:
+        flash(
+            'Successfully added %d packages to your organisation.' % total, 
+            'success')
+    else:
+        flash(
+            "No packages were added to your organisation. This "
+            "could be because you've already added all existing ones.", 
+            'error')
+
+
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 @usermanagement.perms_required()
 def organisation_edit(organisation_code=None):
@@ -416,32 +444,6 @@ def organisation_edit(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
 
 
-    def add_packagegroup():
-        condition = request.form['condition']
-        data = {
-            'organisation_id': organisation.id,
-            'packagegroup_id': request.form['packagegroup'],
-            'condition': condition
-            }
-        total = dqorganisations.addOrganisationPackageFromPackageGroup(data)
-        if 'applyfuture' in request.form:
-            if dqorganisations.addOrganisationPackageGroup(data):
-                flash(
-                    'All future packages in this package group will be '
-                    'added to this organisation', 'success')
-            else:
-                flash(
-                    'Could not ensure that all packages in this package '
-                    'group will be added to this organisation', 'error')
-        if total:
-            flash(
-                'Successfully added %d packages to your organisation.' % total, 
-                'success')
-        else:
-            flash(
-                "No packages were added to your organisation. This "
-                "could be because you've already added all existing ones.", 
-                'error')
 
     def update_organisation():
         data = {
@@ -455,7 +457,7 @@ def organisation_edit(organisation_code=None):
         if 'addpackages' in request.form:
             add_packages(organisation)
         elif 'addpackagegroup' in request.form:
-            add_packagegroup()
+            add_packagegroup(organisation)
         elif 'updateorganisation' in request.form:
             update_organisation()
 
