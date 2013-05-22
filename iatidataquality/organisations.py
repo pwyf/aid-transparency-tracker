@@ -58,7 +58,7 @@ def get_info_results(org_packages, organisation):
 
 # FIXME: use organisation_total_spend when data is imported to db
 def get_coverage(organisation, info_results):
-    coverage_found = reduce(operator.add, irs, 0)
+    coverage_found = reduce(operator.add, info_results, 0)
     coverage_total = organisation.organisation_total_spend * 1000000
 
     if coverage_total and coverage_found:
