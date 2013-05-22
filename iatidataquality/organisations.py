@@ -160,9 +160,10 @@ def organisation_new():
             return redirect(url_for(
                     'organisation_edit', 
                     organisation_code=organisation.organisation_code))
-        else:
-            flash("Couldn't add organisation", "error")
-            organisation = data
+        
+        flash("Couldn't add organisation", "error")
+        organisation = data
+
     return render_template("organisation_edit.html", organisation=organisation,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
