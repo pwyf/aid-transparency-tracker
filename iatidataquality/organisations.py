@@ -62,7 +62,8 @@ def get_coverage(organisation, info_results):
     coverage_total = organisation.organisation_total_spend * 1000000
 
     if coverage_total and coverage_found:
-        coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
+        c = float(coverage_found) / float(coverage_total)
+        coverage_pct = int(c * 100)
     else:
         coverage_pct = None
         coverage_found = None
