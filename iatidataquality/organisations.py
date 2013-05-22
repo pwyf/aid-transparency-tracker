@@ -97,6 +97,8 @@ def organisations_index(organisation_code=None):
     coverage = get_coverage(organisation, irs) 
 
     organisation_survey = dqsurveys.getSurvey(organisation_code)
+    print "OS OS ", organisation_code, organisation_survey
+
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
     surveydata, _ = get_survey_data_and_workflow(
@@ -114,6 +116,7 @@ def organisations_index(organisation_code=None):
 
     show_researcher_button = (
         allowed_to_edit_survey_researcher and 
+        organisation_survey and
         organisation_survey.Workflow.name == 'researcher'
         )
 
