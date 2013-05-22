@@ -56,7 +56,6 @@ def get_info_results(org_packages, organisation):
         except TypeError:
             yield 0
 
-
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
@@ -72,13 +71,14 @@ def organisations_index(organisation_code=None):
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
     irs = [ir for ir in get_info_results(org_packages, organisation)]
-    info_results["coverage_current"] = reduce(operator.add, irs, 0)
+    coverage_found = reduce(operator.add, irs, 0)
+
+    
 
     # coverage_total = organisation.organisation_total_spend
     # FIXME: use organisation_total_spend 
     # when data is imported to db
     coverage_total = (organisation.organisation_total_spend)*1000000
-    coverage_found = info_results["coverage_current"]
 
     if (coverage_total and coverage_found):
         coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
