@@ -1,5 +1,5 @@
 {% macro ind_commitment(surveydata, rows, workflow, indicator) %}
-	<tr>        
+	    <tr>        
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -46,10 +46,22 @@
         <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
-        <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea>
+        {% if workflow.Workflow.name=='donorreview' %}
+            <input type="hidden" name="{{indicator.indicator.id}}-ordinal_value" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}"{%endif%} />
+            {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}
+        {% else %}
+            <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea>
+        {% endif %}
         </td>
 
-        <td><textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
+        <td>
+        {% if workflow.Workflow.name=='donorreview' %}
+            <input type="hidden" name="{{indicator.indicator.id}}-source" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}"{%endif%} />
+            {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}
+        {% else %}
+            <textarea name="{{indicator.indicator.id}}-source">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea>
+        {% endif %}
+        </td>
 
         <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
         </tr>

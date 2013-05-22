@@ -91,53 +91,54 @@ def setupSurvey():
     # They define what happens to the survey
     # at each step.
 
-    the_workflows = [
-    {'name': 'researcher',
-     'title': 'Researcher',
-     'workflow_type': workflowTypes('collect').id,
-     'leadsto': getIDorNone(workflows('send')),
-     'duration': 14},
-    {'name': 'send',
-     'title': 'Send to donor',
-     'workflow_type': workflowTypes('send').id,
-     'leadsto': getIDorNone(workflows('donorreview')),
-     'duration': 2},
-    {'name': 'donorreview',
-     'title': 'Donor review',
-     'workflow_type': workflowTypes('review').id,
-     'leadsto': getIDorNone(workflows('pwyfreview')),
-     'duration': 21},
-    {'name': 'pwyfreview',
-     'title': 'PWYF review',
-     'workflow_type': workflowTypes('review').id,
-     'leadsto': getIDorNone(workflows('donorcomments')),
-     'duration': 14},
-    {'name': 'donorcomments',
-     'title': 'Donor comments',
-     'workflow_type': workflowTypes('comment').id,
-     'leadsto': getIDorNone(workflows('pwyffinal')),
-     'duration': 7},
-    {'name': 'pwyffinal',
-     'title': 'PWYF final review',
-     'workflow_type': workflowTypes('finalreview').id,
-     'leadsto': getIDorNone(workflows('finalised')),
-     'duration': 14},
-    {'name': 'finalised',
-     'title': 'Survey finalised',
-     'workflow_type': workflowTypes('finalised').id,
-     'leadsto': None,
-     'duration': None},
-    {'name': 'cso',
-     'title': 'CSO review',
-     'workflow_type': workflowTypes('comment').id,
-     'leadsto': None,
-     'duration': None}
-    ]
-    for the_workflow in the_workflows:
+    def the_workflows():
+        return [
+            {'name': 'researcher',
+             'title': 'Researcher',
+             'workflow_type': workflowTypes('collect').id,
+             'leadsto': getIDorNone(workflows('send')),
+             'duration': 14},
+            {'name': 'send',
+             'title': 'Send to donor',
+             'workflow_type': workflowTypes('send').id,
+             'leadsto': getIDorNone(workflows('donorreview')),
+             'duration': 2},
+            {'name': 'donorreview',
+             'title': 'Donor review',
+             'workflow_type': workflowTypes('review').id,
+             'leadsto': getIDorNone(workflows('pwyfreview')),
+             'duration': 21},
+            {'name': 'cso',
+             'title': 'CSO review',
+             'workflow_type': workflowTypes('comment').id,
+             'leadsto': None,
+             'duration': None},
+            {'name': 'pwyfreview',
+             'title': 'PWYF review',
+             'workflow_type': workflowTypes('review').id,
+             'leadsto': getIDorNone(workflows('donorcomments')),
+             'duration': 14},
+            {'name': 'donorcomments',
+             'title': 'Donor comments',
+             'workflow_type': workflowTypes('comment').id,
+             'leadsto': getIDorNone(workflows('pwyffinal')),
+             'duration': 7},
+            {'name': 'pwyffinal',
+             'title': 'PWYF final review',
+             'workflow_type': workflowTypes('finalreview').id,
+             'leadsto': getIDorNone(workflows('finalised')),
+             'duration': 14},
+            {'name': 'finalised',
+             'title': 'Survey finalised',
+             'workflow_type': workflowTypes('finalised').id,
+             'leadsto': None,
+             'duration': None}
+            ]
+    for the_workflow in the_workflows():
         addWorkflow(the_workflow)
 
     # This will correct leadsto values
-    for the_workflow in the_workflows:
+    for the_workflow in the_workflows():
         updateWorkflow(the_workflow)
 
 def getOrCreateSurvey(data):
