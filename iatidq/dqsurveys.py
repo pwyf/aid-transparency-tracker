@@ -107,6 +107,11 @@ def setupSurvey():
      'workflow_type': workflowTypes('review').id,
      'leadsto': getIDorNone(workflows('pwyfreview')),
      'duration': 21},
+    {'name': 'cso',
+     'title': 'CSO review',
+     'workflow_type': workflowTypes('comment').id,
+     'leadsto': None,
+     'duration': None},
     {'name': 'pwyfreview',
      'title': 'PWYF review',
      'workflow_type': workflowTypes('review').id,
@@ -125,11 +130,6 @@ def setupSurvey():
     {'name': 'finalised',
      'title': 'Survey finalised',
      'workflow_type': workflowTypes('finalised').id,
-     'leadsto': None,
-     'duration': None},
-    {'name': 'cso',
-     'title': 'CSO review',
-     'workflow_type': workflowTypes('comment').id,
      'leadsto': None,
      'duration': None}
     ]
