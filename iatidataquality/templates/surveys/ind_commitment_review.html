@@ -46,7 +46,7 @@
         <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
-        {% workflow.Workflow.name=='donorreview' %}
+        {% if workflow.Workflow.name=='donorreview' %}
             <input type="hidden" name="{{indicator.indicator.id}}-ordinal_value" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}"{%endif%} />
             {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}
         {% else %}
@@ -55,7 +55,7 @@
         </td>
 
         <td>
-        {% workflow.Workflow.name=='donorreview' %}
+        {% if workflow.Workflow.name=='donorreview' %}
             <input type="hidden" name="{{indicator.indicator.id}}-source" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}"{%endif%} />
             {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}
         {% else %}
