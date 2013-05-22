@@ -323,6 +323,17 @@ def write_agg_csv_result(out, organisation, freq, result):
             "points": str(points)
             })      
 
+def write_organisation_publications_csv(out, organisation):
+    aggregate_results = dqorganisations._organisation_indicators(organisation)
+
+    if (organisation.frequency == "less than quarterly"):
+        freq = 0.9
+    else:
+        freq = 1.0
+
+    for resultid, result in aggregate_results.items():
+        write_agg_csv_result(out, organisation, freq, result)
+
 csv_fieldnames = [
     "organisation_name",
     "organisation_code",
@@ -341,10 +352,13 @@ def all_organisations_publication_csv():
     strIO = StringIO.StringIO()
     out = unicodecsv.DictWriter(strIO, fieldnames=csv_fieldnames)
     headers = {}
+
     for fieldname in csv_fieldnames:
         headers[fieldname] = fieldname
     out.writerow(headers)
+
     organisations = Organisation.query.all()
+
     for organisation in organisations:
 
         aggregate_results = dqorganisations._organisation_indicators(
@@ -369,22 +383,16 @@ def organisation_publication_csv(organisation_code=None):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = dqorganisations._organisation_indicators(organisation)
-
     strIO = StringIO.StringIO()
     out = unicodecsv.DictWriter(strIO, fieldnames=csv_fieldnames)
+
     headers = {}
+
     for fieldname in csv_fieldnames:
         headers[fieldname] = fieldname
     out.writerow(headers)
 
-    if (organisation.frequency == "less than quarterly"):
-        freq = 0.9
-    else:
-        freq = 1.0
-
-    for resultid, result in aggregate_results.items():
-        write_agg_csv_result(out, organisation, freq, result)
+    write_organisation_publications_csv(out, organisation)
 
     strIO.seek(0)
     filename = "dataqualityresults_%s.csv" % organisation_code
