@@ -39,6 +39,24 @@ import StringIO
 import unicodecsv
 import usermanagement
 
+def get_info_results(org_packages, organisation):
+    for _, p in org_packages:
+        package_id = p.package_id
+        runtime = db.session.query(
+            func.max(InfoResult.runtime_id)).filter(
+            InfoResult.package_id == package_id
+            ).first()
+        runtime, = runtime
+        results = iatidq.inforesult.info_results(
+            package_id, runtime, organisation.id)
+        if "coverage" not in results:
+            continue
+        try:
+            yield int(results["coverage_current"])
+        except TypeError:
+            yield 0
+
+
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
@@ -50,27 +68,10 @@ def organisations_index(organisation_code=None):
     template_args = {}
     org_packages = dqorganisations.organisationPackages(organisation_code)
 
-    def get_info_results():
-        for _, p in org_packages:
-            package_id = p.package_id
-            runtime = db.session.query(
-                func.max(InfoResult.runtime_id)).filter(
-                InfoResult.package_id == package_id
-                ).first()
-            runtime, = runtime
-            results = iatidq.inforesult.info_results(
-                package_id, runtime, organisation.id)
-            if "coverage" not in results:
-                continue
-            try:
-                yield int(results["coverage_current"])
-            except TypeError:
-                yield 0
-
     organisation = dqorganisations.organisations(organisation_code)
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
-    irs = [ir for ir in get_info_results()]
+    irs = [ir for ir in get_info_results(org_packages, organisation)]
     info_results["coverage_current"] = reduce(operator.add, irs, 0)
 
     # coverage_total = organisation.organisation_total_spend
