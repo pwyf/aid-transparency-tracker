@@ -66,7 +66,7 @@ def about_independent():
     return render_markdown('independent_guide.md')
 
 @app.route('/info/donor')
-def about_independent():
+def about_donor():
     return render_markdown('donor_guide.md')
 
 
