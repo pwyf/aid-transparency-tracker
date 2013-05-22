@@ -63,15 +63,15 @@ def get_coverage(organisation, info_results):
 
     if coverage_total and coverage_found:
         coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
-        return {
-            'total': coverage_total,
-            'found': coverage_found,
-            'pct': coverage_pct
-            }
+    else:
+        coverage_pct = None
+        coverage_found = None
+        coverage_total = None
+
     return {
-        'total': None,
-        'found': None,
-        'pct': None
+        'total': coverage_total,
+        'found': coverage_found,
+        'pct': coverage_pct
         }
     
 
