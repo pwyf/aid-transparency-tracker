@@ -323,25 +323,25 @@ def write_agg_csv_result(out, organisation, freq, result):
             "points": str(points)
             })      
 
+csv_fieldnames = [
+    "organisation_name",
+    "organisation_code",
+    "indicator_category_name",
+    "indicator_subcategory_name",
+    "indicator_name",
+    "indicator_description",
+    "percentage_passed",
+    "num_results",
+    "points"
+    ]
 
 @app.route("/organisations/publication.csv")
 @usermanagement.perms_required()
 def all_organisations_publication_csv():
     strIO = StringIO.StringIO()
-    fieldnames = [
-        "organisation_name",
-        "organisation_code",
-        "indicator_category_name",
-        "indicator_subcategory_name",
-        "indicator_name",
-        "indicator_description",
-        "percentage_passed",
-        "num_results",
-        "points"
-        ]
-    out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
+    out = unicodecsv.DictWriter(strIO, fieldnames=csv_fieldnames)
     headers = {}
-    for fieldname in fieldnames:
+    for fieldname in csv_fieldnames:
         headers[fieldname] = fieldname
     out.writerow(headers)
     organisations = Organisation.query.all()
@@ -372,20 +372,9 @@ def organisation_publication_csv(organisation_code=None):
     aggregate_results = dqorganisations._organisation_indicators(organisation)
 
     strIO = StringIO.StringIO()
-    fieldnames = [
-        "organisation_name",
-        "organisation_code",
-        "indicator_category_name",
-        "indicator_subcategory_name",
-        "indicator_name",
-        "indicator_description",
-        "percentage_passed",
-        "num_results",
-        "points"
-        ]
-    out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
+    out = unicodecsv.DictWriter(strIO, fieldnames=csv_fieldnames)
     headers = {}
-    for fieldname in fieldnames:
+    for fieldname in csv_fieldnames:
         headers[fieldname] = fieldname
     out.writerow(headers)
 
