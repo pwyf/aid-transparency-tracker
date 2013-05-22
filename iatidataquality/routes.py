@@ -14,6 +14,7 @@ from flask.ext.login import current_user
 from iatidataquality import app
 from iatidataquality import db
 import usermanagement
+import markdown
 
 @app.route("/")
 def home():
@@ -40,3 +41,19 @@ def about_dq():
 @app.route('/info/survey')
 def about_survey():
     return render_template("about_survey.html", loggedinuser=current_user)
+
+@app.route('/info/test/')
+def about_test():
+    content = """
+Chapter
+=======
+
+Section
+-------
+
+* Item 1
+* Item 2
+"""
+    content = Markup(markdown.markdown(content))
+    loggedinuser = current_user
+    return render_template('about_generic.html', **locals())
