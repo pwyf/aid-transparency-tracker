@@ -196,6 +196,10 @@ def get_survey_data_and_workflow(organisation_survey, surveydata):
             return (surveydata[key], phase)
     return (None, None)
 
+# this lambda and the things which use it exists in surveys.py as well
+# ... merge?
+id_tuple = lambda x: (x.id, x)
+
 def organisation_publication_authorised(organisation_code, aggregation_type):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
@@ -212,13 +216,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
     surveydata, surveydata_workflow = get_survey_data_and_workflow(
         organisation_survey, surveydata)
 
-    published_status = dqsurveys.publishedStatus()
-
-    published_status_by_id = dict(map(lambda x: (x.id, x), 
-                                      published_status))
-
-    publishedformats = dqsurveys.publishedFormatsAll()
-    publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
+    published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
+    publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatsAll()))
 
     published_status_by_id[None] = {
         'name': 'Unknown',
