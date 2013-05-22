@@ -109,11 +109,11 @@ def organisations_index(organisation_code=None):
     allowed_to_edit_survey_researcher = usermanagement.check_perms("survey",
                 "edit",
                 {"organisation_code": organisation_code})
-    if (allowed_to_edit_survey_researcher and 
-        (organisation_survey.Workflow.name == 'researcher')):
-        show_researcher_button = True
-    else:
-        show_researcher_button = False
+
+    show_researcher_button = (
+        allowed_to_edit_survey_researcher and 
+        organisation_survey.Workflow.name == 'researcher'
+        )
 
     template_args = dict(organisation=organisation, 
                          summary_data=summary_data,
