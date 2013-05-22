@@ -15,6 +15,7 @@ from iatidataquality import app
 from iatidataquality import db
 import usermanagement
 import markdown
+import os
 
 @app.route("/")
 def home():
@@ -42,18 +43,16 @@ def about_dq():
 def about_survey():
     return render_template("about_survey.html", loggedinuser=current_user)
 
+def render_markdown(filename):
+    path = os.path.join(os.path.dirname(__file__), 'docs', filename)
+    with file(path) as f:
+        plaintext = f.read()
+        def _wrapped():
+            content = Markup(markdown.markdown(plaintext))
+            loggedinuser = current_user
+            return render_template('about_generic.html', **locals())
+        return _wrapped()
+
 @app.route('/info/test/')
 def about_test():
-    content = """
-Chapter
-=======
-
-Section
--------
-
-* Item 1
-* Item 2
-"""
-    content = Markup(markdown.markdown(content))
-    loggedinuser = current_user
-    return render_template('about_generic.html', **locals())
+    return render_markdown('test1.md')
