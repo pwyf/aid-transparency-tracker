@@ -60,3 +60,13 @@ def about_test():
 @app.route('/info/datacol')
 def about_data_collection():
     return render_markdown('2013_data_collection_guide.md')
+
+@app.route('/info/independent')
+def about_independent():
+    return render_markdown('independent_guide.md')
+
+@app.route('/info/donor')
+def about_independent():
+    return render_markdown('donor_guide.md')
+
+

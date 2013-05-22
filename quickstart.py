@@ -131,6 +131,10 @@ def aggregate_results(options):
 def setup_organisations(options):
     iatidq.setup.setup_organisations()
 
+def setup_users(options):
+    assert options.filename
+    iatidq.dqusers.importUserDataFromFile(options.filename)
+
 def setup(options):
     iatidq.setup.setup(options)
 
@@ -157,7 +161,8 @@ commands = {
     "create_aggregation_types": (create_aggregation_types, "Create basic aggregation types."),
     "aggregate_results": (aggregate_results, "Trigger result aggregation"),
     "create_inforesult_types": (create_inforesult_types, "Create basic infroresult types."),
-    "setup_organisations": (setup_organisations, "Setup organisations.")
+    "setup_organisations": (setup_organisations, "Setup organisations."),
+    "setup_users": (setup_users, "Setup users and permissions.")
 }
 
 def main():

@@ -11,7 +11,7 @@
 ) %}
         {% set data = surveydata['researcher'] %}
         <tr class="indicator{{indicator.indicator.id}}">
-            <td rowspan="{{rows}}"><a href="{{url_for('indicatortests', indicatorgroup="pwyf2013", indicator=indicator.indicator.name)}}">{{indicator.indicator.description}}</a></td>
+            <td rowspan="{{rows}}"><a href="{{url_for('indicatortests', indicatorgroup="2013 Index", indicator=indicator.indicator.name)}}">{{indicator.indicator.description}}</a></td>
             <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
             <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
