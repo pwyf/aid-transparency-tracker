@@ -308,7 +308,17 @@ def organisation_publication_detail(organisation_code=None):
 @usermanagement.perms_required()
 def all_organisations_publication_csv():
     strIO = StringIO.StringIO()
-    fieldnames = "organisation_name organisation_code indicator_category_name indicator_subcategory_name indicator_name indicator_description percentage_passed num_results points".split()
+    fieldnames = [
+        "organisation_name",
+        "organisation_code",
+        "indicator_category_name",
+        "indicator_subcategory_name",
+        "indicator_name",
+        "indicator_description",
+        "percentage_passed",
+        "num_results",
+        "points"
+        ]
     out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
     headers = {}
     for fieldname in fieldnames:
@@ -326,27 +336,14 @@ def all_organisations_publication_csv():
             freq = 1.0
 
         for resultid, result in aggregate_results.items():
-            if result['results_pct'] == 0:
-                points = str(0)
-            else:
-                points = str(((float(result['results_pct'])*freq)/2.0)+50)
-            out.writerow({
-                          "organisation_name": organisation.organisation_name, 
-                          "organisation_code": organisation.organisation_code, 
-                          "indicator_category_name": result['indicator']['indicator_category_name'],
-                          "indicator_subcategory_name": result['indicator']['indicator_subcategory_name'],
-                          "indicator_name": result['indicator']['description'],
-                          "indicator_description": result['indicator']['longdescription'], 
-                          "percentage_passed": result['results_pct'], 
-                          "num_results": result['results_num'],
-                          "points": points
-                        })      
+            write_agg_csv_result(out, organisation, freq, result)
+
     strIO.seek(0)
     return send_file(strIO,
                          attachment_filename="dataqualityresults_all.csv",
                          as_attachment=True)
 
-def write_agg_csv_result(out, freq, result):
+def write_agg_csv_result(out, organisation, freq, result):
     if result['results_pct'] == 0:
         points = 0
     else:
@@ -397,7 +394,7 @@ def organisation_publication_csv(organisation_code=None):
         freq = 1.0
 
     for resultid, result in aggregate_results.items():
-        write_agg_csv_result(out, freq, result)
+        write_agg_csv_result(out, organisation, freq, result)
 
     strIO.seek(0)
     filename = "dataqualityresults_%s.csv" % organisation_code
