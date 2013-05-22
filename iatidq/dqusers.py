@@ -59,6 +59,11 @@ def _importUserData(fh):
                 perms += [
                     ('survey_cso', 'edit')
                     ]
+            if primary == 'data collection':
+                perms += [
+                    ('survey_researcher', 'edit'),
+                    ('survey_researcher', 'view')
+                    ]
 
         return [ perm(user, organisation_id, i) for i in perms ]
 
