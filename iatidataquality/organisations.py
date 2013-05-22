@@ -76,7 +76,7 @@ def organisations_index(organisation_code=None):
     # coverage_total = organisation.organisation_total_spend
     # FIXME: use organisation_total_spend 
     # when data is imported to db
-    coverage_total = (organisation.organisation_total_spend)*1000000
+    coverage_total = organisation.organisation_total_spend * 1000000
 
     if (coverage_total and coverage_found):
         coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
