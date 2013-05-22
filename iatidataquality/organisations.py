@@ -360,17 +360,7 @@ def all_organisations_publication_csv():
     organisations = Organisation.query.all()
 
     for organisation in organisations:
-
-        aggregate_results = dqorganisations._organisation_indicators(
-            organisation)
-
-        if (organisation.frequency == "less than quarterly"):
-            freq = 0.9
-        else:
-            freq = 1.0
-
-        for resultid, result in aggregate_results.items():
-            write_agg_csv_result(out, organisation, freq, result)
+        write_organisation_publications_csv(out, organisation)
 
     strIO.seek(0)
     return send_file(strIO,
