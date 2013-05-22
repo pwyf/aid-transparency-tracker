@@ -97,7 +97,6 @@ def organisations_index(organisation_code=None):
     coverage = get_coverage(organisation, irs) 
 
     organisation_survey = dqsurveys.getSurvey(organisation_code)
-    print "OS OS ", organisation_code, organisation_survey
 
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
