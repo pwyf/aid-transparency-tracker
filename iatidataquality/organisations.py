@@ -32,99 +32,92 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from iatidq import dqorganisations, dqpackages, dqaggregationtypes, dqsurveys
-
+import iatidq.inforesult
 from iatidq.models import *
 
 import StringIO
 import unicodecsv
 import usermanagement
 
+def get_info_results(org_packages, organisation):
+    for _, p in org_packages:
+        package_id = p.package_id
+        runtime = db.session.query(
+            func.max(InfoResult.runtime_id)).filter(
+            InfoResult.package_id == package_id
+            ).first()
+        runtime, = runtime
+        results = iatidq.inforesult.info_results(
+            package_id, runtime, organisation.id)
+        if "coverage" not in results:
+            continue
+        try:
+            yield int(results["coverage_current"])
+        except TypeError:
+            yield 0
+
+# FIXME: use organisation_total_spend when data is imported to db
+def get_coverage(organisation, info_results):
+    coverage_found = reduce(operator.add, info_results, 0)
+    coverage_total = organisation.organisation_total_spend * 1000000
+
+    if coverage_total and coverage_found:
+        c = float(coverage_found) / float(coverage_total)
+        coverage_pct = int(c * 100)
+    else:
+        coverage_pct = None
+        coverage_found = None
+        coverage_total = None
+
+    return {
+        'total': coverage_total,
+        'found': coverage_found,
+        'pct': coverage_pct
+        }
+
+def get_summary_data(organisation, aggregation_type):    
+    try:
+        return _organisation_indicators_summary(organisation, aggregation_type)
+    except Exception, e:
+        return None
+
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
-    info_results = {
-        }
     
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
 
     template_args = {}
     org_packages = dqorganisations.organisationPackages(organisation_code)
 
-    def get_info_results():
-        for _, p in org_packages:
-            package_id = p.package_id
-            from sqlalchemy import func
-            runtime = db.session.query(
-                func.max(InfoResult.runtime_id)).filter(
-                InfoResult.package_id == package_id
-                ).first()
-            import iatidq.inforesult
-            runtime, = runtime
-            results = iatidq.inforesult.info_results(package_id, runtime, organisation.id)
-            if "coverage" in results:
-                try:
-                    yield int(results["coverage_current"])
-                except TypeError:
-                    yield 0
-
     organisation = dqorganisations.organisations(organisation_code)
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
-            
-    info_results["coverage_current"] = \
-        reduce(operator.add, [ir for ir in get_info_results()], 0)
 
-    # coverage_total = organisation.organisation_total_spend
-    # FIXME: use organisation_total_spend 
-    # when data is imported to db
-    coverage_total = (organisation.organisation_total_spend)*1000000
-    coverage_found = info_results["coverage_current"]
+    irs = [ir for ir in get_info_results(org_packages, organisation)]
+    coverage = get_coverage(organisation, irs) 
 
-    if (coverage_total and coverage_found):
-        coverage_pct = int((float(coverage_found)/float(coverage_total))*100)
-        coverage = {
-                    'total': coverage_total,
-                    'found': coverage_found,
-                    'pct': coverage_pct
-                }
-    else:
-        coverage = {
-                    'total': None,
-                    'found': None,
-                    'pct': None
-        }
     organisation_survey = dqsurveys.getSurvey(organisation_code)
+
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-    if organisation_survey:
-        if organisation_survey.Workflow.name in ['donorreview', 'pwyfreview']:
-            surveydata = surveydata["researcher"]
-            surveydata_workflow = 'donorreview'
-        elif organisation_survey.Workflow.name in ['donorcomments', 'pwyffinal']:
-            surveydata = surveydata["pwyfreview"]
-            surveydata_workflow = 'donorcomments'
-        elif organisation_survey.Workflow.name == 'finalised':
-            surveydata = surveydata["pwyffinal"]
-            surveydata_workflow = 'finalised'
-        else:
-            surveydata = None
-    else:
-        surveydata = None
 
-    try:
-        summary_data = _organisation_indicators_summary(organisation, 
-                      aggregation_type)
-    except Exception, e:
-        summary_data = None
+    surveydata, _ = get_survey_data_and_workflow(
+        organisation_survey, surveydata)
 
-    allowed_to_view_survey = usermanagement.check_perms("survey",
-                                          "view")
-    allowed_to_edit_survey_researcher = usermanagement.check_perms("survey",
-                "edit",
-                {"organisation_code": organisation_code})
-    if (allowed_to_edit_survey_researcher and 
-        (organisation_survey.Workflow.name == 'researcher')):
-        show_researcher_button = True
-    else:
-        show_researcher_button = False
+    summary_data = get_summary_data(organisation, aggregation_type)
+
+    allowed_to_view_survey = usermanagement.check_perms(
+        "survey",
+        "view")
+    allowed_to_edit_survey_researcher = usermanagement.check_perms(
+        "survey",
+        "edit",
+        {"organisation_code": organisation_code})
+
+    show_researcher_button = (
+        allowed_to_edit_survey_researcher and 
+        organisation_survey and
+        organisation_survey.Workflow.name == 'researcher'
+        )
 
     template_args = dict(organisation=organisation, 
                          summary_data=summary_data,
@@ -141,20 +134,24 @@ def organisations_index(organisation_code=None):
 @app.route("/organisations/")
 @app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
-    check_perms = usermanagement.check_perms('organisation', 'view', {'organisation_code':organisation_code})
-    if organisation_code is not None:
-        if check_perms:
-            return redirect(url_for('organisations_index', organisation_code=organisation_code))
-        else:
-            return redirect(url_for('organisation_publication', organisation_code=organisation_code))
-    else:
-        organisations = dqorganisations.organisations()
+    check_perms = usermanagement.check_perms(
+        'organisation', 'view', {'organisation_code':organisation_code})
 
-        template_args = dict(organisations=organisations,
+    if organisation_code is not None:
+        template = {
+            True: 'organisations_index',
+            False: 'organisation_publication'
+            }[check_perms]
+
+        return redirect(url_for(template, organisation_code=organisation_code))
+
+    organisations = dqorganisations.organisations()
+
+    template_args = dict(organisations=organisations,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
 
-        return render_template("organisations.html", **template_args)
+    return render_template("organisations.html", **template_args)
 
 @app.route("/organisations/new/", methods=['GET','POST'])
 @usermanagement.perms_required()
@@ -171,9 +168,10 @@ def organisation_new():
             return redirect(url_for(
                     'organisation_edit', 
                     organisation_code=organisation.organisation_code))
-        else:
-            flash("Couldn't add organisation", "error")
-            organisation = data
+        
+        flash("Couldn't add organisation", "error")
+        organisation = data
+
     return render_template("organisation_edit.html", organisation=organisation,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
@@ -186,6 +184,91 @@ def integerise(data):
     except TypeError:
         return None
 
+def get_survey_data_and_workflow(organisation_survey, surveydata):
+    data = {
+        "donorreview": ("researcher", 'donorreview'),
+        "pwyfreview": ("researcher", 'donorreview'),
+        "donorcomments": ("pwyfreview", 'donorcomments'),
+        "pwyffinal": ("pwyfreview", 'donorcomments'),
+        "finalised": ("pwyffinal", 'finalised')
+        }
+           
+    if organisation_survey:
+        workflow_name = organisation_survey.Workflow.name
+        if workflow_name in data:
+            key, phase = data[workflow_name]
+            return (surveydata[key], phase)
+    return (None, None)
+
+# this lambda and the things which use it exists in surveys.py as well
+# ... merge?
+id_tuple = lambda x: (x.id, x)
+
+def organisation_publication_authorised(organisation_code, aggregation_type):
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    all_aggregation_types = dqaggregationtypes.aggregationTypes()
+
+    organisation = Organisation.query.filter_by(
+        organisation_code=organisation_code).first_or_404()
+
+    aggregate_results = dqorganisations._organisation_indicators_split(
+        organisation, aggregation_type)
+        
+    organisation_survey = dqsurveys.getSurvey(organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+
+    surveydata, surveydata_workflow = get_survey_data_and_workflow(
+        organisation_survey, surveydata)
+
+    published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
+    publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatsAll()))
+
+    published_status_by_id[None] = {
+        'name': 'Unknown',
+        'publishedstatus_class': 'label-inverse'
+        }
+
+    publishedformats[None] = {
+        'name': 'Unknown',
+        'format_class': 'label-inverse'
+        }
+
+    latest_runtime=1
+
+    return render_template("organisation_indicators.html", 
+                           organisation=organisation,
+                           results=aggregate_results, 
+                           runtime=latest_runtime,
+                           all_aggregation_types=all_aggregation_types,
+                           aggregation_type=aggregation_type,
+                           surveydata=surveydata,
+                           published_status=published_status_by_id,
+                           published_format=publishedformats,
+                           surveydata_workflow=surveydata_workflow,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
+
+def organisation_publication_unauthorised(organisation_code, aggregation_type):
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    all_aggregation_types = dqaggregationtypes.aggregationTypes()
+
+    organisation = Organisation.query.filter_by(
+        organisation_code=organisation_code).first_or_404()
+
+    aggregate_results = dqorganisations._organisation_indicators(
+        organisation, aggregation_type)
+
+    packages = dqorganisations.organisationPackages(organisation_code)
+
+    return render_template("organisation_publication_public.html", 
+                           organisation=organisation,
+                           results=aggregate_results, 
+                           all_aggregation_types=all_aggregation_types,
+                           aggregation_type=aggregation_type,
+                           packages=packages,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
+
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
     check_perms = usermanagement.check_perms(
@@ -193,89 +276,18 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
         )
     
     if check_perms:
-        aggregation_type=integerise(request.args.get('aggregation_type', 2))
-        all_aggregation_types = dqaggregationtypes.aggregationTypes()
-
-        organisation = Organisation.query.filter_by(
-            organisation_code=organisation_code).first_or_404()
-
-        aggregate_results = dqorganisations._organisation_indicators_split(
-            organisation, aggregation_type)
-        
-        organisation_survey = dqsurveys.getSurvey(organisation_code)
-        surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-        if organisation_survey:
-            if organisation_survey.Workflow.name in ['donorreview', 
-                                                     'pwyfreview']:
-                surveydata = surveydata["researcher"]
-                surveydata_workflow = 'donorreview'
-            elif organisation_survey.Workflow.name in ['donorcomments',
-                                                       'pwyffinal']:
-                surveydata = surveydata["pwyfreview"]
-                surveydata_workflow = 'donorcomments'
-            elif organisation_survey.Workflow.name == 'finalised':
-                surveydata = surveydata["pwyffinal"]
-                surveydata_workflow = 'finalised'
-            else:
-                surveydata = None
-                surveydata_workflow=None
-        else:
-            surveydata = None
-            surveydata_workflow=None
-        published_status = dqsurveys.publishedStatus()
-
-        published_status_by_id = dict(map(lambda x: (x.id, x), 
-                                          published_status))
-
-        publishedformats = dqsurveys.publishedFormatsAll()
-        publishedformats = dict(map(lambda pf: (pf.id, pf), publishedformats))
-
-        published_status_by_id[None] = {
-            'name': 'Unknown',
-            'publishedstatus_class': 'label-inverse'
-            }
-
-        publishedformats[None] = {
-            'name': 'Unknown',
-            'format_class': 'label-inverse'
-            }
-
-        latest_runtime=1
-
-        return render_template("organisation_indicators.html", 
-                               organisation=organisation,
-                               results=aggregate_results, 
-                               runtime=latest_runtime,
-                               all_aggregation_types=all_aggregation_types,
-                               aggregation_type=aggregation_type,
-                               surveydata=surveydata,
-                               published_status=published_status_by_id,
-                               published_format=publishedformats,
-                               surveydata_workflow=surveydata_workflow,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+        return organisation_publication_authorised(
+            organisation_code,
+            aggregation_type)
     else:
-        aggregation_type=integerise(request.args.get('aggregation_type', 2))
-        all_aggregation_types = dqaggregationtypes.aggregationTypes()
+        return organisation_publication_unauthorised(
+            organisation_code,
+            aggregation_type)
 
-        organisation = Organisation.query.filter_by(
-            organisation_code=organisation_code).first_or_404()
 
-        aggregate_results = dqorganisations._organisation_indicators(
-            organisation, aggregation_type)
+def _organisation_publication_detail(organisation_code, aggregation_type, 
+                                     is_admin):
 
-        packages = dqorganisations.organisationPackages(organisation_code)
-
-        return render_template("organisation_publication_public.html", 
-                               organisation=organisation,
-                               results=aggregate_results, 
-                               all_aggregation_types=all_aggregation_types,
-                               aggregation_type=aggregation_type,
-                               packages=packages,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
-
-def _organisation_publication_detail(organisation_code, aggregation_type, is_admin):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
@@ -284,65 +296,90 @@ def _organisation_publication_detail(organisation_code, aggregation_type, is_adm
 
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
-    aggregate_results = dqorganisations._organisation_detail(organisation, aggregation_type)
+    aggregate_results = dqorganisations._organisation_detail(
+        organisation, aggregation_type)
 
-    txt = render_template("organisation_detail.html", 
-                          organisation=organisation, packages=packages, 
-                          results=aggregate_results,
+    return render_template("organisation_detail.html", 
+                           organisation=organisation, packages=packages, 
+                           results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
-                         admin=is_admin,
-                         loggedinuser=current_user)
-    return txt
+                           admin=is_admin,
+                           loggedinuser=current_user)
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
 def organisation_publication_detail(organisation_code=None):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     is_admin = usermanagement.check_perms('admin')
-    return _organisation_publication_detail(organisation_code, aggregation_type, is_admin)
+    return _organisation_publication_detail(
+        organisation_code, aggregation_type, is_admin)
 
+
+def write_agg_csv_result(out, organisation, freq, result):
+    if result['results_pct'] == 0:
+        points = 0
+    else:
+        points = float(result['results_pct']) * freq / 2.0 + 50
+
+    i = result["indicator"]
+    out.writerow({
+            "organisation_name": organisation.organisation_name, 
+            "organisation_code": organisation.organisation_code, 
+            "indicator_category_name": i['indicator_category_name'],
+            "indicator_subcategory_name": i['indicator_subcategory_name'],
+            "indicator_name": i['description'], 
+            "indicator_description": i['longdescription'], 
+            "percentage_passed": result['results_pct'], 
+            "num_results": result['results_num'],
+            "points": str(points)
+            })      
+
+def write_organisation_publications_csv(out, organisation):
+    aggregate_results = dqorganisations._organisation_indicators(organisation)
+
+    if (organisation.frequency == "less than quarterly"):
+        freq = 0.9
+    else:
+        freq = 1.0
+
+    for resultid, result in aggregate_results.items():
+        write_agg_csv_result(out, organisation, freq, result)
+
+csv_fieldnames = [
+    "organisation_name",
+    "organisation_code",
+    "indicator_category_name",
+    "indicator_subcategory_name",
+    "indicator_name",
+    "indicator_description",
+    "percentage_passed",
+    "num_results",
+    "points"
+    ]
+
+def _org_pub_csv(organisations, filename):
+    strIO = StringIO.StringIO()
+    out = unicodecsv.DictWriter(strIO, fieldnames=csv_fieldnames)
+    headers = {}
+
+    for fieldname in csv_fieldnames:
+        headers[fieldname] = fieldname
+    out.writerow(headers)
+
+    for organisation in organisations:
+        write_organisation_publications_csv(out, organisation)
+
+    strIO.seek(0)
+    return send_file(strIO,
+                     attachment_filename=filename,
+                     as_attachment=True)
 
 @app.route("/organisations/publication.csv")
 @usermanagement.perms_required()
 def all_organisations_publication_csv():
-    strIO = StringIO.StringIO()
-    fieldnames = "organisation_name organisation_code indicator_category_name indicator_subcategory_name indicator_name indicator_description percentage_passed num_results points".split()
-    out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
-    headers = {}
-    for fieldname in fieldnames:
-        headers[fieldname] = fieldname
-    out.writerow(headers)
     organisations = Organisation.query.all()
-    for organisation in organisations:
+    return _org_pub_csv(organisations, "dataqualityresults_all.csv")
 
-        aggregate_results = dqorganisations._organisation_indicators(
-            organisation)
-
-        if (organisation.frequency == "less than quarterly"):
-            freq = 0.9
-        else:
-            freq = 1.0
-
-        for resultid, result in aggregate_results.items():
-            if result['results_pct'] == 0:
-                points = str(0)
-            else:
-                points = str(((float(result['results_pct'])*freq)/2.0)+50)
-            out.writerow({
-                          "organisation_name": organisation.organisation_name, 
-                          "organisation_code": organisation.organisation_code, 
-                          "indicator_category_name": result['indicator']['indicator_category_name'],
-                          "indicator_subcategory_name": result['indicator']['indicator_subcategory_name'],
-                          "indicator_name": result['indicator']['description'],
-                          "indicator_description": result['indicator']['longdescription'], 
-                          "percentage_passed": result['results_pct'], 
-                          "num_results": result['results_num'],
-                          "points": points
-                        })      
-    strIO.seek(0)
-    return send_file(strIO,
-                         attachment_filename="dataqualityresults_all.csv",
-                         as_attachment=True)
 
 @app.route("/organisations/<organisation_code>/publication.csv")
 @usermanagement.perms_required('organisation', 'view')
@@ -350,97 +387,78 @@ def organisation_publication_csv(organisation_code=None):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = dqorganisations._organisation_indicators(organisation)
+    organisations = [organisation]
+    filename = "dataqualityresults_%s.csv" % organisation_code
 
-    strIO = StringIO.StringIO()
-    fieldnames = "organisation_name organisation_code indicator_category_name indicator_subcategory_name indicator_name indicator_description percentage_passed num_results points".split()
-    out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
-    headers = {}
-    for fieldname in fieldnames:
-        headers[fieldname] = fieldname
-    out.writerow(headers)
+    return _org_pub_csv(organisations, filename)
 
-    if (organisation.frequency == "less than quarterly"):
-        freq = 0.9
-    else:
-        freq = 1.0
-    for resultid, result in aggregate_results.items():
-        if result['results_pct'] == 0:
-            points = str(0)
+def add_packages(organisation):
+    def add_org_pkg(package):
+        condition = request.form['condition']
+        data = {
+            'organisation_id': organisation.id,
+            'package_id': package,
+            'condition': condition
+            }
+        if dqorganisations.addOrganisationPackage(data):
+            flash('Successfully added package to your organisation.', 
+                  'success')
         else:
-            points = str(((float(result['results_pct'])*freq)/2.0)+50)
-        out.writerow({
-                      "organisation_name": organisation.organisation_name, 
-                      "organisation_code": organisation.organisation_code, 
-                      "indicator_category_name": result['indicator']['indicator_category_name'],
-                      "indicator_subcategory_name": result['indicator']['indicator_subcategory_name'],
-                      "indicator_name": result['indicator']['description'], 
-                      "indicator_description": result['indicator']['longdescription'], 
-                      "percentage_passed": result['results_pct'], 
-                      "num_results": result['results_num'],
-                      "points": points
-                    })      
-    strIO.seek(0)
-    return send_file(strIO,
-                     attachment_filename="dataqualityresults_" + organisation_code + ".csv",
-                     as_attachment=True)
+            flash("Couldn't add package to your organisation.", 
+                  'error')
+
+    packages = request.form.getlist('package')
+    [ add_org_pkg(package) for package in packages ]
+
+def add_packagegroup(organisation):
+    condition = request.form['condition']
+    data = {
+        'organisation_id': organisation.id,
+        'packagegroup_id': request.form['packagegroup'],
+        'condition': condition
+        }
+    total = dqorganisations.addOrganisationPackageFromPackageGroup(data)
+    if 'applyfuture' in request.form:
+        if dqorganisations.addOrganisationPackageGroup(data):
+            flash(
+                'All future packages in this package group will be '
+                'added to this organisation', 'success')
+        else:
+            flash(
+                'Could not ensure that all packages in this package '
+                'group will be added to this organisation', 'error')
+    if total:
+        flash(
+            'Successfully added %d packages to your organisation.' % total, 
+            'success')
+    else:
+        flash(
+            "No packages were added to your organisation. This "
+            "could be because you've already added all existing ones.", 
+            'error')
+
+def update_organisation(organisation_code):
+    data = {
+        'organisation_code': request.form['organisation_code'],
+        'organisation_name': request.form['organisation_name']
+        }
+    organisation = dqorganisations.updateOrganisation(
+        organisation_code, data)
 
 @app.route("/organisations/<organisation_code>/edit/", methods=['GET','POST'])
 @usermanagement.perms_required()
 def organisation_edit(organisation_code=None):
-    
-
     packages = dqpackages.packages()
     packagegroups = dqpackages.packageGroups()
     organisation = dqorganisations.organisations(organisation_code)
 
     if request.method == 'POST':
         if 'addpackages' in request.form:
-            condition = request.form['condition']
-            def add_org_pkg(package):
-                data = {
-                    'organisation_id': organisation.id,
-                    'package_id': package,
-                    'condition': condition
-                    }
-                if dqorganisations.addOrganisationPackage(data):
-                    flash('Successfully added package to your organisation.', 
-                          'success')
-                else:
-                    flash("Couldn't add package to your organisation.", 
-                          'error')
-
-            packages = request.form.getlist('package')
-            [ add_org_pkg(package) for package in packages ]
-
+            add_packages(organisation)
         elif 'addpackagegroup' in request.form:
-            condition = request.form['condition']
-            data = {
-                'organisation_id': organisation.id,
-                'packagegroup_id': request.form['packagegroup'],
-                'condition': condition
-            }
-            add_packagegroups = dqorganisations.addOrganisationPackageFromPackageGroup(data)
-            if 'applyfuture' in request.form:
-                if dqorganisations.addOrganisationPackageGroup(data):
-                    flash('All future packages in this package group will be added to this organisation', 'success')
-                else:
-                    flash('Could not ensure that all packages in this package group will be added to this organisation', 'error')
-                
-            if add_packagegroups:
-                flash('Successfully added ' + str(add_packagegroups) + ' packages to your organisation.', 
-                      'success')
-            else:
-                flash("No packages were added to your organisation. This could be because you've already added all existing ones.", 
-                      'error')
-                
+            add_packagegroup(organisation)
         elif 'updateorganisation' in request.form:
-            data = {
-                'organisation_code': request.form['organisation_code'],
-                'organisation_name': request.form['organisation_name']
-            }
-            organisation = dqorganisations.updateOrganisation(
-                organisation_code, data)
+            update_organisation(organisation_code)
 
     organisationpackages = dqorganisations.organisationPackages(
         organisation.organisation_code)
