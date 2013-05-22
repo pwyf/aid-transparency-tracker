@@ -222,7 +222,7 @@ def setup(options):
     
     print "Importing all users and creating permissions"
     
-    dqusers.importUserDataFromFile(default_userdata_filename)
+    #dqusers.importUserDataFromFile(default_userdata_filename)
     print "Finished importing users"
 
     print "Setup complete."

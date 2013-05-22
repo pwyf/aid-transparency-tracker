@@ -44,7 +44,7 @@ def _importUserData(fh):
             }
 
     def getCSOPermissions(organisation_id, 
-                role, active, primary, user, permissions):
+                role, active, primary, user):
         perms = []
         if active == 'active':
             perms = [
@@ -60,11 +60,10 @@ def _importUserData(fh):
                     ('survey_cso', 'edit')
                     ]
 
-        [ permissions.append(perm(user, organisation_id, i)) for i in perms ]
-        return permissions
+        return [ perm(user, organisation_id, i) for i in perms ]
 
     def getDonorPermissions(organisation_id, 
-                role, active, primary, user, permissions):
+                role, active, primary, user):
         perms = []
         permissions = [{
                 'user_id': user.id,
@@ -89,8 +88,7 @@ def _importUserData(fh):
                     ('organisation_feedback', 'create')
                     ]
 
-        [ permissions.append(perm(user, organisation_id, i)) for i in perms ]
-        return permissions
+        return [ perm(user, organisation_id, i) for i in perms ]
 
     def generate_permissions():
         permissions = []
@@ -98,18 +96,18 @@ def _importUserData(fh):
         for row in data:
 
             user=getCreateUser(row)
-            
+
             organisation_id = row['organisation_id']
             role = row['role']
             active = row['active']
             primary = row['primary']
 
             if role == 'donor':
-                permissions = getDonorPermissions(organisation_id, 
-                        role, active, primary, user, permissions)
+                permissions += getDonorPermissions(organisation_id, 
+                        role, active, primary, user)
             elif role == 'CSO':
-                permissions = getCSOPermissions(organisation_id, 
-                        role, active, primary, user, permissions)
+                permissions += getCSOPermissions(organisation_id, 
+                        role, active, primary, user)
             elif role == 'admin':
                 permissions.append({
                     'user_id': user.id,
