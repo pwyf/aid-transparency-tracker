@@ -74,7 +74,12 @@ def get_coverage(organisation, info_results):
         'found': coverage_found,
         'pct': coverage_pct
         }
-    
+
+def get_summary_data(organisation, aggregation_type):    
+    try:
+        return _organisation_indicators_summary(organisation, aggregation_type)
+    except Exception, e:
+        return None
 
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
@@ -97,11 +102,7 @@ def organisations_index(organisation_code=None):
     surveydata, _ = get_survey_data_and_workflow(
         organisation_survey, surveydata)
 
-    try:
-        summary_data = _organisation_indicators_summary(organisation, 
-                      aggregation_type)
-    except Exception, e:
-        summary_data = None
+    summary_data = get_summary_data(organisation, aggregation_type)
 
     allowed_to_view_survey = usermanagement.check_perms("survey",
                                           "view")
