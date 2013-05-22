@@ -69,9 +69,9 @@ def organisations_index(organisation_code=None):
 
     organisation = dqorganisations.organisations(organisation_code)
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
-            
-    info_results["coverage_current"] = \
-        reduce(operator.add, [ir for ir in get_info_results()], 0)
+
+    irs = [ir for ir in get_info_results()]
+    info_results["coverage_current"] = reduce(operator.add, irs, 0)
 
     # coverage_total = organisation.organisation_total_spend
     # FIXME: use organisation_total_spend 
