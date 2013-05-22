@@ -81,6 +81,9 @@ def check_perms(name, method=None, kwargs=None):
     if role_permission('super').can() and method not in restricted_methods:
         return True
 
+    if (role_permission('super').can() and name=='survey_researcher'):
+        return True
+
     if not name:
         return False
 
