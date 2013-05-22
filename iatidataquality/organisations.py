@@ -32,7 +32,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from iatidq import dqorganisations, dqpackages, dqaggregationtypes, dqsurveys
-
+import iatidq.inforesult
 from iatidq.models import *
 
 import StringIO
@@ -53,19 +53,19 @@ def organisations_index(organisation_code=None):
     def get_info_results():
         for _, p in org_packages:
             package_id = p.package_id
-            from sqlalchemy import func
             runtime = db.session.query(
                 func.max(InfoResult.runtime_id)).filter(
                 InfoResult.package_id == package_id
                 ).first()
-            import iatidq.inforesult
             runtime, = runtime
-            results = iatidq.inforesult.info_results(package_id, runtime, organisation.id)
-            if "coverage" in results:
-                try:
-                    yield int(results["coverage_current"])
-                except TypeError:
-                    yield 0
+            results = iatidq.inforesult.info_results(
+                package_id, runtime, organisation.id)
+            if "coverage" not in results:
+                continue
+            try:
+                yield int(results["coverage_current"])
+            except TypeError:
+                yield 0
 
     organisation = dqorganisations.organisations(organisation_code)
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
