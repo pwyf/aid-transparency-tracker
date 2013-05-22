@@ -56,3 +56,7 @@ def render_markdown(filename):
 @app.route('/info/test/')
 def about_test():
     return render_markdown('test1.md')
+
+@app.route('/info/datacol')
+def about_data_collection():
+    return render_markdown('2013_data_collection_guide.md')
