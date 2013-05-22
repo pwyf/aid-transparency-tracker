@@ -281,7 +281,9 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
             aggregation_type)
 
 
-def _organisation_publication_detail(organisation_code, aggregation_type, is_admin):
+def _organisation_publication_detail(organisation_code, aggregation_type, 
+                                     is_admin):
+
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
@@ -290,22 +292,23 @@ def _organisation_publication_detail(organisation_code, aggregation_type, is_adm
 
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
-    aggregate_results = dqorganisations._organisation_detail(organisation, aggregation_type)
+    aggregate_results = dqorganisations._organisation_detail(
+        organisation, aggregation_type)
 
-    txt = render_template("organisation_detail.html", 
-                          organisation=organisation, packages=packages, 
-                          results=aggregate_results,
+    return render_template("organisation_detail.html", 
+                           organisation=organisation, packages=packages, 
+                           results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
-                         admin=is_admin,
-                         loggedinuser=current_user)
-    return txt
+                           admin=is_admin,
+                           loggedinuser=current_user)
 
 @app.route("/organisations/<organisation_code>/publication/detail/")
 def organisation_publication_detail(organisation_code=None):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     is_admin = usermanagement.check_perms('admin')
-    return _organisation_publication_detail(organisation_code, aggregation_type, is_admin)
+    return _organisation_publication_detail(
+        organisation_code, aggregation_type, is_admin)
 
 
 def write_agg_csv_result(out, organisation, freq, result):
