@@ -21,6 +21,7 @@ from functools import partial, wraps
 from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
+from iatidq import activity_types
 
 principals = Principal(app)
 login_manager = LoginManager()
@@ -170,6 +171,12 @@ def login():
             remember = request.form.get("remember", "no") == "yes"
             if login_user(user, remember=remember):
                 flash("Logged in!", "success")
+                dqusers.logUserActivity({
+                    'user_id': user.id,
+                    'ip_address': request.remote_addr,
+                    'activity_type': activity_types.LOGGED_IN,
+                    'activity_data': None
+                })
                 identity_changed.send(current_app._get_current_object(),
                           identity=Identity(user.id))
                 if request.args.get("next"):
@@ -188,6 +195,12 @@ def login():
 @app.route('/logout/')
 @login_required
 def logout():
+    dqusers.logUserActivity({
+        'user_id': current_user.id,
+        'ip_address': request.remote_addr,
+        'activity_type': activity_types.LOGGED_OUT,
+        'activity_data': None
+    })
     logout_user()
 
     # Remove session keys set by Flask-Principal

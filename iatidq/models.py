@@ -740,3 +740,12 @@ class WorkflowNotification(db.Model):
     workflow_from = Column(Integer, ForeignKey('workflow.id'))
     workflow_to = Column(Integer, ForeignKey('workflow.id'))
     workflow_notice = Column(UnicodeText)
+
+class UserActivity(db.Model):
+    __tablename__='useractivity'
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('dquser.id'))
+    activity_type = Column(Integer)
+    activity_data = Column(UnicodeText)
+    ip_address = Column(UnicodeText)
+    activity_date = Column(DateTime)

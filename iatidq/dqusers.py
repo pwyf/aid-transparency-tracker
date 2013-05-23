@@ -11,6 +11,7 @@ from iatidq import db
 
 import models
 import unicodecsv
+import datetime
 
 def importUserDataFromFile(filename):
     with file(filename) as fh:
@@ -215,3 +216,13 @@ def surveyPermissions(organisation_code):
             ).join(models.UserPermission
             ).all()
     return checkP
+
+def logUserActivity(data):
+    useractivity = models.UserActivity()
+    useractivity.user_id=data['user_id']
+    useractivity.activity_type=data['activity_type']
+    useractivity.activity_data=data['activity_data']
+    useractivity.ip_address=data['ip_address']
+    useractivity.activity_date = datetime.datetime.utcnow()
+    with db.session.begin():
+        db.session.add(useractivity)
