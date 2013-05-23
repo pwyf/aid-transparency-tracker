@@ -385,6 +385,27 @@ def _organisation_detail(organisation, aggregation_type):
                                    conditions=pconditions, 
                                    mode="publisher")
 
+def info_result_tuple(ir):
+    ind = {
+        'description': ir.Indicator.description,
+        'name': ir.Indicator.name,
+        'id': ir.Indicator.id,
+        'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
+        'indicator_type': ir.Indicator.indicator_type,
+        'indicator_category_name': ir.Indicator.indicator_category_name,
+        'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name,
+        'longdescription': ir.Indicator.longdescription,
+        'indicator_noformat': ir.Indicator.indicator_noformat,
+        'indicator_ordinal': ir.Indicator.indicator_ordinal
+        }
+    return (ir.Indicator.id, 
+            {
+            'results_num': 1,
+            'results_pct': ir.result_data,
+            'indicator': ind,
+            'tests': {}
+            })
+
 def _organisation_indicators(organisation, aggregation_type=2):
     aggregate_results = db.session.query(Indicator,
                                      Test,
@@ -414,7 +435,8 @@ def _organisation_indicators(organisation, aggregation_type=2):
                    Indicator.indicator_subcategory_name
         ).all()
 
-    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
+    pconditions = OrganisationCondition.query.filter_by(
+        organisation_id=organisation.id
             ).all()
 
     data = summary.agr_results(aggregate_results, 
@@ -423,28 +445,9 @@ def _organisation_indicators(organisation, aggregation_type=2):
     
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)
-    for inforesult in inforesults:
-        try:
-            data[inforesult.Indicator.id]
-        except KeyError:
-            data[inforesult.Indicator.id]={}
-        data[inforesult.Indicator.id]={
-            'results_num': 1,
-            'results_pct': inforesult.result_data,
-            'indicator': {
-                'description': inforesult.Indicator.description,
-                'name': inforesult.Indicator.name,
-                'id': inforesult.Indicator.id,
-                'indicatorgroup_id': inforesult.Indicator.indicatorgroup_id,
-                'indicator_type': inforesult.Indicator.indicator_type,
-                'indicator_category_name': inforesult.Indicator.indicator_category_name,
-                'indicator_subcategory_name': inforesult.Indicator.indicator_subcategory_name,
-                'longdescription': inforesult.Indicator.longdescription,
-                'indicator_noformat': inforesult.Indicator.indicator_noformat,
-                'indicator_ordinal': inforesult.Indicator.indicator_ordinal
-            },
-            'tests': {}
-        }
+
+    data.update([ info_result_tuple(ir) for ir in inforesults ])
+
     # make sure indicators are complete
     indicators = dqindicators.indicators_subset("2013 Index", "publication")
     for indicator in indicators:
