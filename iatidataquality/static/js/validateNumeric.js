@@ -1,6 +1,3 @@
-$("#dataConfirmOK").click(function(){
-    $("#dataConfirmModal").modal({show:false});
-});
 $("form").submit(function(e){
     var errors=false;
     $('.commitment-indicator').each(function(indicator){
@@ -14,6 +11,7 @@ $("form").submit(function(e){
     });
     if (errors) {
         e.preventDefault();
+        $('#dataConfirmModal').modal({show:false});
         if (!$('#dataConfirmModal').length) {
             $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Errors in your survey input</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">OK</button></div></div>');
         }
