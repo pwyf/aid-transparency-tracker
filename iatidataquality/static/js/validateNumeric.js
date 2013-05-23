@@ -28,8 +28,8 @@ $("#submit").click(function(e){
     e.preventDefault();
     if (!$('#dataConfirmModal').length) {
         $('form').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Confirm submit survey</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">OK</button><input type="submit" name="submit" class="btn btn-success" id="dataConfirmOK" value="Submit data" /></div></div>');
-        warning_text = "Are you sure you want to submit this survey? You cannot make any changes once you have submitted.";
-        $('#dataConfirmModal').find('.modal-body').text(warning_text);
-        $('#dataConfirmModal').modal({show:true});
     }
+    warning_text = "Are you sure you want to submit this survey? You cannot make any changes once you have submitted.";
+    $('#dataConfirmModal').find('.modal-body').text(warning_text);
+    $('#dataConfirmModal').modal({show:true});
 });
