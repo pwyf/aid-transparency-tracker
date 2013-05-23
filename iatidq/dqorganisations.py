@@ -450,25 +450,26 @@ def _organisation_indicators(organisation, aggregation_type=2):
 
     # make sure indicators are complete
     indicators = dqindicators.indicators_subset("2013 Index", "publication")
-    for indicator in indicators:
-        if indicator.id not in data:
-            data[indicator.id] = {
+    for indc in indicators:
+        if indc.id in data:
+            continue
+        data[indc.id] = {
             'results_num': 0,
             'results_pct': 0,
             'indicator': {
-                'description': indicator.description,
-                'name': indicator.name,
-                'id': indicator.id,
-                'indicatorgroup_id': indicator.indicatorgroup_id,
-                'indicator_type': indicator.indicator_type,
-                'indicator_category_name': indicator.indicator_category_name,
-                'indicator_subcategory_name': indicator.indicator_subcategory_name,
-                'longdescription': indicator.longdescription,
-                'indicator_noformat': indicator.indicator_noformat,
-                'indicator_ordinal': indicator.indicator_ordinal
-            },
+                'description': indc.description,
+                'name': indc.name,
+                'id': indc.id,
+                'indicatorgroup_id': indc.indicatorgroup_id,
+                'indicator_type': indc.indicator_type,
+                'indicator_category_name': indc.indicator_category_name,
+                'indicator_subcategory_name': indc.indicator_subcategory_name,
+                'longdescription': indc.longdescription,
+                'indicator_noformat': indc.indicator_noformat,
+                'indicator_ordinal': indc.indicator_ordinal
+                },
             'tests': {}
-        }
+            }
     
     return data
 
