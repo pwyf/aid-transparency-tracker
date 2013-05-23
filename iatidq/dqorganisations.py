@@ -424,7 +424,8 @@ def _organisation_indicators(organisation, aggregation_type=2):
     
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)
-    for ir in inforesults:
+
+    def info_result_tuple(ir):
         ind = {
             'description': ir.Indicator.description,
             'name': ir.Indicator.name,
@@ -437,12 +438,16 @@ def _organisation_indicators(organisation, aggregation_type=2):
             'indicator_noformat': ir.Indicator.indicator_noformat,
             'indicator_ordinal': ir.Indicator.indicator_ordinal
             },
-        data[ir.Indicator.id] = {
-            'results_num': 1,
-            'results_pct': ir.result_data,
-            'indicator': ind,
-            'tests': {}
-        }
+        return (ir.Indicator.id, 
+                {
+                'results_num': 1,
+                'results_pct': ir.result_data,
+                'indicator': ind,
+                'tests': {}
+                })
+
+    data.update([ info_result_tuple(ir) for ir in inforesults ])
+
     # make sure indicators are complete
     indicators = dqindicators.indicators_subset("2013 Index", "publication")
     for indicator in indicators:

@@ -235,6 +235,11 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     latest_runtime=1
 
+    import pprint
+    print "---"
+    pprint.pprint(aggregate_results)
+    print "---"
+
     return render_template("organisation_indicators.html", 
                            organisation=organisation,
                            results=aggregate_results, 
