@@ -124,7 +124,7 @@ def _importUserData(fh):
                 permissions.append({
                     'user_id': user.id,
                     'permission_name': 'super',
-                    'permission_method': 'view',
+                    'permission_method': 'role',
                     'permission_value': ''
                 })
             else:
