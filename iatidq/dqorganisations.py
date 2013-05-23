@@ -425,10 +425,6 @@ def _organisation_indicators(organisation, aggregation_type=2):
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)
     for ir in inforesults:
-        try:
-            data[ir.Indicator.id]
-        except KeyError:
-            data[ir.Indicator.id] = {}
         ind = {
             'description': ir.Indicator.description,
             'name': ir.Indicator.name,
