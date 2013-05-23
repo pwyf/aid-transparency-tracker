@@ -43,24 +43,12 @@
                 <ul>
                     <li>Check our initial assessment of the information we found on your website.</li>
                     <li>You only need to do this if you are not publishing this information in IATI XML format.</li>
-                    <li>You can do this by clicking <a class="btn btn-primary btn-mini">Review manually collected data</a>.</li>
+                    <li>You can do this by clicking <a class="btn btn-mini">Review manually collected data</a>.</li>
                 </ul>
             </div>
         </div>
     </div>
     <hr />
-    <div class="row">
-        <div class="span6">
-            <h4>How do you structure your data?</h4>
-            <p>IATI allows the use of multiple hierarchies (e.g. programs and projects) to structure your data. Please tell us how your data is structured as this could make a difference to your IATI score.</p>
-            <p><a href="{{url_for('organisations_feedback', organisation_code=organisation.organisation_code)}}" class="btn btn-danger">Provide structure &raquo;</a></p>
-        </div>
-        <div class="span6">
-            <h4>Why is IATI data scored more highly?</h4>
-            <p>IATI is the only international standard for publishing comprehensive, comparable, timely and accessible data, which are critical components of aid transparency.</p>
-            <p><a class="btn btn-info" href="http://www.publishwhatyoufund.org/resources/international-aid-transparency-initiative-iati/" target="_blank">Learn more &raquo;</a></p>
-        </div>
-    </div>
     <a id="iati"></a>
     <hr />
         <fieldset>
@@ -83,18 +71,27 @@
 		  data quality tests return a "pass" or "fail" result for each
 		  activity or organisation file included in your data
 		  packages.</p>
+    
+        <div class="row">
+            <div class="span6">
+            <h4>Scoring criteria</h4>
+            <p>Indicators for which information is published in IATI XML format:</p>
+            <ul>
+                <li>50 points are received for publication in an
+			      accessible format, if there is at least one "pass"
+			      result on tests run for that indicator</li>
 
-        <h4>Scoring criteria</h4>
-        <p>Indicators for which information is published in IATI XML format:</p>
-        <ul>
-            <li>50 points are received for publication in an
-			  accessible format, if there is at least one "pass"
-			  result on tests run for that indicator</li>
-
-            <li>50 points are received based on the percentage of 
-			 your total activities published in IATI XML which pass the data quality tests and on the frequency of publication for activity level indicators</li>
-        </ul>
-        <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
+                <li>50 points are received based on the percentage of 
+			     your total activities published in IATI XML which pass the data quality tests and on the frequency of publication for activity level indicators</li>
+            </ul>
+            <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
+            </div>
+            <div class="span6">
+                <h4>How do you structure your data?</h4>
+                <p>IATI allows the use of multiple hierarchies (e.g. programs and projects) to structure your data. Please tell us how your data is structured as this could make a difference to your IATI score.</p>
+                <p><a href="{{url_for('organisations_feedback', organisation_code=organisation.organisation_code)}}" class="btn btn-danger">Provide structure &raquo;</a></p>
+            </div>
+        </div>
         {% if organisation.frequency == "less than quarterly" %}
         <div class="alert alert-info">
             <h3>Frequency of publication</h3>
@@ -230,15 +227,24 @@
         {% endif %}
         <h3>Published in other formats</h3>
         <p class="lead">Information published in formats other than IATI XML (e.g. on your website) can score up to 50 points.</p>
-        <h4>Scoring criteria</h4>
-        <p>For each indicator, points are received if information is <label class="label label-success">Always published</label>. Indicators which are graduated on the basis of format are scored as follows:</p>
-        <ul>
-            <li>16.67 points: PDF file</li>
-            <li>33.33 points: Website</li>
-            <li>50 points: CSV, Excel, XML, or other structured, machine-readable format</li>
-        </ul>
-        <p>For indicators which are graduated based on accesibility, information published in all non IATI XML formats is awarded 50 points.</p>
-        <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
+        <div class="row">
+            <div class="span6">
+                <h4>Scoring criteria</h4>
+                <p>For each indicator, points are received if information is <label class="label label-success">Always published</label>. Indicators which are graduated on the basis of format are scored as follows:</p>
+                <ul>
+                    <li>16.67 points: PDF file</li>
+                    <li>33.33 points: Website</li>
+                    <li>50 points: CSV, Excel, XML, or other structured, machine-readable format</li>
+                </ul>
+                <p>For indicators which are graduated based on accesibility, information published in all non IATI XML formats is awarded 50 points.</p>
+                <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
+            </div>
+            <div class="span6">
+                <h4>Why is IATI data scored more highly?</h4>
+                <p>IATI is the only international standard for publishing comprehensive, comparable, timely and accessible data, which are critical components of aid transparency.</p>
+                <p><a class="btn" href="http://www.publishwhatyoufund.org/resources/international-aid-transparency-initiative-iati/" target="_blank">Learn more &raquo;</a></p>
+            </div>
+        </div>
         <table class="table" id="results_noniati">
         <thead>
         <th>Category</th>
