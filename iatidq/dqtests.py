@@ -30,7 +30,7 @@ def test_by_test_name(test_name=None):
     return checkTest
 
 def updateTest(data):
-    checkTest = tests(id=data['id'])
+    checkTest = tests(data['id'])
     if checkTest:
         with db.session.begin():
             for k, v in data.items():
