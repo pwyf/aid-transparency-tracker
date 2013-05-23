@@ -115,8 +115,12 @@ def organisations_index(organisation_code=None):
 
     show_researcher_button = (
         allowed_to_edit_survey_researcher and 
-        organisation_survey and
-        organisation_survey.Workflow.name == 'researcher'
+         (
+          (organisation_survey and
+           organisation_survey.Workflow.name == 'researcher')
+           or
+          (not organisation_survey)
+         )
         )
 
     template_args = dict(organisation=organisation, 
