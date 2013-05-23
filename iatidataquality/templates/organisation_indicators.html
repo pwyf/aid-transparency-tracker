@@ -131,24 +131,26 @@
                             <td>Convert percentage to points</td><td>÷ 2</td><td></td>
                         </tr>
                         <tr>
-                            <td>Frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
+                            <td>Points</td><td>{{result.results_pct|round|int/2}}</td><td></td>
                         </tr>
-                        <tr class="info">
-                            <td colspan="3"></td>
+                        <tr class="muted">
+                            <td>Frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
                         </tr>
                         <tr>
                             <td><b>Points</b></td><td>{{result.results_pct|round|int*freq/2}}</td><td></td>
                         </tr>
+                        </tbody>
+                        </table>
                         <table class="table">
                         <thead>
                             <th colspan="3">Total score calculation</th>
                         </thead>
                         <tbody>
                         <tr>
-                            <td><b>Data quality points</b></td><td>{{result.results_pct|round|int*freq/2}}</td><td></td>
+                            <td>Data quality points</td><td>{{result.results_pct|round|int*freq/2}}</td><td></td>
                         </tr>
                         <tr>
-                            <td><b>Publication format points</b></td><td>50.0</td><td></td>
+                            <td>Publication format points</td><td>50.0</td><td></td>
                         </tr>
                         <tr class="success">
                             <td><b>Total points for this indicator</b></td><td>{{(result.results_pct|round|int*freq/2)+50}}</td><td></td>
