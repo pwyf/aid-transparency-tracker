@@ -437,7 +437,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
             'longdescription': ir.Indicator.longdescription,
             'indicator_noformat': ir.Indicator.indicator_noformat,
             'indicator_ordinal': ir.Indicator.indicator_ordinal
-            },
+            }
         return (ir.Indicator.id, 
                 {
                 'results_num': 1,
