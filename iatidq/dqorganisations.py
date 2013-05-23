@@ -428,22 +428,23 @@ def _organisation_indicators(organisation, aggregation_type=2):
         try:
             data[ir.Indicator.id]
         except KeyError:
-            data[ir.Indicator.id]={}
-        data[ir.Indicator.id]={
+            data[ir.Indicator.id] = {}
+        ind = {
+            'description': ir.Indicator.description,
+            'name': ir.Indicator.name,
+            'id': ir.Indicator.id,
+            'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
+            'indicator_type': ir.Indicator.indicator_type,
+            'indicator_category_name': ir.Indicator.indicator_category_name,
+            'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name,
+            'longdescription': ir.Indicator.longdescription,
+            'indicator_noformat': ir.Indicator.indicator_noformat,
+            'indicator_ordinal': ir.Indicator.indicator_ordinal
+            },
+        data[ir.Indicator.id] = {
             'results_num': 1,
             'results_pct': ir.result_data,
-            'indicator': {
-                'description': ir.Indicator.description,
-                'name': ir.Indicator.name,
-                'id': ir.Indicator.id,
-                'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
-                'indicator_type': ir.Indicator.indicator_type,
-                'indicator_category_name': ir.Indicator.indicator_category_name,
-                'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name,
-                'longdescription': ir.Indicator.longdescription,
-                'indicator_noformat': ir.Indicator.indicator_noformat,
-                'indicator_ordinal': ir.Indicator.indicator_ordinal
-            },
+            'indicator': ind,
             'tests': {}
         }
     # make sure indicators are complete
