@@ -385,6 +385,27 @@ def _organisation_detail(organisation, aggregation_type):
                                    conditions=pconditions, 
                                    mode="publisher")
 
+def info_result_tuple(ir):
+    ind = {
+        'description': ir.Indicator.description,
+        'name': ir.Indicator.name,
+        'id': ir.Indicator.id,
+        'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
+        'indicator_type': ir.Indicator.indicator_type,
+        'indicator_category_name': ir.Indicator.indicator_category_name,
+        'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name,
+        'longdescription': ir.Indicator.longdescription,
+        'indicator_noformat': ir.Indicator.indicator_noformat,
+        'indicator_ordinal': ir.Indicator.indicator_ordinal
+        }
+    return (ir.Indicator.id, 
+            {
+            'results_num': 1,
+            'results_pct': ir.result_data,
+            'indicator': ind,
+            'tests': {}
+            })
+
 def _organisation_indicators(organisation, aggregation_type=2):
     aggregate_results = db.session.query(Indicator,
                                      Test,
@@ -424,27 +445,6 @@ def _organisation_indicators(organisation, aggregation_type=2):
     
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)
-
-    def info_result_tuple(ir):
-        ind = {
-            'description': ir.Indicator.description,
-            'name': ir.Indicator.name,
-            'id': ir.Indicator.id,
-            'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
-            'indicator_type': ir.Indicator.indicator_type,
-            'indicator_category_name': ir.Indicator.indicator_category_name,
-            'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name,
-            'longdescription': ir.Indicator.longdescription,
-            'indicator_noformat': ir.Indicator.indicator_noformat,
-            'indicator_ordinal': ir.Indicator.indicator_ordinal
-            }
-        return (ir.Indicator.id, 
-                {
-                'results_num': 1,
-                'results_pct': ir.result_data,
-                'indicator': ind,
-                'tests': {}
-                })
 
     data.update([ info_result_tuple(ir) for ir in inforesults ])
 
