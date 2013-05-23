@@ -1,3 +1,6 @@
+$("#dataConfirmOK").click(function(){
+    $("#dataConfirmModal").modal({show:false});
+});
 $("form").submit(function(e){
     var errors=false;
     $('.commitment-indicator').each(function(indicator){
@@ -31,7 +34,4 @@ $("#submit").click(function(e){
         $('#dataConfirmModal').find('.modal-body').text(warning_text);
         $('#dataConfirmModal').modal({show:true});
     }
-});
-$("#dataConfirmOK").click(function(){
-    $("#dataConfirmModal").modal({show:false});
 });
