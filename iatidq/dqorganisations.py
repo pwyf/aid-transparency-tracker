@@ -127,6 +127,7 @@ def _importOrganisationPackages(fh, local):
             packagegroup = get_packagegroup_by_name(pg_name)
             if packagegroup is not None:
                 add_org_package_from_pg(packagegroup)
+                add_org_packagegroup(packagegroup)
                 
     print "Imported successfully"
     return True
