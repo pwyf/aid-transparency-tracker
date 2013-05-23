@@ -120,24 +120,38 @@
                     </div>
                     <div class="modal-body">
                         <table class="table">
+                        <thead>
+                            <th colspan="3">Data quality score calculation</th>
+                        </thead>
                         <tbody>
                         <tr>
-                            <td>IATI data quality</td><td>{{result.results_pct|round|int}}%</td><td></td>
+                            <td>Data quality</td><td>{{result.results_pct|round|int}}%</td><td>% of activities that passed tests</td>
+                        </tr>
+                        <tr class="muted">
+                            <td>Convert percentage to points</td><td>÷ 2</td><td></td>
                         </tr>
                         <tr>
-                            <td>IATI frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
+                            <td>Frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
                         </tr>
                         <tr class="info">
                             <td colspan="3"></td>
                         </tr>
                         <tr>
-                            <td><b>IATI points</b></td><td>{{result.results_pct|round|int*freq/2}}</td><td></td>
+                            <td><b>Points</b></td><td>{{result.results_pct|round|int*freq/2}}</td><td></td>
+                        </tr>
+                        <table class="table">
+                        <thead>
+                            <th colspan="3">Total score calculation</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><b>Data quality points</b></td><td>{{result.results_pct|round|int*freq/2}}</td><td></td>
                         </tr>
                         <tr>
                             <td><b>Publication format points</b></td><td>50.0</td><td></td>
                         </tr>
                         <tr class="success">
-                            <td><b>Total points</b></td><td>{{(result.results_pct|round|int*freq/2)+50}}</td><td></td>
+                            <td><b>Total points for this indicator</b></td><td>{{(result.results_pct|round|int*freq/2)+50}}</td><td></td>
                         </tr>
                         </tbody>
                         </table>
