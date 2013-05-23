@@ -61,36 +61,12 @@
             </form>
         </div>
         <h3>Published in IATI XML format</h3>
+        
         <p class="lead">Information published in IATI XML format can score up
-        to 100 points based on the quality of publication.</p>
+        to 100 points based on the quality of publication. This is determined by running a
+		  series of tests on your data. You can see more details
+		  by clicking on the <i class="icon icon-chevron-down"></i> icon.</p>
 
-		<p>Quality of the publication is determined by running a
-		  series of automated tests on your IATI XML data, which you can see
-		  with the <i class="icon icon-chevron-down"></i> icon. These
-		  data quality tests return a "pass" or "fail" result for each
-		  activity or organisation file included in your data
-		  packages.</p>
-    
-        <div class="row">
-            <div class="span7">
-            <h4>Scoring criteria</h4>
-            <p>Indicators for which information is published in IATI XML format:</p>
-            <ul>
-                <li>50 points are received for publication in an
-			      accessible format, if there is at least one "pass"
-			      result on tests run for that indicator</li>
-
-                <li>50 points are received based on the percentage of 
-			     your total activities published in IATI XML which pass the data quality tests and on the frequency of publication for activity level indicators</li>
-            </ul>
-            <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
-            </div>
-            <div class="span4 offset1">
-                <h4>How do you structure your data?</h4>
-                <p>IATI allows the use of multiple hierarchies (e.g. programs and projects) to structure your data. Please tell us how your data is structured as this could make a difference to your IATI score.</p>
-                <p><a href="{{url_for('organisations_feedback', organisation_code=organisation.organisation_code)}}" class="btn">Provide structure &raquo;</a></p>
-            </div>
-        </div>
         {% if organisation.frequency == "less than quarterly" %}
         <div class="alert alert-info">
             <h3>Frequency of publication</h3>
@@ -215,6 +191,25 @@
         {%endfor%}
         </tbody>
         </table>
+        <div class="row">
+            <div class="span7">
+            <h4>Scoring criteria</h4>
+            <ul>
+                <li>50 points are received for publication in an
+			      accessible format, if there is at least one "pass"
+			      result on tests run for that indicator</li>
+
+                <li>50 points are received based on the percentage of 
+			     your total activities published in IATI XML which pass the data quality tests and on the frequency of publication for activity level indicators</li>
+            </ul>
+            <a href="" class="btn">More details &raquo;</a>
+            </div>
+            <div class="span4 offset1">
+                <h4>How do you structure your data?</h4>
+                <p>IATI allows the use of multiple hierarchies (e.g. programs and projects) to structure your data. Please tell us how your data is structured as this could make a difference to your IATI score.</p>
+                <p><a href="{{url_for('organisations_feedback', organisation_code=organisation.organisation_code)}}" class="btn">Provide structure &raquo;</a></p>
+            </div>
+        </div>
         </fieldset>
         <a id="noniati"></a>
         <hr />
