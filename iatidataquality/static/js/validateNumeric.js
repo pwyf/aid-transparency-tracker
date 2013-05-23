@@ -32,3 +32,6 @@ $("#submit").click(function(e){
         $('#dataConfirmModal').modal({show:true});
     }
 });
+$("#dataConfirmOK").click(function(){
+    $("#dataConfirmModal").modal({show:false});
+});
