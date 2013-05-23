@@ -18,20 +18,18 @@
             {% endfor %}
           {% endif %}
         {% endwith %}
-    <div class="row"><p class="lead">We've just released our initial assessment of the quality of 
-        different organisations' data. We'll release more detailed analysis in October as part of 
-        our 2013 Aid Transparency Index.</p></div>
+    <div class="row"><p class="lead">Review our initial assessment of the quality of different organisations' aid information. We will release more detailed analysis in October as part of the <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/" target="_blank">2013 Aid Transparency Index</a>.</p></div>
     <div class="row">
             <div class="span6">
                 <h1>Organisations</h1>
-                <p class="lead">See data from individual organisations</p>
+                <p class="lead">See data for individual organisations</p>
                 <p>
                 <a class="btn btn-primary" href="{{url_for('organisations')}}">Organisations »</a>
                 </p>
             </div>
             <div class="span6">
                 <h1>Data verification</h1>
-                <p class="lead">Donors and independent reviewers can log in to confirm their data is correct.</p>
+                <p class="lead">Donors and independent reviewers can log in to check the data</p>
                 <form class="form-inline" action="{{url_for('login')}}" method="post">
                 <input name="username" type="text" class="input-small" placeholder="Username">
                 <input name="password" type="password" class="input-small" placeholder="Password">
