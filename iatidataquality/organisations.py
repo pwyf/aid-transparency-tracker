@@ -109,7 +109,7 @@ def organisations_index(organisation_code=None):
         "survey",
         "view")
     allowed_to_edit_survey_researcher = usermanagement.check_perms(
-        "survey",
+        "survey_researcher",
         "edit",
         {"organisation_code": organisation_code})
 
