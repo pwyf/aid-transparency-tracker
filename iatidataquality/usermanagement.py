@@ -21,7 +21,7 @@ from functools import partial, wraps
 from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
-from iatidq import activity_types
+from iatidq import user_activity_types
 
 principals = Principal(app)
 login_manager = LoginManager()
@@ -174,7 +174,7 @@ def login():
                 dqusers.logUserActivity({
                     'user_id': user.id,
                     'ip_address': request.remote_addr,
-                    'activity_type': activity_types.LOGGED_IN,
+                    'activity_type': user_activity_types.LOGGED_IN,
                     'activity_data': None
                 })
                 identity_changed.send(current_app._get_current_object(),
@@ -198,7 +198,7 @@ def logout():
     dqusers.logUserActivity({
         'user_id': current_user.id,
         'ip_address': request.remote_addr,
-        'activity_type': activity_types.LOGGED_OUT,
+        'activity_type': user_activity_types.LOGGED_OUT,
         'activity_data': None
     })
     logout_user()
