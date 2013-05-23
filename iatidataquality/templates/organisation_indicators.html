@@ -217,25 +217,7 @@
         </div>
         {% endif %}
         <h3>Published in other formats</h3>
-        <p class="lead">Information published in formats (e.g. Excel, Website, PDF) can score up to 50 points.</p>
-        <div class="row">
-            <div class="span7">
-                <h4>Scoring criteria</h4>
-                <p>For each indicator, points are received if information is <label class="label label-success">Always published</label>. Indicators which are graduated on the basis of format are scored as follows:</p>
-                <ul>
-                    <li>16.67 points: PDF file</li>
-                    <li>33.33 points: Website</li>
-                    <li>50 points: CSV, Excel, XML, or other structured, machine-readable format</li>
-                </ul>
-                <p>For indicators which are graduated based on accesibility, information published in all non IATI XML formats is awarded 50 points.</p>
-                <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
-            </div>
-            <div class="span4 offset1">
-                <h4>Why is IATI data scored more highly?</h4>
-                <p>IATI is the only international standard for publishing comprehensive, comparable, timely and accessible data, which are critical components of aid transparency.</p>
-                <p><a class="btn" href="http://www.publishwhatyoufund.org/resources/international-aid-transparency-initiative-iati/" target="_blank">Learn more &raquo;</a></p>
-            </div>
-        </div>
+        <p class="lead">Information published in formats (e.g. Excel, website, PDF) can score up to 50 points.</p>
         <table class="table" id="results_noniati">
         <thead>
         <th>Category</th>
@@ -332,11 +314,24 @@
         {%endfor%}
         </tbody>
         </table>
-        {% if surveydata %}
-        <div class="pull-right">
-        <a href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name=surveydata_workflow)}}" class="btn btn-primary">Review manually collected data</a>
+        <div class="row">
+            <div class="span7">
+                <h4>Scoring criteria</h4>
+                <p>For each indicator, points are received if information is <label class="label label-success">Always published</label>. Indicators which are graduated on the basis of format are scored as follows:</p>
+                <ul>
+                    <li>16.67 points: PDF file</li>
+                    <li>33.33 points: Website</li>
+                    <li>50 points: CSV, Excel, XML, or other structured, machine-readable format</li>
+                </ul>
+                <p>For indicators which are graduated based on accesibility, information published in all non IATI XML formats is awarded 50 points.</p>
+                <p>Further details on our scoring approach can be found <a href="insert link here">here</a>.</p>
+            </div>
+            <div class="span4 offset1">
+                <h4>Why is IATI data scored more highly?</h4>
+                <p>IATI is the only international standard for publishing comprehensive, comparable, timely and accessible data, which are critical components of aid transparency.</p>
+                <p><a class="btn" href="http://www.publishwhatyoufund.org/resources/international-aid-transparency-initiative-iati/" target="_blank">Learn more &raquo;</a></p>
+            </div>
         </div>
-        {% endif %}
         </fieldset>
     {%endif%}
 
