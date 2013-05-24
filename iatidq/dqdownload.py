@@ -62,6 +62,7 @@ def download_packages(runtime):
     testing_packages=[]
     packages = models.Package.query.filter_by(active=True).all()
 
+    print registry_packages
     for package in packages:
         name = package.package_name
         print name
