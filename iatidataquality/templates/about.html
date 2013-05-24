@@ -2,38 +2,46 @@
 {% block title %}About{% endblock %}
 
 {% block content %}
-<h3>About</h3>
-      <p><a href="http://www.publishwhatyoufund.org" target="_blank">Publish What You Fund</a> has developed this Data Quality tool to assess the quality of aid information published in IATI XML format. It is designed to run a series of automated checks and tests on data published in IATI XML format and present findings in a way that provides both a comparative view across all organisations and granular level details on each organisation’s data and any gaps.</p>
-<hr />
+<h3>Aid Transparency Tracker: Publish</h3>
+<p class="lead">This section of the Tracker looks at the quality of different organisations' aid information. We will release more detailed analysis in October as part of the <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/">2013 Aid Transparency Index</a>.</p>
 <h3>Purpose</h3>
-  <p>Several organisations have started publishing information on their aid spending to the International Aid Transparency Initiative (IATI) Registry.  While a number of tools have been developed to explore, access and visualise data published to the Registry, at present, it is difficult to obtain an overall picture of the quality of the data being published to the Registry.</p>
-  <p>It is generally recognised by IATI publishers that there is room for improvement in the type and coverage of information being published to the Registry. In some cases, this is because of relatively minor problems inherent in the process of publishing information on large volumes of data, while in others, it relates to bigger problems of non-delivery on commitments and implementation schedules.</p>
-  <p>Given that the number of publishers is likely to rise significantly as organisations begin to publish in line with their commitments under the common standard, there is a clear need for a mechanism to provide feedback on the quality of the data to ensure that the ultimate purpose behind publishing to IATI is met – making timely, comprehensive, comparable and forward looking information on development cooperation available to all stakeholders. The Data Quality too has been developed in response to this need.</p>
+  <p>The main purpose of this section is to analyse what information donors are currently publishing. It combines an automated assessment of data released through the <a href="http://aidtransparency.net">International Aid Transparency Initiative</a> (IATI), with manually collected data in order to understand what information donors are currently making available, and in what formats.</p>
+  <p>We hope that this will be a useful resource for others trying to understand what donors are doing in order to meet their commitments to publish to a common, open standard by 2015, as well as for those who want to use the data.</p>
+  <p>The information collected in the <a href="/plan">Plan</a> and Publish sections provides the data for the 2013 Aid Transparency Index.</p>
 <hr />
 <h3>Methodology</h3>
-  <p>The quality of data published in IATI XML is assessed by running a series of tests on all activity and organisation data packages currently being published to the Registry. These tests have been designed to assess the availability, comprehensiveness and comparability of the information and to determine whether an organisation’s publication conforms to the IATI standard appropriately. Most of the tests have been derived directly from IATI schemas provide formats for reporting data on various fields to the IATI Registry. Some additional tests have been designed to ensure that data published in IATI XML is done in a manner which allows for comparison across donors.</p>
-  <p>For the purposes of the 2013 Index, tests are run against only those activities with planned or actual end dates within the previous 13 months. This is to ensure that the information gathered relates to the period being assessed in the Index, i.e. information published on or after April 1, 2012 or that relates to that period. These same tests can also be run against all IATI data published by an organisation. The Data Quality tool adopts an expansive approach to testing, whereby the tests run on the data are flexible and can be expanded in the future to potentially find out a large amount of comparative information about IATI data.</p>
-  <p>For a complete list of the tests being run for determining indicator scores for the 2013 Index, visit the <a href="http://173.246.104.74/publish/tests/">tests</a> section of the Data Quality tool.</p>
+  
+<h4>Automated data quality assessment</h4>
+  <p>Data published in IATI XML is machine readable and conforms to a common standard. This makes it possible to automatically collect and analyse this data, by running a series of tests against it.</p>
+  <p>These tests have been designed to assess the availability, comprehensiveness and comparability of the information and to determine whether an organisation's publication conforms to the <a href="http://iatistandard.org">IATI Standard</a>. The tests have been derived from the IATI schemas.</p>
+  <p>For the purposes of the 2013 Index, tests are run against current activities, defined as:</p>
+    <ul>
+        <li>ongoing activities</li>
+        <li>planned end dates within the previous 12 months</li>
+        <li>actual end dates within the previous 12 months</li>
+        <li>transaction dates within the previous 12 months</li>
+    </ul>
+
+  <p>The tests are also run against all IATI data published by an organisation. This data is not included in the Index, but can be accessed on an organisation's results page.</p>
+  
+  <p>For each test, the following analysis is provided:</p>
+  <ul>
+        <li><b>organisation level</b> &ndash; whether the document exists;</li>
+        <li><b>activity level</b> &ndash; percentage of activities that have passed that test.</li>
+  </ul>
+  <p>Three organisation level tests use a different scoring approach:</p>
+  <ul>
+        <li><b>total budget</b> &ndash; whether forward budgets exist for each of the next three years;</li>
+        <li><b>country budgets</b> &ndash; the percentage of country budgets that exist for each of the next three years, as a proportion of the total budget;</li>
+        <li><b>country strategy papers</b> &ndash; the percentage of countries for which there is a current country budget, which have a country strategy paper.</li>
+  </ul>
+
+  <p>Test results are then aggregated &ndash; based on the 2013 Aid Transparency Index indicators they relate to  &ndash; in order to produce scores for these indicators. The tests underlying the measurement of each indicator can be viewed by clicking on the <i class="icon-chevron-down"></i> detail button on the publication page for the relevant organisation.</p>
+  <h4>Manual assessment</h4>
+  <p>Information published in other formats that cannot be automatically assessed is collected via a survey. Surveys are completed for all organisations included in the 2013 Aid Transparency Index. Only information that is <b>always</b> published is scored. To establish that the information is always published at the activity level, a minimum of five activities are selected at random for that organisation. While checking and verifying data, organisations are asked to confirm if the responses are representative as a whole.</p>
+  <p>The survey also captures the format (machine readable XML or CSV, webpages or PDF) in which the information is provided.</p>
 <hr />
-<h3>Results and aggregation</h3>
-  <p>The tool returns the following results for each test run on a given data package:
-  <ol>
-        <li>A pass or fail result for each file within a data package;</li>
-        <li>Percentage of activity or organisation files within a data package that have passed the test.</li>
-  </ol>
-  </p>
-  <P>The results also contain information on:
-   <ol>
-        <li>The test ID;</li>
-        <li>The data package ID;</li>
-        <li>The runtime ID;</li>
-        <li>The IATI activity identifier (where applicable)</li>
-  </ol>
-  </p>
-  <p>Test results are currently aggregated – based on the 2013 Aid Transparency Index indicators they pertain to – in order to produce scores for these indicators. The tests underlying the measurement of each indicator can be viewed by clicking on the indicator names in the publication page for the relevant organisation. Click <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/">here</a> for a detailed explanation of how data quality tests are used for scoring indicators in the 2013 Index.</p>
-<hr />
-  <h3>Survey methodology</h3>
-  <p>Surveys for all organisations included in the 2013 Aid Transparency Index are completed using information relating to the country that received the largest amount of aid by value from that donor organisation. The OECD DAC's 2011 CRS data is used for determining the largest recipient. If this information is not available in the CRS, then the largest recipient is determined using the latest annual report for the donor organisation or related ministry. To establish that the information is consistently published at the activity level, a minimum of five activities are selected at random in that country. While checking and verifying data, organisations are asked to confirm if the responses are representative as a whole.</p>
-  <p>The survey tool is designed to capture the format (machine readable XML or CSV, webpages or PDF) in which the information is provided and whether it is 'always' published, 'sometimes' published or 'not published'.</p>
-  <p>Details on how the survey data is scored can be found <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/">here</a>.</p>
+  <h3>More information</h3>
+  <p>Full details of how the information collected will be assessed and scored in the 2013 Index is provided in the scoring guide.</p>
+    <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/" class="btn">More details &raquo;</a>
 {% endblock %}
