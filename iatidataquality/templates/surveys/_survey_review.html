@@ -18,8 +18,9 @@
 {% endblock %}
 
 {% block guidance %}
-        <p class="lead">We have conducted an initial assessment of your organisation’s 
-		  aid transparency. Thank you for agreeing to review this assessment.</p>
+        <p class="lead">We have conducted an initial assessment of the aid 
+          transparency of {{organisation.organisation_name}}. Thank you for 
+          agreeing to review this assessment.</p>
         <h4>Guidelines</h4>
         <ol>
             <li>We are only looking for information which is:</li>
@@ -35,5 +36,7 @@
                 provided, please select the appropriate option and let us know 
                 in the comments box.</li>
         </ol>
-        <a href="{{ url_for('about_donor') }}" class="btn">Detailed guidelines &raquo;</a>
+        <p><b>All data and comments collected will be made public once the 2013 
+              Index is published.</b></p>
+        <a href="{{ url_for('about_donor') }}" class="btn" target="_blank">Detailed guidelines &raquo;</a>
 {% endblock %}
