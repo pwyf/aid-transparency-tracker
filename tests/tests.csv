@@ -229,4 +229,4 @@ allocation,Allocation policy,document-link/category[@code='B04'] exists?,Allocat
 procurement-policy,Procurement policy,document-link/category[@code='B05'] exists?,Procurement policy,3
 audit,Audit,document-link/category[@code='B06'] exists?,Audit,3
 country-strategy,Country Strategy,document-link/category[@code='B03'] exists?,Country strategy paper,3
-,,activity-date[@type='end-planned']/@iso-date or activity-date[@type='end-planned']/text() or activity-date[@type='end-actual']/@iso-date or activity-date[@type='end-actual']/text() is less than 13 months ago?,Current data,1
+,,activity-date[@type='end-planned']/@iso-date or activity-date[@type='end-planned']/text() or activity-date[@type='end-actual']/@iso-date or activity-date[@type='end-actual']/text() or transaction-date/@iso-date (for any transaction) is less than 13 months ago?,Current data,1
