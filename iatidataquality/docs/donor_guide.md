@@ -14,7 +14,7 @@ For the 2013 Aid Transparency Index, data has been collected using two
 tools - a Data Quality tool and a survey. If your organisation is an
 IATI publisher then some of the data has been collected and scored
 automatically using the Data Quality tool. Separate instructions on
-how to access and review this data has been emailed to you. Information provided in other formats (Excel, CSV, website, PDFs)has been collected manually via the survey. If your organisation is not an IATI publisher then all the information is collected via
+how to access and review this data has been emailed to you. Information provided in other formats (Excel, CSV, website, PDFs)has been collected manually via the survey. If your organisation is not an IATI publisher then all the information is collected via the survey.
 
 To ensure that the data is as accurate as possible, we would be
 grateful if you could check the survey responses and correct or add
@@ -56,7 +56,7 @@ where the information was found and any explanatory text is provided
 alongside each question.
 
 
-### Choices for responses
+### Choices for responses:
 
 1. Always published, i.e. systematically and regularly across all activities. 
 2. Sometimes published, i.e. sporadically or not including the current year.
@@ -71,15 +71,14 @@ selected at random.
 Criteria for selecting 'sometimes':
 
 * Information is published for some but not all projects; OR
-* Qualifiers are stated which confirm publication is not
-* comprehensive, i.e. "major projects", "lighthouse projects", "case studies", "key projects".
+* Qualifiers are stated which confirm publication is not comprehensive, i.e. "major projects", "lighthouse projects", "case studies", "key projects".
 
 Criteria for selecting 'not published':
 
 * The information is not published. For activity level questions, this
 information is not being published for any of the projects assessed.
 
-### Providing your feedback
+### Providing your feedback:
 
 - Go to the 'Publication' section of the survey.
 - The information items we are looking for are listed. To see a definition for each information item, click on it.
