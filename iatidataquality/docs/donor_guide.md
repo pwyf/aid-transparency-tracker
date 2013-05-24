@@ -1,5 +1,4 @@
-# Aid Transparency Tracker - Guide for Donor Organisations
-
+# Guide for Donor Organisations
 
 We have conducted an initial assessment of your organisation's
 commitment to aid transparency and publication of information on
