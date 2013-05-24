@@ -35,13 +35,11 @@ def internal_server_error(e):
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user), 500
 
-@app.route('/info/data_quality')
-def about_dq():
-    return render_template("about_dq.html", loggedinuser=current_user)
-
-@app.route('/info/survey')
-def about_survey():
-    return render_template("about_survey.html", loggedinuser=current_user)
+@app.route('/about/')
+def about():
+    return render_template("about.html", 
+                           loggedinuser=current_user, 
+                           admin=usermanagement.check_perms('admin'))
 
 def render_markdown(filename):
     path = os.path.join(os.path.dirname(__file__), 'docs', filename)
