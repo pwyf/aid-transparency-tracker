@@ -14,11 +14,22 @@
 {% endblock %}
 
 {% block guidance %}
-        <p>Thank you for agreeing to contribute to the 2013 Aid 
+        <p class="lead">Thank you for agreeing to contribute to the 2013 Aid 
 		  Transparency Index process. The data you are collecting
  		  will help to accurately capture the levels of aid information 
-		  available, show changes over time and facilitate clear, 
-		  practical improvements in the availability of aid information.</p>
-        <p>Detailed instructions on how to fill this survey can be 
-		  found <a href="{{ url_for('about_data_collection') }}">here</a>.</p>
+		  available.</p>
+        <h3>Guidlines</h3>
+        <ol>
+            <li>Please answer the publication indicators for the <b>largest recipient
+                country</b>, and for <b>current projects</b> only (currently active, 
+                or ended within the last 12 months).</li>
+            <li>2012 survey data has been provided to help you identify where the
+                information might be found. As the largest recipient country or 
+                the information available may have changed, the results may be 
+                different from last year.</li>
+            <li>Commitment indicators have already been filled in by Publish What 
+                You Fund &ndash; so you only need to complete the section related
+                to publication.</li>
+        </ol>
+        <a class="btn" href="{{ url_for('about_data_collection') }}">More details &raquo;</a>
 {% endblock %}
