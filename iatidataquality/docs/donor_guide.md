@@ -7,8 +7,7 @@ in the 2013 Aid Transparency Index. Thank you for agreeing to review
 this assessment.
 
 Details of the indicators used in the Index, including how each
-indicator is scored and weighted, can be found in Table 1
-below. More information on the scoring can be found on our website.
+indicator is scored and weighted, can be found in the [scoring guide](http://www.publishwhatyoufund.org/files/2013/03/Indicator-Scoring-Guide_FINAL.docx)
 
 ## Reviewing the assessment
 
@@ -30,17 +29,17 @@ information as appropriate.
 Surveys have been completed using information relating to the country
 that received the largest amount of aid by value from your
 organisation. OECD DAC 2011 CRS data has been used for determining the
-largest recipient.  If this information was not available in the CRS,
+largest recipient. If this information was not available in the CRS,
 then the largest recipient was determined using the latest annual
 report for the organisation or related organisation/ministry. For
 activity level questions, five activities have been selected at random
 in that country to establish that the information is consistently
-published.  Please confirm if the responses are representative as a
+published. Please confirm if the responses are representative as a
 whole.
 
 Please note that we are only looking at aid information which is:
 
-* Current: For the purposes of the Index, "current" is defined as
+* **Current**: For the purposes of the Index, "current" is defined as
 published within the 12 months immediately prior to the data
 collection period (1 April-30 June 2013), so information published on
 1 April 2012 or later and that relates to that period is accepted as
@@ -53,9 +52,7 @@ they have explicit extensions written into them. Information provided
 on static web pages is deemed as current unless information proving
 the contrary is available.
 
-* Publicly available: The information is available on the
-  organisation's website or portal.
-
+* **Publicly available**: The information is available on the organisation's website or portal.
 
 The survey is looking for specific information items. Each response
 has been scored based on whether the information is 'always'
@@ -80,65 +77,23 @@ Criteria for selecting 'sometimes':
 
 * Information is published for some but not all projects; OR
 * Qualifiers are stated which confirm publication is not
-* comprehensive, i.e. "major projects", "lighthouse projects", "case
-  studies", "key projects".
-
-
+* comprehensive, i.e. "major projects", "lighthouse projects", "case studies", "key projects".
 
 Criteria for selecting 'not published':
-
-
 
 * The information is not published. For activity level questions, this
 information is not being published for any of the projects assessed.
 
-
-
 ### Providing your feedback
 
-
-
-1. Go to the 'Publication' section of the survey.
-2. The information items we are looking for are listed. To see a
-   definition for each information item, click on it
-3. Review each of the responses provided. If you agree with our
-   assessment for that question, move on to the next question.
-4. If you disagree with our assessment or would like to provide additional 
-   information for any of the questions:
-   a. Select your own response for the question.
-   b. If the information is published, provide a URL as evidence. If the information is not published, 
-please put N/A in the 'evidence' text box.
-   c. For some questions, we would like to know the format that the information is provided in. There 
-   d. In the comments box, please add any feedback or clarifications that you think will help us better 
-
-
-
-
-
-
-
-are three format choices: machine readable (Excel or CSV files), website or PDF. If you disagree 
-
-
-
-with the selection made, please update it.
-
-
-
-understand your answer. This is particularly helpful if you think the response might be unclear 
-
-
-
-or open to interpretation. Feel free to add any questions you have for us in the same box. It 
-
-
-
-would also be helpful if you could let us know when you might be able to start publishing this 
-
-
-
-information if you are not currently doing so.
-
+- Go to the 'Publication' section of the survey.
+- The information items we are looking for are listed. To see a definition for each information item, click on it.
+- Review each of the responses provided. If you agree with our assessment for that question, move on to the next question.
+- If you disagree with our assessment or would like to provide additional information for any of the questions:
+ 1. Select your own response for the question.
+ 2. If the information is published, provide a URL as evidence. If the information is not published, please put N/A in the 'evidence' text box.
+ 3. For some questions, we would like to know the format that the information is provided in. There are three format choices: machine readable (Excel or CSV files), website or PDF. If you disagree with the selection made, please update it.
+ 4. In the comments box, please add any feedback or clarifications that you think will help us better understand your answer. This is particularly helpful if you think the response might be unclear or open to interpretation. Feel free to add any questions you have for us in the same box. It would also be helpful if you could let us know when you might be able to start publishing this information if you are not currently doing so.
 
 
 ### Submitting the survey
@@ -161,4 +116,4 @@ decision.
 
 Thank you for reviewing the survey. If you have any questions or
 comments on using the Aid Transparency Tracker please get in touch:
-2013tracker@publishwhatyoufund.org
+2013tracker@publishwhatyoufund.org 
