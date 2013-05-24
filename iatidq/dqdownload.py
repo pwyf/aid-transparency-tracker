@@ -65,6 +65,7 @@ def download_packages(runtime):
     for package in packages:
         name = package.package_name
         print name
+        print package.package_revision_id
     
         try:
             if package.package_revision_id != registry_packages[name]:
