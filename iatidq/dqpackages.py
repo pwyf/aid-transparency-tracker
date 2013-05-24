@@ -83,6 +83,8 @@ def get_organisations_for_testing(package_id):
         # add organisations to be tested;
         organisation_id = packageorganisation.Organisation.id
         condition = packageorganisation.OrganisationPackage.condition
+        if condition == '':
+            condition = None
         if condition is not None:
             condition_unbracketed = condition.strip()
             condition = "[" + condition_unbracketed + "]"
