@@ -1,7 +1,6 @@
 # Guide for Donor Organisations
 
-We have conducted an initial assessment of your organisation's
-commitment to aid transparency and publication of information on
+We have conducted an initial assessment of your organisation's commitment to aid transparency and publication of information on
 specific activities. This information has been collected for inclusion
 in the 2013 Aid Transparency Index. Thank you for agreeing to review
 this assessment.
@@ -15,10 +14,7 @@ For the 2013 Aid Transparency Index, data has been collected using two
 tools - a Data Quality tool and a survey. If your organisation is an
 IATI publisher then some of the data has been collected and scored
 automatically using the Data Quality tool. Separate instructions on
-how to access and review this data has been emailed to
-you. Information provided in other formats (Excel, CSV, website, PDFs)
-has been collected manually via the survey. If your organisation is
-not an IATI publisher then all the information is collected via
+how to access and review this data has been emailed to you. Information provided in other formats (Excel, CSV, website, PDFs)has been collected manually via the survey. If your organisation is not an IATI publisher then all the information is collected via
 
 To ensure that the data is as accurate as possible, we would be
 grateful if you could check the survey responses and correct or add
@@ -28,8 +24,7 @@ information as appropriate.
 
 Surveys have been completed using information relating to the country
 that received the largest amount of aid by value from your
-organisation. OECD DAC 2011 CRS data has been used for determining the
-largest recipient. If this information was not available in the CRS,
+organisation. OECD DAC's 2011 [CRS](http://www.oecd.org/dac/stats/usersguidetothecreditorreportingsystemcrsaidactivitiesdatabase.htm) data has been used for determining the largest recipient. If this information was not available in the CRS,
 then the largest recipient was determined using the latest annual
 report for the organisation or related organisation/ministry. For
 activity level questions, five activities have been selected at random
