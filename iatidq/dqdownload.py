@@ -76,6 +76,10 @@ def download_packages(runtime):
                 add_test_status(package.id, package_status.NEW)
                 testing_packages.append(package.id)
                 enqueue_download(package, runtime.id)
+            else:
+                print "Packages have the same ID"
+                print package.package_revision_id
+                print registry_packages[name]
         except KeyError, e:
             if name not in registry_packages:
                 print "name wasn't there"
