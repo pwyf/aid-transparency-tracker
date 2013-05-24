@@ -18,10 +18,22 @@
 {% endblock %}
 
 {% block guidance %}
+        <p class="lead">We have conducted an initial assessment of your organisation’s 
+		  aid transparency. Thank you for agreeing to review this assessment.</p>
         <h4>Guidelines</h4>
-        <p>We have conducted an initial assessment of your organisation’s 
-		  commitment to aid transparency and publication of information on 
-		  aid activities. Thank you for agreeing to review this assessment.</p>
-        <p> Guidelines on reviewing this assessment can be found 
-		  <a href="{{ url_for('about_donor') }}">here</a>.</p>
+        <ol>
+            <li>We are only looking for information which is:</li>
+            <ul>
+                <li><b>current</b> (ongoing activities, or ended 
+                within the last 12 months);</li>
+                <li><b>publicly available</b>.</li>
+            </ul>
+            <li>Only information which is <b>Always</b> published will be 
+                scored. The more open and comparable the format, the higher
+                the score (machine-readable scores highest, PDF lowest).</li>
+            <li>If you disagree with the initial assessment or the evidence
+                provided, please select the appropriate option and let us know 
+                in the comments box.</li>
+        </ol>
+        <a href="{{ url_for('about_donor') }}" class="btn">Detailed guidelines &raquo;</a>
 {% endblock %}
