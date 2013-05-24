@@ -78,6 +78,7 @@ def download_packages(runtime):
                 enqueue_download(package, runtime.id)
         except KeyError, e:
             if name not in registry_packages:
+                print "name wasn't there"
                 # TODO: handle deleted packages; for now just pass
                 pass
             else:
