@@ -1,5 +1,5 @@
 {% set active_page='about' %}{% extends "layout.html" %}
-{% block title %}About the Data Quality Tool{% endblock %}
+{% block title %}About{% endblock %}
 
 {% block content %}
 <h3>About</h3>
@@ -32,4 +32,8 @@
   </p>
   <p>Test results are currently aggregated – based on the 2013 Aid Transparency Index indicators they pertain to – in order to produce scores for these indicators. The tests underlying the measurement of each indicator can be viewed by clicking on the indicator names in the publication page for the relevant organisation. Click <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/">here</a> for a detailed explanation of how data quality tests are used for scoring indicators in the 2013 Index.</p>
 <hr />
+  <h3>Survey methodology</h3>
+  <p>Surveys for all organisations included in the 2013 Aid Transparency Index are completed using information relating to the country that received the largest amount of aid by value from that donor organisation. The OECD DAC's 2011 CRS data is used for determining the largest recipient. If this information is not available in the CRS, then the largest recipient is determined using the latest annual report for the donor organisation or related ministry. To establish that the information is consistently published at the activity level, a minimum of five activities are selected at random in that country. While checking and verifying data, organisations are asked to confirm if the responses are representative as a whole.</p>
+  <p>The survey tool is designed to capture the format (machine readable XML or CSV, webpages or PDF) in which the information is provided and whether it is 'always' published, 'sometimes' published or 'not published'.</p>
+  <p>Details on how the survey data is scored can be found <a href="http://www.publishwhatyoufund.org/index/2013-index-changes/">here</a>.</p>
 {% endblock %}
