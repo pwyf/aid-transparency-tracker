@@ -68,14 +68,18 @@ def download_packages(runtime):
     
         try:
             if package.package_revision_id != registry_packages[name]:
+                print "Need to update package", name
                 # need to add status here, because otherwise the status could 
                 # be written to DB after the package has finished testing
                 add_test_status(package.id, package_status.NEW)
                 testing_packages.append(package.id)
                 enqueue_download(package, runtime.id)
-        except KeyError:
-            # TODO: handle deleted packages; for now just pass
-            pass
+        except KeyError, e:
+            if name not in registry_packages:
+                # TODO: handle deleted packages; for now just pass
+                pass
+            else:
+                raise Exception, e
 
     print "Testing", len(testing_packages), "packages"
 
