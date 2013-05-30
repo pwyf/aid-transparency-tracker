@@ -6,6 +6,10 @@
             max-width:40px; 
             word-wrap:break-word;
         }
+        th.restrict_text_commitment, td.restrict_text_commitment { 
+            max-width:220px; 
+            word-wrap:break-word;
+        }
     </style>
 	<h3>{% block ask %}{% endblock ask %}</h3>
     <div class="alert alert-info">
@@ -20,8 +24,8 @@
 	  <th>Information item</th>
 	  <th>Responder</th>
 	  <th>Score</th>
-	  <th class="restrict_text">Evidence</th>
-	  <th class="restrict_text">Comments</th>
+	  <th class="restrict_text_commitment">Evidence</th>
+	  <th class="restrict_text_commitment">Comments</th>
 	</thead>
 
     <tbody>
