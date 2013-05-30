@@ -144,7 +144,7 @@ def __survey_process(organisation, workflow, request,
             ordinal_value = None
 
         if request.form.get(indicator + "-noformat"):
-            published_format= dqsurveys.publishedFormat('document').id
+            published_format = dqsurveys.publishedFormat('document').id
         else:
             published_format = request.form.get(indicator + "-publishedformat")
 
