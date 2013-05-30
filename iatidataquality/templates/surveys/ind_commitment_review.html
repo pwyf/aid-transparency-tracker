@@ -54,7 +54,7 @@
         {% endif %}
         </td>
 
-        <td>
+        <td class="restrict_text">
         {% if workflow.Workflow.name=='donorreview' %}
             <input type="hidden" name="{{indicator.indicator.id}}-source" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}"{%endif%} />
             {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}
@@ -63,6 +63,6 @@
         {% endif %}
         </td>
 
-        <td><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td class="restrict_text"><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
         </tr>
 {% endmacro %}
