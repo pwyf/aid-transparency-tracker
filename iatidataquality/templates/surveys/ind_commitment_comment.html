@@ -15,10 +15,10 @@
                 </div></td>
             <td><span class="muted">Researcher</span></td>
             <td>{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}
             </td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}
             </td>
         </tr>
@@ -28,10 +28,10 @@
             <td><span class="muted">Donor review</span></td>
             <td>{{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
             </td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
             </td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
             </td>
         </tr>
@@ -42,10 +42,10 @@
             <td><span class="muted">PWYF review</span></td>
             <td>{{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
             </td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
             </td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
             </td>
         </tr>
@@ -64,8 +64,8 @@
             <td>
             <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
             </td>
-            <td class="restrict_text"></td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment"></td>
+            <td class="restrict_text_commitment">
             {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
             </td>
         </tr>
