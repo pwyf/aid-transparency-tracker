@@ -188,6 +188,20 @@ def integerise(data):
     except TypeError:
         return None
 
+def get_ordinal_values_years():
+    years = [
+        (3, '3 years ahead', 'success'),
+        (2, '2 years ahead', 'warning'),
+        (1, '1 year ahead', 'important'),
+        (0, 'No forward data', 'inverse'),
+        (None, 'Unknown', '')
+        ]
+    struct = lambda yr: (yr[0], ({
+            "text": yr[1], 
+            "class": yr[2] 
+            }))
+    return map(struct, years)
+
 def get_survey_data_and_workflow(organisation_survey, surveydata):
     data = {
         "donorreview": ("researcher", 'donorreview'),
@@ -239,6 +253,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     latest_runtime=1
 
+    years = dict(get_ordinal_values_years())
+
     return render_template("organisation_indicators.html", 
                            organisation=organisation,
                            results=aggregate_results, 
@@ -250,7 +266,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                            published_format=publishedformats,
                            surveydata_workflow=surveydata_workflow,
                            admin=usermanagement.check_perms('admin'),
-                           loggedinuser=current_user)
+                           loggedinuser=current_user,
+                           years=years)
 
 def organisation_publication_unauthorised(organisation_code, aggregation_type):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
