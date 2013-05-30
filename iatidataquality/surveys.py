@@ -139,14 +139,14 @@ def __survey_process(organisation, workflow, request,
     for indicator in indicators:
 
         if request.form.get(indicator + "-ordinal_value"):
-            published_format= dqsurveys.publishedFormat('document').id
             ordinal_value = request.form.get(indicator + "-ordinal_value")
-        elif request.form.get(indicator + "-noformat"):
-            published_format= dqsurveys.publishedFormat('document').id
+        else:
             ordinal_value = None
+
+        if request.form.get(indicator + "-noformat"):
+            published_format= dqsurveys.publishedFormat('document').id
         else:
             published_format = request.form.get(indicator + "-publishedformat")
-            ordinal_value = None
 
         data = {
             'organisationsurvey_id': organisationsurvey.id,
@@ -222,6 +222,19 @@ def get_old_publication_status():
             })
     return dict(map(struct, pses))
 
+def get_ordinal_values_years():
+    years = [
+        (3, '3 years ahead', 'success'),
+        (2, '2 years ahead', 'warning'),
+        (1, '1 year ahead', 'important'),
+        (0, 'No forward data', 'inverse'),
+        (None, 'Unknown', '')
+        ]
+    struct = lambda yr: (yr[0], ({
+            "text": yr[1], 
+            "class": yr[2] 
+            }))
+    return map(struct, years)
 
 id_tuple = lambda p: (p.id, p)
 
@@ -247,6 +260,9 @@ def organisation_survey_view(organisation_code, workflow,
 
     publishedstatuses = dict(map(id_tuple, dqsurveys.publishedStatus()))
     publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormat()))
+    years = get_ordinal_values_years()
+    year_data = dict(years)
+    years.pop()
 
     old_publication_status = get_old_publication_status()
 
