@@ -92,6 +92,11 @@
         </thead>
         <tbody>
         {% for indicator, result in results.non_zero.items() %}
+            {% if result.indicator.indicator_category_name == 'activity' %}
+                {% set points = (result.results_pct|round|int*freq/2)+50 %}
+            {% else %}
+                {% set points = (result.results_pct|round|int/2)+50 %}
+            {% endif %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td>{{result.indicator.indicator_category_name|title}}</td>
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
@@ -111,7 +116,7 @@
             </td>
 	        <td></td>
             <td class="pct muted">{{result.results_pct|round|int}}</td>
-            <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{(result.results_pct|round|int*freq/2)+50}}</a>
+            <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
 
                 <div id="calculation{{result.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -133,11 +138,13 @@
                         <tr>
                             <td>Points</td><td>{{result.results_pct|round|int/2}}</td><td></td>
                         </tr>
+                        {% if result.indicator.indicator_category_name =='activity' %}
                         <tr class="muted">
                             <td>Frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
                         </tr>
+                        {% endif %}
                         <tr>
-                            <td><b>Total data quality points</b></td><td>{{result.results_pct|round|int*freq/2}}</td><td></td>
+                            <td><b>Total data quality points</b></td><td>{{points}}</td><td></td>
                         </tr>
                         </tbody>
                         </table>
