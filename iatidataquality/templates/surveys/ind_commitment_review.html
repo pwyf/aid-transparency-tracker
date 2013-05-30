@@ -15,10 +15,10 @@
                 </div></td>
             <td><span class="muted">Researcher</span></td>
             <td>{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}
             </td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}
             </td>
         </tr>
@@ -28,10 +28,10 @@
             <td><span class="muted">Donor review</span></td>
             <td>{{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
             </td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
             </td>
-            <td class="restrict_text">
+            <td class="restrict_text_commitment">
             {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
             </td>
         </tr>
@@ -54,7 +54,7 @@
         {% endif %}
         </td>
 
-        <td class="restrict_text">
+        <td class="restrict_text_commitment">
         {% if workflow.Workflow.name=='donorreview' %}
             <input type="hidden" name="{{indicator.indicator.id}}-source" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}"{%endif%} />
             {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}
@@ -63,6 +63,6 @@
         {% endif %}
         </td>
 
-        <td class="restrict_text"><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td class="restrict_text_commitment"><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
         </tr>
 {% endmacro %}
