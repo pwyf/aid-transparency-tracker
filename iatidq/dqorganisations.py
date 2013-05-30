@@ -407,6 +407,7 @@ def info_result_tuple(ir):
             'indicator': ind,
             'tests': [
                 {'test': {
+                        'id': 'infotype-' + str(ir.InfoType.id),
                         'name': ir.InfoType.name, 
                         'description': ir.InfoType.description
                         }, 
