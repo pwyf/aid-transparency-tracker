@@ -108,7 +108,7 @@
         </tr>
         <tr id="tr{{indicator.indicator.id}}">
         <td>
-       <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea>             
+       <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />             
         </td>
 
         <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>

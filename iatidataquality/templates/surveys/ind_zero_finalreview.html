@@ -1,4 +1,5 @@
 {% from "surveys/_published.html" import published as published %}
+{% from "surveys/_published_ordinal.html" import published_ordinal as published_ordinal %}
 {% macro ind_zero(
   surveydata,
   rows,
@@ -7,14 +8,21 @@
   publishedstatuses,
   publishedformats,
   workflow,
-  indicator
+  indicator,
+  years,
+  year_data
 ) %}
         {% set data = surveydata['researcher'] %}
         <tr class="indicator{{indicator.indicator.id}}">
             <td rowspan="{{rows}}"><a href="{{url_for('indicatortests', indicatorgroup="2013 Index", indicator=indicator.indicator.name)}}">{{indicator.indicator.description}}</a></td>
             <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
-            <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+            {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+            {% else %}
+                <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+            {% endif %}<br />
             <span class="badge badge-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
@@ -30,7 +38,12 @@
         <tr>
             <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
-            <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+            {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+            {% else %}
+                <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+            {% endif %}<br />
             <span class="badge badge-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
@@ -47,7 +60,12 @@
         <tr>
             <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
-            <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+            {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+            {% else %}
+                <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+            {% endif %}<br />
             <span class="badge badge-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF response">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
@@ -118,7 +136,11 @@
         </tr>
         <tr id="tr{{indicator.indicator.id}}">
         <td>
-          {{ published(data, publishedstatuses, publishedformats, indicator) }}
+          {% if indicator.indicator.indicator_ordinal %}
+            {{ published_ordinal(data, publishedstatuses, publishedformats, indicator, years) }}
+          {% else %}
+            {{ published(data, publishedstatuses, publishedformats, indicator) }}
+          {% endif %}
         </td>
 
         <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>

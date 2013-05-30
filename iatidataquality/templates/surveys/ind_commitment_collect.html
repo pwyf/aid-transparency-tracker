@@ -17,7 +17,7 @@
         <td>
         <div class="control-group">
             <div class="controls">
-                <textarea name="{{indicator.indicator.id}}-ordinal_value" class="commitment-indicator-value">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea>
+                <textarea name="{{indicator.indicator.id}}-ordinal_value" class="commitment-indicator-value">{% if surveydata %}{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
             </div>
         </div>
         </td>

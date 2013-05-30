@@ -44,7 +44,7 @@
 
     <tbody>
     {% for i, indicator in org_indicators["zero"].items() %}
-      {{ ind_zero(surveydata, rows, twentytwelvedata, old_publication_status, publishedstatuses, publishedformats, workflow, indicator) }}
+      {{ ind_zero(surveydata, rows, twentytwelvedata, old_publication_status, publishedstatuses, publishedformats, workflow, indicator, years, year_data) }}
     {% endfor %}
     </tbody>
     </table>

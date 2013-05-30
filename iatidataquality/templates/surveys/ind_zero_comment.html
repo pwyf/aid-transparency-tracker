@@ -6,7 +6,9 @@
   publishedstatuses,
   publishedformats,
   workflow,
-  indicator
+  indicator,
+  years,
+  year_data
 ) %}
         {% set data = surveydata['researcher'] %}
         <tr class="indicator{{indicator.indicator.id}}">
@@ -25,7 +27,12 @@
                 </div></td>
             <td><span class="muted">Researcher</span></td>
             <td>
-            <span class="badge badge-{{surveydata.researcher[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedStatus.title}}</span><br />
+              {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+              {% else %}
+                 <span class="badge badge-{{surveydata.researcher[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedStatus.title}}</span>
+              {% endif %}<br />
             <span class="badge badge-{{surveydata.researcher[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
@@ -36,10 +43,16 @@
             </td>
         </tr>
         {% if surveydata.donorreview %}
+        {% set data = surveydata['donorreview'] %}
         <tr>
             <td><span class="muted">Donor review</span></td>
             <td>
-            <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.title}}</span><br />
+              {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+              {% else %}
+                <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.title}}</span>
+              {% endif %}<br />
             <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
@@ -55,7 +68,12 @@
         <tr>
             <td><span class="muted">PWYF review</span></td>
             <td>
-            <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.title}}</span><br />
+              {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Review">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+              {% else %}
+                <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.title}}</span>
+              {% endif %}<br />
             <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">

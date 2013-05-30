@@ -47,7 +47,7 @@
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
         {% if workflow.Workflow.name=='donorreview' %}
-            <input type="hidden" name="{{indicator.indicator.id}}-ordinal_value" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}"{%endif%} />
+            <input type="hidden" name="{{indicator.indicator.id}}-ordinal_value" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}"{%endif%} /><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
             {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}
         {% else %}
             <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea>
