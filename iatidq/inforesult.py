@@ -41,10 +41,14 @@ def inforesult_total_disbursements_commitments_current(data):
         # by an xpath expression
         for d in data:
             for t in d.xpath("""transaction[transaction-type[@code="D" or @code="E"]]"""):
-                transaction_date = t.find('transaction-date').get('iso-date')
-                transaction_date_date = datetime.datetime.strptime(transaction_date, "%Y-%m-%d")
-                if transaction_date_date > oneyear_ago:
-                    yield t.find('value').text
+                try:
+                    transaction_date = t.find('transaction-date').get('iso-date')
+                    transaction_date_date = datetime.datetime.strptime(transaction_date, "%Y-%m-%d")
+                    if transaction_date_date > oneyear_ago:
+                        yield t.find('value').text
+                except AttributeError:
+                    # No transaction date
+                    pass
 
     def ints():
         for v in values():
