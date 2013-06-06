@@ -214,6 +214,7 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
     assert len(organisations) > 0
 
     for organisation in organisations:
+        print organisation['activities_xpath']
         run_tests_for_organisation(organisation)
 
     dqprocessing.aggregate_results(runtime_id, package_id)
