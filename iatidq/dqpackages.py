@@ -86,21 +86,22 @@ def get_organisations_for_testing(package_id):
         if condition == '':
             condition = None
         if condition is not None:
-            condition_unbracketed = condition.strip()
-            condition = "[" + condition_unbracketed + "]"
+            # unicode-escape is necessary to deal with an umlaut in a condition.
+            condition_unbracketed = condition.decode('unicode-escape').strip()
+            condition = u"[" + condition_unbracketed + u"]"
             conditions.append(condition)
             conditions_unbracketed.append(condition_unbracketed)
         else:
-            condition_unbracketed = ""
-            condition = ""
+            condition_unbracketed = u""
+            condition = u""
 
         organisations.append({
                 'organisation_id': organisation_id,
-                'activities_xpath': "//iati-activity%s" % condition
+                'activities_xpath': u"//iati-activity%s" % condition
                 })
 
     conditions_str = " or ".join(conditions_unbracketed)
-    remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
+    remainder_xpath = u"//iati-activity[not(%s)]" % conditions_str
 
     if conditions:
         organisations.append({
