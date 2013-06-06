@@ -360,7 +360,7 @@ def _organisation_detail_ungrouped(organisation, aggregation_type):
                                      AggregateResult.result_hierarchy,
                                      AggregateResult.package_id,
                                      func.max(AggregateResult.runtime_id)
-        ).filter(Organisation.id==organisation.id
+        ).filter(AggregateResult.organisation_id==organisation.id
         ).filter(AggregateResult.aggregateresulttype_id == aggregation_type)
 
 def _organisation_detail(organisation, aggregation_type):
