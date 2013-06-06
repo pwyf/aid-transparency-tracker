@@ -506,7 +506,7 @@ def organisationpackage_delete(organisation_code=None,
             return ('Could not remove package %s from organisation %s.',
                     'error')
 
-    result = dqorganisation.deleteOrganisationPackage(
+    result = dqorganisations.deleteOrganisationPackage(
         organisation_code, package_name, organisationpackage_id)
 
     msg_template, msg_type = get_message(result)    
