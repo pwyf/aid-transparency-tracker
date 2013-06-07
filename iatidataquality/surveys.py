@@ -120,6 +120,8 @@ def organisation_survey(organisation_code=None):
                            **locals())
 
 def getTimeRemainingNotice(deadline):
+    # Skip this for now
+    return ""
     remaining = deadline.date() - datetime.utcnow().date()
 
     if remaining.days > 1:
