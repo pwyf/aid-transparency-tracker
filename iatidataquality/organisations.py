@@ -389,7 +389,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             indicator_name = i.name
             indicator_id = i.id
             indicator_ordinal = i.indicator_ordinal
-            iati_manual = "iati_manual"
+            iati_manual = "manual"
         else:
             indicator_description = i["description"]
             indicator_name = i["name"]
