@@ -366,6 +366,123 @@ def write_organisation_publications_csv(out, organisation):
     for resultid, result in aggregate_results.items():
         write_agg_csv_result(out, organisation, freq, result)
 
+def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, surveydata, surveydata_workflow, published_status, published_format):
+
+    i = result["indicator"]
+    if iati_manual == 'iati':
+        total_points = ((float(result['results_pct']) * freq) / 2.0) + 50
+        iati_data_quality_total_points = (float(result['results_pct']) * freq) / 2.0
+        iati_data_quality_points = (float(result['results_pct']) / 2.0)
+        iati_data_quality_passed = result["results_pct"]
+        survey_publication_status = ""
+        survey_publication_status_value = ""
+        survey_ordinal_value = ""
+        survey_publication_format = ""
+        survey_publication_format_value = ""
+        publication_format = "iati"
+        indicator_description = i["description"]
+        indicator_name = i["name"]
+        indicator_id = i["id"]
+    else:
+        if iati_manual == "commitment":
+            indicator_description = i.description
+            indicator_name = i.name
+            indicator_id = i.id
+            indicator_ordinal = i.indicator_ordinal
+            iati_manual = "iati_manual"
+        else:
+            indicator_description = i["description"]
+            indicator_name = i["name"]
+            indicator_id = i["id"]
+            indicator_ordinal = i["indicator_ordinal"]
+        if surveydata:
+            iati_data_quality_total_points = 0
+            iati_data_quality_points = 0
+            iati_data_quality_passed = 0
+            try:
+                survey_publication_status = surveydata[indicator_id].PublishedStatus.name
+                survey_publication_status_value = surveydata[indicator_id].PublishedStatus.publishedstatus_value
+            except KeyError:
+                survey_publication_status = ""
+                survey_publication_status_value = 0
+            except AttributeError:
+                survey_publication_status = ""
+                survey_publication_status_value = 0
+            if indicator_ordinal:
+                survey_ordinal_value = surveydata[indicator_id][0].ordinal_value
+            else:
+                survey_ordinal_value = ""
+            try:
+                survey_publication_format = surveydata[indicator_id].PublishedFormat.name
+                survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value
+            except KeyError:
+                survey_publication_format = ""
+                survey_publication_format_value = 0
+            except AttributeError:
+                survey_publication_format = ""
+                survey_publication_format_value = 0
+            publication_format = survey_publication_format
+            total_points = survey_publication_format_value * survey_publication_status_value
+        else:
+            iati_data_quality_total_points = 0
+            iati_data_quality_points = 0
+            iati_data_quality_passed = 0
+            survey_publication_status = ""
+            survey_publication_status_value = ""
+            survey_ordinal_value = ""
+            survey_publication_format = ""
+            survey_publication_format_value = ""
+            publication_format = "NO IATI DATA OR SURVEY DATA"
+            total_points = 0
+
+    out.writerow({
+            "id": organisation.organisation_code + "-" + indicator_name,
+            "organisation_name": organisation.organisation_name, 
+            "organisation_code": organisation.organisation_code, 
+            "indicator_name": indicator_description, 
+            "indicator_weight": "",
+            "iati_manual": iati_manual,
+            "publication_format": publication_format,
+            "publication_format_points": "50",
+            "total_points": str(total_points),
+            "iati_data_quality_passed": str(iati_data_quality_passed),
+            "iati_data_quality_points": str(iati_data_quality_points),
+            "iati_data_quality_frequency": organisation.frequency,
+            "iati_data_quality_frequency_value": str(freq),
+            "iati_data_quality_total_points": str(iati_data_quality_total_points),
+            "survey_publication_status": str(survey_publication_status),
+            "survey_publication_status_value": str(survey_publication_status_value),
+            "survey_ordinal_value": str(survey_ordinal_value),
+            "survey_publication_format": str(survey_publication_format),
+            "survey_publication_format_value": str(survey_publication_format_value)
+            })      
+
+def write_organisation_publications_csv_index(out, organisation):
+    aggregate_results = dqorganisations._organisation_indicators_split(organisation)
+
+    if (organisation.frequency == "less than quarterly"):
+        freq = 0.9
+    else:
+        freq = 1.0
+       
+    organisation_survey = dqsurveys.getSurvey(organisation.organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)
+
+    surveydata, surveydata_workflow = get_survey_data_and_workflow(
+        organisation_survey, surveydata)
+
+    published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
+    publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatsAll()))
+
+    for resultid, result in aggregate_results["non_zero"].items():
+        write_agg_csv_result_index(out, organisation, freq, result, "iati", None, None, None, None)
+
+    for resultid, result in aggregate_results["zero"].items():
+        write_agg_csv_result_index(out, organisation, freq, result, "manual", surveydata, surveydata_workflow, published_status_by_id, publishedformats)
+
+    for resultid, result in aggregate_results["commitment"].items():
+        write_agg_csv_result_index(out, organisation, freq, result, "commitment", surveydata, surveydata_workflow, published_status_by_id, publishedformats)
+
 csv_fieldnames = [
     "organisation_name",
     "organisation_code",
@@ -378,29 +495,64 @@ csv_fieldnames = [
     "points"
     ]
 
-def _org_pub_csv(organisations, filename):
+csv_fieldnames_index = [
+    "id",
+    "organisation_name",
+    "organisation_code",
+    "indicator_name",
+    "indicator_weight",
+    "iati_manual",
+    "publication_format",
+    "publication_format_points",
+    "total_points",
+    "iati_data_quality_passed",
+    "iati_data_quality_points",
+    "iati_data_quality_frequency",
+    "iati_data_quality_frequency_value",
+    "iati_data_quality_total_points",
+    "survey_publication_status",
+    "survey_publication_status_value",
+    "survey_ordinal_value",
+    "survey_publication_format",
+    "survey_publication_format_value"
+    ]
+
+def _org_pub_csv(organisations, filename, index_data=False):
     strIO = StringIO.StringIO()
-    out = unicodecsv.DictWriter(strIO, fieldnames=csv_fieldnames)
+
+    if index_data:
+        csv_headers = csv_fieldnames_index
+    else:
+        csv_headers = csv_fieldnames
+    out = unicodecsv.DictWriter(strIO, fieldnames=csv_headers)
     headers = {}
 
-    for fieldname in csv_fieldnames:
+    for fieldname in csv_headers:
         headers[fieldname] = fieldname
     out.writerow(headers)
 
     for organisation in organisations:
-        write_organisation_publications_csv(out, organisation)
+        if index_data:
+            write_organisation_publications_csv_index(out, organisation)
+        else:
+            write_organisation_publications_csv(out, organisation)
 
     strIO.seek(0)
     return send_file(strIO,
                      attachment_filename=filename,
                      as_attachment=True)
 
+@app.route("/organisations/publication_index.csv")
+@usermanagement.perms_required()
+def all_organisations_publication_index_csv():
+    organisations = Organisation.query.all()
+    return _org_pub_csv(organisations, "dataqualityresults_index.csv", True)
+
 @app.route("/organisations/publication.csv")
 @usermanagement.perms_required()
 def all_organisations_publication_csv():
     organisations = Organisation.query.all()
     return _org_pub_csv(organisations, "dataqualityresults_all.csv")
-
 
 @app.route("/organisations/<organisation_code>/publication.csv")
 @usermanagement.perms_required('organisation', 'view')
