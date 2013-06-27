@@ -524,7 +524,7 @@ csv_fieldnames_index = [
     "survey_publication_status_value",
     "survey_ordinal_value",
     "survey_publication_format",
-    "survey_publication_format_value"
+    "survey_publication_format_value",
     "survey_total_points"
     ]
 
