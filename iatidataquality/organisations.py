@@ -534,6 +534,7 @@ csv_fieldnames_index = [
     "id",
     "organisation_name",
     "organisation_code",
+    "indicator_category_name",
     "indicator_name",
     "indicator_weight",
     "iati_manual",
