@@ -382,10 +382,15 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         indicator_description = i["description"]
         indicator_name = i["name"]
         indicator_id = i["id"]
+        indicator_category_name = i["indicator_category_name"]
+        if (indicator_category_name == 'activity'):
+            frequency_multiplier = freq
+        else:
+            frequency_multiplier = 1
 
-        iati_data_quality_total_points = (float(result['results_pct']) * freq) / 2.0
+        iati_data_quality_total_points = (float(result['results_pct']) * frequency_multiplier) / 2.0
         iati_data_quality_points = (float(result['results_pct']) / 2.0)
-        iati_data_quality_passed = result["results_pct"]
+        iati_data_quality_passed = float(result["results_pct"])
 
         survey_publication_status = ""
         survey_publication_status_value = ""
@@ -395,7 +400,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         survey_total_points = 0
 
         publication_format = "iati"
-        total_points = iati_data_quality_total_points + 50
+        total_points = iati_data_quality_total_points + 50.0
     else:
         if iati_manual == "commitment":
             indicator_description = i.description
@@ -471,6 +476,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             "iati_data_quality_points": str(iati_data_quality_points),
             "iati_data_quality_frequency": organisation.frequency,
             "iati_data_quality_frequency_value": str(freq),
+            "iati_data_quality_frequency_multiplier": str(frequency_multiplier),
             "iati_data_quality_total_points": str(iati_data_quality_total_points),
             "survey_publication_status": str(survey_publication_status),
             "survey_publication_status_value": str(survey_publication_status_value),
@@ -532,6 +538,7 @@ csv_fieldnames_index = [
     "iati_data_quality_points",
     "iati_data_quality_frequency",
     "iati_data_quality_frequency_value",
+    "iati_data_quality_frequency_multiplier",
     "iati_data_quality_total_points",
     "survey_publication_status",
     "survey_publication_status_value",
