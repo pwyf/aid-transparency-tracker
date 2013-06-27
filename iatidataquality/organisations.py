@@ -373,16 +373,18 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         else:
             if thevalue == None:
                 return 0
-            points = (float(thevalue)*float(theformat)/3)*50
+            points = (float(thevalue)/3.0)*float(theformat)
             return points
         
     i = result["indicator"]
+
     if iati_manual == 'iati':
 
         indicator_description = i["description"]
         indicator_name = i["name"]
         indicator_id = i["id"]
         indicator_category_name = i["indicator_category_name"]
+
         if (indicator_category_name == 'activity'):
             frequency_multiplier = freq
         else:
@@ -402,6 +404,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         publication_format = "iati"
         total_points = iati_data_quality_total_points + 50.0
     else:
+        frequency_multiplier=1
         if iati_manual == "commitment":
             indicator_description = i.description
             indicator_name = i.name
@@ -430,7 +433,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                 survey_publication_status_value = 0
             try:
                 survey_publication_format = surveydata[indicator_id].PublishedFormat.name
-                survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value
+                survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value * 50
             except KeyError:
                 survey_publication_format = ""
                 survey_publication_format_value = 0
@@ -444,7 +447,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                                 survey_category)
             else:
                 survey_ordinal_value = ""
-                survey_total_points = survey_publication_format_value * survey_publication_status_value * 50
+                survey_total_points = survey_publication_format_value * survey_publication_status_value
 
             publication_format = survey_publication_format
             total_points = survey_total_points
