@@ -384,7 +384,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         indicator_name = i["name"]
         indicator_id = i["id"]
         indicator_category_name = i["indicator_category_name"]
-
+    
         if (indicator_category_name == 'activity'):
             frequency_multiplier = freq
         else:
@@ -407,6 +407,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         frequency_multiplier=1
         if iati_manual == "commitment":
             indicator_description = i.description
+            indicator_category_name = i.indicator_category_name
             indicator_name = i.name
             indicator_id = i.id
             indicator_ordinal = 1
@@ -414,6 +415,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             survey_category = "commitment"
         else:
             indicator_description = i["description"]
+            indicator_category_name = i["indicator_category_name"]
             indicator_name = i["name"]
             indicator_id = i["id"]
             indicator_ordinal = i["indicator_ordinal"]
@@ -469,6 +471,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             "id": organisation.organisation_code + "-" + indicator_name,
             "organisation_name": organisation.organisation_name, 
             "organisation_code": organisation.organisation_code, 
+            "indicator_category_name": indicator_category_name, 
             "indicator_name": indicator_description, 
             "indicator_weight": "",
             "iati_manual": iati_manual,
