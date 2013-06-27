@@ -367,7 +367,15 @@ def write_organisation_publications_csv(out, organisation):
         write_agg_csv_result(out, organisation, freq, result)
 
 def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, surveydata, surveydata_workflow, published_status, published_format):
-
+    def calculate_ordinal_points(thevalue, theformat, thetype):
+        if thetype == 'commitment':
+            return thevalue
+        else:
+            if thevalue == None:
+                return 0
+            points = (float(thevalue)*float(theformat)/3)*50
+            return points
+        
     i = result["indicator"]
     if iati_manual == 'iati':
 
@@ -393,13 +401,15 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             indicator_description = i.description
             indicator_name = i.name
             indicator_id = i.id
-            indicator_ordinal = i.indicator_ordinal
+            indicator_ordinal = 1
             iati_manual = "manual"
+            survey_category = "commitment"
         else:
             indicator_description = i["description"]
             indicator_name = i["name"]
             indicator_id = i["id"]
             indicator_ordinal = i["indicator_ordinal"]
+            survey_category = "publication"
         if surveydata:
             iati_data_quality_total_points = 0
             iati_data_quality_points = 0
@@ -413,10 +423,6 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             except AttributeError:
                 survey_publication_status = ""
                 survey_publication_status_value = 0
-            if indicator_ordinal:
-                survey_ordinal_value = surveydata[indicator_id][0].ordinal_value
-            else:
-                survey_ordinal_value = ""
             try:
                 survey_publication_format = surveydata[indicator_id].PublishedFormat.name
                 survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value
@@ -426,7 +432,14 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             except AttributeError:
                 survey_publication_format = ""
                 survey_publication_format_value = 0
-            survey_total_points = survey_publication_format_value * survey_publication_status_value * 50
+            if indicator_ordinal:
+                survey_ordinal_value = surveydata[indicator_id].OrganisationSurveyData.ordinal_value
+                survey_total_points = calculate_ordinal_points(surveydata[indicator_id].OrganisationSurveyData.ordinal_value, 
+                                survey_publication_format_value, 
+                                survey_category)
+            else:
+                survey_ordinal_value = ""
+                survey_total_points = survey_publication_format_value * survey_publication_status_value * 50
 
             publication_format = survey_publication_format
             total_points = survey_total_points
