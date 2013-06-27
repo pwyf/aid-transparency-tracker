@@ -370,19 +370,24 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
 
     i = result["indicator"]
     if iati_manual == 'iati':
-        total_points = ((float(result['results_pct']) * freq) / 2.0) + 50
+
+        indicator_description = i["description"]
+        indicator_name = i["name"]
+        indicator_id = i["id"]
+
         iati_data_quality_total_points = (float(result['results_pct']) * freq) / 2.0
         iati_data_quality_points = (float(result['results_pct']) / 2.0)
         iati_data_quality_passed = result["results_pct"]
+
         survey_publication_status = ""
         survey_publication_status_value = ""
         survey_ordinal_value = ""
         survey_publication_format = ""
         survey_publication_format_value = ""
+        survey_total_points = 0
+
         publication_format = "iati"
-        indicator_description = i["description"]
-        indicator_name = i["name"]
-        indicator_id = i["id"]
+        total_points = iati_data_quality_total_points + 50
     else:
         if iati_manual == "commitment":
             indicator_description = i.description
@@ -421,8 +426,10 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             except AttributeError:
                 survey_publication_format = ""
                 survey_publication_format_value = 0
+            survey_total_points = survey_publication_format_value * survey_publication_status_value * 50
+
             publication_format = survey_publication_format
-            total_points = survey_publication_format_value * survey_publication_status_value * 50
+            total_points = survey_total_points
         else:
             iati_data_quality_total_points = 0
             iati_data_quality_points = 0
@@ -432,6 +439,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             survey_ordinal_value = ""
             survey_publication_format = ""
             survey_publication_format_value = ""
+            survey_total_points = 0
+
             publication_format = "NO IATI DATA OR SURVEY DATA"
             total_points = 0
 
@@ -454,7 +463,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             "survey_publication_status_value": str(survey_publication_status_value),
             "survey_ordinal_value": str(survey_ordinal_value),
             "survey_publication_format": str(survey_publication_format),
-            "survey_publication_format_value": str(survey_publication_format_value)
+            "survey_publication_format_value": str(survey_publication_format_value),
+            "survey_total_points": str(survey_total_points)
             })      
 
 def write_organisation_publications_csv_index(out, organisation):
@@ -515,6 +525,7 @@ csv_fieldnames_index = [
     "survey_ordinal_value",
     "survey_publication_format",
     "survey_publication_format_value"
+    "survey_total_points"
     ]
 
 def _org_pub_csv(organisations, filename, index_data=False):
