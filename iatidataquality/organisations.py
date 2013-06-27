@@ -422,7 +422,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                 survey_publication_format = ""
                 survey_publication_format_value = 0
             publication_format = survey_publication_format
-            total_points = survey_publication_format_value * survey_publication_status_value
+            total_points = survey_publication_format_value * survey_publication_status_value * 50
         else:
             iati_data_quality_total_points = 0
             iati_data_quality_points = 0
