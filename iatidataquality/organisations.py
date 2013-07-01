@@ -402,6 +402,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         survey_total_points = 0
 
         publication_format = "iati"
+        publication_format_points = 50
         total_points = iati_data_quality_total_points + 50.0
     else:
         frequency_multiplier=1
@@ -452,6 +453,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                 survey_total_points = survey_publication_format_value * survey_publication_status_value
 
             publication_format = survey_publication_format
+            publication_format_points = survey_total_points
             total_points = survey_total_points
         else:
             iati_data_quality_total_points = 0
@@ -465,6 +467,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             survey_total_points = 0
 
             publication_format = "NO IATI DATA OR SURVEY DATA"
+            publication_format_points = 0
             total_points = 0
 
     out.writerow({
@@ -476,7 +479,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             "indicator_weight": "",
             "iati_manual": iati_manual,
             "publication_format": publication_format,
-            "publication_format_points": "50",
+            "publication_format_points": str(publication_format_points),
             "total_points": str(total_points),
             "iati_data_quality_passed": str(iati_data_quality_passed),
             "iati_data_quality_points": str(iati_data_quality_points),
