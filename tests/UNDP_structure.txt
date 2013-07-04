@@ -1,0 +1,13 @@
+41114 does not use contact-info at activity hierarchy 2
+41114 does not use sector at activity hierarchy 1
+41114 does not use document-link at activity hierarchy 2
+41114 does not use transaction at activity hierarchy 1
+41114 does not use budget at activity hierarchy 1
+41114 does not use conditions at activity hierarchy 2
+41114 does not use location at activity hierarchy 1
+41114 does not use result at activity hierarchy 1
+41114 does not use activity-status at activity hierarchy 2
+41114 does not use recipient-country at activity hierarchy 2
+41114 does not use recipient-region at activity hierarchy 2
+41114 does not use policy-marker at activity hierarchy 1
+41114 does not use participating-org at activity hierarchy 2
