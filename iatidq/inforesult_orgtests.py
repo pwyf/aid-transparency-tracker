@@ -10,15 +10,15 @@ doc = etree.parse(filename)"""
 
 def fixVal(value):
     try:
-        return int(value)
+        return float(value)
     except ValueError:
         pass
     try:
         value = value.replace(',','')
-        return int(value)
+        return float(value)
     except ValueError:
         pass
-    return int(value.replace('.0',''))    
+    return float(value.replace('.0',''))    
 
 def date_later_than_now(date):
     if datetime.datetime.strptime(date, "%Y-%m-%d") > datetime.datetime.utcnow():
