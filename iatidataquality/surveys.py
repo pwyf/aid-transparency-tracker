@@ -94,12 +94,12 @@ def get_organisation_results(organisation_code, newindicators):
 
 def completion_percentage(survey):
     stages = ['researcher', 'send', 'donorreview', 'pwyfreview',
-              'donorcomments', 'pwyffinal', 'finalised']
+              'cso', 'donorcomments', 'pwyffinal', 'finalised']
 
     # can ValueError; used to raise NameError
     idx = stages.index(survey.Workflow.name)
 
-    return float(idx + 1) / 7 * 100
+    return float(idx + 1) / 8 * 100
 
 @app.route("/organisations/<organisation_code>/survey/")
 @usermanagement.perms_required('survey', 'view')

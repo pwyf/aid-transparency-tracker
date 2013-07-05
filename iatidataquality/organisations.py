@@ -206,6 +206,7 @@ def get_survey_data_and_workflow(organisation_survey, surveydata):
     data = {
         "donorreview": ("researcher", 'donorreview'),
         "pwyfreview": ("researcher", 'donorreview'),
+        "cso": ("researcher", 'donorreview'),
         "donorcomments": ("pwyfreview", 'donorcomments'),
         "pwyffinal": ("pwyfreview", 'donorcomments'),
         "finalised": ("pwyffinal", 'finalised')
