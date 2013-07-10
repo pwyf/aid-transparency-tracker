@@ -18,6 +18,8 @@ import csv
 import util
 import unicodecsv
 import datetime
+import dqindicators
+import dqorganisations
 
 def getIDorNone(sqlalchemy_object):
     if sqlalchemy_object is not None:
@@ -443,3 +445,23 @@ def updateWorkflow(data):
         return checkW
     else:
         return None
+
+def updateSurveyData(organisation_code):
+    # for each currently active stage of the workflow
+    # check if there is an indicator at each stage of the workflow
+    # if not, then create one
+
+    allindicators = dqindicators.indicators("2013 Index")
+    allindicators = map(lambda x: x.id, allindicators)
+  
+    organisation = dqorganisations.organisations(organisation_code)
+    org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"].keys()
+
+    survey_data = getSurveyDataAllWorkflows(organisation_code)
+    for k, v in survey_data.items():
+        survey_indicators = v.keys()
+        for indicator in org_indicators:
+            if indicator not in survey_indicators:
+                print "NOT FOUND:", indicator
+            else:
+                print "FOUND:", indicator
