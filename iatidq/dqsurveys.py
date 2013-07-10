@@ -457,11 +457,26 @@ def updateSurveyData(organisation_code):
     organisation = dqorganisations.organisations(organisation_code)
     org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"].keys()
 
+    survey = getSurvey(organisation_code).OrganisationSurvey
+
     survey_data = getSurveyDataAllWorkflows(organisation_code)
-    for k, v in survey_data.items():
+    for workflow_name, v in survey_data.items():
+        workflow = workflows(workflow_name)
         survey_indicators = v.keys()
         for indicator in org_indicators:
             if indicator not in survey_indicators:
                 print "NOT FOUND:", indicator
+                data = {
+                    'organisationsurvey_id' : survey.id,
+                    'workflow_id' : workflow.Workflow.id,
+                    'indicator_id' : indicator,
+                    'published_status' : None,
+                    'published_source' : None,
+                    'published_comment' : None,
+                    'published_accepted' : None,
+                    'published_format' : None,
+                    'ordinal_value' : None
+                }
+                addSurveyData(data)
             else:
                 print "FOUND:", indicator
