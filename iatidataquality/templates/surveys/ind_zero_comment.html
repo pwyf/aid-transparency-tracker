@@ -88,20 +88,19 @@
 		{% if workflow.Workflow.name != 'cso' %}
             {% if surveydata.cso %}
             {% set data = surveydata['cso'] %}
+            {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+            {% set accepted = 'Agree' %}
+            {% set accepted_class = 'success' %}
+            {% else %}
+            {% set accepted = 'Disagree' %}
+            {% set accepted_class = 'important' %}
+            {% endif %}
             <tr>
                 <td><span class="muted">Independent reviewer</span></td>
                 <td>
-                  {% if indicator.indicator.indicator_ordinal %}
-                    <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Independent reviewer">
-                    {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
-                  {% else %}
-                    <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Independent Reviewer">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
-                  {% endif %}<br />
-                <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Independent Reviewer">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
+                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
                 </td>
-                <td class="restrict_text">
-                {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
-                </td>
+                <td class="restrict_text"></td>
                 <td class="restrict_text">
                 {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
                 </td>
@@ -130,7 +129,7 @@
             </tr>
             {% endif %}
         {% endif %}
-        {% if (surveydata.donorcomments) and (workflow.Workflow.name != 'donorcomments') %}
+        {% if (surveydata.donorcomments) and (workflow.Workflow.name != 'donorcomments') and (workflow.Workflow.name!='cso') %}
         {% set data = surveydata['donorcomments'] %}
         {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
         {% set accepted = 'Agree' %}

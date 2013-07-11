@@ -11,6 +11,9 @@
 {% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) and (workflow.Workflow.name != 'donorcomments') %}
   {% set rows = rows-1 %}
 {% endif %}
+{% if (workflow.Workflow.name != 'donorcomments') and ('donorcomments' in surveydata) %}
+  {% set rows = rows-1 %}
+{% endif %}
 {% if ('pwyffinal' in surveydata) and (workflow.Workflow.name != 'donorcomments') %}
   {% set rows = rows-1 %}
 {% endif %}
