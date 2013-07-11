@@ -93,7 +93,10 @@ def users_edit(username=None):
             user = {}
             permissions = {}
 
-    # permissions may be undefined! NameError!
+    try:
+        print permissions
+    except UnboundLocalError:
+        permissions = {}
 
     return render_template("users_edit.html", 
                            user=user,
