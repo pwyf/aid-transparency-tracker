@@ -84,6 +84,52 @@
             </td>
         </tr>
         {% endif %}
+        
+		{% if workflow.Workflow.name != 'cso' %}
+            {% if surveydata.cso %}
+            {% set data = surveydata['cso'] %}
+            <tr>
+                <td><span class="muted">Independent reviewer</span></td>
+                <td>
+                  {% if indicator.indicator.indicator_ordinal %}
+                    <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Independent reviewer">
+                    {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+                  {% else %}
+                    <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Independent Reviewer">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+                  {% endif %}<br />
+                <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Independent Reviewer">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
+                </td>
+                <td class="restrict_text">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
+                </td>
+                <td class="restrict_text">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            </tr>
+            {% endif %}
+
+            {% if surveydata.pwyffinal %}
+            {% set data = surveydata['pwyffinal'] %}
+            <tr>
+                <td><span class="muted">PWYF Final Assessment</span></td>
+                <td>
+                  {% if indicator.indicator.indicator_ordinal %}
+                    <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Final Assessment">
+                    {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+                  {% else %}
+                    <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Final Assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+                  {% endif %}<br />
+                <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF Final Assessment">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
+                </td>
+                <td class="restrict_text">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
+                </td>
+                <td class="restrict_text">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            </tr>
+            {% endif %}
+        {% endif %}
         {% if (surveydata.donorcomments) and (workflow.Workflow.name != 'donorcomments') %}
         {% set data = surveydata['donorcomments'] %}
         {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}

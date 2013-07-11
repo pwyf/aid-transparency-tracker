@@ -8,10 +8,10 @@
 {% if not workflow.Workflow.name in surveydata %}
   {% set rows = rows+1 %}
 {% endif %}
-{% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) %}
+{% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) and (workflow.Workflow.name != 'donorcomments') %}
   {% set rows = rows-1 %}
 {% endif %}
-{% if ('pwyffinal' in surveydata) %}
+{% if ('pwyffinal' in surveydata) and (workflow.Workflow.name != 'donorcomments') %}
   {% set rows = rows-1 %}
 {% endif %}
 
