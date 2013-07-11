@@ -49,6 +49,7 @@ def _importUserData(fh):
         perms = []
         if active == 'active':
             perms = [
+                ('survey_cso', 'view'),
                 ('cso', 'role'),
                 ('organisation', 'view'),
                 ('survey_pwyfreview', 'view'),
@@ -89,8 +90,7 @@ def _importUserData(fh):
                 perms += [
                     ('organisation', 'edit'),
                     ('survey_donorreview', 'edit'),
-                    ('survey_donorcomments', 'edit'),
-                    ('survey_finalised', 'edit'),
+                    ('survey_donorcomments', 'edit')
                     ('organisation_feedback', 'create')
                     ]
 
