@@ -43,15 +43,20 @@
         {% else %}
         {% set data = surveydata.researcher %}  
         {% endif %}
-        <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
+
+        <tr id="tr{{indicator.indicator.id}}" class="commitment-indicator">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
+        <div class="control-group">
+            <div class="controls">
         {% if workflow.Workflow.name=='donorreview' %}
-            <input type="hidden" name="{{indicator.indicator.id}}-ordinal_value" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}"{%endif%} /><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
+            <input type="hidden" name="{{indicator.indicator.id}}-ordinal_value" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}" class="commitment-indicator-value"{% else %} class="commitment-indicator-value" value="0"{%endif%} /><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
             {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}
         {% else %}
-            <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea>
+            <textarea name="{{indicator.indicator.id}}-ordinal_value" class="commitment-indicator-value">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea>
         {% endif %}
+            </div>
+        </div>
         </td>
 
         <td class="restrict_text_commitment">
