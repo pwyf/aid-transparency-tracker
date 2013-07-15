@@ -623,7 +623,7 @@ class OrganisationSurveyData(db.Model):
     published_comment = Column(UnicodeText)
     published_format = Column(Integer, ForeignKey('publishedformat.id'))
     published_accepted = Column(Integer)
-    ordinal_value = Column(Integer)
+    ordinal_value = Column(Float(precision=2))
     __table_args__ = (UniqueConstraint('organisationsurvey_id',
                                        'indicator_id',
                                        'workflow_id'),)

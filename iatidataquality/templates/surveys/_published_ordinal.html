@@ -1,7 +1,7 @@
 {% macro published_ordinal(data, publishedstatuses, publishedformats, indicator, years) %}
         {% for i, year in years %}
             <label for="{{indicator.indicator.id}}-ordinal_value-{{i}}">
-            <input type="radio" name="{{indicator.indicator.id}}-ordinal_value" value="{{i}}" id="{{indicator.indicator.id}}-ordinal_value-{{i}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.ordinal_value == i %} checked{%endif%}> {{year.text}}</input></label>
+            <input type="radio" name="{{indicator.indicator.id}}-ordinal_value" value="{{i}}" id="{{indicator.indicator.id}}-ordinal_value-{{i}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.ordinal_value|int == i %} checked{%endif%}> {{year.text}}</input></label>
         {% endfor %}
 
         {% if not indicator.indicator.indicator_noformat %}
