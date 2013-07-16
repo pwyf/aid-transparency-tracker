@@ -31,7 +31,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqorganisations, dqpackages, dqaggregationtypes, dqsurveys
+from iatidq import dqorganisations, dqpackages, dqaggregationtypes, dqsurveys, donorresponse
 import iatidq.inforesult
 from iatidq.models import *
 
@@ -670,9 +670,19 @@ def add_packagegroup(organisation):
             'error')
 
 def update_organisation(organisation_code):
+    if 'no_independent_reviewer' in request.form:
+        irev=True
+    else:
+        irev=False
+    if 'organisation_responded' in request.form:
+        orgresp=donorresponse.RESPONSE_TYPES[request.form['organisation_responded']]["id"]
+    else:
+        orgresp=None
     data = {
         'organisation_code': request.form['organisation_code'],
-        'organisation_name': request.form['organisation_name']
+        'organisation_name': request.form['organisation_name'],
+        'no_independent_reviewer': irev,
+        'organisation_responded': orgresp
         }
     organisation = dqorganisations.updateOrganisation(
         organisation_code, data)
@@ -700,6 +710,7 @@ def organisation_edit(organisation_code=None):
         organisation=organisation, 
         packages=packages, 
         packagegroups=packagegroups,
+        donorresponses=donorresponse.RESPONSE_TYPES,
         organisationpackages=organisationpackages,
         admin=usermanagement.check_perms('admin'),
         loggedinuser=current_user)
