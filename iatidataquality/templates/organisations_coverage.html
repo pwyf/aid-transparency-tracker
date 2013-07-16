@@ -22,7 +22,7 @@
     <tr>
 	<td><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{ organisation.organisation_name }}</a></td>
     <td>{% if coverage_data[organisation.id].found is not none %}{{coverage_data[organisation.id].found}}{% endif %}</td>
-    <td>{{coverage_data[organisation.id].current}}</td>
+    <td>{% if coverage_data[organisation.id].total is not none %}{{coverage_data[organisation.id].total}}{% endif %}</td>
     <td>{% if coverage_data[organisation.id].found is not none %}{{coverage_data[organisation.id].pct}}{% endif %}</td>
     </tr>
 	{% endfor %}
