@@ -12,7 +12,17 @@
     <div class="pull-right"><a class="btn btn-success" href="{{url_for('organisation_new')}}"><i class="icon-plus icon-white"></i><b> New organisation</b></a></div>
     {% endif %}
 	<h1>Organisations &raquo; Coverage</h1>
-    <p class="lead"> The following organisations are included in the 2013 Aid Transparency Index. Each organisation's page contains an initial assessment of the quality of the aid information they publish. Publish What You Fund is currently working with these organisations and independent reviewers to verify this data. We will publish more detailed analysis in October 2013.</p>
+    <p class="lead">This table shows the total value of expenditure and disbursements under transactions for current activities.</p>
+    <div class="alert alert-info">
+    <h2>Be careful using this data!</h2>
+    <p>There are various reasons why the figures in this table may be inaccurate or misleading:</p>
+    <ul>
+        <li>Some organisations have not published transactions yet, and only budgets.</li>
+        <li>The total spend figures are based on the most recent data available &ndash; e.g. from OECD/DAC (ODA figures), or from the organisation's annual report.</li>
+        <li>Concessional loans are also counted towards ODA figures, but they are not counted in the E&D current column, so for organisations that give a significant amount of loans, the amounts will be lower than expected.</li>
+        <li>The time period used for "current" transactions may miss data just before or just after the cut-off windows.</li>
+    </ul>
+    </div>
     <table class="table" id="organisations">
     <thead>
     <th>Organisation name</th><th>E&D current</th><th>Total spend</th><th>E&D current/total spend</th>
