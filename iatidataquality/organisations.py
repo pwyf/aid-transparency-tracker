@@ -81,6 +81,23 @@ def get_summary_data(organisation, aggregation_type):
     except Exception, e:
         return None
 
+@app.route("/organisations/coverage/")
+@usermanagement.perms_required()
+def organisations_coverage():
+    organisations = dqorganisations.organisations()
+    coverage_data = {}
+
+    for organisation in organisations:
+        org_packages = dqorganisations.organisationPackages(organisation.organisation_code)
+        irs = [ir for ir in get_info_results(org_packages, organisation)]
+        coverage_data[organisation.id] = (get_coverage(organisation, irs))
+    return render_template("organisations_coverage.html",
+        organisations=organisations,
+        coverage_data=coverage_data,
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user
+        )
+
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
