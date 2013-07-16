@@ -71,6 +71,13 @@
         </ol>
         <p><b>All data and comments collected will be made public once the 2013 
               Index is published.</b></p>
+        {% if organisation.organisation_responded and organisation.organisation_responded >=3 %}
+        <hr />
+        <div class="alert alert-danger">
+        <h5>{{donorresponses[organisation.organisation_responded].text|capitalize}}</h5>
+        <p>{{organisation.organisation_name}} {{donorresponses[organisation.organisation_responded].description}}.</p>
+        </div>
+        {% endif %}
   		<a href="{{ url_for('about_independent') }}" target="_blank" class="btn">Detailed guidelines &raquo;</a>
 		{% endif %}
 {% endblock %}
