@@ -1,0 +1,32 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}Organisations &raquo; Coverage{% endblock %}
+{% block content %}
+   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script >
+    $(function() {
+    $("table#organisations").tablesorter({ sortList: [[0,0]] });
+    });
+
+    </script>
+    {% if admin %}
+    <div class="pull-right"><a class="btn btn-success" href="{{url_for('organisation_new')}}"><i class="icon-plus icon-white"></i><b> New organisation</b></a></div>
+    {% endif %}
+	<h1>Organisations &raquo; Coverage</h1>
+    <p class="lead"> The following organisations are included in the 2013 Aid Transparency Index. Each organisation's page contains an initial assessment of the quality of the aid information they publish. Publish What You Fund is currently working with these organisations and independent reviewers to verify this data. We will publish more detailed analysis in October 2013.</p>
+    <table class="table" id="organisations">
+    <thead>
+    <th>Organisation name</th><th>E&D current</th><th>Total spend</th><th>E&D current/total spend</th>
+    </thead>
+    <tbody>
+	{% for organisation in organisations %}
+    <tr>
+	<td><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{ organisation.organisation_name }}</a></td>
+    <td>{% if coverage_data[organisation.id].found is not none %}{{coverage_data[organisation.id].found}}{% endif %}</td>
+    <td>{{coverage_data[organisation.id].current}}</td>
+    <td>{% if coverage_data[organisation.id].found is not none %}{{coverage_data[organisation.id].pct}}{% endif %}</td>
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+
+{% endblock %}
