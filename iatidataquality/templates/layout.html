@@ -65,8 +65,9 @@
                 </a>
                 <ul class="dropdown-menu">
                   {% if admin %}
-                  <li{% if active_page == "pc" %} class="active"{%endif%}><a href="{{url_for('organisation_conditions')}}">Organisation conditions</a></li>
+                  <li{% if active_page == "organisations_coverage" %} class="active"{%endif%}><a href="{{url_for('organisations_coverage')}}">Organisations coverage</a></li>
                   <li{% if active_page == "import_tests" %} class="active"{%endif%}><a href="{{url_for('import_tests')}}">Import tests</a></li>
+                  <li{% if active_page == "pc" %} class="active"{%endif%}><a href="{{url_for('organisation_conditions')}}">Organisation conditions</a></li>
                   <li{% if active_page == "import_conditions" %} class="active"{%endif%}><a href="{{url_for('import_organisation_conditions')}}">Import organisation conditions</a></li>
                   <li{% if active_page == "registry_refresh" %} class="active"{%endif%}><a href="{{url_for('registry_refresh')}}">Refresh from Registry</a></li>
                   <li{% if active_page == "registry_download" %} class="active"{%endif%}><a href="{{url_for('registry_download')}}">Run tests</a></li>

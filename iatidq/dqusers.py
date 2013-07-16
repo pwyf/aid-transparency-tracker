@@ -111,7 +111,7 @@ def _importUserData(fh):
             if role == 'donor':
                 permissions += getDonorPermissions(organisation_id, 
                         role, active, primary, user)
-            elif role == 'CSO':
+            elif role == 'cso':
                 permissions += getCSOPermissions(organisation_id, 
                         role, active, primary, user)
             elif role == 'admin':
