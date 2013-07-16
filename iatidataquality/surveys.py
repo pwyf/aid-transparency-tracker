@@ -22,7 +22,7 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqindicators, dqsurveys, dqorganisations, dqusers
+from iatidq import dqindicators, dqsurveys, dqorganisations, dqusers, donorresponse
 from iatidq.models import *
 
 import usermanagement
@@ -265,6 +265,7 @@ def organisation_survey_view(organisation_code, workflow,
     years = get_ordinal_values_years()
     year_data = dict(years)
     years.pop()
+    donorresponses = donorresponse.RESPONSE_IDS
 
     old_publication_status = get_old_publication_status()
 
