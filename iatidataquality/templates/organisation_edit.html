@@ -20,6 +20,20 @@
     <td>Organisation code:</td><td><input type="text" name="organisation_code" value="{{organisation.organisation_code}}"/></td>
     </tr>
     <tr>
+        <td>Organisation responded:</td>
+        <td>
+            <select name="organisation_responded">
+            {% for dr in donorresponses.items() %}
+            <option value="{{dr[0]}}" {% if dr[1].id==organisation.organisation_responded %}selected{% endif %}>{{dr[1].text|title}}</option>
+            {% endfor %}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>No independent reviewer:</td>
+        <td><input type="checkbox" name="no_independent_reviewer" value="1" {% if organisation.no_independent_reviewer %}checked{%endif%}/></td>
+    </tr>
+    <tr>
     <td colspan="2"><input type="submit" value="Update" class="btn" name="updateorganisation"/></td>
     </tr>
     </tbody>
