@@ -415,6 +415,8 @@ class Organisation(db.Model):
     organisation_largest_recipient_source = Column(UnicodeText)
     frequency = Column(UnicodeText)
     frequency_comment = Column(UnicodeText)
+    no_independent_reviewer=Column(Boolean)
+    organisation_responded=Column(Integer)
     __table_args__ = (UniqueConstraint('organisation_name'),
                       UniqueConstraint('organisation_code'))
     # organisation_code is also used to communicate
