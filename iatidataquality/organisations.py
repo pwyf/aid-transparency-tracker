@@ -220,12 +220,16 @@ def get_ordinal_values_years():
     return map(struct, years)
 
 def get_survey_data_and_workflow(organisation_survey, surveydata):
+    # When provided with a particular organisation survey,
+    # this function takes the current workflow of that survey,
+    # and returns the relevant PWYF stage plus the existing
+    # donor stage name
     data = {
         "donorreview": ("researcher", 'donorreview'),
         "pwyfreview": ("researcher", 'donorreview'),
-        "cso": ("researcher", 'donorreview'),
-        "donorcomments": ("pwyfreview", 'donorcomments'),
+        "cso": ("pwyfreview", 'donorreview'),
         "pwyffinal": ("pwyfreview", 'donorcomments'),
+        "donorcomments": ("pwyffinal", 'donorcomments'),
         "finalised": ("pwyffinal", 'finalised')
         }
            
@@ -402,6 +406,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         indicator_name = i["name"]
         indicator_id = i["id"]
         indicator_category_name = i["indicator_category_name"]
+        indicator_subcategory_name = i["indicator_subcategory_name"]
     
         if (indicator_category_name == 'activity'):
             frequency_multiplier = freq
@@ -426,15 +431,17 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         frequency_multiplier=1
         if iati_manual == "commitment":
             indicator_description = i.description
-            indicator_category_name = i.indicator_category_name
+            indicator_category_name = "commitment"
             indicator_name = i.name
             indicator_id = i.id
+            indicator_subcategory_name=i.indicator_subcategory_name
             indicator_ordinal = 1
             iati_manual = "manual"
             survey_category = "commitment"
         else:
             indicator_description = i["description"]
             indicator_category_name = i["indicator_category_name"]
+            indicator_subcategory_name = i["indicator_subcategory_name"]
             indicator_name = i["name"]
             indicator_id = i["id"]
             indicator_ordinal = i["indicator_ordinal"]
@@ -492,8 +499,10 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             "id": organisation.organisation_code + "-" + indicator_name,
             "organisation_name": organisation.organisation_name, 
             "organisation_code": organisation.organisation_code, 
-            "indicator_category_name": indicator_category_name, 
+            "indicator_id": indicator_name, 
             "indicator_name": indicator_description, 
+            "indicator_category_name": indicator_category_name, 
+            "indicator_subcategory_name": indicator_subcategory_name, 
             "indicator_weight": "",
             "iati_manual": iati_manual,
             "publication_format": publication_format,
@@ -555,8 +564,10 @@ csv_fieldnames_index = [
     "id",
     "organisation_name",
     "organisation_code",
-    "indicator_category_name",
+    "indicator_id",
     "indicator_name",
+    "indicator_category_name",
+    "indicator_subcategory_name",
     "indicator_weight",
     "iati_manual",
     "publication_format",
