@@ -10,6 +10,22 @@
 from iatidq import db
 import models
 
+def addPackage(data):
+    checkP = models.Package.query.filter_by(
+            package_name=data['package_name']).first()
+    if not checkP:
+        with db.session.begin():
+            p = models.Package()
+            p.package_name = data['package_name']
+            p.package_title = data['package_title']
+            p.source_url = data['source_url']
+            p.man_auto = data['man_auto']
+            p.active=data['active']
+            db.session.add(p)
+        return p
+    else:
+        return False
+
 def package_status(package_id):
     return models.PackageStatus.query.filter_by(
         package_id=package_id).order_by("runtime_datetime desc").first()
