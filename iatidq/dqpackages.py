@@ -26,6 +26,23 @@ def addPackage(data):
     else:
         return False
 
+def updatePackage(data):
+    checkP = models.Package.query.filter_by(
+            id=data['package_id']).first()
+    checkOK = models.Package.query.filter_by(package_name=data['package_name']).first()
+    if checkP:
+        if (checkOK and checkOK.id!=checkP.id):
+            return False
+        with db.session.begin():
+            checkP.package_name = data['package_name']
+            checkP.package_title = data['package_title']
+            checkP.source_url = data['source_url']
+            checkP.man_auto = data['man_auto']
+            checkP.active=data['active']
+            db.session.add(checkP)
+        return checkP
+    return False
+
 def package_status(package_id):
     return models.PackageStatus.query.filter_by(
         package_id=package_id).order_by("runtime_datetime desc").first()
