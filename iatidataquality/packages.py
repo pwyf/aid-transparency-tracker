@@ -80,6 +80,51 @@ def package_aggregation(p, latest_runtime, aggregation_type):
             ).join(AggregateResult
             ).all()
                    
+@app.route("/packages/new/", methods=['POST', 'GET'])
+@app.route("/packages/edit/<id>/", methods=['POST', 'GET'])
+def packages_edit(id=None):
+    if request.method=='GET':
+        if id is not None:
+            package = dqpackages.packages(id)
+            if package.man_auto=='auto':
+                flash("That package is not a manual package, so it can't be edited.", 'error')
+                return redirect(url_for('packages'))
+        else:
+            package ={}
+        organisations=dqorganisations.organisations()
+        return render_template("package_edit.html", 
+             package=package,
+             organisations=organisations,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
+    else:
+        if 'active' in request.form:
+            active = True
+        else:
+            active = False
+
+        data = {
+            'package_name' : 'manual_' + request.form.get('package_name'),
+            'package_title' : request.form.get('package_title'),
+            'source_url' : request.form.get('source_url'),
+            'man_auto' : 'man',
+            'active': active
+        }
+        newpackage = dqpackages.addPackage(data)
+        if newpackage:
+            # attach package to organisation
+            flash("Added package", "success")
+            return redirect(url_for('packages_edit', id=newpackage.id))
+        else:
+            flash("Couldn't add package. Maybe that package name already exists?", "error")
+            organisations=dqorganisations.organisations()
+            data['package_name'] = request.form.get('package_name')
+            return render_template("package_edit.html", 
+                 package=data,
+                 organisations=organisations,
+                 admin=usermanagement.check_perms('admin'),
+                 loggedinuser=current_user)
+
 @app.route("/packages/")
 @app.route("/packages/<package_name>/")
 @app.route("/packages/<package_name>/runtimes/<runtime_id>/")
