@@ -196,7 +196,8 @@ def _updateOrganisationFrequency(fh):
 
 def organisations(organisation_code=None):
     if organisation_code is None:
-        return Organisation.query.all()
+        return Organisation.query.order_by(Organisation.organisation_name
+            ).all()
     else:
         return Organisation.query.filter_by(
             organisation_code=organisation_code).first()
