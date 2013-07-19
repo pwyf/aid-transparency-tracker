@@ -1,0 +1,48 @@
+{% set active_page='package'%}{% extends "layout.html" %}
+{% block title %}{%if package.id%}{{package.id}}{%else%}New{%endif%} &raquo; Package{% endblock %}
+{% block content %}
+    <form action="" method="post">
+    <h1>{%if package.id%}Edit manual package {{package.id}}{%else%}New manual package{%endif%}</h1>
+    <table class="table">
+    <thead>
+        <th>Item</th>
+        <th>Value</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Name</td>
+        <td>
+        <div class="input-prepend">
+        {% if not package.id %}<span class="add-on">manual_</span>{% endif %}
+        <input type="text" id="appendedPrependedInput"value="{{package.package_name}}" name="package_name" placeholder="e.g. dfid-tz" />
+        </div></td>
+    </tr>
+    <tr>
+        <td>Title</td>
+        <td><input type="text" value="{{package.package_title}}" name="package_title" placeholder="e.g. DFID Activity File Tanzania" /></td>
+    </tr>
+    <tr>
+        <td>URL</td>
+        <td><input type="text" value="{{package.source_url}}" name="source_url" placeholder="e.g. http://projects.dfid.gov.uk/iati/Country/TZ" /></td>
+    </tr>
+    <tr>
+        <td>Organisation</td>
+        <td><select name="organisation">
+        {% for organisation in organisations %}
+            <option value="{{organisation.organisation_code}}">{{organisation.organisation_name}}</option>
+        {% endfor%}
+        </select></td>
+    </tr>
+    <tr>
+        <td>Active</td>
+        <td><input type="checkbox" name="active" value="1"{% if not (package.active==0) %} checked{%endif%} /></td>
+    </tr>
+    <tr>
+    <td colspan="2">
+    <input type="submit" value="Update" class="btn" />
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </form>
+{% endblock %}
