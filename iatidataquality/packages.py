@@ -86,14 +86,23 @@ def packages_edit(id=None):
     if request.method=='GET':
         if id is not None:
             package = dqpackages.packages(id)
+            # Get only first organisation (this is a hack,
+            # but unlikely we will need to add a package
+            # to more than one org)
+            try:
+                package_org_id = dqpackages.packageOrganisations(id)[0].Organisation.id
+            except IndexError:
+                package_org_id=None
             if package.man_auto=='auto':
                 flash("That package is not a manual package, so it can't be edited.", 'error')
                 return redirect(url_for('packages'))
         else:
             package ={}
+            package_org_id = ""
         organisations=dqorganisations.organisations()
         return render_template("package_edit.html", 
              package=package,
+             package_org_id = package_org_id,
              organisations=organisations,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
@@ -104,26 +113,41 @@ def packages_edit(id=None):
             active = False
 
         data = {
-            'package_name' : 'manual_' + request.form.get('package_name'),
+            'package_name' : request.form.get('package_name'),
             'package_title' : request.form.get('package_title'),
             'source_url' : request.form.get('source_url'),
             'man_auto' : 'man',
             'active': active
         }
-        newpackage = dqpackages.addPackage(data)
-        if newpackage:
-            # attach package to organisation
-            flash("Added package", "success")
-            return redirect(url_for('packages_edit', id=newpackage.id))
+        package_org_id=request.form.get('organisation')
+        if id is not None:
+            data['package_id'] = id
+            package = dqpackages.updatePackage(data)
+            mode = 'updated'
         else:
-            flash("Couldn't add package. Maybe that package name already exists?", "error")
+            data['package_name'] = 'manual_' + data['package_name']
+            package = dqpackages.addPackage(data)
+            mode = 'added'
+        if package:
+            if (package_org_id is not None) and (package_org_id != ""):
+                pkorg = dqorganisations.addOrganisationPackage({
+                    'organisation_id': package_org_id,
+                    'package_id': package.id,
+                    'condition': None
+                })
+            # TODO: attach package to organisation
+            flash("Successfully "+mode+" package.", 'success')
+            return redirect(url_for('packages_edit', id=package.id))
+        else:
+            flash("There was an error, and the package could not be "+mode+".", "error")
             organisations=dqorganisations.organisations()
             data['package_name'] = request.form.get('package_name')
-            return render_template("package_edit.html", 
-                 package=data,
-                 organisations=organisations,
-                 admin=usermanagement.check_perms('admin'),
-                 loggedinuser=current_user)
+        return render_template("package_edit.html", 
+             package=data,
+             package_org_id = package_org_id,
+             organisations=organisations,
+             admin=usermanagement.check_perms('admin'),
+             loggedinuser=current_user)
 
 @app.route("/packages/")
 @app.route("/packages/<package_name>/")
