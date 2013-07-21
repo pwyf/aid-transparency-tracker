@@ -62,6 +62,7 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
 
         package.man_auto = 'auto'
         package.source_url = pkg['resources'][0]['url']
+        package.hash = pkg['resources'][0]['hash']
 
         copy_package_attributes(package, pkg)
         setup_package_group(package, pkg)
@@ -101,34 +102,60 @@ def actually_save_file(package_name, orig_url, pkg, runtime_id):
                       "  Couldn't test package %s" % package_name):
         dqruntests.start_testing(package_name)
 
+def actually_save_manual_file(package_name):
+    success = False
+    directory = app.config['DATA_STORAGE_DIR']
 
-def save_file(package_id, package_name, runtime_id):
-    registry = ckanclient.CkanClient(base_location=CKANurl)   
-    try:
-        pkg = registry.package_entity_get(package_name)
-        resources = pkg.get('resources', [])
-    except Exception, e:
-        print "Couldn't get URL from CKAN for package", package_name, e
-        return
+    package = models.Package.query.filter_by(
+        package_name=package_name).first()
 
-    print package_id, package_name, runtime_id
-    if resources == []:
-        return
-    if len(resources) > 1:
-        print "WARNING: multiple resources found; attempting to use first"
+    url = fixURL(package.source_url)
+    path = os.path.join(directory, package_name + '.xml')
 
-    url = resources[0]['url']
-    print url
+    success = manage_download(path, url)
 
-    with report_error("Saving %s" % url, None):
-        actually_save_file(package_name, url, pkg, runtime_id)
+    with db.session.begin():
+        package.hash = 'retrieved'
+        db.session.add(package)
+
+    with report_error("  Package tested",
+                      "  Couldn't test package %s" % package_name):
+        dqruntests.start_testing(package_name)
+
+
+def save_file(package_id, package_name, runtime_id, man_auto):
+    if man_auto == 'auto':
+        print "Trying to get auto package"
+        registry = ckanclient.CkanClient(base_location=CKANurl)
+        try:
+            pkg = registry.package_entity_get(package_name)
+            resources = pkg.get('resources', [])
+        except Exception, e:
+            print "Couldn't get URL from CKAN for package", package_name, e
+            return
+
+        print package_id, package_name, runtime_id
+        if resources == []:
+            return
+        if len(resources) > 1:
+            print "WARNING: multiple resources found; attempting to use first"
+
+        url = resources[0]['url']
+        print url
+
+        with report_error("Saving %s" % url, None):
+            actually_save_file(package_name, url, pkg, runtime_id)
+    else:
+        with report_error("Saving %s" % package_name, None):
+            actually_save_manual_file(package_name)
 
 def dequeue_download(body):
     args = json.loads(body)
     try:
         save_file(args['package_id'],
                   args['package_name'],
-                  args['runtime_id'])
+                  args['runtime_id'],
+                  args['man_auto'])
     except Exception:
         print sys.exc_info()
         print "Exception!!", e
