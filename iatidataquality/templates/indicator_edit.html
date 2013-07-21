@@ -42,6 +42,12 @@
         <td>Ignore format:</td><td><input type="checkbox" name="indicator_noformat" value="1" {% if indicator.indicator_noformat %}checked{%endif%} /></td>
     </tr>    
     <tr>
+        <td>Order:</td><td><input type="text" name="indicator_order" value="{{indicator.indicator_order}}" /></td>
+    </tr>
+    <tr>
+        <td>Weight:</td><td><input type="text" name="indicator_weight" value="{{indicator.indicator_weight}}" /></td>
+    </tr>
+    <tr>
     <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
     </tr>
     </tbody>
