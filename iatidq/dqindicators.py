@@ -349,3 +349,20 @@ def indicatorGroupTests(indicatorgroup_name=None, option=None):
         return checkIGT
     else:
         return False
+
+def disableUnassociatedTests(indicatorgroup_name):
+    utests = db.session.query(models.Test
+                                ).outerjoin(models.IndicatorTest, models.IndicatorTest.test_id==models.Test.id
+                                ).outerjoin(models.Indicator
+                                ).outerjoin(models.IndicatorGroup
+                                ).filter(models.IndicatorGroup.id==None
+                                ).filter(models.Test.id>0
+                                ).all()
+    count =0
+    with db.session.begin():
+        for utest in utests:
+            utest.active=False
+            db.session.add(utest)
+            count +=1
+    print "Deactivated", count, "tests"
+    return count
