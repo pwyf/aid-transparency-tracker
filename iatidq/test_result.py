@@ -10,3 +10,4 @@
 FAIL = 0
 PASS = 1
 ERROR = 2
+SKIP = 3
