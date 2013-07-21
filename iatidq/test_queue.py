@@ -55,16 +55,20 @@ def _test_elements(test_functions, codelists, add_result,
     def execute_test(xmldata, test_id, binary_test):
         data = reformat_test_data(xmldata, binary_test)
         try:
-            if test_functions[test_id](data):
+            result = test_functions[test_id](data)
+            if result == True:
                 return test_result.PASS
-            else:
+            elif result == False:
                 return test_result.FAIL
+            elif result == None:
+                return test_result.SKIP
         except:
             return test_result.ERROR
 
     def execute_and_record(xmldata, test):
         the_result = execute_test(xmldata, test.id, binary_test(test.name))
-        add_result(test.id, the_result)
+        if the_result != test_result.SKIP:
+            add_result(test.id, the_result)
 
     [ execute_and_record(data, test) for test in tests ]
 
