@@ -216,7 +216,9 @@ def addIndicator(data):
                 indicator_category_name = data.get("indicator_category_name"),
                 indicator_subcategory_name = data.get("indicator_subcategory_name"),
                 indicator_ordinal = data.get("indicator_ordinal", None),
-                indicator_noformat = data.get("indicator_noformat", None)
+                indicator_noformat = data.get("indicator_noformat", None),
+                indicator_order = data.get("indicator_order", None),
+                indicator_weight = data.get("indicator_weight", None)
                 )
             db.session.add(newI)
         return newI
@@ -240,6 +242,8 @@ def updateIndicator(indicatorgroup, indicator, data):
             checkI.indicator_subcategory_name = data.get("indicator_subcategory_name")
             checkI.indicator_ordinal = data.get("indicator_ordinal", None)
             checkI.indicator_noformat = data.get("indicator_noformat", None)
+            checkI.indicator_order = data.get("indicator_order", None)
+            checkI.indicator_weight = data.get("indicator_weight", None)
             db.session.add(checkI)
         return checkI
     else:
