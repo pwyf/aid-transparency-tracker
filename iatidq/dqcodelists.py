@@ -27,6 +27,12 @@ def generateCodelists():
         cl[codelist].append(code)
     return dict(cl)
 
+def generateACodelist(codelist_name):
+    codelist = db.session.query(models.CodelistCode.code
+            ).filter_by(models.Codelist.name==codelist_name
+            ).join(models.Codelist).all()
+    return codelist
+
 def handle_row(codelist, codelist_url, crow):
     #print crow
     with db.session.begin():
