@@ -9,7 +9,10 @@
 
     </script>
     <form action="" method="post">
-    <input type="submit" name="refresh" class="btn pull-right" value="Refresh package list from Registry"/>
+    <div class="pull-right">
+    <input type="submit" name="refresh" class="btn" value="Refresh package list from Registry"/><br /><br />
+    <a href="{{url_for('packages_edit')}}" class="btn btn-success"><i class="icon-plus icon-white"></i>Add manual package</a>
+    </div>
     <h1>Package management</h1>
     <p>Choose active packages</p>
     <p><input class="btn btn-success" type="submit" value="Activate selected packages" /></p>
