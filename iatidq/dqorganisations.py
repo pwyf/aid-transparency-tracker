@@ -400,7 +400,9 @@ def info_result_tuple(ir):
         'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name,
         'longdescription': ir.Indicator.longdescription,
         'indicator_noformat': ir.Indicator.indicator_noformat,
-        'indicator_ordinal': ir.Indicator.indicator_ordinal
+        'indicator_ordinal': ir.Indicator.indicator_ordinal,
+        'indicator_order': ir.Indicator.indicator_order,
+        'indicator_weight': ir.Indicator.indicator_weight
         }
 
     return (ir.Indicator.id, 
@@ -478,7 +480,9 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 'indicator_subcategory_name': indc.indicator_subcategory_name,
                 'longdescription': indc.longdescription,
                 'indicator_noformat': indc.indicator_noformat,
-                'indicator_ordinal': indc.indicator_ordinal
+                'indicator_ordinal': indc.indicator_ordinal,
+                'indicator_order': indc.indicator_order,
+                'indicator_weight': indc.indicator_weight
                 },
             'tests': {}
             }
