@@ -32,16 +32,18 @@ def clear_revisions():
             db.session.add(pkg)
 
 def packages_from_registry(registry_url):
-    offset = 0
-    while True:
-        data = urllib2.urlopen(registry_url % (offset), timeout=60).read()
-        print (registry_url % (offset))
-        data = json.loads(data)
+    #offset = 0
+    #while True:
+    #data = urllib2.urlopen(registry_url % (offset), timeout=60).read()
+    #print (registry_url % (offset))
+    data = urllib2.urlopen(registry_url, timeout=60).read()
+    print registry_url
+    data = json.loads(data)
 
-        if len(data["results"]) < 1:
-            break          
+    #if len(data["results"]) < 1:
+    #    break          
 
-        for pkg in data["results"]:
-            yield pkg
+    for pkg in data["data"]:
+        yield pkg
 
-        offset += 1000
+    #offset += 1000
