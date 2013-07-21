@@ -28,13 +28,17 @@ def generateCodelists():
     return dict(cl)
 
 def generateACodelist(codelist_name):
-    codelist = db.session.query(models.CodelistCode.code
-            ).filter_by(models.Codelist.name==codelist_name
+    codelist = db.session.query(models.CodelistCode.name, 
+                                models.CodelistCode.code
+            ).filter(models.Codelist.name==codelist_name
             ).join(models.Codelist).all()
     return codelist
 
+def reformatCodelist(codelist_name):
+    codelist = generateACodelist(codelist_name)
+    return dict(map(lambda x: (x.name, x.code), codelist))
+
 def handle_row(codelist, codelist_url, crow):
-    #print crow
     with db.session.begin():
         codelistcode = models.CodelistCode.query.filter_by(
             code=crow['code'], codelist_id=codelist.id).first()
@@ -47,6 +51,7 @@ def handle_row(codelist, codelist_url, crow):
             codelist_id = codelist.id
             )
         codelistcode.source = codelist_url
+        db.session.add(codelistcode)
 
 def handle_codelist(codelists_url, row):
     with db.session.begin():
