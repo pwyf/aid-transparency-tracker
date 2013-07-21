@@ -1,6 +1,8 @@
 from lxml import etree
 import datetime
 import re
+from iatidq import dqcodelists
+
 # Tested against:
 #   asdb-org.xml; minbuza_nl-organisation.xml; dfid-org.xml; 
 #   acdi_cida-org.xml; bmz-org.xml
@@ -119,18 +121,27 @@ def total_country_budgets(doc, totalbudgets):
     [make_country_budget(year, budgetdata, 
         recipient_country_budgets) for year in years]
 
+    def getCPAAdjustedPercentage(total_countries, total_year):
+        cpa = 0.2136
+        total_cpa_adjusted = float(total_year)*cpa
+        
+        percentage = (float(total_countries)/float(total_cpa_adjusted))*100
+        if percentage > 100:
+            return 100.00
+        else:
+            return percentage
+
     def generate_total_years_data(budgetdata, year):
         total_countries = budgetdata['summary']['total_amount'][year]
         total_all = totalbudgets[year]['amount']
         try:
-            budgetdata['summary']['total_pct'][year] = ((float(total_countries)/float(total_all))*100)
+            budgetdata['summary']['total_pct'][year] = getCPAAdjustedPercentage(total_countries, total_all)
         except ZeroDivisionError:
             # Use current year's budget
-            pass
-        try:
-            budgetdata['summary']['total_pct'][year] = ((float(total_countries)/float(totalbudgets[0]['amount']))*100)
-        except ZeroDivisionError:
-            budgetdata['summary']['total_pct'][year] = 0.00
+            try:
+                budgetdata['summary']['total_pct'][year] = getCPAAdjustedPercentage(total_countries, totalbudgets[0]['amount'])
+            except ZeroDivisionError:
+                budgetdata['summary']['total_pct'][year] = 0.00
         budgetdata['summary']['num_countries'] = len(budgetdata['countries'])
         return budgetdata
     
@@ -162,19 +173,38 @@ def country_strategy_papers(doc):
     total_countries = len(countries)
     strategy_papers = doc.xpath("//document-link[category/@code]")
 
+    countrycodelist = dqcodelists.reformatCodelist("Country")
+
     for code, name in countries.items():
         # Some donors have not provided the name of the country; the
         # country code could theoretically be looked up to find the 
         # name of the country
-        if name is not None:
-            for strategy_paper in strategy_papers:
-                title = strategy_paper.find('title').text
+        name = getCountryName(code, name, countrycodelist)
+        for strategy_paper in strategy_papers:
+            if name is not None:
+                title = strategy_paper.find('title').text.upper()
+                name = name.upper()
                 if re.compile("(.*)"+name+"(.*)").match(title):
                     try:
                         countries.pop(code)
                     except Exception:
                         pass
+    print "Remaining countries are", countries
+    print "All countries were", total_countries
     return 100-(float(len(countries))/float(total_countries))*100
+
+def getCountryName(code, name, countrycodelist):
+    print "Trying to get code", code, name
+    if name is not None:
+        print "Returning name"
+        return name
+    else:
+        try:
+            print "  Looked up", code
+            return countrycodelist[code]
+        except Exception:
+            print "  Could not lookup", code
+            return None
 
 def all_countries(doc):
 
