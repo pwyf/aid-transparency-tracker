@@ -105,6 +105,7 @@ class Package(db.Model):
     package_filetype = Column(UnicodeText)  
     package_revision_id = Column(UnicodeText)    
     active = Column(Boolean)
+    hash = Column(UnicodeText)
     __table_args__ = (UniqueConstraint('package_name'),)
 
     def __init__(self, man_auto=None, source_url=None):
