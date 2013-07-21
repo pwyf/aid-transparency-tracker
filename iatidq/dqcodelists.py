@@ -36,7 +36,7 @@ def generateACodelist(codelist_name):
 
 def reformatCodelist(codelist_name):
     codelist = generateACodelist(codelist_name)
-    return dict(map(lambda x: (x.name, x.code), codelist))
+    return dict(map(lambda x: (x.code, x.name), codelist))
 
 def handle_row(codelist, codelist_url, crow):
     with db.session.begin():
