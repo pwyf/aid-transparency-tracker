@@ -306,6 +306,8 @@ class Indicator(db.Model):
     indicator_subcategory_name = Column(UnicodeText)
     indicator_ordinal = Column(Boolean)
     indicator_noformat = Column(Boolean)
+    indicator_order = Column(Integer)
+    indicator_weight = Column(Float(precision=4))
 
     def setup(self,
                  name,
@@ -317,6 +319,8 @@ class Indicator(db.Model):
                  indicator_subcategory_name,
                  indicator_ordinal=None,
                  indicator_noformat=None,
+                 indicator_order=None,
+                 indicator_weight=None,
                  id=None):
         self.name = name
         self.description = description
@@ -327,6 +331,8 @@ class Indicator(db.Model):
         self.indicator_subcategory_name = indicator_subcategory_name
         self.indicator_ordinal = indicator_ordinal
         self.indicator_noformat = indicator_noformat
+        self.indicator_order = indicator_order
+        self.indicator_weight = indicator_weight
         if id is not None:
             self.id = id
 
