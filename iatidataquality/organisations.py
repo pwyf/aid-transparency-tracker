@@ -407,6 +407,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         indicator_id = i["id"]
         indicator_category_name = i["indicator_category_name"]
         indicator_subcategory_name = i["indicator_subcategory_name"]
+        indicator_order = i["indicator_order"]
+        indicator_weight = i["indicator_weight"]
     
         if (indicator_category_name == 'activity'):
             frequency_multiplier = freq
@@ -436,6 +438,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             indicator_id = i.id
             indicator_subcategory_name=i.indicator_subcategory_name
             indicator_ordinal = 1
+            indicator_order = i.indicator_order
+            indicator_weight = i.indicator_weight
             iati_manual = "manual"
             survey_category = "commitment"
         else:
@@ -445,6 +449,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             indicator_name = i["name"]
             indicator_id = i["id"]
             indicator_ordinal = i["indicator_ordinal"]
+            indicator_order = i["indicator_order"]
+            indicator_weight = i["indicator_weight"]
             survey_category = "publication"
         if surveydata:
             iati_data_quality_total_points = 0
@@ -503,7 +509,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             "indicator_name": indicator_description, 
             "indicator_category_name": indicator_category_name, 
             "indicator_subcategory_name": indicator_subcategory_name, 
-            "indicator_weight": "",
+            "indicator_order": indicator_order,
+            "indicator_weight": indicator_weight,
             "iati_manual": iati_manual,
             "publication_format": publication_format,
             "publication_format_points": str(publication_format_points),
@@ -568,6 +575,7 @@ csv_fieldnames_index = [
     "indicator_name",
     "indicator_category_name",
     "indicator_subcategory_name",
+    "indicator_order",
     "indicator_weight",
     "iati_manual",
     "publication_format",
