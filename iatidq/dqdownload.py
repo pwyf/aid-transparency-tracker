@@ -21,6 +21,7 @@ import package_status
 
 download_queue = 'iati_download_queue'
 
+IATIUPDATES_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title,revision_id&offset=%s&limit=1000"
 CKANurl = 'http://iatiregistry.org/api'
 
@@ -51,8 +52,8 @@ def get_package(pkg, package, runtime_id):
 
 def download_packages(runtime):
     # Check registry for packages list
-    registry_packages = [ (pkg["name"], pkg["revision_id"]) 
-                          for pkg in packages_from_registry(REGISTRY_URL) ]
+    registry_packages = [ (pkg["name"], pkg["hash"]) 
+                          for pkg in packages_from_registry(IATIUPDATES_URL) ]
 
     print "Found", len(registry_packages),"packages on the IATI Registry"
     print "Checking for updates, calculating and queuing packages;"
@@ -66,27 +67,41 @@ def download_packages(runtime):
     for package in packages:
         name = package.package_name
         print name
-        print package.package_revision_id
-    
-        try:
-            if package.package_revision_id != registry_packages[name]:
-                print "Need to update package", name
+        print package.hash
+        
+        # Handle automatically retrieved packages (from Registry)
+        if package.man_auto == 'auto':
+            try:
+                if package.hash != registry_packages[name]:
+                    print "Need to update package", name
+                    # need to add status here, because otherwise the status could 
+                    # be written to DB after the package has finished testing
+                    add_test_status(package.id, package_status.NEW)
+                    testing_packages.append(package.id)
+                    enqueue_download(package, runtime.id)
+                else:
+                    print "Packages have the same ID"
+                    print package.hash
+                    print registry_packages[name]
+            except KeyError, e:
+                if name not in registry_packages:
+                    print "name wasn't there"
+                    # TODO: handle deleted packages; for now just pass
+                    pass
+                else:
+                    raise Exception, e
+
+        # Handle manually added packages
+        else:
+            if ((package.hash == "") or (package.hash == None)):
+                print "Need to update manual package", name
                 # need to add status here, because otherwise the status could 
                 # be written to DB after the package has finished testing
                 add_test_status(package.id, package_status.NEW)
                 testing_packages.append(package.id)
                 enqueue_download(package, runtime.id)
             else:
-                print "Packages have the same ID"
-                print package.package_revision_id
-                print registry_packages[name]
-        except KeyError, e:
-            if name not in registry_packages:
-                print "name wasn't there"
-                # TODO: handle deleted packages; for now just pass
-                pass
-            else:
-                raise Exception, e
+                print "Not testing manual package, because it has not been set to refresh"
 
     print "Testing", len(testing_packages), "packages"
 
@@ -98,11 +113,17 @@ def download_package(runtime, package_name):
     registry = ckanclient.CkanClient(base_location=CKANurl)  
 
     pkg = registry.package_entity_get(package.package_name)
-
-    if pkg['revision_id'] == package.package_revision_id:
-        add_test_status(package.id, package_status.UP_TO_DATE)
-    else:
-        get_package(pkg, package, runtime.id)
+    try:
+        if pkg['resources'][0]['hash'] == package.hash:
+            add_test_status(package.id, package_status.UP_TO_DATE)
+        else:
+            get_package(pkg, package, runtime.id)
+    except IndexError:
+        print "Package has no resources"
+        pass
+    except KeyError:
+        print "Package resource has no hash"
+        pass
 
 def run(package_name=None):
     runtime = testrun.start_new_testrun()
@@ -116,6 +137,7 @@ def enqueue_download(package, runtime_id):
     args = {
         'package_id': package.id,
         'package_name': package.package_name,
-        'runtime_id': runtime_id
+        'runtime_id': runtime_id,
+        'man_auto': package.man_auto
         }
     queue.enqueue(download_queue, args)
