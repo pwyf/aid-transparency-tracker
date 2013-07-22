@@ -7,8 +7,32 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, dqorganisations
 import models
+import unicodecsv
+
+def importManualPackages(organisation_code, filename, prefix_url):
+    with file(filename) as fh:
+        packages = unicodecsv.DictReader(fh)
+        organisation = dqorganisations.organisations(organisation_code)
+        for package in packages:
+            data = {
+                'package_name': "manual_" + package['package_name'],
+                'package_title': package['package_title'],
+                'source_url': prefix_url + package['filename'],
+                'man_auto': 'man',
+                'active': True
+            }
+            print "Adding package", package["package_name"]
+            newp = addPackage(data)
+            if newp:
+                dqorganisations.addOrganisationPackage({
+                    'organisation_id': organisation.id,
+                    'package_id': newp.id,
+                    'condition': None
+                })
+    print "Success"
+            
 
 def addPackage(data):
     checkP = models.Package.query.filter_by(
