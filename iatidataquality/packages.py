@@ -81,16 +81,16 @@ def package_aggregation(p, latest_runtime, aggregation_type):
             ).all()
                    
 @app.route("/packages/new/", methods=['POST', 'GET'])
-@app.route("/packages/edit/<id>/", methods=['POST', 'GET'])
-def packages_edit(id=None):
+@app.route("/packages/<package_name>/edit/", methods=['POST', 'GET'])
+def packages_edit(package_name=None):
     if request.method=='GET':
-        if id is not None:
-            package = dqpackages.packages(id)
+        if package_name is not None:
+            package = dqpackages.packages_by_name(package_name)
             # Get only first organisation (this is a hack,
             # but unlikely we will need to add a package
             # to more than one org)
             try:
-                package_org_id = dqpackages.packageOrganisations(id)[0].Organisation.id
+                package_org_id = dqpackages.packageOrganisations(package.id)[0].Organisation.id
             except IndexError:
                 package_org_id=None
             if package.man_auto=='auto':
@@ -121,7 +121,8 @@ def packages_edit(id=None):
         }
         package_org_id=request.form.get('organisation')
         if id is not None:
-            data['package_id'] = id
+            pkg = dqpackages.packages_by_name(package_name)
+            data['package_id'] = pkg.id
             package = dqpackages.updatePackage(data)
             mode = 'updated'
         else:
@@ -137,7 +138,7 @@ def packages_edit(id=None):
                 })
             # TODO: attach package to organisation
             flash("Successfully "+mode+" package.", 'success')
-            return redirect(url_for('packages_edit', id=package.id))
+            return redirect(url_for('packages_edit', package_name=package.package_name))
         else:
             flash("There was an error, and the package could not be "+mode+".", "error")
             organisations=dqorganisations.organisations()
