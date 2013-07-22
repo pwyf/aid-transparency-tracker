@@ -26,7 +26,7 @@
     <tr>
 	<td><input type="hidden" name="package" value="{{pk.package_name}}" /><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td>
     <td>{{ pk.package_title }}</td>
-    <td>{% if pk.man_auto=='man' %}<a href="{{url_for('packages_edit', id=pk.id)}}"><i class="icon-pencil"></i> Manual</a>{% endif %}</td>
+    <td>{% if pk.man_auto=='man' %}<a href="{{url_for('packages_edit', package_name=pk.package_name)}}"><i class="icon-pencil"></i> Manual</a>{% endif %}</td>
     <td><input type="checkbox" {% if pk.active %}checked{%endif%} name="active_{{pk.package_name}}"/> <span>{% if pk.active %}Active{%endif%}</span></td>
     </tr>
 	{% endfor %}
