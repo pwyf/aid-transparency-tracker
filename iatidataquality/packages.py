@@ -117,7 +117,8 @@ def packages_edit(package_name=None):
             'package_title' : request.form.get('package_title'),
             'source_url' : request.form.get('source_url'),
             'man_auto' : 'man',
-            'active': active
+            'active': active,
+            'hash': request.form.get('hash')
         }
         package_org_id=request.form.get('organisation')
         if id is not None:
