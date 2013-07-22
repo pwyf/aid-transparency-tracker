@@ -35,6 +35,10 @@
         </select></td>
     </tr>
     <tr>
+        <td>Hash (leave blank to make this package update)</td>
+        <td><input type="text" value="{% if package.hash %}{{package.hash}}{% endif %}" name="hash" placeholder="" /></td>
+    </tr>
+    <tr>
         <td>Active</td>
         <td><input type="checkbox" name="active" value="1"{% if not (package.active==0) %} checked{%endif%} /></td>
     </tr>
