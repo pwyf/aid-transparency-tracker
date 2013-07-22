@@ -45,6 +45,7 @@ def addPackage(data):
             p.source_url = data['source_url']
             p.man_auto = data['man_auto']
             p.active=data['active']
+            p.hash=data['hash']
             db.session.add(p)
         return p
     else:
@@ -63,6 +64,7 @@ def updatePackage(data):
             checkP.source_url = data['source_url']
             checkP.man_auto = data['man_auto']
             checkP.active=data['active']
+            checkP.hash=data['hash']
             db.session.add(checkP)
         return checkP
     return False
