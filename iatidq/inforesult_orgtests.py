@@ -23,8 +23,12 @@ def fixVal(value):
     return float(value.replace('.0',''))    
 
 def date_later_than_now(date):
-    if datetime.datetime.strptime(date, "%Y-%m-%d") > datetime.datetime.utcnow():
-        return True
+    try:
+        if datetime.datetime.strptime(date, "%Y-%m-%d") > datetime.datetime.utcnow():
+            return True
+    except Exception:
+        # Some dates are not real dates...
+        pass
     return False
 
 def budget_within_year_scope(budget_end, year):
@@ -36,15 +40,19 @@ def budget_within_year_scope(budget_end, year):
     # Budgets are now within scope if there are at least 5 months
     # remaining (152 days).
 
-    now = datetime.datetime.now()
-    date_budget_end = datetime.datetime.strptime(budget_end, "%Y-%m-%d")
+    try:
+        now = datetime.datetime.now()
+        date_budget_end = datetime.datetime.strptime(budget_end, "%Y-%m-%d")
 
-    future = datetime.timedelta(days=152*year)
-    future_plus_oneyear = future+datetime.timedelta(days=365)
+        future = datetime.timedelta(days=152*year)
+        future_plus_oneyear = future+datetime.timedelta(days=365)
 
-    if ((date_budget_end > (now+future)) and 
-        (date_budget_end < (now+future_plus_oneyear))):
-        return True
+        if ((date_budget_end > (now+future)) and 
+            (date_budget_end < (now+future_plus_oneyear))):
+            return True
+    except Exception:
+        # Some dates are not real dates...
+        pass
 
     return False
 
@@ -190,20 +198,15 @@ def country_strategy_papers(doc):
                     except Exception:
                         pass
     print "Remaining countries are", countries
-    print "All countries were", total_countries
     return 100-(float(len(countries))/float(total_countries))*100
 
 def getCountryName(code, name, countrycodelist):
-    print "Trying to get code", code, name
     if name is not None:
-        print "Returning name"
         return name
     else:
         try:
-            print "  Looked up", code
             return countrycodelist[code]
         except Exception:
-            print "  Could not lookup", code
             return None
 
 def all_countries(doc):
