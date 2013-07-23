@@ -7,7 +7,8 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, dqorganisations
+from iatidq import db
+import dqorganisations
 import models
 import unicodecsv
 
