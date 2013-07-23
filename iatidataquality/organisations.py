@@ -768,7 +768,7 @@ def _organisation_indicators_summary(organisation, aggregation_type=2):
         return None
 
 
-    testing = [ (i["indicator_name"], i["results_pct"]) for i in summarydata.values() ]
+    testing = [ (i["indicator"]["name"], i["results_pct"]) for i in summarydata.values() ]
     print testing
     percentages = [ i["results_pct"] for i in summarydata.values() ]
     totalpct = reduce(operator.add, percentages, 0.0)
