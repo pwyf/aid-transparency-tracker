@@ -159,7 +159,7 @@
         <tr id="tr{{indicator.indicator.id}}">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" />
         {% if data and not d %}
-        <br /><i icon-class="icon-exclamation-sign"></i> NB: this indicator appeared in the survey since you started reviewing it.{% endif%}</td>
+        <br /><i class="icon-exclamation-sign"></i> new indicator{% endif%}</td>
         <td>
         <label for="{{indicator.indicator.id}}-agree-1">
         <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if agree %} checked{%endif%}> Agree</input>
