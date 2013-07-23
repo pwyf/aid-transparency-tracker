@@ -451,7 +451,7 @@ def repairSurveyData(organisation_code):
     # check if there is an indicator at each stage of the workflow
     # if not, then create one
     changes = False
-    changed_indicators = {}
+    changed_indicators = []
 
     allindicators = dqindicators.indicators("2013 Index")
     allindicators = map(lambda x: x.id, allindicators)
