@@ -150,7 +150,7 @@
         </tr>
         {% endif %}
         {% set data = surveydata[workflow.Workflow.name] %}
-        {% if data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted==0 %}
+        {% if data and data[indicator.indicator.id] and data[indicator.indicator.id].OrganisationSurveyData.published_accepted==0 %}
         {% set agree = True %}
         {% else %}
         {% set agree = False %}
