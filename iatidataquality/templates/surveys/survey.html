@@ -1,12 +1,21 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
 {% block title %}Survey &raquo; {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#tests").tablesorter({ sortList: [[0,0]] });
     });
     </script>
+    {% if not checksurveyOK %}
+        <div class="pull-right alert alert-warning">
+            <h5><i class="icon-info-sign"></i> This survey is broken.</h5>
+            <a href="{{url_for('organisation_survey_repair', organisation_code=organisation.organisation_code)}}" class="btn btn-warning">
+                <i class="icon-wrench icon-white"></i> 
+                <b>Repair survey</b>
+            </a>
+        </div>
+    {%endif%}
     <h1>Survey for <a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
     {% if survey %}
     <p class="lead">Survey currently in {{survey.Workflow.title}} mode; {{pct_complete|int}}% complete.</p>
