@@ -150,19 +150,27 @@
         </tr>
         {% endif %}
         {% set data = surveydata[workflow.Workflow.name] %}
+        {% if data and data[indicator.indicator.id].OrganisationSurveyData and data[indicator.indicator.id].OrganisationSurveyData.published_accepted==0 %}
+        {% set agree = False %}
+        {% else %}
+        {% set agree = True %}
+        {% endif %}
+        {% set d = data[indicator.indicator.id].OrganisationSurveyData %}
         <tr id="tr{{indicator.indicator.id}}">
-        <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" />
+        {% if data and not d %}
+        ERROR {% endif%}</td>
         <td>
         <label for="{{indicator.indicator.id}}-agree-1">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0) %} checked{%endif%}> Agree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if agree %} checked{%endif%}> Agree</input>
         <br />
         <span class="muted">Agree</span></label>
         <label for="{{indicator.indicator.id}}-agree-0">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0 %} checked{%endif%}> Disagree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if not agree %} checked{%endif%}> Disagree</input>
         <br />
         <span class="muted">Disagree</span></label>
         </td>
-        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{% if d %}{{d.published_comment}}{%endif%}</textarea></td>
         </tr>
 
 {% endmacro %}
