@@ -101,6 +101,16 @@ def completion_percentage(survey):
 
     return float(idx + 1) / 8 * 100
 
+@app.route("/organisations/<organisation_code>/survey/repair/")
+@usermanagement.perms_required('survey', 'view')
+def organisation_survey_repair(organisation_code):
+    if dqsurveys.repairSurveyData(organisation_code):
+        flash('Survey successfully repaired', 'success')
+    else:
+        flash('Survey could not be repaired', 'error')
+    return redirect(url_for('organisation_survey', organisation_code=organisation_code))
+    
+
 @app.route("/organisations/<organisation_code>/survey/")
 @usermanagement.perms_required('survey', 'view')
 def organisation_survey(organisation_code=None):
@@ -115,7 +125,8 @@ def organisation_survey(organisation_code=None):
     users = dqusers.surveyPermissions(organisation_code)
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
-       
+    checksurveyOK = dqsurveys.checkSurveyData(organisation_code)
+
     return render_template("surveys/survey.html", 
                            **locals())
 
