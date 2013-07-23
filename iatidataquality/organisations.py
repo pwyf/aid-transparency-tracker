@@ -77,7 +77,7 @@ def get_coverage(organisation, info_results):
 
 def get_summary_data(organisation, aggregation_type):    
     #try:
-    _organisation_indicators_summary(organisation, aggregation_type)
+    return _organisation_indicators_summary(organisation, aggregation_type)
     #except Exception, e:
     #    return None
 
