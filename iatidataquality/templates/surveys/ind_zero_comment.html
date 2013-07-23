@@ -151,10 +151,11 @@
         {% endif %}
         {% set data = surveydata[workflow.Workflow.name] %}
         {% if data and data[indicator.indicator.id].OrganisationSurveyData and data[indicator.indicator.id].OrganisationSurveyData.published_accepted==0 %}
-        {% set agree = True %}
-        {% else %}
         {% set agree = False %}
+        {% else %}
+        {% set agree = True %}
         {% endif %}
+        {% set data = data[indicator.indicator.id].OrganisationSurveyData %}
         <tr id="tr{{indicator.indicator.id}}">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
@@ -167,7 +168,7 @@
         <br />
         <span class="muted">Disagree</span></label>
         </td>
-        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data.published_comment}}{%endif%}</textarea></td>
         </tr>
 
 {% endmacro %}
