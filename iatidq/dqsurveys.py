@@ -451,12 +451,13 @@ def repairSurveyData(organisation_code):
     # check if there is an indicator at each stage of the workflow
     # if not, then create one
     changes = False
+    changed_indicators = {}
 
     allindicators = dqindicators.indicators("2013 Index")
     allindicators = map(lambda x: x.id, allindicators)
   
     organisation = dqorganisations.organisations(organisation_code)
-    org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"].keys()
+    org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"]
 
     survey = getSurvey(organisation_code).OrganisationSurvey
 
@@ -464,7 +465,7 @@ def repairSurveyData(organisation_code):
     for workflow_name, v in survey_data.items():
         workflow = workflows(workflow_name)
         survey_indicators = v.keys()
-        for indicator in org_indicators:
+        for indicator, indicatordata in org_indicators.items():
             if indicator not in survey_indicators:
                 print "NOT FOUND:", indicator
                 data = {
@@ -480,8 +481,10 @@ def repairSurveyData(organisation_code):
                 }
                 addSurveyData(data)
                 changes = True
+                changed_indicators.append(indicatordata["indicator_name"])
             else:
                 print "FOUND:", indicator
+    return {'changes': changes, 'changed_indicators': changed_indicators}
 
 def checkSurveyData(organisation_code):
     # for each currently active stage of the workflow
