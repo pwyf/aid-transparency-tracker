@@ -446,10 +446,11 @@ def updateWorkflow(data):
     else:
         return None
 
-def updateSurveyData(organisation_code):
+def repairSurveyData(organisation_code):
     # for each currently active stage of the workflow
     # check if there is an indicator at each stage of the workflow
     # if not, then create one
+    changes = False
 
     allindicators = dqindicators.indicators("2013 Index")
     allindicators = map(lambda x: x.id, allindicators)
@@ -478,5 +479,28 @@ def updateSurveyData(organisation_code):
                     'ordinal_value' : None
                 }
                 addSurveyData(data)
+                changes = True
             else:
                 print "FOUND:", indicator
+
+def checkSurveyData(organisation_code):
+    # for each currently active stage of the workflow
+    # check if there is an indicator at each stage of the workflow
+    # if not, then create one
+
+    allindicators = dqindicators.indicators("2013 Index")
+    allindicators = map(lambda x: x.id, allindicators)
+  
+    organisation = dqorganisations.organisations(organisation_code)
+    org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"].keys()
+
+    survey = getSurvey(organisation_code).OrganisationSurvey
+
+    survey_data = getSurveyDataAllWorkflows(organisation_code)
+    for workflow_name, v in survey_data.items():
+        workflow = workflows(workflow_name)
+        survey_indicators = v.keys()
+        for indicator in org_indicators:
+            if indicator not in survey_indicators:
+                return False
+    return True 
