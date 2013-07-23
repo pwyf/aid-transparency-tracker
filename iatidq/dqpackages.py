@@ -46,7 +46,7 @@ def addPackage(data):
             p.source_url = data['source_url']
             p.man_auto = data['man_auto']
             p.active=data['active']
-            p.hash=data['hash']
+            p.hash=data.get('hash')
             db.session.add(p)
         return p
     else:
