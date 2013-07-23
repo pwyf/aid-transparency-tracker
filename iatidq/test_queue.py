@@ -309,7 +309,7 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
                 import sys
                 import traceback
                 traceback.print_exc()
-                result = None
+                result = 0
             add_info_result(it.id, result)
 
     finally:
