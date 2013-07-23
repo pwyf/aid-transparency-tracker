@@ -121,7 +121,7 @@ def packages_edit(package_name=None):
             'hash': request.form.get('hash')
         }
         package_org_id=request.form.get('organisation')
-        if id is not None:
+        if package_name is not None:
             pkg = dqpackages.packages_by_name(package_name)
             data['package_id'] = pkg.id
             package = dqpackages.updatePackage(data)
