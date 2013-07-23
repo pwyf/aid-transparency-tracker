@@ -155,7 +155,9 @@
         {% else %}
         {% set agree = True %}
         {% endif %}
+        {% if data %}
         {% set d = data[indicator.indicator.id].OrganisationSurveyData %}
+        {% endif %}
         <tr id="tr{{indicator.indicator.id}}">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" />
         {% if data and not d %}
