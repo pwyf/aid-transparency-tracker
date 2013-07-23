@@ -104,13 +104,14 @@ def completion_percentage(survey):
 @app.route("/organisations/<organisation_code>/survey/repair/")
 @usermanagement.perms_required('survey', 'view')
 def organisation_survey_repair(organisation_code):
-    if dqsurveys.repairSurveyData(organisation_code):
-        flash('Survey successfully repaired', 'success')
+    status = dqsurveys.repairSurveyData(organisation_code)
+    if status['changes'] == True:
+        indicators = ", ".join(status['changed_indicators'])
+        flash('Survey successfully repaired indicators '+indicators, 'success')
     else:
         flash('Survey could not be repaired', 'error')
     return redirect(url_for('organisation_survey', organisation_code=organisation_code))
     
-
 @app.route("/organisations/<organisation_code>/survey/")
 @usermanagement.perms_required('survey', 'view')
 def organisation_survey(organisation_code=None):
