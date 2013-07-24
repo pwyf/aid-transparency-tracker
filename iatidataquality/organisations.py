@@ -505,6 +505,11 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
     except Exception:
         indicator_total_weighted_points = 0
 
+    try:
+        indicator_category_subcategory = indicator_category_name + "-" + indicator_subcategory_name
+    except Exception:
+        indicator_category_subcategory = ""
+
     out.writerow({
             "id": organisation.organisation_code + "-" + indicator_name,
             "organisation_name": organisation.organisation_name, 
@@ -514,6 +519,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             "indicator_name": indicator_description, 
             "indicator_category_name": indicator_category_name, 
             "indicator_subcategory_name": indicator_subcategory_name, 
+            "indicator_category_subcategory": indicator_category_subcategory,
             "indicator_order": indicator_order,
             "indicator_weight": indicator_weight,
             "iati_manual": iati_manual,
