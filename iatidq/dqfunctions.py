@@ -53,8 +53,6 @@ def packages_from_iati_registry(registry_url):
     while True:
         data = urllib2.urlopen(registry_url % (offset), timeout=60).read()
         print (registry_url % (offset))
-        data = urllib2.urlopen(registry_url, timeout=60).read()
-        print registry_url
         data = json.loads(data)
 
         if len(data["results"]) < 1:
