@@ -16,7 +16,7 @@ import ckanclient
 
 import util
 
-from dqfunctions import packages_from_registry
+from dqfunctions import packages_from_iati_registry
 
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
@@ -137,14 +137,14 @@ def refresh_package_by_name(package_name):
         
 def _refresh_packages():
     [ refresh_package(package) 
-      for package in packages_from_registry(REGISTRY_URL) ]
+      for package in packages_from_iati_registry(REGISTRY_URL) ]
 
 def matching_packages(regexp):
     import re
     import itertools
     r = re.compile(regexp)
 
-    pkgs = packages_from_registry(REGISTRY_URL)
+    pkgs = packages_from_iati_registry(REGISTRY_URL)
     pkgs = itertools.ifilter(lambda i: r.match(i["name"]), pkgs)
     for package in pkgs:
         yield package["name"]
