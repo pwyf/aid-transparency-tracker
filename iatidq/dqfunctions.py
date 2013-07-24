@@ -58,7 +58,7 @@ def packages_from_iati_registry(registry_url):
         if len(data["results"]) < 1:
             break          
 
-        for pkg in data["data"]:
+        for pkg in data["results"]:
             yield pkg
 
         offset += 1000
