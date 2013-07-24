@@ -500,11 +500,16 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             publication_format = "NO IATI DATA OR SURVEY DATA"
             publication_format_points = 0
             total_points = 0
+    try:
+        indicator_total_weighted_points = total_points * indicator_weight
+    except Exception:
+        indicator_total_weighted_points = 0
 
     out.writerow({
             "id": organisation.organisation_code + "-" + indicator_name,
             "organisation_name": organisation.organisation_name, 
             "organisation_code": organisation.organisation_code, 
+            "indicator_total_weighted_points": indicator_total_weighted_points,
             "indicator_id": indicator_name, 
             "indicator_name": indicator_description, 
             "indicator_category_name": indicator_category_name, 
@@ -571,6 +576,7 @@ csv_fieldnames_index = [
     "id",
     "organisation_name",
     "organisation_code",
+    "indicator_total_weighted_points",
     "indicator_id",
     "indicator_name",
     "indicator_category_name",
