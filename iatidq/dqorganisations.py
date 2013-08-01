@@ -495,9 +495,13 @@ def _organisation_indicators_inforesults(organisation):
                                      InfoResult.result_data,
                                      InfoResult.package_id,
                                      func.max(InfoResult.runtime_id)
+        ).filter(Organisation.organisation_code==organisation.organisation_code
         ).filter(InfoResult.organisation_id==organisation.id
         ).join(IndicatorInfoType
         ).join(InfoType
+        ).join(InfoResult
+        ).join(Package
+        ).join(OrganisationPackage
         ).group_by(Indicator,
                    InfoType,
                    InfoResult
