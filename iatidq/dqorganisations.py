@@ -21,8 +21,9 @@ import dqindicators
 import dqpackages
 import urllib2
 import datetime
+import json
 
-ORG_FREQUENCY_API_URL = "https://api.scraperwiki.com/api/1.0/datastore/sqlite?format=csv&name=iati_registry_updater_frequency_check&query=select+*+from+%60packagegroups_dates_data%60&apikey="
+ORG_FREQUENCY_API_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/publisher/frequency/"
 
 def update_model(src, dst, keys):
     for key in keys:
@@ -136,12 +137,13 @@ def downloadOrganisationFrequency():
     fh = urllib2.urlopen(ORG_FREQUENCY_API_URL)
     return _updateOrganisationFrequency(fh)
 
-def downloadOrganisationFrequencyFromFile():
+"""def downloadOrganisationFrequencyFromFile():
     filename = 'tests/iati_registry_updater_frequency_check.csv'
     with file(filename) as fh:
-        return _updateOrganisationFrequency(fh)
+        return _updateOrganisationFrequency(fh)"""
 
 def _updateOrganisationFrequency(fh):
+    """
     def check_data_last_four_months(packagegroup_name, packagegroups):
         fourmonths_ago = (datetime.datetime.utcnow()-datetime.timedelta(days=4*30)).date()
         lastfourmonth_dates = filter(lambda d: d>fourmonths_ago, packagegroups[packagegroup_name])
@@ -182,7 +184,25 @@ def _updateOrganisationFrequency(fh):
             else:
                 frequency = "less than quarterly"
                 comment = "Updated on average every " + str(avgmonths) + " days"
-            yield packagegroup, frequency, comment
+            yield packagegroup, frequency, comment"""
+
+    def get_frequency():
+        d = fh.read()
+        packagegroups = json.loads(d)["data"]
+        
+        for packagegroup in packagegroups:
+            freq = packagegroup["frequency_code"]
+
+            if freq==1:
+                frequency = "monthly"
+                comment = packagegroup["frequency_comment"]
+            elif freq ==2:
+                frequency = "quarterly"
+                comment = packagegroup["frequency_comment"]
+            else:
+                frequency = "less than quarterly"
+                comment = packagegroup["frequency_comment"]
+            yield packagegroup["publisher"], frequency, comment
 
     for packagegroup, frequency, comment in get_frequency():
         organisations = dqpackages.packageGroupOrganisations(packagegroup)
