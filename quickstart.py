@@ -85,6 +85,12 @@ def clear_revisionid(options):
 def import_codelists(options):
     iatidq.dqcodelists.importCodelists()
 
+def import_basic_countries(options):
+    filename = 'tests/countries_basic.csv'
+    codelist_name='countriesbasic'
+    codeist_description='Basic list of countries for running tests against'
+    iatidq.dqcodelists.add_manual_codelist(filename, codelist_name, codelist_description)
+
 def download(options):
     if options.minimal:
         for package_name, _ in which_packages:
