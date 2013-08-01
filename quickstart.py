@@ -150,6 +150,7 @@ commands = {
     "enroll_tests": (enroll_tests, "Enroll a CSV file of tests"),
     "clear_revisionid": (clear_revisionid, "Clear CKAN revision ids"),
     "import_codelists": (import_codelists, "Import codelists"),
+    "import_basic_countries": (import_basic_countries, "Import basic list of countries"),
     "download": (download, "Download packages"),
     "updatefrequency": (updatefrequency, "Update frequency"),
     "import_indicators": (
