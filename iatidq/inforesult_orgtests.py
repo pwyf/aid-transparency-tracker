@@ -181,7 +181,7 @@ def country_strategy_papers(doc):
     total_countries = len(countries)
     strategy_papers = doc.xpath("//document-link[category/@code]")
 
-    countrycodelist = dqcodelists.reformatCodelist("Country")
+    countrycodelist = dqcodelists.reformatCodelist("countriesbasic")
 
     for code, name in countries.items():
         # Some donors have not provided the name of the country; the
@@ -209,6 +209,14 @@ def getCountryName(code, name, countrycodelist):
         except Exception:
             return None
 
+def budget_has_value(recipient_country_budget):
+    try:
+        value = recipient_country_budget.xpath('value')[0].text
+        assert int(value)>0
+    except Exception:
+        return False
+    return True
+
 def all_countries(doc):
 
     # Get all countries that have any budget data at all,
@@ -222,7 +230,7 @@ def all_countries(doc):
 
         # Check if the country is still active: if there is 
         # an end date later than today, then include it
-        if (date_later_than_now(country_budget_date)):
+        if (date_later_than_now(country_budget_date) and budget_has_value(recipient_country_budget)):
             code = recipient_country_budget.find('recipient-country').get('code')
             name = recipient_country_budget.find('recipient-country').text
             countries[code] = name
