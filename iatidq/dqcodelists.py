@@ -53,6 +53,25 @@ def handle_row(codelist, codelist_url, crow):
         codelistcode.source = codelist_url
         db.session.add(codelistcode)
 
+def add_manual_codelist(filename, codelist_name, codelist_description):
+    f = open(filename)
+    codelist_data = unicodecsv.DictReader(f)
+    
+    with db.session.begin():
+        codelist = models.Codelist.query.filter(
+            models.Codelist.name==codelist_name).first()
+
+        if not codelist:
+            codelist = models.Codelist()
+        codelist.setup(
+            name = codelist_name,
+            description = codelist_description
+            )
+        codelist.source = filename
+        db.session.add(codelist)
+
+    [ handle_row(codelist, filename, crow) for crow in codelist_data ]
+
 def handle_codelist(codelists_url, row):
     with db.session.begin():
         codelist = models.Codelist.query.filter(
