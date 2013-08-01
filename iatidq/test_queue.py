@@ -59,12 +59,10 @@ def _test_elements(test_functions, codelists, add_result,
             if result == True:
                 return test_result.PASS
             elif result == None:
-                print "Skip test result"
                 return test_result.SKIP
             elif result == False:
                 return test_result.FAIL
         except:
-            print "ERROR"
             return test_result.ERROR
 
     def execute_and_record(xmldata, test):
