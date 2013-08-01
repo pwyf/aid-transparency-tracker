@@ -490,14 +490,14 @@ def _organisation_indicators(organisation, aggregation_type=2):
     return data
 
 def _organisation_indicators_inforesults(organisation):
-    inforesult_data = db.session.query(InfoType,
+    inforesult_data = db.session.query(Indicator,
+                                     InfoType,
                                      InfoResult.package_id,
                                      InfoResult.result_data,
-                                     func.max(InfoResult.runtime_id),
-                                     Indicator
+                                     func.max(InfoResult.runtime_id)
         ).filter(InfoResult.organisation_id==organisation.id
         ).join(IndicatorInfoType
-        ).join(Indicator
+        ).join(InfoType
         ).group_by(InfoResult,
                    Indicator,
                    InfoType
