@@ -492,7 +492,6 @@ def _organisation_indicators(organisation, aggregation_type=2):
 def _organisation_indicators_inforesults(organisation):
     inforesult_data = db.session.query(Indicator,
                                      InfoType,
-                                     InfoResult.package_id,
                                      InfoResult.result_data,
                                      func.max(InfoResult.runtime_id)
         ).filter(InfoResult.organisation_id==organisation.id
