@@ -212,7 +212,7 @@ def getCountryName(code, name, countrycodelist):
 def budget_has_value(recipient_country_budget):
     try:
         value = recipient_country_budget.xpath('value')[0].text
-        assert int(value)>0
+        assert int(float(value))>0
     except Exception:
         return False
     return True
