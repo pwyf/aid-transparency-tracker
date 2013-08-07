@@ -428,7 +428,7 @@ def info_result_tuple(ir):
     return (ir.Indicator.id, 
             {
             'results_num': 1,
-            'results_pct': ir.result_data,
+            'results_pct': ir.InfoResult.result_data,
             'indicator': ind,
             'tests': [
                 {'test': {
@@ -436,7 +436,7 @@ def info_result_tuple(ir):
                         'name': ir.InfoType.name, 
                         'description': ir.InfoType.description
                         }, 
-                 'results_pct': ir.result_data, 
+                 'results_pct': ir.InfoResult.result_data, 
                  'results_num': 1}
                 ]
             })
@@ -510,18 +510,27 @@ def _organisation_indicators(organisation, aggregation_type=2):
     return data
 
 def _organisation_indicators_inforesults(organisation):
-    inforesult_data = db.session.query(Indicator,
-                                     InfoType,
-                                     InfoResult.result_data,
-                                     InfoResult.package_id,
-                                     func.max(InfoResult.runtime_id)
+    # Get the maximum runtime ID for this organisation,
+    # for InfoResults that can be joined to an Indicator
+    #  -- if they can't be joined to an indicator then
+    #     the results just contain coverage data.
+    inforesult_runtime_id = db.session.query(
+                                    func.max(InfoResult.runtime_id).label('runtime_id')
         ).filter(InfoResult.organisation_id==organisation.id
-        ).join(IndicatorInfoType
         ).join(InfoType
-        ).join(InfoResult
-        ).group_by(Indicator,
-                   InfoType,
-                   InfoResult
+        ).join(IndicatorInfoType
+        ).first()
+    inforesult_data = db.session.query(InfoResult,
+                                     Indicator,
+                                     InfoType
+        ).filter(InfoResult.organisation_id==organisation.id
+        ).filter(InfoResult.runtime_id==inforesult_runtime_id.runtime_id
+        ).join(InfoType
+        ).join(IndicatorInfoType
+        ).join(Indicator
+        ).group_by(InfoResult,  
+                   Indicator,
+                   InfoType                   
         ).all()
     return inforesult_data
 
