@@ -32,7 +32,7 @@ def get_package(pkg, package, runtime_id):
     # recently than the database, then download it again
     check_package = package
 
-    if ((package.package_revision_id) != (pkg['revision_id'])):
+    if ((package.hash) != (pkg['resources'][0]['hash'])):
         # if the package has been updated, 
         # then download it and update the package data
         update_package = True
