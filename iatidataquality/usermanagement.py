@@ -113,9 +113,6 @@ def check_perms(name, method=None, kwargs=None):
         return False
 
     if name.startswith('survey'):
-        # FIXME: un-hack this when you want people to look at 
-        # surveys again
-        return False
         if kwargs:
             value = kwargs['organisation_code']
             return SurveyPermission(unicode(name), 
