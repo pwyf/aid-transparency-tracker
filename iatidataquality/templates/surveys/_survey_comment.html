@@ -42,6 +42,14 @@
         </ul>
         <p><b>All data and comments collected will be made public once the 2013 
               Index is published.</b></p>
+
+        {% if organisation.no_independent_reviewer %}
+        <hr />
+        <div class="alert alert-danger">
+        <h5>No independent reviewer</h5>
+        <p>Publish What You Fund was unable to find an independent reviewer for this survey.</p>
+        </div>
+        {% endif %}
 		{% else %}
 		<!-- text if we're a CSO reviewer -->
         <p class="lead">We have conducted an initial assessment of 67 
