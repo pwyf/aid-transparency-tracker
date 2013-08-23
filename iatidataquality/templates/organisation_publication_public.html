@@ -11,7 +11,7 @@
 
     </script>
     <div class="pull-right">
-        <a class="btn btn-success" href="{{url_for('login', next='organisations/' + organisation.organisation_code + '/publication')}}"><i class="icon-lock icon-white"></i> <b>Login &raquo; {{ organisation.organisation_name }}</b></a>
+        <a class="btn btn-success" href="{{url_for('login', next='/organisations/' + organisation.organisation_code + '/publication')}}"><i class="icon-lock icon-white"></i> <b>Login &raquo; {{ organisation.organisation_name }}</b></a>
         <button type="button" class="btn" data-toggle="collapse" data-target="#packages_div">
         <i class="icon-file"></i> <b>Packages</b>
         </button>
