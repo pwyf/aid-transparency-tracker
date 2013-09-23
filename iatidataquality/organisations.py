@@ -526,12 +526,15 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                 publication_format_points = survey_total_points
                 total_points = survey_total_points
             else:
+                sd=surveydata
                 for workflow in workflows:
+                    print workflow.Workflow.name
+                    if not sd:
+                        continue
+                    surveydata = sd.get(workflow.Workflow.name)
                     if not surveydata:
                         continue
-                    surveydata = surveydata.get(workflow.Workflow.name)
-                    if not surveydata:
-                        continue
+                    print "continuing"
                     iati_data_quality_total_points = 0
                     iati_data_quality_points = 0
                     iati_data_quality_passed = 0
@@ -581,6 +584,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                     survey_source = surveydata[indicator_id].OrganisationSurveyData.published_source
                     survey_comment = surveydata[indicator_id].OrganisationSurveyData.published_comment
                     survey_agree = surveydata[indicator_id].OrganisationSurveyData.published_accepted
+                    print "writing csv row for", workflow.Workflow.name
                     write_csv_row(workflow_name=workflow.Workflow.name)
         else:
             iati_data_quality_total_points = 0
