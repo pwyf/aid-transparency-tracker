@@ -388,7 +388,8 @@ def write_organisation_publications_csv(out, organisation):
     for resultid, result in aggregate_results.items():
         write_agg_csv_result(out, organisation, freq, result)
 
-def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, surveydata, surveydata_workflow, published_status, published_format):
+def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, surveydata, surveydata_workflow, published_status, published_format, history=False, workflows=None):
+
     def calculate_ordinal_points(thevalue, theformat, thetype):
         if thetype == 'commitment':
             return thevalue
@@ -397,6 +398,43 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                 return 0
             points = (float(thevalue)/3.0)*float(theformat)
             return points
+
+    def write_csv_row(workflow_name=None):
+        data = {
+            "id": organisation.organisation_code + "-" + indicator_name,
+            "organisation_name": organisation.organisation_name, 
+            "organisation_code": organisation.organisation_code, 
+            "indicator_total_weighted_points": indicator_total_weighted_points,
+            "indicator_id": indicator_name, 
+            "indicator_name": indicator_description, 
+            "indicator_category_name": indicator_category_name, 
+            "indicator_subcategory_name": indicator_subcategory_name, 
+            "indicator_category_subcategory": indicator_category_subcategory,
+            "indicator_order": indicator_order,
+            "indicator_weight": indicator_weight,
+            "iati_manual": iati_manual,
+            "publication_format": publication_format,
+            "publication_format_points": str(publication_format_points),
+            "total_points": str(total_points),
+            "iati_data_quality_passed": str(iati_data_quality_passed),
+            "iati_data_quality_points": str(iati_data_quality_points),
+            "iati_data_quality_frequency": organisation.frequency,
+            "iati_data_quality_frequency_value": str(freq),
+            "iati_data_quality_frequency_multiplier": str(frequency_multiplier),
+            "iati_data_quality_total_points": str(iati_data_quality_total_points),
+            "survey_publication_status": str(survey_publication_status),
+            "survey_publication_status_value": str(survey_publication_status_value),
+            "survey_ordinal_value": str(survey_ordinal_value),
+            "survey_publication_format": str(survey_publication_format),
+            "survey_publication_format_value": str(survey_publication_format_value),
+            "survey_total_points": str(survey_total_points)
+            }
+        if workflow_name:
+            data['survey_workflow_name'] = workflow_name
+            data['survey_source'] = survey_source
+            data['survey_comment'] = survey_comment
+            data['survey_agree'] = survey_agree
+        out.writerow(data)
         
     i = result["indicator"]
 
@@ -453,39 +491,97 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             indicator_weight = i["indicator_weight"]
             survey_category = "publication"
         if surveydata:
-            iati_data_quality_total_points = 0
-            iati_data_quality_points = 0
-            iati_data_quality_passed = 0
-            try:
-                survey_publication_status = surveydata[indicator_id].PublishedStatus.name
-                survey_publication_status_value = surveydata[indicator_id].PublishedStatus.publishedstatus_value
-            except KeyError:
-                survey_publication_status = ""
-                survey_publication_status_value = 0
-            except AttributeError:
-                survey_publication_status = ""
-                survey_publication_status_value = 0
-            try:
-                survey_publication_format = surveydata[indicator_id].PublishedFormat.name
-                survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value * 50
-            except KeyError:
-                survey_publication_format = ""
-                survey_publication_format_value = 0
-            except AttributeError:
-                survey_publication_format = ""
-                survey_publication_format_value = 0
-            if indicator_ordinal:
-                survey_ordinal_value = surveydata[indicator_id].OrganisationSurveyData.ordinal_value
-                survey_total_points = calculate_ordinal_points(surveydata[indicator_id].OrganisationSurveyData.ordinal_value, 
-                                survey_publication_format_value, 
-                                survey_category)
-            else:
-                survey_ordinal_value = ""
-                survey_total_points = survey_publication_format_value * survey_publication_status_value
+            if not history:
+                iati_data_quality_total_points = 0
+                iati_data_quality_points = 0
+                iati_data_quality_passed = 0
+                try:
+                    survey_publication_status = surveydata[indicator_id].PublishedStatus.name
+                    survey_publication_status_value = surveydata[indicator_id].PublishedStatus.publishedstatus_value
+                except KeyError:
+                    survey_publication_status = ""
+                    survey_publication_status_value = 0
+                except AttributeError:
+                    survey_publication_status = ""
+                    survey_publication_status_value = 0
+                try:
+                    survey_publication_format = surveydata[indicator_id].PublishedFormat.name
+                    survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value * 50
+                except KeyError:
+                    survey_publication_format = ""
+                    survey_publication_format_value = 0
+                except AttributeError:
+                    survey_publication_format = ""
+                    survey_publication_format_value = 0
+                if indicator_ordinal:
+                    survey_ordinal_value = surveydata[indicator_id].OrganisationSurveyData.ordinal_value
+                    survey_total_points = calculate_ordinal_points(surveydata[indicator_id].OrganisationSurveyData.ordinal_value, 
+                                    survey_publication_format_value, 
+                                    survey_category)
+                else:
+                    survey_ordinal_value = ""
+                    survey_total_points = survey_publication_format_value * survey_publication_status_value
 
-            publication_format = survey_publication_format
-            publication_format_points = survey_total_points
-            total_points = survey_total_points
+                publication_format = survey_publication_format
+                publication_format_points = survey_total_points
+                total_points = survey_total_points
+            else:
+                for workflow in workflows:
+                    if not surveydata:
+                        continue
+                    surveydata = surveydata.get(workflow.Workflow.name)
+                    if not surveydata:
+                        continue
+                    iati_data_quality_total_points = 0
+                    iati_data_quality_points = 0
+                    iati_data_quality_passed = 0
+                    try:
+                        survey_publication_status = surveydata[indicator_id].PublishedStatus.name
+                        survey_publication_status_value = surveydata[indicator_id].PublishedStatus.publishedstatus_value
+                    except KeyError:
+                        survey_publication_status = ""
+                        survey_publication_status_value = 0
+                    except AttributeError:
+                        survey_publication_status = ""
+                        survey_publication_status_value = 0
+                    try:
+                        survey_publication_format = surveydata[indicator_id].PublishedFormat.name
+                        survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value * 50
+                    except KeyError:
+                        survey_publication_format = ""
+                        survey_publication_format_value = 0
+                    except AttributeError:
+                        survey_publication_format = ""
+                        survey_publication_format_value = 0
+                    if indicator_ordinal:
+                        survey_ordinal_value = surveydata[indicator_id].OrganisationSurveyData.ordinal_value
+                        survey_total_points = calculate_ordinal_points(surveydata[indicator_id].OrganisationSurveyData.ordinal_value, 
+                                        survey_publication_format_value, 
+                                        survey_category)
+                    else:
+                        survey_ordinal_value = ""
+                        survey_total_points = survey_publication_format_value * survey_publication_status_value
+
+                    publication_format = survey_publication_format
+                    publication_format_points = survey_total_points
+                    total_points = survey_total_points
+
+                    try:
+                        indicator_total_weighted_points = total_points * indicator_weight
+                    except Exception:
+                        indicator_total_weighted_points = 0
+
+                    try:
+                        indicator_category_subcategory = indicator_category_name + "-" + indicator_subcategory_name
+                    except Exception:
+                        indicator_category_subcategory = ""
+
+                    if indicator_category_name == "commitment":
+                        publication_format = "not-applicable"
+                    survey_source = surveydata[indicator_id].OrganisationSurveyData.published_source
+                    survey_comment = surveydata[indicator_id].OrganisationSurveyData.published_comment
+                    survey_agree = surveydata[indicator_id].OrganisationSurveyData.published_accepted
+                    write_csv_row(workflow_name=workflow.Workflow.name)
         else:
             iati_data_quality_total_points = 0
             iati_data_quality_points = 0
@@ -513,37 +609,10 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
     if indicator_category_name == "commitment":
         publication_format = "not-applicable"
 
-    out.writerow({
-            "id": organisation.organisation_code + "-" + indicator_name,
-            "organisation_name": organisation.organisation_name, 
-            "organisation_code": organisation.organisation_code, 
-            "indicator_total_weighted_points": indicator_total_weighted_points,
-            "indicator_id": indicator_name, 
-            "indicator_name": indicator_description, 
-            "indicator_category_name": indicator_category_name, 
-            "indicator_subcategory_name": indicator_subcategory_name, 
-            "indicator_category_subcategory": indicator_category_subcategory,
-            "indicator_order": indicator_order,
-            "indicator_weight": indicator_weight,
-            "iati_manual": iati_manual,
-            "publication_format": publication_format,
-            "publication_format_points": str(publication_format_points),
-            "total_points": str(total_points),
-            "iati_data_quality_passed": str(iati_data_quality_passed),
-            "iati_data_quality_points": str(iati_data_quality_points),
-            "iati_data_quality_frequency": organisation.frequency,
-            "iati_data_quality_frequency_value": str(freq),
-            "iati_data_quality_frequency_multiplier": str(frequency_multiplier),
-            "iati_data_quality_total_points": str(iati_data_quality_total_points),
-            "survey_publication_status": str(survey_publication_status),
-            "survey_publication_status_value": str(survey_publication_status_value),
-            "survey_ordinal_value": str(survey_ordinal_value),
-            "survey_publication_format": str(survey_publication_format),
-            "survey_publication_format_value": str(survey_publication_format_value),
-            "survey_total_points": str(survey_total_points)
-            })      
+    if not history:
+        write_csv_row()
 
-def write_organisation_publications_csv_index(out, organisation):
+def write_organisation_publications_csv_index(out, organisation, history=False):
     aggregate_results = dqorganisations._organisation_indicators_split(organisation)
 
     if (organisation.frequency == "less than quarterly"):
@@ -554,8 +623,13 @@ def write_organisation_publications_csv_index(out, organisation):
     organisation_survey = dqsurveys.getSurvey(organisation.organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)
 
-    surveydata, surveydata_workflow = get_survey_data_and_workflow(
-        organisation_survey, surveydata)
+    if not history:
+        surveydata, surveydata_workflow = get_survey_data_and_workflow(
+            organisation_survey, surveydata)
+        workflows = None
+    else:
+        workflows=dqsurveys.workflows()
+        surveydata_workflow=None
 
     published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
     publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatsAll()))
@@ -564,10 +638,10 @@ def write_organisation_publications_csv_index(out, organisation):
         write_agg_csv_result_index(out, organisation, freq, result, "iati", None, None, None, None)
 
     for resultid, result in aggregate_results["zero"].items():
-        write_agg_csv_result_index(out, organisation, freq, result, "manual", surveydata, surveydata_workflow, published_status_by_id, publishedformats)
+        write_agg_csv_result_index(out, organisation, freq, result, "manual", surveydata, surveydata_workflow, published_status_by_id, publishedformats, history, workflows)
 
     for resultid, result in aggregate_results["commitment"].items():
-        write_agg_csv_result_index(out, organisation, freq, result, "commitment", surveydata, surveydata_workflow, published_status_by_id, publishedformats)
+        write_agg_csv_result_index(out, organisation, freq, result, "commitment", surveydata, surveydata_workflow, published_status_by_id, publishedformats, history, workflows)
 
 csv_fieldnames = [
     "organisation_name",
@@ -611,13 +685,15 @@ csv_fieldnames_index = [
     "survey_total_points"
     ]
 
-def _org_pub_csv(organisations, filename, index_data=False):
+def _org_pub_csv(organisations, filename, index_data=False, history=False):
     strIO = StringIO.StringIO()
 
     if index_data:
         csv_headers = csv_fieldnames_index
     else:
         csv_headers = csv_fieldnames
+    if history:
+        csv_headers.extend(["survey_workflow_name", "survey_source", "survey_comment", "survey_agree"])
     out = unicodecsv.DictWriter(strIO, fieldnames=csv_headers)
     headers = {}
 
@@ -627,7 +703,7 @@ def _org_pub_csv(organisations, filename, index_data=False):
 
     for organisation in organisations:
         if index_data:
-            write_organisation_publications_csv_index(out, organisation)
+            write_organisation_publications_csv_index(out, organisation, history)
         else:
             write_organisation_publications_csv(out, organisation)
 
@@ -635,6 +711,12 @@ def _org_pub_csv(organisations, filename, index_data=False):
     return send_file(strIO,
                      attachment_filename=filename,
                      as_attachment=True)
+
+@app.route("/organisations/publication_index_history.csv")
+@usermanagement.perms_required()
+def all_organisations_publication_index_csv_history():
+    organisations = Organisation.query.all()
+    return _org_pub_csv(organisations, "tracker_index_history.csv", True, True)
 
 @app.route("/organisations/publication_index.csv")
 @usermanagement.perms_required()
