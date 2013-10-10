@@ -52,7 +52,7 @@
         {% endif %}
         {% if surveydata.cso %}
         {% set data = surveydata['cso'] %}
-{% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
         {% set accepted = 'Agree' %}
         {% set accepted_class = 'success' %}
         {% else %}
@@ -60,7 +60,7 @@
         {% set accepted_class = 'important' %}
         {% endif %}
         <tr>
-            <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td><span>Independent reviewer</span></td>
             <td>
             <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
             </td>
@@ -70,10 +70,10 @@
             </td>
         </tr>
         {% endif %}
-        {% if (surveydata.pwyffinal) and (workflow.Workflow.name != 'cso') %}
+        {% if (surveydata.pwyffinal) %}
         {% set data = surveydata.pwyffinal %}
-            <tr>
-                <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <tr class="success">
+                <td><b>PWYF Final Assessment</b></td>
                 <td>{{ data[indicator.indicator.id].OrganisationSurveyData.ordinal_value }}
                 </td>
                 <td class="restrict_text_commitment">{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}</td>
@@ -84,11 +84,20 @@
         {% endif %}
         {% if (surveydata.donorcomments) %}
         {% set data = surveydata.donorcomments %}
+
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% set accepted = 'Agree' %}
+        {% set accepted_class = 'success' %}
+        {% else %}
+        {% set accepted = 'Disagree' %}
+        {% set accepted_class = 'important' %}
+        {% endif %}
             <tr>
                 <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
-                <td>{{ data[indicator.indicator.id].OrganisationSurveyData.ordinal_value }}
+                <td>
+                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
                 </td>
-                <td class="restrict_text_commitment">{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}</td>
+                <td class="restrict_text_commitment"></td>
                 <td class="restrict_text_commitment">
                 {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
                 </td>
