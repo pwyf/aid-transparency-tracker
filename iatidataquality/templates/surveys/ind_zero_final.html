@@ -85,7 +85,6 @@
         </tr>
         {% endif %}
         
-		{% if workflow.Workflow.name != 'cso' %}
             {% if surveydata.cso %}
             {% set data = surveydata['cso'] %}
             {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
@@ -109,8 +108,8 @@
 
             {% if surveydata.pwyffinal %}
             {% set data = surveydata['pwyffinal'] %}
-            <tr>
-                <td><span>PWYF Final Assessment</span></td>
+            <tr class="success">
+                <td><b>PWYF Final Assessment</b></td>
                 <td>
                   {% if indicator.indicator.indicator_ordinal %}
                     <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Final Assessment">
@@ -128,7 +127,6 @@
                 </td>
             </tr>
             {% endif %}
-        {% endif %}
         {% if (surveydata.donorcomments) and (workflow.Workflow.name != 'donorcomments') and (workflow.Workflow.name!='cso') %}
         {% set data = surveydata['donorcomments'] %}
         {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
