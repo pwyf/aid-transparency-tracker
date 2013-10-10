@@ -1,0 +1,153 @@
+{% macro ind_zero(
+  surveydata,
+  rows,
+  twentytwelvedata,
+  old_publication_status,
+  publishedstatuses,
+  publishedformats,
+  workflow,
+  indicator,
+  years,
+  year_data
+) %}
+        {% set data = surveydata['researcher'] %}
+        <tr class="indicator{{indicator.indicator.id}}">
+            <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
+                <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{indicator.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div></td>
+            <td><span>Researcher</span></td>
+            <td>
+              {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+              {% else %}
+                 <span class="badge badge-{{surveydata.researcher[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedStatus.title}}</span>
+              {% endif %}<br />
+            <span class="badge badge-{{surveydata.researcher[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedFormat.title}}</span>
+            </td>
+            <td class="restrict_text">
+            {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% if surveydata.donorreview %}
+        {% set data = surveydata['donorreview'] %}
+        <tr>
+            <td><span>Donor review</span></td>
+            <td>
+              {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+              {% else %}
+                <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.title}}</span>
+              {% endif %}<br />
+            <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.title}}</span>
+            </td>
+            <td class="restrict_text">
+            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% if surveydata.pwyfreview %}
+        {% set data = surveydata['pwyfreview'] %}
+        <tr>
+            <td><span>PWYF review</span></td>
+            <td>
+              {% if indicator.indicator.indicator_ordinal %}
+                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Review">
+                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+              {% else %}
+                <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.title}}</span>
+              {% endif %}<br />
+            <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.title}}</span>
+            </td>
+            <td class="restrict_text">
+            {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text">
+            {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        
+		{% if workflow.Workflow.name != 'cso' %}
+            {% if surveydata.cso %}
+            {% set data = surveydata['cso'] %}
+            {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+            {% set accepted = 'Agree' %}
+            {% set accepted_class = 'success' %}
+            {% else %}
+            {% set accepted = 'Disagree' %}
+            {% set accepted_class = 'important' %}
+            {% endif %}
+            <tr>
+                <td><span>Independent reviewer</span></td>
+                <td>
+                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                </td>
+                <td class="restrict_text"></td>
+                <td class="restrict_text">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            </tr>
+            {% endif %}
+
+            {% if surveydata.pwyffinal %}
+            {% set data = surveydata['pwyffinal'] %}
+            <tr>
+                <td><span>PWYF Final Assessment</span></td>
+                <td>
+                  {% if indicator.indicator.indicator_ordinal %}
+                    <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Final Assessment">
+                    {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+                  {% else %}
+                    <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Final Assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+                  {% endif %}<br />
+                <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF Final Assessment">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
+                </td>
+                <td class="restrict_text">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
+                </td>
+                <td class="restrict_text">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            </tr>
+            {% endif %}
+        {% endif %}
+        {% if (surveydata.donorcomments) and (workflow.Workflow.name != 'donorcomments') and (workflow.Workflow.name!='cso') %}
+        {% set data = surveydata['donorcomments'] %}
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% set accepted = 'Agree' %}
+        {% set accepted_class = 'success' %}
+        {% else %}
+        {% set accepted = 'Disagree' %}
+        {% set accepted_class = 'important' %}
+        {% endif %}
+        <tr>
+            <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td>
+            <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+            </td>
+            <td class="restrict_text"></td>
+            <td class="restrict_text">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+
+{% endmacro %}
