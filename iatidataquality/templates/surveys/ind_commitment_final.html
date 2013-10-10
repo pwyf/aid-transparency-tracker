@@ -1,0 +1,97 @@
+{% macro ind_commitment(surveydata, rows, workflow, indicator) %}
+        <tr>
+            <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
+                <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{indicator.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div></td>
+            <td><span>Researcher</span></td>
+            <td>{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}
+            <td class="restrict_text_commitment">
+            {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text_commitment">
+            {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% if surveydata.donorreview %}
+
+        <tr>
+            <td><span>Donor review</span></td>
+            <td>{{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
+            </td>
+            <td class="restrict_text_commitment">
+            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text_commitment">
+            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% if surveydata.pwyfreview %}
+
+        <tr>
+            <td><span>PWYF review</span></td>
+            <td>{{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
+            </td>
+            <td class="restrict_text_commitment">
+            {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
+            </td>
+            <td class="restrict_text_commitment">
+            {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% if surveydata.cso %}
+        {% set data = surveydata['cso'] %}
+{% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% set accepted = 'Agree' %}
+        {% set accepted_class = 'success' %}
+        {% else %}
+        {% set accepted = 'Disagree' %}
+        {% set accepted_class = 'important' %}
+        {% endif %}
+        <tr>
+            <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td>
+            <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+            </td>
+            <td class="restrict_text_commitment"></td>
+            <td class="restrict_text_commitment">
+            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+            </td>
+        </tr>
+        {% endif %}
+        {% if (surveydata.pwyffinal) and (workflow.Workflow.name != 'cso') %}
+        {% set data = surveydata.pwyffinal %}
+            <tr>
+                <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
+                <td>{{ data[indicator.indicator.id].OrganisationSurveyData.ordinal_value }}
+                </td>
+                <td class="restrict_text_commitment">{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}</td>
+                <td class="restrict_text_commitment">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            </tr>
+        {% endif %}
+        {% if (surveydata.donorcomments) %}
+        {% set data = surveydata.donorcomments %}
+            <tr>
+                <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
+                <td>{{ data[indicator.indicator.id].OrganisationSurveyData.ordinal_value }}
+                </td>
+                <td class="restrict_text_commitment">{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}</td>
+                <td class="restrict_text_commitment">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            </tr>
+        {% endif %}
+{% endmacro %}
