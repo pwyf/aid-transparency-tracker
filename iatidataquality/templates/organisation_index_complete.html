@@ -189,45 +189,7 @@
             {% if result.results_pct > 0 %}
             <tr class="group-{{result["indicator"]["id"]}} hidden">
             <p>This activity was scored using the IATI data published by {{organisation.organisation_name}}.</p>
-            <table class="table">
-            <thead>
-            <th>Test name</th>
-            <th>Number of results</th>
-            <th>Percentage of activities that passed</th>
-            </thead>
-            <tbody>
-            {% for testdata in result["tests"] %}
-            <tr>
-	        <td><a href="#test{{testdata["test"]["id"]}}" role="button" data-toggle="modal">{{testdata["test"]["description"]}}</a>
-                <div id="test{{testdata["test"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="testHeader" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="testHeader">Test: {{testdata.test.description}}</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>One or more tests are automatically run on the data collected for each indicator.</p>
-                        {% if testdata.test.test_level ==3 %}
-                        <p>This test is run on <b>organisation files</b>.</p>
-                        {% elif testdata.test.test_level ==2 %}
-                        <p>This test is run on <b>each package of data</b>.</p>
-                        {% elif testdata.test.test_level ==1 %}
-                        <p>This test is run for <b>each activity</b> in the data.</p>
-                        {% elif testdata.test.test_level ==0 %}
-                        <p>This test is run for <b>each transaction</b> in the data.</p>
-                        {% endif%}
-                        <p>The specific test expression is:</p>
-                        <code>{{testdata.test.name}}</code>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    </div>
-                </div>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
-            <td class="pct">{{testdata.results_pct|round|int}}</td>
-            <td>{{testdata["results_num"]|round|int}}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-            </table>
+            
             </tr>
             {% else %}
             {% if surveydata %}
