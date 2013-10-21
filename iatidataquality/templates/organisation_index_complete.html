@@ -129,7 +129,7 @@
                 </div>
             </td>
 	        <td>
-            {% if result.results_pct > 0 %}IATI{% else %}{% if surveydata and surveydata[result.indicator.id].PublishedStatus and (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value>0) %}surveydata[result.indicator.id].PublishedFormat{% endif %}{% endif %}</td>
+            {% if result.results_pct > 0 %}IATI{% else %}{% if surveydata and surveydata[result.indicator.id].PublishedStatus and (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value>0) %}{{surveydata[result.indicator.id].PublishedFormat.title}}{% endif %}{% endif %}</td>
             <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
 
                 <div id="calculation{{result.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
