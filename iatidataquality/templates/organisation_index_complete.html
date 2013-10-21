@@ -107,7 +107,7 @@
         </thead>
         <tbody>
         {% for indicator, result in results.publication_organisation.items() %}
-            {% if results_pct > 0 %}
+            {% if result.results_pct > 0 %}
                 {% if result.indicator.indicator_category_name == 'activity' %}
                     {% set points = ((result.results_pct*freq/2.0)+50)|round %}
                 {% else %}
