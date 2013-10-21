@@ -374,7 +374,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
             organisation_code,
             aggregation_type)
 
-@app.route("/organisations/<organisation_code>/publication/complete/")
+@app.route("/organisations/<organisation_code>/complete/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
     return organisation_publication_complete(
         organisation_code,
