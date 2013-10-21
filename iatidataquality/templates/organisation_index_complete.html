@@ -143,7 +143,7 @@
                 </div>
             </td>
 	        <td>
-            {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}{% if surveydata %}                {% if (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class == 'success') or (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class == "") %}
+            {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}{% if surveydata %}                {% if (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class == 'success') or (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class == None) %}
             <span class="label label-{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].format_class}}">{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].title}}</span>{% endif %}{% endif %}{% endif %}</td>
             <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
 
