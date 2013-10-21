@@ -1,4 +1,11 @@
 {% macro ind_commitment(surveydata, rows, workflow, indicator) %}
+        {% if surveydata.donorcomments %}
+        {% set data = surveydata.donorcomments %}
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted != 1 %}
+            {% set rows = rows-1 %}
+        {% endif %}
+        {% endif %}
+
         <tr>
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
