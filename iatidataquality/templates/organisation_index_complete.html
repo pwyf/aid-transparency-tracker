@@ -107,10 +107,24 @@
         </thead>
         <tbody>
         {% for indicator, result in results.publication_organisation.items() %}
-            {% if result.indicator.indicator_category_name == 'activity' %}
-                {% set points = ((result.results_pct*freq/2.0)+50)|round %}
+            {% if results_pct > 0 %}
+                {% if result.indicator.indicator_category_name == 'activity' %}
+                    {% set points = ((result.results_pct*freq/2.0)+50)|round %}
+                {% else %}
+                    {% set points = ((result.results_pct/2.0)+50)|round %}
+                {% endif %}
             {% else %}
-                {% set points = ((result.results_pct/2.0)+50)|round %}
+                {% if surveydata %}
+                {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
+                    {% set points = ((surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value|float/3) * surveydata[result.indicator.id].PublishedFormat.format_value * 50)|round(2) %}
+                {% elif surveydata[result.indicator.id].PublishedStatus and surveydata[result.indicator.id].PublishedFormat %}
+                    {% set points = (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value * surveydata[result.indicator.id].PublishedFormat.format_value * 50) %}
+                {% else %}
+                    {% set points = 0 %}
+                {% endif %}
+                {% else %}
+                    {% set points = "" %}
+                {% endif %}
             {% endif %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
@@ -234,16 +248,6 @@
             </tr>
             {% else %}
             {% if surveydata %}
-            {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
-                {% set points = ((surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value|float/3) * surveydata[result.indicator.id].PublishedFormat.format_value * 50)|round(2) %}
-            {% elif surveydata[result.indicator.id].PublishedStatus and surveydata[result.indicator.id].PublishedFormat %}
-                {% set points = (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value * surveydata[result.indicator.id].PublishedFormat.format_value * 50) %}
-            {% else %}
-                {% set points = 0 %}
-            {% endif %}
-            {% else %}
-                {% set points = "" %}
-            {% endif %}
 
             <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
             <td colspan="5">
