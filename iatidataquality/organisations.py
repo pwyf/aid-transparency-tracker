@@ -375,7 +375,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
             aggregation_type)
 
 @app.route("/organisations/<organisation_code>/complete/")
-def organisation_publication(organisation_code=None, aggregation_type=2):
+def organisation_publication_complete(organisation_code=None, aggregation_type=2):
     check_perms = usermanagement.check_perms(
         'organisation', 'view', {'organisation_code': organisation_code}
         )
