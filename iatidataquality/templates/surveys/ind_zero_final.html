@@ -10,6 +10,14 @@
   years,
   year_data
 ) %}
+
+        {% if surveydata.donorcomments %}
+        {% set data = surveydata.donorcomments %}
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+            {% set rows = rows-1 %}
+        {% endif %}
+        {% endif %}
+
         {% set data = surveydata['researcher'] %}
         <tr class="indicator{{indicator.indicator.id}}">
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
