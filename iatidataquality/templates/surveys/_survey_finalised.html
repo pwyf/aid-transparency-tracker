@@ -8,5 +8,25 @@
 
 	<h3>This is the finalised survey for {{organisation.organisation_name}}.</h3>
     <p class="lead">Thank you for participating in the 2013 Aid Transparency Index process.</p>
-    
+        {% if organisation.no_independent_reviewer %}
+        <hr />
+        <div class="alert alert-danger">
+        <h5>No independent reviewer</h5>
+        <p>Publish What You Fund was unable to find an independent reviewer for this survey.</p>
+        </div>
+        {% endif %}
+        {% if organisation.no_independent_reviewer %}
+        <hr />
+        <div class="alert alert-danger">
+        <h5>No independent reviewer</h5>
+        <p>Publish What You Fund was unable to find an independent reviewer for this survey.</p>
+        </div>
+        {% endif %}
+        {% if organisation.organisation_responded and organisation.organisation_responded >=3 %}
+        <hr />
+        <div class="alert alert-danger">
+        <h5>{{donorresponses[organisation.organisation_responded].text|capitalize}}</h5>
+        <p>{{organisation.organisation_name}} {{donorresponses[organisation.organisation_responded].description}}.</p>
+        </div>
+        {% endif %}
 {% endblock %}
