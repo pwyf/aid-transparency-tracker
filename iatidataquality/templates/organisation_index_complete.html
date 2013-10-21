@@ -187,7 +187,6 @@
             <td><a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a></td>
             </tr>
             {% if result.results_pct > 0 %}
-            {% for testdata in result["tests"] %}
             <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
             <p>This activity was scored using the IATI data published by {{organisation.organisation_name}}.</p>
             <table class="table">
@@ -197,6 +196,8 @@
             <th>Percentage of activities that passed</th>
             </thead>
             <tbody>
+            {% for testdata in result["tests"] %}
+            <tr>
 	        <td><a href="#test{{testdata["test"]["id"]}}" role="button" data-toggle="modal">{{testdata["test"]["description"]}}</a>
                 <div id="test{{testdata["test"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="testHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -224,9 +225,9 @@
             <td class="pct">{{testdata.results_pct|round|int}}</td>
             <td>{{testdata["results_num"]|round|int}}</td>
             </tr>
+            {% endfor %}
             </tbody>
             </table>
-            {% endfor %}
             {% else %}
             {% if surveydata %}
             {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
