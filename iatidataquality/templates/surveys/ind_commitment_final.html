@@ -1,7 +1,7 @@
 {% macro ind_commitment(surveydata, rows, workflow, indicator) %}
         {% if surveydata.donorcomments %}
         {% set data = surveydata.donorcomments %}
-        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted != 1 %}
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
             {% set rows = rows-1 %}
         {% endif %}
         {% endif %}
