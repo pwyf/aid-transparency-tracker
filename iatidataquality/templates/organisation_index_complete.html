@@ -256,17 +256,15 @@
             <tr />
             {% endif %}
         {%endfor%}
-
-
-
         </tbody>
         </table>
         </fieldset>
+
     <a id="publication_activity"></a>
     <hr />
         <fieldset>
         <h3>Publication &ndash; Activity</h3>
-        <table class="table" id="results_publication_activity">
+        <table class="table" id="results_publication">
         <thead>
         <th>Subgroup</th>
         <th>Indicator</th>
@@ -352,15 +350,21 @@
                     </div>
                 </div>
             </td>
-            <td></td>
             <td><a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a></td>
             </tr>
             {% if result.results_pct > 0 %}
+            <tr class="group-{{result["indicator"]["id"]}} hidden">
+            <td colspan="5">
+            <p>This indicator was scored using the IATI data published by {{organisation.organisation_name}}.</p>
+            <table class="table">
+            <thead>
+            <th>Test name</th>
+            <th>Number of results</th>
+            <th>Percentage of activities that passed</th>
+            </thead>
+            <tbody>
             {% for testdata in result["tests"] %}
-            <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
-            <td><span class="hidden">{{result.indicator.indicator_category_name|title}}</span></td>
-            <td><span class="hidden">{{result.indicator.indicator_subcategory_name|title}}</span></td>
-            <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
+            <tr>
 	        <td><a href="#test{{testdata["test"]["id"]}}" role="button" data-toggle="modal">{{testdata["test"]["description"]}}</a>
                 <div id="test{{testdata["test"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="testHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -386,11 +390,13 @@
                     </div>
                 </div>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
             <td class="pct">{{testdata.results_pct|round|int}}</td>
-            <td></td>
             <td>{{testdata["results_num"]|round|int}}</td>
-            <td></td>
             </tr>
             {% endfor %}
+            </tbody>
+            </table>
+            </td>
+            </tr>
             {% else %}
             {% if surveydata %}
             {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
@@ -406,7 +412,9 @@
 
             <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
             <td colspan="5">
+            <!--
             <a class="btn-small btn btn-primary pull-right"><i class="icon icon-white icon-list"></i> <b>Indicator history</b></a>
+            -->
             <h5>Evidence</h5>
             <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_source}}</p>
             <h5>Comments</h5>
@@ -415,9 +423,6 @@
             <tr />
             {% endif %}
         {%endfor%}
-
-
-
         </tbody>
         </table>
         </fieldset>
