@@ -376,9 +376,14 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
 
 @app.route("/organisations/<organisation_code>/complete/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
-    return organisation_publication_complete(
-        organisation_code,
-        aggregation_type)
+    check_perms = usermanagement.check_perms(
+        'organisation', 'view', {'organisation_code': organisation_code}
+        )
+    
+    if check_perms:
+        return organisation_publication_complete(
+            organisation_code,
+            aggregation_type)
 
 def _organisation_publication_detail(organisation_code, aggregation_type, 
                                      is_admin):
