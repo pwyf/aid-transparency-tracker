@@ -1,0 +1,490 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}{{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+{% block content %}
+
+   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+
+    <style>
+    #results_commitment th {
+        width:25%;
+    }
+    </style>
+    <h1><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
+
+    {% if results %}
+
+    <h3>2013 Index results and IATI data quality</h3>
+    <div class="">
+        <div class="row">
+            <div class="span12">
+                <h2>Tracking aid transparency improvements over time.</h2>
+                <p class="lead">From 24th October 2013, this page will begin to show changes in the aid transparency of {{organisation.organisation_name}} over time by automatically analysing the quality of their IATI data. The numbers may therefore differ from the 2013 Aid Transparency Index, which took a snapshot on 31st July 2013. Manual survey data collected as part of the 2013 Index is shown here where no IATI data is available; but note that this manually-collected survey data will not be updated until the 2014 Index.</p>
+                <p class="lead">Consult the 2013 Aid Transparency Index for finalised scores and analysis. <a class="btn btn-warning pull-right">2013 Index &raquo;</a></p>
+            </div>
+        </div>
+    </div>
+
+
+        <a id="commitment"></a>
+        <hr />
+        <fieldset>
+        <h3>Commitment</h3>
+        <table class="table" id="results_commitment">
+        <thead>
+        <th>Indicator</th>
+        <th>Points</th>
+        <th>Detail</th>
+        </thead>
+        <tbody>
+        {% for indicator, result in results.commitment.items() %}
+            {% if surveydata %}
+                {% set points = surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value %}
+            {% endif %}
+
+            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{result.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+            {% if surveydata %}
+            <td>{{points}}</td>
+            {% else %}
+            <td>
+            No survey data yet.
+            </td>
+            {% endif %}
+            <td><a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down"></i></a></td>
+            </tr>
+            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+            <td colspan="4">
+            <a class="btn-small btn btn-primary pull-right"><i class="icon icon-white icon-list"></i> <b>Indicator history</b></a>
+            <h5>Evidence</h5>
+            <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_source}}</p>
+            <h5>Comments</h5>
+            <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_comment}}</p>
+            </td>
+            <tr />
+        {%endfor%}
+        </tbody>
+        </table>
+        </fieldset>
+
+        {% if organisation.frequency == "less than quarterly" %}
+        <hr />
+        <div class="alert alert-info">
+            <h3>Frequency of publication</h3>
+            <p class="lead">It looks like {{organisation.organisation_name}} 
+            publishes less often than quarterly, so the maximum they 
+            can score for IATI data is 95 points. The total points for the 
+            relevant indicators have been adjusted accordingly.</p>
+        </div>
+        {% set freq=0.9 %}
+        {% else %}
+        {% set freq=1.0 %}
+        {% endif %}
+
+    <a id="publication_organisation"></a>
+    <hr />
+        <fieldset>
+        <h3>Publication &ndash; Organisation</h3>
+        <table class="table" id="results_publication">
+        <thead>
+        <th>Subgroup</th>
+        <th>Indicator</th>
+        <th>Publication format</th>
+        <th>Points</th>
+        <th>Detail</th>
+        </thead>
+        <tbody>
+        {% for indicator, result in results.publication_organisation.items() %}
+            {% if result.indicator.indicator_category_name == 'activity' %}
+                {% set points = ((result.results_pct*freq/2.0)+50)|round %}
+            {% else %}
+                {% set points = ((result.results_pct/2.0)+50)|round %}
+            {% endif %}
+            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{result.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+	        <td></td>
+            <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
+
+                <div id="calculation{{result.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Score calculation for {{result.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                        <thead>
+                            <th colspan="3">Data quality score calculation</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Data quality</td><td>{{result.results_pct|round}}%</td><td>% of activities that passed tests</td>
+                        </tr>
+                        <tr class="muted">
+                            <td>Convert percentage to points</td><td>÷ 2</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>Points</td><td>{{(result.results_pct/2)|round}}</td><td></td>
+                        </tr>
+                        {% if result.indicator.indicator_category_name =='activity' %}
+                        <tr class="muted">
+                            <td>Frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td><b>Total data quality points</b></td><td>{{points-50}}</td><td></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        <table class="table">
+                        <thead>
+                            <th colspan="3">Total score calculation</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Data quality points</td><td>{{(result.results_pct*freq/2)|round}}</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>Publication format points</td><td>50.0</td><td></td>
+                        </tr>
+                        <tr class="success">
+                            <td><b>Total points for this indicator</b></td><td>{{((result.results_pct*freq/2)+50)|round}}</td><td></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+            <td></td>
+            <td><a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a></td>
+            </tr>
+            {% if result.results_pct > 0 %}
+            {% for testdata in result["tests"] %}
+            <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
+            <td><span class="hidden">{{result.indicator.indicator_category_name|title}}</span></td>
+            <td><span class="hidden">{{result.indicator.indicator_subcategory_name|title}}</span></td>
+            <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
+	        <td><a href="#test{{testdata["test"]["id"]}}" role="button" data-toggle="modal">{{testdata["test"]["description"]}}</a>
+                <div id="test{{testdata["test"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="testHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="testHeader">Test: {{testdata.test.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>One or more tests are automatically run on the data collected for each indicator.</p>
+                        {% if testdata.test.test_level ==3 %}
+                        <p>This test is run on <b>organisation files</b>.</p>
+                        {% elif testdata.test.test_level ==2 %}
+                        <p>This test is run on <b>each package of data</b>.</p>
+                        {% elif testdata.test.test_level ==1 %}
+                        <p>This test is run for <b>each activity</b> in the data.</p>
+                        {% elif testdata.test.test_level ==0 %}
+                        <p>This test is run for <b>each transaction</b> in the data.</p>
+                        {% endif%}
+                        <p>The specific test expression is:</p>
+                        <code>{{testdata.test.name}}</code>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
+            <td class="pct">{{testdata.results_pct|round|int}}</td>
+            <td></td>
+            <td>{{testdata["results_num"]|round|int}}</td>
+            <td></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            {% if surveydata %}
+            {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
+                {% set points = ((surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value|float/3) * surveydata[result.indicator.id].PublishedFormat.format_value * 50)|round(2) %}
+            {% elif surveydata[result.indicator.id].PublishedStatus and surveydata[result.indicator.id].PublishedFormat %}
+                {% set points = (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value * surveydata[result.indicator.id].PublishedFormat.format_value * 50) %}
+            {% else %}
+                {% set points = 0 %}
+            {% endif %}
+            {% else %}
+                {% set points = "" %}
+            {% endif %}
+
+            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+            <td colspan="5">
+            <a class="btn-small btn btn-primary pull-right"><i class="icon icon-white icon-list"></i> <b>Indicator history</b></a>
+            <h5>Evidence</h5>
+            <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_source}}</p>
+            <h5>Comments</h5>
+            <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_comment}}</p>
+            </td>
+            <tr />
+            {% endif %}
+        {%endfor%}
+
+
+
+        </tbody>
+        </table>
+        </fieldset>
+    <a id="publication_activity"></a>
+    <hr />
+        <fieldset>
+        <h3>Publication &ndash; Activity</h3>
+        <table class="table" id="results_publication_activity">
+        <thead>
+        <th>Subgroup</th>
+        <th>Indicator</th>
+        <th>Publication format</th>
+        <th>Points</th>
+        <th>Detail</th>
+        </thead>
+        <tbody>
+        {% for indicator, result in results.publication_activity.items() %}
+            {% if result.indicator.indicator_category_name == 'activity' %}
+                {% set points = ((result.results_pct*freq/2.0)+50)|round %}
+            {% else %}
+                {% set points = ((result.results_pct/2.0)+50)|round %}
+            {% endif %}
+            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{result.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+	        <td></td>
+            <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
+
+                <div id="calculation{{result.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Score calculation for {{result.indicator.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                        <thead>
+                            <th colspan="3">Data quality score calculation</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Data quality</td><td>{{result.results_pct|round}}%</td><td>% of activities that passed tests</td>
+                        </tr>
+                        <tr class="muted">
+                            <td>Convert percentage to points</td><td>÷ 2</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>Points</td><td>{{(result.results_pct/2)|round}}</td><td></td>
+                        </tr>
+                        {% if result.indicator.indicator_category_name =='activity' %}
+                        <tr class="muted">
+                            <td>Frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td><b>Total data quality points</b></td><td>{{points-50}}</td><td></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                        <table class="table">
+                        <thead>
+                            <th colspan="3">Total score calculation</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Data quality points</td><td>{{(result.results_pct*freq/2)|round}}</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>Publication format points</td><td>50.0</td><td></td>
+                        </tr>
+                        <tr class="success">
+                            <td><b>Total points for this indicator</b></td><td>{{((result.results_pct*freq/2)+50)|round}}</td><td></td>
+                        </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+            <td></td>
+            <td><a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a></td>
+            </tr>
+            {% if result.results_pct > 0 %}
+            {% for testdata in result["tests"] %}
+            <tr id="tr{{testdata["test"]["id"]}}" class="group-{{result["indicator"]["id"]}} hidden">
+            <td><span class="hidden">{{result.indicator.indicator_category_name|title}}</span></td>
+            <td><span class="hidden">{{result.indicator.indicator_subcategory_name|title}}</span></td>
+            <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
+	        <td><a href="#test{{testdata["test"]["id"]}}" role="button" data-toggle="modal">{{testdata["test"]["description"]}}</a>
+                <div id="test{{testdata["test"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="testHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="testHeader">Test: {{testdata.test.description}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>One or more tests are automatically run on the data collected for each indicator.</p>
+                        {% if testdata.test.test_level ==3 %}
+                        <p>This test is run on <b>organisation files</b>.</p>
+                        {% elif testdata.test.test_level ==2 %}
+                        <p>This test is run on <b>each package of data</b>.</p>
+                        {% elif testdata.test.test_level ==1 %}
+                        <p>This test is run for <b>each activity</b> in the data.</p>
+                        {% elif testdata.test.test_level ==0 %}
+                        <p>This test is run for <b>each transaction</b> in the data.</p>
+                        {% endif%}
+                        <p>The specific test expression is:</p>
+                        <code>{{testdata.test.name}}</code>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
+            <td class="pct">{{testdata.results_pct|round|int}}</td>
+            <td></td>
+            <td>{{testdata["results_num"]|round|int}}</td>
+            <td></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            {% if surveydata %}
+            {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
+                {% set points = ((surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value|float/3) * surveydata[result.indicator.id].PublishedFormat.format_value * 50)|round(2) %}
+            {% elif surveydata[result.indicator.id].PublishedStatus and surveydata[result.indicator.id].PublishedFormat %}
+                {% set points = (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value * surveydata[result.indicator.id].PublishedFormat.format_value * 50) %}
+            {% else %}
+                {% set points = 0 %}
+            {% endif %}
+            {% else %}
+                {% set points = "" %}
+            {% endif %}
+
+            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+            <td colspan="5">
+            <a class="btn-small btn btn-primary pull-right"><i class="icon icon-white icon-list"></i> <b>Indicator history</b></a>
+            <h5>Evidence</h5>
+            <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_source}}</p>
+            <h5>Comments</h5>
+            <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_comment}}</p>
+            </td>
+            <tr />
+            {% endif %}
+        {%endfor%}
+
+
+
+        </tbody>
+        </table>
+        </fieldset>
+    {%endif%}
+
+<script type="text/javascript">
+
+    $(".showTests").click(function(e){
+        if ($(this).hasClass("visible")) {
+            e.preventDefault();
+
+            re=new RegExp("showindicator-([0-9]*)");
+            r=re.exec(this.id);
+            indicator_id = r[1]
+
+            $(this).closest("tr").removeClass("success");
+            $(this).removeClass("visible").html('<i class="icon-chevron-down"></i>');
+            $(".group-"+indicator_id).hide();
+            $(".th_test").addClass('hidden');
+
+        } else {
+            e.preventDefault();
+
+            re=new RegExp("showindicator-([0-9]*)");
+            r=re.exec(this.id);
+            indicator_id = r[1]
+            $(this).closest("tr").addClass("success");
+            $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
+            $(".group-"+indicator_id).show().removeClass('hidden');
+            $(".th_test").removeClass('hidden');
+    }
+    });
+
+    $(".scrollto").click(function(e){
+        e.preventDefault();
+        scrollto = $(this).attr('href');
+        $("html, body").animate(
+                {scrollTop: $(scrollto).offset().top},'slow'
+        );
+    });
+    var previous_aggregation_type;
+    var chosen_aggregation_type;
+    $('#aggregation_type').focus(function(){
+        previous_aggregation_type = $(this).val();
+    }).change(function(){
+        var agg_type = $('#aggregation_type_form select').val();
+        if (agg_type == 1) {
+           // changing to all data
+           var warning_text = "Do you want to switch to show all data? This may include data from several years ago. Please note that the 2013 Index will only consider current data.";
+        } else {
+           // changing to current data
+           var warning_text = "Do you want to switch to show only current data? The 2013 Index will only consider current data - defined as projects that are currently operational, or ended within the last 12 months.";
+        }
+        if (!$('#dataConfirmModal').length) {
+$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Switch data source</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+        }
+        $('#dataConfirmModal').find('.modal-body').text(warning_text);
+        $('#dataConfirmOK').addClass('confirmswitch');
+        $('#dataConfirmModal').modal({show:true});
+        chosen_aggregation_type = $(this).val();
+        $(this).val(previous_aggregation_type);
+        return false;
+    });
+    $(document).on("click", ".confirmswitch", function(e){
+        $("#dataConfirmModal").modal('hide');
+        e.preventDefault();
+        $('#aggregation_type').val(chosen_aggregation_type);
+        $('#aggregation_type_form').submit();
+    });
+
+    $(".bar").each(function(e){
+        width = $(this).attr('data-width');
+        if (width > 0) {
+            $(this).width(width+'%');
+        }
+    });
+
+</script>
+
+{% endblock %}
