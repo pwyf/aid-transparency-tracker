@@ -85,13 +85,9 @@
         {% if (surveydata.donorcomments) %}
         {% set data = surveydata.donorcomments %}
 
-        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
-        {% set accepted = 'Agree' %}
-        {% set accepted_class = 'success' %}
-        {% else %}
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted != 1 %}
         {% set accepted = 'Disagree' %}
         {% set accepted_class = 'important' %}
-        {% endif %}
             <tr>
                 <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
                 <td>
@@ -102,5 +98,7 @@
                 {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
                 </td>
             </tr>
+
+        {% endif %}
         {% endif %}
 {% endmacro %}
