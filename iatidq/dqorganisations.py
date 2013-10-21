@@ -534,6 +534,21 @@ def _organisation_indicators_inforesults(organisation):
         ).all()
     return inforesult_data
 
+def _organisation_indicators_complete_split(organisation, aggregation_type=2):
+    results = _organisation_indicators(organisation, aggregation_type)
+    
+    commitment_data = dqindicators.indicators_subset("2013 Index", "commitment")
+    commitment_results = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
+
+    publication_organisation = lambda kv: (kv[1]["indicator"]["indicator_category_name"]=="organisation")
+    publication_activity = lambda kv: (kv[1]["indicator"]["indicator_category_name"]=="activity")
+    publication_organisation_results = dict(filter(publication_organisation, results.iteritems()))
+    publication_activity_results = dict(filter(publication_activity, results.iteritems()))
+
+    return { "publication_activity": publication_activity_results,
+             "publication_organisation": publication_organisation_results,
+             "commitment": commitment_results}
+
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
