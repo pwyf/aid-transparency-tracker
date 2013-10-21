@@ -153,6 +153,7 @@
                         <h3 id="indicatorHeader">Score calculation for {{result.indicator.description}}</h3>
                     </div>
                     <div class="modal-body">
+                        {% if result.results_pct >0 %}
                         <table class="table">
                         <thead>
                             <th colspan="3">Data quality score calculation</th>
@@ -177,11 +178,13 @@
                         </tr>
                         </tbody>
                         </table>
+                        {% endif %}
                         <table class="table">
                         <thead>
                             <th colspan="3">Total score calculation</th>
                         </thead>
                         <tbody>
+                        {% if result.results_pct > 0 %}
                         <tr>
                             <td>Data quality points</td><td>{{(result.results_pct*freq/2)|round}}</td><td></td>
                         </tr>
@@ -191,6 +194,14 @@
                         <tr class="success">
                             <td><b>Total points for this indicator</b></td><td>{{((result.results_pct*freq/2)+50)|round}}</td><td></td>
                         </tr>
+                        {% else %}
+                        <tr>
+                            <td>Publication format points</td><td>{{points}}</td><td></td>
+                        </tr>
+                        <tr class="success">
+                            <td><b>Total points for this indicator</b></td><td>{{points}}</td><td></td>
+                        </tr>
+                        {% endif %}
                         </tbody>
                         </table>
                     </div>
@@ -279,10 +290,24 @@
         </thead>
         <tbody>
         {% for indicator, result in results.publication_activity.items() %}
-            {% if result.indicator.indicator_category_name == 'activity' %}
-                {% set points = ((result.results_pct*freq/2.0)+50)|round %}
+            {% if result.results_pct > 0 %}
+                {% if result.indicator.indicator_category_name == 'activity' %}
+                    {% set points = ((result.results_pct*freq/2.0)+50)|round %}
+                {% else %}
+                    {% set points = ((result.results_pct/2.0)+50)|round %}
+                {% endif %}
             {% else %}
-                {% set points = ((result.results_pct/2.0)+50)|round %}
+                {% if surveydata %}
+                {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
+                    {% set points = ((surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value|float/3) * surveydata[result.indicator.id].PublishedFormat.format_value * 50)|round(2) %}
+                {% elif surveydata[result.indicator.id].PublishedStatus and surveydata[result.indicator.id].PublishedFormat %}
+                    {% set points = (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value * surveydata[result.indicator.id].PublishedFormat.format_value * 50) %}
+                {% else %}
+                    {% set points = 0 %}
+                {% endif %}
+                {% else %}
+                    {% set points = "" %}
+                {% endif %}
             {% endif %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
@@ -300,7 +325,9 @@
                     </div>
                 </div>
             </td>
-	        <td></td>
+	        <td>
+            {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}{% if surveydata %}                {% if published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class != 'important' %}
+            <span class="label label-{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].format_class}}">{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].title}}</span>{% endif %}{% endif %}{% endif %}</td>
             <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
 
                 <div id="calculation{{result.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
@@ -309,6 +336,7 @@
                         <h3 id="indicatorHeader">Score calculation for {{result.indicator.description}}</h3>
                     </div>
                     <div class="modal-body">
+                        {% if result.results_pct >0 %}
                         <table class="table">
                         <thead>
                             <th colspan="3">Data quality score calculation</th>
@@ -333,11 +361,13 @@
                         </tr>
                         </tbody>
                         </table>
+                        {% endif %}
                         <table class="table">
                         <thead>
                             <th colspan="3">Total score calculation</th>
                         </thead>
                         <tbody>
+                        {% if result.results_pct > 0 %}
                         <tr>
                             <td>Data quality points</td><td>{{(result.results_pct*freq/2)|round}}</td><td></td>
                         </tr>
@@ -347,6 +377,14 @@
                         <tr class="success">
                             <td><b>Total points for this indicator</b></td><td>{{((result.results_pct*freq/2)+50)|round}}</td><td></td>
                         </tr>
+                        {% else %}
+                        <tr>
+                            <td>Publication format points</td><td>{{points}}</td><td></td>
+                        </tr>
+                        <tr class="success">
+                            <td><b>Total points for this indicator</b></td><td>{{points}}</td><td></td>
+                        </tr>
+                        {% endif %}
                         </tbody>
                         </table>
                     </div>
@@ -365,7 +403,7 @@
             <thead>
             <th>Test name</th>
             <th>Number of results</th>
-            <th>Percentage of activities that passed</th>
+            <th>Percentage of tests that passed</th>
             </thead>
             <tbody>
             {% for testdata in result["tests"] %}
@@ -403,17 +441,6 @@
             </td>
             </tr>
             {% else %}
-            {% if surveydata %}
-            {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
-                {% set points = ((surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value|float/3) * surveydata[result.indicator.id].PublishedFormat.format_value * 50)|round(2) %}
-            {% elif surveydata[result.indicator.id].PublishedStatus and surveydata[result.indicator.id].PublishedFormat %}
-                {% set points = (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value * surveydata[result.indicator.id].PublishedFormat.format_value * 50) %}
-            {% else %}
-                {% set points = 0 %}
-            {% endif %}
-            {% else %}
-                {% set points = "" %}
-            {% endif %}
 
             <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
             <td colspan="5">
