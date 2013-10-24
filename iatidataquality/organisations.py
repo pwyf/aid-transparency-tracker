@@ -166,6 +166,8 @@ def organisations(organisation_code=None):
     check_perms = usermanagement.check_perms(
         'organisation', 'view', {'organisation_code':organisation_code})
 
+    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+
     if organisation_code is not None:
         return organisation_publication_complete(
                 organisation_code,
