@@ -103,6 +103,11 @@
     <p class="lead">No IATI data found for this organisation.</p>
     {%endif%}
 
+<!-- hack -->
+<script type="text/javascript">
+  organisation_code = "{{organisation.organisation_code}}";
+</script>
+
 <script type="text/javascript" src="/static/js/orgDetail.js">
 </script>
 {% endblock %}

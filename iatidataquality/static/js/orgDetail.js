@@ -1,4 +1,21 @@
 
+var url_root = "/"; // or "/publish"
+
+function paginate_result(result_id, hierarchy_id, page) {
+	var new_html = '<tr id="tr-pagination-' +  result_id  + '-hierarchy-' + hierarchy_id + '" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="' +
+		(page-1) + '" href="#">Prev</a></li><li><a class="' + page + '" href="#">' + page + '</a></li><li><a class="' +
+		(page + 1) + '" href="#">' +
+		(page + 1) + '</a></li><li><a class="' +
+		(page + 2) + '" href="#">' +
+		(page + 2) + '</a></li><li><a class="' +
+		(page + 3) + '" href="#">' +
+		(page + 3) + '</a></li><li><a class="' +
+		(page + 4) + '" href="#">' +
+		(page + 4) + '</a></li><li><a class="' +
+		(page + 1) + '" href="#">Next</a></li></ul></div><p>Note that this contains test results for historical as well as current data; and therefore may not necessarily agree with the total percentages shown above.</p></td></tr><tr id="tr-result-'  +  result_id  +  '"><td class="results" colspan="5"><span class="muted loading_data">Loading data... (this may take considerable time)</span></td></tr>';
+	return new_html;
+}
+
     $(document).on('click', ".pagination a", function(e){
         e.preventDefault();
         re=new RegExp("tr\-pagination\-([0-9]*|[A-z]*)\-hierarchy\-([0-9]|[A-z]*)");
@@ -8,13 +25,14 @@
         hierarchy_id = r[2];
         $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
         $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
-        page = parseInt($(this).attr('class'));
-        offset = ((page-1)*50)
+        var page = parseInt($(this).attr('class'));
+        var offset = ((page-1)*50)
 
-        $("#tr"+result_id+"h"+hierarchy_id).after('<tr id="tr-pagination-'+ result_id +'-hierarchy-'+hierarchy_id+'" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="'+(page-1)+'" href="#">Prev</a></li><li><a class="'+page+'" href="#">'+page+'</a></li><li><a class="'+(page+1)+'" href="#">'+(page+1)+'</a></li><li><a class="'+(page+2)+'" href="#">'+(page+2)+'</a></li><li><a class="'+(page+3)+'" href="#">'+(page+3)+'</a></li><li><a class="'+(page+4)+'" href="#">'+(page+4)+'</a></li><li><a class="'+(page+1)+'" href="#">Next</a></li></ul></div><p>Note that this contains test results for historical as well as current data; and therefore may not necessarily agree with the total percentages shown above.</p></td></tr><tr id="tr-result-' + result_id + '"><td class="results" colspan="5"><span class="muted loading_data">Loading data... (this may take considerable time)</span></td></tr>');
+		var html_addition = paginate_result(result_id, hierarchy_id, page);
+        $("#tr" + result_id + "h" + hierarchy_id).after(html_addition);
 
         $('.loading_data').show();
-        $.getJSON("/publish/api/organisations/{{organisation.organisation_code}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
+        $.getJSON(url_root + "api/organisations/" +  organisation_code + "/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
             var items = [];
             $.each(data["results"], function(key, val){
                 if (val == '1') {
@@ -68,11 +86,14 @@
             result_id = r[1]
             hierarchy_id=r[2]
 
-            offset = ((page-1)*50)
+            var offset = ((page-1)*50)
 
-            $("#tr"+result_id+"h"+hierarchy_id).after('<tr id="tr-pagination-'+ result_id +'-hierarchy-'+hierarchy_id+'" ><td class="pagination_td" colspan="5"><div class="pagination"><ul><li><a class="'+(page-1)+'" href="#">Prev</a></li><li><a class="'+page+'" href="#">'+page+'</a></li><li><a class="'+(page+1)+'" href="#">'+(page+1)+'</a></li><li><a class="'+(page+2)+'" href="#">'+(page+2)+'</a></li><li><a class="'+(page+3)+'" href="#">'+(page+3)+'</a></li><li><a class="'+(page+4)+'" href="#">'+(page+4)+'</a></li><li><a class="'+(page+1)+'" href="#">Next</a></li></ul></div><p>Note that this contains test results for historical as well as current data; and therefore may not necessarily agree with the total percentages shown above.</p></td></tr><tr id="tr-result-' + result_id + '"><td class="results" colspan="5"><span class="muted loading_data">Loading data... (this may take considerable time)</span></td></tr>');
+			var html_addition = paginate_result(result_id, hierarchy_id, page);
+
+            $("#tr"+result_id+"h"+hierarchy_id).after(html_addition);
+
             $('.loading_data').show();
-            $.getJSON("/publish/api/organisations/{{organisation.organisation_code}}/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
+            $.getJSON(url_root + "api/organisations/" + organisation_code + "/hierarchy/" + hierarchy_id + "/tests/" + result_id + "/activities?offset="+offset, function(data){
                 var items = [];
                 $.each(data["results"], function(key, val){
                     if (val == '1') {
