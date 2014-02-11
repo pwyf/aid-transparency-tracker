@@ -16,7 +16,7 @@ import lxml.etree
 
 import util
 
-CODELIST_API = "http://data.aidinfolabs.org/data/%s"
+CODELIST_API = "https://raw2.github.com/pwyf/iati-codelists/master/%s"
 
 def generateCodelists():
     codelists = db.session.query(models.CodelistCode.code,
