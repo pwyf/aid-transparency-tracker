@@ -93,7 +93,8 @@ def setup_package_group(package, pkg):
         if 'groups' not in pkg:
             print "Warning: package %s has no groups key" % pkg['name']
             return
-        group = pkg['groups'][0]
+
+        group = pkg['organization']["name"]
         pg = models.PackageGroup.query.filter_by(name=group).first()
         if pg is None:
             pg = create_package_group(group, handle_country=False)
