@@ -52,6 +52,7 @@ $(document).on('click', ".pagination a", function(e){
     });
 	
 });
+
 var showAllTests;
 $("#showAllTests").click(function(e){
     e.preventDefault();
@@ -64,6 +65,7 @@ $("#showAllTests").click(function(e){
         $(this).text("Show only relevant tests");
     }
 });
+
 var page = 1;
 $(".showResult").click(function(e){
     if ($(this).hasClass("visible")) {
@@ -153,6 +155,7 @@ $('#aggregation_type').focus(function(){
     $(this).val(previous_aggregation_type);
     return false;
 });
+
 $(document).on("click", ".confirmswitch", function(e){
     $("#dataConfirmModal").modal('hide');
     e.preventDefault();
