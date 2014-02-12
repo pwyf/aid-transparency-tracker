@@ -305,10 +305,6 @@ class PublisherSummary(Summary):
     def restructure_data(self):
         return lambda x: ((x[4], x[1].id, x[5]), (x))
 
-class VanillaSummary(Summary):
-    def get_mode(self):
-        return None
-
 class PublisherIndicatorsSummary(PublisherSummary):
     def get_mode(self):
         return "publisher_indicators"

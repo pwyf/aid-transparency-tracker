@@ -41,9 +41,8 @@ def check_summary(config):
 @nose.with_setup(setup_func, teardown_func)
 def test_summary_fn():
     configs = [
-        ("publisher", iatidq.summary.PublisherSummary),
-        ("package", iatidq.summary.VanillaSummary)
-        ]
+        ("publisher", iatidq.summary.PublisherSummary)
+        ] # used to test "package", None
 
     for cfg in configs:
         yield (check_summary, cfg)
