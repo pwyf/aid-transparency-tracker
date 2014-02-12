@@ -235,16 +235,17 @@ class Summary(object):
     def get_mode(self):
         raise
 
-    def aggregate(self, data):
-        def gen_hierarchies():
-            for i in set(map(lambda x: (x[4]), data)):
-                yield i
-        hierarchies = gen_hierarchies()
+    def gen_hierarchies(self, data):
+        for i in set(map(lambda x: (x[4]), data)):
+            yield i
 
-        def gen_tests():
-            for i in set(map(lambda x: (x[1].id), data)):
-                yield i
-        tests = gen_tests()
+    def gen_tests(self, data):
+        for i in set(map(lambda x: (x[1].id), data)):
+            yield i
+
+    def aggregate(self, data):
+        hierarchies = self.gen_hierarchies(data)
+        tests = self.gen_tests(data)
 
         cdtns = None
         if self.conditions:
