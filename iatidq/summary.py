@@ -204,8 +204,8 @@ class Summary(object):
         def replace_first(tupl, newval):
             return tuple([newval] + list(tupl)[1:])
         switch_first = lambda t: replace_first(t, t[0].as_dict())
-        fixed_data = map(switch_first, self.data)
-        return self.aggregate(fixed_data)
+        self.data = map(switch_first, self.data)
+        return self.aggregate(self.data)
 
     def summary(self):
         return self._summary
@@ -213,12 +213,12 @@ class Summary(object):
     def get_mode(self):
         raise
 
-    def gen_hierarchies(self, data):
-        for i in set(map(lambda x: (x[4]), data)):
+    def gen_hierarchies(self):
+        for i in set(map(lambda x: (x[4]), self.data)):
             yield i
 
-    def gen_tests(self, data):
-        for i in set(map(lambda x: (x[1].id), data)):
+    def gen_tests(self):
+        for i in set(map(lambda x: (x[1].id), self.data)):
             yield i
 
     def get_conditions(self):
@@ -233,16 +233,22 @@ class Summary(object):
     def restructure_data(self):
         return lambda x: ((x[4], x[1].id), (x))
 
-    def aggregate(self, data):
-        hierarchies = self.gen_hierarchies(data)
-        tests = self.gen_tests(data)
+    def aggregate(self):
+        hierarchies = self.gen_hierarchies()
+        tests = self.gen_tests()
         cdtns = self.get_conditions()
 
         def setmap(lam):
-            return set(map(lam, data))
+            return set(map(lam, self.data))
     
         d_f = self.restructure_data()
-        d = dict(map(d_f, data))
+
+        #with file('/tmp/summary.data', 'w') as f:
+        #    import pprint
+        #    f.write(pprint.pformat(self.data))
+        #    f.write("\n")
+
+        d = dict(map(d_f, self.data))
 
         ind_f = lambda x: (
             x[0]["id"], (
