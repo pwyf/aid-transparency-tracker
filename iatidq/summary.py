@@ -306,6 +306,7 @@ class VanillaSummary(Summary):
     def get_mode(self):
         return None
 
-class PublisherIndicatorsSummary(Summary):
+class PublisherIndicatorsSummary(PublisherSummary):
     def get_mode(self):
         return "publisher_indicators"
+
