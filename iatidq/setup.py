@@ -27,7 +27,8 @@ which_packages = [
     (u'unops-tz', True),
     (u'dfid-tz', True),
     (u'unitedstates-tz', True),
-    (u'dfid-org', True)
+    (u'dfid-org', True),
+    (u'dfid-ug', True)
     ]
 
 default_tests_filename="tests/tests.csv"
@@ -104,7 +105,21 @@ default_minimal_organisations = [
              "organisation_currency_conversion_source": None,
              "organisation_largest_recipient": None,
              "organisation_largest_recipient_source": None
-            }         
+            },
+            {
+            'organisation_name': 'UK, DFID',
+            'organisation_code': 'GB-1',
+            'packagegroup_name': 'dfid',
+            'condition': None,
+            'package_name': 'dfid-ug',
+             "organisation_total_spend": "3750.21",
+             "organisation_total_spend_source": None,
+             "organisation_currency": None,
+             "organisation_currency_conversion": None,
+             "organisation_currency_conversion_source": None,
+             "organisation_largest_recipient": None,
+             "organisation_largest_recipient_source": None
+            }
         ]
 
 def create_inforesult_types(options):
