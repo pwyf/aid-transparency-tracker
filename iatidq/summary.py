@@ -263,11 +263,8 @@ class Summary(object):
         def setmap(lam):
             return set(map(lam, data))
     
-        def dictmap(lam):
-            return dict(map(lam, data))
-
         d_f = self.restructure_data()
-        d = dictmap(d_f)
+        d = dict(map(d_f, data))
 
         if publisher_mode(self.get_mode()):
             ind_f = lambda x: (
