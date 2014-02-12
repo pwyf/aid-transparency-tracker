@@ -207,10 +207,6 @@ def summarise_results(conditions, mode, hierarchies,
         return out
 
     simple_out = publisher_simple(out, cdtns)
-
-    if mode != "publisher_indicators":
-        return simple_out
-
     return publisher_indicators(indicators, indicators_tests, simple_out)
 
 def _agr_results(data, conditions=None, mode=None):
