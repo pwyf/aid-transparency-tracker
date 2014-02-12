@@ -20,7 +20,7 @@ def reform_dict(d):
                    for k1 in set( k1 for k1, k2 in d.keys() ) ])
     
 def publisher_mode(mode):
-    if mode in ["publisher", "publisher_simple", "publisher_indicators"]:
+    if mode in ["publisher", "publisher_indicators"]:
         return True
     return False
 
