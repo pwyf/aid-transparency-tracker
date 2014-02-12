@@ -247,18 +247,18 @@ class Summary(object):
         hierarchies = self.gen_hierarchies(data)
         tests = self.gen_tests(data)
 
+        def setmap(lam):
+            return set(map(lam, data))
+    
+        def dictmap(lam):
+            return dict(map(lam, data))
+
         cdtns = None
         if self.conditions:
             cdtns = dict(map(lambda x: (
                         (x.test_id, x.condition, x.condition_value),
                         (x.operation, x.description)
                         ), self.conditions))
-
-        def setmap(lam):
-            return set(map(lam, data))
-    
-        def dictmap(lam):
-            return dict(map(lam, data))
 
         if publisher_mode(self.get_mode()):
             ind_f = lambda x: (
