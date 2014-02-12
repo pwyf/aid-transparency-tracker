@@ -199,13 +199,13 @@ class Summary(object):
         mode = self.get_mode()
 
         if self.manual:
-            return self.aggregate(self.data)
+            return self.aggregate()
 
         def replace_first(tupl, newval):
             return tuple([newval] + list(tupl)[1:])
         switch_first = lambda t: replace_first(t, t[0].as_dict())
         self.data = map(switch_first, self.data)
-        return self.aggregate(self.data)
+        return self.aggregate()
 
     def summary(self):
         return self._summary
