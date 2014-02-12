@@ -266,6 +266,9 @@ class Summary(object):
         def dictmap(lam):
             return dict(map(lam, data))
 
+        d_f = self.restructure_data()
+        d = dictmap(d_f)
+
         if publisher_mode(self.get_mode()):
             ind_f = lambda x: (
                 x[0]["id"], (
@@ -289,15 +292,8 @@ class Summary(object):
             pkg_f = lambda x: x[5]
             packages = setmap(pkg_f)
 
-            d_f = self.restructure_data()
-            d = dictmap(d_f)
-
             summary = lambda h, t: sum_for_publishers(packages, d, h, t)
-
         else:
-            d_f = self.restructure_data()
-            d = dictmap(d_f)
-
             summary = lambda h, t: sum_default(d, h, t)
 
         return summarise_results(self.conditions, self.get_mode(), hierarchies, 
