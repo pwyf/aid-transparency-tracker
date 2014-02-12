@@ -209,6 +209,7 @@ def summarise_results(conditions, mode, hierarchies,
     simple_out = publisher_simple(out, cdtns)
     return publisher_indicators(indicators, indicators_tests, simple_out)
 
+
 class Summary(object):
     def __init__(self, data, conditions=None, manual=False):
         self.data = data
