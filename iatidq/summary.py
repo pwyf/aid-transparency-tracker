@@ -209,99 +209,6 @@ def summarise_results(conditions, mode, hierarchies,
     simple_out = publisher_simple(out, cdtns)
     return publisher_indicators(indicators, indicators_tests, simple_out)
 
-def _agr_results(data, conditions, mode):
-    """
-        data variable looks like this:
-            models.Indicator,
-            models.Test,
-            models.AggregateResult.results_data, ## percentage
-            models.AggregateResult.results_num, ## total values
-            models.AggregateResult.result_hierarchy
-
-        conditions variable looks like this:
-            models.PublisherCondition.query.filter_by(publisher_id=p[1].id).all()
-
-            ======================================
-            id = Column(Integer, primary_key=True)
-            publisher_id = Column(Integer, ForeignKey('packagegroup.id'))
-            test_id = Column(Integer, ForeignKey('test.id'))
-            operation = Column(Integer) # show (1) or don't show (0) result
-            condition = Column(UnicodeText) # activity level, hierarchy 2
-            condition_value = Column(UnicodeText) # True, 2, etc.
-            description = Column(UnicodeText)
-            file = Column(UnicodeText)
-            line = Column(Integer)
-            active = Column(Boolean)
-            ======================================
-        mode can be:
-            None = package-specific
-            "publisher" = aggregate results for a whole publisher
-
-        TODO:
-            in publisher mode, allow weighting of data by package rather than number of activities.
-    """
-
-    def gen_hierarchies():
-        for i in set(map(lambda x: (x[4]), data)):
-            yield i
-    hierarchies = gen_hierarchies()
-
-    def gen_tests():
-        for i in set(map(lambda x: (x[1].id), data)):
-            yield i
-    tests = gen_tests()
-
-    cdtns = None
-    if conditions:
-        cdtns = dict(map(lambda x: (
-                    (x.test_id, x.condition, x.condition_value),
-                    (x.operation, x.description)
-                    ), conditions))
-
-    def setmap(lam):
-        return set(map(lam, data))
-        
-    def dictmap(lam):
-        return dict(map(lam, data))
-
-    if publisher_mode(mode):
-        ind_f = lambda x: (
-            x[0]["id"], (
-                x[0]["name"], 
-                x[0]["description"], 
-                x[0]["indicator_type"], 
-                x[0]["indicator_category_name"], 
-                x[0]["indicator_subcategory_name"], 
-                x[0]["longdescription"], 
-                x[0]["indicator_noformat"], 
-                x[0]["indicator_ordinal"], 
-                x[0]["indicator_order"], 
-                x[0]["indicator_weight"]
-                )
-            )
-        indicators = setmap(ind_f)
-
-        ind_test_f = lambda x: (x[0]["id"], x[1].id)
-        indicators_tests = list(setmap(ind_test_f))
-
-        pkg_f = lambda x: x[5]
-        packages = setmap(pkg_f)
-
-        d_f = lambda x: ((x[4], x[1].id, x[5]),(x))
-        d = dictmap(d_f)
-
-        summary = lambda h, t: sum_for_publishers(packages, d, h, t)
-
-    else:
-        d_f = lambda x: ((x[4], x[1].id),(x))
-        d = dictmap(d_f)
-
-        summary = lambda h, t: sum_default(d, h, t)
-
-    return summarise_results(conditions, mode, hierarchies, 
-                             tests, cdtns, indicators,
-                             indicators_tests, packages, d, summary)
-
 class Summary(object):
     def __init__(self, data, conditions=None, manual=False):
         self.data = data
@@ -313,19 +220,82 @@ class Summary(object):
         mode = self.get_mode()
 
         if self.manual:
-            return _agr_results(self.data, self.conditions, mode)
+            return self.aggregate(self.data)
 
         def replace_first(tupl, newval):
             return tuple([newval] + list(tupl)[1:])
         switch_first = lambda t: replace_first(t, t[0].as_dict())
         fixed_data = map(switch_first, self.data)
-        return _agr_results(fixed_data, self.conditions, mode)
+        return self.aggregate(fixed_data)
 
     def summary(self):
         return self._summary
 
     def get_mode(self):
         raise
+
+    def aggregate(self, data):
+        def gen_hierarchies():
+            for i in set(map(lambda x: (x[4]), data)):
+                yield i
+        hierarchies = gen_hierarchies()
+
+        def gen_tests():
+            for i in set(map(lambda x: (x[1].id), data)):
+                yield i
+        tests = gen_tests()
+
+        cdtns = None
+        if self.conditions:
+            cdtns = dict(map(lambda x: (
+                        (x.test_id, x.condition, x.condition_value),
+                        (x.operation, x.description)
+                        ), self.conditions))
+
+        def setmap(lam):
+            return set(map(lam, data))
+    
+        def dictmap(lam):
+            return dict(map(lam, data))
+
+        if publisher_mode(self.get_mode()):
+            ind_f = lambda x: (
+                x[0]["id"], (
+                    x[0]["name"], 
+                    x[0]["description"], 
+                    x[0]["indicator_type"], 
+                    x[0]["indicator_category_name"], 
+                    x[0]["indicator_subcategory_name"], 
+                    x[0]["longdescription"], 
+                    x[0]["indicator_noformat"], 
+                    x[0]["indicator_ordinal"], 
+                    x[0]["indicator_order"], 
+                    x[0]["indicator_weight"]
+                    )
+                )
+            indicators = setmap(ind_f)
+
+            ind_test_f = lambda x: (x[0]["id"], x[1].id)
+            indicators_tests = list(setmap(ind_test_f))
+
+            pkg_f = lambda x: x[5]
+            packages = setmap(pkg_f)
+
+            d_f = lambda x: ((x[4], x[1].id, x[5]),(x))
+            d = dictmap(d_f)
+
+            summary = lambda h, t: sum_for_publishers(packages, d, h, t)
+
+        else:
+            d_f = lambda x: ((x[4], x[1].id),(x))
+            d = dictmap(d_f)
+
+            summary = lambda h, t: sum_default(d, h, t)
+
+        return summarise_results(self.conditions, self.get_mode(), hierarchies, 
+                                 tests, cdtns, indicators,
+                                 indicators_tests, packages, d, summary)
+
 
 class PublisherSummary(Summary):
     def get_mode(self):
