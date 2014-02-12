@@ -265,7 +265,20 @@ def _agr_results(data, conditions, mode):
         return dict(map(lam, data))
 
     if publisher_mode(mode):
-        ind_f = lambda x: (x[0]["id"], (x[0]["name"], x[0]["description"], x[0]["indicator_type"], x[0]["indicator_category_name"], x[0]["indicator_subcategory_name"], x[0]["longdescription"], x[0]["indicator_noformat"], x[0]["indicator_ordinal"], x[0]["indicator_order"], x[0]["indicator_weight"]))
+        ind_f = lambda x: (
+            x[0]["id"], (
+                x[0]["name"], 
+                x[0]["description"], 
+                x[0]["indicator_type"], 
+                x[0]["indicator_category_name"], 
+                x[0]["indicator_subcategory_name"], 
+                x[0]["longdescription"], 
+                x[0]["indicator_noformat"], 
+                x[0]["indicator_ordinal"], 
+                x[0]["indicator_order"], 
+                x[0]["indicator_weight"]
+                )
+            )
         indicators = setmap(ind_f)
 
         ind_test_f = lambda x: (x[0]["id"], x[1].id)
