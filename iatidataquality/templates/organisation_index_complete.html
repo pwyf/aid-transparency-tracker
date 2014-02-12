@@ -275,9 +275,21 @@
             <a class="btn-small btn btn-primary pull-right"><i class="icon icon-white icon-list"></i> <b>Indicator history</b></a>
             -->
             <h5>Evidence</h5>
-            <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_source}}</p>
+            <p>
+			  {% if surveydata %}
+			  {{surveydata[result.indicator.id].OrganisationSurveyData.published_source}}
+			  {% else %}
+			  No survey results yet
+			  {% endif %}
+			</p>
             <h5>Comments</h5>
-            <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_comment}}</p>
+            <p>
+			  {% if surveydata %}
+			  {{surveydata[result.indicator.id].OrganisationSurveyData.published_comment}}
+			  {% else %}
+			  No comments yet
+			  {% endif %}
+			</p>
             </td>
             <tr />
             {% endif %}
