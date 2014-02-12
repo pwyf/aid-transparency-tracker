@@ -290,22 +290,38 @@ def _agr_results(data, conditions, mode):
                              indicators_tests, packages, d, summary)
 
 class Summary(object):
-    def __init__(self, data, conditions=None, mode=None, manual=False):
+    def __init__(self, data, conditions=None, manual=False):
         self.data = data
         self.conditions = conditions
-        self.mode = mode
         self.manual = manual
         self._summary = self.calculate()
 
     def calculate(self):
+        mode = self.get_mode()
+
         if self.manual:
-            return _agr_results(self.data, self.conditions, self.mode)
+            return _agr_results(self.data, self.conditions, mode)
 
         def replace_first(tupl, newval):
             return tuple([newval] + list(tupl)[1:])
         switch_first = lambda t: replace_first(t, t[0].as_dict())
         fixed_data = map(switch_first, self.data)
-        return _agr_results(fixed_data, self.conditions, self.mode)
+        return _agr_results(fixed_data, self.conditions, mode)
 
     def summary(self):
         return self._summary
+
+    def get_mode(self):
+        raise
+
+class PublisherSummary(Summary):
+    def get_mode(self):
+        return "publisher"
+
+class VanillaSummary(Summary):
+    def get_mode(self):
+        return None
+
+class PublisherIndicatorsSummary(Summary):
+    def get_mode(self):
+        return "publisher_indicators"

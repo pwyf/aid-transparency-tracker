@@ -25,7 +25,7 @@ def check_summary(config):
     # Don't check summary for now while 
     # we're changing it a lot...
     return True
-    suffix, mode = config
+    suffix, cls = config
 
     with file('unittests/artefacts/input-%s.json' % suffix) as f:
         data = json.load(f)
@@ -33,11 +33,7 @@ def check_summary(config):
     with file('unittests/artefacts/output-%s.json' % suffix) as f:
         expected = f.read()
 
-    s = iatidq.summary.Summary(
-        data,
-        conditions=None,
-        mode=mode
-        )
+    s = cls(data, conditions=None)
     observed = s.summary()
 
     assert json.dumps(observed, indent=2) == expected
@@ -45,8 +41,8 @@ def check_summary(config):
 @nose.with_setup(setup_func, teardown_func)
 def test_summary_fn():
     configs = [
-        ("publisher", "publisher"),
-        ("package", None)
+        ("publisher", iatidq.summary.PublisherSummary),
+        ("package", iatidq.summary.VanillaSummary)
         ]
 
     for cfg in configs:

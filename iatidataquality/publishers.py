@@ -76,8 +76,7 @@ def _publisher_detail(p_group):
     #  of organisation conditions
     pconditions = {}
 
-    s = summary.Summary(aggregate_results, conditions=pconditions, 
-                        mode="publisher")
+    s = summary.PublisherSummary(aggregate_results, conditions=pconditions)
     return s.summary()
 
 @app.route("/publishers/<id>/detail")
@@ -196,8 +195,8 @@ def publisher(id=None):
     #  organisation conditions.
     pconditions = {}
 
-    s = summary.Summary(aggregate_results, conditions=pconditions, 
-                        mode="publisher_indicators")
+    s = summary.PublisherIndicatorsSummary(aggregate_results, 
+                                           conditions=pconditions)
     aggregate_results = s.summary()
 
     latest_runtime=1

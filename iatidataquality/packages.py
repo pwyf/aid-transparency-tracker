@@ -225,7 +225,7 @@ def packages(package_name=None, runtime_id=None):
     if latest_runtime:
         aggregate_results = package_aggregation(package, latest_runtime, aggregation_type)
 
-        s = summary.Summary(aggregate_results, pconditions, mode="publisher")
+        s = summary.PublisherSummary(aggregate_results, pconditions)
         aggregate_results = s.summary()
     else:
         aggregate_results = None
