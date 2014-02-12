@@ -203,7 +203,7 @@ def summarise_results(conditions, mode, hierarchies,
     tmp_out = dict([ ((h, t), tdata) for h, t, tdata in summaries ])
     out = reform_dict(tmp_out)
 
-    if mode not in ["publisher_simple", "publisher_indicators"]:
+    if mode not in ["publisher_indicators"]:
         return out
 
     simple_out = publisher_simple(out, cdtns)
