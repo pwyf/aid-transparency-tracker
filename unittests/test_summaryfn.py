@@ -33,7 +33,7 @@ def check_summary(config):
     with file('unittests/artefacts/output-%s.json' % suffix) as f:
         expected = f.read()
 
-    s = cls(data, conditions=None)
+    s = cls(data, conditions=None, manual=True)
     observed = s.summary()
 
     assert json.dumps(observed, indent=2) == expected
