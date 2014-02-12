@@ -243,22 +243,26 @@ class Summary(object):
         for i in set(map(lambda x: (x[1].id), data)):
             yield i
 
+    def get_conditions(self):
+        if not self.conditions:
+            return None
+
+        return dict(map(lambda x: (
+                    (x.test_id, x.condition, x.condition_value),
+                    (x.operation, x.description)
+                    ), self.conditions))
+
+
     def aggregate(self, data):
         hierarchies = self.gen_hierarchies(data)
         tests = self.gen_tests(data)
+        cdtns = self.get_conditions()
 
         def setmap(lam):
             return set(map(lam, data))
     
         def dictmap(lam):
             return dict(map(lam, data))
-
-        cdtns = None
-        if self.conditions:
-            cdtns = dict(map(lambda x: (
-                        (x.test_id, x.condition, x.condition_value),
-                        (x.operation, x.description)
-                        ), self.conditions))
 
         if publisher_mode(self.get_mode()):
             ind_f = lambda x: (
