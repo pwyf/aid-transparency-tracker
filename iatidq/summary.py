@@ -252,6 +252,8 @@ class Summary(object):
                     (x.operation, x.description)
                     ), self.conditions))
 
+    def restructure_data(self):
+        return lambda x: ((x[4], x[1].id), (x))
 
     def aggregate(self, data):
         hierarchies = self.gen_hierarchies(data)
@@ -287,13 +289,13 @@ class Summary(object):
             pkg_f = lambda x: x[5]
             packages = setmap(pkg_f)
 
-            d_f = lambda x: ((x[4], x[1].id, x[5]),(x))
+            d_f = self.restructure_data()
             d = dictmap(d_f)
 
             summary = lambda h, t: sum_for_publishers(packages, d, h, t)
 
         else:
-            d_f = lambda x: ((x[4], x[1].id),(x))
+            d_f = self.restructure_data()
             d = dictmap(d_f)
 
             summary = lambda h, t: sum_default(d, h, t)
@@ -306,6 +308,9 @@ class Summary(object):
 class PublisherSummary(Summary):
     def get_mode(self):
         return "publisher"
+
+    def restructure_data(self):
+        return lambda x: ((x[4], x[1].id, x[5]), (x))
 
 class VanillaSummary(Summary):
     def get_mode(self):
