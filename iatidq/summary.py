@@ -162,23 +162,6 @@ def sum_for_publishers(packages, d, h, t):
     tmp["result_hierarchy"] = total_activities
     return tmp
 
-def sum_default(d, h, t):
-    # return data for this single package
-    data = d.get((h, t), None)
-    if data is None:
-        return None
-
-    tmp = make_summary(
-        data[1].id,
-        data[1].name,
-        data[1].description,
-        data[1].test_group,
-        data[1].test_level,
-        data[2],
-        data[3])
-    tmp["result_hierarchy"] = data[4]
-    return tmp
-
 def summarise_results(conditions, mode, hierarchies, 
                       tests, cdtns, indicators,
                       indicators_tests, packages, d, summary):
@@ -266,32 +249,29 @@ class Summary(object):
         d_f = self.restructure_data()
         d = dict(map(d_f, data))
 
-        if publisher_mode(self.get_mode()):
-            ind_f = lambda x: (
-                x[0]["id"], (
-                    x[0]["name"], 
-                    x[0]["description"], 
-                    x[0]["indicator_type"], 
-                    x[0]["indicator_category_name"], 
-                    x[0]["indicator_subcategory_name"], 
-                    x[0]["longdescription"], 
-                    x[0]["indicator_noformat"], 
-                    x[0]["indicator_ordinal"], 
-                    x[0]["indicator_order"], 
-                    x[0]["indicator_weight"]
-                    )
+        ind_f = lambda x: (
+            x[0]["id"], (
+                x[0]["name"], 
+                x[0]["description"], 
+                x[0]["indicator_type"], 
+                x[0]["indicator_category_name"], 
+                x[0]["indicator_subcategory_name"], 
+                x[0]["longdescription"], 
+                x[0]["indicator_noformat"], 
+                x[0]["indicator_ordinal"], 
+                x[0]["indicator_order"], 
+                x[0]["indicator_weight"]
                 )
-            indicators = setmap(ind_f)
+            )
+        indicators = setmap(ind_f)
 
-            ind_test_f = lambda x: (x[0]["id"], x[1].id)
-            indicators_tests = list(setmap(ind_test_f))
+        ind_test_f = lambda x: (x[0]["id"], x[1].id)
+        indicators_tests = list(setmap(ind_test_f))
 
-            pkg_f = lambda x: x[5]
-            packages = setmap(pkg_f)
+        pkg_f = lambda x: x[5]
+        packages = setmap(pkg_f)
 
-            summary = lambda h, t: sum_for_publishers(packages, d, h, t)
-        else:
-            summary = lambda h, t: sum_default(d, h, t)
+        summary = lambda h, t: sum_for_publishers(packages, d, h, t)
 
         return summarise_results(self.conditions, self.get_mode(), hierarchies, 
                                  tests, cdtns, indicators,
