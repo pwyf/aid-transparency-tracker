@@ -18,11 +18,6 @@ def reform_dict(d):
 
     return dict([ (k1, inner(k1))
                    for k1 in set( k1 for k1, k2 in d.keys() ) ])
-    
-def publisher_mode(mode):
-    if mode in ["publisher", "publisher_indicators"]:
-        return True
-    return False
 
 def publisher_indicators(indicators, indicators_tests, simple_out):
     # get all tests which belong to a specific indicator
