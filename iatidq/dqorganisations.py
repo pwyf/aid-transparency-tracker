@@ -405,9 +405,9 @@ def _organisation_detail(organisation, aggregation_type):
     pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
             ).all()
 
-    return summary.agr_results(aggregate_results, 
-                                   conditions=pconditions, 
-                                   mode="publisher")
+    s = summary.Summary(aggregate_results, conditions=pconditions, 
+                        mode="publisher")
+    return s.summary()
 
 def info_result_tuple(ir):
     ind = {
@@ -474,9 +474,9 @@ def _organisation_indicators(organisation, aggregation_type=2):
         organisation_id=organisation.id
             ).all()
 
-    data = summary.agr_results(aggregate_results, 
-                                                conditions=pconditions, 
-                                                mode="publisher_indicators")
+    s = summary.Summary(aggregate_results, conditions=pconditions, 
+                        mode="publisher_indicators")
+    data = s.summary()
     
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)

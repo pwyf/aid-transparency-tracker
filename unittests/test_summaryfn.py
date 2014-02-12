@@ -33,11 +33,12 @@ def check_summary(config):
     with file('unittests/artefacts/output-%s.json' % suffix) as f:
         expected = f.read()
 
-    observed = iatidq.summary._agr_results(
+    s = iatidq.summary.Summary(
         data,
         conditions=None,
         mode=mode
         )
+    observed = s.summary()
 
     assert json.dumps(observed, indent=2) == expected
 

@@ -209,7 +209,7 @@ def summarise_results(conditions, mode, hierarchies,
     simple_out = publisher_simple(out, cdtns)
     return publisher_indicators(indicators, indicators_tests, simple_out)
 
-def _agr_results(data, conditions=None, mode=None):
+def _agr_results(data, conditions, mode):
     """
         data variable looks like this:
             models.Indicator,
@@ -289,10 +289,23 @@ def _agr_results(data, conditions=None, mode=None):
                              tests, cdtns, indicators,
                              indicators_tests, packages, d, summary)
 
-def agr_results(data, conditions=None, mode=None):
-    def replace_first(tupl, newval):
-        return tuple([newval] + list(tupl)[1:])
-    switch_first = lambda t: replace_first(t, t[0].as_dict())
-    fixed_data = map(switch_first, data)
-    results = _agr_results(fixed_data, conditions, mode)
-    return results
+class Summary(object):
+    def __init__(self, data, conditions=None, mode=None, manual=False):
+        self.data = data
+        self.conditions = conditions
+        self.mode = mode
+        self.manual = manual
+        self._summary = self.calculate()
+
+    def calculate(self):
+        if self.manual:
+            return _agr_results(self.data, self.conditions, self.mode)
+
+        def replace_first(tupl, newval):
+            return tuple([newval] + list(tupl)[1:])
+        switch_first = lambda t: replace_first(t, t[0].as_dict())
+        fixed_data = map(switch_first, self.data)
+        return _agr_results(fixed_data, self.conditions, self.mode)
+
+    def summary(self):
+        return self._summary
