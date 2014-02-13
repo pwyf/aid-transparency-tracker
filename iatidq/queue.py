@@ -65,3 +65,18 @@ def handle_queue_generator(queue_name):
         requeued_messages = channel.cancel()
         channel.close()
         connection.close()
+
+def exhaust_queue(queue, callback_fn):
+    try:
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='localhost'))
+        channel = connection.channel()
+        while True:
+            method_frame, header_frame, body = channel.basic_get(queue)
+            if not method_frame:
+                break
+            callback_fn(body)
+
+    finally:
+        channel.close()
+        connection.close()

@@ -169,3 +169,6 @@ def callback_fn(ch, method, properties, body):
 def run_download_queue():
     while True:
         queue.handle_queue(download_queue, callback_fn)
+
+def download_queue_once():
+    queue.exhaust_queue(download_queue, callback_fn)
