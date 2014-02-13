@@ -171,4 +171,4 @@ def run_download_queue():
         queue.handle_queue(download_queue, callback_fn)
 
 def download_queue_once():
-    queue.exhaust_queue(download_queue, callback_fn)
+    queue.exhaust_queue(download_queue, dequeue_download)

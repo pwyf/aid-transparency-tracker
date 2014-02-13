@@ -76,6 +76,7 @@ def exhaust_queue(queue, callback_fn):
             if not method_frame:
                 break
             callback_fn(body)
+            channel.basic_ack(method_frame.delivery_tag)
 
     finally:
         channel.close()
