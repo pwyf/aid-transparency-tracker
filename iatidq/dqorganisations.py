@@ -222,12 +222,19 @@ def organisations(organisation_code=None):
         return Organisation.query.filter_by(
             organisation_code=organisation_code).first()
 
-def organisation_by_code(organisation_code):
+def organisationid_by_code(organisation_code):
     assert organisation_code
 
     org = Organisation.query.filter_by(organisation_code=organisation_code).first()
     assert org
     return org.id
+
+def organisation_by_code(organisation_code):
+    assert organisation_code
+
+    org = Organisation.query.filter_by(organisation_code=organisation_code).first()
+    assert org
+    return org
 
 def organisationPackages(organisation_code=None):
     if organisation_code is None:

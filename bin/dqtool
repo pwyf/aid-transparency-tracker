@@ -54,7 +54,7 @@ def compare_aggregation(options):
 
     expected_data = json.load(file(filename))
 
-    org_id = dqorganisations.organisation_by_code(organisation_code)
+    org_id = dqorganisations.organisationid_by_code(organisation_code)
 
     from iatidq import db
     
