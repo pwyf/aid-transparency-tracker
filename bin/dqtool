@@ -73,6 +73,21 @@ def compare_aggregation(options):
         print json.dumps(results, indent=2)
         sys.exit(1)
 
+def compare_summary(options):
+    organisation_code = options.organisation_code.decode('ascii')
+    assert organisation_code
+
+    aggregation_type = 2
+
+    from iatidq import dqorganisations
+
+    organisation = dqorganisations.organisation_by_code(organisation_code)
+
+    aggregate_results = dqorganisations._organisation_detail(
+        organisation, aggregation_type)
+    import json
+    print json.dumps(aggregate_results, indent=2)
+
 
 def run():
     parser = optparse.OptionParser()
@@ -93,7 +108,8 @@ def run():
         "clear-survey": clear_survey,
         "list-packages": list_packages,
         "reload-packages": reload_packages,
-        "compare-aggregation": compare_aggregation
+        "compare-aggregation": compare_aggregation,
+        "compare-summary": compare_summary
         }
 
     if options.mode not in modes:
