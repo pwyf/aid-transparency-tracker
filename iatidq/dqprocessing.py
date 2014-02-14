@@ -136,16 +136,17 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
     aresults = aggregations.aggregate_percentages(data)
     print "finished calculating percentages"
 
-    for aresult in aresults:
-        a = models.AggregateResult()
-        a.runtime_id = runtime
-        a.package_id = aresult["package_id"]
-        a.test_id = aresult["test_id"]
-        a.result_hierarchy = aresult["hierarchy"]
-        a.results_data = aresult["percentage_passed"]
-        a.results_num = aresult["total_results"]
-        a.aggregateresulttype_id = agg_type.id
-        db.session.add(a)
+    with db.session.begin():
+        for aresult in aresults:
+            a = models.AggregateResult()
+            a.runtime_id = runtime
+            a.package_id = aresult["package_id"]
+            a.test_id = aresult["test_id"]
+            a.result_hierarchy = aresult["hierarchy"]
+            a.results_data = aresult["percentage_passed"]
+            a.results_num = aresult["total_results"]
+            a.aggregateresulttype_id = agg_type.id
+            db.session.add(a)
     
     return {"status": status, "data": aresults}
 
@@ -171,17 +172,20 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
         ).all()
 
     aresults = aggregations.aggregate_percentages_org(data)
-        
-    for aresult in aresults:
-        a = models.AggregateResult()
-        a.runtime_id = runtime
-        a.package_id = aresult["package_id"]
-        a.test_id = aresult["test_id"]
-        a.result_hierarchy = aresult["hierarchy"]
-        a.results_data = aresult["percentage_passed"]
-        a.results_num = aresult["total_results"]
-        a.organisation_id = aresult["organisation_id"]
-        a.aggregateresulttype_id = agg_type.id
-        db.session.add(a)
+
+    with db.session.begin():
+        for aresult in aresults:
+            a = models.AggregateResult()
+            a.runtime_id = runtime
+            a.package_id = aresult["package_id"]
+            a.test_id = aresult["test_id"]
+            a.result_hierarchy = aresult["hierarchy"]
+            a.results_data = aresult["percentage_passed"]
+            a.results_num = aresult["total_results"]
+            a.organisation_id = aresult["organisation_id"]
+            a.aggregateresulttype_id = agg_type.id
+            db.session.add(a)
+
+    print "added to db"
     
     return {"status": status, "data": aresults}

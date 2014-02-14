@@ -134,7 +134,8 @@ def enqueue_test(options):
 def aggregate_results(options):
     assert options.runtime_id
     assert options.package_id
-    iatidq.dqprocessing.aggregate_results(options.runtime_id, options.package_id)
+    iatidq.dqprocessing.aggregate_results(options.runtime_id, 
+                                          options.package_id)
 
 def setup_organisations(options):
     iatidq.setup.setup_organisations()
