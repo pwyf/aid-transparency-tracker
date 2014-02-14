@@ -65,7 +65,13 @@ def compare_aggregation(options):
 
     results = map(list, db.engine.execute(sql, (org_id, )))
 
-    assert results == expected_data
+    if results == expected_data:
+        print "PASS"
+        sys.exit(0)
+    else:
+        print "FAIL"
+        print json.dumps(results, indent=2)
+        sys.exit(1)
 
 
 def run():
