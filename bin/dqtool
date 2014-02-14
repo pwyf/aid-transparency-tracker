@@ -69,24 +69,34 @@ def compare_aggregation(options):
         print "PASS"
         sys.exit(0)
     else:
-        print "FAIL"
         print json.dumps(results, indent=2)
         sys.exit(1)
 
 def compare_summary(options):
     organisation_code = options.organisation_code.decode('ascii')
+    filename = options.filename
     assert organisation_code
 
     aggregation_type = 2
 
     from iatidq import dqorganisations
 
+    expected_data = json.load(file(filename))
+
     organisation = dqorganisations.organisation_by_code(organisation_code)
 
     aggregate_results = dqorganisations._organisation_detail(
         organisation, aggregation_type)
-    import json
-    print json.dumps(aggregate_results, indent=2)
+
+    aggregate_results = json.loads(json.dumps(aggregate_results, 
+                                              sort_keys=True))
+
+    if aggregate_results == expected_data:
+        print "PASS"
+        sys.exit(0)
+    else:
+        print json.dumps(aggregate_results, indent=2, sort_keys=True)
+        sys.exit(1)
 
 
 def run():

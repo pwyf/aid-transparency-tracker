@@ -1,0 +1,2192 @@
+{
+  "null": {
+    "2": {
+      "indicator": {
+        "description": "Allocation policy", 
+        "id": 2, 
+        "indicator_category_name": "organisation", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "planning", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Aid allocation policies and procedures are the detailed policy and procedure documents by which the organisation chooses where to spend its resources, i.e. on which countries or themes rather than others. Relatively general documents or webpages outlining which countries, themes and institutions the agency will fund are accepted, as long as this is forward-looking and not wholly retrospective.", 
+        "name": "allocation"
+      }, 
+      "result_hierarchy": 1, 
+      "results_num": 1, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Allocation policy", 
+        "id": 2, 
+        "name": "document-link/category[@code='B04'] exists?", 
+        "test_group": "allocation", 
+        "test_level": 3
+      }
+    }, 
+    "3": {
+      "indicator": {
+        "description": "Annual report", 
+        "id": 3, 
+        "indicator_category_name": "organisation", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "planning", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Annual reports outline basic (normally aggregate) information about how aid was spent in the previous year, broken down by sector and / or country. This should be backward looking. \nAnnual reports which are up to date within their regular cycle, i.e. the organisation publishes an annual report a year behind, the most recent document within this time frame are accepted.", 
+        "name": "annual-report"
+      }, 
+      "result_hierarchy": 1, 
+      "results_num": 1, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Annual report", 
+        "id": 3, 
+        "name": "document-link/category[@code='B01'] exists?", 
+        "test_group": "annual-report", 
+        "test_level": 3
+      }
+    }, 
+    "4": {
+      "indicator": {
+        "description": "Audit", 
+        "id": 4, 
+        "indicator_category_name": "organisation", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The organisation's annual audit of its activities is an official inspection of the accounts and activities of this organisation, typically by an independent body.\nAudits up to date with regular audit cycles are accepted, i.e. If the organisation publishes biennial audits, the most recent document within this time frame are accepted.", 
+        "name": "audit"
+      }, 
+      "result_hierarchy": 1, 
+      "results_num": 1, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Audit", 
+        "id": 4, 
+        "name": "document-link/category[@code='B06'] exists?", 
+        "test_group": "audit", 
+        "test_level": 3
+      }
+    }, 
+    "15": {
+      "indicator": {
+        "description": "Country strategy", 
+        "id": 12, 
+        "indicator_category_name": "organisation", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "planning", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "A country strategy paper sets out the organisation's planned approach and activities in the recipient country. For it to be accepted it needs to be a detailed document, rather than just a paragraph on the organisation's website.", 
+        "name": "country-strategy"
+      }, 
+      "result_hierarchy": 1, 
+      "results_num": 1, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Country strategy paper", 
+        "id": 15, 
+        "name": "document-link/category[@code='B03'] exists?", 
+        "test_group": "country-strategy", 
+        "test_level": 3
+      }
+    }, 
+    "35": {
+      "indicator": {
+        "description": "Procurement policy", 
+        "id": 27, 
+        "indicator_category_name": "organisation", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "planning", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "An organisation's procurement procedures explain the process used to tender and contract (invite bids for) goods and services. This must fully explain the criteria on which decisions are made, and could be in a single procurement policy document or attached to each tender.", 
+        "name": "procurement-policy"
+      }, 
+      "result_hierarchy": 1, 
+      "results_num": 1, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Procurement policy", 
+        "id": 35, 
+        "name": "document-link/category[@code='B05'] exists?", 
+        "test_group": "procurement-policy", 
+        "test_level": 3
+      }
+    }, 
+    "40": {
+      "indicator": {
+        "description": "Organisation strategy", 
+        "id": 30, 
+        "indicator_category_name": "organisation", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "planning", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "An overarching strategy document explains the general approach and policies of the donor towards international development. This should be forward looking. \nAt a minimum, the document should outline which countries, sectors or themes the donor organisation supports, what budget it anticipates spending on the various sectors, countries or themes and what kind of activities it plans to implement and/or support.", 
+        "name": "strategy"
+      }, 
+      "result_hierarchy": 1, 
+      "results_num": 1, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Strategy", 
+        "id": 40, 
+        "name": "document-link/category[@code='B02'] exists?", 
+        "test_group": "strategy", 
+        "test_level": 3
+      }
+    }
+  }, 
+  "1": {
+    "1": {
+      "indicator": {
+        "description": "Aid Type", 
+        "id": 1, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The type of aid shows whether the activity is classed as budget support, a project, technical assistance, debt relief, administrative costs, and so on. This needs to be explicitly stated per activity, or once in a country strategy paper or on a clear place on the organisation's website if there is only one aid type for the whole organisation, e.g. \"all aid is project-type interventions\".", 
+        "name": "aid-type"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Default aid type ", 
+        "id": 1, 
+        "name": "default-aid-type or transaction/aid-type exists (if activity-status/@code is at least 2)?", 
+        "test_group": "aid-type", 
+        "test_level": 1
+      }
+    }, 
+    "5": {
+      "indicator": {
+        "description": "Budget Docs", 
+        "id": 5, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "This is a specific budget detailing what the intended spending is for the different lines of the individual activity. It is often a document published on the organisation's website.\nBudget documents cannot simply be at the country level. If an activity budget is included in a larger ???country level' document, it is only accepted if the budget for the activity is broken down line by line.  ", 
+        "name": "budget"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 59, 
+      "test": {
+        "description": "Document - Budget document", 
+        "id": 5, 
+        "name": "document-link/category[@code='A05'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "budget", 
+        "test_level": 1
+      }
+    }, 
+    "6": {
+      "indicator": {
+        "description": "Budget Identifier", 
+        "id": 6, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The budget classification is a way of linking the activity to the recipient country government's own budget codes. This information can either be provided as the budget codes themselves, or as a common code that can map from a donor organisation's detailed purpose codes to the recipient country's functional or administrative budget classifications.\nThis information will not be made available if the organisation does not publish to IATI.", 
+        "name": "budget-identifier"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Budget identifier, administrative/functional classification", 
+        "id": 6, 
+        "name": "country-budget exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "budget-identifier", 
+        "test_level": 1
+      }
+    }, 
+    "7": {
+      "indicator": {
+        "description": "Budget Identifier", 
+        "id": 6, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The budget classification is a way of linking the activity to the recipient country government's own budget codes. This information can either be provided as the budget codes themselves, or as a common code that can map from a donor organisation's detailed purpose codes to the recipient country's functional or administrative budget classifications.\nThis information will not be made available if the organisation does not publish to IATI.", 
+        "name": "budget-identifier"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Budget identifier, economic classification", 
+        "id": 7, 
+        "name": "capital-spend exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "budget-identifier", 
+        "test_level": 1
+      }
+    }, 
+    "8": {
+      "indicator": {
+        "description": "Collaboration Type", 
+        "id": 7, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The collaboration type shows how the activity is funded  -  whether directly from one government to another (bilaterally), through institutions such as the World Bank or UN (multilaterally), or otherwise. This needs to be explicitly stated.\n\nTo be accepted, responses need to be stated per activity, or once in a country strategy paper or a clear place on the website, if there is only one collaboration type for the whole organisation, e.g. \"all aid is funded bilaterally\".", 
+        "name": "collaboration-type"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Collaboration type ", 
+        "id": 8, 
+        "name": "collaboration-type exists (if activity-status/@code is at least 2)?", 
+        "test_group": "collaboration-type", 
+        "test_level": 1
+      }
+    }, 
+    "9": {
+      "indicator": {
+        "description": "Conditions", 
+        "id": 8, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The terms and conditions of the activity may also be referred to as benchmarks, priors, or involve words such as \"subject to...\". They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released.\n\nThe conditions should include loan repayment terms if the activity is financed by a loan.", 
+        "name": "conditions"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Conditions", 
+        "id": 9, 
+        "name": "conditions exists (if activity-status/@code is at least 2)?", 
+        "test_group": "conditions", 
+        "test_level": 1
+      }
+    }, 
+    "10": {
+      "indicator": {
+        "description": "Conditions", 
+        "id": 8, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The terms and conditions of the activity may also be referred to as benchmarks, priors, or involve words such as \"subject to...\". They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released.\n\nThe conditions should include loan repayment terms if the activity is financed by a loan.", 
+        "name": "conditions"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 59, 
+      "test": {
+        "description": "Document - Conditions document", 
+        "id": 10, 
+        "name": "document-link/category[@code='A04'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "conditions", 
+        "test_level": 1
+      }
+    }, 
+    "11": {
+      "indicator": {
+        "description": "Contact details", 
+        "id": 9, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "This shows who can be contacted in relation to this activity. This does not have to be the contact information for an individual or project manager and could refer to a central contact or information desk. Contacts for either the funding organisation or the implementing organisation were accepted.\nThis has to be stated alongside the activity or on an obvious \"contact us\" link alongside the activity.", 
+        "name": "contact-details"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Contact information for the activity ", 
+        "id": 11, 
+        "name": "contact-info exists?", 
+        "test_group": "contact-details", 
+        "test_level": 1
+      }
+    }, 
+    "12": {
+      "indicator": {
+        "description": "Contracts", 
+        "id": 10, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The individual contract(s) which is signed with a company, organisation or individual that provides goods and services for the activity. Again this could be on a procurement section of the organisation's website, on a separate website or possibly on a central government procurement website. \nContract documents cannot simply be at the country level. If an activity contract is included in a larger ???country level' document, it is only accepted if the contract mentions the activity with a great degree of detail.  ", 
+        "name": "contracts"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 15, 
+      "test": {
+        "description": "Document - Contract", 
+        "id": 12, 
+        "name": "document-link/category[@code='A11'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "contracts", 
+        "test_level": 1
+      }
+    }, 
+    "13": {
+      "indicator": {
+        "description": "Contracts", 
+        "id": 10, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The individual contract(s) which is signed with a company, organisation or individual that provides goods and services for the activity. Again this could be on a procurement section of the organisation's website, on a separate website or possibly on a central government procurement website. \nContract documents cannot simply be at the country level. If an activity contract is included in a larger ???country level' document, it is only accepted if the contract mentions the activity with a great degree of detail.  ", 
+        "name": "contracts"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Summary information about contract document", 
+        "id": 13, 
+        "name": "document-link/category[@code='A06'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "contracts", 
+        "test_level": 1
+      }
+    }, 
+    "14": {
+      "indicator": {
+        "description": "Overall cost", 
+        "id": 11, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The overall financial cost or amount is a summary total financial sum for the activity.", 
+        "name": "cost-overall"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Budget", 
+        "id": 14, 
+        "name": "budget exists (if activity-status/@code is at least 2)?", 
+        "test_group": "cost-overall", 
+        "test_level": 1
+      }
+    }, 
+    "16": {
+      "indicator": {
+        "description": "Current Status", 
+        "id": 13, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "This shows whether the activity is currently under design, being implemented, has finished or has been cancelled.", 
+        "name": "current-status"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity status ", 
+        "id": 16, 
+        "name": "activity-status exists?", 
+        "test_group": "current-status", 
+        "test_level": 1
+      }
+    }, 
+    "17": {
+      "indicator": {
+        "description": "Current Status", 
+        "id": 13, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "This shows whether the activity is currently under design, being implemented, has finished or has been cancelled.", 
+        "name": "current-status"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity status, only once", 
+        "id": 17, 
+        "name": "activity-status exists 1 time?", 
+        "test_group": "current-status", 
+        "test_level": 1
+      }
+    }, 
+    "18": {
+      "indicator": {
+        "description": "Actual dates", 
+        "id": 14, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "These are the dates that the activity actually started (and ended on, if the activity has finished). If there are only one set of dates but they are not explicitly stated as planned or actual dates, then it is assumed they are planned dates. Actual dates are accepted where specific events occurred, for example the date the project/programme agreement is signed, a board presentation or an appraisal date.", 
+        "name": "dates-actual"
+      }, 
+      "result_hierarchy": 13, 
+      "results_num": 13, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity date actual end date", 
+        "id": 18, 
+        "name": "activity-date[@type='end-actual'] exists (if activity-status/@code is at least 3)?", 
+        "test_group": "dates-actual", 
+        "test_level": 1
+      }
+    }, 
+    "19": {
+      "indicator": {
+        "description": "Actual dates", 
+        "id": 14, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "These are the dates that the activity actually started (and ended on, if the activity has finished). If there are only one set of dates but they are not explicitly stated as planned or actual dates, then it is assumed they are planned dates. Actual dates are accepted where specific events occurred, for example the date the project/programme agreement is signed, a board presentation or an appraisal date.", 
+        "name": "dates-actual"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity date actual start date", 
+        "id": 19, 
+        "name": "activity-date[@type='start-actual'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "dates-actual", 
+        "test_level": 1
+      }
+    }, 
+    "20": {
+      "indicator": {
+        "description": "Planned dates", 
+        "id": 15, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The planned dates are the dates that the activity is scheduled to start and end on. If there are one set of dates but they are not explicitly planned or actual dates, given that these are for activities which are current (i.e. Being implemented at the time of data collection) it is assumed that they are planned dates.", 
+        "name": "dates-planned"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity date planned end date", 
+        "id": 20, 
+        "name": "activity-date[@type='end-planned'] exists?", 
+        "test_group": "dates-planned", 
+        "test_level": 1
+      }
+    }, 
+    "21": {
+      "indicator": {
+        "description": "Planned dates", 
+        "id": 15, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The planned dates are the dates that the activity is scheduled to start and end on. If there are one set of dates but they are not explicitly planned or actual dates, given that these are for activities which are current (i.e. Being implemented at the time of data collection) it is assumed that they are planned dates.", 
+        "name": "dates-planned"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity date planned start date", 
+        "id": 21, 
+        "name": "activity-date[@type='start-planned'] exists?", 
+        "test_group": "dates-planned", 
+        "test_level": 1
+      }
+    }, 
+    "22": {
+      "indicator": {
+        "description": "Description", 
+        "id": 16, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The description of the activity is a descriptive text, longer than the title, explaining what the activity is. Sometimes it is just a short sentence but could also be more detailed. Either is accepted.\n\nThe description of the activity needs to contain a minimum of 10 words in order to be considered a description rather than just a title.", 
+        "name": "description"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 98, 
+      "test": {
+        "description": "Description", 
+        "id": 22, 
+        "name": "description/text() exists?", 
+        "test_group": "description", 
+        "test_level": 1
+      }
+    }, 
+    "23": {
+      "indicator": {
+        "description": "Description", 
+        "id": 16, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The description of the activity is a descriptive text, longer than the title, explaining what the activity is. Sometimes it is just a short sentence but could also be more detailed. Either is accepted.\n\nThe description of the activity needs to contain a minimum of 10 words in order to be considered a description rather than just a title.", 
+        "name": "description"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 98, 
+      "test": {
+        "description": "Description, more than 40 chars", 
+        "id": 23, 
+        "name": "description/text() has more than 40 characters?", 
+        "test_group": "description", 
+        "test_level": 1
+      }
+    }, 
+    "24": {
+      "indicator": {
+        "description": "Evaluations", 
+        "id": 17, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Evaluation documents consider what the activity achieved, whether the intended objectives were met, what the major factors influencing the achievement or non-achievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation's website.\n\nIf the activity under assessment is not completed but evaluation documents are available for other completed activities, the donor can score for this indicator.", 
+        "name": "evaluations"
+      }, 
+      "result_hierarchy": 13, 
+      "results_num": 13, 
+      "results_pct": 36, 
+      "test": {
+        "description": "Document - Review of project performance and evaluation document", 
+        "id": 24, 
+        "name": "document-link/category[@code='A07'] exists (if activity-status/@code is at least 3)?", 
+        "test_group": "evaluations", 
+        "test_level": 1
+      }
+    }, 
+    "25": {
+      "indicator": {
+        "description": "Actual expenditure", 
+        "id": 18, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Individual actual financial disbursements must be related to individual activities and must be on a per-transaction basis. Each activity is likely to have several transactions. \n\nThis information is unlikely to be made available if the organisation does not publish to IATI.", 
+        "name": "expenditure-actual"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Disbursements", 
+        "id": 25, 
+        "name": "transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='E'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "expenditure-actual", 
+        "test_level": 1
+      }
+    }, 
+    "26": {
+      "indicator": {
+        "description": "Planned expenditure", 
+        "id": 19, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Individual planned expenditures must be related to individual activities but are generally high level commitments rather than a detailed breakdown of the activity budget. \n\nThis information is unlikely to be made available if the organisation does not publish to IATI.", 
+        "name": "expenditure-planned"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Commitments", 
+        "id": 26, 
+        "name": "transaction/transaction-type[@code='C'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "expenditure-planned", 
+        "test_level": 1
+      }
+    }, 
+    "27": {
+      "indicator": {
+        "description": "Finance Type", 
+        "id": 20, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The type of finance shows whether the activity is a grant, loan, export credit or debt relief. This needs to be explicitly stated per activity, or once in a country strategy paper or on a clear place on the organisation's website if there is only one finance type for the whole organisation, e.g. \"all aid is grants\".", 
+        "name": "finance-type"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Default finance type ", 
+        "id": 27, 
+        "name": "default-finance-type or transaction/finance-type exists (if activity-status/@code is at least 2)?", 
+        "test_group": "finance-type", 
+        "test_level": 1
+      }
+    }, 
+    "28": {
+      "indicator": {
+        "description": "Flow Type", 
+        "id": 21, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The flow type shows whether the organisation states this activity counts as ODA, OOF, climate finance or any other type of flow. This has to be explicitly stated per activity, or once in a country strategy paper or a single place on the organisation's website if there is only one flow type for all activities, e.g. \"all aid is ODA\".", 
+        "name": "flow-type"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Flow type", 
+        "id": 28, 
+        "name": "default-flow-type or transaction/flow-type exists (if activity-status/@code is at least 2)?", 
+        "test_group": "flow-type", 
+        "test_level": 1
+      }
+    }, 
+    "29": {
+      "indicator": {
+        "description": "Impact Appraisals", 
+        "id": 22, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Pre -project impact appraisals explain the totality of positive and negative, primary and secondary effects expected to be produced by a development intervention.", 
+        "name": "impact-appraisals"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 63, 
+      "test": {
+        "description": "Document - Pre- and post-project impact appraisal", 
+        "id": 29, 
+        "name": "document-link/category[@code='A01'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "impact-appraisals", 
+        "test_level": 1
+      }
+    }, 
+    "30": {
+      "indicator": {
+        "description": "Implementer", 
+        "id": 23, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The implementer of the activity is the organisation which is principally responsible for delivering this activity.", 
+        "name": "implementer"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Implementing organisation", 
+        "id": 30, 
+        "name": "participating-org[@role='Implementing'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "implementer", 
+        "test_level": 1
+      }
+    }, 
+    "31": {
+      "indicator": {
+        "description": "Sub-national location", 
+        "id": 24, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The sub-national geographic location is information about where the activity is located within a country. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.", 
+        "name": "location"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Location (sub-national)", 
+        "id": 31, 
+        "name": "location exists (if activity-status/@code is at least 2)?", 
+        "test_group": "location", 
+        "test_level": 1
+      }
+    }, 
+    "32": {
+      "indicator": {
+        "description": "Sub-national location", 
+        "id": 24, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The sub-national geographic location is information about where the activity is located within a country. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.", 
+        "name": "location"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Location (sub-national) coordinates", 
+        "id": 32, 
+        "name": "location/coordinates exists (if activity-status/@code is at least 2)?", 
+        "test_group": "location", 
+        "test_level": 1
+      }
+    }, 
+    "33": {
+      "indicator": {
+        "description": "MoU", 
+        "id": 25, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "A Memorandum of Understanding (MoU) is a document which details the agreement usually between the organisation and recipient government for the provision of aid in the country.", 
+        "name": "mou"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 3, 
+      "test": {
+        "description": "Document - Memorandum of understanding document", 
+        "id": 33, 
+        "name": "document-link/category[@code='A09'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not C01))?", 
+        "test_group": "mou", 
+        "test_level": 1
+      }
+    }, 
+    "34": {
+      "indicator": {
+        "description": "Objectives", 
+        "id": 26, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The objectives or purposes of the activity are those that the activity intends to achieve.", 
+        "name": "objectives"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 79, 
+      "test": {
+        "description": "Document - Objectives / Purpose of activity document", 
+        "id": 34, 
+        "name": "document-link/category[@code='A02'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "objectives", 
+        "test_level": 1
+      }
+    }, 
+    "36": {
+      "indicator": {
+        "description": "Results", 
+        "id": 28, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The results show whether activities achieved their intended outputs in accordance with the stated goals or plans. This information often refers to logframes and results chains and may be within a specific results or evaluation section of the organisation's website. ", 
+        "name": "results"
+      }, 
+      "result_hierarchy": 13, 
+      "results_num": 13, 
+      "results_pct": 63, 
+      "test": {
+        "description": "Document - Results, outcomes and outputs document", 
+        "id": 36, 
+        "name": "document-link/category[@code='A08'] exists (if activity-status/@code is at least 3)?", 
+        "test_group": "results", 
+        "test_level": 1
+      }
+    }, 
+    "37": {
+      "indicator": {
+        "description": "Results", 
+        "id": 28, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The results show whether activities achieved their intended outputs in accordance with the stated goals or plans. This information often refers to logframes and results chains and may be within a specific results or evaluation section of the organisation's website. ", 
+        "name": "results"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Result", 
+        "id": 37, 
+        "name": "result/indicator or result/title exists (if activity-status/@code is at least 2)?", 
+        "test_group": "results", 
+        "test_level": 1
+      }
+    }, 
+    "38": {
+      "indicator": {
+        "description": "Sector", 
+        "id": 29, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The sectors of the activity explain whether this is, for example, a health or education project. It does not count if it is just mentioned incidentally within the title / description / etc. It needs to be stated separately and explicitly.\n\nThe sectors must conform to the agreed sectors used by the OECD DAC rather than being the organisation's own sector descriptions. This allows for comparison of activities and spending across sectors and donors.", 
+        "name": "sector"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Sector ", 
+        "id": 38, 
+        "name": "sector exists?", 
+        "test_group": "sector", 
+        "test_level": 1
+      }
+    }, 
+    "39": {
+      "indicator": {
+        "description": "Sector", 
+        "id": 29, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The sectors of the activity explain whether this is, for example, a health or education project. It does not count if it is just mentioned incidentally within the title / description / etc. It needs to be stated separately and explicitly.\n\nThe sectors must conform to the agreed sectors used by the OECD DAC rather than being the organisation's own sector descriptions. This allows for comparison of activities and spending across sectors and donors.", 
+        "name": "sector"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Sector, code", 
+        "id": 39, 
+        "name": "sector/@code exists?", 
+        "test_group": "sector", 
+        "test_level": 1
+      }
+    }, 
+    "41": {
+      "indicator": {
+        "description": "Tenders", 
+        "id": 31, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Tenders are the individual contracts or proposals that have been put out to invite bids from companies or organisations that want to provide goods and services for an activity. They may be on a separate website, possibly on a central government procurement website.", 
+        "name": "tenders"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 13, 
+      "test": {
+        "description": "Document - Tender", 
+        "id": 41, 
+        "name": "document-link/category[@code='A10'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "tenders", 
+        "test_level": 1
+      }
+    }, 
+    "42": {
+      "indicator": {
+        "description": "Tied Aid Status", 
+        "id": 32, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The tied aid status shows whether the organisation states that this activity counts as \"tied\" (procurement is restricted to the donor organisation country) or \"untied\" (open procurement). This has to be explicitly stated per activity, or once in a country strategy paper or on a clear place on the website if there is only one tied aid status (e.g. \"all aid is untied\").\n\nSpecifying location requirements in project documents such as procurement policies or tenders is accepted as publishing tied aid status.", 
+        "name": "tied-aid-status"
+      }, 
+      "result_hierarchy": 75, 
+      "results_num": 75, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Tied aid status", 
+        "id": 42, 
+        "name": "default-tied-status or transaction/tied-status exists (if activity-status/@code is at least 2)?", 
+        "test_group": "tied-aid-status", 
+        "test_level": 1
+      }
+    }, 
+    "43": {
+      "indicator": {
+        "description": "Title", 
+        "id": 33, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The title of the activity is the name of the activity. This is preferably the formal name of the activity, but did not have to be.\nThe title needs to be complete with any abbreviations or acronyms explained.", 
+        "name": "title"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Title", 
+        "id": 43, 
+        "name": "title/text() exists?", 
+        "test_group": "title", 
+        "test_level": 1
+      }
+    }, 
+    "44": {
+      "indicator": {
+        "description": "Title", 
+        "id": 33, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The title of the activity is the name of the activity. This is preferably the formal name of the activity, but did not have to be.\nThe title needs to be complete with any abbreviations or acronyms explained.", 
+        "name": "title"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Title, more than 10 chars", 
+        "id": 44, 
+        "name": "title/text() has more than 10 characters?", 
+        "test_group": "title", 
+        "test_level": 1
+      }
+    }, 
+    "45": {
+      "indicator": {
+        "description": "Unique ID", 
+        "id": 34, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The activity identifier is a unique reference ID for the activity, e.g. A project number. It allows an activity to be referred to and searched for by a code, which can be used to retrieve the project from a database or filing system.\n\nThe project ID must be stated clearly on the page. It is not sufficient if it is only stated in the URL. It must be numeric or alpha-numeric.", 
+        "name": "unique-id"
+      }, 
+      "result_hierarchy": 86, 
+      "results_num": 86, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Unique IATI Identifier", 
+        "id": 45, 
+        "name": "iati-identifier exists?", 
+        "test_group": "unique-id", 
+        "test_level": 1
+      }
+    }
+  }, 
+  "2": {
+    "1": {
+      "indicator": {
+        "description": "Aid Type", 
+        "id": 1, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The type of aid shows whether the activity is classed as budget support, a project, technical assistance, debt relief, administrative costs, and so on. This needs to be explicitly stated per activity, or once in a country strategy paper or on a clear place on the organisation's website if there is only one aid type for the whole organisation, e.g. \"all aid is project-type interventions\".", 
+        "name": "aid-type"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Default aid type ", 
+        "id": 1, 
+        "name": "default-aid-type or transaction/aid-type exists (if activity-status/@code is at least 2)?", 
+        "test_group": "aid-type", 
+        "test_level": 1
+      }
+    }, 
+    "5": {
+      "indicator": {
+        "description": "Budget Docs", 
+        "id": 5, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "This is a specific budget detailing what the intended spending is for the different lines of the individual activity. It is often a document published on the organisation's website.\nBudget documents cannot simply be at the country level. If an activity budget is included in a larger ???country level' document, it is only accepted if the budget for the activity is broken down line by line.  ", 
+        "name": "budget"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Budget document", 
+        "id": 5, 
+        "name": "document-link/category[@code='A05'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "budget", 
+        "test_level": 1
+      }
+    }, 
+    "6": {
+      "indicator": {
+        "description": "Budget Identifier", 
+        "id": 6, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The budget classification is a way of linking the activity to the recipient country government's own budget codes. This information can either be provided as the budget codes themselves, or as a common code that can map from a donor organisation's detailed purpose codes to the recipient country's functional or administrative budget classifications.\nThis information will not be made available if the organisation does not publish to IATI.", 
+        "name": "budget-identifier"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Budget identifier, administrative/functional classification", 
+        "id": 6, 
+        "name": "country-budget exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "budget-identifier", 
+        "test_level": 1
+      }
+    }, 
+    "7": {
+      "indicator": {
+        "description": "Budget Identifier", 
+        "id": 6, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The budget classification is a way of linking the activity to the recipient country government's own budget codes. This information can either be provided as the budget codes themselves, or as a common code that can map from a donor organisation's detailed purpose codes to the recipient country's functional or administrative budget classifications.\nThis information will not be made available if the organisation does not publish to IATI.", 
+        "name": "budget-identifier"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Budget identifier, economic classification", 
+        "id": 7, 
+        "name": "capital-spend exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "budget-identifier", 
+        "test_level": 1
+      }
+    }, 
+    "8": {
+      "indicator": {
+        "description": "Collaboration Type", 
+        "id": 7, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The collaboration type shows how the activity is funded  -  whether directly from one government to another (bilaterally), through institutions such as the World Bank or UN (multilaterally), or otherwise. This needs to be explicitly stated.\n\nTo be accepted, responses need to be stated per activity, or once in a country strategy paper or a clear place on the website, if there is only one collaboration type for the whole organisation, e.g. \"all aid is funded bilaterally\".", 
+        "name": "collaboration-type"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Collaboration type ", 
+        "id": 8, 
+        "name": "collaboration-type exists (if activity-status/@code is at least 2)?", 
+        "test_group": "collaboration-type", 
+        "test_level": 1
+      }
+    }, 
+    "9": {
+      "indicator": {
+        "description": "Conditions", 
+        "id": 8, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The terms and conditions of the activity may also be referred to as benchmarks, priors, or involve words such as \"subject to...\". They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released.\n\nThe conditions should include loan repayment terms if the activity is financed by a loan.", 
+        "name": "conditions"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Conditions", 
+        "id": 9, 
+        "name": "conditions exists (if activity-status/@code is at least 2)?", 
+        "test_group": "conditions", 
+        "test_level": 1
+      }
+    }, 
+    "10": {
+      "indicator": {
+        "description": "Conditions", 
+        "id": 8, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The terms and conditions of the activity may also be referred to as benchmarks, priors, or involve words such as \"subject to...\". They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released.\n\nThe conditions should include loan repayment terms if the activity is financed by a loan.", 
+        "name": "conditions"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Conditions document", 
+        "id": 10, 
+        "name": "document-link/category[@code='A04'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "conditions", 
+        "test_level": 1
+      }
+    }, 
+    "11": {
+      "indicator": {
+        "description": "Contact details", 
+        "id": 9, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "This shows who can be contacted in relation to this activity. This does not have to be the contact information for an individual or project manager and could refer to a central contact or information desk. Contacts for either the funding organisation or the implementing organisation were accepted.\nThis has to be stated alongside the activity or on an obvious \"contact us\" link alongside the activity.", 
+        "name": "contact-details"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Contact information for the activity ", 
+        "id": 11, 
+        "name": "contact-info exists?", 
+        "test_group": "contact-details", 
+        "test_level": 1
+      }
+    }, 
+    "12": {
+      "indicator": {
+        "description": "Contracts", 
+        "id": 10, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The individual contract(s) which is signed with a company, organisation or individual that provides goods and services for the activity. Again this could be on a procurement section of the organisation's website, on a separate website or possibly on a central government procurement website. \nContract documents cannot simply be at the country level. If an activity contract is included in a larger ???country level' document, it is only accepted if the contract mentions the activity with a great degree of detail.  ", 
+        "name": "contracts"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Contract", 
+        "id": 12, 
+        "name": "document-link/category[@code='A11'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "contracts", 
+        "test_level": 1
+      }
+    }, 
+    "13": {
+      "indicator": {
+        "description": "Contracts", 
+        "id": 10, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The individual contract(s) which is signed with a company, organisation or individual that provides goods and services for the activity. Again this could be on a procurement section of the organisation's website, on a separate website or possibly on a central government procurement website. \nContract documents cannot simply be at the country level. If an activity contract is included in a larger ???country level' document, it is only accepted if the contract mentions the activity with a great degree of detail.  ", 
+        "name": "contracts"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Summary information about contract document", 
+        "id": 13, 
+        "name": "document-link/category[@code='A06'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "contracts", 
+        "test_level": 1
+      }
+    }, 
+    "14": {
+      "indicator": {
+        "description": "Overall cost", 
+        "id": 11, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The overall financial cost or amount is a summary total financial sum for the activity.", 
+        "name": "cost-overall"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 96, 
+      "test": {
+        "description": "Budget", 
+        "id": 14, 
+        "name": "budget exists (if activity-status/@code is at least 2)?", 
+        "test_group": "cost-overall", 
+        "test_level": 1
+      }
+    }, 
+    "16": {
+      "indicator": {
+        "description": "Current Status", 
+        "id": 13, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "This shows whether the activity is currently under design, being implemented, has finished or has been cancelled.", 
+        "name": "current-status"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity status ", 
+        "id": 16, 
+        "name": "activity-status exists?", 
+        "test_group": "current-status", 
+        "test_level": 1
+      }
+    }, 
+    "17": {
+      "indicator": {
+        "description": "Current Status", 
+        "id": 13, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "This shows whether the activity is currently under design, being implemented, has finished or has been cancelled.", 
+        "name": "current-status"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity status, only once", 
+        "id": 17, 
+        "name": "activity-status exists 1 time?", 
+        "test_group": "current-status", 
+        "test_level": 1
+      }
+    }, 
+    "18": {
+      "indicator": {
+        "description": "Actual dates", 
+        "id": 14, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "These are the dates that the activity actually started (and ended on, if the activity has finished). If there are only one set of dates but they are not explicitly stated as planned or actual dates, then it is assumed they are planned dates. Actual dates are accepted where specific events occurred, for example the date the project/programme agreement is signed, a board presentation or an appraisal date.", 
+        "name": "dates-actual"
+      }, 
+      "result_hierarchy": 20, 
+      "results_num": 20, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity date actual end date", 
+        "id": 18, 
+        "name": "activity-date[@type='end-actual'] exists (if activity-status/@code is at least 3)?", 
+        "test_group": "dates-actual", 
+        "test_level": 1
+      }
+    }, 
+    "19": {
+      "indicator": {
+        "description": "Actual dates", 
+        "id": 14, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "These are the dates that the activity actually started (and ended on, if the activity has finished). If there are only one set of dates but they are not explicitly stated as planned or actual dates, then it is assumed they are planned dates. Actual dates are accepted where specific events occurred, for example the date the project/programme agreement is signed, a board presentation or an appraisal date.", 
+        "name": "dates-actual"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity date actual start date", 
+        "id": 19, 
+        "name": "activity-date[@type='start-actual'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "dates-actual", 
+        "test_level": 1
+      }
+    }, 
+    "20": {
+      "indicator": {
+        "description": "Planned dates", 
+        "id": 15, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The planned dates are the dates that the activity is scheduled to start and end on. If there are one set of dates but they are not explicitly planned or actual dates, given that these are for activities which are current (i.e. Being implemented at the time of data collection) it is assumed that they are planned dates.", 
+        "name": "dates-planned"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity date planned end date", 
+        "id": 20, 
+        "name": "activity-date[@type='end-planned'] exists?", 
+        "test_group": "dates-planned", 
+        "test_level": 1
+      }
+    }, 
+    "21": {
+      "indicator": {
+        "description": "Planned dates", 
+        "id": 15, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The planned dates are the dates that the activity is scheduled to start and end on. If there are one set of dates but they are not explicitly planned or actual dates, given that these are for activities which are current (i.e. Being implemented at the time of data collection) it is assumed that they are planned dates.", 
+        "name": "dates-planned"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Activity date planned start date", 
+        "id": 21, 
+        "name": "activity-date[@type='start-planned'] exists?", 
+        "test_group": "dates-planned", 
+        "test_level": 1
+      }
+    }, 
+    "22": {
+      "indicator": {
+        "description": "Description", 
+        "id": 16, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The description of the activity is a descriptive text, longer than the title, explaining what the activity is. Sometimes it is just a short sentence but could also be more detailed. Either is accepted.\n\nThe description of the activity needs to contain a minimum of 10 words in order to be considered a description rather than just a title.", 
+        "name": "description"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Description", 
+        "id": 22, 
+        "name": "description/text() exists?", 
+        "test_group": "description", 
+        "test_level": 1
+      }
+    }, 
+    "23": {
+      "indicator": {
+        "description": "Description", 
+        "id": 16, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The description of the activity is a descriptive text, longer than the title, explaining what the activity is. Sometimes it is just a short sentence but could also be more detailed. Either is accepted.\n\nThe description of the activity needs to contain a minimum of 10 words in order to be considered a description rather than just a title.", 
+        "name": "description"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Description, more than 40 chars", 
+        "id": 23, 
+        "name": "description/text() has more than 40 characters?", 
+        "test_group": "description", 
+        "test_level": 1
+      }
+    }, 
+    "24": {
+      "indicator": {
+        "description": "Evaluations", 
+        "id": 17, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Evaluation documents consider what the activity achieved, whether the intended objectives were met, what the major factors influencing the achievement or non-achievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation's website.\n\nIf the activity under assessment is not completed but evaluation documents are available for other completed activities, the donor can score for this indicator.", 
+        "name": "evaluations"
+      }, 
+      "result_hierarchy": 20, 
+      "results_num": 20, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Review of project performance and evaluation document", 
+        "id": 24, 
+        "name": "document-link/category[@code='A07'] exists (if activity-status/@code is at least 3)?", 
+        "test_group": "evaluations", 
+        "test_level": 1
+      }
+    }, 
+    "25": {
+      "indicator": {
+        "description": "Actual expenditure", 
+        "id": 18, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Individual actual financial disbursements must be related to individual activities and must be on a per-transaction basis. Each activity is likely to have several transactions. \n\nThis information is unlikely to be made available if the organisation does not publish to IATI.", 
+        "name": "expenditure-actual"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 79, 
+      "test": {
+        "description": "Disbursements", 
+        "id": 25, 
+        "name": "transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='E'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "expenditure-actual", 
+        "test_level": 1
+      }
+    }, 
+    "26": {
+      "indicator": {
+        "description": "Planned expenditure", 
+        "id": 19, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "financial", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Individual planned expenditures must be related to individual activities but are generally high level commitments rather than a detailed breakdown of the activity budget. \n\nThis information is unlikely to be made available if the organisation does not publish to IATI.", 
+        "name": "expenditure-planned"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 96, 
+      "test": {
+        "description": "Commitments", 
+        "id": 26, 
+        "name": "transaction/transaction-type[@code='C'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "expenditure-planned", 
+        "test_level": 1
+      }
+    }, 
+    "27": {
+      "indicator": {
+        "description": "Finance Type", 
+        "id": 20, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The type of finance shows whether the activity is a grant, loan, export credit or debt relief. This needs to be explicitly stated per activity, or once in a country strategy paper or on a clear place on the organisation's website if there is only one finance type for the whole organisation, e.g. \"all aid is grants\".", 
+        "name": "finance-type"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 89, 
+      "test": {
+        "description": "Default finance type ", 
+        "id": 27, 
+        "name": "default-finance-type or transaction/finance-type exists (if activity-status/@code is at least 2)?", 
+        "test_group": "finance-type", 
+        "test_level": 1
+      }
+    }, 
+    "28": {
+      "indicator": {
+        "description": "Flow Type", 
+        "id": 21, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The flow type shows whether the organisation states this activity counts as ODA, OOF, climate finance or any other type of flow. This has to be explicitly stated per activity, or once in a country strategy paper or a single place on the organisation's website if there is only one flow type for all activities, e.g. \"all aid is ODA\".", 
+        "name": "flow-type"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Flow type", 
+        "id": 28, 
+        "name": "default-flow-type or transaction/flow-type exists (if activity-status/@code is at least 2)?", 
+        "test_group": "flow-type", 
+        "test_level": 1
+      }
+    }, 
+    "29": {
+      "indicator": {
+        "description": "Impact Appraisals", 
+        "id": 22, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Pre -project impact appraisals explain the totality of positive and negative, primary and secondary effects expected to be produced by a development intervention.", 
+        "name": "impact-appraisals"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Pre- and post-project impact appraisal", 
+        "id": 29, 
+        "name": "document-link/category[@code='A01'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "impact-appraisals", 
+        "test_level": 1
+      }
+    }, 
+    "30": {
+      "indicator": {
+        "description": "Implementer", 
+        "id": 23, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The implementer of the activity is the organisation which is principally responsible for delivering this activity.", 
+        "name": "implementer"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 89, 
+      "test": {
+        "description": "Implementing organisation", 
+        "id": 30, 
+        "name": "participating-org[@role='Implementing'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "implementer", 
+        "test_level": 1
+      }
+    }, 
+    "31": {
+      "indicator": {
+        "description": "Sub-national location", 
+        "id": 24, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The sub-national geographic location is information about where the activity is located within a country. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.", 
+        "name": "location"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Location (sub-national)", 
+        "id": 31, 
+        "name": "location exists (if activity-status/@code is at least 2)?", 
+        "test_group": "location", 
+        "test_level": 1
+      }
+    }, 
+    "32": {
+      "indicator": {
+        "description": "Sub-national location", 
+        "id": 24, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The sub-national geographic location is information about where the activity is located within a country. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.", 
+        "name": "location"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Location (sub-national) coordinates", 
+        "id": 32, 
+        "name": "location/coordinates exists (if activity-status/@code is at least 2)?", 
+        "test_group": "location", 
+        "test_level": 1
+      }
+    }, 
+    "33": {
+      "indicator": {
+        "description": "MoU", 
+        "id": 25, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "A Memorandum of Understanding (MoU) is a document which details the agreement usually between the organisation and recipient government for the provision of aid in the country.", 
+        "name": "mou"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Memorandum of understanding document", 
+        "id": 33, 
+        "name": "document-link/category[@code='A09'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not C01))?", 
+        "test_group": "mou", 
+        "test_level": 1
+      }
+    }, 
+    "34": {
+      "indicator": {
+        "description": "Objectives", 
+        "id": 26, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The objectives or purposes of the activity are those that the activity intends to achieve.", 
+        "name": "objectives"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Objectives / Purpose of activity document", 
+        "id": 34, 
+        "name": "document-link/category[@code='A02'] exists (if activity-status/@code is at least 2)?", 
+        "test_group": "objectives", 
+        "test_level": 1
+      }
+    }, 
+    "36": {
+      "indicator": {
+        "description": "Results", 
+        "id": 28, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The results show whether activities achieved their intended outputs in accordance with the stated goals or plans. This information often refers to logframes and results chains and may be within a specific results or evaluation section of the organisation's website. ", 
+        "name": "results"
+      }, 
+      "result_hierarchy": 20, 
+      "results_num": 20, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Results, outcomes and outputs document", 
+        "id": 36, 
+        "name": "document-link/category[@code='A08'] exists (if activity-status/@code is at least 3)?", 
+        "test_group": "results", 
+        "test_level": 1
+      }
+    }, 
+    "37": {
+      "indicator": {
+        "description": "Results", 
+        "id": 28, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "performance", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The results show whether activities achieved their intended outputs in accordance with the stated goals or plans. This information often refers to logframes and results chains and may be within a specific results or evaluation section of the organisation's website. ", 
+        "name": "results"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Result", 
+        "id": 37, 
+        "name": "result/indicator or result/title exists (if activity-status/@code is at least 2)?", 
+        "test_group": "results", 
+        "test_level": 1
+      }
+    }, 
+    "38": {
+      "indicator": {
+        "description": "Sector", 
+        "id": 29, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The sectors of the activity explain whether this is, for example, a health or education project. It does not count if it is just mentioned incidentally within the title / description / etc. It needs to be stated separately and explicitly.\n\nThe sectors must conform to the agreed sectors used by the OECD DAC rather than being the organisation's own sector descriptions. This allows for comparison of activities and spending across sectors and donors.", 
+        "name": "sector"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Sector ", 
+        "id": 38, 
+        "name": "sector exists?", 
+        "test_group": "sector", 
+        "test_level": 1
+      }
+    }, 
+    "39": {
+      "indicator": {
+        "description": "Sector", 
+        "id": 29, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The sectors of the activity explain whether this is, for example, a health or education project. It does not count if it is just mentioned incidentally within the title / description / etc. It needs to be stated separately and explicitly.\n\nThe sectors must conform to the agreed sectors used by the OECD DAC rather than being the organisation's own sector descriptions. This allows for comparison of activities and spending across sectors and donors.", 
+        "name": "sector"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Sector, code", 
+        "id": 39, 
+        "name": "sector/@code exists?", 
+        "test_group": "sector", 
+        "test_level": 1
+      }
+    }, 
+    "41": {
+      "indicator": {
+        "description": "Tenders", 
+        "id": 31, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "related-documents", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "Tenders are the individual contracts or proposals that have been put out to invite bids from companies or organisations that want to provide goods and services for an activity. They may be on a separate website, possibly on a central government procurement website.", 
+        "name": "tenders"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 0, 
+      "test": {
+        "description": "Document - Tender", 
+        "id": 41, 
+        "name": "document-link/category[@code='A10'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?", 
+        "test_group": "tenders", 
+        "test_level": 1
+      }
+    }, 
+    "42": {
+      "indicator": {
+        "description": "Tied Aid Status", 
+        "id": 32, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "classifications", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The tied aid status shows whether the organisation states that this activity counts as \"tied\" (procurement is restricted to the donor organisation country) or \"untied\" (open procurement). This has to be explicitly stated per activity, or once in a country strategy paper or on a clear place on the website if there is only one tied aid status (e.g. \"all aid is untied\").\n\nSpecifying location requirements in project documents such as procurement policies or tenders is accepted as publishing tied aid status.", 
+        "name": "tied-aid-status"
+      }, 
+      "result_hierarchy": 222, 
+      "results_num": 222, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Tied aid status", 
+        "id": 42, 
+        "name": "default-tied-status or transaction/tied-status exists (if activity-status/@code is at least 2)?", 
+        "test_group": "tied-aid-status", 
+        "test_level": 1
+      }
+    }, 
+    "43": {
+      "indicator": {
+        "description": "Title", 
+        "id": 33, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The title of the activity is the name of the activity. This is preferably the formal name of the activity, but did not have to be.\nThe title needs to be complete with any abbreviations or acronyms explained.", 
+        "name": "title"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Title", 
+        "id": 43, 
+        "name": "title/text() exists?", 
+        "test_group": "title", 
+        "test_level": 1
+      }
+    }, 
+    "44": {
+      "indicator": {
+        "description": "Title", 
+        "id": 33, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The title of the activity is the name of the activity. This is preferably the formal name of the activity, but did not have to be.\nThe title needs to be complete with any abbreviations or acronyms explained.", 
+        "name": "title"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 99, 
+      "test": {
+        "description": "Title, more than 10 chars", 
+        "id": 44, 
+        "name": "title/text() has more than 10 characters?", 
+        "test_group": "title", 
+        "test_level": 1
+      }
+    }, 
+    "45": {
+      "indicator": {
+        "description": "Unique ID", 
+        "id": 34, 
+        "indicator_category_name": "activity", 
+        "indicator_noformat": null, 
+        "indicator_order": null, 
+        "indicator_ordinal": null, 
+        "indicator_subcategory_name": "basic", 
+        "indicator_type": "publication", 
+        "indicator_weight": null, 
+        "indicatorgroup_id": 1, 
+        "longdescription": "The activity identifier is a unique reference ID for the activity, e.g. A project number. It allows an activity to be referred to and searched for by a code, which can be used to retrieve the project from a database or filing system.\n\nThe project ID must be stated clearly on the page. It is not sufficient if it is only stated in the URL. It must be numeric or alpha-numeric.", 
+        "name": "unique-id"
+      }, 
+      "result_hierarchy": 233, 
+      "results_num": 233, 
+      "results_pct": 100, 
+      "test": {
+        "description": "Unique IATI Identifier", 
+        "id": 45, 
+        "name": "iati-identifier exists?", 
+        "test_group": "unique-id", 
+        "test_level": 1
+      }
+    }
+  }
+}
