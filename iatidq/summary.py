@@ -246,13 +246,13 @@ class Summary(object):
         # p: ???
         return lambda x: ((x[4], x[1], x[5]), (x))
 
+    def setmap(self, lam):
+        return set(map(lam, self.data))
+
     def aggregate(self):
         hierarchies = self.gen_hierarchies()
         tests = self.gen_tests()
         cdtns = self.get_conditions()
-
-        def setmap(lam):
-            return set(map(lam, self.data))
     
         d_f = self.restructure_data()
 
@@ -272,13 +272,13 @@ class Summary(object):
                 x[0]["indicator_weight"]
                 )
             )
-        indicators = setmap(ind_f)
+        indicators = self.setmap(ind_f)
 
         ind_test_f = lambda x: (x[0]["id"], x[1])
-        indicators_tests = list(setmap(ind_test_f))
+        indicators_tests = list(self.setmap(ind_test_f))
 
         pkg_f = lambda x: x[5]
-        packages = setmap(pkg_f)
+        packages = self.setmap(pkg_f)
 
         summary = lambda h, t: sum_for_publishers(packages, d, h, t)
 
