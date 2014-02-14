@@ -3,6 +3,7 @@
 import sys
 import os
 import optparse
+import json
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
@@ -43,12 +44,37 @@ def reload_packages(options):
         iatidq.dqregistry.activate_packages([(p, True)], clear_revision_id=True)
         iatidq.dqdownload.run(package_name=p)
 
+def compare_aggregation(options):
+    organisation_code = options.organisation_code.decode('ascii')
+    filename = options.filename
+    assert organisation_code
+    assert filename
+
+    from iatidq import dqorganisations
+
+    expected_data = json.load(file(filename))
+
+    org_id = dqorganisations.organisation_by_code(organisation_code)
+
+    from iatidq import db
+    
+    sql = '''select package_id, aggregateresulttype_id, test_id, 
+                  result_hierarchy, results_data, results_num 
+           from aggregateresult where organisation_id = %s 
+           order by id;'''
+
+    results = map(list, db.engine.execute(sql, (org_id, )))
+
+    assert results == expected_data
+
 
 def run():
     parser = optparse.OptionParser()
     parser.add_option("--mode", dest="mode",
                       action="store")
     parser.add_option("--organisation", dest="organisation_code",
+                      action="store")
+    parser.add_option("--filename", dest="filename",
                       action="store")
 
     options, rest = parser.parse_args()
@@ -60,7 +86,8 @@ def run():
     modes = {
         "clear-survey": clear_survey,
         "list-packages": list_packages,
-        "reload-packages": reload_packages
+        "reload-packages": reload_packages,
+        "compare-aggregation": compare_aggregation
         }
 
     if options.mode not in modes:
