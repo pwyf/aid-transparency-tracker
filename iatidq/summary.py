@@ -176,10 +176,14 @@ def summarise_results(conditions, mode, hierarchies,
 
     summaries = (add_condition(i) for i in summaries(summary))
 
-    ## FIXME: the bit which removes empty data seems to have been deleted
-
     tmp_out = dict([ ((h, t), tdata) for h, t, tdata in summaries ])
     out = reform_dict(tmp_out)
+
+    has_keys = lambda kvp: len(kvp[1])
+    out = dict([ 
+            (K, dict(filter(has_keys, V.items()))) 
+            for K, V in out.items() 
+            ])
 
     if mode != "publisher_indicators":
         return out
