@@ -80,7 +80,7 @@ def aggregate_percentages(data):
 
     dims = [
         ("package_id", lambda x: x[FIELD_PACKAGE]),
-        ("test_id",    lambda x: x[FIELD_TEST].id),
+        ("test_id",    lambda x: x[FIELD_TEST]),
         ("hierarchy",  lambda x: x[FIELD_HIERARCHY])
         ]
 
@@ -91,7 +91,7 @@ def aggregate_percentages_org(data):
 
     dims = [
         ("package_id", lambda x: x[FIELD_PACKAGE]),
-        ("test_id",    lambda x: x[FIELD_TEST].id),
+        ("test_id",    lambda x: x[FIELD_TEST]),
         ("hierarchy",  lambda x: x[FIELD_HIERARCHY]),
         ("organisation_id", lambda x: x[FIELD_ORGANISATION])
         ]

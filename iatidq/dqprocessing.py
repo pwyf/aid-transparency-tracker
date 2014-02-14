@@ -114,7 +114,7 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
     print "getting result ids"
     result_ids = get_results(runtime, package_id, agg_type)
     print "getting data"
-    data = db.session.query(models.Test,
+    data = db.session.query(models.Test.id,
                 models.Result.result_data,
                 models.Result.result_hierarchy,
                 func.count(models.Result.id),
@@ -154,7 +154,9 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
     status = "Updating"
     result_ids = get_results(runtime, package_id, agg_type)
 
-    data = db.session.query(models.Test,
+    print "len(result_ids): %d" % len(result_ids)
+
+    data = db.session.query(models.Test.id,
                 models.Result.result_data,
                 models.Result.result_hierarchy,
                 func.count(models.Result.id),
