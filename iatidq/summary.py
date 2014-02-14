@@ -9,6 +9,7 @@
 
 import operator
 import itertools
+import models # damn!
 
 def reform_dict(d):
     def inner(k1):
@@ -143,13 +144,16 @@ def sum_for_publishers(packages, d, h, t):
         return {}
 
     ok_tdata = relevant_data[-1] ## FIXME: this is obviously wrong
+
+    test_id = ok_tdata[1]
+    test = models.Test.query.filter(models.Test.id == test_id).first()
          
     tmp = make_summary(
-        ok_tdata[1].id,
-        ok_tdata[1].name,
-        ok_tdata[1].description,
-        ok_tdata[1].test_group,
-        ok_tdata[1].test_level,
+        test.id,
+        test.name,
+        test.description,
+        test.test_group,
+        test.test_level,
         int(float(total_pct/packages_in_hierarchy)),
         total_activities
         )
@@ -209,6 +213,7 @@ class Summary(object):
             return tuple([newval] + list(tupl)[1:])
         switch_first = lambda t: replace_first(t, t[0].as_dict())
         self.data = map(switch_first, self.data)
+
         return self.aggregate()
 
     def summary(self):
@@ -222,7 +227,7 @@ class Summary(object):
             yield i
 
     def gen_tests(self):
-        for i in set(map(lambda x: (x[1].id), self.data)):
+        for i in set(map(lambda x: (x[1]), self.data)):
             yield i
 
     def get_conditions(self):
@@ -235,7 +240,11 @@ class Summary(object):
                     ), self.conditions))
 
     def restructure_data(self):
-        return lambda x: ((x[4], x[1].id), (x))
+        # (h, t, p) -> _
+        # h: hierarchy
+        # t: test
+        # p: ???
+        return lambda x: ((x[4], x[1], x[5]), (x))
 
     def aggregate(self):
         hierarchies = self.gen_hierarchies()
@@ -246,11 +255,6 @@ class Summary(object):
             return set(map(lam, self.data))
     
         d_f = self.restructure_data()
-
-        #with file('/tmp/summary.data', 'w') as f:
-        #    import pprint
-        #    f.write(pprint.pformat(self.data))
-        #    f.write("\n")
 
         d = dict(map(d_f, self.data))
 
@@ -270,7 +274,7 @@ class Summary(object):
             )
         indicators = setmap(ind_f)
 
-        ind_test_f = lambda x: (x[0]["id"], x[1].id)
+        ind_test_f = lambda x: (x[0]["id"], x[1])
         indicators_tests = list(setmap(ind_test_f))
 
         pkg_f = lambda x: x[5]
@@ -287,8 +291,6 @@ class PublisherSummary(Summary):
     def get_mode(self):
         return "publisher"
 
-    def restructure_data(self):
-        return lambda x: ((x[4], x[1].id, x[5]), (x))
 
 class PublisherIndicatorsSummary(PublisherSummary):
     def get_mode(self):

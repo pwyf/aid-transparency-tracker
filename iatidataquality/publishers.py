@@ -47,7 +47,7 @@ def publishers():
 
 def _publisher_detail_ungrouped(p_group):
     return db.session.query(Indicator,
-                                     Test,
+                                     Test.id,
                                      AggregateResult.results_data,
                                      AggregateResult.results_num,
                                      AggregateResult.result_hierarchy,
@@ -55,11 +55,12 @@ def _publisher_detail_ungrouped(p_group):
                                      func.max(AggregateResult.runtime_id)
         ).filter(PackageGroup.id==p_group.id)
 
+## FIXME: major duplication of code deteceted
 def _publisher_detail(p_group):
     aggregate_results = _publisher_detail_ungrouped(p_group)\
         .group_by(Indicator,
                    AggregateResult.result_hierarchy, 
-                   Test, 
+                   Test.id, 
                    AggregateResult.package_id,
                    AggregateResult.results_data,
                    AggregateResult.results_num
@@ -176,7 +177,7 @@ def publisher(id=None):
     """try:"""
     aggregate_results = _publisher_detail_ungrouped(p_group)\
         .group_by(AggregateResult.result_hierarchy, 
-                   Test, 
+                   Test.id, 
                    AggregateResult.package_id,
                    Indicator,
                    AggregateResult.results_data,
