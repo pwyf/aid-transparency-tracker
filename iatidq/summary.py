@@ -249,15 +249,7 @@ class Summary(object):
     def setmap(self, lam):
         return set(map(lam, self.data))
 
-    def aggregate(self):
-        hierarchies = self.gen_hierarchies()
-        tests = self.gen_tests()
-        cdtns = self.get_conditions()
-    
-        d_f = self.restructure_data()
-
-        d = dict(map(d_f, self.data))
-
+    def get_indicator_data(self):
         ind_f = lambda x: (
             x[0]["id"], (
                 x[0]["name"], 
@@ -272,7 +264,19 @@ class Summary(object):
                 x[0]["indicator_weight"]
                 )
             )
-        indicators = self.setmap(ind_f)
+        return ind_f
+
+
+    def aggregate(self):
+        hierarchies = self.gen_hierarchies()
+        tests = self.gen_tests()
+        cdtns = self.get_conditions()
+    
+        d_f = self.restructure_data()
+
+        d = dict(map(d_f, self.data))
+
+        indicators = self.setmap(self.get_indicator_data())
 
         ind_test_f = lambda x: (x[0]["id"], x[1])
         indicators_tests = list(self.setmap(ind_test_f))
