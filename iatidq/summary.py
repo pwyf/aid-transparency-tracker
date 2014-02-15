@@ -264,12 +264,11 @@ class Summary(object):
 
         summary = lambda h, t: sum_for_publishers(packages, d, h, t)
 
-        return self.summarise_results(self.get_mode(), 
-                                      hierarchies, 
+        return self.summarise_results(hierarchies, 
                                  tests, cdtns, indicators,
                                  indicators_tests, packages, d, summary)
 
-    def summarise_results(self, mode, hierarchies, 
+    def summarise_results(self, hierarchies, 
                       tests, cdtns, indicators,
                       indicators_tests, packages, d, summary):
 
@@ -292,7 +291,7 @@ class Summary(object):
 
         out = remove_empty_dicts(out)
 
-        if mode != "publisher_indicators":
+        if self.get_mode() != "publisher_indicators":
             return out
 
         simple_out = publisher_simple(out, cdtns)
