@@ -98,7 +98,10 @@ def publisher_simple(out, cdtns):
                     pass
                 results_pct+= out[hierarchy][t]["results_pct"]
                 results_num+= out[hierarchy][t]["results_num"]
-                results_weighted_pct_average_numerator += (out[hierarchy][t]["results_pct"]*out[hierarchy][t]["results_num"])
+                results_weighted_pct_average_numerator += (
+                    out[hierarchy][t]["results_pct"] * 
+                    out[hierarchy][t]["results_num"]
+                    )
                 okhierarchy = hierarchy
             except KeyError:
                 pass
