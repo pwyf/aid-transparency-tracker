@@ -10,6 +10,7 @@
 import operator
 import itertools
 import models # damn!
+import pprint
 
 def reform_dict(d):
     def inner(k1):
@@ -263,12 +264,12 @@ class Summary(object):
 
         summary = lambda h, t: sum_for_publishers(packages, d, h, t)
 
-        return self.summarise_results(self.conditions, self.get_mode(), 
+        return self.summarise_results(self.get_mode(), 
                                       hierarchies, 
                                  tests, cdtns, indicators,
                                  indicators_tests, packages, d, summary)
 
-    def summarise_results(self, conditions, mode, hierarchies, 
+    def summarise_results(self, mode, hierarchies, 
                       tests, cdtns, indicators,
                       indicators_tests, packages, d, summary):
 
@@ -278,7 +279,7 @@ class Summary(object):
 
         def add_condition(i):
             h, t, tdata = i
-            if conditions:
+            if self.conditions:
                 key = (t, 'activity hierarchy', str(h))
                 if key in cdtns:
                     tdata["condition"] = cdtns[key]
