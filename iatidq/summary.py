@@ -182,8 +182,6 @@ class Summary(object):
         self._summary = self.calculate()
 
     def calculate(self):
-        mode = self.get_mode()
-
         if self.manual:
             return self.aggregate()
 
@@ -196,9 +194,6 @@ class Summary(object):
 
     def summary(self):
         return self._summary
-
-    def get_mode(self):
-        raise
 
     def gen_hierarchies(self):
         for i in set(map(lambda x: (x[4]), self.data)):
@@ -299,14 +294,10 @@ class Summary(object):
 
 
 class PublisherSummary(Summary):
-    def get_mode(self):
-        return "publisher"
+    pass
 
 
 class PublisherIndicatorsSummary(PublisherSummary):
-    def get_mode(self):
-        return "publisher_indicators"
-
     def add_indicator_info(self, out, cdtns, indicators,
                            indicators_tests):
 
