@@ -290,6 +290,11 @@ class Summary(object):
         out = reform_dict(tmp_out)
 
         out = remove_empty_dicts(out)
+        return self.add_indicator_info(out, cdtns, indicators,
+                                       indicators_tests)
+
+    def add_indicator_info(self, out, cdtns, indicators,
+                           indicators_tests):
 
         if self.get_mode() != "publisher_indicators":
             return out
