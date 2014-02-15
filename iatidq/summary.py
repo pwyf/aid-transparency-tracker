@@ -171,35 +171,6 @@ def sum_for_publishers(packages, d, h, t):
     tmp["result_hierarchy"] = total_activities
     return tmp
 
-def summarise_results(conditions, mode, hierarchies, 
-                      tests, cdtns, indicators,
-                      indicators_tests, packages, d, summary):
-
-    def summaries(summary_f):
-        for h, t in itertools.product(hierarchies, tests):
-            yield h, t, summary_f(h, t)
-
-    def add_condition(i):
-        h, t, tdata = i
-        if conditions:
-            key = (t, 'activity hierarchy', str(h))
-            if key in cdtns:
-                tdata["condition"] = cdtns[key]
-        return h, t, tdata
-
-
-    summaries = (add_condition(i) for i in summaries(summary))
-
-    tmp_out = dict([ ((h, t), tdata) for h, t, tdata in summaries ])
-    out = reform_dict(tmp_out)
-
-    out = remove_empty_dicts(out)
-
-    if mode != "publisher_indicators":
-        return out
-
-    simple_out = publisher_simple(out, cdtns)
-    return publisher_indicators(indicators, indicators_tests, simple_out)
 
 
 class Summary(object):
@@ -292,9 +263,39 @@ class Summary(object):
 
         summary = lambda h, t: sum_for_publishers(packages, d, h, t)
 
-        return summarise_results(self.conditions, self.get_mode(), hierarchies, 
+        return self.summarise_results(self.conditions, self.get_mode(), 
+                                      hierarchies, 
                                  tests, cdtns, indicators,
                                  indicators_tests, packages, d, summary)
+
+    def summarise_results(self, conditions, mode, hierarchies, 
+                      tests, cdtns, indicators,
+                      indicators_tests, packages, d, summary):
+
+        def summaries(summary_f):
+            for h, t in itertools.product(hierarchies, tests):
+                yield h, t, summary_f(h, t)
+
+        def add_condition(i):
+            h, t, tdata = i
+            if conditions:
+                key = (t, 'activity hierarchy', str(h))
+                if key in cdtns:
+                    tdata["condition"] = cdtns[key]
+            return h, t, tdata
+
+        summaries = (add_condition(i) for i in summaries(summary))
+
+        tmp_out = dict([ ((h, t), tdata) for h, t, tdata in summaries ])
+        out = reform_dict(tmp_out)
+
+        out = remove_empty_dicts(out)
+
+        if mode != "publisher_indicators":
+            return out
+
+        simple_out = publisher_simple(out, cdtns)
+        return publisher_indicators(indicators, indicators_tests, simple_out)
 
 
 class PublisherSummary(Summary):
