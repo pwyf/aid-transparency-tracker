@@ -295,12 +295,7 @@ class Summary(object):
 
     def add_indicator_info(self, out, cdtns, indicators,
                            indicators_tests):
-
-        if self.get_mode() != "publisher_indicators":
-            return out
-
-        simple_out = publisher_simple(out, cdtns)
-        return publisher_indicators(indicators, indicators_tests, simple_out)
+        return out
 
 
 class PublisherSummary(Summary):
@@ -312,3 +307,11 @@ class PublisherIndicatorsSummary(PublisherSummary):
     def get_mode(self):
         return "publisher_indicators"
 
+    def add_indicator_info(self, out, cdtns, indicators,
+                           indicators_tests):
+
+        if self.get_mode() != "publisher_indicators":
+            return out
+
+        simple_out = publisher_simple(out, cdtns)
+        return publisher_indicators(indicators, indicators_tests, simple_out)
