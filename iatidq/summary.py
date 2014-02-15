@@ -20,6 +20,13 @@ def reform_dict(d):
     return dict([ (k1, inner(k1))
                    for k1 in set( k1 for k1, k2 in d.keys() ) ])
 
+def remove_empty_dicts(h):
+    has_keys = lambda kvp: len(kvp[1])
+    return dict([ 
+            (K, dict(filter(has_keys, V.items()))) 
+            for K, V in h.items() 
+            ])
+
 def publisher_indicators(indicators, indicators_tests, simple_out):
     # get all tests which belong to a specific indicator
     # average the results for all tests in that indicator
@@ -186,11 +193,7 @@ def summarise_results(conditions, mode, hierarchies,
     tmp_out = dict([ ((h, t), tdata) for h, t, tdata in summaries ])
     out = reform_dict(tmp_out)
 
-    has_keys = lambda kvp: len(kvp[1])
-    out = dict([ 
-            (K, dict(filter(has_keys, V.items()))) 
-            for K, V in out.items() 
-            ])
+    out = remove_empty_dicts(out)
 
     if mode != "publisher_indicators":
         return out
