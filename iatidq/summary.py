@@ -28,6 +28,32 @@ def remove_empty_dicts(h):
             for K, V in h.items() 
             ])
 
+
+class TestInfo(object):
+    def __init__(self, test_id, results_pct, results_num):
+        test = models.Test.query.filter(models.Test.id == test_id).first()
+        self.test_id = test_id
+        self.test_name = test.name
+        self.test_description = test.description
+        self.test_group = test.test_group
+        self.test_level = test.test_level
+        self.results_pct = results_pct
+        self.results_num = results_num
+
+    def as_dict(self):
+        return {
+            "test": {
+                "id": self.test_id,
+                "name": self.test_name,
+                "description": self.test_description,
+                "test_group": self.test_group,
+                "test_level": self.test_level
+                },
+            "results_pct": self.results_pct,
+            "results_num": self.results_num
+            }
+
+
 def publisher_indicators(indicators, indicators_tests, simple_out):
     # get all tests which belong to a specific indicator
     # average the results for all tests in that indicator
@@ -71,30 +97,6 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     #for test, testdata in simple_out.items():
     #    indicators_out[testdata["indicator"]["id"]] = testdata
     #return indicators_out
-
-class TestInfo(object):
-    def __init__(self, test_id, results_pct, results_num):
-        test = models.Test.query.filter(models.Test.id == test_id).first()
-        self.test_id = test_id
-        self.test_name = test.name
-        self.test_description = test.description
-        self.test_group = test.test_group
-        self.test_level = test.test_level
-        self.results_pct = results_pct
-        self.results_num = results_num
-
-    def as_dict(self):
-        return {
-            "test": {
-                "id": self.test_id,
-                "name": self.test_name,
-                "description": self.test_description,
-                "test_group": self.test_group,
-                "test_level": self.test_level
-                },
-            "results_pct": self.results_pct,
-            "results_num": self.results_num
-            }
 
 
 def make_summary(test_id, results_pct, results_num):
