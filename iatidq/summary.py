@@ -73,14 +73,13 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     #return indicators_out
 
 class TestInfo(object):
-    def __init__(self, test_id, test_name, test_description,
-                 test_group, test_level, results_pct,
-                 results_num):
+    def __init__(self, test_id, results_pct, results_num):
+        test = models.Test.query.filter(models.Test.id == test_id).first()
         self.test_id = test_id
-        self.test_name = test_name
-        self.test_description = test_description
-        self.test_group = test_group
-        self.test_level = test_level
+        self.test_name = test.name
+        self.test_description = test.description
+        self.test_group = test.test_group
+        self.test_level = test.test_level
         self.results_pct = results_pct
         self.results_num = results_num
 
@@ -98,10 +97,8 @@ class TestInfo(object):
             }
 
 
-def make_summary(test_id, test_name, test_description, test_group, 
-                 test_level, results_pct, results_num):
-    t = TestInfo(test_id, test_name, test_description, test_group, 
-                 test_level, results_pct, results_num)
+def make_summary(test_id, results_pct, results_num):
+    t = TestInfo(test_id, results_pct, results_num)
     return t.as_dict()
 
 def publisher_simple(out, cdtns):
@@ -134,10 +131,6 @@ def publisher_simple(out, cdtns):
 
         tmp = make_summary(
             out[okhierarchy][t]['test']["id"],
-            out[okhierarchy][t]['test']["name"],
-            out[okhierarchy][t]['test']["description"],
-            out[okhierarchy][t]['test']["test_group"],
-            out[okhierarchy][t]['test']["test_level"],
             (results_weighted_pct_average_numerator/results_num),
             results_num
             )
@@ -170,14 +163,9 @@ def sum_for_publishers(packages, d, h, t):
     ok_tdata = relevant_data[-1] ## FIXME: this is obviously wrong
 
     test_id = ok_tdata[1]
-    test = models.Test.query.filter(models.Test.id == test_id).first()
          
     tmp = make_summary(
-        test.id,
-        test.name,
-        test.description,
-        test.test_group,
-        test.test_level,
+        test_id,
         int(float(total_pct/packages_in_hierarchy)),
         total_activities
         )
