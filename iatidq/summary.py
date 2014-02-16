@@ -68,9 +68,12 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
             try:
                 testing = (indicator, test)
                 if (testing in indicators_tests):
-                    results_pct+= simple_out[test]["results_pct"]
-                    results_num+= simple_out[test]["results_num"]
-                    results_weighted_pct_average_numerator += (simple_out[test]["results_pct"]*simple_out[test]["results_num"])
+                    results_pct += simple_out[test]["results_pct"]
+                    results_num += simple_out[test]["results_num"]
+                    results_weighted_pct_average_numerator += (
+                        simple_out[test]["results_pct"] * 
+                        simple_out[test]["results_num"]
+                        )
                     oktest = test
                     indicator_test_data.append(simple_out[test])
             except KeyError:
