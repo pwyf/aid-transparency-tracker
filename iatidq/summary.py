@@ -150,12 +150,9 @@ def sum_for_publishers(packages, d, h, t):
     pct = lambda i: i[2]
     activities = lambda i: i[3]
 
-    try:
-        total_pct = reduce(operator.add, map(pct, relevant_data))
-        total_activities = reduce(operator.add, map(activities, relevant_data))
-    except Exception:
-        total_pct = 0.0
-        total_activities = 0
+    total_pct = reduce(operator.add, map(pct, relevant_data), 0)
+    total_activities = reduce(operator.add, map(activities, relevant_data), 0)
+
     packages_in_hierarchy = len(relevant_data)
 
     if total_activities <= 0:
