@@ -128,14 +128,9 @@ def publisher_simple(out, cdtns):
     return simple_out
 
 def sum_for_publishers(packages, d, h, t):
-    # aggregate data across multiple packages for a single publisher
-        
-    # for each package, add percentage for each
-    total_pct = 0
-    total_activities = 0
-
+    # aggregate data across multiple packages for a single publisher ;
+    # for each package, add percentage for each ;
     # need below to only include packages that are in this hierarchy
-    packages_in_hierarchy = 0
 
     relevant = lambda p: (h, t, p) in d
     relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
