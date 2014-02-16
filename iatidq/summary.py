@@ -96,11 +96,7 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
             "results_pct": (results_weighted_pct_average_numerator/results_num),
             "results_num": results_num
             }
-    return indicators_out        
-    #for test, testdata in simple_out.items():
-    #    indicators_out[testdata["indicator"]["id"]] = testdata
-    #return indicators_out
-
+    return indicators_out
 
 def make_summary(test_id, results_pct, results_num):
     t = TestInfo(test_id, results_pct, results_num)
