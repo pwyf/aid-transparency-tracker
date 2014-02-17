@@ -13,6 +13,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from datetime import datetime
 from flask.ext.login import current_user
+import usermanagement
 
 from iatidataquality import app
 from iatidataquality import db
