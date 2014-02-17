@@ -116,12 +116,12 @@ def publisher_simple(out, cdtns):
             try:
                 key = (t,'activity hierarchy', str(hierarchy)) 
                 try:
-                    if ((cdtns) and (key in cdtns) and (cdtns[key][0]==0)):
+                    if ((cdtns) and (key in cdtns) and (cdtns[key][0] == 0)):
                         continue
                 except KeyError:
                     pass
-                results_pct+= out[hierarchy][t]["results_pct"]
-                results_num+= out[hierarchy][t]["results_num"]
+                results_pct += out[hierarchy][t]["results_pct"]
+                results_num += out[hierarchy][t]["results_num"]
                 results_weighted_pct_average_numerator += (
                     out[hierarchy][t]["results_pct"] * 
                     out[hierarchy][t]["results_num"]
@@ -132,7 +132,7 @@ def publisher_simple(out, cdtns):
 
         tmp = make_summary(
             out[okhierarchy][t]['test']["id"],
-            (results_weighted_pct_average_numerator/results_num),
+            (results_weighted_pct_average_numerator / results_num),
             results_num
             )
         tmp["indicator"] = out[okhierarchy][t]['indicator']
