@@ -167,9 +167,9 @@ def publisher_detail_xls(id=None):
         if os.path.exists(filename):
             os.unlink(filename)
 
-@app.route("/publishers/<id>/")
-def publisher(id=None):
-    p_group = PackageGroup.query.filter_by(name=id).first_or_404()
+@app.route("/publishers/<publisher_id>/")
+def publisher(publisher_id=None):
+    p_group = PackageGroup.query.filter_by(name=publisher_id).first_or_404()
 
     pkgs = db.session.query(Package
             ).filter(Package.package_group == p_group.id
