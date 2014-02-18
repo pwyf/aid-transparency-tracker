@@ -348,7 +348,7 @@ def addFeedback(data):
 
 
 def _organisation_detail_ungrouped(organisation, aggregation_type):
-    return db.session.query(Indicator,
+    return db.session.query(Indicator.id,
                                      Test.id,
                                      AggregateResult.results_data,
                                      AggregateResult.results_num,
@@ -360,7 +360,7 @@ def _organisation_detail_ungrouped(organisation, aggregation_type):
 
 def _organisation_detail(organisation, aggregation_type):
     aggregate_results = _organisation_detail_ungrouped(organisation, aggregation_type)\
-        .group_by(Indicator,
+        .group_by(Indicator.id,
                    AggregateResult.result_hierarchy, 
                    Test.id, 
                    AggregateResult.package_id,
@@ -413,7 +413,7 @@ def info_result_tuple(ir):
             })
 
 def _organisation_indicators(organisation, aggregation_type=2):
-    aggregate_results = db.session.query(Indicator,
+    aggregate_results = db.session.query(Indicator.id,
                                      Test.id,
                                      AggregateResult.results_data,
                                      AggregateResult.results_num,
@@ -426,7 +426,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
         ).group_by(AggregateResult.result_hierarchy, 
                    Test.id, 
                    AggregateResult.package_id,
-                   Indicator,
+                   Indicator.id,
                    AggregateResult.results_data,
                    AggregateResult.results_num,
                    AggregateResult.package_id

@@ -56,10 +56,21 @@ def _publisher_detail_ungrouped(p_group):
                                      func.max(AggregateResult.runtime_id)
         ).filter(PackageGroup.id==p_group.id)
 
+# FIXME: duplication
+def _publisher_detail_ungrouped_fixed(p_group):
+    return db.session.query(Indicator.id,
+                                     Test.id,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(PackageGroup.id==p_group.id)
+
 ## FIXME: major duplication of code deteceted
 def _publisher_detail(p_group):
     aggregate_results = _publisher_detail_ungrouped(p_group)\
-        .group_by(Indicator,
+        .group_by(Indicator.id,
                    AggregateResult.result_hierarchy, 
                    Test.id, 
                    AggregateResult.package_id,
@@ -168,7 +179,7 @@ def publisher_detail_xls(id=None):
             os.unlink(filename)
 
 def publisher_summary(publisher_id, p_group):
-    aggregate_results = _publisher_detail_ungrouped(p_group)\
+    aggregate_results = _publisher_detail_ungrouped_fixed(p_group)\
         .group_by(AggregateResult.result_hierarchy, 
                    Test.id, 
                    AggregateResult.package_id,

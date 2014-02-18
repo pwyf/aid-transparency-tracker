@@ -54,11 +54,26 @@ class TestInfo(object):
             }
 
 
+class IndicatorInfo(object):
+    def __init__(self, indicator_id):
+        self.indicator_id = indicator_id
+        self.ind = models.Indicator.query.filter(
+            models.Indicator.id == self.indicator_id).first()
+
+    def as_dict(self):
+        return self.ind.as_dict()
+
+    def as_dict_minus_group(self):
+        tmp = self.ind.as_dict()
+        del(tmp['indicatorgroup_id'])
+        return tmp
+
+
 def publisher_indicators(indicators, indicators_tests, simple_out):
     # get all tests which belong to a specific indicator
     # average the results for all tests in that indicator
     indicators_out = {}
-    for indicator, indicatordata in indicators:
+    for indicator in indicators:
         indicators_out[indicator] = {}
         indicator_test_data = []
         results_pct = 0.0
@@ -78,19 +93,7 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
             except KeyError:
                 pass
         indicators_out[indicator] = {
-            "indicator": {
-                "id": indicator,
-                "name": indicatordata[0],
-                "description": indicatordata[1],
-                "indicator_type": indicatordata[2],
-                "indicator_category_name": indicatordata[3],
-                "indicator_subcategory_name": indicatordata[4],
-                "longdescription": indicatordata[5], 
-                "indicator_noformat": indicatordata[6],
-                "indicator_ordinal": indicatordata[7],
-                "indicator_order": indicatordata[8],
-                "indicator_weight": indicatordata[9]
-                },
+            "indicator": IndicatorInfo(indicator).as_dict_minus_group(),
             "tests": indicator_test_data,
             "results_pct": (results_weighted_pct_average_numerator/results_num),
             "results_num": results_num
@@ -140,6 +143,7 @@ def publisher_simple(out, cdtns):
         simple_out[t] = tmp
     return simple_out
 
+
 def sum_for_publishers(packages, d, h, t):
     # aggregate data across multiple packages for a single publisher ;
     # for each package, add percentage for each ;
@@ -168,7 +172,7 @@ def sum_for_publishers(packages, d, h, t):
         int(float(total_pct/packages_in_hierarchy)),
         total_activities
         )
-    tmp["indicator"] = ok_tdata[0]
+    tmp["indicator"] = IndicatorInfo(ok_tdata[0]).as_dict()
     tmp["result_hierarchy"] = total_activities
     return tmp
 
@@ -187,7 +191,7 @@ class Summary(object):
 
         def replace_first(tupl, newval):
             return tuple([newval] + list(tupl)[1:])
-        switch_first = lambda t: replace_first(t, t[0].as_dict())
+        switch_first = lambda t: replace_first(t, t[0])
         self.data = map(switch_first, self.data)
 
         return self.aggregate()
@@ -223,20 +227,7 @@ class Summary(object):
         return set(map(lam, self.data))
 
     def get_indicator_data(self):
-        ind_f = lambda x: (
-            x[0]["id"], (
-                x[0]["name"], 
-                x[0]["description"], 
-                x[0]["indicator_type"], 
-                x[0]["indicator_category_name"], 
-                x[0]["indicator_subcategory_name"], 
-                x[0]["longdescription"], 
-                x[0]["indicator_noformat"], 
-                x[0]["indicator_ordinal"], 
-                x[0]["indicator_order"], 
-                x[0]["indicator_weight"]
-                )
-            )
+        ind_f = lambda x: x[0]
         return ind_f
 
 
@@ -251,7 +242,7 @@ class Summary(object):
 
         indicators = self.setmap(self.get_indicator_data())
 
-        ind_test_f = lambda x: (x[0]["id"], x[1])
+        ind_test_f = lambda x: (x[0], x[1])
         indicators_tests = list(self.setmap(ind_test_f))
 
         pkg_f = lambda x: x[5]
