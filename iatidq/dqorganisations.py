@@ -454,7 +454,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
     data.update([ info_result_tuple(ir) for ir in inforesults ])
 
     # make sure indicators are complete
-    indicators = dqindicators.indicators_subset("2013 Index", "publication")
+    indicators = dqindicators.indicators_subset(u"2013 Index", u"publication")
     for indc in indicators:
         if indc.id in data:
             continue
@@ -477,7 +477,6 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 },
             'tests': {}
             }
-
     return data
 
 def _organisation_indicators_inforesults(organisation):
@@ -508,7 +507,8 @@ def _organisation_indicators_inforesults(organisation):
 def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
-    commitment_data = dqindicators.indicators_subset("2013 Index", "commitment")
+    commitment_data = dqindicators.indicators_subset(u"2013 Index", 
+                                                     u"commitment")
     commitment_results = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
 
     publication_organisation = lambda kv: (kv[1]["indicator"]["indicator_category_name"]=="organisation")
@@ -523,7 +523,8 @@ def _organisation_indicators_complete_split(organisation, aggregation_type=2):
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
-    commitment_data = dqindicators.indicators_subset("2013 Index", "commitment")
+    commitment_data = dqindicators.indicators_subset(u"2013 Index", 
+                                                     u"commitment")
     commitment = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
     if not results:
         indicators = dqindicators.indicators("2013 Index")
