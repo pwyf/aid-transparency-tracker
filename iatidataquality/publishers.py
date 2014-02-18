@@ -167,14 +167,7 @@ def publisher_detail_xls(id=None):
         if os.path.exists(filename):
             os.unlink(filename)
 
-@app.route("/publishers/<publisher_id>/")
-def publisher(publisher_id=None):
-    p_group = PackageGroup.query.filter_by(name=publisher_id).first_or_404()
-
-    pkgs = db.session.query(Package
-            ).filter(Package.package_group == p_group.id
-            ).order_by(Package.package_name).all()
-
+def publisher_summary(publisher_id, p_group):
     """try:"""
     aggregate_results = _publisher_detail_ungrouped(p_group)\
         .group_by(AggregateResult.result_hierarchy, 
@@ -199,7 +192,18 @@ def publisher(publisher_id=None):
 
     s = summary.PublisherIndicatorsSummary(aggregate_results, 
                                            conditions=pconditions)
-    aggregate_results = s.summary()
+    return s.summary()
+
+
+@app.route("/publishers/<publisher_id>/")
+def publisher(publisher_id=None):
+    p_group = PackageGroup.query.filter_by(name=publisher_id).first_or_404()
+
+    pkgs = db.session.query(Package
+            ).filter(Package.package_group == p_group.id
+            ).order_by(Package.package_name).all()
+
+    aggregate_results = publisher_summary(publisher_id, p_group)
 
     latest_runtime=1
     """except Exception, e:
