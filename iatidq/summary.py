@@ -113,6 +113,8 @@ def publisher_simple(out, cdtns):
         results_num = 0.0
         results_weighted_pct_average_numerator = 0.0
         for hierarchy in hierarchies:
+            test_info = out[hierarchy][t]
+            
             try:
                 key = (t,'activity hierarchy', str(hierarchy)) 
                 try:
@@ -120,11 +122,11 @@ def publisher_simple(out, cdtns):
                         continue
                 except KeyError:
                     pass
-                results_pct += out[hierarchy][t]["results_pct"]
-                results_num += out[hierarchy][t]["results_num"]
+                results_pct += test_info["results_pct"]
+                results_num += test_info["results_num"]
                 results_weighted_pct_average_numerator += (
-                    out[hierarchy][t]["results_pct"] * 
-                    out[hierarchy][t]["results_num"]
+                    test_info["results_pct"] * 
+                    test_info["results_num"]
                     )
                 okhierarchy = hierarchy
             except KeyError:
