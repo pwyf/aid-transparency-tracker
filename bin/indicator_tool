@@ -19,7 +19,7 @@ o = Organisation.query.filter_by(organisation_code=org.decode('ascii')).first()
 
 ocs = iatidq.dqorganisations._organisation_indicators_split(o, 2)
 
-pprint.pprint(ocs)
+pprint.pprint(ocs, indent=2)
 
 
 #import iatidq.dqindicators

@@ -74,7 +74,6 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
                         simple_out[test]["results_pct"] * 
                         simple_out[test]["results_num"]
                         )
-                    oktest = test
                     indicator_test_data.append(simple_out[test])
             except KeyError:
                 pass
