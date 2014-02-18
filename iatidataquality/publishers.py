@@ -168,7 +168,6 @@ def publisher_detail_xls(id=None):
             os.unlink(filename)
 
 def publisher_summary(publisher_id, p_group):
-    """try:"""
     aggregate_results = _publisher_detail_ungrouped(p_group)\
         .group_by(AggregateResult.result_hierarchy, 
                    Test.id, 
@@ -184,10 +183,6 @@ def publisher_summary(publisher_id, p_group):
         ).join(PackageGroup
         ).all()
 
-    """pconditions = PublisherCondition.query.filter_by(
-        publisher_id=p_group.id).all()"""
-    # Publisher Conditions have been removed in favour of
-    #  organisation conditions.
     pconditions = {}
 
     s = summary.PublisherIndicatorsSummary(aggregate_results, 
@@ -206,12 +201,10 @@ def publisher(publisher_id=None):
     aggregate_results = publisher_summary(publisher_id, p_group)
 
     latest_runtime=1
-    """except Exception, e:
-        latest_runtime = None
-        aggregate_results = None"""
 
-    return render_template("publisher_indicators.html", p_group=p_group, pkgs=pkgs, 
+    return render_template("publisher_indicators.html", 
+                           p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
