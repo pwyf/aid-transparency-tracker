@@ -79,7 +79,7 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
         results_pct = 0.0
         results_num = 0.0
         results_weighted_pct_average_numerator = 0.0
-        for test, testdata in simple_out.items():
+        for test in simple_out.keys():
             try:
                 testing = (indicator, test)
                 if (testing in indicators_tests):
