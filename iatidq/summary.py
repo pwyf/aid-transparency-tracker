@@ -117,14 +117,13 @@ def publisher_simple(out, cdtns):
         def relevant(hierarchy):
             key = (t,'activity hierarchy', str(hierarchy)) 
 
-            if cdtns and cdtns.get(key, {}).get(0, None) == 0:
-                return False
-            return True
+            return (
+                ((not cdtns) or (cdtns.get(key, {}).get(0, None) != 0))
+                and 
+                (t in out[hierarchy])
+                )
 
         for hierarchy in filter(relevant, hierarchies):
-            if t not in out[hierarchy]:
-                continue
-
             test_info = out[hierarchy][t]
             
             results_pct += test_info["results_pct"]
