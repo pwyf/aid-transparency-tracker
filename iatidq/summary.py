@@ -77,10 +77,10 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
         results_pct = 0.0
         results_num = 0.0
         results_weighted_pct_average_numerator = 0.0
-        for test in simple_out.keys():
-            testing = (indicator, test)
-            if testing not in indicators_tests:
-                continue
+
+        relevant = lambda test: (indicator, test) in indicators_tests
+
+        for test in filter(relevant, simple_out.keys()):
             indic_info = simple_out[test]
             results_pct += indic_info["results_pct"]
             results_num += indic_info["results_num"]
