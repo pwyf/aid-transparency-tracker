@@ -105,12 +105,12 @@ def make_summary(test_id, results_pct, results_num):
     return t.as_dict()
 
 def publisher_simple(out, cdtns):
-    simple_out = {}
     hierarchies = set(out)
     tests = set()
     for h in hierarchies:
         tests.update(set(out[h]))
-    for t in tests: 
+
+    def per_test(t):
         results_pct = 0.0
         results_num = 0.0
         results_weighted_pct_average_numerator = 0.0
@@ -140,8 +140,9 @@ def publisher_simple(out, cdtns):
             results_num
             )
         tmp["indicator"] = out[okhierarchy][t]['indicator']
-        simple_out[t] = tmp
-    return simple_out
+        return tmp
+
+    return dict([ (t, per_test(t)) for t in tests ])
 
 
 def sum_for_publishers(packages, d, h, t):
