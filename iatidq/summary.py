@@ -73,7 +73,8 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     # get all tests which belong to a specific indicator
     # average the results for all tests in that indicator
     indicators_out = {}
-    for indicator in indicators:
+
+    def per_indicator(indicator):
         indicators_out[indicator] = {}
         indicator_test_data = []
         results_pct = 0.0
@@ -92,12 +93,14 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
                     indicator_test_data.append(simple_out[test])
             except KeyError:
                 pass
-        indicators_out[indicator] = {
+        return {
             "indicator": IndicatorInfo(indicator).as_dict_minus_group(),
             "tests": indicator_test_data,
             "results_pct": (results_weighted_pct_average_numerator/results_num),
             "results_num": results_num
             }
+    for indicator in indicators:
+        indicators_out[indicator] = per_indicator(indicator)
     return indicators_out
 
 def make_summary(test_id, results_pct, results_num):
