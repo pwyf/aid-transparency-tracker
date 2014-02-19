@@ -78,19 +78,16 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
         results_num = 0.0
         results_weighted_pct_average_numerator = 0.0
         for test in simple_out.keys():
-            try:
-                testing = (indicator, test)
-                if (testing in indicators_tests):
-                    indic_info = simple_out[test]
-                    results_pct += indic_info["results_pct"]
-                    results_num += indic_info["results_num"]
-                    results_weighted_pct_average_numerator += (
-                        indic_info["results_pct"] * 
-                        indic_info["results_num"]
-                        )
-                    indicator_test_data.append(indic_info)
-            except KeyError:
-                pass
+            testing = (indicator, test)
+            if (testing in indicators_tests):
+                indic_info = simple_out[test]
+                results_pct += indic_info["results_pct"]
+                results_num += indic_info["results_num"]
+                results_weighted_pct_average_numerator += (
+                    indic_info["results_pct"] * 
+                    indic_info["results_num"]
+                    )
+                indicator_test_data.append(indic_info)
         return {
             "indicator": IndicatorInfo(indicator).as_dict_minus_group(),
             "tests": indicator_test_data,
