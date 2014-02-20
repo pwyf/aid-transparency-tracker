@@ -267,7 +267,7 @@ def organisation_survey_view(organisation_code, workflow,
     except Exception:
         pass
 
-    indicators = dqindicators.indicators("2013 Index")
+    indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     org_indicators = dqorganisations._organisation_indicators_split(
         organisation, 2)
 

@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 
 from sqlalchemy import func
 
@@ -454,7 +454,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
     data.update([ info_result_tuple(ir) for ir in inforesults ])
 
     # make sure indicators are complete
-    indicators = dqindicators.indicators_subset(u"2013 Index", u"publication")
+    indicators = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], u"publication")
     for indc in indicators:
         if indc.id in data:
             continue
@@ -507,7 +507,7 @@ def _organisation_indicators_inforesults(organisation):
 def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
-    commitment_data = dqindicators.indicators_subset(u"2013 Index", 
+    commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
                                                      u"commitment")
     commitment_results = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
 
@@ -523,7 +523,7 @@ def _organisation_indicators_complete_split(organisation, aggregation_type=2):
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
-    commitment_data = dqindicators.indicators_subset(u"2013 Index", 
+    commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
                                                      u"commitment")
     commitment = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
     if not results:

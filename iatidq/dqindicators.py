@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 
 import models
 import csv
@@ -15,7 +15,7 @@ import util
 import unicodecsv
 
 def importIndicatorDescriptions():
-    indicatorgroup_name = "2013 Index"
+    indicatorgroup_name = app.config["INDICATOR_GROUP"]
     filename = 'tests/indicators.csv'
     return importIndicatorDescriptionsFromFile(indicatorgroup_name, filename)
 
@@ -52,7 +52,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
 
 def importIndicators():
     filename = 'tests/tests.csv'
-    indicatorgroup_id = '2013 Index'
+    indicatorgroup_id = app.config["INDICATOR_GROUP"]
     with file(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True, False)
 

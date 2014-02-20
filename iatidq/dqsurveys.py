@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 
 from sqlalchemy import func
 
@@ -453,7 +453,7 @@ def repairSurveyData(organisation_code):
     changes = False
     changed_indicators = []
 
-    allindicators = dqindicators.indicators("2013 Index")
+    allindicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     allindicators = map(lambda x: x.id, allindicators)
   
     organisation = dqorganisations.organisations(organisation_code)
@@ -491,7 +491,7 @@ def checkSurveyData(organisation_code):
     # check if there is an indicator at each stage of the workflow
     # if not, then create one
 
-    allindicators = dqindicators.indicators("2013 Index")
+    allindicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     allindicators = map(lambda x: x.id, allindicators)
   
     organisation = dqorganisations.organisations(organisation_code)

@@ -8,7 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 import models, dqregistry 
-from iatidq import db
+from iatidq import db, app
 
 import dqimporttests
 import dqorganisations
@@ -33,7 +33,7 @@ which_packages = [
 
 default_tests_filename="tests/tests.csv"
 default_infotypes_filename="tests/infotypes.csv"
-default_indicator_group_name="2013 Index"
+default_indicator_group_name= app.config["INDICATOR_GROUP"]
 default_userdata_filename='tests/users.csv'
 default_minimal_organisations = [
             {
@@ -157,8 +157,9 @@ def setup_common():
         default_indicator_group_name,
         default_tests_filename)
     print "Importing indicator descriptions"
-    dqindicators.importIndicatorDescriptionsFromFile("2013 Index", 
-                                                            "tests/indicators.csv")
+    dqindicators.importIndicatorDescriptionsFromFile(
+        app.config["INDICATOR_GROUP"], 
+        "tests/indicators.csv")
     print "Importing codelists"
     dqcodelists.importCodelists()
 
