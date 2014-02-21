@@ -73,9 +73,10 @@ def compare_aggregation(options):
         sys.exit(1)
 
 def compare_summary(options):
+    assert options.organisation_code
+    assert options.filename
     organisation_code = options.organisation_code.decode('ascii')
     filename = options.filename
-    assert organisation_code
 
     aggregation_type = 2
 
@@ -98,6 +99,18 @@ def compare_summary(options):
         print json.dumps(aggregate_results, indent=2, sort_keys=True)
         sys.exit(1)
 
+def list_modes(options):
+    for key in sorted(modes.keys()):
+        print key
+
+modes = {
+    "clear-survey": clear_survey,
+    "list-packages": list_packages,
+    "reload-packages": reload_packages,
+    "compare-aggregation": compare_aggregation,
+    "compare-summary": compare_summary,
+    "list-modes": list_modes
+    }
 
 def run():
     parser = optparse.OptionParser()
@@ -107,21 +120,12 @@ def run():
                       action="store")
     parser.add_option("--filename", dest="filename",
                       action="store")
-
     options, rest = parser.parse_args()
 
     if not options.mode:
         print "Must specify a mode"
         sys.exit(1)
     
-    modes = {
-        "clear-survey": clear_survey,
-        "list-packages": list_packages,
-        "reload-packages": reload_packages,
-        "compare-aggregation": compare_aggregation,
-        "compare-summary": compare_summary
-        }
-
     if options.mode not in modes:
         print "Mode must be one of:"
         for mode in modes:
