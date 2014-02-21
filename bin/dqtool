@@ -123,7 +123,7 @@ def run():
     options, rest = parser.parse_args()
 
     if not options.mode:
-        print "Must specify a mode"
+        print "Must specify a mode; use --mode list-modes to see them"
         sys.exit(1)
     
     if options.mode not in modes:
