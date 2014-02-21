@@ -11,7 +11,7 @@ sys.path.append(parent)
 
 
 from iatidq.models import *
-import iatidq.dqsurveys
+import iatidq.survey
 import iatidq.dqorganisations
 import iatidq.dqpackages
 import iatidq.dqregistry
@@ -21,7 +21,7 @@ def clear_survey(options):
     organisation_code = options.organisation_code
     assert organisation_code
 
-    iatidq.dqsurveys.deleteSurveyData(organisation_code)
+    iatidq.survey.data.deleteSurveyData(organisation_code)
 
 def get_package_names(organisation_code):
     for p in iatidq.dqorganisations.organisationPackages(

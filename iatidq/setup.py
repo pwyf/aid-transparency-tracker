@@ -18,7 +18,7 @@ import test_level
 import dqaggregationtypes
 import dqtests
 import inforesult
-import dqsurveys
+import iatidq.survey
 import dqusers
 
 # FIXME: duplicated
@@ -222,7 +222,7 @@ def setup(options):
     print "Getting organisation frequency"
     dqorganisations.downloadOrganisationFrequency()
     print "Setting up survey"
-    dqsurveys.setupSurvey()
+    iatidq.survey.setup.setupSurvey()
     user = dqusers.addUser({'username': "admin",
                             'password': "CHANGEME"
                           })

@@ -31,7 +31,8 @@ current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqorganisations, dqpackages, dqaggregationtypes, dqsurveys, donorresponse
+from iatidq import dqorganisations, dqpackages, dqaggregationtypes, donorresponse
+import iatidq.survey.data as dqsurveys
 import iatidq.inforesult
 from iatidq.models import *
 
