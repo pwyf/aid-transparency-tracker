@@ -99,6 +99,43 @@ def compare_summary(options):
         print json.dumps(aggregate_results, indent=2, sort_keys=True)
         sys.exit(1)
 
+def make_survey_data(options):
+    from iatidq import dqorganisations
+    assert options.organisation_code
+
+    organisation_code = options.organisation_code.decode('ascii')
+    org_id = dqorganisations.organisationid_by_code(organisation_code)
+    print "faking survey for %s" % organisation_code
+
+    while True:
+        make_survey_data_for_current_workflow(organisation_code)
+
+def make_survey_data_for_current_workflow(organisation_code):
+    survey, workflow = iatidq.survey.data.getSurvey(organisation_code)
+
+    print "current workflow: %s" % workflow.name
+
+    from iatidq import dqindicators
+    indicators = dqindicators.indicators(indicatorgroup=u"2013 Index")
+
+    for indicator in indicators:
+        data = {
+            'organisationsurvey_id': survey.id,
+            'indicator_id': indicator.id,
+            'workflow_id': workflow.id,
+            'published_status': 1,
+            'published_source': "hello",
+            'published_comment': "hello",
+            'published_format': 2,
+            'published_accepted': 1.0,
+            'ordinal_value': "50"
+            }
+
+        iatidq.survey.data.addSurveyData(data)
+
+    iatidq.survey.data.advanceSurvey(survey)
+        
+
 def list_modes(options):
     for key in sorted(modes.keys()):
         print key
@@ -109,7 +146,8 @@ modes = {
     "reload-packages": reload_packages,
     "compare-aggregation": compare_aggregation,
     "compare-summary": compare_summary,
-    "list-modes": list_modes
+    "list-modes": list_modes,
+    "make-survey-data": make_survey_data
     }
 
 def run():

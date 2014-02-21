@@ -28,9 +28,13 @@ def getIDorNone(sqlalchemy_object):
     else:
         return None
 
+def getSurveyById(organisation_id):
+    return models.OrganisationSurvey.query.filter_by(
+        organisation_id=organisation_id).first()
 
 def getOrCreateSurvey(data):
-    checkS = models.OrganisationSurvey.query.filter_by(organisation_id=data["organisation_id"]).first()
+    checkS = getSurveyById(data["organisation_id"])
+
     if not checkS:
         with db.session.begin():
             newS = models.OrganisationSurvey()
