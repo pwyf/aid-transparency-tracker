@@ -67,6 +67,9 @@ def users_edit_deletepermission(username):
 @app.route("/users/<username>/edit/", methods=['POST', 'GET'])
 @usermanagement.perms_required()
 def users_edit(username=None):
+    user = {}
+    permissions = {}
+
     if username:
         user = dqusers.user_by_username(username)
         permissions = dqusers.userPermissions(user.id)
@@ -89,14 +92,6 @@ def users_edit(username=None):
                 flash('Successfully added new user', 'success')
             else:
                 flash('Could not add user user', 'error')
-        else:
-            user = {}
-            permissions = {}
-
-    try:
-        print permissions
-    except UnboundLocalError:
-        permissions = {}
 
     return render_template("users_edit.html", 
                            user=user,
