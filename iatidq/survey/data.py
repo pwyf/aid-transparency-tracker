@@ -242,20 +242,6 @@ def addWorkflowType(data):
     else:
         return checkWT
 
-def addWorkflowType(data):
-    checkWT = models.WorkflowType.query.filter_by(name=data["name"]
-                ).first()
-    if not checkWT:
-        with db.session.begin():
-            newWT = models.WorkflowType()
-            newWT.setup(
-                name = data["name"]
-                )
-            db.session.add(newWT)
-        return newWT
-    else:
-        return checkWT
-
 def workflows(workflow_name=None):
     if workflow_name:
         checkW = db.session.query(models.Workflow,
