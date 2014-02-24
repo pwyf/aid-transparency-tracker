@@ -145,35 +145,40 @@ def getTimeRemainingNotice(deadline):
 def __survey_process(organisation, workflow, request, 
                      organisationsurvey, published_accepted):
 
-    indicators = request.form.getlist('indicator')
-    print "INDICATORS: ", indicators
+    indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
+    form_indicators = request.form.getlist('indicator')
 
     workflow_id = workflow.Workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
-
-        if request.form.get(indicator + "-ordinal_value"):
-            ordinal_value = request.form.get(indicator + "-ordinal_value")
-        else:
-            ordinal_value = None
-
-        if request.form.get(indicator + "-noformat"):
-            published_format = dqsurveys.publishedFormatByName('document').id
-        else:
-            published_format = request.form.get(indicator + "-publishedformat")
-
         data = {
             'organisationsurvey_id': organisationsurvey.id,
-            'indicator_id': indicator,
+            'indicator_id': str(indicator.id),
             'workflow_id': workflow_id,
-            'published_status': request.form.get(indicator+"-published"),
-            'published_source': request.form.get(indicator+"-source"),
-            'published_comment': request.form.get(indicator+"-comments"),
-            'published_format': published_format,
-            'published_accepted': published_accepted(indicator),
-            'ordinal_value': ordinal_value
         }
+
+        if indicator.id not in form_indicators:
+            # It's an IATI indicator...
+            data['published_status'] = dqsurveys.publishedStatusByName('always').id
+            data['published_format'] = dqsurveys.publishedFormatByName('iati').id
+        else:
+            data['published_status'] = request.form.get(str(indicator.id)+"-published")
+
+            if indicator.indicator_noformat:
+                data['published_format'] = dqsurveys.publishedFormatByName('document').id
+            else:
+                data['published_format'] = request.form.get(str(indicator.id) + "-publishedformat")      
+
+            if indicator.indicator_ordinal:
+                data['ordinal_value'] = request.form.get(str(indicator.id) + "-ordinal_value")
+            else:
+                data['ordinal_value'] = None
+
+        data['published_comment'] = request.form.get(str(indicator.id)+"-comments")
+        data['published_source'] = request.form.get(str(indicator.id)+"-source")
+        data['published_accepted'] = published_accepted(str(indicator.id))
+        
         surveydata = dqsurveys.addSurveyData(data)
     
     if 'submit' in request.form:

@@ -111,6 +111,12 @@ def publishedStatus():
     checkPS = models.PublishedStatus.query.all()
     return checkPS
 
+def publishedStatusByName(name):
+    checkPS = models.PublishedStatus.query.filter(
+        models.PublishedStatus.name == name
+        ).first()
+    return checkPS
+
 def publishedFormatByName(name):
     checkPF = models.PublishedFormat.query.filter(
         models.PublishedFormat.name == name
@@ -120,6 +126,8 @@ def publishedFormatByName(name):
 def publishedFormatAll():
     checkPF = models.PublishedFormat.query.filter(
         models.PublishedFormat.name != 'document'
+        ).filter(
+        models.PublishedFormat.name != 'iati'
         ).all()
     return checkPF
 
