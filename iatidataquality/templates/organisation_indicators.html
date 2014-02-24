@@ -2,7 +2,7 @@
 {% block title %}{{organisation.organisation_name}} &raquo; Organisations{% endblock %}
 {% block content %}
 
-   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#results_iati").tablesorter({ sortList: [[0,0],[1,0],[2,0]] });
