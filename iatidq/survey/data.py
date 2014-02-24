@@ -231,16 +231,16 @@ def addPublishedStatus(data):
 def addWorkflowType(data):
     checkWT = models.WorkflowType.query.filter_by(name=data["name"]
                 ).first()
-    if not checkWT:
-        with db.session.begin():
-            newWT = models.WorkflowType()
-            newWT.setup(
-                name = data["name"]
-                )
-            db.session.add(newWT)
-        return newWT
-    else:
+    if checkWT:
         return checkWT
+
+    with db.session.begin():
+        newWT = models.WorkflowType()
+        newWT.setup(
+            name = data["name"]
+            )
+        db.session.add(newWT)
+    return newWT
 
 def workflows(workflow_name=None):
     if workflow_name:
