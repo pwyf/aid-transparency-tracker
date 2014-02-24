@@ -14,14 +14,19 @@ import survey.data as dqsurveys
 
 id_tuple = lambda x: (x.id, x)
 
-def publication_status(surveydata, indicator_id):
+def extract_survey_data_with_guards(surveydata, indicator_id,
+                                    field, val1_name, val2_name):
     if indicator_id in surveydata:
         resp = surveydata[indicator_id]
-        if hasattr(resp, 'PublishedStatus'):
-            data = getattr(resp, 'PublishedStatus')
-            if hasattr(data, 'name') and hasattr(data, 'publishedstatus_value'):
-                return getattr(data, 'name'), getattr(data, 'publishedstatus_value')
+        if hasattr(resp, field):
+            data = getattr(resp, field)
+            if hasattr(data, val1_name) and hasattr(data, val2_name):
+                return getattr(data, val1_name), getattr(data, val2_name)
     return "", 0
+
+def publication_status(surveydata, indicator_id):
+    return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedStatus', 
+                                           'name', 'publishedstatus_value')
 
 def get_survey_data_and_workflow(organisation_survey, surveydata):
     # When provided with a particular organisation survey,
