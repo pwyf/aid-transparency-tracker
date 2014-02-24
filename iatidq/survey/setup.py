@@ -35,6 +35,10 @@ def setupSurvey():
      {'name': 'document',
       'title': 'Document',
       'format_class': 'success',
+      'format_value': 1.0},
+     {'name': 'iati',
+      'title': 'IATI',
+      'format_class': 'success',
       'format_value': 1.0}]
 
     for the_publishedformat in the_publishedformat:
