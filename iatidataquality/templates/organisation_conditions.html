@@ -1,7 +1,7 @@
 {% set active_page='pc'%}{% extends "layout.html" %}
 {% block title %}Organisation Conditions{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#pcs").tablesorter({ sortList: [[0,0]] });

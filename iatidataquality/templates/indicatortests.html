@@ -1,7 +1,8 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}Indicators{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
     <script >
     $(function() {
     $("table#tests").tablesorter({ sortList: [[0,0]] });
@@ -52,19 +53,4 @@
     </div>
 </form>
 </div>
-
-<script>
-$(document).ready(function() {
-	$('a[data-confirm]').click(function(ev) {
-		var href = $(this).attr('href');
-		if (!$('#dataConfirmModal').length) {
-			$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
-		} 
-		$('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
-		$('#dataConfirmOK').attr('href', href);
-		$('#dataConfirmModal').modal({show:true});
-		return false;
-	});
-});
-</script>
 {% endblock %}

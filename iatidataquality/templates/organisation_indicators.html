@@ -443,14 +443,6 @@ $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-la
         $('#aggregation_type').val(chosen_aggregation_type);
         $('#aggregation_type_form').submit();
     });
-
-    $(".bar").each(function(e){
-        width = $(this).attr('data-width');
-        if (width > 0) {
-            $(this).width(width+'%');
-        }
-    });
-
 </script>
 
 {% endblock %}
