@@ -32,7 +32,7 @@ import usermanagement
 @usermanagement.perms_required()
 def surveys_admin():
     surveys = dqsurveys.surveys()
-    workflows = dqsurveys.workflows()
+    workflows = dqsurveys.workflowsAll()
     publishedstatuses=dqsurveys.publishedStatus()
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
@@ -122,7 +122,7 @@ def organisation_survey(organisation_code=None):
 
     survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-    workflows = dqsurveys.workflows()
+    workflows = dqsurveys.workflowsAll()
     pct_complete = completion_percentage(survey)
     users = dqusers.surveyPermissions(organisation_code)
     admin = usermanagement.check_perms('admin')
@@ -159,7 +159,7 @@ def __survey_process(organisation, workflow, request,
             ordinal_value = None
 
         if request.form.get(indicator + "-noformat"):
-            published_format = dqsurveys.publishedFormat('document').id
+            published_format = dqsurveys.publishedFormatByName('document').id
         else:
             published_format = request.form.get(indicator + "-publishedformat")
 
@@ -278,7 +278,7 @@ def organisation_survey_view(organisation_code, workflow,
         )
 
     publishedstatuses = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormat()))
+    publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormatAll()))
     years = get_ordinal_values_years()
     year_data = dict(years)
     years.pop()
@@ -296,7 +296,7 @@ def organisation_survey_view(organisation_code, workflow,
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
     
-    workflow = dqsurveys.workflows(workflow_name)
+    workflow = dqsurveys.workflowByName(workflow_name)
     if not workflow:
         flash('That workflow does not exist.', 'error')
         return abort(404)

@@ -45,34 +45,6 @@ default_minimal_organisations = [
              "organisation_largest_recipient_source": None
             },
             {
-            'organisation_name': 'USAID',
-            'organisation_code': 'US-1',
-            'packagegroup_name': 'unitedstates',
-            'condition': 'participating-org[@role="Extending"][@ref="US-1"]',
-            'package_name': 'unitedstates-tz',
-             "organisation_total_spend": "11324",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            },
-            {
-            'organisation_name': 'MCC',
-            'organisation_code': 'US-18',
-            'packagegroup_name': 'unitedstates',
-            'condition': 'participating-org[@role="Extending"][@ref="US-18"]',
-            'package_name': 'unitedstates-tz',
-             "organisation_total_spend": "1591",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            },
-            {
             'organisation_name': 'UK, DFID',
             'organisation_code': 'GB-1',
             'packagegroup_name': 'dfid',
