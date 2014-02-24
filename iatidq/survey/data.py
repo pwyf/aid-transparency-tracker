@@ -35,25 +35,24 @@ def getSurveyById(organisation_id):
 def getOrCreateSurvey(data):
     checkS = getSurveyById(data["organisation_id"])
 
-    if not checkS:
-        with db.session.begin():
-            newS = models.OrganisationSurvey()
-
-            workflow = workflows('researcher')
-            currentworkflow_id = workflow.Workflow.id
-            deadline_days = datetime.timedelta(days=workflow.Workflow.duration)
-
-            currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
-
-            newS.setup(
-                organisation_id = data["organisation_id"],
-                currentworkflow_id = currentworkflow_id,
-                currentworkflow_deadline = currentworkflow_deadline
-                )
-            db.session.add(newS)
-        return newS
-    else:
+    if checkS:
         return checkS
+    with db.session.begin():
+        newS = models.OrganisationSurvey()
+
+        workflow = workflows('researcher')
+        currentworkflow_id = workflow.Workflow.id
+        deadline_days = datetime.timedelta(days=workflow.Workflow.duration)
+
+        currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
+
+        newS.setup(
+            organisation_id = data["organisation_id"],
+            currentworkflow_id = currentworkflow_id,
+            currentworkflow_deadline = currentworkflow_deadline
+            )
+        db.session.add(newS)
+    return newS
 
 def addSurveyData(data):
     checkSD = models.OrganisationSurveyData.query.filter_by(
@@ -197,64 +196,60 @@ def getSurveyDataAllWorkflows(organisation_code):
 def addPublishedFormat(data):
     checkPF = models.PublishedFormat.query.filter_by(name=data["name"]
                 ).first()
-    if not checkPF:
-        with db.session.begin():
-            newPF = models.PublishedFormat()
-            newPF.setup(
-                name = data["name"],
-                title = data["title"],
-                format_class = data["format_class"],
-                format_value = data["format_value"]
-                )
-            db.session.add(newPF)
-        return newPF
-    else:
+    if checkPF:
         return checkPF
+    with db.session.begin():
+        newPF = models.PublishedFormat()
+        newPF.setup(
+            name = data["name"],
+            title = data["title"],
+            format_class = data["format_class"],
+            format_value = data["format_value"]
+            )
+        db.session.add(newPF)
+    return newPF
 
 def addPublishedStatus(data):
     checkPS = models.PublishedStatus.query.filter_by(name=data["name"]
                 ).first()
-    if not checkPS:
-        with db.session.begin():
-            newPS = models.PublishedStatus()
-            newPS.setup(
-                name = data["name"],
-                title = data["title"],
-                publishedstatus_class = data["publishedstatus_class"],
-                publishedstatus_value = data["publishedstatus_value"]
-                )
-            db.session.add(newPS)
-        return newPS
-    else:
+    if checkPS:
         return checkPS
+    with db.session.begin():
+        newPS = models.PublishedStatus()
+        newPS.setup(
+            name = data["name"],
+            title = data["title"],
+            publishedstatus_class = data["publishedstatus_class"],
+            publishedstatus_value = data["publishedstatus_value"]
+            )
+        db.session.add(newPS)
+    return newPS
 
 def addWorkflowType(data):
     checkWT = models.WorkflowType.query.filter_by(name=data["name"]
                 ).first()
-    if not checkWT:
-        with db.session.begin():
-            newWT = models.WorkflowType()
-            newWT.setup(
-                name = data["name"]
-                )
-            db.session.add(newWT)
-        return newWT
-    else:
+    if checkWT:
         return checkWT
+    with db.session.begin():
+        newWT = models.WorkflowType()
+        newWT.setup(
+            name = data["name"]
+            )
+        db.session.add(newWT)
+    return newWT
 
 def addWorkflowType(data):
     checkWT = models.WorkflowType.query.filter_by(name=data["name"]
                 ).first()
-    if not checkWT:
-        with db.session.begin():
-            newWT = models.WorkflowType()
-            newWT.setup(
-                name = data["name"]
-                )
-            db.session.add(newWT)
-        return newWT
-    else:
+    if checkWT:
         return checkWT
+    with db.session.begin():
+        newWT = models.WorkflowType()
+        newWT.setup(
+            name = data["name"]
+            )
+        db.session.add(newWT)
+    return newWT
 
 def workflows(workflow_name=None):
     if workflow_name:
@@ -268,10 +263,10 @@ def workflows(workflow_name=None):
                                   models.WorkflowType
             ).join(models.WorkflowType, models.WorkflowType.id==models.Workflow.workflow_type
             ).order_by(models.Workflow.id).all()
+
     if checkW:
         return checkW
-    else:
-        return None
+    return None
 
 def workflowTypes(workflowtype_name=None):
     if workflowtype_name:
@@ -281,8 +276,7 @@ def workflowTypes(workflowtype_name=None):
         checkWT = models.WorkflowType.query.all()
     if checkWT:
         return checkWT
-    else:
-        return None
+    return None
 
 def workflow_by_id(workflow_id):
     checkW = db.session.query(models.Workflow
@@ -296,45 +290,45 @@ def advanceSurvey(organisationsurvey):
     checkS=models.OrganisationSurvey.query.filter_by(id=organisationsurvey.id
             ).first()
     checkW = workflow_by_id(organisationsurvey.currentworkflow_id)
-    if checkS and checkW:
-        with db.session.begin():
-            checkS.currentworkflow_id=checkW.leadsto
-            db.session.add(checkS)
-    else:
+    if not (checkS and checkW):
         return False
+    with db.session.begin():
+        checkS.currentworkflow_id=checkW.leadsto
+        db.session.add(checkS)
+    # FIXME
+    # return None instead of False - the test for this is potentially 
+    # misleading
 
 def addWorkflow(data):
     checkW = models.Workflow.query.filter_by(name=data["name"]
                 ).first()
-    if not checkW:
-        with db.session.begin():
-            newW = models.Workflow()
-            newW.setup(
-                name = data["name"],
-                leadsto = data["leadsto"],
-                workflow_type = data["workflow_type"],
-                duration = data["duration"],
-                title = data["title"]
-                )
-            db.session.add(newW)
-        return newW
-    else:
+    if checkW:
         return checkW
+    with db.session.begin():
+        newW = models.Workflow()
+        newW.setup(
+            name = data["name"],
+            leadsto = data["leadsto"],
+            workflow_type = data["workflow_type"],
+            duration = data["duration"],
+            title = data["title"]
+            )
+        db.session.add(newW)
+    return newW
 
 def updateWorkflow(data):
     checkW = models.Workflow.query.filter_by(name=data["name"]
                 ).first()
-    if checkW:
-        with db.session.begin():
-            checkW.name = data["name"],
-            checkW.title = data["title"],
-            checkW.workflow_type = data["workflow_type"],
-            checkW.leadsto = data["leadsto"],
-            checkW.duration = data["duration"]
-            db.session.add(checkW)
-        return checkW
-    else:
+    if not checkW:
         return None
+    with db.session.begin():
+        checkW.name = data["name"],
+        checkW.title = data["title"],
+        checkW.workflow_type = data["workflow_type"],
+        checkW.leadsto = data["leadsto"],
+        checkW.duration = data["duration"]
+        db.session.add(checkW)
+    return checkW
 
 def repairSurveyData(organisation_code):
     # for each currently active stage of the workflow
