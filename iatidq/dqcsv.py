@@ -95,7 +95,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
             points = (float(thevalue)/3.0)*float(theformat)
             return points
 
-    def write_csv_row(workflow_name=None):
+    def write_csv_row(workflow_name):
         data = {
             "id": organisation.organisation_code + "-" + indicator_name,
             "organisation_name": organisation.organisation_name, 
@@ -257,7 +257,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                     survey_comment = surveydata[indicator_id].OrganisationSurveyData.published_comment
                     survey_agree = surveydata[indicator_id].OrganisationSurveyData.published_accepted
                     print "writing csv row for", workflow.Workflow.name
-                    write_csv_row(workflow_name=workflow.Workflow.name)
+                    write_csv_row(workflow.Workflow.name)
         else:
             iati_data_quality_total_points = 0
             iati_data_quality_points = 0
@@ -286,7 +286,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         publication_format = "not-applicable"
 
     if not history:
-        write_csv_row()
+        write_csv_row(None)
 
 def write_organisation_publications_csv_index(out, organisation, history=False):
     aggregate_results = dqorganisations._organisation_indicators_split(organisation)
