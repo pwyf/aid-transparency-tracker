@@ -159,7 +159,7 @@ def __survey_process(organisation, workflow, request,
             ordinal_value = None
 
         if request.form.get(indicator + "-noformat"):
-            published_format = dqsurveys.publishedFormat('document').id
+            published_format = dqsurveys.publishedFormatByName('document').id
         else:
             published_format = request.form.get(indicator + "-publishedformat")
 
@@ -278,7 +278,7 @@ def organisation_survey_view(organisation_code, workflow,
         )
 
     publishedstatuses = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormat()))
+    publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormatAll()))
     years = get_ordinal_values_years()
     year_data = dict(years)
     years.pop()

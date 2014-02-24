@@ -111,15 +111,16 @@ def publishedStatus():
     checkPS = models.PublishedStatus.query.all()
     return checkPS
 
-def publishedFormat(name=None):
-    if name is not None:
-        checkPF = models.PublishedFormat.query.filter(
-                models.PublishedFormat.name == name
-                ).first()
-    else:
-        checkPF = models.PublishedFormat.query.filter(
-                models.PublishedFormat.name != 'document'
-                ).all()
+def publishedFormatByName(name):
+    checkPF = models.PublishedFormat.query.filter(
+        models.PublishedFormat.name == name
+        ).first()
+    return checkPF
+
+def publishedFormatAll():
+    checkPF = models.PublishedFormat.query.filter(
+        models.PublishedFormat.name != 'document'
+        ).all()
     return checkPF
 
 def publishedFormatsAll():
