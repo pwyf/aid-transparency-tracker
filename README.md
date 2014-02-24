@@ -78,3 +78,14 @@ The survey component currently requires the existence of three files (could be a
     cp tests/2012_2013_organisation_mapping.csv /home/me/data/
     cp tests/2012_indicators.csv /home/me/data/
     cp tests/2012_results.csv /home/me/data/
+
+Reinitialise
+============
+
+    python quickstart.py --drop-db
+    python quickstart.py --init-db
+    python quickstart.py --setup --minimal
+    python quickstart.py --refresh --minimal
+    bin/dqtool --mode=reload-packages --organisation=GB-1
+    python download_once.py
+    python tests_once.py
