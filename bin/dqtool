@@ -16,6 +16,7 @@ import iatidq.dqorganisations
 import iatidq.dqpackages
 import iatidq.dqregistry
 import iatidq.dqdownload
+import iatidq.dqcsv
 
 def clear_survey(options):
     organisation_code = options.organisation_code
@@ -136,6 +137,12 @@ def make_survey_data_for_current_workflow(organisation_code):
     iatidq.survey.data.advanceSurvey(survey)
         
 
+def make_csv_output(options):
+    organisations = Organisation.query.all()
+    print iatidq.dqcsv._org_pub_csv(organisations, 
+                                    "dataqualityresults_index.csv", True)
+
+
 def list_modes(options):
     for key in sorted(modes.keys()):
         print key
@@ -147,7 +154,8 @@ modes = {
     "compare-aggregation": compare_aggregation,
     "compare-summary": compare_summary,
     "list-modes": list_modes,
-    "make-survey-data": make_survey_data
+    "make-survey-data": make_survey_data,
+    "make-csv-output": make_csv_output
     }
 
 def run():
