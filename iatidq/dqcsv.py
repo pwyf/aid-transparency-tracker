@@ -85,7 +85,14 @@ def write_organisation_publications_csv(out, organisation):
         write_agg_csv_result(out, organisation, freq, result)
 
 
-def write_csv_row(out, workflow_name, organisation, indicator_name, indicator_total_weighted_points, indicator_description, indicator_category_name, indicator_subcategory_name, indicator_category_subcategory, indicator_order, indicator_weight, iati_manual, publication_format, publication_format_points, total_points, iati_data_quality_passed, iati_data_quality_points, freq, frequency_multiplier, iati_data_quality_total_points, survey_publication_status, survey_publication_status_value, survey_ordinal_value, survey_publication_format, survey_publication_format_value, survey_total_points):
+class CSVRow(object):
+    def __init__(self, *args):
+        self.field_data = args
+
+    def write_to(self, stream, workflow):
+        self._write(stream, workflow, *self.field_data)
+
+    def _write(self, out, workflow_name, organisation, indicator_name, indicator_total_weighted_points, indicator_description, indicator_category_name, indicator_subcategory_name, indicator_category_subcategory, indicator_order, indicator_weight, iati_manual, publication_format, publication_format_points, total_points, iati_data_quality_passed, iati_data_quality_points, freq, frequency_multiplier, iati_data_quality_total_points, survey_publication_status, survey_publication_status_value, survey_ordinal_value, survey_publication_format, survey_publication_format_value, survey_total_points):
         data = {
             "id": organisation.organisation_code + "-" + indicator_name,
             "organisation_name": organisation.organisation_name, 
@@ -121,13 +128,6 @@ def write_csv_row(out, workflow_name, organisation, indicator_name, indicator_to
             data['survey_comment'] = survey_comment
             data['survey_agree'] = survey_agree
         out.writerow(data)
-
-class CSVRow(object):
-    def __init__(self, *args):
-        self.field_data = args
-
-    def write_to(self, stream, workflow):
-        write_csv_row(stream, workflow, *self.field_data)
     
 def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, surveydata, surveydata_workflow, published_status, published_format, history=False, workflows=None):
 
