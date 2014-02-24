@@ -89,3 +89,8 @@ Reinitialise
     bin/dqtool --mode=reload-packages --organisation=GB-1
     python download_once.py
     python tests_once.py
+
+Run unit tests
+==============
+
+FIXME
