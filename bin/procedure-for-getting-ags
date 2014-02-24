@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 python quickstart.py --drop-db
 python quickstart.py --init-db
 python quickstart.py --setup --minimal
