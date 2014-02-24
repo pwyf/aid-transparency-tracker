@@ -111,7 +111,7 @@ def create_aggregation_types(options):
 
 def _test_example_tests(publisher, country):
     package_name = '-'.join([publisher, country])
-    xml_filename = os.path.join("unittests", "artefacts", package_name + '.xml')
+    xml_filename = os.path.join("unittests", "artefacts", "xml", package_name + '.xml')
 
     # check there's nothing in the db
     #pgs = get_packagegroups_by_name(publisher)
