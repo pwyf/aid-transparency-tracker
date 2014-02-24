@@ -275,12 +275,10 @@ def workflowsAll():
         return checkW
     return None
 
-def workflowTypes(workflowtype_name=None):
-    if workflowtype_name:
-        checkWT = models.WorkflowType.query.filter_by(name=workflowtype_name
-            ).first()
-    else:
-        checkWT = models.WorkflowType.query.all()
+def workflowTypeByName(workflowtype_name):
+    checkWT = models.WorkflowType.query.filter_by(name=workflowtype_name
+                                                  ).first()
+
     if checkWT:
         return checkWT
     return None
