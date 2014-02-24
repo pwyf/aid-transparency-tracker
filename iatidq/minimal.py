@@ -1,10 +1,9 @@
 
 # FIXME: duplicated
 which_packages = [
-    (u'worldbank-tz', True),
-    (u'unops-tz', True),
-    (u'dfid-tz', True),
-    (u'unitedstates-tz', True),
-    (u'dfid-org', True),
-    (u'dfid-ug', True)
+    (u'dfid-ml', True),
+    (u'dfid-589', True),
+    (u'dfid-ph', True),
+    (u'worldbank-789', True),
+    (u'worldbank-ao', True),
     ]
