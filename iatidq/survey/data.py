@@ -144,23 +144,10 @@ def getSurvey(organisation_code):
             ).first()
     return survey
 
-def getSurveyData(organisation_code, workflow_name=None):
-    if workflow_name:
-        surveyData = db.session.query(models.OrganisationSurveyData,
-                                      models.PublishedStatus,
-                                      models.PublishedFormat
-        ).filter(models.Organisation.organisation_code==organisation_code
-        ).filter(models.Workflow.name==workflow_name
-        ).outerjoin(models.PublishedStatus
-        ).outerjoin(models.PublishedFormat
-        ).join(models.OrganisationSurvey
-        ).join(models.Organisation
-        ).join(models.Workflow, (models.OrganisationSurveyData.workflow_id==models.Workflow.id)
-        ).all()
-    else:
-        surveyData = db.session.query(models.OrganisationSurveyData,
-                                      models.PublishedStatus,
-                                      models.PublishedFormat
+def getSurveyData(organisation_code, workflow_name):
+    surveyData = db.session.query(models.OrganisationSurveyData,
+                                  models.PublishedStatus,
+                                  models.PublishedFormat
         ).filter(models.Organisation.organisation_code==organisation_code
         ).outerjoin(models.PublishedStatus
         ).outerjoin(models.PublishedFormat
