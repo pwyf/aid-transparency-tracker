@@ -88,6 +88,10 @@ def setup_organisations_minimal():
         thepackage = models.Package.query.filter_by(
             package_name=organisation['package_name']
                 ).first()
+
+        if thepackage is None:
+            print "Organisation lookup failure", organisation
+            raise ValueError
         
         organisationpackage_data = {
             "organisation_id": inserted_organisation.id, 
