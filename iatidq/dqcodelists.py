@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 import models
 import unicodecsv
 from collections import defaultdict
@@ -16,7 +16,7 @@ import lxml.etree
 
 import util
 
-CODELIST_API = "https://raw2.github.com/pwyf/iati-codelists/master/%s"
+CODELIST_API = app.config["CODELIST_API"]
 
 def generateCodelists():
     codelists = db.session.query(models.CodelistCode.code,
