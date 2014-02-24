@@ -132,6 +132,7 @@ def publisher_simple(out, cdtns):
                 test_info["results_pct"] * 
                 test_info["results_num"]
                 )
+            ## FIXME: all okhieriarcy values are identical
             okhierarchy = hierarchy
 
         tmp = make_summary(
