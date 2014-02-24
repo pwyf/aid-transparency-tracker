@@ -1,16 +1,6 @@
 {% set active_page='organisations'%}{% extends "surveys/survey_base.html" %}
 
 {% block survey %}
-    <style type="text/css">
-        th.restrict_text, td.restrict_text { 
-            max-width:200px; 
-            word-wrap:break-word;
-        }
-        th.restrict_text_commitment, td.restrict_text_commitment { 
-            max-width:220px; 
-            word-wrap:break-word;
-        }
-    </style>
 	<h3>{% block ask %}{% endblock ask %}</h3>
     <div class="alert alert-info">
 	  {% block guidance %}
