@@ -28,6 +28,11 @@ def publication_status(surveydata, indicator_id):
     return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedStatus', 
                                            'name', 'publishedstatus_value')
 
+def publication_format(surveydata, indicator_id):
+    return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedFormat', 
+                                           'name', 'format_value')
+    
+
 def get_survey_data_and_workflow(organisation_survey, surveydata):
     # When provided with a particular organisation survey,
     # this function takes the current workflow of that survey,
@@ -189,6 +194,9 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
 
                 survey_publication_status, survey_publication_status_value = publication_status(surveydata, indicator_id)
 
+                survey_publication_format, survey_publication_format_value = publication_format(surveydata, indicator_id)
+                survey_publication_format_value *= 50
+
                 try:
                     survey_publication_format = surveydata[indicator_id].PublishedFormat.name
                     survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value * 50
@@ -226,15 +234,9 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
 
                     survey_publication_status, survey_publication_status_value = publication_status(surveydata, indicator_id)
 
-                    try:
-                        survey_publication_format = surveydata[indicator_id].PublishedFormat.name
-                        survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value * 50
-                    except KeyError:
-                        survey_publication_format = ""
-                        survey_publication_format_value = 0
-                    except AttributeError:
-                        survey_publication_format = ""
-                        survey_publication_format_value = 0
+                    survey_publication_format, survey_publication_format_value = publication_format(surveydata, indicator_id)
+                    survey_publication_format_value *= 50
+
                     if indicator_ordinal:
                         survey_ordinal_value = surveydata[indicator_id].OrganisationSurveyData.ordinal_value
                         survey_total_points = calculate_ordinal_points(surveydata[indicator_id].OrganisationSurveyData.ordinal_value, 
