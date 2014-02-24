@@ -1,5 +1,13 @@
 #!/usr/bin/python
 
+#  IATI Data Quality, tools for Data QA on IATI-formatted  publications
+#  by Mark Brough, Martin Keegan, Ben Webb and Jennifer Smith
+#
+#  Copyright (C) 2014  Publish What You Fund
+#
+#  This programme is free software; you may redistribute and/or modify
+#  it under the terms of the GNU Affero General Public License v3.0
+
 import os
 import sys
 import csv
@@ -41,10 +49,10 @@ def setup_func():
 
 def __setup_organisations(pkg_id):
     org_data = [ 
-        ('USAID', 'US-1', 
-         '''participating-org[@role="Extending"][@ref="US-1"]'''),
-        ('MCC', 'US-18',
-         '''participating-org[@role="Extending"][@ref="US-18"]'''),
+        ('UK, DFID', 'GB-1', 
+         '''participating-org[@role="Extending"][@ref="GB-1"]'''),
+        ('World Bank', '44002',
+         '''participating-org[@role="Extending"][@ref="44002"]'''),
         ]
     for name, code, cond in org_data:
         organisation = iatidq.dqorganisations.addOrganisation(
@@ -217,8 +225,8 @@ def _test_example_tests(publisher, country):
 
 @nose.with_setup(setup_func, teardown_func)
 def test_samples():
-    data = [ ('worldbank', 'tz'),
-             ('unitedstates', 'tz') 
+    data = [ ('worldbank', '789'),
+             ('dfid', 'ph') 
              ]
 
     #data = [ data[1] ]
