@@ -32,7 +32,7 @@ import usermanagement
 @usermanagement.perms_required()
 def surveys_admin():
     surveys = dqsurveys.surveys()
-    workflows = dqsurveys.workflows()
+    workflows = dqsurveys.workflowsAll()
     publishedstatuses=dqsurveys.publishedStatus()
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
@@ -122,7 +122,7 @@ def organisation_survey(organisation_code=None):
 
     survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-    workflows = dqsurveys.workflows()
+    workflows = dqsurveys.workflowsAll()
     pct_complete = completion_percentage(survey)
     users = dqusers.surveyPermissions(organisation_code)
     admin = usermanagement.check_perms('admin')
@@ -296,7 +296,7 @@ def organisation_survey_view(organisation_code, workflow,
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
     
-    workflow = dqsurveys.workflows(workflow_name)
+    workflow = dqsurveys.workflowByName(workflow_name)
     if not workflow:
         flash('That workflow does not exist.', 'error')
         return abort(404)

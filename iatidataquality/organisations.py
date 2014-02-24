@@ -685,7 +685,7 @@ def write_organisation_publications_csv_index(out, organisation, history=False):
             organisation_survey, surveydata)
         workflows = None
     else:
-        workflows=dqsurveys.workflows()
+        workflows=dqsurveys.workflowsAll()
         surveydata_workflow=None
 
     published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
