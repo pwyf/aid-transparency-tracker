@@ -14,6 +14,15 @@ import survey.data as dqsurveys
 
 id_tuple = lambda x: (x.id, x)
 
+def publication_status(surveydata, indicator_id):
+    if indicator_id in surveydata:
+        resp = surveydata[indicator_id]
+        if hasattr(resp, 'PublishedStatus'):
+            data = getattr(resp, 'PublishedStatus')
+            if hasattr(data, 'name') and hasattr(data, 'publishedstatus_value'):
+                return getattr(data, 'name'), getattr(data, 'publishedstatus_value')
+    return "", 0
+
 def get_survey_data_and_workflow(organisation_survey, surveydata):
     # When provided with a particular organisation survey,
     # this function takes the current workflow of that survey,
@@ -172,15 +181,9 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                 iati_data_quality_total_points = 0
                 iati_data_quality_points = 0
                 iati_data_quality_passed = 0
-                try:
-                    survey_publication_status = surveydata[indicator_id].PublishedStatus.name
-                    survey_publication_status_value = surveydata[indicator_id].PublishedStatus.publishedstatus_value
-                except KeyError:
-                    survey_publication_status = ""
-                    survey_publication_status_value = 0
-                except AttributeError:
-                    survey_publication_status = ""
-                    survey_publication_status_value = 0
+
+                survey_publication_status, survey_publication_status_value = publication_status(surveydata, indicator_id)
+
                 try:
                     survey_publication_format = surveydata[indicator_id].PublishedFormat.name
                     survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value * 50
@@ -215,15 +218,9 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                     iati_data_quality_total_points = 0
                     iati_data_quality_points = 0
                     iati_data_quality_passed = 0
-                    try:
-                        survey_publication_status = surveydata[indicator_id].PublishedStatus.name
-                        survey_publication_status_value = surveydata[indicator_id].PublishedStatus.publishedstatus_value
-                    except KeyError:
-                        survey_publication_status = ""
-                        survey_publication_status_value = 0
-                    except AttributeError:
-                        survey_publication_status = ""
-                        survey_publication_status_value = 0
+
+                    survey_publication_status, survey_publication_status_value = publication_status(surveydata, indicator_id)
+
                     try:
                         survey_publication_format = surveydata[indicator_id].PublishedFormat.name
                         survey_publication_format_value = surveydata[indicator_id].PublishedFormat.format_value * 50
