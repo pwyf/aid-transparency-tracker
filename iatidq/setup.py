@@ -21,15 +21,7 @@ import inforesult
 import iatidq.survey
 import dqusers
 
-# FIXME: duplicated
-which_packages = [
-    (u'worldbank-tz', True),
-    (u'unops-tz', True),
-    (u'dfid-tz', True),
-    (u'unitedstates-tz', True),
-    (u'dfid-org', True),
-    (u'dfid-ug', True)
-    ]
+from minimal import which_packages
 
 default_tests_filename="tests/tests.csv"
 default_infotypes_filename="tests/infotypes.csv"
