@@ -139,8 +139,8 @@ def make_survey_data_for_current_workflow(organisation_code):
 
 def make_csv_output(options):
     organisations = Organisation.query.all()
-    print iatidq.dqcsv._org_pub_csv(organisations, 
-                                    "dataqualityresults_index.csv", True)
+    s = iatidq.dqcsv.make_csv(organisations, True, True)
+    print s.read()
 
 
 def list_modes(options):
