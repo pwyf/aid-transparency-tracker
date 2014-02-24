@@ -94,3 +94,11 @@ Run unit tests
 ==============
 
 FIXME
+
+Run aggregation test
+====================
+
+    bin/dqtool --mode compare-aggregation --organisation GB-1 --filename unittests/artefacts/json/dfid-sample-aggregation-data.json
+
+This runs an aggregation on the packages for organisation GB-1 and compares
+the results with the stashed file in unittests/artefacts/json/dfid-sample-aggregation-data.json; if the results are different, then a new file is output
