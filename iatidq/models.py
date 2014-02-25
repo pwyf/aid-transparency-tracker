@@ -130,7 +130,7 @@ class Result(db.Model):
     package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
     test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
-    result_data = Column(Integer)
+    result_data = Column(Integer, nullable=False)
     result_identifier = Column(UnicodeText)
     result_hierarchy = Column(Integer)
 
