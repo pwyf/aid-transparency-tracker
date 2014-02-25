@@ -24,18 +24,15 @@
             <h3 id="addFeedbackModalLabel">Add conditions for {{organisation.organisation_code}}</h3>
         </div>
         <div class="modal-body">
-            <p>Add qualifications of where you use or don't use different elements.</p>
+            <p>Add qualifications of where you don't use different elements.</p>
             <table class="table">
             <tbody>
             <tr>
-            <td>Use / don't use</td>
-            <td><select id="uses">
-                <option value="does not use">Don't use</option>
-                <option value="uses">Use</option>
-            </select></td>
+            <td>{{organisation.organisation_code}}</td>
+            <td><input type="hidden" id="uses" value="does not use" />does not use</td>
             </tr>
             <tr>
-            <td>Element</td>
+            <td class="muted"><i>element</i></td>
             <td><select id="element">
                 <option value="title">title</option>
                 <option value="description">description</option>
@@ -63,13 +60,11 @@
             </select></td>
             </tr>
             <tr>
-            <td>Where</td>
+            <td class="muted"><i>at hierarchy</i></td>
             <td> <select id="where">
                 <option value="activity hierarchy 1">activity hierarchy 1</option>
                 <option value="activity hierarchy 2">activity hierarchy 2</option>
                 <option value="activity hierarchy 3">activity hierarchy 3</option>
-                <option value="activity level">activity level</option>
-                <option value="transaction level">transaction level</option>
             </select>
             </td>
             </tr>
