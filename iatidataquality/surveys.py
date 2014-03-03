@@ -18,6 +18,15 @@ import os
 import sys
 import unicodecsv
 
+YEAR_MAP_FILE = '2012_2013_organisation_mapping.csv'
+OLD_YEAR = '2012'
+NEW_YEAR = '2013'
+OLD_FIELD_ID = OLD_YEAR + '_id'
+NEW_FIELD_ID = NEW_YEAR + '_id'
+OLD_INDICATORS_FILE = OLD_YEAR + '_indicators.csv'
+OLD_RESULTS_FILE = OLD_YEAR + '_results.csv'
+NEW_INDICATOR_NAME = NEW_YEAR + '_indicator_name'
+
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
@@ -47,22 +56,22 @@ def create_survey(organisation_code=None):
 
 def get_old_organisation_id(organisation_code='GB-1'):
     path = app.config["DATA_STORAGE_DIR"]
-    old_organisation_file = os.path.join(path, '2012_2013_organisation_mapping.csv')
+    old_organisation_file = os.path.join(path, YEAR_MAP_FILE)
 
     old_organisation_data = unicodecsv.DictReader(file(old_organisation_file))
     for row in old_organisation_data:
-        if row['2013_id'] == organisation_code:
-            return row['2012_id']
+        if row[NEW_FIELD_ID] == organisation_code:
+            return row[OLD_FIELD_ID]
 
 def get_old_indicators():
     path = app.config["DATA_STORAGE_DIR"]
-    old_indicators_file = os.path.join(path, '2012_indicators.csv')
+    old_indicators_file = os.path.join(path, OLD_INDICATORS_FILE)
     old_indicators_data = unicodecsv.DictReader(file(old_indicators_file))
 
     indicator_data = {}
     for row in old_indicators_data:
-        if ((row["question_number"]) and (row["2013_indicator_name"])):
-            indicator_data[int(row["question_number"])] = row["2013_indicator_name"]
+        if ((row["question_number"]) and (row[NEW_INDICATOR_NAME])):
+            indicator_data[int(row["question_number"])] = row[NEW_INDICATOR_NAME]
     return indicator_data
     
 def get_organisation_results(organisation_code, newindicators):
@@ -71,7 +80,7 @@ def get_organisation_results(organisation_code, newindicators):
 
     path = app.config["DATA_STORAGE_DIR"]
 
-    old_results_file = os.path.join(path, '2012_results.csv')
+    old_results_file = os.path.join(path, OLD_RESULTS_FILE)
     old_results_data = unicodecsv.DictReader(file(old_results_file))
 
     data = {}
