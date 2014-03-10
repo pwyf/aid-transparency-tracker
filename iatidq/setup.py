@@ -27,6 +27,7 @@ default_tests_filename="tests/tests.csv"
 default_infotypes_filename="tests/infotypes.csv"
 default_indicator_group_name= app.config["INDICATOR_GROUP"]
 default_userdata_filename='tests/users.csv'
+default_indicator_filename='tests/indicators.csv'
 
 def create_inforesult_types(options):
     print "Adding info result types"
@@ -61,7 +62,7 @@ def setup_common():
     print "Importing indicators"
     dqindicators.importIndicatorsFromFile(
         default_indicator_group_name,
-        default_tests_filename)
+        default_indicator_filename)
     print "Importing indicator descriptions"
     dqindicators.importIndicatorDescriptionsFromFile(
         app.config["INDICATOR_GROUP"], 
