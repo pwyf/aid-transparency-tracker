@@ -49,7 +49,7 @@ def returnLevel(row, level):
 
 def _importTests(fh, filename, level=1, local=True):
     data = unicodecsv.DictReader(fh)
-
+    
     for row in data:
         with db.session.begin():
             test = models.Test.query.filter(
@@ -68,6 +68,25 @@ def _importTests(fh, filename, level=1, local=True):
             test.file = filename
             test.line = data.line_num
             db.session.add(test)
+
+        with db.session.begin():
+            test = models.Test.query.filter(
+                models.Test.name==row['test_name']).first()
+
+            if row['indicator_name']:
+                ind = models.Indicator.query.filter(
+                    models.Indicator.name==row['indicator_name']).first()
+
+                assert ind
+                assert test
+                assert test.id
+
+                newIT = models.IndicatorTest()
+                newIT.setup(
+                    indicator_id = ind.id,
+                    test_id = test.id
+                    )
+                db.session.add(newIT)
 
     print "Imported successfully"
     return True

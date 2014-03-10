@@ -55,10 +55,6 @@ def setup_common():
     db.create_all()
     print "Adding hardcoded tests"
     dqimporttests.hardcodedTests()
-    print "Importing tests"
-    dqimporttests.importTestsFromFile(
-        default_tests_filename,
-        test_level.ACTIVITY)
     print "Importing indicators"
     dqindicators.importIndicatorsFromFile(
         default_indicator_group_name,
@@ -67,6 +63,10 @@ def setup_common():
     dqindicators.importIndicatorDescriptionsFromFile(
         app.config["INDICATOR_GROUP"], 
         "tests/indicators.csv")
+    print "Importing tests"
+    dqimporttests.importTestsFromFile(
+        default_tests_filename,
+        test_level.ACTIVITY)
     print "Importing codelists"
     dqcodelists.importCodelists()
 

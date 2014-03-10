@@ -347,6 +347,7 @@ class IndicatorTest(db.Model):
     id = Column(Integer, primary_key=True)
     indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
     test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
+    __table_args__ = (UniqueConstraint('indicator_id', 'test_id'), )
 
     def setup(self,
                  indicator_id,
