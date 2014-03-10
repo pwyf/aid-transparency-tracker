@@ -42,6 +42,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
         data['indicator_type']=row['indicator_type']
         data['indicator_category_name']=row['indicator_category_name']
         data['indicator_subcategory_name']=row['indicator_subcategory_name']
+        data['order']=row['order']
         data['indicatorgroup_id']=indicatorgroup.id
 
         checkI = indicators(indicatorgroup_name, data['name'])
@@ -95,12 +96,12 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
                                 "indicator_id" : indicator.id
                             })
         else:
-            test = models.Test.query.filter(models.Test.name==row['test_name']).first()
+            test = models.Test.query.filter(models.Test.name==row['name']).first()
 
             if not test:
                 continue
             
-            indicator_name = row['indicator_name']
+            indicator_name = row['name']
             if (indicator_name == ""):
                 continue
             
@@ -108,10 +109,13 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
             if checkI:
                 indicator = checkI
             else:
+                import pprint
+                pprint.pprint(row)
                 indicator = addIndicator({
                                 "name" : indicator_name,
                                 "description" : "",
-                                "indicatorgroup_id" : indicatorgroup.id
+                                "indicatorgroup_id" : indicatorgroup.id,
+                                "order": row["order"]
                             })
             addIndicatorTest({
                                 "test_id" : test.id,
@@ -217,7 +221,7 @@ def addIndicator(data):
                 indicator_subcategory_name = data.get("indicator_subcategory_name"),
                 indicator_ordinal = data.get("indicator_ordinal", None),
                 indicator_noformat = data.get("indicator_noformat", None),
-                indicator_order = data.get("indicator_order", None),
+                indicator_order = data["order"],
                 indicator_weight = data.get("indicator_weight", None)
                 )
             db.session.add(newI)

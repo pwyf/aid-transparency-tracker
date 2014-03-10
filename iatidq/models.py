@@ -306,7 +306,7 @@ class Indicator(db.Model):
     indicator_subcategory_name = Column(UnicodeText)
     indicator_ordinal = Column(Boolean)
     indicator_noformat = Column(Boolean)
-    indicator_order = Column(Integer)
+    indicator_order = Column(Integer, nullable=False)
     indicator_weight = Column(Float(precision=4))
 
     def setup(self,
@@ -347,6 +347,7 @@ class IndicatorTest(db.Model):
     id = Column(Integer, primary_key=True)
     indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
     test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
+    __table_args__ = (UniqueConstraint('indicator_id', 'test_id'), )
 
     def setup(self,
                  indicator_id,
