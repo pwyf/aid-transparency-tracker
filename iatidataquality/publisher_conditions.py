@@ -15,74 +15,78 @@ from flask.ext.login import current_user
 from iatidataquality import app
 from iatidataquality import db
 
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
+from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, dqpublishercondition
 from iatidq.models import *
 
 import StringIO
 
 import usermanagement
 
-def get_pc(pc_id):
-    return db.session.query(
-        OrganisationCondition.id,
-        OrganisationCondition.description,
-        OrganisationCondition.operation,
-        OrganisationCondition.condition,
-        OrganisationCondition.condition_value,
-        Organisation.organisation_name.label("organisation_name"),
-        Organisation.organisation_code.label("organisation_code"),
-        Organisation.id.label("organisation_id"),
-        Test.name.label("test_name"),    
-        Test.description.label("test_description"),
-        Test.id.label("test_id")
-        ).filter_by(id=pc_id
-                    ).join(Organisation, Test).first()
-
-def get_pcs():
-    return db.session.query(
-        OrganisationCondition.id,
-        OrganisationCondition.description,
-        Organisation.organisation_name.label("organisation_name"),
-        Organisation.organisation_code.label("organisation_code"),
-        Organisation.id.label("organisation_id"),
-        Test.name.label("test_name"),    
-        Test.description.label("test_description"),
-        Test.id.label("test_id")
-        ).order_by(
-        OrganisationCondition.id
-        ).join(Organisation, Test
-               ).all()
+@app.route("/organisation_conditions/clear/")
+@usermanagement.perms_required()
+def organisationfeedback_clear():
+    feedback = dqpublishercondition.get_publisher_feedback()
+    dqpublishercondition.delete_publisher_feedback(feedback)
+    flash('All remaining publisher feedback was successfully cleared', 'warning')
+    return redirect(url_for('organisation_conditions'))
         
 @app.route("/organisation_conditions/")
 @app.route("/organisation_conditions/<id>/")
+@usermanagement.perms_required()
 def organisation_conditions(id=None):
     if id is not None:
-        pc = get_pc(id)
+        pc = dqpublishercondition.get_publisher_condition(id)
         return render_template("organisation_condition.html", pc=pc,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
     else:
-        pcs = get_pcs()
+        pcs = dqpublishercondition.get_publisher_conditions()
+        feedbackconditions = dqpublishercondition.get_publisher_feedback()
+        text = ""
+        for i, condition in enumerate(feedbackconditions):
+            if i>0: text += "\n"
+            text += condition.Organisation.organisation_code + " does not use "
+            text += condition.OrganisationConditionFeedback.element + " at "
+            text += condition.OrganisationConditionFeedback.where
         return render_template("organisation_conditions.html", pcs=pcs,
              admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
-
-def configure_organisation_condition(pc):
-    with db.session.begin():
-        pc.description = request.form['description']
-        pc.organisation_id = int(request.form['organisation_id'])
-        pc.test_id = int(request.form['test_id'])
-        pc.operation = int(request.form['operation'])
-        pc.condition = request.form['condition']
-        pc.condition_value = request.form['condition_value']
-        pc.file = request.form['file']
-        pc.line = int(request.form['line'])
-        pc.active = bool(request.form['active'])
-        db.session.add(pc)
+             loggedinuser=current_user,
+             feedbackconditions=text)
         
+@app.route("/organisation_conditions/<int:id>/delete/")
+@usermanagement.perms_required()
+def organisation_condition_delete(id=None):
+    pc = dqpublishercondition.delete_publisher_condition(id)
+    flash('Deleted that condition', "success")
+    return redirect(url_for('organisation_conditions'))
+
+@app.route("/organisation_conditions/import_feedback/", methods=['POST'])
+@usermanagement.perms_required()
+def import_feedback():
+    from iatidq import dqimportpublisherconditions
+
+    def get_results():
+        if request.form.get('feedbacktext'):
+            text = request.form.get('feedbacktext')
+            return dqimportpublisherconditions.importPCsFromText(text)
+
+    results = get_results()
+
+    if results:
+        flash('Parsed conditions', "success")
+        return render_template(
+            "import_organisation_conditions_step2.html",
+            results=results,
+            step=2,
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user)
+    else:
+        flash('There was an error importing your conditions', "error")
+        return redirect(url_for('import_organisation_conditions'))
+
 def update_organisation_condition(pc_id):
     pc = OrganisationCondition.query.filter_by(id=pc_id).first_or_404()
-    configure_organisation_condition(pc)
+    dqpublishercondition.configure_organisation_condition(pc)
 
 @app.route("/organisation_conditions/<id>/edit/", methods=['GET', 'POST'])
 @usermanagement.perms_required()
@@ -120,7 +124,7 @@ def organisation_conditions_new(id=None):
 
     if (request.method == 'POST'):
         pc = OrganisationCondition()
-        configure_organisation_condition(pc)
+        dqpublishercondition.configure_organisation_condition(pc)
         flash('Created new condition', "success")
         return redirect(url_for('organisation_conditions_editor', id=pc.id))
     else:
