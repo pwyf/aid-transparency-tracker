@@ -253,6 +253,11 @@ def updateIndicator(indicatorgroup, indicator, data):
     else:
         return False
 
+
+def getIndicatorByName(indicator_name):
+    return db.session.query(models.Indicator.name==indicator_name).first()
+
+
 def deleteIndicator(indicatorgroup, indicator):
     checkI = db.session.query(models.Indicator
                 ).filter(models.Indicator.name==indicator, 
