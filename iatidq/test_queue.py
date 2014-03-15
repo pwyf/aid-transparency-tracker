@@ -23,10 +23,18 @@ import package_status
 import hardcoded_test
 
 # FIXME: this should be in config
+rm_packages = True
 download_queue='iati_tests_queue'
 
 class InvalidXPath(Exception): pass
 
+
+def delete_results(runtime_id, package_id):
+    with db.session.begin():
+        results = models.Result.query.filter(
+            models.Result.runtime_id==runtime_id,
+            models.Result.package_id==package_id
+            ).delete()
 
 def binary_test(test_name):
     if re.compile("(\S*) is on list (\S*)").match(test_name):
@@ -240,6 +248,9 @@ def unguarded_check_file(test_functions, codelists, file_name,
         return False
 
     check_data(runtime_id, package_id, test_functions, codelists, data)
+
+    if rm_packages:
+        delete_results(runtime_id, package_id)
 
     return True
 
