@@ -14,13 +14,7 @@ import csv
 import util
 import urllib2
 
-def _importPCs(fh, local=True):
-    
-    results = {}
-    for n, line in enumerate(fh):
-        text = line.strip('\n')
-        results[n]=text
-        
+def _parsePCresults(results):
     import dqparseconditions
     test_functions = dqparseconditions.parsePC(results)
     tested_results = []
@@ -30,6 +24,19 @@ def _importPCs(fh, local=True):
         tested_results.append(data)
 
     return tested_results
+
+def importPCsFromText(text):
+    results = {}
+    for n, line in enumerate(text.split("\n")):
+        results[n]=line
+    return _parsePCresults(results)
+
+def _importPCs(fh, local=True):
+    results = {}
+    for n, line in enumerate(fh):
+        text = line.strip('\n')
+        results[n]=text
+    return _parsePCresults(results)
 
 def importPCsFromFile(filename='tests/organisation_structures.txt', local=True):
     with file(filename) as fh:
