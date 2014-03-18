@@ -43,7 +43,6 @@ def log(s):
     print >>sys.stderr, s
 
 def setup_func():
-    print >>sys.stderr, "setting up"
     iatidq.db.drop_all()
     iatidq.db.create_all()
 
