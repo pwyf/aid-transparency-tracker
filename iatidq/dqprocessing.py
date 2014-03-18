@@ -156,22 +156,36 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
 
     print "len(result_ids): %d" % len(result_ids)
 
-    data = db.session.query(models.Test.id,
-                models.Result.result_data,
-                models.Result.result_hierarchy,
-                func.count(models.Result.id),
-                models.Result.package_id,
-                models.Result.organisation_id
-        ).filter(models.Result.runtime_id==runtime
-        ).filter(models.Result.package_id==package_id
-        ).filter(models.Result.id.in_(result_ids)
-        ).join(models.Result
-        ).group_by(models.Result.package_id, 
-                   models.Result.result_hierarchy, 
-                   models.Result.organisation_id,
-                   models.Test.id, 
-                   models.Result.result_data
-        ).all()
+    # create temp table
+    conn = db.session.connection()
+    conn.execute('begin transaction;')
+    conn.execute('''create temporary table relevant_result 
+                                           (result_id int not null primary key);''')
+
+    for result_id in result_ids:
+        conn.execute('''insert into relevant_result values (%d);''' % result_id)
+
+    sql = '''
+        SELECT test.id AS test_id,
+            result.result_data AS result_result_data,
+            result.result_hierarchy AS result_result_hierarchy,
+            count(result.id) AS count_1,
+            result.package_id AS result_package_id,
+            result.organisation_id AS result_organisation_id 
+        FROM test JOIN result ON test.id = result.test_id 
+        WHERE result.runtime_id = %d AND result.package_id = %d AND 
+              result.id IN 
+                  (select result_id from relevant_result) GROUP BY result.package_id,
+            result.result_hierarchy,
+            result.organisation_id,
+            test.id,
+            result.result_data'''
+
+    stmt = sql % (runtime, package_id)
+    data = [row for row in conn.execute(stmt)]
+    conn.execute('''drop table relevant_result;''')
+    conn.execute('rollback;')
+    del(conn)
 
     aresults = aggregations.aggregate_percentages_org(data)
 
