@@ -75,13 +75,14 @@ def users_edit(username=None):
         permissions = dqusers.userPermissions(user.id)
         if request.method == 'POST':
             if user:
-                user = dqusers.addUser({
+                data = {
                     'username': username,
-                    'password': request.form['password'],
+                    'password': request.form.get('password'),
                     'name': request.form['name'],
                     'email_address': request.form['email_address'],
                     'organisation': request.form['organisation']
-                    })
+                    }
+                user = dqusers.updateUser(data)
                 flash('Successfully updated user.', 'success')
             else:
                 user = {}
