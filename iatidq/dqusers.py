@@ -90,7 +90,7 @@ def _importUserData(fh):
                 perms += [
                     ('organisation', 'edit'),
                     ('survey_donorreview', 'edit'),
-                    ('survey_donorcomments', 'edit')
+                    ('survey_donorcomments', 'edit'),
                     ('organisation_feedback', 'create')
                     ]
 
