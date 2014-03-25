@@ -137,8 +137,11 @@ def refresh_package_by_name(package_name):
         print "Error 403 (Not authorised) when retrieving '%s'" % package_name
         
 def _refresh_packages():
-    [ refresh_package(package) 
-      for package in packages_from_iati_registry(REGISTRY_URL) ]
+    for package in packages_from_iati_registry(REGISTRY_URL):
+        package_name = package["name"]
+        registry = ckanclient.CkanClient(base_location=CKANurl)
+        pkg = registry.package_entity_get(package_name)
+        refresh_package(pkg)
 
 def matching_packages(regexp):
     import re
