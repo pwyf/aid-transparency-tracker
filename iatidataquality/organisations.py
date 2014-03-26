@@ -103,14 +103,8 @@ def organisations_coverage():
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
-
+    
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
-
-    return organisation_publication_complete(
-            organisation_code,
-            aggregation_type)
-
-"""
 
     template_args = {}
     org_packages = dqorganisations.organisationPackages(organisation_code)
@@ -119,7 +113,7 @@ def organisations_index(organisation_code=None):
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
     irs = [ir for ir in get_info_results(org_packages, organisation)]
-    coverage = get_coverage(organisation, irs) 
+    coverage = get_coverage(organisation, irs)
 
     organisation_survey = dqsurveys.getSurvey(organisation_code)
 
@@ -139,7 +133,7 @@ def organisations_index(organisation_code=None):
         {"organisation_code": organisation_code})
 
     show_researcher_button = (
-        allowed_to_edit_survey_researcher and 
+        allowed_to_edit_survey_researcher and
          (
           (organisation_survey and
            organisation_survey.Workflow.name == 'researcher')
@@ -148,7 +142,7 @@ def organisations_index(organisation_code=None):
          )
         )
 
-    template_args = dict(organisation=organisation, 
+    template_args = dict(organisation=organisation,
                          summary_data=summary_data,
                          packagegroups=packagegroups,
                          coverage=coverage,
@@ -159,21 +153,20 @@ def organisations_index(organisation_code=None):
                          show_researcher_button=show_researcher_button)
 
     return render_template("organisation_index.html", **template_args)
-"""
 
-@app.route("/organisations/<organisation_code>/")
 @app.route("/organisations/")
+@app.route("/organisations/<organisation_code>/")
 def organisations(organisation_code=None):
-
     check_perms = usermanagement.check_perms(
         'organisation', 'view', {'organisation_code':organisation_code})
 
-    aggregation_type=integerise(request.args.get('aggregation_type', 2))
-
     if organisation_code is not None:
-        return organisation_publication_complete(
-                organisation_code,
-                aggregation_type)
+        template = {
+            True: 'organisations_index',
+            False: 'organisation_publication'
+            }[check_perms]
+
+        return redirect(url_for(template, organisation_code=organisation_code))
 
     organisations = dqorganisations.organisations()
 
@@ -266,9 +259,9 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     years = dict(get_ordinal_values_years())
 
-    return render_template("organisation_indicators.html", 
+    return render_template("organisation_indicators.html",
                            organisation=organisation,
-                           results=aggregate_results, 
+                           results=aggregate_results,
                            runtime=latest_runtime,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
@@ -313,9 +306,9 @@ def organisation_publication_complete(organisation_code, aggregation_type):
 
     years = dict(get_ordinal_values_years())
 
-    return render_template("organisation_index_complete.html", 
+    return render_template("organisation_index_complete.html",
                            organisation=organisation,
-                           results=aggregate_results, 
+                           results=aggregate_results,
                            runtime=latest_runtime,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
@@ -339,28 +332,35 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
 
     packages = dqorganisations.organisationPackages(organisation_code)
 
-    return render_template("organisation_publication_public.html", 
+    return render_template("organisation_publication_public.html",
                            organisation=organisation,
-                           results=aggregate_results, 
+                           results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
                            packages=packages,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user)
 
+@app.route("/organisations/<organisation_code>/publication/")
+def organisation_publication(organisation_code=None, aggregation_type=2):
+    check_perms = usermanagement.check_perms(
+        'organisation', 'view', {'organisation_code': organisation_code}
+        )
+    
+    if check_perms:
+        return organisation_publication_authorised(
+            organisation_code,
+            aggregation_type)
+    else:
+        return organisation_publication_complete(
+        organisation_code,
+        aggregation_type)
 
+"""@app.route("/organisations/<organisation_code>/publication/complete/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
     return organisation_publication_complete(
-            organisation_code,
-            aggregation_type)
-
-@app.route("/organisations/<organisation_code>/")
-@app.route("/organisations/<organisation_code>/publication/")
-@app.route("/organisations/<organisation_code>/index/")
-def organisation_publication_complete_page(organisation_code=None, aggregation_type=2):
-    return organisation_publication_complete(
-            organisation_code,
-            aggregation_type)
+        organisation_code,
+        aggregation_type)"""
 
 def _organisation_publication_detail(organisation_code, aggregation_type, 
                                      is_admin):
