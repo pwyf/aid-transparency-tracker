@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 
 import urllib2
 import models
@@ -137,8 +137,22 @@ def refresh_package_by_name(package_name):
         print "Error 403 (Not authorised) when retrieving '%s'" % package_name
         
 def _refresh_packages():
-    [ refresh_package(package) 
-      for package in packages_from_iati_registry(REGISTRY_URL) ]
+    setup_orgs = app.config.get("SETUP_ORGS", [])
+    counter = app.config.get("SETUP_PKG_COUNTER", None)
+
+    for package in packages_from_iati_registry(REGISTRY_URL):
+        package_name = package["name"]
+        if len(setup_orgs) and ('-' in package_name):
+            org, country = package_name.split('-', 1)
+            if org not in setup_orgs:
+                continue
+        registry = ckanclient.CkanClient(base_location=CKANurl)
+        pkg = registry.package_entity_get(package_name)
+        refresh_package(pkg)
+        if counter is not None:
+            counter -= 1
+            if counter <= 0:
+                break
 
 def matching_packages(regexp):
     import re
