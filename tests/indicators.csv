@@ -29,11 +29,11 @@ location,Sub-national location,publication,activity,classifications,"The sub-nat
 tied-aid-status,Tied Aid Status,publication,activity,classifications,"The tied aid status shows whether the organisation states that this activity counts as ""tied"" (procurement is restricted to the donor organisation country) or ""untied"" (open procurement). This has to be explicitly stated per activity, or once in a country strategy paper or on a clear place on the website if there is only one tied aid status (e.g. ""all aid is untied"").
 
 Specifying location requirements in project documents such as procurement policies or tenders is accepted as publishing tied aid status.",26
-expenditure-actual,Actual expenditure,publication,activity,financial,"Individual actual financial disbursements must be related to individual activities and must be on a per-transaction basis. Each activity is likely to have several transactions. 
+expenditure-actual,Disbursements and expenditure,publication,activity,financial,"Individual actual financial disbursements must be related to individual activities and must be on a per-transaction basis. Each activity is likely to have several transactions. 
 
 This information is unlikely to be made available if the organisation does not publish to IATI.",35
-cost-overall,Overall cost,publication,activity,financial,The overall financial cost or amount is a summary total financial sum for the activity.,33
-expenditure-planned,Planned expenditure,publication,activity,financial,"Individual planned expenditures must be related to individual activities but are generally high level commitments rather than a detailed breakdown of the activity budget. 
+cost-overall,Budget,publication,activity,financial,The overall financial cost or amount is a summary total financial sum for the activity.,33
+expenditure-planned,Commitments,publication,activity,financial,"Individual planned expenditures must be related to individual activities but are generally high level commitments rather than a detailed breakdown of the activity budget. 
 
 This information is unlikely to be made available if the organisation does not publish to IATI.",34
 budget-identifier,Budget Identifier,publication,activity,financial,"The budget classification is a way of linking the activity to the recipient country government's own budget codes. This information can either be provided as the budget codes themselves, or as a common code that can map from a donor organisation's detailed purpose codes to the recipient country's functional or administrative budget classifications.
