@@ -16,7 +16,7 @@ ckan
 ckanclient
 pika==0.9.8
 supervisor
-foxpath>=0.92
+foxpath>=0.95
 psycopg2
 unicodecsv
 openpyxl
