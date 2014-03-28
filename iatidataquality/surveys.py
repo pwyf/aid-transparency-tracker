@@ -155,7 +155,7 @@ def __survey_process(organisation, workflow, request,
                      organisationsurvey, published_accepted):
 
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
-    form_indicators = request.form.getlist('indicator')
+    form_indicators = map(int, request.form.getlist('indicator'))
 
     workflow_id = workflow.Workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
