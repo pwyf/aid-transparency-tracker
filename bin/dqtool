@@ -36,14 +36,25 @@ def list_packages(options):
     for p in get_package_names(organisation_code):
         print p
 
+# where p is the package name
+def do_reload_package(package_name):
+    iatidq.dqregistry.refresh_package_by_name(package_name)
+    iatidq.dqregistry.activate_packages([(package_name, True)], 
+                                        clear_revision_id=True)
+    iatidq.dqdownload.run(package_name=package_name)
+
 def reload_packages(options):
     organisation_code = options.organisation_code
     assert organisation_code
 
     for p in get_package_names(organisation_code):
-        iatidq.dqregistry.refresh_package_by_name(p)
-        iatidq.dqregistry.activate_packages([(p, True)], clear_revision_id=True)
-        iatidq.dqdownload.run(package_name=p)
+        do_reload_package(p)
+
+def reload_package(options):
+    package_name = options.package_name
+    assert package_name
+
+    do_reload_package(package_name)
 
 def compare_aggregation(options):
     organisation_code = options.organisation_code.decode('ascii')
@@ -151,6 +162,7 @@ modes = {
     "clear-survey": clear_survey,
     "list-packages": list_packages,
     "reload-packages": reload_packages,
+    "reload-package": reload_package,
     "compare-aggregation": compare_aggregation,
     "compare-summary": compare_summary,
     "list-modes": list_modes,
@@ -165,6 +177,8 @@ def run():
     parser.add_option("--organisation", dest="organisation_code",
                       action="store")
     parser.add_option("--filename", dest="filename",
+                      action="store")
+    parser.add_option("--name", dest="package_name",
                       action="store")
     options, rest = parser.parse_args()
 
