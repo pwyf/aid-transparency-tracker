@@ -219,7 +219,7 @@ def addIndicator(data):
                 indicator_type = data.get("indicator_type"),
                 indicator_category_name = data.get("indicator_category_name"),
                 indicator_subcategory_name = data.get("indicator_subcategory_name"),
-                indicator_ordinal = data.get("indicator_ordinal").startswith("1"),
+                indicator_ordinal = data.get("indicator_ordinal", "0").startswith("1"),
                 indicator_noformat = data.get("indicator_noformat", None),
                 indicator_order = data["order"],
                 indicator_weight = data.get("indicator_weight", None)
