@@ -47,4 +47,4 @@ title,Title,title/text() exists?,Title,1
 title,Title,title/text() has more than 10 characters?,"Title, more than 10 chars",1
 unique-id,Unique ID,iati-identifier exists?,Unique IATI Identifier,1
 unique-id,Unique ID,iati-identifier/text() starts with reporting-org/@ref?,IATI Identifier starts with reporting org ref,1
-,,activity-date[@type='end-planned']/@iso-date or activity-date[@type='end-planned']/text() or activity-date[@type='end-actual']/@iso-date or activity-date[@type='end-actual']/text() or transaction-date/@iso-date (for any transaction[transaction-type/@code='D' or transaction-type/@code='E']) is less than 13 months ago?,Current data,1
+,,activity-date[@type='end-planned']/@iso-date or activity-date[@type='end-planned']/text() or activity-date[@type='end-actual']/@iso-date or activity-date[@type='end-actual']/text() or transaction-date/@iso-date (for any transaction[transaction-type/@code='D']|transaction[transaction-type/@code='E']) is less than 13 months ago?,Current data,1
