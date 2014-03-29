@@ -26,6 +26,13 @@ def get_old_organisation_id(organisation_code='GB-1'):
         if row[NEW_ORG_FIELD_ID] == organisation_code:
             return row[OLD_ORG_FIELD_ID]
 
+# read in(!) a CSV file of last year's indicators or survey questions;
+# significant fields:
+
+#  question_number  - the numerical ID of the indicator in the previous year
+#  YYYY_indicator_name - the name of the indicator in the current year,
+#                        e.g. 2014_indicator_name
+
 def get_old_indicators():
     old_indicators_file = os.path.join(path, OLD_INDICATORS_FILE)
     old_indicators_data = unicodecsv.DictReader(file(old_indicators_file))
@@ -36,6 +43,7 @@ def get_old_indicators():
             indicator_data[row[OLD_INDICATOR_NAME]] = row[NEW_INDICATOR_NAME]
     return indicator_data
 
+
 # read in(!) a CSV file of last year's results; it must have fields
 
 # id              - not used
@@ -45,15 +53,16 @@ def get_old_indicators():
 # result_evidence - used in templates
 # result_comments - used in templates
 # result_review   - not used
-
-    
 def get_organisation_results(organisation_code, newindicators):
     old_organisation_id = get_old_organisation_id(organisation_code)
     indicators = get_old_indicators()
+
     old_results_file = os.path.join(path, OLD_RESULTS_FILE)
     old_results_data = unicodecsv.DictReader(file(old_results_file))
 
     data = {}
+
+    # old_indicators is a map from int -> string, e.g., 1 -> "foia"
 
     for d in old_results_data:
         if d["organisation_code"] == old_organisation_id:
@@ -63,11 +72,9 @@ def get_organisation_results(organisation_code, newindicators):
                 data[indicators[question_id]] = d
             except KeyError:
                 pass
+
     for indicator_name in newindicators:
-        try:
-            discard = data[indicator_name]
-        except KeyError:
-            data[indicator_name] = {
-                'result': ''
-            }
+        if indicator_name not in data:
+            data[indicator_name] = { 'result': '' }
+
     return data
