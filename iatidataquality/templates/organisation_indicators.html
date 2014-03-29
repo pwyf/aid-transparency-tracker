@@ -15,24 +15,24 @@
 
     {% if results %}
 
-    <h3>2013 Index &raquo; Publication</h3>
+    <h3>2014 Index &raquo; Publication</h3>
     <div class="">
         <div class="row">
             <div class="span12">
                 <h2>An initial assessment of the information you publish is below.</h2>
-                <p class="lead">A new, graduated scoring methodology is used for some of the publication indicators included in the 2013 Index. The scoring takes into account the format that the information is provided in, depending on how accessible and comparable it is.</p>
+                <p class="lead">A graduated scoring methodology is used for some of the publication indicators included in the 2014 Index. The scoring takes into account the format that the information is provided in.</p>
             </div>
         </div>
         <hr />
         <div class="row">
             <div class="span6">
-                <h4>Information published in IATI XML format</h4>
+                <h4>Information published to the IATI Registry</h4>
                 <div class="pull-right"><a class="btn btn-mini scrollto" href="#iati"><b>Jump to indicators</b> <i class="icon-chevron-down"></i></a></div>
                 <p>Maximum score: 100 points</p>
                 <h5>Guidelines</h5>
                 <ul>
                     <li>Where a test does not appear to be capturing information that is published in your data, please let us know.</li>
-                    <li>The tests will help to identify problems and gaps in the data, which you can address before July 31st.</li>
+                    <li>The tests will help to identify problems and gaps in the data, which you can address before June 30.</li>
                 </ul>
             </div>
             <div class="span6">
@@ -42,7 +42,7 @@
                 <h5>Guidelines</h5>
                 <ul>
                     <li>Check our initial assessment of the information we found on your website.</li>
-                    <li>You only need to do this if you are not publishing this information in IATI XML format.</li>
+                    <li>You only need to do this if you are not publishing this information to the IATI Registry.</li>
                     <li>You can do this by clicking <a class="btn btn-mini">Review manually collected data</a>.</li>
                 </ul>
             </div>
@@ -60,11 +60,11 @@
                 </select>
             </form>
         </div>
-        <h3>Published in IATI XML format</h3>
+        <h3>Published to the IATI Registry</h3>
         
-        <p class="lead">Information published in IATI XML format can score up
-        to 100 points based on the quality of publication. This is determined by running a
-		  series of tests on your data. You can see more details
+        <p class="lead">Information published to the IATI Registry can score up
+        to 100 points based on the quality and frequency of publication. This is determined by running a
+		  series of tests on the data. You can see more details
 		  by clicking on the <i class="icon icon-chevron-down"></i> icon.</p>
 
         {% if organisation.frequency == "less than quarterly" %}
@@ -220,7 +220,7 @@
             <ul>
                 <li>50 points are awarded for publication in an accessible format</li>
 
-                <li>50 points can additionally be awarded based on data quality</li>
+                <li>50 points can additionally be awarded based on data quality and frequency of publication</li>
             </ul>
             <a href="http://www.publishwhatyoufund.org/files/2013/03/Indicator-Scoring-Guide_FINAL.docx" class="btn">More details &raquo;</a>
             </div>
@@ -240,7 +240,7 @@
         </div>
         {% endif %}
         <h3>Published in other formats</h3>
-        <p class="lead">Information published in formats (e.g. Excel, website, PDF) can score up to 50 points.</p>
+        <p class="lead">Information published in other formats (e.g. Excel, website, PDF) can score up to 50 points.</p>
         <table class="table" id="results_noniati">
         <thead>
         <th>Category</th>
@@ -318,7 +318,7 @@
                         <h3 id="testHeader">Test: {{testdata.test.description}}</h3>
                     </div>
                     <div class="modal-body">
-                        <p>Each indicator in the 2013 Index can be comprised of several tests, which are automatically run on the data.</p>
+                        <p>Each indicator in the 2014 Index can be comprised of several tests, which are automatically run on the data.</p>
                         {% if testdata.test.test_level ==3 %}
                         <p>This test is run on <b>organisation files</b>.</p>
                         {% elif testdata.test.test_level ==2 %}
@@ -368,7 +368,7 @@
                         </tr>
                     </tbody>
                 </table>
-            <a href="http://www.publishwhatyoufund.org/files/2013/03/Indicator-Scoring-Guide_FINAL.docx" class="btn">More details &raquo;</a>
+            <a href="" class="btn">More details &raquo;</a>
             </div>
             <div class="span6">
                 <h4>Why is IATI data scored more highly?</h4>

@@ -392,3 +392,24 @@ def checkSurveyData(organisation_code):
                 return False
     return True 
 
+
+def get_survey_data_and_workflow(organisation_survey, surveydata):
+    # When provided with a particular organisation survey,
+    # this function takes the current workflow of that survey,
+    # and returns the relevant PWYF stage plus the existing
+    # donor stage name
+    data = {
+        "donorreview": ("researcher", 'donorreview'),
+        "pwyfreview": ("researcher", 'donorreview'),
+        "cso": ("pwyfreview", 'donorreview'),
+        "pwyffinal": ("pwyfreview", 'donorcomments'),
+        "donorcomments": ("pwyffinal", 'donorcomments'),
+        "finalised": ("pwyffinal", 'finalised')
+        }
+           
+    if organisation_survey:
+        workflow_name = organisation_survey.Workflow.name
+        if workflow_name in data:
+            key, phase = data[workflow_name]
+            return (surveydata[key], phase)
+    return (None, None)
