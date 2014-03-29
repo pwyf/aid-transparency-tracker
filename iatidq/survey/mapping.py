@@ -55,6 +55,8 @@ def get_organisation_results(organisation_code, newindicators):
 
     data = {}
 
+    # old_indicators is a map from int -> string, e.g., 1 -> "foia"
+
     for d in old_results_data:
         if d["target_id"] == old_organisation_id:
             assert "question_id" in d
