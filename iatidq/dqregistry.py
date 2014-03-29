@@ -177,5 +177,11 @@ def activate_packages(data, clear_revision_id=None):
             pkg.active = active
             db.session.add(pkg)
 
+def clear_hash(package_name):
+    with db.session.begin():
+        pkg = models.Package.query.filter_by(package_name=package_name).first()
+        pkg.hash = ""
+        db.session.add(pkg)
+
 if __name__ == "__main__":
     refresh_packages()
