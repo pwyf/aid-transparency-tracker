@@ -64,10 +64,6 @@ def get_organisation_results(organisation_code, newindicators):
             except KeyError:
                 pass
     for indicator_name in newindicators:
-        try:
-            discard = data[indicator_name]
-        except KeyError:
-            data[indicator_name] = {
-                'result': ''
-            }
+        if indicator_name not in data:
+            data[indicator_name] = { 'result': '' }
     return data
