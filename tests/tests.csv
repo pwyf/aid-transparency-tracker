@@ -13,7 +13,7 @@ conditions,Conditions,conditions or document-link/category[@code='A04'] exists (
 contact-details,Contact details,contact-info exists?,Contact information for the activity ,1
 contracts,Contracts,document-link/category[@code='A06'] or document-link/category[@code='A11'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?,Document - Contract,1
 cost-overall,Budget,budget or planned-disbursement is available forward (if activity-status/@code is at least 2)?,Budget,1
-cost-overall,Budget,budget or planned-disbursement is available forward by quarters (if activity-status/@code is at least 2)?,,
+cost-overall,Budget,budget or planned-disbursement is available forward by quarters (if activity-status/@code is at least 2)?,"Budget, by quarters",1
 country-strategy,Country Strategy,document-link/category[@code='B03'] exists?,Country strategy paper,3
 current-status,Current Status,activity-status exists?,Activity status ,1
 current-status,Current Status,activity-status/@code is on list ActivityStatus?,"Activity status, only once",1
@@ -43,7 +43,7 @@ sector,Sector,"at least one (sector[@vocabulary=""DAC""]/@code or sector[not(@vo
 strategy,Strategy,document-link/category[@code='B02'] exists?,Strategy,3
 tenders,Tenders,document-link/category[@code='A10'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?,Document - Tender,1
 tied-aid-status,Tied Aid Status,default-tied-status or transaction/tied-status exists (if activity-status/@code is at least 2)?,Tied aid status,1
-tied-aid-status,Tied Aid Status,default-tied-status or transaction/tied-status is on list TiedStatus (if activity-status/@code is at least 2)?,,
+tied-aid-status,Tied Aid Status,default-tied-status or transaction/tied-status is on list TiedStatus (if activity-status/@code is at least 2)?,Tied aid status uses standard codelist,1
 title,Title,title/text() exists?,Title,1
 title,Title,title/text() has more than 10 characters?,"Title, more than 10 chars",1
 unique-id,Unique ID,iati-identifier exists?,Unique IATI Identifier,1
