@@ -22,6 +22,13 @@ def get_old_organisation_id(organisation_code='GB-1'):
         if row[NEW_FIELD_ID] == organisation_code:
             return row[OLD_FIELD_ID]
 
+# read in(!) a CSV file of last year's indicators or survey questions;
+# significant fields:
+
+#  question_number  - the numerical ID of the indicator in the previous year
+#  YYYY_indicator_name - the name of the indicator in the current year,
+#                        e.g. 2014_indicator_name
+
 def get_old_indicators():
     path = app.config["DATA_STORAGE_DIR"]
     old_indicators_file = os.path.join(path, OLD_INDICATORS_FILE)
@@ -38,6 +45,7 @@ def get_old_indicators():
 
     return indicator_data
 
+
 # read in(!) a CSV file of last year's results; it must have fields
 
 # id              - not used
@@ -47,8 +55,6 @@ def get_old_indicators():
 # result_evidence - used in templates
 # result_comments - used in templates
 # result_review   - not used
-
-    
 def get_organisation_results(organisation_code, newindicators):
     old_organisation_id = get_old_organisation_id(organisation_code)
     old_indicators = get_old_indicators()
