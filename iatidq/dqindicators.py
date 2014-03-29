@@ -42,7 +42,10 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
         data['indicator_type']=row['indicator_type']
         data['indicator_category_name']=row['indicator_category_name']
         data['indicator_subcategory_name']=row['indicator_subcategory_name']
-        data['order']=row['order']
+        data['indicator_order']=row['order']
+        data['indicator_ordinal']=row['ordinal'].startswith('1')
+        data['indicator_weight']=row['weight']
+        data['indicator_noformat']=row['noformat'].startswith('1')
         data['indicatorgroup_id']=indicatorgroup.id
 
         checkI = indicators(indicatorgroup_name, data['name'])
@@ -219,9 +222,9 @@ def addIndicator(data):
                 indicator_type = data.get("indicator_type"),
                 indicator_category_name = data.get("indicator_category_name"),
                 indicator_subcategory_name = data.get("indicator_subcategory_name"),
-                indicator_ordinal = data.get("indicator_ordinal", "0").startswith("1"),
+                indicator_ordinal = data.get("indicator_ordinal", False),
                 indicator_noformat = data.get("indicator_noformat", None),
-                indicator_order = data["order"],
+                indicator_order = data.get("indicator_order", None),
                 indicator_weight = data.get("indicator_weight", None)
                 )
             db.session.add(newI)
