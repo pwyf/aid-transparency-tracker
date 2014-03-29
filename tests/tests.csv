@@ -43,7 +43,7 @@ sector,Sector,"at least one (sector[@vocabulary=""DAC""]/@code or sector[not(@vo
 strategy,Strategy,document-link/category[@code='B02'] exists?,Strategy,3
 tenders,Tenders,document-link/category[@code='A10'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?,Document - Tender,1
 tied-aid-status,Tied Aid Status,default-tied-status or transaction/tied-status exists (if activity-status/@code is at least 2)?,Tied aid status,1
-tied-aid-status,Tied Aid Status,default-tied-status or transaction/tied-status is on list TiedStatus (if activity-status/@code is at least 2)?,Tied aid status uses standard codelist,1
+tied-aid-status,Tied Aid Status,default-tied-status/@code or transaction/tied-status/@code is on list TiedStatus (if activity-status/@code is at least 2)?,Tied aid status uses standard codelist,1
 title,Title,title/text() exists?,Title,1
 title,Title,title/text() has more than 10 characters?,"Title, more than 10 chars",1
 unique-id,Unique ID,iati-identifier exists?,Unique IATI Identifier,1
