@@ -12,7 +12,8 @@ collaboration-type,Collaboration Type,collaboration-type/@code is on list Collab
 conditions,Conditions,conditions or document-link/category[@code='A04'] exists (if activity-status/@code is at least 2 and conditions/@attached is not 0)?,Conditions,1
 contact-details,Contact details,contact-info exists?,Contact information for the activity ,1
 contracts,Contracts,document-link/category[@code='A06'] or document-link/category[@code='A11'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?,Document - Contract,1
-cost-overall,Budget,budget exists (if activity-status/@code is at least 2)?,Budget,1
+cost-overall,Budget,budget or planned-disbursement is available forward (if activity-status/@code is at least 2)?,Budget,1
+cost-overall,Budget,budget or planned-disbursement is available forward by quarters (if activity-status/@code is at least 2)?,,
 country-strategy,Country Strategy,document-link/category[@code='B03'] exists?,Country strategy paper,3
 current-status,Current Status,activity-status exists?,Activity status ,1
 current-status,Current Status,activity-status/@code is on list ActivityStatus?,"Activity status, only once",1
