@@ -29,15 +29,19 @@
                 </div></td>
             <td><span class="muted">2013</span></td>
             <td>
-            <span class="badge badge-{{old_publication_status[twentytwelvedata[indicator.indicator.name].result].class}}" title="Researcher's initial assessment">{{ old_publication_status[twentytwelvedata[indicator.indicator.name].result].text }}</span>
+            {% if not indicator.indicator.indicator_ordinal %}
+            <span class="badge badge-{{old_publication_status[twentytwelvedata[indicator.indicator.name].publication_status].class}}" title="Researcher's initial assessment">{{ old_publication_status[twentytwelvedata[indicator.indicator.name].publication_status].text }}</span>
+            {% else %}
+            <span class="badge badge-{{year_data[twentytwelvedata[indicator.indicator.name].survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[twentytwelvedata[indicator.indicator.name].survey_ordinal_value|int].text }}</span>
+            {% endif %}
             </td>
 
             <td class="restrict_text">
-            {{twentytwelvedata[indicator.indicator.name].result_evidence}}
+            {{twentytwelvedata[indicator.indicator.name].survey_source}}
             </td>
 
             <td class="restrict_text">
-            {{twentytwelvedata[indicator.indicator.name].result_comments}}
+            {{twentytwelvedata[indicator.indicator.name].survey_comment}}
             </td>
         </tr>
         <tr id="tr{{indicator.indicator.id}}">
