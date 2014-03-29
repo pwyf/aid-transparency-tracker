@@ -73,6 +73,17 @@ def get_old_indicators():
         if ((row["question_number"]) and (row[NEW_INDICATOR_NAME])):
             indicator_data[int(row["question_number"])] = row[NEW_INDICATOR_NAME]
     return indicator_data
+
+# read in(!) a CSV file of last year's results; it must have fields
+
+# id              - not used
+# question_id     - the indicator id of the question in the old data
+# target_id       - the organisation ID in the old data
+# result          - used in templates
+# result_evidence - used in templates
+# result_comments - used in templates
+# result_review   - not used
+
     
 def get_organisation_results(organisation_code, newindicators):
     old_organisation_id = get_old_organisation_id(organisation_code)
