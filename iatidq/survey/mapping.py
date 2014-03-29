@@ -29,8 +29,13 @@ def get_old_indicators():
 
     indicator_data = {}
     for row in old_indicators_data:
-        if ((row["question_number"]) and (row[NEW_INDICATOR_NAME])):
-            indicator_data[int(row["question_number"])] = row[NEW_INDICATOR_NAME]
+        question_number = int(row["question_number"])
+        new_indicator_name = row[NEW_INDICATOR_NAME]
+
+        assert question_number != 0
+        if (question_number and new_indicator_name):
+            indicator_data[question_number] = new_indicator_name
+
     return indicator_data
 
 # read in(!) a CSV file of last year's results; it must have fields
