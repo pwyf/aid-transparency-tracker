@@ -33,27 +33,6 @@ def get_publication_format(surveydata, indicator_id):
                                            'name', 'format_value')
     
 
-def get_survey_data_and_workflow(organisation_survey, surveydata):
-    # When provided with a particular organisation survey,
-    # this function takes the current workflow of that survey,
-    # and returns the relevant PWYF stage plus the existing
-    # donor stage name
-    data = {
-        "donorreview": ("researcher", 'donorreview'),
-        "pwyfreview": ("researcher", 'donorreview'),
-        "cso": ("pwyfreview", 'donorreview'),
-        "pwyffinal": ("pwyfreview", 'donorcomments'),
-        "donorcomments": ("pwyffinal", 'donorcomments'),
-        "finalised": ("pwyffinal", 'finalised')
-        }
-           
-    if organisation_survey:
-        workflow_name = organisation_survey.Workflow.name
-        if workflow_name in data:
-            key, phase = data[workflow_name]
-            return (surveydata[key], phase)
-    return (None, None)
-
 def write_agg_csv_result(out, organisation, freq, result):
     if result['results_pct'] == 0:
         points = 0
@@ -323,7 +302,7 @@ def write_organisation_publications_csv_index(out, organisation, history=False):
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)
 
     if not history:
-        surveydata, surveydata_workflow = get_survey_data_and_workflow(
+        surveydata, surveydata_workflow = dqsurveys.get_survey_data_and_workflow(
             organisation_survey, surveydata)
         workflows = None
     else:

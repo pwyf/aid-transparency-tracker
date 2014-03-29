@@ -20,7 +20,7 @@ from datetime import datetime
 from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
-from iatidq.dqcsv import make_csv, get_survey_data_and_workflow
+from iatidq.dqcsv import make_csv
 
 import os
 import sys
@@ -119,7 +119,7 @@ def organisations_index(organisation_code=None):
 
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
-    surveydata, _ = get_survey_data_and_workflow(
+    surveydata, _ = dqsurveys.get_survey_data_and_workflow(
         organisation_survey, surveydata)
 
     summary_data = get_summary_data(organisation, aggregation_type)
@@ -238,8 +238,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         
     organisation_survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-
-    surveydata, surveydata_workflow = get_survey_data_and_workflow(
+    
+    surveydata, surveydata_workflow = dqsurveys.get_survey_data_and_workflow(
         organisation_survey, surveydata)
 
     published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
@@ -286,7 +286,7 @@ def organisation_publication_complete(organisation_code, aggregation_type):
     organisation_survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
 
-    surveydata, surveydata_workflow = get_survey_data_and_workflow(
+    surveydata, surveydata_workflow = dqsurveys.get_survey_data_and_workflow(
         organisation_survey, surveydata)
 
     published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
