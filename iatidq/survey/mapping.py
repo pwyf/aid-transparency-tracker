@@ -46,7 +46,7 @@ def get_old_indicators():
     
 def get_organisation_results(organisation_code, newindicators):
     old_organisation_id = get_old_organisation_id(organisation_code)
-    indicators = get_old_indicators()
+    old_indicators = get_old_indicators()
 
     path = app.config["DATA_STORAGE_DIR"]
 
@@ -59,9 +59,11 @@ def get_organisation_results(organisation_code, newindicators):
         if d["target_id"] == old_organisation_id:
             assert "question_id" in d
             question_id = int(d["question_id"])
-            if question_id in indicators:
-                data[indicators[question_id]] = d
+            if question_id in old_indicators:
+                data[old_indicators[question_id]] = d
+
     for indicator_name in newindicators:
         if indicator_name not in data:
             data[indicator_name] = { 'result': '' }
+
     return data
