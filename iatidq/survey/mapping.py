@@ -57,12 +57,10 @@ def get_organisation_results(organisation_code, newindicators):
 
     for d in old_results_data:
         if d["target_id"] == old_organisation_id:
-            try:
-                question_id = int(d["question_id"])
-                d["newindicator_id"] = indicators[question_id]
+            assert "question_id" in d
+            question_id = int(d["question_id"])
+            if question_id in indicators:
                 data[indicators[question_id]] = d
-            except KeyError:
-                pass
     for indicator_name in newindicators:
         if indicator_name not in data:
             data[indicator_name] = { 'result': '' }
