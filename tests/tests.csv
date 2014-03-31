@@ -4,14 +4,14 @@ aid-type,Aid Type,default-aid-type/@code or transaction/aid-type/@code is on lis
 allocation,Allocation policy,document-link/category[@code='B04'] exists?,Allocation policy,3
 annual-report,Annual report,document-link/category[@code='B01'] exists?,Annual report,3
 audit,Audit,document-link/category[@code='B06'] exists?,Audit,3
-budget,Budget Docs,document-link/category[@code='A05'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?,Document - Budget document,1
-budget-identifier,Budget Identifier,"at least one country-budget-items[@vocabulary=""1""]/budget-item/@code is on list BudgetIdentifier?","Budget identifier, administrative/functional classification",1
-budget-identifier,Budget Identifier,capital-spend exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?,"Budget identifier, economic classification",1
+budget,Budget Docs,document-link/category[@code='A05'] exists (if activity-status/@code is at least 2 and (default-aid-type/@code or transaction/aid-type/@code is not A01))?,Document - Budget document,1
+budget-identifier,Budget Identifier,"at least one country-budget-items[@vocabulary=""1""]/budget-item/@code is on list BudgetIdentifier (if activity-status/@code is at least 2 and (default-aid-type/@code or transaction/aid-type/@code is not A01 or A02))?","Budget identifier, administrative/functional classification",1
+budget-identifier,Budget Identifier,capital-spend exists (if activity-status/@code is at least 2 and (default-aid-type/@code or transaction/aid-type/@code is not A01 or A02))?,"Budget identifier, economic classification",1
 collaboration-type,Collaboration Type,collaboration-type exists (if activity-status/@code is at least 2)?,Collaboration type ,1
 collaboration-type,Collaboration Type,collaboration-type/@code is on list CollaborationType (if activity-status/@code is at least 2)?,Collaboration type uses standard codelist,1
 conditions,Conditions,conditions or document-link/category[@code='A04'] exists (if activity-status/@code is at least 2 and conditions/@attached is not 0)?,Conditions,1
 contact-details,Contact details,contact-info exists?,Contact information for the activity ,1
-contracts,Contracts,document-link/category[@code='A06'] or document-link/category[@code='A11'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?,Document - Contract,1
+contracts,Contracts,document-link/category[@code='A06'] or document-link/category[@code='A11'] exists (if activity-status/@code is at least 2 and (default-aid-type/@code or transaction/aid-type/@code is not A01))?,Document - Contract,1
 cost-overall,Budget,budget or planned-disbursement is available forward (if activity-status/@code is at least 2)?,Budget,1
 cost-overall,Budget,budget or planned-disbursement is available forward by quarters (if activity-status/@code is at least 2)?,"Budget, by quarters",1
 current-status,Current Status,activity-status exists?,Activity status ,1
@@ -26,21 +26,21 @@ evaluations,Evaluations,document-link/category[@code='A07'] exists (if activity-
 expenditure-actual,Disbursements and expenditure,transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='E'] exists (if activity-status/@code is at least 2)?,Disbursements,1
 expenditure-planned,Commitments,transaction/transaction-type[@code='C'] exists (if activity-status/@code is at least 2)?,Commitments,1
 finance-type,Finance Type,default-finance-type or transaction/finance-type exists (if activity-status/@code is at least 2)?,Default finance type ,1
-finance-type,Finance Type,default-finance-type/@code or transaction/finance-type/@code is on list FinanceType (if activity-status/@code is at least 2)?,Finance type uses standard codelist,1
+finance-type,Finance Type,default-finance-type or transaction/finance-type exists (if activity-status/@code is at least 2)?,Finance type uses standard codelist,1
 flow-type,Flow Type,default-flow-type or transaction/flow-type exists (if activity-status/@code is at least 2)?,Flow type,1
 flow-type,Flow Type,default-flow-type/@code or transaction/flow-type/@code is on list FlowType (if activity-status/@code is at least 2)?,Flow type uses standard codelist,1
 impact-appraisals,Impact Appraisals,document-link/category[@code='A01'] exists (if activity-status/@code is at least 2)?,Document - Pre- and post-project impact appraisal,1
 implementer,Implementer,participating-org[@role='Implementing'] exists (if activity-status/@code is at least 2)?,Implementing organisation,1
 location,Sub-national location,location exists (if activity-status/@code is at least 2 and recipient-region/@code is not 998)?,Location (sub-national),1
 location,Sub-national location,location/coordinates exists (if activity-status/@code is at least 2 and recipient-region/@code is not 998)?,Location (sub-national) coordinates,1
-mou,MoU,document-link/category[@code='A09'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not C01))?,Document - Memorandum of understanding document,1
-objectives,Objectives,"document-link/category[@code='A02'] or description[@type=""2""] exists (if activity-status/@code is at least 2)?",Document - Objectives / Purpose of activity document,1
+mou,MoU,document-link/category[@code='A09'] exists (if activity-status/@code is at least 2 and (default-aid-type/@code or transaction/aid-type/@code is not C01))?,Document - Memorandum of understanding document,1
+objectives,Objectives,document-link/category[@code='A02'] or description[@type='2'] exists (if activity-status/@code is at least 2)?,Document - Objectives / Purpose of activity document,1
 procurement-policy,Procurement policy,document-link/category[@code='B05'] exists?,Procurement policy,3
 results,Results,document-link/category[@code='A08'] or result exists (if activity-status/@code is at least 2)?,"Document - Results, outcomes and outputs document",1
 sector,Sector,sector exists?,Sector ,1
 sector,Sector,"at least one (sector[@vocabulary=""DAC""]/@code or sector[not(@vocabulary)]/@code) is on list Sector?",Sector uses standard codelist,1
 strategy,Strategy,document-link/category[@code='B02'] exists?,Strategy,3
-tenders,Tenders,document-link/category[@code='A10'] exists (if activity-status/@code is at least 2 and (default-aid-type or transaction/aid-type is not A01))?,Document - Tender,1
+tenders,Tenders,document-link/category[@code='A10'] exists (if activity-status/@code is at least 2 and (default-aid-type/@code or transaction/aid-type/@code is not A01))?,Document - Tender,1
 tied-aid-status,Tied Aid Status,default-tied-status or transaction/tied-status exists (if activity-status/@code is at least 2)?,Tied aid status,1
 tied-aid-status,Tied Aid Status,default-tied-status/@code or transaction/tied-status/@code is on list TiedStatus (if activity-status/@code is at least 2)?,Tied aid status uses standard codelist,1
 title,Title,title/text() exists?,Title,1
