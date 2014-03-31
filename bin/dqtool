@@ -19,10 +19,14 @@ import iatidq.dqdownload
 import iatidq.dqcsv
 
 def clear_survey(options):
-    organisation_code = options.organisation_code
+    organisation_code = options.organisation_code.decode('ascii')
     assert organisation_code
 
-    iatidq.survey.data.deleteSurveyData(organisation_code)
+    try:
+        iatidq.survey.data.deleteSurveyData(organisation_code)
+    except iatidq.survey.data.NoSuchSurvey:
+        print "No such survey"
+        sys.exit(1)
 
 def get_package_names(organisation_code):
     for p in iatidq.dqorganisations.organisationPackages(
