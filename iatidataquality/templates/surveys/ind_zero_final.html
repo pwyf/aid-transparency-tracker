@@ -95,12 +95,16 @@
         
             {% if surveydata.cso %}
             {% set data = surveydata['cso'] %}
-            {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+            {% set accepted_val = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+            {% if accepted_val == 1 %}
             {% set accepted = 'Agree' %}
             {% set accepted_class = 'success' %}
-            {% else %}
+            {% elif accepted_val == 0 %}
             {% set accepted = 'Disagree' %}
             {% set accepted_class = 'important' %}
+            {% else %}
+            {% set accepted = '' %}
+            {% set accepted_class = '' %}
             {% endif %}
             <tr>
                 <td><span>Independent reviewer</span></td>

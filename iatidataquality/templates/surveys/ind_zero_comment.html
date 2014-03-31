@@ -149,30 +149,32 @@
             </td>
         </tr>
         {% endif %}
-        {% set data = surveydata[workflow.Workflow.name] %}
-        {% if data and data[indicator.indicator.id].OrganisationSurveyData and data[indicator.indicator.id].OrganisationSurveyData.published_accepted==0 %}
-        {% set agree = False %}
+        {% if ((workflow.Workflow.name == 'donorcomments') and (surveydata.donorcomments)) %}
+            {% set data = surveydata.donorcomments %}
+            {% set accepted = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+            {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
+        {% elif ((workflow.Workflow.name == 'cso') and (surveydata.cso)) %}
+            {% set data = surveydata.cso %}
+            {% set accepted = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+            {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
         {% else %}
-        {% set agree = True %}
-        {% endif %}
-        {% if data %}
-        {% set d = data[indicator.indicator.id].OrganisationSurveyData %}
+            {% set accepted = 2 %}
+            {% set comment = "" %}
         {% endif %}
         <tr id="tr{{indicator.indicator.id}}">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" />
-        {% if data and not d %}
-        <br /><i class="icon-exclamation-sign"></i> <span class="label label-warning" title="This indicator has been added to the manual survey since you started reviewing it, because it was previously in this organisation's IATI data, and is no longer.">new indicator</span>{% endif%}</td>
+        </td>
         <td>
         <label for="{{indicator.indicator.id}}-agree-1">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if agree %} checked{%endif%}> Agree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if accepted == 1 %} checked{%endif%}> Agree</input>
         <br />
         <span class="muted">Agree</span></label>
         <label for="{{indicator.indicator.id}}-agree-0">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if not agree %} checked{%endif%}> Disagree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if accepted == 0 %} checked{%endif%}> Disagree</input>
         <br />
         <span class="muted">Disagree</span></label>
         </td>
-        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{% if d %}{{d.published_comment}}{%endif%}</textarea></td>
+        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{{comment}}</textarea></td>
         </tr>
 
 {% endmacro %}
