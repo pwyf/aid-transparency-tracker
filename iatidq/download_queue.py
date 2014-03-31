@@ -64,8 +64,14 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         package.source_url = pkg['resources'][0]['url']
         package.hash = pkg['resources'][0]['hash']
 
+        if pkg.get('organization') and pkg['organization'].get('name'):
+            packagegroup_name = pkg['organization']['name']
+        else:
+            packagegroup_name = None
+        packages_groups = {pkg['name']: packagegroup_name}
+
         copy_package_attributes(package, pkg)
-        setup_package_group(package, pkg)
+        setup_package_group(package, pkg, packages_groups)
         copy_package_fields(package, pkg)
 
         db.session.add(package)
