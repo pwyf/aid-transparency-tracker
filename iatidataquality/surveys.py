@@ -16,7 +16,6 @@ from iatidataquality import db
 
 import os
 import sys
-import unicodecsv
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
@@ -24,6 +23,7 @@ sys.path.append(parent)
 
 from iatidq import dqindicators, dqorganisations, dqusers, donorresponse
 import iatidq.survey.data as dqsurveys
+import iatidq.survey.mapping
 from iatidq.models import *
 
 import usermanagement
@@ -44,54 +44,6 @@ def surveys_admin():
 @app.route("/surveys/<organisation_code>/create/", methods=["GET", "POST"])
 def create_survey(organisation_code=None):
     return "You're trying to create a survey"
-
-def get_old_organisation_id(organisation_code='GB-1'):
-    path = app.config["DATA_STORAGE_DIR"]
-    old_organisation_file = os.path.join(path, '2012_2013_organisation_mapping.csv')
-
-    old_organisation_data = unicodecsv.DictReader(file(old_organisation_file))
-    for row in old_organisation_data:
-        if row['2013_id'] == organisation_code:
-            return row['2012_id']
-
-def get_old_indicators():
-    path = app.config["DATA_STORAGE_DIR"]
-    old_indicators_file = os.path.join(path, '2012_indicators.csv')
-    old_indicators_data = unicodecsv.DictReader(file(old_indicators_file))
-
-    indicator_data = {}
-    for row in old_indicators_data:
-        if ((row["question_number"]) and (row["2013_indicator_name"])):
-            indicator_data[int(row["question_number"])] = row["2013_indicator_name"]
-    return indicator_data
-    
-def get_organisation_results(organisation_code, newindicators):
-    old_organisation_id = get_old_organisation_id(organisation_code)
-    indicators = get_old_indicators()
-
-    path = app.config["DATA_STORAGE_DIR"]
-
-    old_results_file = os.path.join(path, '2012_results.csv')
-    old_results_data = unicodecsv.DictReader(file(old_results_file))
-
-    data = {}
-
-    for d in old_results_data:
-        if d["target_id"] == old_organisation_id:
-            try:
-                question_id = int(d["question_id"])
-                d["newindicator_id"] = indicators[question_id]
-                data[indicators[question_id]] = d
-            except KeyError:
-                pass
-    for indicator_name in newindicators:
-        try:
-            discard = data[indicator_name]
-        except KeyError:
-            data[indicator_name] = {
-                'result': ''
-            }
-    return data
 
 def completion_percentage(survey):
     stages = ['researcher', 'send', 'donorreview', 'pwyfreview',
@@ -146,7 +98,7 @@ def __survey_process(organisation, workflow, request,
                      organisationsurvey, published_accepted):
 
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
-    form_indicators = request.form.getlist('indicator')
+    form_indicators = map(int, request.form.getlist('indicator'))
 
     workflow_id = workflow.Workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
@@ -234,7 +186,11 @@ def get_old_publication_status():
         ('3', 'Sometimes published', 'warning'),
         ('2', 'Collected', 'important'),
         ('1', 'Not collected', 'inverse'),
-        ('',  'Unknown', '')
+        ('',  'Unknown', ''),
+        ('iati', 'Published to IATI', 'success'),
+        ('always', 'Always published', 'success'),
+        ('sometimes', 'Sometimes published', 'warning'),
+        ('not published', 'Not published', 'important'),
         ]
     struct = lambda ps: (ps[0], {
             "text": ps[1], 
@@ -277,7 +233,7 @@ def organisation_survey_view(organisation_code, workflow,
     org_indicators = dqorganisations._organisation_indicators_split(
         organisation, 2)
 
-    twentytwelvedata=get_organisation_results(
+    twentytwelvedata = iatidq.survey.mapping.get_organisation_results(
         organisation_code, 
         [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
         )
