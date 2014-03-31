@@ -19,7 +19,6 @@ import util
 from dqfunctions import packages_from_iati_registry, get_package_organisations
 
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
-IATIUPDATES_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
 
 CKANurl = 'http://iatiregistry.org/api'
 
@@ -145,7 +144,7 @@ def _refresh_packages():
     setup_orgs = app.config.get("SETUP_ORGS", [])
     counter = app.config.get("SETUP_PKG_COUNTER", None)
 
-    packages_groups = get_package_organisations(IATIUPDATES_URL)
+    packages_groups = get_package_organisations(app.config["IATIUPDATES_URL"])
 
     for package in packages_from_iati_registry(REGISTRY_URL):
         package_name = package["name"]
