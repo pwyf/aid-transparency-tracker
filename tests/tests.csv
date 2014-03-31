@@ -26,7 +26,7 @@ evaluations,Evaluations,document-link/category[@code='A07'] exists (if activity-
 expenditure-actual,Disbursements and expenditure,transaction/transaction-type[@code='D'] or transaction/transaction-type[@code='E'] exists (if activity-status/@code is at least 2)?,Disbursements,1
 expenditure-planned,Commitments,transaction/transaction-type[@code='C'] exists (if activity-status/@code is at least 2)?,Commitments,1
 finance-type,Finance Type,default-finance-type or transaction/finance-type exists (if activity-status/@code is at least 2)?,Default finance type ,1
-finance-type,Finance Type,default-finance-type or transaction/finance-type exists (if activity-status/@code is at least 2)?,Finance type uses standard codelist,1
+finance-type,Finance Type,default-finance-type/@code or transaction/finance-type/@code is on list FinanceType (if activity-status/@code is at least 2)?,Finance type uses standard codelist,1
 flow-type,Flow Type,default-flow-type or transaction/flow-type exists (if activity-status/@code is at least 2)?,Flow type,1
 flow-type,Flow Type,default-flow-type/@code or transaction/flow-type/@code is on list FlowType (if activity-status/@code is at least 2)?,Flow type uses standard codelist,1
 impact-appraisals,Impact Appraisals,document-link/category[@code='A01'] exists (if activity-status/@code is at least 2)?,Document - Pre- and post-project impact appraisal,1
