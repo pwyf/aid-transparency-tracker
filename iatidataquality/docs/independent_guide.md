@@ -2,7 +2,7 @@
 
 We have conducted an initial assessment of 67 donor organisations, reviewing their overall commitment to aid transparency and checking what information they publish on their activities. This information will be included in the 2014 Aid Transparency Index.
 
-Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/files/2013/03/Indicators-in-2013-Aid-Transparency-Index3.docx).
+Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/index/2014-ati/).
 
 To ensure that the survey data is as accurate as possible, we would be grateful if you could check the responses and correct or add information as appropriate. 
 
@@ -57,7 +57,7 @@ Given your familiarity with this donor organisation, we would like to receive yo
 1. Note whether you agree or disagree with Publish What You Fund's assessment. If you are unsure,please let us know using the comments box.
 1. In the comments box, please add any feedback or clarifications that you think will help us better understand your response. This is particularly helpful if you think the donor organisation's response is unclear or open to interpretation. Feel free to add any questions you have for us in the same box.
 
-More information on the scoring can be found in the [scoring guide](http://www.publishwhatyoufund.org/files/2013/03/Indicator-Scoring-Guide_FINAL.docx).
+More information on the scoring can be found in the [scoring guide](http://www.publishwhatyoufund.org/index/2014-ati/).
 
 
 ## Submitting the survey
