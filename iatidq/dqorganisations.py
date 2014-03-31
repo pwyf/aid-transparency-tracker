@@ -23,8 +23,6 @@ import urllib2
 import datetime
 import json
 
-ORG_FREQUENCY_API_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/publisher/frequency/"
-
 def update_model(src, dst, keys):
     for key in keys:
         setattr(dst, key, getattr(dst, key))
@@ -134,7 +132,7 @@ def _importOrganisationPackages(fh, local):
     return True
 
 def downloadOrganisationFrequency():
-    fh = urllib2.urlopen(ORG_FREQUENCY_API_URL)
+    fh = urllib2.urlopen(app.config["ORG_FREQUENCY_API_URL"])
     return _updateOrganisationFrequency(fh)
 
 """def downloadOrganisationFrequencyFromFile():
