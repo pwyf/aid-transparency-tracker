@@ -81,8 +81,8 @@ def download_packages(runtime):
                     enqueue_download(package, runtime.id)
                 else:
                     print "Packages have the same ID"
-                    print package.hash
-                    print registry_packages[name]
+                    print "Hash is", package.hash
+                    print "Registry packaeg name is", registry_packages[name]
             except KeyError, e:
                 if name not in registry_packages:
                     print "name wasn't there"
