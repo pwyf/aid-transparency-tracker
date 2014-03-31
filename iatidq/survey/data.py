@@ -22,6 +22,8 @@ import datetime
 import iatidq.dqindicators as dqindicators
 import iatidq.dqorganisations as dqorganisations
 
+class NoSuchSurvey(Exception): pass
+
 def getIDorNone(sqlalchemy_object):
     if sqlalchemy_object is not None:
         return sqlalchemy_object.Workflow.id
@@ -104,6 +106,8 @@ def deleteSurveyData(organisation_code):
             models.Organisation
             ).filter(
             models.Organisation.organisation_code==organisation_code).first()
+        if not survey:
+            raise NoSuchSurvey
         db.session.delete(survey) 
 
 
