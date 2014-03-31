@@ -19,7 +19,8 @@ from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
-from iatidq import dqusers
+from iatidq import dqusers, dqindicators
+from iatidataquality import surveys
 from iatidq.dqcsv import make_csv
 
 import os
@@ -226,6 +227,8 @@ def get_ordinal_values_years():
 # ... merge?
 id_tuple = lambda x: (x.id, x)
 
+name_tuple = lambda x: (x.name, x)
+
 def organisation_publication_authorised(organisation_code, aggregation_type):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
@@ -327,19 +330,47 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
-    aggregate_results = dqorganisations._organisation_indicators(
+    aggregate_results = dqorganisations._organisation_indicators_complete_split(
         organisation, aggregation_type)
 
     packages = dqorganisations.organisationPackages(organisation_code)
 
-    return render_template("organisation_publication_public.html",
+    org_indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
+
+    lastyearsdata = iatidq.survey.mapping.get_organisation_results(
+        organisation_code, 
+        [i.name for i in org_indicators]
+        )
+
+    published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
+    publishedformats = dict(map(name_tuple, dqsurveys.publishedFormatsAll()))
+
+    published_status_by_id[None] = {
+        'name': 'Unknown',
+        'publishedstatus_class': 'label-inverse'
+        }
+
+    publishedformats[None] = {
+        'name': 'Unknown',
+        'format_class': 'label-inverse'
+        }
+
+    latest_runtime=1
+
+    years = dict(get_ordinal_values_years())
+
+    return render_template("organisation_index_public_2014.html",
                            organisation=organisation,
                            results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
                            packages=packages,
                            admin=usermanagement.check_perms('admin'),
-                           loggedinuser=current_user)
+                           loggedinuser=current_user,
+                           lastyearsdata=lastyearsdata,
+                           publishedformats=publishedformats,
+                           years=years,
+                           old_publication_status = surveys.get_old_publication_status())
 
 @app.route("/organisations/<organisation_code>/publication/")
 def organisation_publication(organisation_code=None, aggregation_type=2):
@@ -352,7 +383,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
             organisation_code,
             aggregation_type)
     else:
-        return organisation_publication_complete(
+        return organisation_publication_unauthorised(
         organisation_code,
         aggregation_type)
 
