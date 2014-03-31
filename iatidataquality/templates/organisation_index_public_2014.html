@@ -1,0 +1,224 @@
+{% set active_page='organisations'%}{% extends "layout.html" %}
+{% block title %}{{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+{% block content %}
+
+   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+
+    <h1><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
+
+    {% if results %}
+
+    <h3>2014 Aid Transparency Index data </h3>
+    <div class="">
+        <div class="row">
+            <div class="span12">
+                <h2>Tracking aid transparency improvements over time.</h2>
+                <p class="lead">This page shows the information collected for {{organisation.organisation_name}} for the 2014 Aid Transparency Index and tracks changes to the information found over the course of the Index data collection period.</p>
+            </div>
+        </div>
+    </div>
+
+
+        <a id="commitment"></a>
+        <hr />
+        <fieldset>
+        <h3>Commitment</h3>
+        <table class="table" id="results_commitment">
+        <thead>
+        <th width="50%">Indicator</th>
+        <th width="25%">2013</th>
+        <th width="25%">2014</th>
+        </thead>
+        <tbody>
+        {% for indicator, result in results.commitment.items() %}
+
+            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{result.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+            <td>{{lastyearsdata[result.indicator.name].survey_ordinal_value}}% <a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down"></i></a></td>
+            <td><span class="label label-default">No survey data yet.</span></td>
+            </tr>
+            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+            <td colspan="3">
+            <h5>Evidence</h5>
+			<p>{{lastyearsdata[result.indicator.name].survey_source}}</p>
+            <h5>Comments</h5>
+			<p>{{lastyearsdata[result.indicator.name].survey_comment}}</p>
+            </td>
+            <tr />
+        {%endfor%}
+        </tbody>
+        </table>
+        </fieldset>
+
+        <!--
+        {% if organisation.frequency == "less than quarterly" %}
+        <hr />
+        <div class="alert alert-info">
+            <h3>Frequency of publication</h3>
+            <p class="lead">It looks like {{organisation.organisation_name}} 
+            publishes less often than quarterly, so the maximum they 
+            can score for IATI data is 95 points. The total points for the 
+            relevant indicators have been adjusted accordingly.</p>
+        </div>
+        {% set freq=0.9 %}
+        {% else %}
+        {% set freq=1.0 %}
+        {% endif %}-->
+
+    <a id="publication_organisation"></a>
+    <hr />
+        <fieldset>
+        <h3>Publication &ndash; Organisation</h3>
+        <table class="table" id="results_publication">
+        <thead>
+        <th width="20%">Subgroup</th>
+        <th width="30%">Indicator</th>
+        <th width="25%">2013</th>
+        <th width="25%">2014</th>
+        </thead>
+        <tbody>
+        {% for indicator, result in results.publication_organisation.items() %}
+            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{result.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+            <td>{% if lastyearsdata[result.indicator.name]["total_points"]|int>0 %}
+                    {% if lastyearsdata[result.indicator.name]['iati_manual'] == 'iati' %}
+
+                    <span class="label label-success">IATI</span>
+                    {% else %}
+                    <span class="label label-{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].format_class}}">{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].title}}</span> 
+                    {% endif %}
+                {% else %}
+                    {% if lastyearsdata[result.indicator.name]['publication_status'] == 'sometimes' %}
+                    <span class="label label-default">Sometimes published</span>
+                    {% else %}
+                    <span class="label label-inverse">Not published</span>
+                    {% endif %}
+                {% endif %}
+                {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
+                <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a>
+                {% endif %}
+            </td>
+	        <td>
+            {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}<span class="label label-default">No survey data yet.</span>{% endif %}</td>
+            </tr>
+            {% if lastyearsdata[result.indicator.name]["iati_manual"] == 'manual' %}
+
+            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+            <td colspan="4">
+            <h5>Evidence</h5>
+            <p>
+			  {{lastyearsdata[result.indicator.name].survey_source}}
+			</p>
+            <h5>Comments</h5>
+            <p>
+			  {{lastyearsdata[result.indicator.name].survey_comment}}
+			</p>
+            </td>
+            <tr />
+            {% endif %}
+        {%endfor%}
+        </tbody>
+        </table>
+        </fieldset>
+
+    <a id="publication_activity"></a>
+    <hr />
+        <fieldset>
+        <h3>Publication &ndash; Activity</h3>
+        <table class="table" id="results_publication">
+        <thead>
+        <th width="20%">Subgroup</th>
+        <th width="30%">Indicator</th>
+        <th width="25%">2013</th>
+        <th width="25%">2014</th>
+        </thead>
+        <tbody>
+        {% for indicator, result in results.publication_activity.items() %}
+            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
+                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        {{result.indicator.longdescription}}
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    </div>
+                </div>
+            </td>
+            <td>{% if lastyearsdata[result.indicator.name]["total_points"]|int>0 %}
+                    {% if lastyearsdata[result.indicator.name]['iati_manual'] == 'iati' %}
+
+                    <span class="label label-success">IATI</span>
+                    {% else %}
+                    <span class="label label-{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].format_class}}">{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].title}}</span> 
+                    {% endif %}
+                {% else %}
+                    {% if lastyearsdata[result.indicator.name]['publication_status'] == 'sometimes' %}
+                    <span class="label label-default">Sometimes published</span>
+                    {% else %}
+                    <span class="label label-inverse">Not published</span>
+                    {% endif %}
+                {% endif %}
+                {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
+                <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a>
+                {% endif %}
+            </td>
+	        <td>
+            {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}<span class="label label-default">No survey data yet.</span>{% endif %}</td>
+            </tr>
+            {% if lastyearsdata[result.indicator.name]["iati_manual"] == 'manual' %}
+
+            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+            <td colspan="4">
+            <h5>Evidence</h5>
+            <p>
+			  {{lastyearsdata[result.indicator.name].survey_source}}
+			</p>
+            <h5>Comments</h5>
+            <p>
+			  {{lastyearsdata[result.indicator.name].survey_comment}}
+			</p>
+            </td>
+            <tr />
+            {% endif %}
+        {%endfor%}
+        </tbody>
+        </table>
+        </fieldset>
+    {%endif%}
+
+    <script src="{{url_for('static', filename='js/organisationPublication.js')}}"></script>
+
+{% endblock %}
