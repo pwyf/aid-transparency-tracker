@@ -120,11 +120,11 @@ def publisher_simple(out, cdtns):
             if not cdtns:
                 return True
 
-            if key not in cdtns:
-                return True
-
             if t not in out[hierarchy]:
                 return False
+
+            if key not in cdtns:
+                return True
 
             if cdtns[key][0] == 0:
                 return False
