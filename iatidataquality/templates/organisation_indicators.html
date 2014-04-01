@@ -343,6 +343,16 @@
             <td></td>
             <td></td>
             </tr>
+            {% else %}
+            <tr class="group-{{result["indicator"]["id"]}} hidden">
+            <td><span class="hidden">{{result.indicator.indicator_category_name|title}}</span></td>
+            <td><span class="hidden">{{result.indicator.indicator_subcategory_name|title}}</span></td>
+            <td><span class="hidden">{{result["indicator"]["description"]}}.</span></td>
+            <td colspan="6"><b>No data quality results available.</b><br />
+            This may be because you have not yet published an 
+            {{result.indicator.indicator_category_name}} file.
+            </td>
+            </tr>
             {% endfor %}
         {%endfor%}
         </tbody>
