@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 
 import urllib2
 import models
@@ -16,7 +16,7 @@ import ckanclient
 
 import util
 
-from dqfunctions import packages_from_iati_registry
+from dqfunctions import packages_from_iati_registry, get_package_organisations
 
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
@@ -87,18 +87,17 @@ def create_package_group(group, handle_country=True):
     return pg
 
 # package: a sqla model; pkg: a ckan object
-def setup_package_group(package, pkg):
+def setup_package_group(package, pkg, packages_groups):
     with util.report_error(None, "Error saving package_group"):
         # there is a group, so use that group ID, or create one
-        if 'groups' not in pkg:
-            print "Warning: package %s has no groups key" % pkg['name']
-            return
 
-        group = pkg['organization']["name"]
-        pg = models.PackageGroup.query.filter_by(name=group).first()
-        if pg is None:
-            pg = create_package_group(group, handle_country=False)
-        package.package_group = pg.id
+        group = packages_groups.get(package.package_name)
+        if group is not None:
+            pg = models.PackageGroup.query.filter_by(name=group).first()
+            if pg is None:
+                pg = create_package_group(group, handle_country=False)
+                print "Created new group"
+            package.package_group = pg.id
 
 # FIXME: compare this with similar function in download_queue
 
@@ -114,7 +113,7 @@ def copy_pkg_attributes(pkg, package):
     
 # Don't get revision ID; 
 # empty var will trigger download of file elsewhere
-def refresh_package(package):
+def refresh_package(package, packages_groups):
     with db.session.begin():
         print package['name']
         pkg = models.Package.query.filter_by(
@@ -123,22 +122,43 @@ def refresh_package(package):
             pkg = models.Package()
 
         copy_pkg_attributes(pkg, package)
-        setup_package_group(pkg, package)
+        setup_package_group(pkg, package, packages_groups)
 
         pkg.man_auto = u'auto'
         db.session.add(pkg)
 
 def refresh_package_by_name(package_name):
-    registry = ckanclient.CkanClient(base_location=CKANurl)  
+    registry = ckanclient.CkanClient(base_location=CKANurl)
     try:
         package = registry.package_entity_get(package_name)
-        refresh_package(package)
+        if package.get('organization') and package['organization'].get('name'):
+            packagegroup_name = package['organization']['name']
+        else:
+            packagegroup_name = None
+        packages_groups = {package['name']: packagegroup_name}
+        refresh_package(package, packages_groups)
     except ckanclient.CkanApiNotAuthorizedError:
         print "Error 403 (Not authorised) when retrieving '%s'" % package_name
         
 def _refresh_packages():
-    [ refresh_package(package) 
-      for package in packages_from_iati_registry(REGISTRY_URL) ]
+    setup_orgs = app.config.get("SETUP_ORGS", [])
+    counter = app.config.get("SETUP_PKG_COUNTER", None)
+
+    packages_groups = get_package_organisations(app.config["IATIUPDATES_URL"])
+
+    for package in packages_from_iati_registry(REGISTRY_URL):
+        package_name = package["name"]
+        if len(setup_orgs) and ('-' in package_name):
+            org, country = package_name.split('-', 1)
+            if org not in setup_orgs:
+                continue
+        registry = ckanclient.CkanClient(base_location=CKANurl)
+        pkg = registry.package_entity_get(package_name)
+        refresh_package(pkg, packages_groups)
+        if counter is not None:
+            counter -= 1
+            if counter <= 0:
+                break
 
 def matching_packages(regexp):
     import re
@@ -162,6 +182,12 @@ def activate_packages(data, clear_revision_id=None):
                 pkg.package_revision_id = u""
             pkg.active = active
             db.session.add(pkg)
+
+def clear_hash(package_name):
+    with db.session.begin():
+        pkg = models.Package.query.filter_by(package_name=package_name).first()
+        pkg.hash = ""
+        db.session.add(pkg)
 
 if __name__ == "__main__":
     refresh_packages()

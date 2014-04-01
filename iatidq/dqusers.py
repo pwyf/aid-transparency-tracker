@@ -90,7 +90,7 @@ def _importUserData(fh):
                 perms += [
                     ('organisation', 'edit'),
                     ('survey_donorreview', 'edit'),
-                    ('survey_donorcomments', 'edit')
+                    ('survey_donorcomments', 'edit'),
                     ('organisation_feedback', 'create')
                     ]
 
@@ -152,6 +152,19 @@ def user_by_username(username=None):
         return user
     return None
 
+
+def updateUser(data):
+    with db.session.begin():
+        checkU = models.User.query.filter_by(username=data["username"]
+                    ).first()
+        assert checkU
+        checkU.username = data["username"]
+        checkU.name = data["name"]
+        checkU.email_address = data["email_address"]
+        checkU.organisation = data["organisation"]
+        db.session.add(checkU)
+        return checkU
+
 def addUser(data):
     with db.session.begin():
         checkU = models.User.query.filter_by(username=data["username"]
@@ -160,7 +173,7 @@ def addUser(data):
             newU = models.User()
             newU.setup(
                 username = data["username"],
-                password = data["password"],
+                password = data.get('password'),
                 name = data.get('name'),
                 email_address = data.get('email_address'),
                 organisation = data.get('organisation')

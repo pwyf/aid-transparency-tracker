@@ -20,7 +20,7 @@
     {% if survey %}
     <p class="lead">Survey currently in {{survey.Workflow.title}} mode; {{pct_complete|int}}% complete.</p>
     <div class="progress">
-        <div class="bar" data-width="{{pct_complete}}"></div>
+        <div class="bar" width="{{pct_complete}}%"></div>
     </div>
     {% else %}
     <p class="lead">No survey has been created for this organisation yet.</p>
@@ -76,12 +76,4 @@
     {% endfor %}
     </tbody>
     </table>
-<script type="text/javascript">
-    $(".bar").each(function(e){
-        width = $(this).attr('data-width');
-        if (width > 0) {
-            $(this).width(width+'%');
-        }
-    });
-</script>
 {% endblock %}

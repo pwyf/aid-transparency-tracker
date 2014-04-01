@@ -1,0 +1,11 @@
+code,name,description
+C,Commitment,A firm written obligation by the donor to provide resources of a specified amount under specified financial terms and conditions and for specified purposes for the benefit of the recipient
+D,Disbursement,"The amount placed at the disposal of a recipient country or agency (in the case of internal development-related expenditures, the outlay of funds)"
+E,Expenditure,The outlay by the implementing agency on goods and services for the activity
+IF,Incoming Funds,Funds received from an external funding source (eg a donor).
+IR,Interest Repayment,"The actual amount of interest repaid, including fees."
+LR,Loan Repayment,"The actual amount of principal (amortisation) repaid, including any arrears."
+R,Reimbursement,"A disbursement that covers funds already spent by the recipient, as agreed in the terms of the loan or grant."
+QP,Purchase of Equity,The use of an activity's funds to purchase equity in a business.
+QS,Sale of Equity,The flow of funds into an activity from the sale of equity.
+CG,Credit Guarantee,A commitment made by a funding organisation to underwrite a loan or line of credit entered into by a third party.

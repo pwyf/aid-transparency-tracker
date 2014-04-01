@@ -95,6 +95,19 @@ def indicatorgroups_new():
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
 
+
+@app.route("/indicators/<indicatorgroup>/comparison/<indicator>")
+def indicators_comparison(indicatorgroup, indicator):
+
+    indicator = dqindicators.getIndicatorByName(indicator)
+    organisations = dqorganisations.organisations()
+
+    return render_template("indicator_comparison.html",
+                           loggedinuser=current_user,
+                           indicator=indicator,
+                           organisations=organisations)
+
+
 @app.route("/indicators/<indicatorgroup>/")
 def indicators(indicatorgroup=None):
     indicators = dqindicators.indicators(indicatorgroup)

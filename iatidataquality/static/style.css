@@ -156,3 +156,11 @@ h1, .brand {
     border-bottom-color: #FFFFFF !important;
     border-top-color: #FFFFFF !important;
 }
+th.restrict_text, td.restrict_text { 
+    max-width:200px; 
+    word-wrap:break-word;
+}
+th.restrict_text_commitment, td.restrict_text_commitment { 
+    max-width:220px; 
+    word-wrap:break-word;
+}

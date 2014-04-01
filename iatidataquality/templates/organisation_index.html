@@ -45,19 +45,19 @@
         <table class="table">
         <tbody>
         <tr>
-            <td><b>May 1st</b></td><td>Data collection begins</td><td></td>
+            <td><b>April 1</b></td><td>Data collection begins</td><td></td>
         </tr>
         <tr class="success">
-            <td><b>May - June</b></td><td>Initial assessment shared with donors for review</td><td><i class="icon-arrow-left"></i></td>
+            <td><b>April - May</b></td><td>Initial assessments shared with organisations for review</td><td><i class="icon-arrow-left"></i></td>
         </tr>
         <tr>
-            <td><b>June 30th</b></td><td>Survey data collection ends</td><td></td>
+            <td><b>May - June</b></td><td>Surveys shared with independent reviewers</td><td></td>
         </tr>
         <tr>
-            <td><b>July 1st</b></td><td>Assessment shared with independent reviewers</td><td></td>
+            <td><b>June 30</b></td><td>Data collection ends; final round of IATI data collected</td><td></td>
         </tr>
         <tr>
-            <td><b>July 31st</b></td><td>Final round of IATI data collected for the 2013 Index</td><td></td>
+            <td><b>July</b></td><td>Final assessment shared with organisations</td><td></td>
         </tr>
         </tbody>
         </table>
@@ -67,61 +67,7 @@
             <p>Information published in more accessible formats is scored more highly. IATI is the only international standard for publishing comprehensive, comparable, timely and accessible data, which are critical components of aid transparency.</p>
         </div>
     </div>
-    <script type="text/javascript">
-        var success = false;
-        jQuery().ready(function() { 
 
-            var url = ""; 
-            jQuery.getJSON(url+"/plan/api/organisations/{{organisation.organisation_code}}" + "?callback=?", null, function(org) { 
-                success = true;
-                if (org['scores']['group'] == 'Under consideration'){
-                    var approach_text = '<i class="icon icon-info-sign"></i> It looks like IATI publication is under consideration.';
-                    var elements_text = '<i class="icon icon-question-sign"></i> Please let us know if there is an updated schedule';
-                    var schedulequalifier = '';
-                } else if (org['scores']['group'] == 'No publication') {
-                    var approach_text = '<i class="icon icon-info-sign"></i> It looks like you\'re not planning to publish to IATI.';
-                    var elements_text = '<i class="icon icon-question-sign"></i> Please let us know if there is an updated schedule';
-                    var schedulequalifier = '';
-                } else {
-                    if (org['publisher']['publisher_code_actual'] != '{{organisation.organisation_code}}') {
-                        var schedulequalifier = ' (for ' + org['publisher']['publisher_actual'] + ')';
-                    } else {
-                        var schedulequalifier = '';
-                    }
-                    var approach = org['scores']['approach'];
-                    if (approach==100){
-                        var approach_text = '<i class="icon icon-ok"></i> Good publication approach: planning to publish under an open licence and at least quarterly';
-                    } else if (approach==50) {
-                        var approach_text = '<i class="icon icon-minus"></i> Moderate publication approach: planning to publish either under an open licence or quarterly';
-                    } else if (approach==0) {
-                        var approach_text = '<i class="icon icon-remove"></i> Poor publication approach: neither planning to publish under an open licence nor quarterly';
-                    }
-                    var elements = org['scores']['elements'];
-                    if (elements>=60){
-                        var elements_text = '<i class="icon icon-ok"></i> Planning to publish '+elements+'% of fields';
-                    } else if (elements>=40) {
-                        var elements_text = '<i class="icon icon-minus"></i> Planning to publish '+elements+'% of fields';
-                    } else if (elements>=0) {
-                        var elements_text = '<i class="icon icon-remove"></i> Planning to publish '+elements+'% of fields';
-                    }
-                }
-                jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found' + schedulequalifier).removeClass('muted');
-                jQuery(".commitment .approach").html(approach_text);
-                jQuery(".commitment .elements").html(elements_text);
-                jQuery(".commitment .review").html('<a class="btn btn-success" href="'+url+'/plan/organisations/{{organisation.organisation_code}}">Review Commitment »</a>');
-            });
-        });
+    <script src="{{url_for('static', filename='js/organisationIndex.js')}}"></script>
 
-        setTimeout(function() {
-            if (!success)
-            {
-                // Handle error
-                jQuery(".commitment .foundschedule").html('<i class="icon icon-remove"></i> No implementation schedule found');
-                jQuery(".commitment .approach").html('');
-                jQuery(".commitment .elements").html('');
-                jQuery(".commitment .review").html('<a class="btn btn-warning" href="http://www.oecd.org/dac/aid-architecture/acommonstandard.htm" target="_blank">More on implementation schedules »</a>');
-            }
-        }, 5000);
-
-    </script>
 {% endblock %}

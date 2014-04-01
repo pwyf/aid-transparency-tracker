@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 import models
 import unicodecsv
 from collections import defaultdict
@@ -16,7 +16,7 @@ import lxml.etree
 
 import util
 
-CODELIST_API = "https://raw2.github.com/pwyf/iati-codelists/master/%s"
+CODELIST_API = app.config["CODELIST_API"]
 
 def generateCodelists():
     codelists = db.session.query(models.CodelistCode.code,
@@ -39,19 +39,18 @@ def reformatCodelist(codelist_name):
     return dict(map(lambda x: (x.code, x.name), codelist))
 
 def handle_row(codelist, codelist_url, crow):
-    with db.session.begin():
-        codelistcode = models.CodelistCode.query.filter_by(
-            code=crow['code'], codelist_id=codelist.id).first()
+    codelistcode = models.CodelistCode.query.filter_by(
+        code=crow['code'], codelist_id=codelist.id).first()
 
-        if not codelistcode:
-            codelistcode = models.CodelistCode()
-        codelistcode.setup(
-            name = crow['name'],
-            code = crow['code'],
-            codelist_id = codelist.id
-            )
-        codelistcode.source = codelist_url
-        db.session.add(codelistcode)
+    if not codelistcode:
+        codelistcode = models.CodelistCode()
+    codelistcode.setup(
+        name = crow['name'],
+        code = crow['code'],
+        codelist_id = codelist.id
+        )
+    codelistcode.source = codelist_url
+    db.session.add(codelistcode)
 
 def add_manual_codelist(filename, codelist_name, codelist_description):
     f = open(filename)
@@ -70,7 +69,8 @@ def add_manual_codelist(filename, codelist_name, codelist_description):
         codelist.source = filename
         db.session.add(codelist)
 
-    [ handle_row(codelist, filename, crow) for crow in codelist_data ]
+    with db.session.begin():
+       [ handle_row(codelist, filename, crow) for crow in codelist_data ]
 
 def handle_codelist(codelists_url, row):
     with db.session.begin():
@@ -99,7 +99,8 @@ def handle_codelist(codelists_url, row):
 
     codelist_data = unicodecsv.DictReader(f)
 
-    [ handle_row(codelist, codelist_url, crow) for crow in codelist_data ]
+    with db.session.begin():
+        [ handle_row(codelist, codelist_url, crow) for crow in codelist_data ]
 
 def pretend_xml_is_csv(f):
     data = f.read()

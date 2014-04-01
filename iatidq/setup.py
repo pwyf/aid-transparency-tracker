@@ -8,7 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 import models, dqregistry 
-from iatidq import db
+from iatidq import db, app
 
 import dqimporttests
 import dqorganisations
@@ -18,109 +18,17 @@ import test_level
 import dqaggregationtypes
 import dqtests
 import inforesult
-import dqsurveys
+import iatidq.survey
 import dqusers
 
-# FIXME: duplicated
-which_packages = [
-    (u'worldbank-tz', True),
-    (u'unops-tz', True),
-    (u'dfid-tz', True),
-    (u'unitedstates-tz', True),
-    (u'dfid-org', True),
-    (u'dfid-ug', True)
-    ]
+from minimal import which_packages, default_minimal_organisations
 
 default_tests_filename="tests/tests.csv"
 default_infotypes_filename="tests/infotypes.csv"
-default_indicator_group_name="2013 Index"
+default_indicator_group_name= app.config["INDICATOR_GROUP"]
 default_userdata_filename='tests/users.csv'
-default_minimal_organisations = [
-            {
-            'organisation_name': 'World Bank',
-            'organisation_code': '44002',
-            'packagegroup_name': 'worldbank',
-            'condition': None,
-            'package_name': 'worldbank-tz',
-             "organisation_total_spend": "11703.48",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            },
-            {
-            'organisation_name': 'USAID',
-            'organisation_code': 'US-1',
-            'packagegroup_name': 'unitedstates',
-            'condition': 'participating-org[@role="Extending"][@ref="US-1"]',
-            'package_name': 'unitedstates-tz',
-             "organisation_total_spend": "11324",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            },
-            {
-            'organisation_name': 'MCC',
-            'organisation_code': 'US-18',
-            'packagegroup_name': 'unitedstates',
-            'condition': 'participating-org[@role="Extending"][@ref="US-18"]',
-            'package_name': 'unitedstates-tz',
-             "organisation_total_spend": "1591",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            },
-            {
-            'organisation_name': 'UK, DFID',
-            'organisation_code': 'GB-1',
-            'packagegroup_name': 'dfid',
-            'condition': None,
-            'package_name': 'dfid-tz',
-             "organisation_total_spend": "3750.21",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            },
-            {
-            'organisation_name': 'UK, DFID',
-            'organisation_code': 'GB-1',
-            'packagegroup_name': 'dfid',
-            'condition': None,
-            'package_name': 'dfid-org',
-             "organisation_total_spend": "3750.21",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            },
-            {
-            'organisation_name': 'UK, DFID',
-            'organisation_code': 'GB-1',
-            'packagegroup_name': 'dfid',
-            'condition': None,
-            'package_name': 'dfid-ug',
-             "organisation_total_spend": "3750.21",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            }
-        ]
+default_indicator_filename='tests/indicators.csv'
+default_basic_countries_filename='tests/countries_basic.csv'
 
 def create_inforesult_types(options):
     print "Adding info result types"
@@ -136,7 +44,7 @@ def create_aggregation_types(options):
                                            'test_result':'1'})
     print "Adding an aggregation type for current data"
     currentdata_test = dqtests.test_by_test_name(
-        "activity-date[@type='end-planned']/@iso-date or activity-date[@type='end-planned']/text() or activity-date[@type='end-actual']/@iso-date or activity-date[@type='end-actual']/text() or transaction-date/@iso-date (for any transaction) is less than 13 months ago?"
+        "activity-date[@type='end-planned']/@iso-date or activity-date[@type='end-planned']/text() or activity-date[@type='end-actual']/@iso-date or activity-date[@type='end-actual']/text() or transaction-date/@iso-date (for any transaction[transaction-type/@code='D']|transaction[transaction-type/@code='E']) is less than 13 months ago?"
         )
     dqaggregationtypes.addAggregationType({'name':'Current data',
                                            'description': '',
@@ -148,19 +56,24 @@ def setup_common():
     db.create_all()
     print "Adding hardcoded tests"
     dqimporttests.hardcodedTests()
+    print "Importing indicators"
+    dqindicators.importIndicatorsFromFile(
+        default_indicator_group_name,
+        default_indicator_filename)
+    print "Importing indicator descriptions"
+    dqindicators.importIndicatorDescriptionsFromFile(
+        app.config["INDICATOR_GROUP"], 
+        "tests/indicators.csv")
     print "Importing tests"
     dqimporttests.importTestsFromFile(
         default_tests_filename,
         test_level.ACTIVITY)
-    print "Importing indicators"
-    dqindicators.importIndicatorsFromFile(
-        default_indicator_group_name,
-        default_tests_filename)
-    print "Importing indicator descriptions"
-    dqindicators.importIndicatorDescriptionsFromFile("2013 Index", 
-                                                            "tests/indicators.csv")
     print "Importing codelists"
     dqcodelists.importCodelists()
+    print "Importing basic countries"
+    codelist_name='countriesbasic'
+    codelist_description='Basic list of countries for running tests against'
+    iatidq.dqcodelists.add_manual_codelist(default_basic_countries_filename, codelist_name, codelist_description)
 
 def setup_packages_minimal():
     print "Creating packages"
@@ -181,6 +94,10 @@ def setup_organisations_minimal():
         thepackage = models.Package.query.filter_by(
             package_name=organisation['package_name']
                 ).first()
+
+        if thepackage is None:
+            print "Organisation lookup failure", organisation
+            raise ValueError
         
         organisationpackage_data = {
             "organisation_id": inserted_organisation.id, 
@@ -221,7 +138,7 @@ def setup(options):
     print "Getting organisation frequency"
     dqorganisations.downloadOrganisationFrequency()
     print "Setting up survey"
-    dqsurveys.setupSurvey()
+    iatidq.survey.setup.setupSurvey()
     user = dqusers.addUser({'username': "admin",
                             'password': "CHANGEME"
                           })

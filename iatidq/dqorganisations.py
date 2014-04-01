@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 
 from sqlalchemy import func
 
@@ -22,8 +22,6 @@ import dqpackages
 import urllib2
 import datetime
 import json
-
-ORG_FREQUENCY_API_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/publisher/frequency/"
 
 def update_model(src, dst, keys):
     for key in keys:
@@ -134,7 +132,7 @@ def _importOrganisationPackages(fh, local):
     return True
 
 def downloadOrganisationFrequency():
-    fh = urllib2.urlopen(ORG_FREQUENCY_API_URL)
+    fh = urllib2.urlopen(app.config["ORG_FREQUENCY_API_URL"])
     return _updateOrganisationFrequency(fh)
 
 """def downloadOrganisationFrequencyFromFile():
@@ -143,48 +141,6 @@ def downloadOrganisationFrequency():
         return _updateOrganisationFrequency(fh)"""
 
 def _updateOrganisationFrequency(fh):
-    """
-    def check_data_last_four_months(packagegroup_name, packagegroups):
-        fourmonths_ago = (datetime.datetime.utcnow()-datetime.timedelta(days=4*30)).date()
-        lastfourmonth_dates = filter(lambda d: d>fourmonths_ago, packagegroups[packagegroup_name])
-        return len(lastfourmonth_dates)
-
-    def check_data_avg_months_to_publication(packagegroup_name, packagegroups):
-        earliest_date = min(packagegroups[packagegroup_name])
-        earliest_date_days_ago=(datetime.datetime.utcnow().date()-earliest_date).days
-        number_months_changes = len(packagegroups[packagegroup_name])
-        avg_days_per_change = earliest_date_days_ago/number_months_changes
-        return avg_days_per_change
-
-    def generate_data():
-        data = unicodecsv.DictReader(fh)
-        packagegroups = {}
-        for row in data:
-            try:
-                packagegroups[row['packagegroup_name']].append((datetime.date(year=int(row['year']), month=int(row['month']), day=1)))
-            except KeyError:
-                packagegroups[row['packagegroup_name']] = []
-                packagegroups[row['packagegroup_name']].append((datetime.date(year=int(row['year']), month=int(row['month']), day=1)))
-        return packagegroups
-
-    def get_frequency():
-        packagegroups = generate_data()
-        for packagegroup in sorted(packagegroups.keys()):
-            lastfour = check_data_last_four_months(packagegroup, packagegroups)
-            avgmonths = check_data_avg_months_to_publication(packagegroup, packagegroups)
-            if lastfour >=3:
-                frequency = "monthly"
-                comment = "Updated " + str(lastfour) + " times in the last 4 months"
-            elif avgmonths<31:
-                frequency = "monthly"
-                comment = "Updated on average every " + str(avgmonths) + " days"
-            elif avgmonths<93:
-                frequency = "quarterly"
-                comment = "Updated on average every " + str(avgmonths) + " days"
-            else:
-                frequency = "less than quarterly"
-                comment = "Updated on average every " + str(avgmonths) + " days"
-            yield packagegroup, frequency, comment"""
 
     def get_frequency():
         d = fh.read()
@@ -390,7 +346,7 @@ def addFeedback(data):
 
 
 def _organisation_detail_ungrouped(organisation, aggregation_type):
-    return db.session.query(Indicator,
+    return db.session.query(Indicator.id,
                                      Test.id,
                                      AggregateResult.results_data,
                                      AggregateResult.results_num,
@@ -402,7 +358,7 @@ def _organisation_detail_ungrouped(organisation, aggregation_type):
 
 def _organisation_detail(organisation, aggregation_type):
     aggregate_results = _organisation_detail_ungrouped(organisation, aggregation_type)\
-        .group_by(Indicator,
+        .group_by(Indicator.id,
                    AggregateResult.result_hierarchy, 
                    Test.id, 
                    AggregateResult.package_id,
@@ -455,7 +411,7 @@ def info_result_tuple(ir):
             })
 
 def _organisation_indicators(organisation, aggregation_type=2):
-    aggregate_results = db.session.query(Indicator,
+    aggregate_results = db.session.query(Indicator.id,
                                      Test.id,
                                      AggregateResult.results_data,
                                      AggregateResult.results_num,
@@ -468,7 +424,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
         ).group_by(AggregateResult.result_hierarchy, 
                    Test.id, 
                    AggregateResult.package_id,
-                   Indicator,
+                   Indicator.id,
                    AggregateResult.results_data,
                    AggregateResult.results_num,
                    AggregateResult.package_id
@@ -496,7 +452,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
     data.update([ info_result_tuple(ir) for ir in inforesults ])
 
     # make sure indicators are complete
-    indicators = dqindicators.indicators_subset("2013 Index", "publication")
+    indicators = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], u"publication")
     for indc in indicators:
         if indc.id in data:
             continue
@@ -519,7 +475,6 @@ def _organisation_indicators(organisation, aggregation_type=2):
                 },
             'tests': {}
             }
-
     return data
 
 def _organisation_indicators_inforesults(organisation):
@@ -550,7 +505,8 @@ def _organisation_indicators_inforesults(organisation):
 def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
-    commitment_data = dqindicators.indicators_subset("2013 Index", "commitment")
+    commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
+                                                     u"commitment")
     commitment_results = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
 
     publication_organisation = lambda kv: (kv[1]["indicator"]["indicator_category_name"]=="organisation")
@@ -565,10 +521,11 @@ def _organisation_indicators_complete_split(organisation, aggregation_type=2):
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
-    commitment_data = dqindicators.indicators_subset("2013 Index", "commitment")
+    commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
+                                                     u"commitment")
     commitment = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
     if not results:
-        indicators = dqindicators.indicators("2013 Index")
+        indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
         indicators_restructured = dict(map(lambda x: (x.id, {'indicator': {'name': x.name } }), indicators))
         return {"zero": indicators_restructured,
                 "non_zero": {},

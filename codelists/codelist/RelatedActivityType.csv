@@ -1,0 +1,5 @@
+code,name,description
+1,Parent,An activity that contains sub-activities (sub-components)
+2,Child,A sub-activity (sub-component) of a larger activity (the parent)
+3,Sibling,A sub-activity (sub-component) related to another sub-activity of the same parent
+4,Multifunded,"A multifunded, or co-funded activity. The identifier should be globally unique and shared by all reporters of this activity."

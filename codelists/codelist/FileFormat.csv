@@ -1,0 +1,10 @@
+code,name
+application/msword,Microsoft Word
+application/pdf,Portable Data Format
+application/rtf,Rich Text Format
+application/vnd.ms-excel,Microsoft Excel
+application/vnd.ms-powerpoint,Microsoft Powerpoint
+text/csv,Comma Separated Values
+text/html,Hypertext Markup Language
+text/plain,Text only
+text/xml,Extensible Markup Language

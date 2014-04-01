@@ -13,6 +13,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from datetime import datetime
 from flask.ext.login import current_user
+import usermanagement
 
 from iatidataquality import app
 from iatidataquality import db
@@ -55,10 +56,21 @@ def _publisher_detail_ungrouped(p_group):
                                      func.max(AggregateResult.runtime_id)
         ).filter(PackageGroup.id==p_group.id)
 
+# FIXME: duplication
+def _publisher_detail_ungrouped_fixed(p_group):
+    return db.session.query(Indicator.id,
+                                     Test.id,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(PackageGroup.id==p_group.id)
+
 ## FIXME: major duplication of code deteceted
 def _publisher_detail(p_group):
     aggregate_results = _publisher_detail_ungrouped(p_group)\
-        .group_by(Indicator,
+        .group_by(Indicator.id,
                    AggregateResult.result_hierarchy, 
                    Test.id, 
                    AggregateResult.package_id,
@@ -166,16 +178,8 @@ def publisher_detail_xls(id=None):
         if os.path.exists(filename):
             os.unlink(filename)
 
-@app.route("/publishers/<id>/")
-def publisher(id=None):
-    p_group = PackageGroup.query.filter_by(name=id).first_or_404()
-
-    pkgs = db.session.query(Package
-            ).filter(Package.package_group == p_group.id
-            ).order_by(Package.package_name).all()
-
-    """try:"""
-    aggregate_results = _publisher_detail_ungrouped(p_group)\
+def publisher_summary(publisher_id, p_group):
+    aggregate_results = _publisher_detail_ungrouped_fixed(p_group)\
         .group_by(AggregateResult.result_hierarchy, 
                    Test.id, 
                    AggregateResult.package_id,
@@ -190,23 +194,28 @@ def publisher(id=None):
         ).join(PackageGroup
         ).all()
 
-    """pconditions = PublisherCondition.query.filter_by(
-        publisher_id=p_group.id).all()"""
-    # Publisher Conditions have been removed in favour of
-    #  organisation conditions.
     pconditions = {}
 
     s = summary.PublisherIndicatorsSummary(aggregate_results, 
                                            conditions=pconditions)
-    aggregate_results = s.summary()
+    return s.summary()
+
+
+@app.route("/publishers/<publisher_id>/")
+def publisher(publisher_id=None):
+    p_group = PackageGroup.query.filter_by(name=publisher_id).first_or_404()
+
+    pkgs = db.session.query(Package
+            ).filter(Package.package_group == p_group.id
+            ).order_by(Package.package_name).all()
+
+    aggregate_results = publisher_summary(publisher_id, p_group)
 
     latest_runtime=1
-    """except Exception, e:
-        latest_runtime = None
-        aggregate_results = None"""
 
-    return render_template("publisher_indicators.html", p_group=p_group, pkgs=pkgs, 
+    return render_template("publisher_indicators.html", 
+                           p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results, runtime=latest_runtime,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 

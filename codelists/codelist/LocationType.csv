@@ -1,0 +1,11 @@
+code,name
+ADM1,first-order administrative division
+ADM2,second-order administrative division
+CNS,concession area
+FRM,farm
+PCL,political entity (i.e. a country)
+PPL,populated place
+PPLA,seat of a first-order administrative division
+PPLA2,seat of a second-order administrative division
+PPLC,capital of a political entity
+RES,reserve

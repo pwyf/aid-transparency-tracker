@@ -48,6 +48,16 @@ def packages_from_registry(registry_url):
 
     #offset += 1000
 
+def get_package_organisations(iatiupdates_url):
+    data = urllib2.urlopen(iatiupdates_url, timeout=60).read()
+    print iatiupdates_url
+    data = json.loads(data)
+    package_data = data["data"]
+    out = {}
+    for pd in package_data:
+        out[pd['name']] = pd['organization']
+    return out
+
 def packages_from_iati_registry(registry_url):
     offset = 0
     while True:

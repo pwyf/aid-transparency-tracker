@@ -51,13 +51,18 @@
         </tr>
         {% endif %}
         {% if surveydata.donorcomments %}
-        {% set data = surveydata['donorcomments'] %}
-        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% set data = surveydata.donorcomments %}
+
+        {% set accepted_val = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+        {% if accepted_val == 1 %}
         {% set accepted = 'Agree' %}
         {% set accepted_class = 'success' %}
-        {% else %}
+        {% elif accepted_val == 0 %}
         {% set accepted = 'Disagree' %}
         {% set accepted_class = 'important' %}
+        {% else %}
+        {% set accepted = '' %}
+        {% set accepted_class = '' %}
         {% endif %}
         <tr>
             <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
@@ -71,13 +76,17 @@
         </tr>
         {% endif %}
         {% if surveydata.cso %}
-        {% set data = surveydata['cso'] %}
-        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% set data = surveydata.cso %}
+        {% set accepted_val = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+        {% if accepted_val == 1 %}
         {% set accepted = 'Agree' %}
         {% set accepted_class = 'success' %}
-        {% else %}
+        {% elif accepted_val == 0 %}
         {% set accepted = 'Disagree' %}
         {% set accepted_class = 'important' %}
+        {% else %}
+        {% set accepted = '' %}
+        {% set accepted_class = '' %}
         {% endif %}
         <tr>
             <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
@@ -91,7 +100,13 @@
         </tr>
         {% endif %}
 
-        {% set data = surveydata[workflow.Workflow.name] %}
+        {% if surveydata.pwyffinal %}
+        {% set data = surveydata.pwyffinal %}
+        {% elif surveydata.pwyfreview %}
+        {% set data = surveydata.pwyfreview %}
+        {% else %}
+        {% set data = surveydata.researcher %}
+        {% endif %}
         <tr id="tr{{indicator.indicator.id}}">
         <td rowspan="2">{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
@@ -106,9 +121,13 @@
         </td>
         <td colspan="2"></td>
         </tr>
-        <tr id="tr{{indicator.indicator.id}}">
+        <tr id="tr{{indicator.indicator.id}}" class="commitment-indicator">
         <td>
-       <textarea name="{{indicator.indicator.id}}-ordinal_value">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />             
+            <div class="control-group">
+                <div class="controls">
+           <textarea name="{{indicator.indicator.id}}-ordinal_value" class="commitment-indicator-value">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}</textarea><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
+                </div>
+            </div>       
         </td>
 
         <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>

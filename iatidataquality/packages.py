@@ -57,7 +57,7 @@ def packages_manage():
 
 def package_aggregation(p, latest_runtime, aggregation_type):
     return db.session.query(
-        Indicator,
+        Indicator.id,
         Test.id,
         AggregateResult.results_data,
         AggregateResult.results_num,
@@ -71,7 +71,7 @@ def package_aggregation(p, latest_runtime, aggregation_type):
             AggregateResult.result_hierarchy, 
             Test.id,
             AggregateResult.package_id,
-            Indicator,
+            Indicator.id,
             AggregateResult.results_data,
             AggregateResult.results_num,
             AggregateResult.package_id

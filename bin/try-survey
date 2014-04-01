@@ -1,0 +1,117 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import subprocess
+import mechanize
+from optparse import OptionParser
+
+curdir = os.path.dirname(__file__)
+
+base_url = "http://localhost:5000/"
+
+def clear_survey(org_id):
+    dqtool_path = os.path.join(curdir, "dqtool")
+    subprocess.call([dqtool_path, 
+                     "--mode", "clear-survey",
+                     "--organisation", org_id])
+    # ignore exit code
+
+class Workflow(object): pass
+
+workflows = {}
+
+workflow_names = ['researcher', 'send', 'donorreview', 'pwyfreview',
+                  'cso', 'pwyffinal', 'donorcomments', 'finalised']
+
+for w in workflow_names:
+    cls = type(w.title(), (Workflow,), {})
+    workflows[w] = cls
+
+class Survey(object):
+    def __init__(self, org_id, username, password):
+        self.org_id = org_id
+        self.username = username
+        self.password = password
+        self.br = mechanize.Browser()
+        self.br.set_handle_robots(False)  
+        self.br.set_handle_refresh(False)  
+        self.handlers = {}
+        
+    def run(self):
+        clear_survey(self.org_id)
+
+        self.login()
+
+        phase = workflow_names[0]
+        self.do_phase(phase)
+        for phase in workflow_names[1:]:
+            self.normal_submit()
+            self.advance(phase)
+            self.do_phase(phase)
+
+    def login(self):
+        url = base_url + "organisations/%s/survey/researcher/" % self.org_id
+
+        response = self.br.open(url)
+
+        self.br.select_form(nr=0)
+        self.br["username"] = self.username
+        self.br["password"] = self.password
+        self.br.submit()
+
+    def do_phase(self, workflow_name):
+        self.br.select_form(nr=0)
+
+        assert workflow_name in workflow_names
+
+        if workflow_name in self.handlers:
+            self.handlers[workflow_name](self)
+
+    def advance(self, workflow_name):
+        self.br.follow_link(text_regex=r"View survey", nr=0)
+
+        rex = "survey/%s" % workflow_name
+        self.br.follow_link(url_regex=rex, nr=0)
+        print "New workflow: %s" % workflow_name
+
+    def normal_submit(self):
+        req = self.br.click(type="submit", name="submit", nr=0)
+        self.br.open(req)
+
+def setup_ordinals(self):
+    self.br["1-ordinal_value"] = "1"
+    self.br["2-ordinal_value"] = "2"
+    self.br["3-ordinal_value"] = "13"
+
+def check_values(self):
+    pass
+
+class TrySurvey(Survey):
+    def __init__(self, *args):
+        super(TrySurvey, self).__init__(*args)
+        self.handlers = {
+            "researcher": setup_ordinals,
+            "pwyffinal": setup_ordinals
+            }
+
+def main(org_id, username, password):
+    survey = TrySurvey(org_id, username, password)
+    survey.run()
+
+def run():
+    p = OptionParser()
+    p.add_option("-o", action="store", dest="org_id")
+    p.add_option("-u", action="store", dest="username")
+    p.add_option("-p", action="store", dest="password")
+    options, remainder = p.parse_args()
+
+    assert options.org_id
+    assert options.username
+    assert options.password
+
+    main(options.org_id, options.username, options.password)
+
+
+if __name__ == '__main__':
+    run()

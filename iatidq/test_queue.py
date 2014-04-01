@@ -37,7 +37,7 @@ def delete_results(runtime_id, package_id):
             ).delete()
 
 def binary_test(test_name):
-    if re.compile("(\S*) is on list (\S*)").match(test_name):
+    if re.compile("(.*) is on list (.*)").match(test_name):
         return True
     return False
 
@@ -62,6 +62,8 @@ def _test_elements(test_functions, codelists, add_result,
 
     def execute_test(xmldata, test_id, binary_test):
         data = reformat_test_data(xmldata, binary_test)
+        # FIXME: All tests should really be validated in some way before being 
+        # entered into the database.
         try:
             result = test_functions[test_id](data)
             if result == True:

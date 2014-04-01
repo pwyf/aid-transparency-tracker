@@ -52,7 +52,7 @@
         {% endif %}
         {% if (surveydata.cso) and (workflow.Workflow.name != 'cso') %}
         {% set data = surveydata['cso'] %}
-{% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
         {% set accepted = 'Agree' %}
         {% set accepted_class = 'success' %}
         {% else %}
@@ -82,33 +82,31 @@
                 </td>
             </tr>
         {% endif %}
-        {% if (workflow.Workflow.name == 'donorcomments') %}
-            {% if (surveydata.donorcomments) %}
-                {% set data = surveydata.donorcomments %}
-            {% else %}
-                {% set data = surveydata.pwyffinal %}
-            {% endif %}
-        {% elif (workflow.Workflow.name == 'cso') %}
-            {% if (surveydata.cso) %}
-                {% set data = surveydata.cso %}
-            {% else %}
-                {% set data = surveydata.pwyfreview %}
-            {% endif %}
+        {% if ((workflow.Workflow.name == 'donorcomments') and (surveydata.donorcomments)) %}
+            {% set data = surveydata.donorcomments %}
+            {% set accepted = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+            {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
+        {% elif ((workflow.Workflow.name == 'cso') and (surveydata.cso)) %}
+            {% set data = surveydata.cso %}
+            {% set accepted = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+            {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
         {% else %}
-            {% set data = surveydata.researcher %}  
+            {% set accepted = 2 %}
+            {% set comment = "" %}
         {% endif %}
+        
         <tr id="tr{{indicator.indicator.id}}">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
         <label for="{{indicator.indicator.id}}-agree-1">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0) %} checked{%endif%}> Agree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if accepted == 1 %} checked{%endif%}> Agree</input>
         <br />
         <span class="muted">Agree</span></label>
         <label for="{{indicator.indicator.id}}-agree-0">
-        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0 %} checked{%endif%}> Disagree</input>
+        <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if accepted == 0 %} checked{%endif%}> Disagree</input>
         <br />
         <span class="muted">Disagree</span></label>
         </td>
-        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td colspan="2"><textarea name="{{indicator.indicator.id}}-comments">{{comment}}</textarea></td>
         </tr>
 {% endmacro %}

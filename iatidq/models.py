@@ -130,7 +130,7 @@ class Result(db.Model):
     package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
     test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
-    result_data = Column(Integer)
+    result_data = Column(Integer, nullable=False)
     result_identifier = Column(UnicodeText)
     result_hierarchy = Column(Integer)
 
@@ -306,7 +306,7 @@ class Indicator(db.Model):
     indicator_subcategory_name = Column(UnicodeText)
     indicator_ordinal = Column(Boolean)
     indicator_noformat = Column(Boolean)
-    indicator_order = Column(Integer)
+    indicator_order = Column(Integer, nullable=False)
     indicator_weight = Column(Float(precision=4))
 
     def setup(self,
@@ -347,6 +347,7 @@ class IndicatorTest(db.Model):
     id = Column(Integer, primary_key=True)
     indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
     test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
+    __table_args__ = (UniqueConstraint('indicator_id', 'test_id'), )
 
     def setup(self,
                  indicator_id,
@@ -398,13 +399,22 @@ class OrganisationCondition(db.Model):
 class OrganisationConditionFeedback(db.Model):
     __tablename__ ='organisationconditionfeedback'
     id = Column(Integer, primary_key=True)
-    organisation_id = Column(UnicodeText, nullable=False)
+    organisation_id = Column(Integer,
+                             ForeignKey('organisation.id'),
+                             nullable=False)
     uses = Column(UnicodeText)
     element = Column(UnicodeText)
     where = Column(UnicodeText)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+# Migration
+"""
+alter table organisationconditionfeedback
+    alter column organisation_id type integer USING (organisation_id::integer);
+alter table organisationconditionfeedback add constraint ofbkorg FOREIGN KEY (organisation_id) REFERENCES organisation (id) MATCH FULL;
+"""
 
 ## ORGANISATIONS; RELATIONS WITH PACKAGES
 

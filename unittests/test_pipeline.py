@@ -1,5 +1,13 @@
 #!/usr/bin/python
 
+#  IATI Data Quality, tools for Data QA on IATI-formatted  publications
+#  by Mark Brough, Martin Keegan, Ben Webb and Jennifer Smith
+#
+#  Copyright (C) 2014  Publish What You Fund
+#
+#  This programme is free software; you may redistribute and/or modify
+#  it under the terms of the GNU Affero General Public License v3.0
+
 import os
 import sys
 import csv
@@ -35,16 +43,15 @@ def log(s):
     print >>sys.stderr, s
 
 def setup_func():
-    print >>sys.stderr, "setting up"
     iatidq.db.drop_all()
     iatidq.db.create_all()
 
 def __setup_organisations(pkg_id):
     org_data = [ 
-        ('USAID', 'US-1', 
-         '''participating-org[@role="Extending"][@ref="US-1"]'''),
-        ('MCC', 'US-18',
-         '''participating-org[@role="Extending"][@ref="US-18"]'''),
+        ('UK, DFID', 'GB-1', 
+         '''participating-org[@role="Extending"][@ref="GB-1"]'''),
+        ('World Bank', '44002',
+         '''participating-org[@role="Extending"][@ref="44002"]'''),
         ]
     for name, code, cond in org_data:
         organisation = iatidq.dqorganisations.addOrganisation(
@@ -111,7 +118,7 @@ def create_aggregation_types(options):
 
 def _test_example_tests(publisher, country):
     package_name = '-'.join([publisher, country])
-    xml_filename = os.path.join("unittests", "artefacts", package_name + '.xml')
+    xml_filename = os.path.join("unittests", "artefacts", "xml", package_name + '.xml')
 
     # check there's nothing in the db
     #pgs = get_packagegroups_by_name(publisher)
@@ -217,8 +224,8 @@ def _test_example_tests(publisher, country):
 
 @nose.with_setup(setup_func, teardown_func)
 def test_samples():
-    data = [ ('worldbank', 'tz'),
-             ('unitedstates', 'tz') 
+    data = [ ('worldbank', '789'),
+             ('dfid', 'ph') 
              ]
 
     #data = [ data[1] ]

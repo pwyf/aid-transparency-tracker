@@ -24,18 +24,15 @@
             <h3 id="addFeedbackModalLabel">Add conditions for {{organisation.organisation_code}}</h3>
         </div>
         <div class="modal-body">
-            <p>Add qualifications of where you use or don't use different elements.</p>
+            <p>Add qualifications of where you don't use different elements.</p>
             <table class="table">
             <tbody>
             <tr>
-            <td>Use / don't use</td>
-            <td><select id="uses">
-                <option value="does not use">Don't use</option>
-                <option value="uses">Use</option>
-            </select></td>
+            <td>{{organisation.organisation_code}}</td>
+            <td><input type="hidden" id="uses" value="does not use" />does not use</td>
             </tr>
             <tr>
-            <td>Element</td>
+            <td class="muted"><i>element</i></td>
             <td><select id="element">
                 <option value="title">title</option>
                 <option value="description">description</option>
@@ -63,13 +60,11 @@
             </select></td>
             </tr>
             <tr>
-            <td>Where</td>
+            <td class="muted"><i>at hierarchy</i></td>
             <td> <select id="where">
                 <option value="activity hierarchy 1">activity hierarchy 1</option>
                 <option value="activity hierarchy 2">activity hierarchy 2</option>
                 <option value="activity hierarchy 3">activity hierarchy 3</option>
-                <option value="activity level">activity level</option>
-                <option value="transaction level">transaction level</option>
             </select>
             </td>
             </tr>
@@ -82,22 +77,8 @@
         </div>
     </form>
     </div>
-<script type="text/javascript">
-    $(document).on("click", ".deletefeedback", function(e){
-        e.preventDefault();
-        var feedbackid = $(this).attr('data-feedback-id');
-        $("#feedback"+feedbackid).remove();
-    });
-    var countfeedback = 0;
-    $("#addfeedbackbtn").click(function(){
-        countfeedback ++;
-        var uses = $("#uses option:selected").val();
-        var element = $("#element option:selected").val();
-        var where = $("#where option:selected").val();
-        $("#conditions tbody").append('<tr id="feedback' + countfeedback + '"><td>{{organisation.organisation_code}} ' + $("#uses option:selected").val() + ' ' + $("#element option:selected").val() + ' at ' + $("#where option:selected").val() + '<input type="hidden" name="feedback" value="' + countfeedback + '" /><input type="hidden" name="uses' + countfeedback + '" value="' + uses + '" /><input type="hidden" name="element' + countfeedback + '" value="' + element + '" /><input type="hidden" name="where' + countfeedback + '" value="' + where + '" /></td><td><a href="" class="deletefeedback" data-feedback-id="' + countfeedback + '"><i class="icon-trash"></i></td></tr>');
-        $("#addFeedback").modal('hide');
-    });
-
-</script>
-
+    <script>
+    var organisation_code = "{{organisation.organisation_code}}";
+    </script>
+    <script src="{{url_for('static', filename='js/organisationFeedback.js')}}"></script>
 {% endblock %}

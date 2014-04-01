@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidq import db, app
 
 import models
 import csv
@@ -15,7 +15,7 @@ import util
 import unicodecsv
 
 def importIndicatorDescriptions():
-    indicatorgroup_name = "2013 Index"
+    indicatorgroup_name = app.config["INDICATOR_GROUP"]
     filename = 'tests/indicators.csv'
     return importIndicatorDescriptionsFromFile(indicatorgroup_name, filename)
 
@@ -42,6 +42,10 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
         data['indicator_type']=row['indicator_type']
         data['indicator_category_name']=row['indicator_category_name']
         data['indicator_subcategory_name']=row['indicator_subcategory_name']
+        data['indicator_order']=row['order']
+        data['indicator_ordinal']=row['ordinal'].startswith('1')
+        data['indicator_weight']=row['weight']
+        data['indicator_noformat']=row['noformat'].startswith('1')
         data['indicatorgroup_id']=indicatorgroup.id
 
         checkI = indicators(indicatorgroup_name, data['name'])
@@ -52,7 +56,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
 
 def importIndicators():
     filename = 'tests/tests.csv'
-    indicatorgroup_id = '2013 Index'
+    indicatorgroup_id = app.config["INDICATOR_GROUP"]
     with file(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True, False)
 
@@ -95,12 +99,12 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
                                 "indicator_id" : indicator.id
                             })
         else:
-            test = models.Test.query.filter(models.Test.name==row['test_name']).first()
+            test = models.Test.query.filter(models.Test.name==row['name']).first()
 
             if not test:
                 continue
             
-            indicator_name = row['indicator_name']
+            indicator_name = row['name']
             if (indicator_name == ""):
                 continue
             
@@ -108,10 +112,13 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
             if checkI:
                 indicator = checkI
             else:
+                import pprint
+                pprint.pprint(row)
                 indicator = addIndicator({
                                 "name" : indicator_name,
                                 "description" : "",
-                                "indicatorgroup_id" : indicatorgroup.id
+                                "indicatorgroup_id" : indicatorgroup.id,
+                                "order": row["order"]
                             })
             addIndicatorTest({
                                 "test_id" : test.id,
@@ -215,7 +222,7 @@ def addIndicator(data):
                 indicator_type = data.get("indicator_type"),
                 indicator_category_name = data.get("indicator_category_name"),
                 indicator_subcategory_name = data.get("indicator_subcategory_name"),
-                indicator_ordinal = data.get("indicator_ordinal", None),
+                indicator_ordinal = data.get("indicator_ordinal", False),
                 indicator_noformat = data.get("indicator_noformat", None),
                 indicator_order = data.get("indicator_order", None),
                 indicator_weight = data.get("indicator_weight", None)
@@ -248,6 +255,11 @@ def updateIndicator(indicatorgroup, indicator, data):
         return checkI
     else:
         return False
+
+
+def getIndicatorByName(indicator_name):
+    return db.session.query(models.Indicator.name==indicator_name).first()
+
 
 def deleteIndicator(indicatorgroup, indicator):
     checkI = db.session.query(models.Indicator

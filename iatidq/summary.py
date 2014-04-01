@@ -28,114 +28,128 @@ def remove_empty_dicts(h):
             for K, V in h.items() 
             ])
 
+
+class TestInfo(object):
+    def __init__(self, test_id, results_pct, results_num):
+        test = models.Test.query.filter(models.Test.id == test_id).first()
+        self.test_id = test_id
+        self.test_name = test.name
+        self.test_description = test.description
+        self.test_group = test.test_group
+        self.test_level = test.test_level
+        self.results_pct = results_pct
+        self.results_num = results_num
+
+    def as_dict(self):
+        return {
+            "test": {
+                "id": self.test_id,
+                "name": self.test_name,
+                "description": self.test_description,
+                "test_group": self.test_group,
+                "test_level": self.test_level
+                },
+            "results_pct": self.results_pct,
+            "results_num": self.results_num
+            }
+
+
+class IndicatorInfo(object):
+    def __init__(self, indicator_id):
+        self.indicator_id = indicator_id
+        self.ind = models.Indicator.query.filter(
+            models.Indicator.id == self.indicator_id).first()
+
+    def as_dict(self):
+        return self.ind.as_dict()
+
+    def as_dict_minus_group(self):
+        tmp = self.ind.as_dict()
+        del(tmp['indicatorgroup_id'])
+        return tmp
+
+
 def publisher_indicators(indicators, indicators_tests, simple_out):
     # get all tests which belong to a specific indicator
     # average the results for all tests in that indicator
-    indicators_out = {}
-    for indicator, indicatordata in indicators:
-        indicators_out[indicator] = {}
+    def per_indicator(indicator):
         indicator_test_data = []
         results_pct = 0.0
         results_num = 0.0
         results_weighted_pct_average_numerator = 0.0
-        for test, testdata in simple_out.items():
-            try:
-                testing = (indicator, test)
-                if (testing in indicators_tests):
-                    results_pct+= simple_out[test]["results_pct"]
-                    results_num+= simple_out[test]["results_num"]
-                    results_weighted_pct_average_numerator += (simple_out[test]["results_pct"]*simple_out[test]["results_num"])
-                    oktest = test
-                    indicator_test_data.append(simple_out[test])
-            except KeyError:
-                pass
-        indicators_out[indicator] = {
-            "indicator": {
-                "id": indicator,
-                "name": indicatordata[0],
-                "description": indicatordata[1],
-                "indicator_type": indicatordata[2],
-                "indicator_category_name": indicatordata[3],
-                "indicator_subcategory_name": indicatordata[4],
-                "longdescription": indicatordata[5], 
-                "indicator_noformat": indicatordata[6],
-                "indicator_ordinal": indicatordata[7],
-                "indicator_order": indicatordata[8],
-                "indicator_weight": indicatordata[9]
-                },
+
+        relevant = lambda test: (indicator, test) in indicators_tests
+
+        for test in filter(relevant, simple_out.keys()):
+            indic_info = simple_out[test]
+            results_pct += indic_info["results_pct"]
+            results_num += indic_info["results_num"]
+            results_weighted_pct_average_numerator += (
+                indic_info["results_pct"] * 
+                indic_info["results_num"]
+                )
+            indicator_test_data.append(indic_info)
+
+        return {
+            "indicator": IndicatorInfo(indicator).as_dict_minus_group(),
             "tests": indicator_test_data,
             "results_pct": (results_weighted_pct_average_numerator/results_num),
             "results_num": results_num
             }
-    return indicators_out        
-    #for test, testdata in simple_out.items():
-    #    indicators_out[testdata["indicator"]["id"]] = testdata
-    #return indicators_out
+    
+    return dict([ (i, per_indicator(i)) for i in indicators ])
 
-def make_summary(test_id, test_name, test_description, test_group, 
-                 test_level, results_pct, results_num):
-    return {
-        "test": {
-            "id": test_id,
-            "name": test_name,
-            "description": test_description,
-            "test_group": test_group,
-            "test_level": test_level
-            },
-        "results_pct": results_pct,
-        "results_num": results_num
-        }
+def make_summary(test_id, results_pct, results_num):
+    t = TestInfo(test_id, results_pct, results_num)
+    return t.as_dict()
 
 def publisher_simple(out, cdtns):
-    simple_out = {}
     hierarchies = set(out)
     tests = set()
     for h in hierarchies:
         tests.update(set(out[h]))
-    for t in tests: 
+
+    def per_test(t):
         results_pct = 0.0
         results_num = 0.0
         results_weighted_pct_average_numerator = 0.0
-        for hierarchy in hierarchies:
-            try:
-                key = (t,'activity hierarchy', str(hierarchy)) 
-                try:
-                    if ((cdtns) and (key in cdtns) and (cdtns[key][0]==0)):
-                        continue
-                except KeyError:
-                    pass
-                results_pct+= out[hierarchy][t]["results_pct"]
-                results_num+= out[hierarchy][t]["results_num"]
-                results_weighted_pct_average_numerator += (
-                    out[hierarchy][t]["results_pct"] * 
-                    out[hierarchy][t]["results_num"]
-                    )
-                okhierarchy = hierarchy
-            except KeyError:
-                pass
+
+        def relevant(hierarchy):
+            key = (t,'activity hierarchy', str(hierarchy)) 
+
+            return (
+                ((not cdtns) or (cdtns.get(key, {}).get(0, None) != 0))
+                and 
+                (t in out[hierarchy])
+                )
+
+        for hierarchy in filter(relevant, hierarchies):
+            test_info = out[hierarchy][t]
+            
+            results_pct += test_info["results_pct"]
+            results_num += test_info["results_num"]
+            results_weighted_pct_average_numerator += (
+                test_info["results_pct"] * 
+                test_info["results_num"]
+                )
+            ## FIXME: all okhieriarcy values are identical
+            okhierarchy = hierarchy
 
         tmp = make_summary(
             out[okhierarchy][t]['test']["id"],
-            out[okhierarchy][t]['test']["name"],
-            out[okhierarchy][t]['test']["description"],
-            out[okhierarchy][t]['test']["test_group"],
-            out[okhierarchy][t]['test']["test_level"],
-            (results_weighted_pct_average_numerator/results_num),
+            (results_weighted_pct_average_numerator / results_num),
             results_num
             )
         tmp["indicator"] = out[okhierarchy][t]['indicator']
-        simple_out[t] = tmp
-    return simple_out
+        return tmp
+
+    return dict([ (t, per_test(t)) for t in tests ])
+
 
 def sum_for_publishers(packages, d, h, t):
-    # aggregate data across multiple packages for a single publisher
-        
-    # for each package, add percentage for each
-    total_pct = 0
-    total_activities = 0
-
+    # aggregate data across multiple packages for a single publisher ;
+    # for each package, add percentage for each ;
     # need below to only include packages that are in this hierarchy
-    packages_in_hierarchy = 0
 
     relevant = lambda p: (h, t, p) in d
     relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
@@ -143,12 +157,9 @@ def sum_for_publishers(packages, d, h, t):
     pct = lambda i: i[2]
     activities = lambda i: i[3]
 
-    try:
-        total_pct = reduce(operator.add, map(pct, relevant_data))
-        total_activities = reduce(operator.add, map(activities, relevant_data))
-    except Exception:
-        total_pct = 0.0
-        total_activities = 0
+    total_pct        = reduce(operator.add, map(pct,        relevant_data), 0)
+    total_activities = reduce(operator.add, map(activities, relevant_data), 0)
+
     packages_in_hierarchy = len(relevant_data)
 
     if total_activities <= 0:
@@ -157,18 +168,13 @@ def sum_for_publishers(packages, d, h, t):
     ok_tdata = relevant_data[-1] ## FIXME: this is obviously wrong
 
     test_id = ok_tdata[1]
-    test = models.Test.query.filter(models.Test.id == test_id).first()
          
     tmp = make_summary(
-        test.id,
-        test.name,
-        test.description,
-        test.test_group,
-        test.test_level,
+        test_id,
         int(float(total_pct/packages_in_hierarchy)),
         total_activities
         )
-    tmp["indicator"] = ok_tdata[0]
+    tmp["indicator"] = IndicatorInfo(ok_tdata[0]).as_dict()
     tmp["result_hierarchy"] = total_activities
     return tmp
 
@@ -187,7 +193,7 @@ class Summary(object):
 
         def replace_first(tupl, newval):
             return tuple([newval] + list(tupl)[1:])
-        switch_first = lambda t: replace_first(t, t[0].as_dict())
+        switch_first = lambda t: replace_first(t, t[0])
         self.data = map(switch_first, self.data)
 
         return self.aggregate()
@@ -223,20 +229,7 @@ class Summary(object):
         return set(map(lam, self.data))
 
     def get_indicator_data(self):
-        ind_f = lambda x: (
-            x[0]["id"], (
-                x[0]["name"], 
-                x[0]["description"], 
-                x[0]["indicator_type"], 
-                x[0]["indicator_category_name"], 
-                x[0]["indicator_subcategory_name"], 
-                x[0]["longdescription"], 
-                x[0]["indicator_noformat"], 
-                x[0]["indicator_ordinal"], 
-                x[0]["indicator_order"], 
-                x[0]["indicator_weight"]
-                )
-            )
+        ind_f = lambda x: x[0]
         return ind_f
 
 
@@ -251,7 +244,7 @@ class Summary(object):
 
         indicators = self.setmap(self.get_indicator_data())
 
-        ind_test_f = lambda x: (x[0]["id"], x[1])
+        ind_test_f = lambda x: (x[0], x[1])
         indicators_tests = list(self.setmap(ind_test_f))
 
         pkg_f = lambda x: x[5]

@@ -1,0 +1,6 @@
+code,name,description,language
+1,Bilateral,"Bilateral transactions are those undertaken by a donor, excluding core contributions to other organisations (codes 2 and 3 below). It includes transactions channelled through other organisations.",en
+2,Multilateral,"Multilateral contributions are those made to a recipient institution which:  i. conducts all or part of its activities in favour of development;  ii. is an international agency, institution or organisation whose members are governments, or a fund managed autonomously by such an agency; and  iii. pools contributions so that they lose their identity and become an integral part of its financial assets.",en
+3,"Bilateral, core contributions to NGOs and other private bodies / PPPs","Bilateral funds paid over to national and international non-governmental organisations (NGOs), Public Private Partnerships (PPPs), or other private bodies for use at their discretion.",en
+4,Multilateral outflows,Aid activities financed from the multilateral institutions' regular budgets.,en
+6,Private sector outflow,,en

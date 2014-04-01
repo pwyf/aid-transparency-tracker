@@ -11,17 +11,22 @@ sys.path.append(parent)
 
 
 from iatidq.models import *
-import iatidq.dqsurveys
+import iatidq.survey
 import iatidq.dqorganisations
 import iatidq.dqpackages
 import iatidq.dqregistry
 import iatidq.dqdownload
+import iatidq.dqcsv
 
 def clear_survey(options):
-    organisation_code = options.organisation_code
+    organisation_code = options.organisation_code.decode('ascii')
     assert organisation_code
 
-    iatidq.dqsurveys.deleteSurveyData(organisation_code)
+    try:
+        iatidq.survey.data.deleteSurveyData(organisation_code)
+    except iatidq.survey.data.NoSuchSurvey:
+        print "No such survey"
+        sys.exit(1)
 
 def get_package_names(organisation_code):
     for p in iatidq.dqorganisations.organisationPackages(
@@ -35,14 +40,26 @@ def list_packages(options):
     for p in get_package_names(organisation_code):
         print p
 
+# where p is the package name
+def do_reload_package(package_name):
+    iatidq.dqregistry.refresh_package_by_name(package_name)
+    iatidq.dqregistry.activate_packages([(package_name, True)], 
+                                        clear_revision_id=True)
+    iatidq.dqregistry.clear_hash(package_name)
+    iatidq.dqdownload.run(package_name=package_name)
+
 def reload_packages(options):
     organisation_code = options.organisation_code
     assert organisation_code
 
     for p in get_package_names(organisation_code):
-        iatidq.dqregistry.refresh_package_by_name(p)
-        iatidq.dqregistry.activate_packages([(p, True)], clear_revision_id=True)
-        iatidq.dqdownload.run(package_name=p)
+        do_reload_package(p)
+
+def reload_package(options):
+    package_name = options.package_name
+    assert package_name
+
+    do_reload_package(package_name)
 
 def compare_aggregation(options):
     organisation_code = options.organisation_code.decode('ascii')
@@ -73,9 +90,10 @@ def compare_aggregation(options):
         sys.exit(1)
 
 def compare_summary(options):
+    assert options.organisation_code
+    assert options.filename
     organisation_code = options.organisation_code.decode('ascii')
     filename = options.filename
-    assert organisation_code
 
     aggregation_type = 2
 
@@ -98,6 +116,78 @@ def compare_summary(options):
         print json.dumps(aggregate_results, indent=2, sort_keys=True)
         sys.exit(1)
 
+def make_survey_data(options):
+    from iatidq import dqorganisations
+    assert options.organisation_code
+
+    organisation_code = options.organisation_code.decode('ascii')
+    org_id = dqorganisations.organisationid_by_code(organisation_code)
+    print "faking survey for %s" % organisation_code
+
+    while True:
+        make_survey_data_for_current_workflow(organisation_code)
+
+def make_survey_data_for_current_workflow(organisation_code):
+    survey, workflow = iatidq.survey.data.getSurvey(organisation_code)
+
+    print "current workflow: %s" % workflow.name
+
+    from iatidq import dqindicators
+    indicators = dqindicators.indicators(indicatorgroup=u"2013 Index")
+
+    for indicator in indicators:
+        data = {
+            'organisationsurvey_id': survey.id,
+            'indicator_id': indicator.id,
+            'workflow_id': workflow.id,
+            'published_status': 1,
+            'published_source': "hello",
+            'published_comment': "hello",
+            'published_format': 2,
+            'published_accepted': 1.0,
+            'ordinal_value': "50"
+            }
+
+        iatidq.survey.data.addSurveyData(data)
+
+    iatidq.survey.data.advanceSurvey(survey)
+        
+
+def make_csv_output(options):
+    organisations = Organisation.query.all()
+    s = iatidq.dqcsv.make_csv(organisations, True, True)
+    print s.read()
+
+def clear_queue(options):
+    from iatidq import queue
+    def run_queue(queue_name):
+        while True:
+            queue.handle_queue(queue_name, callback_fn)
+
+    def callback_fn(ch, method, properties, body):
+        print "Dequeuing"
+        ch.basic_ack(delivery_tag=method.delivery_tag)
+
+    the_queue='iati_download_queue'
+    [ run_queue(queue_name) for queue_name in
+                ['iati_download_queue', 'iati_tests_queue'] ]
+
+def list_modes(options):
+    for key in sorted(modes.keys()):
+        print key
+
+modes = {
+    "clear-survey": clear_survey,
+    "list-packages": list_packages,
+    "reload-packages": reload_packages,
+    "reload-package": reload_package,
+    "compare-aggregation": compare_aggregation,
+    "compare-summary": compare_summary,
+    "list-modes": list_modes,
+    "make-survey-data": make_survey_data,
+    "make-csv-output": make_csv_output,
+    "clear-queue": clear_queue
+    }
 
 def run():
     parser = optparse.OptionParser()
@@ -107,21 +197,14 @@ def run():
                       action="store")
     parser.add_option("--filename", dest="filename",
                       action="store")
-
+    parser.add_option("--name", dest="package_name",
+                      action="store")
     options, rest = parser.parse_args()
 
     if not options.mode:
-        print "Must specify a mode"
+        print "Must specify a mode; use\n\n dqtool --mode list-modes\n\nto see them"
         sys.exit(1)
     
-    modes = {
-        "clear-survey": clear_survey,
-        "list-packages": list_packages,
-        "reload-packages": reload_packages,
-        "compare-aggregation": compare_aggregation,
-        "compare-summary": compare_summary
-        }
-
     if options.mode not in modes:
         print "Mode must be one of:"
         for mode in modes:

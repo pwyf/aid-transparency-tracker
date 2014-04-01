@@ -2,6 +2,7 @@
 
 import sys
 import os
+import json
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
@@ -14,15 +15,13 @@ import pprint
 
 _, org = sys.argv
 
-o = Organisation.query.filter_by(organisation_code=org).first()
-
-print o
+o = Organisation.query.filter_by(organisation_code=org.decode('ascii')).first()
 
 ocs = iatidq.dqorganisations._organisation_indicators_split(o, 2)
 
-pprint.pprint(ocs)
+pprint.pprint(ocs, indent=2)
 
 
-import iatidq.dqindicators
+#import iatidq.dqindicators
 
-print iatidq.dqindicators.indicators_subset('2013 Index', 'commitment')
+#print iatidq.dqindicators.indicators_subset('2013 Index', 'commitment')

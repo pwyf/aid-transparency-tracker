@@ -16,7 +16,7 @@ from iatidataquality import app
 from iatidataquality import db
 import usermanagement
 
-from iatidq import dqusers, util
+from iatidq import dqusers, util, dqorganisations
 
 import unicodecsv
 
@@ -67,11 +67,22 @@ def users_edit_deletepermission(username):
 @app.route("/users/<username>/edit/", methods=['POST', 'GET'])
 @usermanagement.perms_required()
 def users_edit(username=None):
+    user = {}
+    permissions = {}
+
     if username:
         user = dqusers.user_by_username(username)
         permissions = dqusers.userPermissions(user.id)
         if request.method == 'POST':
             if user:
+                data = {
+                    'username': username,
+                    'password': request.form.get('password'),
+                    'name': request.form['name'],
+                    'email_address': request.form['email_address'],
+                    'organisation': request.form['organisation']
+                    }
+                user = dqusers.updateUser(data)
                 flash('Successfully updated user.', 'success')
             else:
                 user = {}
@@ -87,22 +98,16 @@ def users_edit(username=None):
                     })
             if user:
                 flash('Successfully added new user', 'success')
+                return redirect(url_for('users_edit', username=user.username))
             else:
-                flash('Could not add user user', 'error')
-        else:
-            user = {}
-            permissions = {}
-
-    try:
-        print permissions
-    except UnboundLocalError:
-        permissions = {}
+                flash('Could not add user', 'error')
 
     return render_template("users_edit.html", 
                            user=user,
                            permissions=permissions,
              admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+             loggedinuser=current_user,
+             organisations=dqorganisations.organisations())
 
 @app.route("/users/<username>/delete/")
 @usermanagement.perms_required()

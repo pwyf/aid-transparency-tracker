@@ -37,11 +37,14 @@
         </tr>
         {% endif %}
         {% if (workflow.Workflow.name == 'pwyfreview') and (surveydata.pwyfreview) %}
-        {% set data = surveydata.pwyfreview %}            
+        {% set data = surveydata.pwyfreview %}
+        {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
         {% elif (workflow.Workflow.name == 'donorreview') and (surveydata.donorreview) %}
-        {% set data = surveydata.donorreview %}  
+        {% set data = surveydata.donorreview %}
+        {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
         {% else %}
-        {% set data = surveydata.researcher %}  
+        {% set data = surveydata.researcher %}
+        {% set comment = "" %}
         {% endif %}
 
         <tr id="tr{{indicator.indicator.id}}" class="commitment-indicator">
@@ -68,6 +71,6 @@
         {% endif %}
         </td>
 
-        <td class="restrict_text_commitment"><textarea name="{{indicator.indicator.id}}-comments">{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td class="restrict_text_commitment"><textarea name="{{indicator.indicator.id}}-comments">{{comment}}</textarea></td>
         </tr>
 {% endmacro %}

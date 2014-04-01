@@ -16,13 +16,14 @@ from iatidataquality import db
 
 import os
 import sys
-import unicodecsv
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from iatidq import dqindicators, dqsurveys, dqorganisations, dqusers, donorresponse
+from iatidq import dqindicators, dqorganisations, dqusers, donorresponse
+import iatidq.survey.data as dqsurveys
+import iatidq.survey.mapping
 from iatidq.models import *
 
 import usermanagement
@@ -31,7 +32,7 @@ import usermanagement
 @usermanagement.perms_required()
 def surveys_admin():
     surveys = dqsurveys.surveys()
-    workflows = dqsurveys.workflows()
+    workflows = dqsurveys.workflowsAll()
     publishedstatuses=dqsurveys.publishedStatus()
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
@@ -43,54 +44,6 @@ def surveys_admin():
 @app.route("/surveys/<organisation_code>/create/", methods=["GET", "POST"])
 def create_survey(organisation_code=None):
     return "You're trying to create a survey"
-
-def get_old_organisation_id(organisation_code='GB-1'):
-    path = app.config["DATA_STORAGE_DIR"]
-    old_organisation_file = os.path.join(path, '2012_2013_organisation_mapping.csv')
-
-    old_organisation_data = unicodecsv.DictReader(file(old_organisation_file))
-    for row in old_organisation_data:
-        if row['2013_id'] == organisation_code:
-            return row['2012_id']
-
-def get_old_indicators():
-    path = app.config["DATA_STORAGE_DIR"]
-    old_indicators_file = os.path.join(path, '2012_indicators.csv')
-    old_indicators_data = unicodecsv.DictReader(file(old_indicators_file))
-
-    indicator_data = {}
-    for row in old_indicators_data:
-        if ((row["question_number"]) and (row["2013_indicator_name"])):
-            indicator_data[int(row["question_number"])] = row["2013_indicator_name"]
-    return indicator_data
-    
-def get_organisation_results(organisation_code, newindicators):
-    old_organisation_id = get_old_organisation_id(organisation_code)
-    indicators = get_old_indicators()
-
-    path = app.config["DATA_STORAGE_DIR"]
-
-    old_results_file = os.path.join(path, '2012_results.csv')
-    old_results_data = unicodecsv.DictReader(file(old_results_file))
-
-    data = {}
-
-    for d in old_results_data:
-        if d["target_id"] == old_organisation_id:
-            try:
-                question_id = int(d["question_id"])
-                d["newindicator_id"] = indicators[question_id]
-                data[indicators[question_id]] = d
-            except KeyError:
-                pass
-    for indicator_name in newindicators:
-        try:
-            discard = data[indicator_name]
-        except KeyError:
-            data[indicator_name] = {
-                'result': ''
-            }
-    return data
 
 def completion_percentage(survey):
     stages = ['researcher', 'send', 'donorreview', 'pwyfreview',
@@ -121,7 +74,7 @@ def organisation_survey(organisation_code=None):
 
     survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-    workflows = dqsurveys.workflows()
+    workflows = dqsurveys.workflowsAll()
     pct_complete = completion_percentage(survey)
     users = dqusers.surveyPermissions(organisation_code)
     admin = usermanagement.check_perms('admin')
@@ -144,35 +97,40 @@ def getTimeRemainingNotice(deadline):
 def __survey_process(organisation, workflow, request, 
                      organisationsurvey, published_accepted):
 
-    indicators = request.form.getlist('indicator')
-    print "INDICATORS: ", indicators
+    indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
+    form_indicators = map(int, request.form.getlist('indicator'))
 
     workflow_id = workflow.Workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
-
-        if request.form.get(indicator + "-ordinal_value"):
-            ordinal_value = request.form.get(indicator + "-ordinal_value")
-        else:
-            ordinal_value = None
-
-        if request.form.get(indicator + "-noformat"):
-            published_format = dqsurveys.publishedFormat('document').id
-        else:
-            published_format = request.form.get(indicator + "-publishedformat")
-
         data = {
             'organisationsurvey_id': organisationsurvey.id,
-            'indicator_id': indicator,
+            'indicator_id': str(indicator.id),
             'workflow_id': workflow_id,
-            'published_status': request.form.get(indicator+"-published"),
-            'published_source': request.form.get(indicator+"-source"),
-            'published_comment': request.form.get(indicator+"-comments"),
-            'published_format': published_format,
-            'published_accepted': published_accepted(indicator),
-            'ordinal_value': ordinal_value
         }
+
+        if indicator.id not in form_indicators:
+            # It's an IATI indicator...
+            data['published_status'] = dqsurveys.publishedStatusByName('always').id
+            data['published_format'] = dqsurveys.publishedFormatByName('iati').id
+        else:
+            data['published_status'] = request.form.get(str(indicator.id)+"-published")
+
+            if indicator.indicator_noformat:
+                data['published_format'] = dqsurveys.publishedFormatByName('document').id
+            else:
+                data['published_format'] = request.form.get(str(indicator.id) + "-publishedformat")      
+
+            if indicator.indicator_ordinal:
+                data['ordinal_value'] = request.form.get(str(indicator.id) + "-ordinal_value")
+            else:
+                data['ordinal_value'] = None
+
+        data['published_comment'] = request.form.get(str(indicator.id)+"-comments")
+        data['published_source'] = request.form.get(str(indicator.id)+"-source")
+        data['published_accepted'] = published_accepted(str(indicator.id))
+        
         surveydata = dqsurveys.addSurveyData(data)
     
     if 'submit' in request.form:
@@ -228,7 +186,11 @@ def get_old_publication_status():
         ('3', 'Sometimes published', 'warning'),
         ('2', 'Collected', 'important'),
         ('1', 'Not collected', 'inverse'),
-        ('',  'Unknown', '')
+        ('',  'Unknown', ''),
+        ('iati', 'Published to IATI', 'success'),
+        ('always', 'Always published', 'success'),
+        ('sometimes', 'Sometimes published', 'warning'),
+        ('not published', 'Not published', 'important'),
         ]
     struct = lambda ps: (ps[0], {
             "text": ps[1], 
@@ -267,17 +229,17 @@ def organisation_survey_view(organisation_code, workflow,
     except Exception:
         pass
 
-    indicators = dqindicators.indicators("2013 Index")
+    indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     org_indicators = dqorganisations._organisation_indicators_split(
         organisation, 2)
 
-    twentytwelvedata=get_organisation_results(
+    twentytwelvedata = iatidq.survey.mapping.get_organisation_results(
         organisation_code, 
         [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
         )
 
     publishedstatuses = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormat()))
+    publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormatAll()))
     years = get_ordinal_values_years()
     year_data = dict(years)
     years.pop()
@@ -295,7 +257,7 @@ def organisation_survey_view(organisation_code, workflow,
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
     
-    workflow = dqsurveys.workflows(workflow_name)
+    workflow = dqsurveys.workflowByName(workflow_name)
     if not workflow:
         flash('That workflow does not exist.', 'error')
         return abort(404)

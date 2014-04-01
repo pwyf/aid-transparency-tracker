@@ -27,10 +27,10 @@ def check_summary(config):
     return True
     suffix, cls = config
 
-    with file('unittests/artefacts/input-%s.json' % suffix) as f:
+    with file('unittests/artefacts/json/input-%s.json' % suffix) as f:
         data = json.load(f)
 
-    with file('unittests/artefacts/output-%s.json' % suffix) as f:
+    with file('unittests/artefacts/json/output-%s.json' % suffix) as f:
         expected = f.read()
 
     s = cls(data, conditions=None, manual=True)
