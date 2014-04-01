@@ -84,6 +84,9 @@ def setup_ordinals(self):
     self.br["2-ordinal_value"] = "2"
     self.br["3-ordinal_value"] = "13"
 
+def check_values(self):
+    pass
+
 class TrySurvey(Survey):
     def __init__(self, *args):
         super(TrySurvey, self).__init__(*args)
