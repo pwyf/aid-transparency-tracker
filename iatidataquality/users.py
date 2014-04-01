@@ -16,7 +16,7 @@ from iatidataquality import app
 from iatidataquality import db
 import usermanagement
 
-from iatidq import dqusers, util
+from iatidq import dqusers, util, dqorganisations
 
 import unicodecsv
 
@@ -98,14 +98,16 @@ def users_edit(username=None):
                     })
             if user:
                 flash('Successfully added new user', 'success')
+                return redirect(url_for('users_edit', username=user.username))
             else:
-                flash('Could not add user user', 'error')
+                flash('Could not add user', 'error')
 
     return render_template("users_edit.html", 
                            user=user,
                            permissions=permissions,
              admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+             loggedinuser=current_user,
+             organisations=dqorganisations.organisations())
 
 @app.route("/users/<username>/delete/")
 @usermanagement.perms_required()
