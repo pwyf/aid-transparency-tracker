@@ -73,8 +73,7 @@ selected at random.
 Criteria for selecting 'sometimes':
 
 * Information is published for some but not all projects; OR
-* Qualifiers are stated which confirm publication is not
-* comprehensive, i.e. "major projects", "lighthouse projects", "case studies", "key projects".
+* Qualifiers are stated which confirm publication is not comprehensive, i.e. "major projects", "lighthouse projects", "case studies", "key projects".
 
 Criteria for selecting 'not published':
 

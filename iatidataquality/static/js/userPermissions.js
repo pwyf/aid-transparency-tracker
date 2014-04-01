@@ -24,7 +24,8 @@ $(document).on("click", ".deletepermission", function(e){
         }
     });
 });
-$("#addpermissionbtn").click(function(){
+$("#addpermissionbtn").click(function(e){
+    e.preventDefault();
     var name = $("#name option:selected").val();
     var method = $("#method option:selected").val();
     var value = $("#value").val();
@@ -41,5 +42,83 @@ $("#addpermissionbtn").click(function(){
         } else {
             alert("Couldn't add that permission. Maybe you're not authorised, or maybe that permission already exists?");
         }
+    });
+});
+$("#addpermissionSetbtn").click(function(e){
+    e.preventDefault();
+    var name = $("#setname option:selected").val();
+    var value = $("#setvalue option:selected").val();
+    var permissions = {};
+    permissions['csocomments'] = [
+            {'permission_name': 'survey_cso',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'cso',
+             'permission_method': 'role',
+             'permission_value': value},
+            {'permission_name': 'organisation',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'survey_pwyfreview',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'survey_donorcomments',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'survey_pwyffinal',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'survey_finalised',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'survey_cso',
+             'permission_method': 'edit',
+             'permission_value': value}]
+    permissions['csoresearcher'] = permissions['csocomments']
+    permissions['csoresearcher'].push({
+             'permission_name': 'survey_researcher',
+             'permission_method': 'view',
+             'permission_value': value}, 
+            {'permission_name': 'survey_researcher',
+             'permission_method': 'edit',
+             'permission_value': value})
+    permissions['donor'] = [{'permission_name': 'organisation',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'survey_donorreview',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'survey_donorcomments',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'survey_finalised',
+             'permission_method': 'view',
+             'permission_value': value},
+            {'permission_name': 'organisation',
+             'permission_method': 'edit',
+             'permission_value': value},
+            {'permission_name': 'survey_donorreview',
+             'permission_method': 'edit',
+             'permission_value': value},
+            {'permission_name': 'survey_donorcomments',
+             'permission_method': 'edit',
+             'permission_value': value},
+            {'permission_name': 'organisation_feedback',
+             'permission_method': 'create',
+             'permission_value': value}]
+
+    var permission = {}
+    var successcount = 0;
+    $(permissions[name]).each(function(i, permissiondata) {
+        $.post('addpermission/', permissiondata, function(resultdata) {
+            permission_id=resultdata.id;
+            if (!(resultdata['error'])) {
+                successcount++;
+                $("#permissions tbody").append('<tr id="permission' + permission_id + '"><td><input type="hidden" name="permission" value="' + permission_id + '" /><input type="hidden" name="name' + permission_id + '" value="' + permissiondata['permission_name'] + '" />' + permissiondata['permission_name'] + '</td><td><input type="hidden" name="method' + permission_id + '" value="' + permissiondata['permission_method'] + '" />' + permissiondata['permission_method'] + '</td><td>' + permissiondata['permission_value'] + '</td><input type="hidden" name="value' + permission_id + '" value="' + permissiondata['permission_value'] + '" /></td><td><a href="" data-confirm="Are you sure you want to delete this permission?" data-permission-id="' + permission_id + '"><i class="icon-trash"></i></td></tr>');
+            }
+        });
+    }).promise()
+      .done( function() {
+        $("#addPermissionsSet").modal('hide');
     });
 });

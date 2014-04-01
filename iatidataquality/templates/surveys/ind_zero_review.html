@@ -70,11 +70,21 @@
         </tr>
         {% endif %}
         {% if (workflow.Workflow.name == 'pwyfreview') and (surveydata.pwyfreview) %}
-        {% set data = surveydata.pwyfreview %}            
+        {% set data = surveydata.pwyfreview %}
+        {% set source = data[indicator.indicator.id].OrganisationSurveyData.published_source %}
+        {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
+        {% elif (workflow.Workflow.name == 'pwyfreview') %}
+        {% set data = surveydata.researcher %}
+        {% set source = data[indicator.indicator.id].OrganisationSurveyData.published_source %}
+        {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
         {% elif (workflow.Workflow.name == 'donorreview') and (surveydata.donorreview) %}
-        {% set data = surveydata.donorreview %}  
+        {% set data = surveydata.donorreview %}
+        {% set source = data[indicator.indicator.id].OrganisationSurveyData.published_source %}
+        {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
         {% else %}
-        {% set data = surveydata.researcher %}  
+        {% set data = surveydata.researcher %}
+        {% set comment = "" %}
+        {% set source = "" %}
         {% endif %}
         <tr id="tr{{indicator.indicator.id}}">
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
@@ -86,8 +96,8 @@
           {% endif %}
         </td>
 
-        <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
+        <td><textarea name="{{indicator.indicator.id}}-source">{{source}}</textarea></td>
 
-        <td><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td><textarea name="{{indicator.indicator.id}}-comments">{{comment}}</textarea></td>
         </tr>
 {% endmacro %}

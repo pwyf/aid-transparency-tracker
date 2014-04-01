@@ -28,6 +28,7 @@ default_infotypes_filename="tests/infotypes.csv"
 default_indicator_group_name= app.config["INDICATOR_GROUP"]
 default_userdata_filename='tests/users.csv'
 default_indicator_filename='tests/indicators.csv'
+default_basic_countries_filename='tests/countries_basic.csv'
 
 def create_inforesult_types(options):
     print "Adding info result types"
@@ -69,6 +70,10 @@ def setup_common():
         test_level.ACTIVITY)
     print "Importing codelists"
     dqcodelists.importCodelists()
+    print "Importing basic countries"
+    codelist_name='countriesbasic'
+    codelist_description='Basic list of countries for running tests against'
+    iatidq.dqcodelists.add_manual_codelist(default_basic_countries_filename, codelist_name, codelist_description)
 
 def setup_packages_minimal():
     print "Creating packages"

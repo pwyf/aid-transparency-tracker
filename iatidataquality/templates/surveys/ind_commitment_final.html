@@ -57,14 +57,20 @@
             </td>
         </tr>
         {% endif %}
-        {% if surveydata.cso %}
-        {% set data = surveydata['cso'] %}
-        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
+        {% if (surveydata.cso) %}
+        {% set data = surveydata.cso %}
+    
+        {% set accepted_val = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+
+        {% if accepted_val == 1 %}
         {% set accepted = 'Agree' %}
         {% set accepted_class = 'success' %}
-        {% else %}
+        {% elif accepted_val == 0 %}
         {% set accepted = 'Disagree' %}
         {% set accepted_class = 'important' %}
+        {% else %}
+        {% set accepted = '' %}
+        {% set accepted_class = '' %}
         {% endif %}
         <tr>
             <td><span>Independent reviewer</span></td>
@@ -91,10 +97,19 @@
         {% endif %}
         {% if (surveydata.donorcomments) %}
         {% set data = surveydata.donorcomments %}
-
-        {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted != 1 %}
+    
+        {% set accepted_val = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
+        {% if accepted_val == 1 %}
+        {% set accepted = 'Agree' %}
+        {% set accepted_class = 'success' %}
+        {% elif accepted_val == 0 %}
         {% set accepted = 'Disagree' %}
         {% set accepted_class = 'important' %}
+        {% else %}
+        {% set accepted = '' %}
+        {% set accepted_class = '' %}
+        {% endif %}
+         
             <tr>
                 <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
                 <td>
@@ -106,6 +121,6 @@
                 </td>
             </tr>
 
-        {% endif %}
+
         {% endif %}
 {% endmacro %}
