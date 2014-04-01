@@ -1,6 +1,10 @@
 {% set active_page='users'%}{% extends "layout.html" %}
 {% block title %}{% if user%}Edit{%else%}New{%endif%} Users{% endblock %}
 {% block content %}
+    <ul class="breadcrumb">
+    <li><a href="{{url_for('users')}}">Users</a> <span class="divider">/</span></li>
+    <li class="active">{{user.username}}</li>
+    </ul>
 	{% if user%}<h1>Edit user {{user.username}}</h1>
     {% else %}<h1>New user</h1>{%endif%}
     <form name="userupdate" method="post" action="">
@@ -33,6 +37,7 @@
     </table>
     </form>
     {% if user %}<a class="btn btn-success" href="#addPermission" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add permissions</b></a>
+                 <a class="btn btn-success" href="#addPermissionsSet" role="button" data-toggle="modal"><i class="icon-white icon-th-large"></i> <b>Add set of permissions</b></a>
     <h2>Permissions</h2>
     <table class="table" id="permissions">
     <thead>
@@ -96,6 +101,43 @@
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             <a id="addpermissionbtn" class="btn btn-success" href="">Add permission</a>
+        </div>
+    </form>
+    </div>
+    <div id="addPermissionsSet" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel" aria-hidden="true"> 
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <form method="post" action="">
+            <h3 id="addFeedbackModalLabel">Add permissions Set for {{user.username}}</h3>
+        </div>
+        <div class="modal-body">
+            <p>Add a group of permissions to this user.</p>
+            <table class="table">
+            <tbody>
+            <tr>
+            <td>Name</td>
+            <td><select id="setname">
+                <option value="csoresearcher">CSO Researcher, can view organisation and edit survey</option>
+                <option value="donor">Donor, can view organisation and edit survey</option>
+                <option value="csocomments">CSO commenter, can view organisation and provide comments on survey</option>
+            </select></td>
+            </tr>
+            <tr>
+            <td>Organisation</td>
+            <td> <select id="setvalue">
+                 <option value="" selected></option>
+                 {% for organisation in organisations %}
+                 <option value="{{organisation.organisation_code}}">{{organisation.organisation_name}}</option>
+                 {% endfor %}
+                 </select>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <a id="addpermissionSetbtn" class="btn btn-success" href="">Add permission</a>
         </div>
     </form>
     </div>
