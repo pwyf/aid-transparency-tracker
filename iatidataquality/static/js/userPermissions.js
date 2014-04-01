@@ -24,7 +24,8 @@ $(document).on("click", ".deletepermission", function(e){
         }
     });
 });
-$("#addpermissionbtn").click(function(){
+$("#addpermissionbtn").click(function(e){
+    e.preventDefault();
     var name = $("#name option:selected").val();
     var method = $("#method option:selected").val();
     var value = $("#value").val();
