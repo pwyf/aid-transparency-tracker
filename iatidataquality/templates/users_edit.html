@@ -1,7 +1,6 @@
 {% set active_page='users'%}{% extends "layout.html" %}
 {% block title %}{% if user%}Edit{%else%}New{%endif%} Users{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', filename='js/userPermissions.js')}}"></script>
 	{% if user%}<h1>Edit user {{user.username}}</h1>
     {% else %}<h1>New user</h1>{%endif%}
     <form name="userupdate" method="post" action="">
@@ -96,8 +95,9 @@
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a id="addpermissionbtn" class="btn btn-success">Add permission</a>
+            <a id="addpermissionbtn" class="btn btn-success" href="">Add permission</a>
         </div>
     </form>
     </div>
+   <script src="{{url_for('static', filename='js/userPermissions.js')}}"></script>
 {% endblock %}
