@@ -16,14 +16,14 @@ import dqprocessing
 from lxml import etree
 import re
 
-from iatidq import db
+from iatidq import db, app
 import test_level
 import test_result
 import package_status
 import hardcoded_test
 
 # FIXME: this should be in config
-rm_packages = True
+rm_results = app.config["REMOVE_RESULTS"]
 download_queue='iati_tests_queue'
 
 class InvalidXPath(Exception): pass
@@ -251,7 +251,7 @@ def unguarded_check_file(test_functions, codelists, file_name,
 
     check_data(runtime_id, package_id, test_functions, codelists, data)
 
-    if rm_packages:
+    if rm_results:
         delete_results(runtime_id, package_id)
 
     return True
