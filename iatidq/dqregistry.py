@@ -22,6 +22,8 @@ REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,t
 
 CKANurl = 'http://iatiregistry.org/api'
 
+class PackageMissing(Exception): pass
+
 # pg is sqlalchemy model; ckangroup is a ckan object
 def copy_pg_attributes(pg, ckangroup):
     mapping = [
@@ -178,6 +180,9 @@ def activate_packages(data, clear_revision_id=None):
     with db.session.begin():
         for package_name, active in data:
             pkg = models.Package.query.filter_by(package_name=package_name).first()
+            if pkg is None:
+                msg = "Package: %s found on CKAN, not in DB" % package_name
+                raise PackageMissing(msg)
             if (clear_revision_id is not None):
                 pkg.package_revision_id = u""
             pkg.active = active
