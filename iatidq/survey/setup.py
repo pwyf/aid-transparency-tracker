@@ -89,7 +89,7 @@ def setupSurvey():
              'leadsto': getIDorNone(workflowByName('pwyfreview')),
              'duration': 21},
             {'name': 'cso',
-             'title': 'CSO review',
+             'title': 'Independent review',
              'workflow_type': workflowTypeByName('comment').id,
              'leadsto': getIDorNone(workflowByName('pwyffinal')),
              'duration': None},
