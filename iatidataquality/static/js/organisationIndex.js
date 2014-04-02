@@ -1,8 +1,10 @@
 var success = false;
 jQuery().ready(function() { 
 
+	// organisation_code is defined in the HTML template
+
     var url = ""; 
-    jQuery.getJSON(url+"/plan/api/organisations/{{organisation.organisation_code}}" + "?callback=?", null, function(org) { 
+    jQuery.getJSON(url+"/plan/api/organisations/" + organisation_code + "?callback=?", null, function(org) { 
         success = true;
         if (org['scores']['group'] == 'Under consideration'){
             var approach_text = '<i class="icon icon-info-sign"></i> It looks like IATI publication is under consideration.';
@@ -13,7 +15,7 @@ jQuery().ready(function() {
             var elements_text = '<i class="icon icon-question-sign"></i> Please let us know if there is an updated schedule';
             var schedulequalifier = '';
         } else {
-            if (org['publisher']['publisher_code_actual'] != '{{organisation.organisation_code}}') {
+            if (org['publisher']['publisher_code_actual'] != organisation_code) {
                 var schedulequalifier = ' (for ' + org['publisher']['publisher_actual'] + ')';
             } else {
                 var schedulequalifier = '';
@@ -38,7 +40,7 @@ jQuery().ready(function() {
         jQuery(".commitment .foundschedule").html('<i class="icon icon-ok"></i> Implementation schedule found' + schedulequalifier).removeClass('muted');
         jQuery(".commitment .approach").html(approach_text);
         jQuery(".commitment .elements").html(elements_text);
-        jQuery(".commitment .review").html('<a class="btn btn-success" href="'+url+'/plan/organisations/{{organisation.organisation_code}}">Review Commitment »</a>');
+        jQuery(".commitment .review").html('<a class="btn btn-success" href="'+url+'/plan/organisations/' + organisation_code + '>Review Commitment »</a>');
     });
 });
 
