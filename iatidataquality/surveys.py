@@ -27,6 +27,7 @@ import iatidq.survey.mapping
 from iatidq.models import *
 
 import usermanagement
+from iatidq import util
 
 @app.route("/surveys/admin/")
 @usermanagement.perms_required()
@@ -249,6 +250,9 @@ def organisation_survey_view(organisation_code, workflow,
 
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
+
+    org_indicators['commitment'] = util.resort_sqlalchemy_indicator(org_indicators['commitment'])
+    org_indicators['zero'] = util.resort_dict_indicator(org_indicators['zero'])
 
     return render_template(
         "surveys/_survey_%s.html" % workflow.WorkflowType.name,
