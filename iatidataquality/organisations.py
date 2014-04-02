@@ -22,6 +22,7 @@ from iatidataquality import db
 from iatidq import dqusers, dqindicators
 from iatidataquality import surveys
 from iatidq.dqcsv import make_csv
+from iatidq import util
 
 import os
 import sys
@@ -238,6 +239,11 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     aggregate_results = dqorganisations._organisation_indicators_split(
         organisation, aggregation_type)
+
+    aggregate_results['zero'] = util.resort_dict_indicator(
+                                aggregate_results['zero'])
+    aggregate_results['non_zero'] = util.resort_dict_indicator(
+                                    aggregate_results['non_zero'])
         
     organisation_survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
@@ -336,6 +342,13 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
     packages = dqorganisations.organisationPackages(organisation_code)
 
     org_indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
+
+    aggregate_results['commitment'] = util.resort_sqlalchemy_indicator(
+                                    aggregate_results['commitment'])
+    aggregate_results['publication_organisation'] = util.resort_dict_indicator(
+                                aggregate_results['publication_organisation'])
+    aggregate_results['publication_activity'] = util.resort_dict_indicator(
+                                aggregate_results['publication_activity'])
 
     lastyearsdata = iatidq.survey.mapping.get_organisation_results(
         organisation_code, 
