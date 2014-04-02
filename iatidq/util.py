@@ -13,6 +13,7 @@ import urllib2
 import json
 from flask import request, current_app
 import traceback
+import collections
 
 @contextlib.contextmanager
 def report_error(success, failure):
@@ -48,3 +49,17 @@ def jsonify(*args, **kwargs):
     return current_app.response_class(json.dumps(dict(*args, **kwargs),
             indent=None if request.is_xhr else 2, cls=JSONEncoder),
         mimetype='application/json')
+
+def resort_sqlalchemy_indicator(data):
+    resort_fn = lambda x, y: cmp(x[1]['indicator'].indicator_order,
+                                        y[1]['indicator'].indicator_order)
+    new = sorted(data.items(),
+                    cmp=resort_fn)
+    return collections.OrderedDict(new)
+
+def resort_dict_indicator(data):
+    resort_fn = lambda x, y: cmp(x[1]['indicator']['indicator_order'],
+                                        y[1]['indicator']['indicator_order'])
+    new = sorted(data.items(),
+                    cmp=resort_fn)
+    return collections.OrderedDict(new)
