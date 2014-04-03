@@ -106,7 +106,9 @@
     <tbody>
     {% for pp in organisationpackages %}
     <tr>
-	<td>{{pp.Package.package_name}}</td><td>{{pp.Package.package_title}}</td><td>{{pp.OrganisationPackage.condition}}</td>
+    <td><a href="{{url_for('packages', package_name=pp.Package.package_name)}}">{{pp.Package.package_name}}</a></td>
+    <td>{{pp.Package.package_title}}</td>
+    <td>{{pp.OrganisationPackage.condition}}</td>
     <td>
         {% if pp.Package.man_auto=='man' %}<a href="{{url_for('packages_edit', package_name=pp.Package.package_name)}}"><i class="icon-pencil"></i></a>{% endif %}
     </td>
