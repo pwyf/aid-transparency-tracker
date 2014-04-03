@@ -117,11 +117,11 @@ def publisher_simple(out, cdtns):
         def relevant(hierarchy):
             key = (t,'activity hierarchy', str(hierarchy)) 
 
-            if not cdtns:
-                return True
-
             if t not in out[hierarchy]:
                 return False
+
+            if not cdtns:
+                return True
 
             if key not in cdtns:
                 return True
