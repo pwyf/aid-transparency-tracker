@@ -131,6 +131,13 @@ def publisher_simple(out, cdtns):
 
             return True
 
+        # This makes sure information about a test is returned.
+        def get_okhierarchy(out, t):
+            for h in out:
+                if (t in out[h] and 'test' in out[h][t]):
+                    return h
+            return False
+
         for hierarchy in filter(relevant, hierarchies):
             test_info = out[hierarchy][t]
             
@@ -140,8 +147,10 @@ def publisher_simple(out, cdtns):
                 test_info["results_pct"] * 
                 test_info["results_num"]
                 )
-            ## FIXME: all okhieriarcy values are identical
-            okhierarchy = hierarchy
+        # Result aggregation throws away hierarchies if there are 0 results.
+        # This means some hierarchies won't have the 'test' dict. But, at
+        # least one must, because we wouldn't be here otherwise.
+        okhierarchy = get_okhierarchy(out, t)
 
         tmp = make_summary(
             out[okhierarchy][t]['test']["id"],
