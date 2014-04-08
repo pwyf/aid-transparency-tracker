@@ -133,7 +133,7 @@ def make_survey_data_for_current_workflow(organisation_code):
     print "current workflow: %s" % workflow.name
 
     from iatidq import dqindicators
-    indicators = dqindicators.indicators(indicatorgroup=u"2013 Index")
+    indicators = dqindicators.indicators(indicatorgroup=u"2014index")
 
     for indicator in indicators:
         data = {
