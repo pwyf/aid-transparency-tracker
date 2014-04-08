@@ -2,7 +2,6 @@
 {% block title %}{{organisation.organisation_name}} &raquo; Organisations{% endblock %}
 {% block content %}
 
-   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
     <div class="pull-right">
         <a class="btn btn-success" href="{{url_for('login', next='/organisations/' + organisation.organisation_code + '/publication')}}"><i class="icon-lock icon-white"></i> <b>Login &raquo; {{ organisation.organisation_name }}</b></a>
     </div>
@@ -50,7 +49,7 @@
                     </div>
                 </div>
             </td>
-            <td>{{lastyearsdata[result.indicator.name].survey_ordinal_value}}% <a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down"></i></a></td>
+            <td>{{lastyearsdata[result.indicator.name].survey_ordinal_value}}% <a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down align-right"></i></a></td>
             <td><span class="label label-default">No survey data yet.</span></td>
             </tr>
             <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
@@ -126,7 +125,7 @@
                     {% endif %}
                 {% endif %}
                 {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
-                <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a>
+                <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down align-right"></i></a>
                 {% endif %}
             </td>
 	        <td>
@@ -197,7 +196,7 @@
                     {% endif %}
                 {% endif %}
                 {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
-                <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a>
+                <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down align-right"></i></a>
                 {% endif %}
             </td>
 	        <td>
