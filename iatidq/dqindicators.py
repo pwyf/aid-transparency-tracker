@@ -151,19 +151,25 @@ def indicators(indicatorgroup=None, indicator=None):
         indicators = db.session.query(models.Indicator
                     ).filter(models.IndicatorGroup.name==indicatorgroup
                     ).join(models.IndicatorGroup
-                    ).order_by(models.Indicator.indicator_type,
-                               models.Indicator.indicator_category_name,
-                               models.Indicator.indicator_subcategory_name
+                    ).order_by(models.Indicator.indicator_order
                     ).all()
     else:
         indicators = db.session.query(models.Indicator
                     ).filter(models.IndicatorGroup.name==indicatorgroup,
                              models.Indicator.name==indicator
                     ).join(models.IndicatorGroup
-                    ).order_by(models.Indicator.indicator_type,
-                               models.Indicator.indicator_category_name,
-                               models.Indicator.indicator_subcategory_name
+                    ).order_by(models.Indicator.indicator_order
                     ).first()
+    return indicators
+
+def indicatorsTests(indicatorgroup_name):
+    indicators = db.session.query(models.Indicator,
+                                  models.Test
+                ).filter(models.IndicatorGroup.name==indicatorgroup_name
+                ).outerjoin(models.IndicatorTest
+                ).outerjoin(models.Test
+                ).order_by(models.Indicator.indicator_order
+                ).all()
     return indicators
 
 def addIndicatorGroup(data):
