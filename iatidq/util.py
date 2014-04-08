@@ -63,3 +63,10 @@ def resort_dict_indicator(data):
     new = sorted(data.items(),
                     cmp=resort_fn)
     return collections.OrderedDict(new)
+
+def resort_indicator_tests(data):
+    resort_fn = lambda x, y: cmp(x[1]["indicator_order"],
+                                        y[1]["indicator_order"])
+    new = sorted(data.items(),
+                    cmp=resort_fn)
+    return collections.OrderedDict(new)
