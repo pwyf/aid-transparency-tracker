@@ -38,6 +38,8 @@ import spreadsheet
 
 @app.route("/indicators/")
 def indicatorgroups():
+    if not usermanagement.check_perms('admin'):
+        return redirect(url_for('indicators', indicatorgroup=app.config["INDICATOR_GROUP"]))
     indicatorgroups = dqindicators.indicatorGroups()
     return render_template("indicatorgroups.html", indicatorgroups=indicatorgroups,
                          admin=usermanagement.check_perms('admin'),
