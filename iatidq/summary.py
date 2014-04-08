@@ -12,6 +12,8 @@ import itertools
 import models # damn!
 import pprint
 
+class NoRelevantResults(Exception): pass
+
 def reform_dict(d):
     def inner(k1):
         matches_first = lambda i: i[0] == k1
@@ -136,7 +138,9 @@ def publisher_simple(out, cdtns):
             for h in out:
                 if (t in out[h] and 'test' in out[h][t]):
                     return h
-            return False
+            raise NoRelevantResults(
+                "Summary could not be generated for test %d" % t
+                )
 
         for hierarchy in filter(relevant, hierarchies):
             test_info = out[hierarchy][t]
