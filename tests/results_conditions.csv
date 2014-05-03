@@ -1,0 +1,5 @@
+indicator_name,indicator_description,test_name,test_description,test_level
+conditions,Conditions,conditions exists (if activity-status/@code is at least 2 and conditions/@attached is not 0)?,Conditions data,1
+conditions,Conditions,document-link/category[@code='A04'] exists (if activity-status/@code is at least 2 and conditions/@attached is not 0)?,Conditions document,1
+results,Results,result exists (if activity-status/@code is at least 2)?,Results data,1
+results,Results,document-link/category[@code='A08'] exists (if activity-status/@code is at least 2)?,Results document,1
