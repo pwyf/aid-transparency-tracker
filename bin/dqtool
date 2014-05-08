@@ -32,7 +32,9 @@ def create_survey(options):
     organisation_code = options.organisation_code.decode('ascii')
     assert organisation_code
 
-    s = iatidq.survey.data.getOrCreateSurvey(organisation_code)
+    s = iatidq.survey.data.getOrCreateSurvey({ 
+            "organisation_code": organisation_code
+            })
 
 def get_package_names(organisation_code):
     for p in iatidq.dqorganisations.organisationPackages(
