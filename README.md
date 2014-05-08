@@ -108,3 +108,8 @@ Reload a package
 
     bin/dqtool --mode reload-package --name dfid-tz
 
+Adding new tests
+================
+
+    ./quickstart.py --enroll-tests --filename tests/some-new-file.csv
+
