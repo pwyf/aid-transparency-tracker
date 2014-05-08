@@ -172,7 +172,6 @@ def test_organisation(runtime_id, package_id, data, test_functions, codelists,
 
     res = test_organisation_data(data, test_functions, codelists, add_result)
     add_results()
-    return res
 
 def parse_xml(file_name):
     try:
