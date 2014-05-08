@@ -228,7 +228,7 @@ def run():
     parser.add_option("--name", dest="package_name",
                       action="store")
     parser.add_option("--test-id", type="int", dest="test_id",
-                      action="store_int")
+                      action="store")
     parser.add_option("--indicator", dest="indicator",
                       action="store")
     options, rest = parser.parse_args()
