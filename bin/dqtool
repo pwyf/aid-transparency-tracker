@@ -227,7 +227,7 @@ def run():
                       action="store")
     parser.add_option("--name", dest="package_name",
                       action="store")
-    parser.add_option("--test-id", dest="test_id",
+    parser.add_option("--test-id", type="int", dest="test_id",
                       action="store_int")
     parser.add_option("--indicator", dest="indicator",
                       action="store")
