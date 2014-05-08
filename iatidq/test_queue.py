@@ -27,7 +27,7 @@ rm_results = app.config["REMOVE_RESULTS"]
 download_queue='iati_tests_queue'
 
 class InvalidXPath(Exception): pass
-
+class MissingIdentifier(Exception): pass
 
 def delete_results(runtime_id, package_id):
     with db.session.begin():
@@ -179,6 +179,12 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
         if hierarchy is "":
             return None
         return hierarchy
+
+    def get_result_identifier(activity):
+        try:
+            return activity.find('iati-identifier').text.decode()
+        except:
+            raise MissingIdentifier
 
     def run_test_activity(organisation_id, activity):
         result_hierarchy = get_result_hierarchy(activity)
