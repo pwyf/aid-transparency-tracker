@@ -112,7 +112,7 @@ def test_activity(runtime_id, package_id, activity,
                   organisation_id):
 
     result_identifier = get_result_identifier(activity)
-    activity_data = etree.tostring(activity)
+    data = etree.tostring(activity)
 
     results = []
 
