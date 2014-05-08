@@ -134,7 +134,6 @@ def test_activity(runtime_id, package_id, activity,
 
     res = test_elements(data, test_functions, codelists, add_result)
     add_results()
-    return res
 
 def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
 
