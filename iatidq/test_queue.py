@@ -111,7 +111,7 @@ def test_activity(runtime_id, package_id, activity,
                   result_hierarchy, test_functions, codelists,
                   organisation_id):
 
-    result_identifier = activity.find('iati-identifier').text.decode()
+    result_identifier = get_result_identifier(activity)
     activity_data = etree.tostring(activity)
 
     results = []
