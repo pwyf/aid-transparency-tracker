@@ -102,3 +102,9 @@ Run aggregation test
 
 This runs an aggregation on the packages for organisation GB-1 and compares
 the results with the stashed file in unittests/artefacts/json/dfid-sample-aggregation-data.json; if the results are different, then a new file is output
+
+Reload a package
+================
+
+    bin/dqtool --mode reload-package --name dfid-tz
+
