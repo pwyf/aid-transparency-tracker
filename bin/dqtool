@@ -28,6 +28,12 @@ def clear_survey(options):
         print "No such survey"
         sys.exit(1)
 
+def create_survey(options):
+    organisation_code = options.organisation_code.decode('ascii')
+    assert organisation_code
+
+    s = iatidq.survey.data.getOrCreateSurvey(organisation_code)
+
 def get_package_names(organisation_code):
     for p in iatidq.dqorganisations.organisationPackages(
         organisation_code=organisation_code):
@@ -178,6 +184,7 @@ def list_modes(options):
 
 modes = {
     "clear-survey": clear_survey,
+    "create-survey": create_survey,
     "list-packages": list_packages,
     "reload-packages": reload_packages,
     "reload-package": reload_package,
