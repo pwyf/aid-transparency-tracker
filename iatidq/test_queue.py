@@ -36,6 +36,12 @@ def delete_results(runtime_id, package_id):
             models.Result.package_id==package_id
             ).delete()
 
+def get_result_identifier(activity):
+    try:
+        return activity.find('iati-identifier').text.decode()
+    except:
+        raise MissingIdentifier
+
 def binary_test(test_name):
     if re.compile("(.*) is on list (.*)").match(test_name):
         return True
@@ -179,12 +185,6 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
         if hierarchy is "":
             return None
         return hierarchy
-
-    def get_result_identifier(activity):
-        try:
-            return activity.find('iati-identifier').text.decode()
-        except:
-            raise MissingIdentifier
 
     def run_test_activity(organisation_id, activity):
         result_hierarchy = get_result_hierarchy(activity)
