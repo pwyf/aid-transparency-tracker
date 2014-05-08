@@ -107,9 +107,12 @@ def test_elements(xml_fragment, test_functions, codelists, add_result):
         return _test_elements(test_functions, codelists, add_result,
                               tests, data)
 
-def test_activity(runtime_id, package_id, result_identifier, 
-                  result_hierarchy, data, test_functions, codelists,
+def test_activity(runtime_id, package_id, activity, 
+                  result_hierarchy, test_functions, codelists,
                   organisation_id):
+
+    result_identifier = activity.find('iati-identifier').text.decode()
+    activity_data = etree.tostring(activity)
 
     results = []
 
@@ -188,13 +191,10 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     def run_test_activity(organisation_id, activity):
         result_hierarchy = get_result_hierarchy(activity)
-            
-        result_identifier = activity.find('iati-identifier').text.decode()
-        activity_data = etree.tostring(activity)
         
-        test_activity(runtime_id, package_id, 
-                      result_identifier, result_hierarchy,
-                      activity_data, test_functions, 
+        test_activity(runtime_id, package_id, activity,
+                      result_hierarchy,
+                      test_functions, 
                       codelists, organisation_id)
 
     def run_test_organisation(organisation_id, 
