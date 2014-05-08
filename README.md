@@ -113,3 +113,7 @@ Adding new tests
 
     ./quickstart.py --enroll-tests --filename tests/some-new-file.csv
 
+You will then need to associate each test with an indicator:
+
+    bin/dqtool --mode associate-test --test-id 52 --indicator conditions
+

@@ -99,6 +99,17 @@ def compare_aggregation(options):
         print json.dumps(results, indent=2)
         sys.exit(1)
 
+def associate_test(options):
+    assert options.test_id
+    assert options.indicator
+
+    sql = '''insert into indicatortest (test_id, indicator_id)
+               values (%s, %s);'''
+
+    from iatidq import db
+
+    db.engine.execute(sql, (options.test_id, options.indicator))
+
 def compare_summary(options):
     assert options.organisation_code
     assert options.filename
@@ -197,7 +208,8 @@ modes = {
     "list-modes": list_modes,
     "make-survey-data": make_survey_data,
     "make-csv-output": make_csv_output,
-    "clear-queue": clear_queue
+    "clear-queue": clear_queue,
+    "associate-test": associate_test
     }
 
 def run():
@@ -209,6 +221,10 @@ def run():
     parser.add_option("--filename", dest="filename",
                       action="store")
     parser.add_option("--name", dest="package_name",
+                      action="store")
+    parser.add_option("--test-id", dest="test_id",
+                      action="store_int")
+    parser.add_option("--indicator", dest="indicator",
                       action="store")
     options, rest = parser.parse_args()
 
