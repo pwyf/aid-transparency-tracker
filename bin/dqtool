@@ -102,13 +102,18 @@ def compare_aggregation(options):
 def associate_test(options):
     assert options.test_id
     assert options.indicator
+    from iatidq import db
+
+    sql = '''select id from indicator where name = %s'''
+    results = db.engine.execute(sql, (options.indicator,)).fetchall()
+
+    assert len(results) == 1
+    (indicator_id, ) = results[0]
 
     sql = '''insert into indicatortest (test_id, indicator_id)
                values (%s, %s);'''
 
-    from iatidq import db
-
-    db.engine.execute(sql, (options.test_id, options.indicator))
+    db.engine.execute(sql, (options.test_id, indicator_id))
 
 def compare_summary(options):
     assert options.organisation_code
