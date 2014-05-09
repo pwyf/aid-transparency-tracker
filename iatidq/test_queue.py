@@ -297,6 +297,10 @@ def test_one_package(filename, package_name):
     package_id = package.id
     runtime_id = testrun.start_new_testrun().id
 
+    print "Package: %s" % package_name
+    print "Package ID: %d" % package_id
+    print "Runtime: %d" % runtime_id
+
     check_file(test_functions, codelists,
                filename,
                runtime_id,
