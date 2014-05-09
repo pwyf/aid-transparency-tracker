@@ -86,7 +86,7 @@ def import_feedback():
 
 def update_organisation_condition(pc_id):
     pc = OrganisationCondition.query.filter_by(id=pc_id).first_or_404()
-    dqpublishercondition.configure_organisation_condition(pc)
+    dqpublishercondition.configure_organisation_condition(pc, request)
 
 @app.route("/organisation_conditions/<id>/edit/", methods=['GET', 'POST'])
 @usermanagement.perms_required()
@@ -124,7 +124,7 @@ def organisation_conditions_new(id=None):
 
     if (request.method == 'POST'):
         pc = OrganisationCondition()
-        dqpublishercondition.configure_organisation_condition(pc)
+        dqpublishercondition.configure_organisation_condition(pc, request)
         flash('Created new condition', "success")
         return redirect(url_for('organisation_conditions_editor', id=pc.id))
     else:
