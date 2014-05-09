@@ -199,7 +199,7 @@ def clear_queue(options):
                 ['iati_download_queue', 'iati_tests_queue'] ]
 
 def test_package(options):
-    package_name = options.name
+    package_name = options.package_name
     assert package_name
     
     filename = options.filename
