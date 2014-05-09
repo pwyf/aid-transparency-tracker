@@ -198,6 +198,16 @@ def clear_queue(options):
     [ run_queue(queue_name) for queue_name in
                 ['iati_download_queue', 'iati_tests_queue'] ]
 
+def test_package(options):
+    package_name = options.name
+    assert package_name
+    
+    filename = options.filename
+    assert filename
+
+    import iatidq.test_queue
+    iatidq.test_queue.test_one_package(filename, package_name)
+
 def list_modes(options):
     for key in sorted(modes.keys()):
         print key
@@ -214,7 +224,8 @@ modes = {
     "make-survey-data": make_survey_data,
     "make-csv-output": make_csv_output,
     "clear-queue": clear_queue,
-    "associate-test": associate_test
+    "associate-test": associate_test,
+    "test-package": test_package
     }
 
 def run():
