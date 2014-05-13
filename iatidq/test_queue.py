@@ -55,7 +55,7 @@ def tests_by_level(test_functions, level):
     return itertools.ifilter(test_exists, tests)
 
 def _test_elements(test_functions, codelists, add_result,
-                  tests, data):
+                  tests, data, override_result):
 
     def reformat_test_data(xmldata, binary_test):
         if binary_test:
