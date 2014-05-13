@@ -270,7 +270,7 @@ def check_package_results(options):
                                                               test_ids)
         print runtime_id
     except NoAggregateResults as exc:
-        print "No aggregate results for test_id: ", exc
+        print "No aggregate results for test_id:", exc
 
 def list_modes(options):
     for key in sorted(modes.keys()):
