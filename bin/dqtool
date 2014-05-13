@@ -250,7 +250,8 @@ def check_package_results(options):
     from iatidq import db
     first = lambda x : x.__getitem__(0)
 
-    sql = '''select id from test where id >= 0 and active = 't';'''
+    sql = '''select id from test where id >= 0 and active = 't'
+               and test_level = 1;'''
 
     test_ids = map(first, db.engine.execute(sql, ()))
     print test_ids
