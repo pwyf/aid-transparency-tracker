@@ -119,9 +119,10 @@ def test_activity(runtime_id, package_id, activity,
     
     try:
         result_identifier = get_result_identifier(activity)
-        data = etree.tostring(activity)
     except MissingIdentifier:
         override_result = test_result.FAIL
+
+    data = etree.tostring(activity)
 
     results = []
 
