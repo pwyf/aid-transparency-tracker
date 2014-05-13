@@ -273,20 +273,27 @@ def check_package_results(options):
     test_ids = map(first, db.engine.execute(sql, ()))
     assert test_ids
 
-    sql = '''select id from package where package_name = %s'''
+    if options.all_packages:
+        sql = '''select package_id from organisationpackage 
+                   left join package on package_id = package.id 
+                   where organisation_id = %s and 
+                   package_name not like '%%-org';'''
+    else:
+        sql = '''select id from package where package_name = %s'''
     
-    package_ids = [row for row in db.engine.execute(sql, (package_name,))]
-    assert len(package_ids) == 1
+    package_ids = [row[0] for row in db.engine.execute(sql, (package_name,))]
+    if not options.all_packages:
+        assert len(package_ids) == 1
 
-    package_id = package_ids[0][0]
-    
-    try:
-        runtime_id, date = get_aggregate_result_runtime_for_package(package_id,
-                                                                    test_ids)
-        print "%s,%d,%s" % (package_name, runtime_id,
-                            date.strftime('%Y-%m-%d %H:%M:%S'))
-    except NoAggregateResults as exc:
-        print "No aggregate results for test_id:", exc
+    for package_id in package_ids:
+        try:
+            runtime_id, date = get_aggregate_result_runtime_for_package(
+                package_id, test_ids)
+            print "%s,%d,%s" % (package_name, runtime_id,
+                                date.strftime('%Y-%m-%d %H:%M:%S'))
+        except NoAggregateResults as exc:
+            print "No aggregate results for test_id:", exc
+            sys.exit(1)
 
 def list_modes(options):
     for key in sorted(modes.keys()):
@@ -323,6 +330,8 @@ def run():
                       action="store")
     parser.add_option("--indicator", dest="indicator",
                       action="store")
+    parser.add_option("--all-packages", dest="all_packages",
+                      action="store_true")
     options, rest = parser.parse_args()
 
     if not options.mode:
