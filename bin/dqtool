@@ -235,7 +235,18 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
         return results
 
     runtime_ids = [ runtime_for_test(test_id) for test_id in test_ids ]
-    return sorted(runtime_ids)[0]
+
+    assert len(runtime_ids) > 0
+
+    sql = '''select runtime_id from runtime where
+               runtime_id in (%s)
+               order by runtime_datetime desc;'''
+
+    ids = ",".join(map(str, runtime_ids))
+    rids = db.engine.execute(sql, (ids,))
+
+    return rids[0]
+
 
 def check_package_results(options):
     package_name = options.package_name
