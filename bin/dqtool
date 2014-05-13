@@ -218,14 +218,21 @@ def check_package_results(options):
         sort by timestamps
         report oldest timestamp'''
 
-    # get test ids
-    # get package ids
-    sql = '''select id from test;'''
     from iatidq import db
-
     first = lambda x : x.__getitem__(0)
+
+    sql = '''select id from test;'''
+
     test_ids = map(first, db.engine.execute(sql, ()))
     print test_ids
+    assert test_ids
+
+    sql = '''select id from package where package_name = %s'''
+    
+    package_id = db.engine.execute(sql, (package_name,))[0][0]
+
+    print package_id
+    
                   
 
 def list_modes(options):
