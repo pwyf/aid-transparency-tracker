@@ -256,7 +256,7 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
 
 def check_package_results(options):
     package_name = options.package_name
-    assert package_name
+    assert package_name or options.all_packages
  
     ''' find list of expected aggregations
         is set complete?
