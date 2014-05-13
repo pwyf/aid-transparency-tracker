@@ -223,7 +223,8 @@ def check_package_results(options):
     sql = '''select id from test;'''
     from iatidq import db
 
-    results = map(list, db.engine.execute(sql, ()))
+    first = lambda x : x.__getitem__(0)
+    results = map(first, db.engine.execute(sql, ()))
     print results
                   
 
