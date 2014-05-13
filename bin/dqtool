@@ -211,6 +211,8 @@ def test_package(options):
 class NoAggregateResults(Exception): pass
 
 def get_aggregate_result_runtime_for_package(package_id, test_ids):
+    from iatidq import db
+
     # foreach test
     #   get matching runtimes
     #      if no match, raise
@@ -221,8 +223,14 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
     assert len(test_ids) > 0
 
     def runtime_for_test(test_id):
-        print test_id
-        raise NoAggregateResults
+        sql = '''select runtime_id from aggregateresult
+                   where test_id = %s and
+                         package_id = %s;'''
+
+        results = [i[0] for i in db.engine.execute(sql, (test_id, package_id))]
+        if len(results) == 0:
+            raise NoAggregateResults
+        return results
 
     runtime_ids = [ runtime_for_test(test_id) for test_id in test_ids ]
     return sorted(runtime_ids)[0]
