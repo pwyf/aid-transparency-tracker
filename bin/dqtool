@@ -252,11 +252,13 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
 
     oldest_test_runtime = [i for i in rids][0]
 
+    return tuple(oldest_test_runtime)
+
+def get_package_name(package_id):
     sql = '''select package_name from package where id = %s'''
     results = db.engine.execute(sql, (package_id,))
     package_name = results.fetchall()[0][0]
-
-    return (package_name,) + tuple(oldest_test_runtime)
+    return package_name
 
 def check_package_results(options):
     package_name = options.package_name
@@ -301,14 +303,15 @@ def check_package_results(options):
 
 
     for package_id in package_ids:
+        pkg_name = get_package_name(package_id)
+
         try:
-            pkg_name, runtime_id, date = get_aggregate_result_runtime_for_package(
+            runtime_id, date = get_aggregate_result_runtime_for_package(
                 package_id, test_ids)
-            print "%s,%d,%s" % (pkg_name, runtime_id,
-                                date.strftime('%Y-%m-%d %H:%M:%S'))
+            print "%s,%d,%s,%s" % (pkg_name, runtime_id,
+                                date.strftime('%Y-%m-%d %H:%M:%S'),"OK")
         except NoAggregateResults as exc:
-            print "No aggregate results for test_id:", exc
-            sys.exit(1)
+            print "%s,,,No aggregate results for test " % (pkg_name, exc)
 
 def list_modes(options):
     for key in sorted(modes.keys()):
