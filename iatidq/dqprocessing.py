@@ -85,9 +85,6 @@ def get_results(runtime, package_id, agg_type):
 
     result_identifiers = results # set([r.result_identifier for r in results])
 
-    print "finished doing distinct"
-    print len(result_identifiers)
-
     if result_identifiers:
         results = models.Result.query.filter(
             models.Result.runtime_id == runtime,
@@ -95,10 +92,7 @@ def get_results(runtime, package_id, agg_type):
             models.Result.result_identifier.in_(result_identifiers)
             ).all()
     else:
-        print "short cut"
         results = []
-
-    print "doing res2"
 
     results2 = models.Result.query.filter(
         models.Result.runtime_id == runtime,
@@ -111,9 +105,9 @@ def get_results(runtime, package_id, agg_type):
 
 def aggregate_results_single_org(runtime, package_id, agg_type):
     status = "Updating"
-    print "getting result ids"
+
     result_ids = get_results(runtime, package_id, agg_type)
-    print "getting data"
+
     data = db.session.query(models.Test.id,
                 models.Result.result_data,
                 models.Result.result_hierarchy,
@@ -129,12 +123,7 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
                    models.Result.result_data
         ).all()
 
-    print "got data, len:"
-    print len(data)
-
-    print "calc percentages"
     aresults = aggregations.aggregate_percentages(data)
-    print "finished calculating percentages"
 
     with db.session.begin():
         for aresult in aresults:
@@ -153,8 +142,6 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
 def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
     status = "Updating"
     result_ids = get_results(runtime, package_id, agg_type)
-
-    print "len(result_ids): %d" % len(result_ids)
 
     # create temp table
     conn = db.session.connection()
@@ -202,6 +189,4 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
             a.aggregateresulttype_id = agg_type.id
             db.session.add(a)
 
-    print "added to db"
-    
     return {"status": status, "data": aresults}
