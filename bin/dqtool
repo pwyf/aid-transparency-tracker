@@ -283,8 +283,8 @@ def check_package_results(options):
     try:
         runtime_id, date = get_aggregate_result_runtime_for_package(package_id,
                                                                     test_ids)
-        print "Runtime: %d, Time: %s" % (runtime_id,
-                                         date.strftime('%Y-%m-%d %H:%M:%S'))
+        print "%s,%d,%s" % (package_name, runtime_id,
+                            date.strftime('%Y-%m-%d %H:%M:%S'))
     except NoAggregateResults as exc:
         print "No aggregate results for test_id:", exc
 
