@@ -234,7 +234,7 @@ def check_package_results(options):
     print len(package_ids)
     assert len(package_ids) == 1
 
-    print package_id[0][0]
+    print package_ids[0][0]
     
                   
 
