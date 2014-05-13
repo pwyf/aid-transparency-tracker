@@ -88,7 +88,8 @@ def _test_elements(test_functions, codelists, add_result,
 
     def execute_and_record(xmldata, test):
         the_result = execute_test(xmldata, test.id, binary_test(test.name))
-        if the_result != test_result.SKIP:
+        #if the_result != test_result.SKIP:
+        if True:
             add_result(test.id, the_result)
 
     [ execute_and_record(data, test) for test in tests ]
