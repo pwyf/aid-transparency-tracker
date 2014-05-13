@@ -228,8 +228,6 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
                    where test_id = %s and
                          package_id = %s;'''
 
-        print "test: %d" % test_id
-
         results = [i[0] for i in db.engine.execute(sql, (test_id, package_id))]
         if len(results) == 0:
             raise NoAggregateResults(test_id)
@@ -240,15 +238,11 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
         ids = ",".join(map(str, results))
         rids = db.engine.execute(sql % ids)
 
-        print "all runtimes for this test: ", results
         most_recent_runtime = [i[0] for i in rids][0]
-        print "most recent runtime: ", most_recent_runtime
         return most_recent_runtime
 
     runtime_ids = [ runtime_for_test(test_id) for test_id in test_ids ]
     runtime_ids = [ i for i in set(runtime_ids) ]
-
-    print "most recent runtimes for package: ", runtime_ids
 
     sql = '''select id, runtime_datetime from runtime where id in (%s)
                order by runtime_datetime;'''
