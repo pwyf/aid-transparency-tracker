@@ -232,21 +232,20 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
         results = [i[0] for i in db.engine.execute(sql, (test_id, package_id))]
         if len(results) == 0:
             raise NoAggregateResults(test_id)
-        return results
+
+        sql = '''select id from runtime where
+                   runtime_id in (%s)
+                   order by runtime_datetime desc;'''
+
+        ids = ",".join(map(str, results))
+        rids = db.engine.execute(sql, (ids,))
+
+        return rids[0]
 
     runtime_ids = [ runtime_for_test(test_id) for test_id in test_ids ]
+    runtime_ids = [ i for i in set(runtime_ids) ]
 
-    assert len(runtime_ids) > 0
-
-    sql = '''select id from runtime where
-               runtime_id in (%s)
-               order by runtime_datetime desc;'''
-
-    ids = ",".join(map(str, runtime_ids))
-    rids = db.engine.execute(sql, (ids,))
-
-    return rids[0]
-
+    return runtime_ids
 
 def check_package_results(options):
     package_name = options.package_name
