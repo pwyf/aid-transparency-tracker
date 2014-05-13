@@ -231,7 +231,7 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
 
         results = [i[0] for i in db.engine.execute(sql, (test_id, package_id))]
         if len(results) == 0:
-            raise NoAggregateResults
+            raise NoAggregateResults(test_id)
         return results
 
     runtime_ids = [ runtime_for_test(test_id) for test_id in test_ids ]
