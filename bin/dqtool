@@ -336,7 +336,7 @@ modes = {
     "associate-test": associate_test,
     "test-package": test_package,
     "check-package-results": check_package_results,
-    "update-frequencies", update_frequencies
+    "update-frequencies": update_frequencies
     }
 
 def run():
