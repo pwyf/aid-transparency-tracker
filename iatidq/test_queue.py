@@ -147,6 +147,7 @@ def test_activity(runtime_id, package_id, activity,
     return res
 
 def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
+    override_result = None
 
     organisation_data = etree.fromstring(xml_fragment)
 
@@ -158,7 +159,7 @@ def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
     
     for tests, data in tests_and_sources:
         return _test_elements(test_functions, codelists, add_result,
-                              tests, data)
+                              tests, data, override_result)
 
 def test_organisation(runtime_id, package_id, data, test_functions, codelists,
                   organisation_id):
