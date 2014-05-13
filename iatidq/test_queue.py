@@ -26,6 +26,8 @@ import hardcoded_test
 rm_results = app.config["REMOVE_RESULTS"]
 download_queue='iati_tests_queue'
 
+missing_result_id = 0
+
 class InvalidXPath(Exception): pass
 class MissingIdentifier(Exception): pass
 
@@ -114,6 +116,7 @@ def test_elements(xml_fragment, test_functions, codelists, add_result,
 def test_activity(runtime_id, package_id, activity, 
                   result_hierarchy, test_functions, codelists,
                   organisation_id):
+    global missing_result_id
 
     override_result = None
     
@@ -121,6 +124,8 @@ def test_activity(runtime_id, package_id, activity,
         result_identifier = get_result_identifier(activity)
     except MissingIdentifier:
         override_result = test_result.FAIL
+        missing_result_id += 1
+        result_identifier = "MISSING-%d" % missing_result_id
 
     data = etree.tostring(activity)
 
