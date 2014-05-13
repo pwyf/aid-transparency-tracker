@@ -257,6 +257,7 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
     package_name = results.fetchall()[0][0]
 
     print "PKG", package_name
+    print type(package_name)
 
     return (package_name,) + oldest_test_runtime
 
