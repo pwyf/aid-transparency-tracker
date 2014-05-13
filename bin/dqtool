@@ -239,7 +239,10 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
         ids = ",".join(map(str, results))
         rids = db.engine.execute(sql % ids)
 
-        return [i[0] for i in rids][0]
+        print "all runtimes for this test: ", results
+        most_recent_runtime = [i[0] for i in rids][0]
+        print "most recent runtime: ", most_recent_runtime
+        return most_recent_runtime
 
     runtime_ids = [ runtime_for_test(test_id) for test_id in test_ids ]
     runtime_ids = [ i for i in set(runtime_ids) ]
