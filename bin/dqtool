@@ -227,6 +227,8 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
                    where test_id = %s and
                          package_id = %s;'''
 
+        print "test: %d" % test_id
+
         results = [i[0] for i in db.engine.execute(sql, (test_id, package_id))]
         if len(results) == 0:
             raise NoAggregateResults
