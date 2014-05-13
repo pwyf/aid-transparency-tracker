@@ -208,6 +208,11 @@ def test_package(options):
     import iatidq.test_queue
     iatidq.test_queue.test_one_package(filename, package_name)
 
+class NoAggregateResults(Exception): pass
+
+def get_aggregate_result_runtime_for_package(package_id, test_ids):
+    raise NoAggregateResults
+
 def check_package_results(options):
     package_name = options.package_name
     assert package_name
@@ -234,9 +239,14 @@ def check_package_results(options):
     print len(package_ids)
     assert len(package_ids) == 1
 
-    print package_ids[0][0]
+    package_id = package_ids[0][0]
     
-                  
+    try:
+        runtime_id = get_aggregate_result_runtime_for_package(package_id,
+                                                              test_ids)
+        print runtime_id
+    except NoAggregateResults:
+        print "No aggregate results"
 
 def list_modes(options):
     for key in sorted(modes.keys()):
