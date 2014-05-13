@@ -229,9 +229,10 @@ def check_package_results(options):
 
     sql = '''select id from package where package_name = %s'''
     
-    package_id = db.engine.execute(sql, (package_name,))[0][0]
+    package_ids = [row for row in db.engine.execute(sql, (package_name,))]
+    assert len(package_ids) == 1
 
-    print package_id
+    print package_id[0][0]
     
                   
 
