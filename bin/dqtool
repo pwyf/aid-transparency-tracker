@@ -224,7 +224,7 @@ def check_package_results(options):
     from iatidq import db
 
     first = lambda x : x.__getitem__(0)
-    results = [first(i) for i in db.engine.execute(sql, ())]
+    results = map(first, db.engine.execute(sql, ()))
     print results
                   
 
