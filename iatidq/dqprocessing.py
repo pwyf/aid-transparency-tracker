@@ -44,9 +44,7 @@ def aggregate_results(runtime, package_id):
     if len(agg_types) == 0:
         return {"status": status, "data": []}
 
-    print "getting org ids"
     organisation_ids = get_organisation_ids()
-    print organisation_ids
     aresults = []
 
     for agg_type in agg_types:
@@ -60,9 +58,6 @@ def aggregate_results(runtime, package_id):
     return {"status": status, "data": aresults}
 
 def get_results(runtime, package_id, agg_type):
-    print "results: lookup by aggtype"
-    print agg_type
-    print agg_type.test_id
 
     if agg_type.test_id is not None:
         results = db.session.query(distinct(models.Result.result_identifier)).filter(
@@ -73,15 +68,11 @@ def get_results(runtime, package_id, agg_type):
     else:
         results = db.session.query(distinct(models.Result.result_identifier))
 
-    print "results: filter by runtime,packageid"
-
     results = results.filter(
         models.Result.runtime_id == runtime
         ).filter(
         models.Result.package_id == package_id
         ).all()
-
-    print "doing distinct on result ids"
 
     result_identifiers = results # set([r.result_identifier for r in results])
 
