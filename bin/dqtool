@@ -280,6 +280,8 @@ def check_package_results(options):
         results = db.engine.execute(sql, (options.organisation_code,))
         org_id = results.fetchall()[0][0]
 
+        pring "ORG: ", org_id
+
         sql = '''select package_id from organisationpackage 
                    left join package on package_id = package.id 
                    where organisation_id = %s and 
