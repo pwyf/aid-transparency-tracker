@@ -208,6 +208,25 @@ def test_package(options):
     import iatidq.test_queue
     iatidq.test_queue.test_one_package(filename, package_name)
 
+def check_package_results(options):
+    package_name = options.package_name
+    assert package_name
+ 
+    ''' find list of expected aggregations
+        is set complete?
+        get timestamps
+        sort by timestamps
+        report oldest timestamp'''
+
+    # get test ids
+    # get package ids
+    sql = '''select id from test;'''
+    from iatidq import db
+
+    results = map(list, db.engine.execute(sql, ()))
+    print results
+                  
+
 def list_modes(options):
     for key in sorted(modes.keys()):
         print key
@@ -225,7 +244,8 @@ modes = {
     "make-csv-output": make_csv_output,
     "clear-queue": clear_queue,
     "associate-test": associate_test,
-    "test-package": test_package
+    "test-package": test_package,
+    "check-package-results": check_package_results
     }
 
 def run():
