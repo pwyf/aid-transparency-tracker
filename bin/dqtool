@@ -253,7 +253,8 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
     oldest_test_runtime = [i for i in rids][0]
 
     sql = '''select package_name from package where id = %s'''
-    package_name = db.engine.execute(sql, (package_id,)).fetchall()[0][0]
+    results = db.engine.execute(sql, (package_id,))
+    package_name = results.fetchall()[0][0]
 
     return (package_name,) + oldest_test_runtime
 
