@@ -257,7 +257,9 @@ def get_aggregate_result_runtime_for_package(package_id, test_ids):
 def check_package_results(options):
     package_name = options.package_name
     assert package_name or options.all_packages
- 
+    if options.all_packages:
+        assert options.organisation_code
+    
     ''' find list of expected aggregations
         is set complete?
         get timestamps
@@ -274,14 +276,20 @@ def check_package_results(options):
     assert test_ids
 
     if options.all_packages:
+        sql = '''select id from organisation where organisation_code = %s;'''
+        results = db.engine.execute(sql, (options.organisation_code,))
+        org_id = results.fetchall()[0][0]
+
         sql = '''select package_id from organisationpackage 
                    left join package on package_id = package.id 
                    where organisation_id = %s and 
-                   package_name not like '%%-org';'''
+                   package_name not like '%s';'''
+        package_ids = [row[0] for row in db.engine.execute(
+                sql, (org_id, '%-org'))]
     else:
         sql = '''select id from package where package_name = %s'''
-    
-    package_ids = [row[0] for row in db.engine.execute(sql, (package_name,))]
+        package_ids = [row[0] for row in db.engine.execute(
+                sql, (package_name,))]
 
     assert len(package_ids) > 0
     if not options.all_packages:
