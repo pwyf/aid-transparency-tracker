@@ -211,7 +211,20 @@ def test_package(options):
 class NoAggregateResults(Exception): pass
 
 def get_aggregate_result_runtime_for_package(package_id, test_ids):
-    raise NoAggregateResults
+    # foreach test
+    #   get matching runtimes
+    #      if no match, raise
+    #
+    # combine all runtimes into a set
+    # get oldest runtime in set
+
+    assert len(test_ids) > 0
+
+    def runtime_for_test(test_id):
+        raise NoAggregateResults
+
+    runtime_ids = [ runtime_for_test(test_id) for test_id in test_ids ]
+    return sorted(runtime_ids)[0]
 
 def check_package_results(options):
     package_name = options.package_name
