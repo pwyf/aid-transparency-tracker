@@ -67,6 +67,9 @@ def _test_elements(test_functions, codelists, add_result,
             return xmldata
 
     def execute_test(xmldata, test_id, binary_test):
+        if override_result is not None:
+            return override_result
+
         data = reformat_test_data(xmldata, binary_test)
         # FIXME: All tests should really be validated in some way before being 
         # entered into the database.
@@ -88,7 +91,8 @@ def _test_elements(test_functions, codelists, add_result,
 
     [ execute_and_record(data, test) for test in tests ]
 
-def test_elements(xml_fragment, test_functions, codelists, add_result):
+def test_elements(xml_fragment, test_functions, codelists, add_result,
+                  override_result):
 
     elements = etree.fromstring(xml_fragment)
 
@@ -105,14 +109,19 @@ def test_elements(xml_fragment, test_functions, codelists, add_result):
     
     for tests, data in tests_and_sources:
         return _test_elements(test_functions, codelists, add_result,
-                              tests, data)
+                              tests, data, override_result)
 
 def test_activity(runtime_id, package_id, activity, 
                   result_hierarchy, test_functions, codelists,
                   organisation_id):
 
-    result_identifier = get_result_identifier(activity)
-    data = etree.tostring(activity)
+    override_result = None
+    
+    try:
+        result_identifier = get_result_identifier(activity)
+        data = etree.tostring(activity)
+    except MissingIdentifier:
+        override_result = test_result.FAIL
 
     results = []
 
@@ -132,7 +141,8 @@ def test_activity(runtime_id, package_id, activity,
                 newresult.organisation_id = organisation_id
                 db.session.add(newresult)
 
-    res = test_elements(data, test_functions, codelists, add_result)
+    res = test_elements(data, test_functions, codelists, add_result, 
+                        override_result)
     add_results()
     return res
 
