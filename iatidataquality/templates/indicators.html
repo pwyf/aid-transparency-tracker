@@ -1,13 +1,8 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}Indicators{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    {% if admin %}
     <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
-    <script >
-    $(function() {
-    $("table#tests").tablesorter({ sortList: [[0,0]] });
-    });
-    </script>
     <div class="pull-right">
     <p><a class="btn btn-success" href="{{url_for('indicatorgroups_edit', indicatorgroup=indicatorgroup.name)}}"><i class="icon-white icon-pencil"></i> <b>Edit Group</b></a>
     <a class="btn btn-danger" href="{{url_for('indicatorgroups_delete', indicatorgroup=indicatorgroup.name)}}" data-confirm="Are you sure you want to delete indicator group {{indicatorgroup.name}}? This action will also delete all indicators associated with this group, and cannot be undone."><i class="icon-white icon-trash"></i> <b>Delete Group</b></a></p>
@@ -16,25 +11,55 @@
     <p><a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', indicatorgroup=indicatorgroup.name)}}"><i class="icon-download"></i> <b>CSV of associated tests</b></a></p>
     <p><a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', indicatorgroup=indicatorgroup.name, option="no")}}"><i class="icon-download"></i> <b>CSV of unassociated tests</b></a></p>
     </div>
-	<h1>{{indicatorgroup.description}} <code>{{indicatorgroup.name}}</code></h1>
+    {% endif %}
+	<h1>{{indicatorgroup.description}}</h1>
 	<h3>Indicators</h3>
     <table class="table" id="tests">
     <thead>
-    <th>Name</th><th>Description</th>
+    <th width="10%">No</th>
+    <th colspan="2" width="{% if admin %}80%{%else%}90%{%endif%}">Description</th>
+    {% if admin %}
+    <th width="10%">Edit</th>
+    {% endif %}
     </thead>
     <tbody>
     {% if indicators %}
-	    {% for indicator in indicators %}
-        <tr>
-	    <td><a href="{{url_for('indicatortests', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}">{{ indicator.name }}</a></td>
-        <td>{{indicator.description}}</td>
+        {% set typecolspan = "2" %}
+        {% if admin %}
+        {% set typecolspan = "3" %}
+        {% endif %}
+	    {% for i, indicator in indicators.items() %}
+        {% if indicator.indicator_type != type %}
+        {% set type = indicator.indicator_type %}
+        {% set cat = indicator.indicator_category_name %}
+        <tr class="info"><td colspan="{% if admin %}4{%else%}3{%endif%}"><b>{{type|title}}{% if cat != "" %}
+        &ndash; {{cat|title}}{% endif %}</b></td></tr>
+        {% endif %}
+        <tr id="indicator-{{indicator.id}}">
+        <td>{{indicator.indicator_order}}</td>
+	    <td>{{indicator.description}}</td>
+        {% if admin %}
         <td>
             <a href="{{url_for('indicators_edit', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}"><i class="icon-pencil"></i></a>
             <a href="{{url_for('indicators_delete', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}" data-confirm="Are you sure you want to delete Indicator {{indicator.name}}?"><i class="icon-trash"></i></a>
         </td>
+        {% endif %}
+        <td><a href="#" class="showTests" id="showindicator-{{indicator.id}}"><i class="icon-chevron-down align-right"></i></a></td>
         </tr>
+        <tr class="group-{{indicator.id}} hidden">
+            <td></td>
+            <td colspan="2">{{indicator.longdescription}}</td>
+        </tr>
+            {% for test in indicator.tests %}
+                <tr id="tr{{test.id}}" class="group-{{indicator.id}} hidden">
+                <td></td>
+                <td><i>{{ test.description}}</i></td>
+	            <td><code>{{ test.name }}</code></td>
+                </tr>
+            {% endfor %}
 	    {% endfor %}
     {% endif %}
     </tbody>
     </table>
+    <script src="{{url_for('static', filename='js/organisationPublication.js')}}"></script>
 {% endblock %}

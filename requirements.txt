@@ -7,7 +7,6 @@ Werkzeug==0.8.3
 amqplib==1.0.2
 anyjson==0.3.1
 argparse==1.2.1
-distribute==0.6.19
 kombu==2.1.8
 lxml==2.3.4
 python-dateutil==1.5
@@ -16,7 +15,7 @@ ckan
 ckanclient
 pika==0.9.8
 supervisor
-foxpath>=0.98
+foxpath>=0.99.11
 psycopg2
 unicodecsv
 openpyxl

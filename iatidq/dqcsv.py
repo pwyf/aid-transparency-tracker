@@ -56,6 +56,8 @@ def write_organisation_publications_csv(out, organisation):
     aggregate_results = dqorganisations._organisation_indicators(organisation)
 
     if (organisation.frequency == "less than quarterly"):
+        freq = 0.5
+    elif (organisation.frequency == "quarterly"):
         freq = 0.9
     else:
         freq = 1.0

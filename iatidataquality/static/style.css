@@ -164,3 +164,6 @@ th.restrict_text_commitment, td.restrict_text_commitment {
     max-width:220px; 
     word-wrap:break-word;
 }
+.align-right {
+    float:right;
+}

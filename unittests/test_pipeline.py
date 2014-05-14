@@ -143,7 +143,7 @@ def _test_example_tests(publisher, country):
         "test_pwyf2013",
         "tests/sample_tests.csv")
 
-    iatidq.dqindicators.importIndicatorDescriptionsFromFile("2013 Index", 
+    iatidq.dqindicators.importIndicatorDescriptionsFromFile("2014index", 
                                                             "tests/indicators.csv")
     log("Importing codelists")
     #iatidq.dqcodelists.importCodelists()

@@ -17,7 +17,7 @@ from datetime import datetime
 
 from iatidataquality import app
 from iatidataquality import db
-from iatidq import dqusers
+from iatidq import dqusers, util
 import usermanagement
 
 import os
@@ -38,6 +38,8 @@ import spreadsheet
 
 @app.route("/indicators/")
 def indicatorgroups():
+    if not usermanagement.check_perms('admin'):
+        return redirect(url_for('indicators', indicatorgroup=app.config["INDICATOR_GROUP"]))
     indicatorgroups = dqindicators.indicatorGroups()
     return render_template("indicatorgroups.html", indicatorgroups=indicatorgroups,
                          admin=usermanagement.check_perms('admin'),
@@ -110,11 +112,22 @@ def indicators_comparison(indicatorgroup, indicator):
 
 @app.route("/indicators/<indicatorgroup>/")
 def indicators(indicatorgroup=None):
-    indicators = dqindicators.indicators(indicatorgroup)
+    its = {}
+    indicators = dqindicators.indicatorsTests(indicatorgroup)
+    for indicator in indicators:
+        if indicator.Indicator.id not in its:
+            its[indicator.Indicator.id] = {}
+        its[indicator.Indicator.id].update(indicator.Indicator.as_dict())
+        if indicator.Test:
+            if ('tests' not in its[indicator.Indicator.id]):
+                its[indicator.Indicator.id]['tests'] = []
+            its[indicator.Indicator.id]['tests'].append(indicator.Test.as_dict())
+
+    its = util.resort_indicator_tests(its)
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
     return render_template("indicators.html", 
                         indicatorgroup=indicatorgroup, 
-                        indicators=indicators,
+                        indicators=its,
                         admin=usermanagement.check_perms('admin'),
                         loggedinuser=current_user)
 

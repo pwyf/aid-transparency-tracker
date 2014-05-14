@@ -102,3 +102,18 @@ Run aggregation test
 
 This runs an aggregation on the packages for organisation GB-1 and compares
 the results with the stashed file in unittests/artefacts/json/dfid-sample-aggregation-data.json; if the results are different, then a new file is output
+
+Reload a package
+================
+
+    bin/dqtool --mode reload-package --name dfid-tz
+
+Adding new tests
+================
+
+    ./quickstart.py --enroll-tests --filename tests/some-new-file.csv
+
+You will then need to associate each test with an indicator:
+
+    bin/dqtool --mode associate-test --test-id 52 --indicator conditions
+
