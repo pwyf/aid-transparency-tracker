@@ -151,7 +151,6 @@ def test_activity(runtime_id, package_id, activity,
     res = test_elements(data, test_functions, codelists, add_result, 
                         override_result)
     add_results()
-    return res
 
 def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
     override_result = None
@@ -191,7 +190,6 @@ def test_organisation(runtime_id, package_id, data, test_functions, codelists,
 
     res = test_organisation_data(data, test_functions, codelists, add_result)
     add_results()
-    return res
 
 def parse_xml(file_name):
     try:
