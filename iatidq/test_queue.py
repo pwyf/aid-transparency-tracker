@@ -284,6 +284,7 @@ def record_testrun(package_id, runtime_id):
         conn.execute('begin transaction;')
         conn.execute('delete from package_tested where id = %d;' % package_id)
         conn.execute('insert into package_tested (package_id, runtime) values (%d, %d);' % (package_id, runtime_id))
+        conn.execute('commit;')
     except:
         conn.execute('rollback;')
     finally:
