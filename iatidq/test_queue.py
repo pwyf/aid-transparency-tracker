@@ -275,16 +275,37 @@ def unguarded_check_file(test_functions, codelists, file_name,
 
     return True
 
+def record_testrun(package_id, runtime_id):
+        # get db
+        # sql = '''delete from package_tested where id = %s'''
+        # sql2 = '''insert into package_tested values (%s, %s)'''
+    conn = db.session.connection()
+    try:
+        conn.execute('begin transaction;')
+        conn.execute('delete from package_tested where id = %d;' % package_id)
+        conn.execute('insert into package_tested (package_id, runtime) values (%d, %d);' % (package_id, runtime_id))
+    except:
+        conn.execute('rollback;')
+    finally:
+        del(conn)
+
 def check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id):
     try:
-        return unguarded_check_file(test_functions, codelists, file_name, 
+        rv = unguarded_check_file(test_functions, codelists, file_name, 
                                     runtime_id, package_id)
     except Exception, e:
         import traceback
         traceback.print_exc()
         print "Exception in check_file ", e
         raise
+
+    try:
+        record_testrun(package_id, runtime_id)
+    except:
+        pass
+
+    return rv
 
 def dequeue_download(body, test_functions, codelists):
     try:
