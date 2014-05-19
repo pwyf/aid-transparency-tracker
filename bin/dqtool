@@ -282,7 +282,7 @@ def check_package_results(options):
                 oldest = date
 
         except NoAggregateResults as exc:
-            print "%s,,,No completion recorded" % pkg_name
+            print "%s,,,No completion ever recorded" % pkg_name
             broken = True
 
     if broken:
