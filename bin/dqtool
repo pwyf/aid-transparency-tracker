@@ -246,9 +246,6 @@ def check_package_results(options):
     from iatidq import db
     first = lambda x : x.__getitem__(0)
 
-    sql = '''select id from test where id >= 0 and active = 't'
-               and test_level = 1;'''
-
     if options.all_packages:
         sql = '''select id from organisation where organisation_code = %s;'''
         results = db.engine.execute(sql, (options.organisation_code,))
