@@ -266,6 +266,8 @@ def check_package_results(options):
     if not options.all_packages:
         assert len(package_ids) == 1
 
+    oldest = None
+    broken = False
 
     for package_id in package_ids:
         pkg_name = get_package_name(package_id)
@@ -275,8 +277,18 @@ def check_package_results(options):
                 package_id)
             print "%s,%d,%s,%s" % (pkg_name, runtime_id,
                                 date.strftime('%Y-%m-%d %H:%M:%S'),"OK")
+
+            if oldest is None or oldest > date:
+                oldest = date
+
         except NoAggregateResults as exc:
             print "%s,,,No completion recorded" % pkg_name
+            broken = True
+
+    if broken:
+        print "Some package(s) missing"
+    else:
+        print "All packages tested; oldest was at: %s" % oldest.strftime('%Y-%m-%d %H:%M:%S')
 
 def update_frequencies(options):
     import iatidq.dqorganisations
