@@ -276,7 +276,7 @@ def check_package_results(options):
             print "%s,%d,%s,%s" % (pkg_name, runtime_id,
                                 date.strftime('%Y-%m-%d %H:%M:%S'),"OK")
         except NoAggregateResults as exc:
-            print "%s,,,No aggregate results for ", pkg_name
+            print "%s,,,No completion recorded" % pkg_name
 
 def update_frequencies(options):
     import iatidq.dqorganisations
