@@ -67,7 +67,7 @@ def reload_packages(options):
     for p in get_package_names(organisation_code):
         try:
             do_reload_package(p, options.no_refresh)
-        except e:
+        except Exception as e:
             print "Error reloading: %s" % e
 
 def reload_package(options):
