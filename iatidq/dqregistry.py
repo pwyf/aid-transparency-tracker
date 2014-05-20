@@ -143,7 +143,6 @@ def refresh_package_by_name(package_name):
         print "Error 403 (Not authorised) when retrieving '%s'" % package_name
     except ckanclient.CkanApiNotFoundError:
         print "Error 404 (Not found) when retrieving '%s'" % package_name
-        raise
         
 def _refresh_packages():
     setup_orgs = app.config.get("SETUP_ORGS", [])
