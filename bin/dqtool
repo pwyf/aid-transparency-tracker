@@ -61,7 +61,7 @@ def do_reload_package(package_name, no_refresh):
     iatidq.dqdownload.run(package_name=package_name)
 
 def reload_packages(options):
-    organisation_code = options.organisation_code
+    organisation_code = options.organisation_code.decode('ascii')
     assert organisation_code
 
     for p in get_package_names(organisation_code):
@@ -71,7 +71,7 @@ def reload_packages(options):
             print "Error reloading: %s" % e
 
 def reload_package(options):
-    package_name = options.package_name
+    package_name = options.package_name.decode('ascii')
     assert package_name
 
     do_reload_package(package_name, options.no_refresh)
