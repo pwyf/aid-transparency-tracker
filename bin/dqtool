@@ -211,48 +211,19 @@ def test_package(options):
 
 class NoAggregateResults(Exception): pass
 
-def get_aggregate_result_runtime_for_package(package_id, test_ids):
+def get_aggregate_result_runtime_for_package(package_id):
     from iatidq import db
 
-    # foreach test
-    #   get matching runtimes
-    #      if no match, raise
-    #
-    # combine all runtimes into a set
-    # get oldest runtime in set
+    sql = '''select id, runtime_datetime from package_tested 
+               left join runtime on runtime = id
+               where package_id = %s;'''
 
-    assert len(test_ids) > 0
+    results = db.engine.execute(sql, (package_id,)).fetchall()
 
-    def runtime_for_test(test_id):
-        sql = '''select runtime_id from aggregateresult
-                   where test_id = %s and
-                         package_id = %s;'''
+    if len(results) != 1:
+        raise NoAggregateResults
 
-        results = [i[0] for i in db.engine.execute(sql, (test_id, package_id))]
-        if len(results) == 0:
-            raise NoAggregateResults(test_id)
-
-        sql = '''select id from runtime where id in (%s)
-                   order by runtime_datetime desc;'''
-
-        ids = ",".join(map(str, results))
-        rids = db.engine.execute(sql % ids)
-
-        most_recent_runtime = [i[0] for i in rids][0]
-        return most_recent_runtime
-
-    runtime_ids = [ runtime_for_test(test_id) for test_id in test_ids ]
-    runtime_ids = [ i for i in set(runtime_ids) ]
-
-    sql = '''select id, runtime_datetime from runtime where id in (%s)
-               order by runtime_datetime;'''
-
-    ids = ",".join(map(str, runtime_ids))
-    rids = db.engine.execute(sql % ids)
-
-    oldest_test_runtime = [i for i in rids][0]
-
-    return tuple(oldest_test_runtime)
+    return tuple(results[0])
 
 def get_package_name(package_id):
     sql = '''select package_name from package where id = %s'''
@@ -275,16 +246,16 @@ def check_package_results(options):
     from iatidq import db
     first = lambda x : x.__getitem__(0)
 
-    sql = '''select id from test where id >= 0 and active = 't'
-               and test_level = 1;'''
-
-    test_ids = map(first, db.engine.execute(sql, ()))
-    assert test_ids
-
     if options.all_packages:
+        org_code = options.organisation_code
         sql = '''select id from organisation where organisation_code = %s;'''
-        results = db.engine.execute(sql, (options.organisation_code,))
-        org_id = results.fetchall()[0][0]
+        results = db.engine.execute(sql, (org_code,))
+        rows = results.fetchall()
+        if len(rows) == 0:
+            print "No organisation found for code `%s'" % org_code
+            sys.exit(1)
+
+        org_id = rows[0][0]
 
         sql = '''select package_id from organisationpackage 
                    left join package on package_id = package.id 
@@ -297,21 +268,36 @@ def check_package_results(options):
         package_ids = [row[0] for row in db.engine.execute(
                 sql, (package_name,))]
 
-    assert len(package_ids) > 0
+    if len(package_ids) == 0:
+        print "No packages, let alone test results, found"
+        sys.exit(1)
+
     if not options.all_packages:
         assert len(package_ids) == 1
 
+    oldest = None
+    broken = False
 
     for package_id in package_ids:
         pkg_name = get_package_name(package_id)
 
         try:
             runtime_id, date = get_aggregate_result_runtime_for_package(
-                package_id, test_ids)
+                package_id)
             print "%s,%d,%s,%s" % (pkg_name, runtime_id,
                                 date.strftime('%Y-%m-%d %H:%M:%S'),"OK")
+
+            if oldest is None or oldest > date:
+                oldest = date
+
         except NoAggregateResults as exc:
-            print "%s,,,No aggregate results for test %d" % (pkg_name, exc.args[0])
+            print "%s,,,No completion ever recorded" % pkg_name
+            broken = True
+
+    if broken:
+        print "Some package(s) missing"
+    else:
+        print "All packages tested; oldest was at: %s" % oldest.strftime('%Y-%m-%d %H:%M:%S')
 
 def update_frequencies(options):
     import iatidq.dqorganisations

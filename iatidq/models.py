@@ -760,6 +760,13 @@ class WorkflowNotification(db.Model):
     workflow_to = Column(Integer, ForeignKey('workflow.id'))
     workflow_notice = Column(UnicodeText)
 
+
+class PackageTested(db.Model):
+    __tablename__ = 'package_tested'
+    package_id = Column(Integer, ForeignKey('package.id'), primary_key=True)
+    runtime = Column(Integer, ForeignKey('package.id'), nullable=False)
+
+
 class UserActivity(db.Model):
     __tablename__='useractivity'
     id = Column(Integer, primary_key=True)
