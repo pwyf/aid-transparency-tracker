@@ -268,7 +268,10 @@ def check_package_results(options):
         package_ids = [row[0] for row in db.engine.execute(
                 sql, (package_name,))]
 
-    assert len(package_ids) > 0
+    if len(package_ids) == 0:
+        print "No packages, let alone test results, found"
+        sys.exit(1)
+
     if not options.all_packages:
         assert len(package_ids) == 1
 
