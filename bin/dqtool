@@ -65,7 +65,10 @@ def reload_packages(options):
     assert organisation_code
 
     for p in get_package_names(organisation_code):
-        do_reload_package(p, options.no_refresh)
+        try:
+            do_reload_package(p, options.no_refresh)
+        except e:
+            print "Error reloading: %s" % e
 
 def reload_package(options):
     package_name = options.package_name
