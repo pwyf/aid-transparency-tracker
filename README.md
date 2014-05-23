@@ -117,3 +117,10 @@ You will then need to associate each test with an indicator:
 
     bin/dqtool --mode associate-test --test-id 52 --indicator conditions
 
+
+Checking if tests are complete
+==============================
+
+    bin/dqtool --mode check-package-results --all --organisation GB-1
+
+
