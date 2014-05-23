@@ -213,6 +213,26 @@ def test_package(options):
     import iatidq.test_queue
     iatidq.test_queue.test_one_package(filename, package_name)
 
+def test_packages(options):
+    org_code = options.organisation_code
+    assert org_code
+
+    from iatidq import db
+
+    sql = '''
+        select package_name from organisation 
+            left join organisationpackage on organisation.id = organisation_id
+            left join package on package_id = package.id 
+            where organisation_code = %s and active = 't';
+    '''
+    results = db.engine.execute(sql, (org_code,))
+    package_names = [ row[0] for row in results.fetchall() ]
+    
+    import iatidq.test_queue
+    for package_name in package_names:
+        iatidq.test_queue.test_one_package(filename, package_name)
+
+
 class NoAggregateResults(Exception): pass
 
 def get_aggregate_result_runtime_for_package(package_id):
