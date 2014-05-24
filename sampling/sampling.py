@@ -22,11 +22,19 @@ class SampleOrgTest(object):
         self.test_id = test_id
 
     def qualifies(self):
-        rows = query('''select result_data from result where organisation_id = %s and test_id = %s where result_data != 0''', [self.organisation_id, self.test_id])
+        rows = query('''select result_data from result 
+                          where organisation_id = %s 
+                            and test_id = %s 
+                            and result_data != 0''', 
+                     [self.org_id, self.test_id])
         return len(rows) >= 1
         
     def activity_ids(self):
-        rows = query('''select result_identifier from result where organisation_id = %s and test_id = %s where result_data != 0''', [self.organisation_id, self.test_id])
+        rows = query('''select result_identifier from result 
+                          where organisation_id = %s 
+                            and test_id = %s 
+                            and result_data != 0''', 
+                     [self.org_id, self.test_id])
         ids = [ i[0] for i in rows ]
         return ids
 
