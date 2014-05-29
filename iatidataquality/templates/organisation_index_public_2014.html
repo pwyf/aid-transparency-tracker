@@ -181,22 +181,26 @@
                     </div>
                 </div>
             </td>
-            <td>{% if lastyearsdata[result.indicator.name]["total_points"]|int>0 %}
-                    {% if lastyearsdata[result.indicator.name]['iati_manual'] == 'iati' %}
-
-                    <span class="label label-success">IATI</span>
-                    {% else %}
-                    <span class="label label-{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].format_class}}">{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].title}}</span> 
-                    {% endif %}
+            <td>{% if lastyearsdata[result.indicator.name].result == '' %}
+                <span class="label label-default">Not in 2013 Index</span>
                 {% else %}
-                    {% if lastyearsdata[result.indicator.name]['publication_status'] == 'sometimes' %}
-                    <span class="label label-default">Sometimes published</span>
+                    {% if lastyearsdata[result.indicator.name]["total_points"]|int>0 %}
+                        {% if lastyearsdata[result.indicator.name]['iati_manual'] == 'iati' %}
+
+                        <span class="label label-success">IATI</span>
+                        {% else %}
+                        <span class="label label-{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].format_class}}">{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].title}}</span> 
+                        {% endif %}
                     {% else %}
-                    <span class="label label-inverse">Not published</span>
+                        {% if lastyearsdata[result.indicator.name]['publication_status'] == 'sometimes' %}
+                        <span class="label label-default">Sometimes published</span>
+                        {% else %}
+                        <span class="label label-inverse">Not published</span>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-                {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
-                <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down align-right"></i></a>
+                    {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
+                    <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down align-right"></i></a>
+                    {% endif %}
                 {% endif %}
             </td>
 	        <td>
