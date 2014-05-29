@@ -4,6 +4,7 @@ import sys
 import os
 import optparse
 import json
+import datetime
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
@@ -28,6 +29,16 @@ def clear_survey(options):
         print "No such survey"
         sys.exit(1)
 
+def create_survey(options):
+    organisation_code = options.organisation_code.decode('ascii')
+    assert organisation_code
+
+    org_id = iatidq.dqorganisations.organisationid_by_code(organisation_code)
+
+    s = iatidq.survey.data.getOrCreateSurvey({ 
+            "organisation_id": org_id
+            })
+
 def get_package_names(organisation_code):
     for p in iatidq.dqorganisations.organisationPackages(
         organisation_code=organisation_code):
@@ -41,25 +52,29 @@ def list_packages(options):
         print p
 
 # where p is the package name
-def do_reload_package(package_name):
-    iatidq.dqregistry.refresh_package_by_name(package_name)
+def do_reload_package(package_name, no_refresh):
+    if not no_refresh:
+        iatidq.dqregistry.refresh_package_by_name(package_name)
     iatidq.dqregistry.activate_packages([(package_name, True)], 
                                         clear_revision_id=True)
     iatidq.dqregistry.clear_hash(package_name)
     iatidq.dqdownload.run(package_name=package_name)
 
 def reload_packages(options):
-    organisation_code = options.organisation_code
+    organisation_code = options.organisation_code.decode('ascii')
     assert organisation_code
 
     for p in get_package_names(organisation_code):
-        do_reload_package(p)
+        try:
+            do_reload_package(p, options.no_refresh)
+        except Exception as e:
+            print "Error reloading: %s" % e
 
 def reload_package(options):
-    package_name = options.package_name
+    package_name = options.package_name.decode('ascii')
     assert package_name
 
-    do_reload_package(package_name)
+    do_reload_package(package_name, options.no_refresh)
 
 def compare_aggregation(options):
     organisation_code = options.organisation_code.decode('ascii')
@@ -88,6 +103,22 @@ def compare_aggregation(options):
     else:
         print json.dumps(results, indent=2)
         sys.exit(1)
+
+def associate_test(options):
+    assert options.test_id
+    assert options.indicator
+    from iatidq import db
+
+    sql = '''select id from indicator where name = %s'''
+    results = db.engine.execute(sql, (options.indicator,)).fetchall()
+
+    assert len(results) == 1
+    (indicator_id, ) = results[0]
+
+    sql = '''insert into indicatortest (test_id, indicator_id)
+               values (%s, %s);'''
+
+    db.engine.execute(sql, (options.test_id, indicator_id))
 
 def compare_summary(options):
     assert options.organisation_code
@@ -172,12 +203,117 @@ def clear_queue(options):
     [ run_queue(queue_name) for queue_name in
                 ['iati_download_queue', 'iati_tests_queue'] ]
 
+def test_package(options):
+    package_name = options.package_name
+    assert package_name
+    
+    filename = options.filename
+    assert filename
+
+    import iatidq.test_queue
+    iatidq.test_queue.test_one_package(filename, package_name)
+
+class NoAggregateResults(Exception): pass
+
+def get_aggregate_result_runtime_for_package(package_id):
+    from iatidq import db
+
+    sql = '''select id, runtime_datetime from package_tested 
+               left join runtime on runtime = id
+               where package_id = %s;'''
+
+    results = db.engine.execute(sql, (package_id,)).fetchall()
+
+    if len(results) != 1:
+        raise NoAggregateResults
+
+    return tuple(results[0])
+
+def get_package_name(package_id):
+    sql = '''select package_name from package where id = %s'''
+    results = db.engine.execute(sql, (package_id,))
+    package_name = results.fetchall()[0][0]
+    return package_name
+
+def check_package_results(options):
+    package_name = options.package_name
+    assert package_name or options.all_packages
+    if options.all_packages:
+        assert options.organisation_code
+    
+    ''' find list of expected aggregations
+        is set complete?
+        get timestamps
+        sort by timestamps
+        report oldest timestamp'''
+
+    from iatidq import db
+    first = lambda x : x.__getitem__(0)
+
+    if options.all_packages:
+        org_code = options.organisation_code
+        sql = '''select id from organisation where organisation_code = %s;'''
+        results = db.engine.execute(sql, (org_code,))
+        rows = results.fetchall()
+        if len(rows) == 0:
+            print "No organisation found for code `%s'" % org_code
+            sys.exit(1)
+
+        org_id = rows[0][0]
+
+        sql = '''select package_id from organisationpackage 
+                   left join package on package_id = package.id 
+                   where organisation_id = %s and 
+                   package_name not like %s;'''
+        package_ids = [row[0] for row in db.engine.execute(
+                sql, (org_id, '%-org'))]
+    else:
+        sql = '''select id from package where package_name = %s'''
+        package_ids = [row[0] for row in db.engine.execute(
+                sql, (package_name,))]
+
+    if len(package_ids) == 0:
+        print "No packages, let alone test results, found"
+        sys.exit(1)
+
+    if not options.all_packages:
+        assert len(package_ids) == 1
+
+    oldest = None
+    broken = False
+
+    for package_id in package_ids:
+        pkg_name = get_package_name(package_id)
+
+        try:
+            runtime_id, date = get_aggregate_result_runtime_for_package(
+                package_id)
+            print "%s,%d,%s,%s" % (pkg_name, runtime_id,
+                                date.strftime('%Y-%m-%d %H:%M:%S'),"OK")
+
+            if oldest is None or oldest > date:
+                oldest = date
+
+        except NoAggregateResults as exc:
+            print "%s,,,No completion ever recorded" % pkg_name
+            broken = True
+
+    if broken:
+        print "Some package(s) missing"
+    else:
+        print "All packages tested; oldest was at: %s" % oldest.strftime('%Y-%m-%d %H:%M:%S')
+
+def update_frequencies(options):
+    import iatidq.dqorganisations
+    iatidq.dqorganisations.downloadOrganisationFrequency()
+
 def list_modes(options):
     for key in sorted(modes.keys()):
         print key
 
 modes = {
     "clear-survey": clear_survey,
+    "create-survey": create_survey,
     "list-packages": list_packages,
     "reload-packages": reload_packages,
     "reload-package": reload_package,
@@ -186,7 +322,11 @@ modes = {
     "list-modes": list_modes,
     "make-survey-data": make_survey_data,
     "make-csv-output": make_csv_output,
-    "clear-queue": clear_queue
+    "clear-queue": clear_queue,
+    "associate-test": associate_test,
+    "test-package": test_package,
+    "check-package-results": check_package_results,
+    "update-frequencies": update_frequencies
     }
 
 def run():
@@ -199,6 +339,14 @@ def run():
                       action="store")
     parser.add_option("--name", dest="package_name",
                       action="store")
+    parser.add_option("--test-id", type="int", dest="test_id",
+                      action="store")
+    parser.add_option("--indicator", dest="indicator",
+                      action="store")
+    parser.add_option("--all-packages", dest="all_packages",
+                      action="store_true")
+    parser.add_option("--no-refresh", dest="no_refresh",
+                      action="store_true")
     options, rest = parser.parse_args()
 
     if not options.mode:

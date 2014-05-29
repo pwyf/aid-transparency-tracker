@@ -26,8 +26,10 @@ import hardcoded_test
 rm_results = app.config["REMOVE_RESULTS"]
 download_queue='iati_tests_queue'
 
-class InvalidXPath(Exception): pass
+missing_result_id = 0
 
+class InvalidXPath(Exception): pass
+class MissingIdentifier(Exception): pass
 
 def delete_results(runtime_id, package_id):
     with db.session.begin():
@@ -35,6 +37,12 @@ def delete_results(runtime_id, package_id):
             models.Result.runtime_id==runtime_id,
             models.Result.package_id==package_id
             ).delete()
+
+def get_result_identifier(activity):
+    try:
+        return activity.find('iati-identifier').text.decode()
+    except:
+        raise MissingIdentifier
 
 def binary_test(test_name):
     if re.compile("(.*) is on list (.*)").match(test_name):
@@ -49,7 +57,7 @@ def tests_by_level(test_functions, level):
     return itertools.ifilter(test_exists, tests)
 
 def _test_elements(test_functions, codelists, add_result,
-                  tests, data):
+                  tests, data, override_result):
 
     def reformat_test_data(xmldata, binary_test):
         if binary_test:
@@ -61,6 +69,9 @@ def _test_elements(test_functions, codelists, add_result,
             return xmldata
 
     def execute_test(xmldata, test_id, binary_test):
+        if override_result is not None:
+            return override_result
+
         data = reformat_test_data(xmldata, binary_test)
         # FIXME: All tests should really be validated in some way before being 
         # entered into the database.
@@ -77,12 +88,14 @@ def _test_elements(test_functions, codelists, add_result,
 
     def execute_and_record(xmldata, test):
         the_result = execute_test(xmldata, test.id, binary_test(test.name))
-        if the_result != test_result.SKIP:
+        #if the_result != test_result.SKIP:
+        if True:
             add_result(test.id, the_result)
 
     [ execute_and_record(data, test) for test in tests ]
 
-def test_elements(xml_fragment, test_functions, codelists, add_result):
+def test_elements(xml_fragment, test_functions, codelists, add_result,
+                  override_result):
 
     elements = etree.fromstring(xml_fragment)
 
@@ -99,11 +112,23 @@ def test_elements(xml_fragment, test_functions, codelists, add_result):
     
     for tests, data in tests_and_sources:
         return _test_elements(test_functions, codelists, add_result,
-                              tests, data)
+                              tests, data, override_result)
 
-def test_activity(runtime_id, package_id, result_identifier, 
-                  result_hierarchy, data, test_functions, codelists,
+def test_activity(runtime_id, package_id, activity, 
+                  result_hierarchy, test_functions, codelists,
                   organisation_id):
+    global missing_result_id
+
+    override_result = None
+    
+    try:
+        result_identifier = get_result_identifier(activity)
+    except MissingIdentifier:
+        override_result = test_result.FAIL
+        missing_result_id += 1
+        result_identifier = "MISSING-%d" % missing_result_id
+
+    data = etree.tostring(activity)
 
     results = []
 
@@ -123,11 +148,12 @@ def test_activity(runtime_id, package_id, result_identifier,
                 newresult.organisation_id = organisation_id
                 db.session.add(newresult)
 
-    res = test_elements(data, test_functions, codelists, add_result)
+    res = test_elements(data, test_functions, codelists, add_result, 
+                        override_result)
     add_results()
-    return res
 
 def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
+    override_result = None
 
     organisation_data = etree.fromstring(xml_fragment)
 
@@ -139,7 +165,7 @@ def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
     
     for tests, data in tests_and_sources:
         return _test_elements(test_functions, codelists, add_result,
-                              tests, data)
+                              tests, data, override_result)
 
 def test_organisation(runtime_id, package_id, data, test_functions, codelists,
                   organisation_id):
@@ -164,7 +190,6 @@ def test_organisation(runtime_id, package_id, data, test_functions, codelists,
 
     res = test_organisation_data(data, test_functions, codelists, add_result)
     add_results()
-    return res
 
 def parse_xml(file_name):
     try:
@@ -182,13 +207,10 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     def run_test_activity(organisation_id, activity):
         result_hierarchy = get_result_hierarchy(activity)
-            
-        result_identifier = activity.find('iati-identifier').text.decode()
-        activity_data = etree.tostring(activity)
         
-        test_activity(runtime_id, package_id, 
-                      result_identifier, result_hierarchy,
-                      activity_data, test_functions, 
+        test_activity(runtime_id, package_id, activity,
+                      result_hierarchy,
+                      test_functions, 
                       codelists, organisation_id)
 
     def run_test_organisation(organisation_id, 
@@ -228,7 +250,6 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
     assert len(organisations) > 0
 
     for organisation in organisations:
-        print organisation['activities_xpath']
         run_tests_for_organisation(organisation)
 
     dqprocessing.aggregate_results(runtime_id, package_id)
@@ -238,9 +259,9 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
 def unguarded_check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id):
-    xml_parsed, data = parse_xml(file_name)
+    print "Filename to test: %s (%d)" % (file_name, package_id)
 
-    print file_name
+    xml_parsed, data = parse_xml(file_name)
 
     dqprocessing.add_hardcoded_result(hardcoded_test.VALID_XML, 
                                       runtime_id, package_id, xml_parsed)
@@ -256,16 +277,38 @@ def unguarded_check_file(test_functions, codelists, file_name,
 
     return True
 
+def record_testrun(package_id, runtime_id):
+        # get db
+        # sql = '''delete from package_tested where id = %s'''
+        # sql2 = '''insert into package_tested values (%s, %s)'''
+    conn = db.session.connection()
+    try:
+        conn.execute('begin transaction;')
+        conn.execute('delete from package_tested where package_id = %d;' % package_id)
+        conn.execute('insert into package_tested (package_id, runtime) values (%d, %d);' % (package_id, runtime_id))
+        conn.execute('commit;')
+    except:
+        conn.execute('rollback;')
+    finally:
+        del(conn)
+
 def check_file(test_functions, codelists, file_name, 
                 runtime_id, package_id):
     try:
-        return unguarded_check_file(test_functions, codelists, file_name, 
+        rv = unguarded_check_file(test_functions, codelists, file_name, 
                                     runtime_id, package_id)
     except Exception, e:
         import traceback
         traceback.print_exc()
         print "Exception in check_file ", e
         raise
+
+    try:
+        record_testrun(package_id, runtime_id)
+    except:
+        pass
+
+    return rv
 
 def dequeue_download(body, test_functions, codelists):
     try:
@@ -277,6 +320,29 @@ def dequeue_download(body, test_functions, codelists):
                    args['package_id'])
     except Exception, e:
         print "Exception in dequeue_download", e
+
+def test_one_package(filename, package_name):
+    import testrun
+
+    from dqparsetests import test_functions as tf
+    test_functions = tf()
+    import dqcodelists
+    codelists = dqcodelists.generateCodelists()
+    
+    package = models.Package.query.filter_by(
+        package_name=package_name).first()
+    package_id = package.id
+    runtime_id = testrun.start_new_testrun().id
+
+    print "Package: %s" % package_name
+    print "Package ID: %d" % package_id
+    print "Runtime: %d" % runtime_id
+
+    check_file(test_functions, codelists,
+               filename,
+               runtime_id,
+               package_id)
+    
 
 def run_test_queue():
     from dqparsetests import test_functions as tf

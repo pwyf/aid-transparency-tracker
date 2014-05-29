@@ -10,7 +10,7 @@
 from iatidq import db
 import models
 
-def configure_organisation_condition(pc):
+def configure_organisation_condition(pc, request):
     with db.session.begin():
         pc.description = request.form['description']
         pc.organisation_id = int(request.form['organisation_id'])

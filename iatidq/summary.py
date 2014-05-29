@@ -151,6 +151,10 @@ def publisher_simple(out, cdtns):
                 test_info["results_pct"] * 
                 test_info["results_num"]
                 )
+
+        if results_num == 0:
+            raise NoRelevantResults("Results_num == 0 for test: %d" % t)
+
         # Result aggregation throws away hierarchies if there are 0 results.
         # This means some hierarchies won't have the 'test' dict. But, at
         # least one must, because we wouldn't be here otherwise.
