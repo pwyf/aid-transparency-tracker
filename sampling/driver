@@ -4,7 +4,7 @@ import sys
 import uuid
 import json
 
-from sampling import SampleOrgTest, DocumentLinks
+from sample_work import SampleOrgTest, DocumentLinks
 
 def run():
     org_ids = [1, 2]
