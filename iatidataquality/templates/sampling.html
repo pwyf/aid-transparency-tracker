@@ -1,0 +1,104 @@
+{% set active_page='sampling'%}{% extends "layout.html" %}
+{% block title %}Sampling{% endblock %}
+{% block content %}
+    <ul class="breadcrumb">
+    <li><a href="{{url_for('sampling')}}">Sampling</a> <span class="divider">/</span></li>
+    <li><a href="">DFID</a> <span class="divider">/</span></li>
+    <li class="active">Evaluations</li>
+    </ul>
+    <h1>Sampling: Evaluations</h1>
+    <h4>Definition</h4>
+    <p>Evaluation documents consider what the activity achieved, whether the intended objectives were met, what the major factors influencing the achievement or non-achievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation's website. If the activity under assessment is not completed but evaluation documents are available for other completed activities, the organisation can score for this indicator. Not all organisations carry out evaluations for all of their activities. Organisations can score on this indicator as long as they publish evaluations within their regular evaluation cycles, i.e. the organisation publishes country evaluations every three years, the most recent documents within this time frame are accepted. The IATI reference for this indicator is: Review of project performance and evaluation (document code = A07).</p>
+    <hr />
+    <div class="sampling-container">
+    <h3>Activity <span id="data-iati-identifier"></span></h3>
+    <div class="row">
+        <div class="span6">
+        <b>1. Contains information about this activity?</b>
+        </div>
+        <div class="span6">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-yes">Yes</button>
+              <button type="button" class="btn btn-default btn-no">No</button>
+              <button type="button" class="btn btn-default btn-unsure">Unsure</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+        <b>2. Satisfies the definition?</b>
+        </div>
+        <div class="span6">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-yes">Yes</button>
+              <button type="button" class="btn btn-default btn-no">No</button>
+              <button type="button" class="btn btn-default btn-unsure">Unsure</button>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row" id="data-content">
+        <div class="span8 offset2">
+            <h4>Mid-term evaluation document for some project</h4>
+            <p><a href="http://dfid.gov.uk/iati/gb-123456-evaluation.doc">http://dfid.gov.uk/iati/gb-123456-midtermevaluation.doc</a></p>
+            <span class="label label-default">Evaluation</span>
+        </div>
+        <div class="span8 offset2">
+            <h4>Evaluation document for some project</h4>
+            <p><a href="http://dfid.gov.uk/iati/gb-123456-evaluation.doc">http://dfid.gov.uk/iati/gb-123456-evaluation.doc</a></p>
+            <span class="label label-default">Evaluation</span>
+        </div>
+        <div class="span8 offset2">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-mini btn-primary">HTML</button>
+                <button type="button" class="btn btn-mini btn-default">XML</button>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="span4">
+            <a class="btn btn-default">&laquo; Previous</a>
+            <a class="btn btn-success">Next &raquo;</a>
+        </div>
+        <div class="span4">
+            <center>
+            <span class="label label-success">Pass: 1</span>
+            <span class="label label-important">Fail: 3</span>
+            </center>
+        </div>
+        <div class="span4">
+            <div class="progress">
+                <div class="bar bar-success" style="width: 40%;"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+<style>
+.nomargin {
+    margin:0px;
+}
+.sampling-container {
+    border:1px solid #666666;
+    padding: 15px;
+    margin:20px -30px 10px -30px;
+}
+</style>
+<script>
+$(".btn-yes").click(function(e){
+    $(this).toggleClass("btn-default btn-success");
+});
+$(".btn-no").click(function(e){
+    $(this).toggleClass("btn-default btn-danger");
+});
+$(".btn-unsure").click(function(e){
+    $(this).toggleClass("btn-default btn-warning");
+});
+var samplingdata={{samplingdata|safe}};
+$(document).ready(function(){
+    first_sample = samplingdata[0];
+    sample_iati_identifier = first_sample["iati-identifier"];
+    $("#data-iati-identifier").html(sample_iati_identifier);
+});
+</script>
+{% endblock %}
