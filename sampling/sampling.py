@@ -5,6 +5,7 @@ import psycopg2
 import requests
 import random
 import lxml.etree
+import json
 
 def save_url(url, filename):
     resp = requests.get(url)
@@ -75,6 +76,14 @@ class DocumentLink(object):
     def __repr__(self):
         return '''<DocumentLink: %s>''' % self.url
 
+    def to_json(self):
+        data = {
+            "name": "name",
+            "url": "http://",
+            "categories": []
+            }
+        return json.dumps(data, indent=2)
+    
 
 class DocumentLinks(object):
     def __init__(self, xml_string):
