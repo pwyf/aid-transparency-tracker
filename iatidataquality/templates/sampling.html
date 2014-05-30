@@ -84,21 +84,6 @@
     margin:20px -30px 10px -30px;
 }
 </style>
-<script>
-$(".btn-yes").click(function(e){
-    $(this).toggleClass("btn-default btn-success");
-});
-$(".btn-no").click(function(e){
-    $(this).toggleClass("btn-default btn-danger");
-});
-$(".btn-unsure").click(function(e){
-    $(this).toggleClass("btn-default btn-warning");
-});
-var samplingdata={{samplingdata|safe}};
-$(document).ready(function(){
-    first_sample = samplingdata[0];
-    sample_iati_identifier = first_sample["iati-identifier"];
-    $("#data-iati-identifier").html(sample_iati_identifier);
-});
+<script src="{{url_for('static', filename='js/sampling.js')}}" type="text/javascript">
 </script>
 {% endblock %}

@@ -19,6 +19,7 @@ import usermanagement
 from iatidq import dqusers, util, dqorganisations
 
 import unicodecsv
+import json
 
 samplingdata = [{'iati-identifier': 'GB-123456',
                  'data': [{
@@ -48,6 +49,11 @@ samplingdata = [{'iati-identifier': 'GB-123456',
                     ],
                  'sampling_id': '2',
                  }]
+
+
+@app.route("/api/sampling/")
+def api_sampling():
+    return json.dumps(samplingdata, indent=2)
 
 @app.route("/sampling/")
 #@usermanagement.perms_required()
