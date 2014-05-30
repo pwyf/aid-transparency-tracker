@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 import sys
+import uuid
+import json
+
 from sampling import SampleOrgTest, DocumentLinks
 
 def run():
@@ -13,19 +16,35 @@ def run():
             if not sot.qualifies():
                 continue
             act_ids = sot.activity_ids()
-            print len(act_ids)
+            #print len(act_ids)
             sample_ids = sot.sample_activity_ids(10)
-            print org_id, test_id, sample_ids
+            #print org_id, test_id, sample_ids
 
             for act_id in sample_ids:
-                print act_id
+                #print act_id
                 act = sot.xml_of_activity(act_id)
-                print act
+                #print act
                 # lxml.etree.tostring(act)
                 
                 for dl in DocumentLinks(act).get_links():
-                    print dl
+                    #print dl
+                    pass
 
+                u = str(uuid.uuid4())
+
+                #print u, org_id, test_id, act_id[0], act_id[1], len(act)
+
+                args = {
+                    "uuid": u,
+                    "organisation_id": org_id,
+                    "test_id": test_id,
+                    "activity_id": act_id[0],
+                    "package_id": act_id[1],
+                    "xml_data": "Would be %d bytes long" % len(act)
+                    }
+
+                print json.dumps(args, indent=2)
+                
 
 
 if __name__ == '__main__':
