@@ -10,21 +10,20 @@ def run():
     org_ids = [1, 2]
     test_ids = [52, 53]
 
+    oo = [o for o in get_objects_for_orgs_and_tests(org_ids, test_ids)]
+    print json.dumps(oo, indent=2)
+
+def get_objects_for_orgs_and_tests(org_ids, test_ids):
     for org_id in org_ids:
         for test_id in test_ids:
             sot = SampleOrgTest(org_id, test_id)
             if not sot.qualifies():
                 continue
             act_ids = sot.activity_ids()
-            #print len(act_ids)
             sample_ids = sot.sample_activity_ids(10)
-            #print org_id, test_id, sample_ids
 
             for act_id in sample_ids:
-                #print act_id
                 act = sot.xml_of_activity(act_id)
-                #print act
-                # lxml.etree.tostring(act)
                 
                 for dl in DocumentLinks(act).get_links():
                     #print dl
@@ -32,18 +31,16 @@ def run():
 
                 u = str(uuid.uuid4())
 
-                #print u, org_id, test_id, act_id[0], act_id[1], len(act)
-
                 args = {
                     "uuid": u,
                     "organisation_id": org_id,
                     "test_id": test_id,
                     "activity_id": act_id[0],
                     "package_id": act_id[1],
-                    "xml_data": "Would be %d bytes long" % len(act)
+                    "xml_data": act
                     }
 
-                print json.dumps(args, indent=2)
+                yield args
                 
 
 
