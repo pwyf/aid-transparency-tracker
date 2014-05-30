@@ -58,6 +58,33 @@ class SampleOrgTest(object):
     def xml_of_activity(self, activity):
         activity_id, pkg = activity
         xml = self.xml_of_package(pkg)
-        activities = xml.xpath('//iati-activity[iati-identifier/text()="%s"]' % activity_id)
+
+        xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
+
+        activities = xml.xpath(xpath_str % activity_id)
         assert len(activities) == 1
         return lxml.etree.tostring(activities[0], pretty_print=True)
+
+
+class DocumentLink(object):
+    def __init__(self, url, title, elt):
+        self.elt = elt
+        self.title = title
+        self.url = url
+
+    def __repr__(self):
+        return '''<DocumentLink: %s>''' % self.url
+
+
+class DocumentLinks(object):
+    def __init__(self, xml_string):
+        root = lxml.etree.fromstring(xml_string)
+
+        self.root = root
+
+    def get_links(self):
+        for i in self.root.iterfind('document-link'):
+            url = i.attrib["url"]
+            title = i.find('title').text
+
+            yield DocumentLink(url, title, i)
