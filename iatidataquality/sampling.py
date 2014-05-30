@@ -21,6 +21,10 @@ from iatidq import dqusers, util, dqorganisations
 import unicodecsv
 import json
 
+import lxml.etree
+
+from sample_work import sample_work
+
 samplingdata = [{'iati-identifier': 'GB-123456',
                  'data': [{
                     'name': "Mid-term evaluation document for some project",
@@ -50,10 +54,30 @@ samplingdata = [{'iati-identifier': 'GB-123456',
                  'sampling_id': '2',
                  }]
 
+def make_sample_json(work_item):
+    document_links = sample_work.DocumentLinks(work_item["xml_data"])
+    data_section = [ dl.to_dict() for dl in document_links.get_links() ]
+
+    return {
+        "iati-identifier": work_item["activity_id"],
+        "data": data_section,
+        "sampling_id": work_item["uuid"],
+        "test_id": work_item["test_id"],
+        "organisation_id": work_item["organisation_id"]
+        }
 
 @app.route("/api/sampling/")
 def api_sampling():
-    return json.dumps(samplingdata, indent=2)
+    import os
+    filename = os.path.join(os.path.dirname(__file__), 
+                            '../sample_work/example_samples.json')
+    with file(filename) as f:
+        data = json.load(f)
+
+    work_items = [ make_sample_json(wi) for wi in data ]
+
+
+    return json.dumps(work_items, indent=2)
 
 @app.route("/sampling/")
 #@usermanagement.perms_required()

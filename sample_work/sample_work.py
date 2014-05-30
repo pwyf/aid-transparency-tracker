@@ -76,13 +76,13 @@ class DocumentLink(object):
     def __repr__(self):
         return '''<DocumentLink: %s>''' % self.url
 
-    def to_json(self):
+    def to_dict(self):
         data = {
-            "name": "name",
-            "url": "http://",
-            "categories": []
+            "name": self.title,
+            "url": self.url,
+            "categories": ["FIXME", "FIXMETOO"]
             }
-        return json.dumps(data, indent=2)
+        return data
     
 
 class DocumentLinks(object):
