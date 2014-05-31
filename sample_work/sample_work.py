@@ -7,6 +7,9 @@ import random
 import lxml.etree
 import json
 
+# FIXME: should be in config (sort of)
+IATI_DIR = '/var/tmp/iati'
+
 def save_url(url, filename):
     resp = requests.get(url)
     with file(filename, 'w') as f:
@@ -53,8 +56,7 @@ class SampleOrgTest(object):
         return act_ids[:max]
 
     def xml_of_package(self, package_name):
-        ROOT= '/var/tmp/iati'
-        return lxml.etree.parse(ROOT + '/' + package_name + '.xml')
+        return lxml.etree.parse(IATI_DIR + '/' + package_name + '.xml')
 
     def xml_of_activity(self, activity):
         activity_id, pkg = activity
