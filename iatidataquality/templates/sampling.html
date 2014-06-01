@@ -10,30 +10,13 @@
     <h4>Definition</h4>
     <p>Evaluation documents consider what the activity achieved, whether the intended objectives were met, what the major factors influencing the achievement or non-achievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation's website. If the activity under assessment is not completed but evaluation documents are available for other completed activities, the organisation can score for this indicator. Not all organisations carry out evaluations for all of their activities. Organisations can score on this indicator as long as they publish evaluations within their regular evaluation cycles, i.e. the organisation publishes country evaluations every three years, the most recent documents within this time frame are accepted. The IATI reference for this indicator is: Review of project performance and evaluation (document code = A07).</p>
     <hr />
-    <div class="sampling-container">
+    <div class="sampling-container" id="sampling-container">
     <h3>Activity <span id="data-iati-identifier"></span></h3>
     <div class="row">
-        <div class="span6">
-        <b>1. Contains information about this activity?</b>
-        </div>
-        <div class="span6">
-            <div class="btn-group">
-              <button type="button" class="btn btn-default btn-yes">Yes</button>
-              <button type="button" class="btn btn-default btn-no">No</button>
-              <button type="button" class="btn btn-default btn-unsure">Unsure</button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="span6">
-        <b>2. Satisfies the definition?</b>
-        </div>
-        <div class="span6">
-            <div class="btn-group">
-              <button type="button" class="btn btn-default btn-yes">Yes</button>
-              <button type="button" class="btn btn-default btn-no">No</button>
-              <button type="button" class="btn btn-default btn-unsure">Unsure</button>
-            </div>
+        <div class="span12">
+            <div class="btn btn-danger">Fail - not for this activity</div>
+            <div class="btn btn-danger">Fail - doesn't satisfy definition</div>
+            <div class="btn btn-success"><i class="icon-ok icon-white"></i> Pass</div>
         </div>
     </div>
     <hr />
@@ -59,7 +42,7 @@
     <div class="row">
         <div class="span4">
             <a class="btn btn-default">&laquo; Previous</a>
-            <a class="btn btn-success">Next &raquo;</a>
+            <a class="btn btn-success" id="next-btn">Next &raquo;</a>
         </div>
         <div class="span4">
             <center>

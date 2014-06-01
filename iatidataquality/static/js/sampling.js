@@ -11,14 +11,29 @@ $(document).ready(function(){
 	var samplingdata;
 
 	$.getJSON("/api/sampling", function(data) { 
-		console.log("got json response");
-		samplingdata = data;
-
-		console.log(data);
-
-		first_sample = samplingdata[0];
-		sample_iati_identifier = first_sample["iati-identifier"];
-		$("#data-iati-identifier").html(sample_iati_identifier);
+        setupNewSurveyForm(data);
 	});
 
 });
+$("#next-btn").click(function(e) {
+    var data = $("#sampling-container")[0].data;
+    $.post("/api/sampling/process/", data, function(returndata){
+    	$.getJSON("/api/sampling", function(data) { 
+            setupNewSurveyForm(data);
+        });
+    });
+});
+
+function setupNewSurveyForm(data) {
+	console.log("got json response");
+	samplingdata = data;
+
+	console.log(data);
+
+	var first_sample = samplingdata;
+	var sample_iati_identifier = first_sample["iati-identifier"];
+	var elt = $("#data-iati-identifier");
+    elt.html(sample_iati_identifier);
+    $("#sampling-container")[0].data = first_sample;
+    console.log(elt);
+}
