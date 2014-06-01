@@ -26,7 +26,6 @@ def get_objects_for_orgs_and_tests(org_ids, test_ids):
                 act = sot.xml_of_activity(act_id)
                 
                 for dl in DocumentLinks(act).get_links():
-                    #print dl
                     pass
 
                 u = str(uuid.uuid4())
