@@ -24,6 +24,7 @@ import json
 import lxml.etree
 
 from sample_work import sample_work
+from sample_work import db as sample_db
 
 samplingdata = [{'iati-identifier': 'GB-123456',
                  'data': [{
@@ -79,12 +80,11 @@ def api_sampling_process():
 
 def work_item_generator():
     import os
-    filename = os.path.join(os.path.dirname(__file__), 
-                            '../sample_work/example_samples.json')
-    with file(filename) as f:
-        data = json.load(f)
+    from sqlite3 import dbapi2 as sqlite
 
-    for wi in data:
+    filename = os.path.join(os.path.dirname(__file__), 
+                            '../sample_work.db')
+    for wi in sample_db.read_db(filename):
         yield make_sample_json(wi)
 
 work_items = work_item_generator()

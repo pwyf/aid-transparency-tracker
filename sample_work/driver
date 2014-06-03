@@ -4,13 +4,20 @@ import sys
 import json
 
 from sample_work import SampleOrgTest, DocumentLinks, WorkItems
+import db
+import os
 
 def run():
     org_ids = [1, 2]
     test_ids = [52, 53]
 
-    oo = [o for o in WorkItems(org_ids, test_ids)]
-    print json.dumps(oo, indent=2)
+    #oo = [o for o in WorkItems(org_ids, test_ids)]
+    #print json.dumps(oo, indent=2)
+
+
+    filename = os.path.join(os.path.dirname(__file__), 
+                            '../sample_work.db')
+    db.make_db(filename, WorkItems(org_ids, test_ids))
 
 if __name__ == '__main__':
     run()    
