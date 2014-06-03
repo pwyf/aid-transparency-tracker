@@ -9,7 +9,7 @@ $(".btn-unsure").click(function(e){
 });
 var setupNewSurveyForm = function(data) {
 	console.log("got json response");
-	samplingdata = data;
+	var samplingdata = data;
 
 	var first_sample = samplingdata;
 	var sample_iati_identifier = first_sample["iati-identifier"];
