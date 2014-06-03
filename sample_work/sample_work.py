@@ -30,9 +30,19 @@ class WorkItems(object):
         self.org_ids = org_ids
         self.test_ids = test_ids
 
-        
+    def test_string_of_test_id(self, test_id):
+        results = query('''select name from test where id = %s;''', (test_id,));
+        assert len(results) == 1
+        return results[0][0]
+
     def kind_of_test(self, test_id):
-        return "document"
+        test_string = self.test_string_of_test_id(test_id)
+        return self.kind_of_test_string(test_string)
+
+    def kind_of_test_string(self, test_string):
+        import test_mapping
+
+        return test_mapping.test_to_kind[test_string]
 
     def __iter__(self):
         for org_id in self.org_ids:
