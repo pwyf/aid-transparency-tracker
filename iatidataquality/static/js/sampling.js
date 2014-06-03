@@ -31,9 +31,14 @@ $(document).ready(function(){
 });
 
 $(".advance").click(function(e) {
-    $.post("/api/sampling/process/", $('form').serialize(), 
+    e.preventDefault();
+
+    var url = "/api/sampling/process/" + $(this).attr('value');
+
+    $.post(url, $("form").serialize(), 
 		   function(returndata){
 			   getNewData();
 		   });
+    
 });
 
