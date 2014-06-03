@@ -30,6 +30,10 @@ class WorkItems(object):
         self.org_ids = org_ids
         self.test_ids = test_ids
 
+        
+    def kind_of_test(self, test_id):
+        return "document"
+
     def __iter__(self):
         for org_id in self.org_ids:
             for test_id in self.test_ids:
@@ -38,6 +42,8 @@ class WorkItems(object):
                     continue
                 act_ids = sot.activity_ids()
                 sample_ids = sot.sample_activity_ids(10)
+
+                test_kind = self.kind_of_test(test_id)
 
                 for act_id in sample_ids:
                     act = sot.xml_of_activity(act_id)
@@ -50,7 +56,8 @@ class WorkItems(object):
                         "test_id": test_id,
                         "activity_id": act_id[0],
                         "package_id": act_id[1],
-                        "xml_data": act
+                        "xml_data": act,
+                        "test_kind": test_kind
                         }
                     
                     yield args
