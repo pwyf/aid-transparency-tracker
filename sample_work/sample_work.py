@@ -7,6 +7,8 @@ import random
 import lxml.etree
 import json
 import os
+import uuid
+
 
 # FIXME: should be in config (sort of)
 IATI_DIR = '/var/tmp/iati'
@@ -21,6 +23,37 @@ def query(*args):
     c = db.cursor()
     c.execute(*args)
     return c.fetchall()
+
+
+class WorkItems(object):
+    def __init__(self, org_ids, test_ids):
+        self.org_ids = org_ids
+        self.test_ids = test_ids
+
+    def __iter__(self):
+        for org_id in self.org_ids:
+            for test_id in self.test_ids:
+                sot = SampleOrgTest(org_id, test_id)
+                if not sot.qualifies():
+                    continue
+                act_ids = sot.activity_ids()
+                sample_ids = sot.sample_activity_ids(10)
+
+                for act_id in sample_ids:
+                    act = sot.xml_of_activity(act_id)
+                
+                    u = str(uuid.uuid4())
+
+                    args = {
+                        "uuid": u,
+                        "organisation_id": org_id,
+                        "test_id": test_id,
+                        "activity_id": act_id[0],
+                        "package_id": act_id[1],
+                        "xml_data": act
+                        }
+                    
+                    yield args
 
 
 class SampleOrgTest(object):
