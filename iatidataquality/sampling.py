@@ -14,9 +14,9 @@ from flask.ext.login import login_required, current_user
 
 from iatidataquality import app
 from iatidataquality import db
-import usermanagement
+import usermanagement 
 
-from iatidq import dqusers, util, dqorganisations
+from iatidq import dqusers, util, dqorganisations, dqtests, dqindicators
 
 import unicodecsv
 import json
@@ -59,18 +59,38 @@ samplingdata = [{'iati-identifier': 'GB-123456',
 
 def make_sample_json(work_item):
     document_links = sample_work.DocumentLinks(work_item["xml_data"])
-    data_section = [ dl.to_dict() for dl in document_links.get_links() ]
+    locations = sample_work.Locations(work_item["xml_data"])
+    docs = [ dl.to_dict() for dl in document_links.get_links() ]
+    locs = [ ln.to_dict() for ln in locations.get_locations() ]
+
     activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
-    return {
-        "iati-identifier": work_item["activity_id"],
-        "data": data_section,
-        "sampling_id": work_item["uuid"],
-        "test_id": work_item["test_id"],
-        "organisation_id": work_item["organisation_id"],
-        "activity_title": activity_info.title,
-        "activity_description": activity_info.description,
-        "test_kind": work_item["test_kind"],
+    work_item_test = dqtests.tests(work_item["test_id"])
+    work_item_indicator = dqindicators.testIndicator(work_item["test_id"])
+    work_item_org = dqorganisations.organisation_by_id(work_item["organisation_id"])
+
+    return { "sample": {
+                "iati-identifier": work_item["activity_id"],
+                "documents": docs,
+                "locations": locs,
+                "sampling_id": work_item["uuid"],
+                "test_id": work_item["test_id"],
+                "organisation_id": work_item["organisation_id"],
+                "activity_title": activity_info.title,
+                "activity_description": activity_info.description,
+                "test_kind": work_item["test_kind"],
+            },
+            "headers": {
+                "test_name": work_item_test.name,
+                "test_description": work_item_test.description,
+                "indicator_name": work_item_indicator.description,
+                "indicator_description": work_item_indicator.longdescription,
+                "organisation_name": work_item_org.organisation_name,
+                "organisation_code": work_item_org.organisation_code,
+            },
+            "buttons": {
+
+            },
         }
 
 
