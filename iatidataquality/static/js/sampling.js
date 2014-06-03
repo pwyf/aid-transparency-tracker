@@ -16,6 +16,11 @@ var setupNewSurveyForm = function(work_item) {
 	var elt = $("#data-iati-identifier");
     elt.html(sample_iati_identifier);
     $("#sampling-container")[0].data = work_item;
+
+	elt = $("#data-activity-title");
+	elt.html(work_item["activity_title"]);
+	$("#data-activity-description").html(work_item["activity_description"]);
+
 };
 
 var getNewData = function() {

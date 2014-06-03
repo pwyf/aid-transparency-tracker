@@ -57,13 +57,16 @@ samplingdata = [{'iati-identifier': 'GB-123456',
 def make_sample_json(work_item):
     document_links = sample_work.DocumentLinks(work_item["xml_data"])
     data_section = [ dl.to_dict() for dl in document_links.get_links() ]
+    activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
     return {
         "iati-identifier": work_item["activity_id"],
         "data": data_section,
         "sampling_id": work_item["uuid"],
         "test_id": work_item["test_id"],
-        "organisation_id": work_item["organisation_id"]
+        "organisation_id": work_item["organisation_id"],
+        "activity_title": activity_info.title,
+        "activity_description": activity_info.description
         }
 
 

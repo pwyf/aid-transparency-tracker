@@ -142,3 +142,11 @@ class DocumentLinks(object):
             title = i.find('title').text
 
             yield DocumentLink(url, title, i)
+
+class ActivityInfo(object):
+    def __init__(self, xml_string):
+        root = lxml.etree.fromstring(xml_string)
+        self.title = root.find("title").text
+        self.description = root.find("description").text
+
+        
