@@ -7,7 +7,7 @@ $(".btn-no").click(function(e){
 $(".btn-unsure").click(function(e){
     $(this).toggleClass("btn-default btn-warning");
 });
-function setupNewSurveyForm(data) {
+var setupNewSurveyForm = function(data) {
 	console.log("got json response");
 	samplingdata = data;
 
