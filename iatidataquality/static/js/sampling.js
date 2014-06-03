@@ -25,8 +25,6 @@ var getNewData = function() {
 };
 
 $(document).ready(function(){
-	var samplingdata;
-
 	getNewData();
 });
 
