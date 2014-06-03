@@ -1,0 +1,37 @@
+digraph whatever {
+	aggregateresult -> aggregationtype;
+	aggregateresult -> organisation;
+	aggregateresult -> package;
+	aggregateresult -> runtime;
+	aggregateresult -> test;
+
+	aggregationtype -> test;
+	
+	indicator -> indicatorgroup;
+	
+	indicatortest -> indicator;
+	indicatortest -> test;
+	
+	organisationcondition -> organisation;
+	organisationcondition -> test;
+
+	organisationconditionfeedback -> organisation;
+	organisationpackage -> organisation;	
+	organisationpackage -> package;
+	
+	organisationpackagegroup -> organisation;
+	organisationpackagegroup -> packagegroup;
+	
+	organisationsurvey -> organisation;
+	result -> organisation;
+	package -> packagegroup;
+	packagestatus -> package;
+
+	result -> package;
+	result -> runtime;
+	result -> test;
+	
+	
+}
+
+
