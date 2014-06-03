@@ -12,14 +12,10 @@ $(".btn-unsure").click(function(e){
 });
 
 var setupNewSurveyForm = function(work_item) {
-	var sample_iati_identifier = work_item["iati-identifier"];
-	var elt = $("#data-iati-identifier");
-    elt.html(sample_iati_identifier);
-    $("#sampling-container")[0].data = work_item;
-
-	elt = $("#data-activity-title");
-	elt.html(work_item["activity_title"]);
-	$("#data-activity-description").html(work_item["activity_description"]);
+	var template = $('#template').html();
+	Mustache.parse(template);   // optional, speeds up future uses
+	var rendered = Mustache.render(template, work_item);
+	$('#insert-here').html(rendered);
 
 };
 
@@ -34,10 +30,9 @@ $(document).ready(function(){
 });
 
 $(".advance").click(function(e) {
-    var data = $("#sampling-container")[0].data;
-	data["response"] = 1;
-    $.post("/api/sampling/process/", data, function(returndata){
-		getNewData();
-    });
+    $.post("/api/sampling/process/", $('form').serialize(), 
+		   function(returndata){
+			   getNewData();
+		   });
 });
 
