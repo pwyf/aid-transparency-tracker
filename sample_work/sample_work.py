@@ -11,7 +11,7 @@ import uuid
 
 
 # FIXME: should be in config (sort of)
-IATI_DIR = '/var/tmp/iati'
+IATI_DIR = "/home/mark/sites/IATI-Data-Quality/data/"
 
 def save_url(url, filename):
     resp = requests.get(url)
@@ -19,7 +19,7 @@ def save_url(url, filename):
         f.write(resp.content)
 
 def query(*args):
-    db = psycopg2.connect(user='iatidq', database='iatidq')
+    db = psycopg2.connect(database='iatidq')
     c = db.cursor()
     c.execute(*args)
     return c.fetchall()
@@ -135,10 +135,9 @@ class DocumentLink(object):
         data = {
             "name": self.title,
             "url": self.url,
-            "categories": ["FIXME", "FIXMETOO"]
+            "categories": self.elt.xpath('category/@code')
             }
-        return data
-    
+        return data   
 
 class DocumentLinks(object):
     def __init__(self, xml_string):
@@ -152,6 +151,30 @@ class DocumentLinks(object):
             title = i.find('title').text
 
             yield DocumentLink(url, title, i)
+
+class Location(object):
+    def __init__(self, elt):
+        self.elt = elt
+
+    def __repr__(self):
+        return '''<Location: %s>''' % self.elt
+
+    def to_dict(self):
+        data = {
+            "name": self.elt.find('name').text,
+            "longitude": self.elt.find('coordinates').attrib['longitude'],
+            "latitude": self.elt.find('coordinates').attrib['latitude'],
+            }
+        return data   
+
+class Locations(object):
+    def __init__(self,xml_string):
+        root = lxml.etree.fromstring(xml_string)
+        self.root = root
+
+    def get_locations(self):
+        for i in self.root.iterfind('location'):
+            yield Location(i)
 
 class ActivityInfo(object):
     def __init__(self, xml_string):
