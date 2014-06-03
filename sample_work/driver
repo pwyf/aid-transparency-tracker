@@ -9,12 +9,8 @@ def run():
     org_ids = [1, 2]
     test_ids = [52, 53]
 
-    oo = [o for o in get_objects_for_orgs_and_tests(org_ids, test_ids)]
+    oo = [o for o in WorkItems(org_ids, test_ids)]
     print json.dumps(oo, indent=2)
-
-def get_objects_for_orgs_and_tests(org_ids, test_ids):
-    for wi in WorkItems(org_ids, test_ids):
-        yield wi
 
 if __name__ == '__main__':
     run()    
