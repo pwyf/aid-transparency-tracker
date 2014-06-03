@@ -66,18 +66,29 @@ def make_sample_json(work_item):
         "organisation_id": work_item["organisation_id"]
         }
 
-@app.route("/api/sampling/")
-def api_sampling():
+
+@app.route("/api/sampling/process/", methods=['POST'])
+def api_sampling_process():
+    data = request.form
+    if 'iati-identifier' in data:
+        return 'OK'
+    return 'ERROR'
+
+def work_item_generator():
     import os
     filename = os.path.join(os.path.dirname(__file__), 
                             '../sample_work/example_samples.json')
     with file(filename) as f:
         data = json.load(f)
 
-    work_items = [ make_sample_json(wi) for wi in data ]
+    for wi in data:
+        yield make_sample_json(wi)
 
+work_items = work_item_generator()
 
-    return json.dumps(work_items, indent=2)
+@app.route("/api/sampling/")
+def api_sampling():
+    return json.dumps(work_items.next(), indent=2)
 
 @app.route("/sampling/")
 #@usermanagement.perms_required()
