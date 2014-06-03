@@ -16,7 +16,7 @@ var setupNewSurveyForm = function(data) {
 	var elt = $("#data-iati-identifier");
     elt.html(sample_iati_identifier);
     $("#sampling-container")[0].data = first_sample;
-}
+};
 
 var getNewData = function() {
 	$.getJSON("/api/sampling", function(data) { 
