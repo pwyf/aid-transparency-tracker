@@ -28,8 +28,6 @@ function setupNewSurveyForm(data) {
 	console.log("got json response");
 	samplingdata = data;
 
-	console.log(data);
-
 	var first_sample = samplingdata;
 	var sample_iati_identifier = first_sample["iati-identifier"];
 	var elt = $("#data-iati-identifier");
