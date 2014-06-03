@@ -297,6 +297,17 @@ def indicatorTests(indicatorgroup_name, indicator_name):
     else:
         return False
 
+def testIndicator(test_id):
+    testIndicator = db.session.query(models.Indicator
+                ).filter(models.Test.id==test_id
+                ).join(models.IndicatorTest
+                ).join(models.Test
+                ).first()
+    if testIndicator:
+        return testIndicator
+    else:
+        return False
+
 def addIndicatorTest(data):
     checkIT = models.IndicatorTest.query.filter_by(test_id=data["test_id"], indicator_id=data["indicator_id"]).first()
     if not checkIT:
