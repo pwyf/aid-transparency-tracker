@@ -18,20 +18,22 @@ var setupNewSurveyForm = function(data) {
     $("#sampling-container")[0].data = first_sample;
 }
 
-$(document).ready(function(){
-	var samplingdata;
-
+var getNewData = function() {
 	$.getJSON("/api/sampling", function(data) { 
         setupNewSurveyForm(data);
 	});
+};
 
+$(document).ready(function(){
+	var samplingdata;
+
+	getNewData();
 });
+
 $("#next-btn").click(function(e) {
     var data = $("#sampling-container")[0].data;
     $.post("/api/sampling/process/", data, function(returndata){
-    	$.getJSON("/api/sampling", function(data) { 
-            setupNewSurveyForm(data);
-        });
+		getNewData();
     });
 });
 
