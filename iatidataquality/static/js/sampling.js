@@ -8,7 +8,6 @@ $(".btn-unsure").click(function(e){
     $(this).toggleClass("btn-default btn-warning");
 });
 var setupNewSurveyForm = function(data) {
-	console.log("got json response");
 	var samplingdata = data;
 
 	var first_sample = samplingdata;
