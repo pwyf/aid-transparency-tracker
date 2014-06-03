@@ -74,16 +74,13 @@ def make_sample_json(work_item):
         }
 
 
-@app.route("/api/sampling/process/", methods=['POST'])
-def api_sampling_process():
+@app.route("/api/sampling/process/<response>", methods=['POST'])
+def api_sampling_process(response):
     data = request.form
-    print "here"
     try:
-        assert 'iati-identifier' in data
-
+        assert 'sampling_id' in data
         work_item_uuid = data["sampling_id"]
-        response = int(data["response"])
-
+        response = int(response)
         filename = os.path.join(os.path.dirname(__file__), 
                                 '../sample_work.db')
 
