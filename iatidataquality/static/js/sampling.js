@@ -1,12 +1,16 @@
+
 $(".btn-yes").click(function(e){
     $(this).toggleClass("btn-default btn-success");
 });
+
 $(".btn-no").click(function(e){
     $(this).toggleClass("btn-default btn-danger");
 });
+
 $(".btn-unsure").click(function(e){
     $(this).toggleClass("btn-default btn-warning");
 });
+
 var setupNewSurveyForm = function(data) {
 	var samplingdata = data;
 
