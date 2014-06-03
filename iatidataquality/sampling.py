@@ -23,6 +23,7 @@ import json
 
 import lxml.etree
 
+from sqlite3 import dbapi2 as sqlite
 from sample_work import sample_work
 from sample_work import db as sample_db
 
@@ -74,13 +75,15 @@ def make_sample_json(work_item):
 @app.route("/api/sampling/process/", methods=['POST'])
 def api_sampling_process():
     data = request.form
+
+    print data
+
     if 'iati-identifier' in data:
         return 'OK'
     return 'ERROR'
 
 def work_item_generator():
     import os
-    from sqlite3 import dbapi2 as sqlite
 
     filename = os.path.join(os.path.dirname(__file__), 
                             '../sample_work.db')
