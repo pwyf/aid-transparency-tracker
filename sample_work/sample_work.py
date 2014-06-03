@@ -145,8 +145,11 @@ class DocumentLinks(object):
 
 class ActivityInfo(object):
     def __init__(self, xml_string):
-        root = lxml.etree.fromstring(xml_string)
-        self.title = root.find("title").text
-        self.description = root.find("description").text
+        self.root = lxml.etree.fromstring(xml_string)
+        self.title = self.elt_text_or_MISSING("title")
+        self.description = self.elt_text_or_MISSING("description")
 
-        
+    def elt_text_or_MISSING(self, key):
+        elt = self.root.find(key)
+        return getattr(elt, "text", "MISSING")
+
