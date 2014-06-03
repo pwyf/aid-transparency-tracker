@@ -35,6 +35,7 @@ $(document).ready(function(){
 
 $(".advance").click(function(e) {
     var data = $("#sampling-container")[0].data;
+	data["response"] = 1;
     $.post("/api/sampling/process/", data, function(returndata){
 		getNewData();
     });
