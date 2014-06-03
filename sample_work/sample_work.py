@@ -121,36 +121,44 @@ class SampleOrgTest(object):
         assert len(activities) == 1
         return lxml.etree.tostring(activities[0], pretty_print=True)
 
-
 class DocumentLink(object):
-    def __init__(self, url, title, elt):
+    def __init__(self, url, title, elt, codelists):
         self.elt = elt
         self.title = title
         self.url = url
+        self.codelists = codelists
 
     def __repr__(self):
         return '''<DocumentLink: %s>''' % self.url
 
     def to_dict(self):
+        def getCategory(category, codelists):
+            return {"category": codelists[category],
+                    "category_code": category }
+        
+        def getCategories(categories, codelists):
+            return [ getCategory(category, codelists) for category in categories ]
+    
         data = {
             "name": self.title,
             "url": self.url,
-            "categories": self.elt.xpath('category/@code')
+            "categories": getCategories(self.elt.xpath('category/@code'), 
+                                       self.codelists)
             }
-        return data   
+        return data
 
 class DocumentLinks(object):
-    def __init__(self, xml_string):
+    def __init__(self, xml_string, codelists):
         root = lxml.etree.fromstring(xml_string)
-
         self.root = root
+        self.codelists = codelists
 
     def get_links(self):
         for i in self.root.iterfind('document-link'):
             url = i.attrib["url"]
             title = i.find('title').text
-
-            yield DocumentLink(url, title, i)
+            codelists = self.codelists
+            yield DocumentLink(url, title, i, codelists)
 
 class Location(object):
     def __init__(self, elt):
