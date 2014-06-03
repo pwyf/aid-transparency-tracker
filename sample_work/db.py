@@ -7,7 +7,13 @@ create_sql = """
         package_id varchar(100) not null,
         xml_data text not null,
         test_kind varchar(20)
-    )
+    );
+"""
+create_sql2 = """
+    create table sample_result (
+        uuid char(36) unique not null,
+        response int not null
+    );
 """
 
 from sqlite3 import dbapi2 as sqlite
@@ -24,6 +30,7 @@ def make_db(filename, work_items):
     c = database.cursor()
 
     c.execute(create_sql)
+    c.execute(create_sql2)
 
     for wi in work_items:
         wi_info = tuple(map(lambda k: wi[k], keys))
