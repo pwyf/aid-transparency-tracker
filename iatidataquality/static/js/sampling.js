@@ -33,5 +33,4 @@ function setupNewSurveyForm(data) {
 	var elt = $("#data-iati-identifier");
     elt.html(sample_iati_identifier);
     $("#sampling-container")[0].data = first_sample;
-    console.log(elt);
 }
