@@ -73,7 +73,7 @@
 </style>
 
 {% raw %}
-<script id="template" type="x-tmpl-mustache">
+<script id="document-template" type="x-tmpl-mustache">
 
     <div class="sampling-container" id="sampling-container">
     <h3>Activity {{ iati-identifier }}</h3>
@@ -85,22 +85,13 @@
 	</div>
     <hr />
     <div class="row" id="data-content">
+	{{# data }}
         <div class="span8 offset2">
-            <h4>Mid-term evaluation document for some project</h4>
-            <p><a href="http://dfid.gov.uk/iati/gb-123456-evaluation.doc">http://dfid.gov.uk/iati/gb-123456-midtermevaluation.doc</a></p>
-            <span class="label label-default">Evaluation</span>
+            <h4>{{ name }}</h4>
+            <p><a href="{{ url}}">{{ url }}</a></p>
+            {{# categories }}<span class="label label-default">{{ . }}</span> {{/ categories }}
         </div>
-        <div class="span8 offset2">
-            <h4>Evaluation document for some project</h4>
-            <p><a href="http://dfid.gov.uk/iati/gb-123456-evaluation.doc">http://dfid.gov.uk/iati/gb-123456-evaluation.doc</a></p>
-            <span class="label label-default">Evaluation</span>
-        </div>
-        <div class="span8 offset2">
-            <div class="btn-group pull-right">
-                <button type="button" class="btn btn-mini btn-primary">HTML</button>
-                <button type="button" class="btn btn-mini btn-default">XML</button>
-            </div>
-        </div>
+	{{/ data }}
     </div>
 
 	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>

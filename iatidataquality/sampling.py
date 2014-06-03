@@ -69,7 +69,8 @@ def make_sample_json(work_item):
         "test_id": work_item["test_id"],
         "organisation_id": work_item["organisation_id"],
         "activity_title": activity_info.title,
-        "activity_description": activity_info.description
+        "activity_description": activity_info.description,
+        "test_kind": work_item["test_kind"],
         }
 
 

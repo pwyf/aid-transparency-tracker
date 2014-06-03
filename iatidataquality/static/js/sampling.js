@@ -12,11 +12,12 @@ $(".btn-unsure").click(function(e){
 });
 
 var setupNewSurveyForm = function(work_item) {
-	var template = $('#template').html();
+	console.log(work_item);
+	var kind = work_item['test_kind'];
+	var template = $('#' + kind + '-template').html();
 	Mustache.parse(template);   // optional, speeds up future uses
 	var rendered = Mustache.render(template, work_item);
 	$('#insert-here').html(rendered);
-
 };
 
 var getNewData = function() {
