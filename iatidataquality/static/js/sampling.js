@@ -11,14 +11,11 @@ $(".btn-unsure").click(function(e){
     $(this).toggleClass("btn-default btn-warning");
 });
 
-var setupNewSurveyForm = function(data) {
-	var samplingdata = data;
-
-	var first_sample = samplingdata;
-	var sample_iati_identifier = first_sample["iati-identifier"];
+var setupNewSurveyForm = function(work_item) {
+	var sample_iati_identifier = work_item["iati-identifier"];
 	var elt = $("#data-iati-identifier");
     elt.html(sample_iati_identifier);
-    $("#sampling-container")[0].data = first_sample;
+    $("#sampling-container")[0].data = work_item;
 };
 
 var getNewData = function() {
