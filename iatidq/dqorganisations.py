@@ -178,6 +178,10 @@ def organisations(organisation_code=None):
         return Organisation.query.filter_by(
             organisation_code=organisation_code).first()
 
+def organisation_by_id(organisation_id):
+    return Organisation.query.filter_by(
+        id=organisation_id).first()
+
 def organisationid_by_code(organisation_code):
     assert organisation_code
 
