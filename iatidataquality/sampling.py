@@ -16,7 +16,8 @@ from iatidataquality import app
 from iatidataquality import db
 import usermanagement 
 
-from iatidq import dqusers, util, dqorganisations, dqtests, dqindicators
+from iatidq import dqusers, util, dqorganisations, dqtests, dqindicators, \
+    dqcodelists
 
 import unicodecsv
 import json
@@ -58,7 +59,8 @@ samplingdata = [{'iati-identifier': 'GB-123456',
                  }]
 
 def make_sample_json(work_item):
-    document_links = sample_work.DocumentLinks(work_item["xml_data"])
+    document_category_codes = dqcodelists.reformatCodelist('DocumentCategory')
+    document_links = sample_work.DocumentLinks(work_item["xml_data"], document_category_codes)
     locations = sample_work.Locations(work_item["xml_data"])
     docs = [ dl.to_dict() for dl in document_links.get_links() ]
     locs = [ ln.to_dict() for ln in locations.get_locations() ]
