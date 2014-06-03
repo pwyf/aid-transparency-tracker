@@ -7,6 +7,17 @@ $(".btn-no").click(function(e){
 $(".btn-unsure").click(function(e){
     $(this).toggleClass("btn-default btn-warning");
 });
+function setupNewSurveyForm(data) {
+	console.log("got json response");
+	samplingdata = data;
+
+	var first_sample = samplingdata;
+	var sample_iati_identifier = first_sample["iati-identifier"];
+	var elt = $("#data-iati-identifier");
+    elt.html(sample_iati_identifier);
+    $("#sampling-container")[0].data = first_sample;
+}
+
 $(document).ready(function(){
 	var samplingdata;
 
@@ -24,13 +35,3 @@ $("#next-btn").click(function(e) {
     });
 });
 
-function setupNewSurveyForm(data) {
-	console.log("got json response");
-	samplingdata = data;
-
-	var first_sample = samplingdata;
-	var sample_iati_identifier = first_sample["iati-identifier"];
-	var elt = $("#data-iati-identifier");
-    elt.html(sample_iati_identifier);
-    $("#sampling-container")[0].data = first_sample;
-}
