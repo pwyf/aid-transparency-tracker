@@ -97,7 +97,7 @@ def make_sample_json(work_item):
             },
         }
     if 'response' in work_item:
-        data['response'] = work_item[response]
+        data['response'] = work_item['response']
 
     return data
 
