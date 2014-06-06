@@ -109,15 +109,7 @@ def api_sampling_process(response):
         assert 'sampling_id' in data
         work_item_uuid = data["sampling_id"]
         response = int(response)
-        filename = os.path.join(os.path.dirname(__file__), 
-                                '../sample_work.db')
-
-        database = sqlite.connect(filename)
-        c = database.cursor()
-        
-        c.execute('''insert into sample_result ("uuid", "response")
-                       values (?, ?);''', (work_item_uuid, response))
-        database.commit()
+        sample_db.save_response(work_item_uuid, response)
         return 'OK'
     except Exception as e:
         return 'ERROR'

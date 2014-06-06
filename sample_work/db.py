@@ -82,3 +82,14 @@ def work_item_generator():
                             '../sample_work.db')
     for wi in sample_db.read_db(filename):
         yield make_sample_json(wi)
+
+def save_response(work_item_uuid, response):
+    filename = os.path.join(os.path.dirname(__file__), 
+                                '../sample_work.db')
+
+    database = sqlite.connect(filename)
+    c = database.cursor()
+        
+    c.execute('''insert into sample_result ("uuid", "response")
+                       values (?, ?);''', (work_item_uuid, response))
+    database.commit()
