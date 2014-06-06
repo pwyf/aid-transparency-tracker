@@ -25,6 +25,9 @@ keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
 keys_response = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "test_kind", "response"]
 
+def default_filename():
+    return os.path.join(os.path.dirname(__file__), '../sample_work.db')
+
 def make_db(filename, work_items):
     if os.path.exists(filename):
         os.unlink(filename)
@@ -60,7 +63,9 @@ def read_db(filename):
 
         yield data
 
-def read_db_response(filename):
+def read_db_response():
+    filename = default_filename()
+
     database = sqlite.connect(filename)
     c = database.cursor()
 
@@ -81,14 +86,13 @@ def read_db_response(filename):
         yield data
 
 def work_item_generator():
-    filename = os.path.join(os.path.dirname(__file__), 
-                            '../sample_work.db')
+    filename = default_filename()
+
     for wi in sample_db.read_db(filename):
         yield make_sample_json(wi)
 
 def save_response(work_item_uuid, response):
-    filename = os.path.join(os.path.dirname(__file__), 
-                                '../sample_work.db')
+    filename = default_filename()
 
     database = sqlite.connect(filename)
     c = database.cursor()
