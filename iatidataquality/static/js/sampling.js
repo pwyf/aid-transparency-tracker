@@ -107,6 +107,8 @@ var setupNewSurveyForm = function(survey_data) {
 	    layer_MapBox.addTo(map);
         map.addLayer(markers);
         map.fitBounds(markers.getBounds());
+
+        $("#location-xml").text(vkbeautify.xml($("#location-xml").text()));
 	}
 };
 
