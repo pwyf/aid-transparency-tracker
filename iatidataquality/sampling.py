@@ -96,8 +96,6 @@ def make_sample_json(work_item):
     work_item_indicator = get_test_indicator_info(work_item["test_id"])
     work_item_org = get_org_info(work_item["organisation_id"])
 
-    print lxml.etree.tostring(lxml.etree.fromstring(work_item['xml_data']), pretty_print=True)
-
     return { "sample": {
                 "iati-identifier": work_item["activity_id"],
                 "documents": docs,
