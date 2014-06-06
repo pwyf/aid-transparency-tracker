@@ -56,3 +56,24 @@ def read_db(filename):
         data = dict([ (keys[i], wi[i]) for i in range(0, 7) ])
 
         yield data
+
+
+def read_db_response(filename):
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    c.execute("""select sample_work_item.uuid as uuid,
+                sample_work_item.organisation_id as organisation_id, 
+                sample_work_item.test_id as test_id,
+                sample_work_item.activity_id as activity_id,
+                sample_work_item.package_id as package_id, 
+                sample_work_item.xml_data as xml_data, 
+                sample_work_item.test_kind as test_kind,
+                sample_result.response as response
+                from sample_work_item
+                left join sample_result on
+                sample_work_item.uuid=sample_result.uuid;""")
+
+    for wi in c.fetchall():
+        data = dict([ (keys[i], wi[i]) for i in range(0, 7) ])
+        yield data
