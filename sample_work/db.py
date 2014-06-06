@@ -60,7 +60,10 @@ def read_db(filename):
 
         yield data
 
-def read_db_response(filename):
+def read_db_response():
+    filename = os.path.join(os.path.dirname(__file__), 
+                            '../sample_work.db')
+
     database = sqlite.connect(filename)
     c = database.cursor()
 
