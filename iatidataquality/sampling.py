@@ -29,34 +29,6 @@ from sqlite3 import dbapi2 as sqlite
 from sample_work import sample_work
 from sample_work import db as sample_db
 
-samplingdata = [{'iati-identifier': 'GB-123456',
-                 'data': [{
-                    'name': "Mid-term evaluation document for some project",
-                    'url': "http://dfid.gov.uk/iati/gb-123456-midtermevaluation.doc",
-                    'categories': ['Evaluation'],
-                    },
-                    {
-                    'name': "Evaluation document for some project",
-                    'url': "http://dfid.gov.uk/iati/gb-123456-evaluation.doc",
-                    'categories': ['Evaluation'],
-                    },
-                    ],
-                 'sampling_id': '1',
-                 },
-                {'iati-identifier': 'GB-123456',
-                 'data': [{
-                    'name': "Mid-term evaluation document for some project",
-                    'url': "http://dfid.gov.uk/iati/gb-123456-midtermevaluation.doc",
-                    'categories': ['Evaluation'],
-                    },
-                    {
-                    'name': "Evaluation document for some project",
-                    'url': "http://dfid.gov.uk/iati/gb-123456-evaluation.doc",
-                    'categories': ['Evaluation'],
-                    },
-                    ],
-                 'sampling_id': '2',
-                 }]
 def memodict(f):
     """ Memoization decorator for a function taking a single argument """
     class memodict(dict):
@@ -178,8 +150,7 @@ def api_sampling():
 def sampling():
     return render_template("sampling.html",
          admin=usermanagement.check_perms('admin'),
-         loggedinuser=current_user,
-         samplingdata=samplingdata)
+         loggedinuser=current_user)
 
 @app.route("/sampling/list/")
 #@usermanagement.perms_required()
