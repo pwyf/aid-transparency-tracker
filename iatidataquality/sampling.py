@@ -98,7 +98,7 @@ def make_sample_json(work_item):
 
     print lxml.etree.tostring(lxml.etree.fromstring(work_item['xml_data']), pretty_print=True)
 
-    return { "sample": {
+    data = { "sample": {
                 "iati-identifier": work_item["activity_id"],
                 "documents": docs,
                 "locations": locs,
@@ -122,6 +122,10 @@ def make_sample_json(work_item):
 
             },
         }
+    if 'response' in work_item:
+        data['response'] = work_item[response]
+
+    return data
 
 
 @app.route("/api/sampling/process/<response>", methods=['POST'])
