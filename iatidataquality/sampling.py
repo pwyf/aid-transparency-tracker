@@ -162,7 +162,7 @@ def api_sampling():
         results = {
             "error": "Finished"
             }
-    else:
+    except:
         results = {
             "error": "Unknown"
             }
