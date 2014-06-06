@@ -167,3 +167,16 @@ def sampling():
          admin=usermanagement.check_perms('admin'),
          loggedinuser=current_user,
          samplingdata=samplingdata)
+
+@app.route("/sampling/list/")
+#@usermanagement.perms_required()
+def sampling_list():
+    filename = os.path.join(os.path.dirname(__file__), 
+                            '../sample_work.db')
+    samples = []
+    for wi in sample_db.read_db_response(filename):
+        samples.append(make_sample_json(wi))
+    return render_template("sampling_list.html",
+         admin=usermanagement.check_perms('admin'),
+         loggedinuser=current_user,
+         samples=samples)
