@@ -156,7 +156,8 @@ work_items = work_item_generator()
 
 @app.route("/api/sampling/")
 def api_sampling():
-    return json.dumps(work_items.next(), indent=2)
+    wi = work_items.next()
+    return json.dumps(wi, indent=2)
 
 @app.route("/sampling/")
 #@usermanagement.perms_required()
