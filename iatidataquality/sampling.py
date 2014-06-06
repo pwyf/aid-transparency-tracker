@@ -96,6 +96,7 @@ def make_sample_json(work_item):
     work_item_indicator = get_test_indicator_info(work_item["test_id"])
     work_item_org = get_org_info(work_item["organisation_id"])
 
+    ## this should be done in the driver, not the webserver!
     xml = lxml.etree.tostring(lxml.etree.fromstring(work_item['xml_data']), 
                               method='xml', pretty_print=True)
 
