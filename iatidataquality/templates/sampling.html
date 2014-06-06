@@ -9,6 +9,8 @@
     <link href="http://pwyf.github.io/philippines/static/css/leaflet/MarkerCluster.css" media="all" rel="stylesheet" type="text/css" />
     <link href="http://pwyf.github.io/philippines/static/css/leaflet/MarkerCluster.Default.css" media="all" rel="stylesheet" type="text/css" />
     <script src="http://pwyf.github.io/philippines/static/js/leaflet/leaflet.markercluster-src.js"></script>
+    <script src="https://github.com/vkiryukhin/vkBeautify/raw/master/vkbeautify.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=xml"></script>
     <style>
     .projectMap {
         height: 350px;
@@ -53,16 +55,7 @@
 	</form>
 
     </div>
-<style>
-    .nomargin {
-        margin:0px;
-    }
-    .sampling-container {
-        border:1px solid #666666;
-        padding: 15px;
-        margin:20px -30px 10px -30px;
-    }
-</style>
+
 
 {% raw %}
 <script id="header-template" type="x-tmpl-mustache">
@@ -74,17 +67,30 @@
     <li class="active">{{ indicator_name }}</li>
     </ul>
     <h1>Sampling: {{ indicator_name }} </h1>
-    <h4>Definition</h4>
-    <p>
-        {{ indicator_description }}
-	</p>
-    <h4>Test</h4>
-    <p>
-        <i>{{ test_description }}</i>
-    </p>
-    <p>
-        <code>{{ test_name }}</code>
-    </p>
+
+    <div class="accordion" id="accordion">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseDefinition">
+                Definition
+                </a>
+            </div>
+            <div id="collapseDefinition" class="accordion-body collapse">
+                <div class="accordion-inner">
+                <p>
+                    {{ indicator_description }}
+	            </p>
+                <h4>Test</h4>
+                <p>
+                    <i>{{ test_description }}</i>
+                </p>
+                <p>
+                    <code>{{ test_name }}</code>
+                </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script id="buttons-template" type="x-tmpl-mustache">
@@ -109,9 +115,9 @@
     <hr />
     <div class="row" id="data-content">
 	{{# documents }}
-        <div class="span8 offset2">
+        <div class="span12">
             <h4>{{ name }}</h4>
-            <p><a href="{{ url}}">{{ url }}</a></p>
+            <p><a href="{{ url}}" target="_blank">{{ url }}</a></p>
             {{# categories }}<span class="label label-default">{{ category }} ({{ category_code }})</span> {{/ categories }}
         </div>
 	{{/ documents }}
@@ -137,13 +143,29 @@
     </div>
     <hr />
     <div class="row" id="data-content">
-	{{# locations }}
-        <div class="span8 offset2">
-            <h4>{{ name }}</h4>
-            <p><a href="{{ url}}">{{ url }}</a></p>
-            {{# categories }}<span class="label label-default">{{ . }}</span> {{/ categories }}
+        <div class="span12">
+            <ul>
+	        {{# locations }}
+            <li>{{ name }}</li>
+	        {{/ locations }}
+            </ul>
         </div>
-	{{/ locations }}
+    </div>
+
+    <div class="accordion" id="accordion-location">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-location" href="#collapseLocation">
+                XML
+                </a>
+            </div>
+            <div id="collapseLocation" class="accordion-body collapse">
+                <div class="accordion-inner">
+                <?prettify?>
+                <pre class="prettyprint">{{ xml }}</pre>
+                </div>
+            </div>
+        </div>
     </div>
 
 	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
