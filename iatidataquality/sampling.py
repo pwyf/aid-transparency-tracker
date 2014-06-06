@@ -57,6 +57,26 @@ samplingdata = [{'iati-identifier': 'GB-123456',
                     ],
                  'sampling_id': '2',
                  }]
+def memodict(f):
+    """ Memoization decorator for a function taking a single argument """
+    class memodict(dict):
+        def __missing__(self, key):
+            ret = self[key] = f(key)
+            return ret 
+    return memodict().__getitem__
+
+@memodict
+def get_test_info(test_id):
+    return dqtests.tests(test_id)
+
+@memodict
+def get_test_indicator_info(test_id):
+    return dqindicators.testIndicator(test_id)
+
+@memodict
+def get_org_info(organisation_id):
+    return dqorganisations.organisation_by_id(organisation_id)
+
 
 def make_sample_json(work_item):
     document_category_codes = dqcodelists.reformatCodelist('DocumentCategory')
@@ -67,9 +87,9 @@ def make_sample_json(work_item):
 
     activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
-    work_item_test = dqtests.tests(work_item["test_id"])
-    work_item_indicator = dqindicators.testIndicator(work_item["test_id"])
-    work_item_org = dqorganisations.organisation_by_id(work_item["organisation_id"])
+    work_item_test = get_test_info(work_item["test_id"])
+    work_item_indicator = get_test_indicator_info(work_item["test_id"])
+    work_item_org = get_org_info(work_item["organisation_id"])
 
     return { "sample": {
                 "iati-identifier": work_item["activity_id"],
