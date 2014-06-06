@@ -22,6 +22,9 @@ import os
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "test_kind"]
 
+keys_response = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
+        "xml_data", "test_kind", "response"]
+
 def make_db(filename, work_items):
     if os.path.exists(filename):
         os.unlink(filename)
@@ -74,7 +77,7 @@ def read_db_response(filename):
                 sample_work_item.uuid=sample_result.uuid;""")
 
     for wi in c.fetchall():
-        data = dict([ (keys[i], wi[i]) for i in range(0, 7) ])
+        data = dict([ (keys_response[i], wi[i]) for i in range(0, 8) ])
         yield data
 
 def work_item_generator():
