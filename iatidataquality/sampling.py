@@ -122,13 +122,8 @@ def api_sampling_process(response):
     except Exception as e:
         return 'ERROR'
 
-def work_item_generator():
-    filename = os.path.join(os.path.dirname(__file__), 
-                            '../sample_work.db')
-    for wi in sample_db.read_db(filename):
-        yield make_sample_json(wi)
 
-work_items = work_item_generator()
+work_items = sample_db.work_item_generator()
 
 @app.route("/api/sampling/")
 def api_sampling():

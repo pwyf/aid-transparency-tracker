@@ -56,3 +56,10 @@ def read_db(filename):
         data = dict([ (keys[i], wi[i]) for i in range(0, 7) ])
 
         yield data
+
+
+def work_item_generator():
+    filename = os.path.join(os.path.dirname(__file__), 
+                            '../sample_work.db')
+    for wi in sample_db.read_db(filename):
+        yield make_sample_json(wi)
