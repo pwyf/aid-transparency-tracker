@@ -84,7 +84,11 @@ def make_sample_json(work_item):
                                                document_category_codes)
     locations = sample_work.Locations(work_item["xml_data"])
     docs = [ dl.to_dict() for dl in document_links.get_links() ]
-    locs = [ ln.to_dict() for ln in locations.get_locations() ]
+
+    if work_item["test_kind"] == "location":
+        locs = [ ln.to_dict() for ln in locations.get_locations() ]
+    else:
+        locs = []
 
     activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
