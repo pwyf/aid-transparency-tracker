@@ -8,10 +8,22 @@ import lxml.etree
 import json
 import os
 import uuid
+import sys
 
+config_file = os.path.join(os.path.abspath(
+        os.path.join(os.path.dirname(__file__), '..')), 'config.py')
 
-# FIXME: should be in config (sort of)
-IATI_DIR = "/home/mark/sites/IATI-Data-Quality/data/"
+directory, module_name = os.path.split(config_file)
+module_name = os.path.splitext(module_name)[0]
+
+path = list(sys.path)
+sys.path.insert(0, directory)
+try:
+    config = __import__(module_name)
+finally:
+    sys.path[:] = path # restore
+
+IATI_DIR = config.DATA_STORAGE_DIR
 
 def save_url(url, filename):
     resp = requests.get(url)
