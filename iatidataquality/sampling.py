@@ -96,7 +96,9 @@ def make_sample_json(work_item):
     work_item_indicator = get_test_indicator_info(work_item["test_id"])
     work_item_org = get_org_info(work_item["organisation_id"])
 
-    print lxml.etree.tostring(lxml.etree.fromstring(work_item['xml_data']), pretty_print=True)
+    ## this should be done in the driver, not the webserver!
+    xml = lxml.etree.tostring(lxml.etree.fromstring(work_item['xml_data']), 
+                              method='xml', pretty_print=True)
 
     data = { "sample": {
                 "iati-identifier": work_item["activity_id"],
@@ -108,7 +110,7 @@ def make_sample_json(work_item):
                 "activity_title": activity_info.title,
                 "activity_description": activity_info.description,
                 "test_kind": work_item["test_kind"],
-                "xml": lxml.etree.tostring(lxml.etree.fromstring(work_item['xml_data']), method='xml', pretty_print=True),
+                "xml": xml,
             },
             "headers": {
                 "test_name": work_item_test.name,
@@ -158,7 +160,18 @@ work_items = work_item_generator()
 
 @app.route("/api/sampling/")
 def api_sampling():
-    return json.dumps(work_items.next(), indent=2)
+    try:
+        results = work_items.next()
+    except StopIteration:
+        results = {
+            "error": "Finished"
+            }
+    except:
+        results = {
+            "error": "Unknown"
+            }
+    return json.dumps(results, indent=2)
+                          
 
 @app.route("/sampling/")
 #@usermanagement.perms_required()
