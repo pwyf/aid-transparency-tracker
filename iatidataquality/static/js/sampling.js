@@ -80,6 +80,15 @@ var setupLocation = function() {
 
 var setupNewSurveyForm = function(survey_data) {
 
+	if(survey_data["error"]) {
+		if(survey_data["error"] == "Finished") {
+			alert("Finished");
+		} else {
+			alert("Unknown error");
+		}
+		return;
+	}
+
 	var kind = survey_data['sample']['test_kind'];
 	var template = $('#' + kind + '-template').html();
 	Mustache.parse(template);   // optional, speeds up future uses
