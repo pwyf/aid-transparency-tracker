@@ -28,6 +28,7 @@ import os
 from sqlite3 import dbapi2 as sqlite
 from sample_work import sample_work
 from sample_work import db as sample_db
+from sample_work import test_mapping
 
 def memodict(f):
     """ Memoization decorator for a function taking a single argument """
@@ -49,6 +50,22 @@ def get_test_indicator_info(test_id):
 def get_org_info(organisation_id):
     return dqorganisations.organisation_by_id(organisation_id)
 
+def get_response(kind, response):
+    kind_data = test_mapping.kind_to_status[kind]
+    response_data = kind_data.get(response)
+    if response_data is not None:
+        return response_data
+    return {
+              "text:": "not yet sampled",
+              "button": "not yet sampled",
+              "icon": "info-sign",
+              "class": "warning",
+            }
+
+def kind_to_list(kind):
+    kind_data = test_mapping.kind_to_status[kind]
+    kind_data = map(lambda x: (x[1]), kind_data.items())
+    return kind_data
 
 def make_sample_json(work_item):
     document_category_codes = dqcodelists.reformatCodelist('DocumentCategory')
@@ -92,12 +109,11 @@ def make_sample_json(work_item):
                 "organisation_name": work_item_org.organisation_name,
                 "organisation_code": work_item_org.organisation_code,
             },
-            "buttons": {
-
-            },
+            "buttons": kind_to_list(work_item["test_kind"]),
         }
     if 'response' in work_item:
-        data['response'] = work_item['response']
+        data['response'] = get_response(work_item["test_kind"], 
+					work_item['response'])
 
     return data
 
