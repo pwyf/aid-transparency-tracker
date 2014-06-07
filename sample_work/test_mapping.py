@@ -23,84 +23,118 @@ test_to_kind = {
 ## sample_work_item table.
 
 kind_to_status = {
-    "document": [
+    "document": {
         1:
             {
-              "positive:": "pass",
+              "text:": "pass",
               "button": "pass",
               "icon": "ok",
               "class": "success",
+              "value": "1",
             },
         2:
             {
-              "positive:": "able to access",
+              "text:": "able to access",
               "button": "unable to access",
               "icon": "remove",
               "class": "danger",
+              "value": "2",
             },
         3: 
             {
-              "positive:": "specific to the activity",
+              "text:": "specific to the activity",
               "button": "not specific to the activity",
               "icon": "remove",
               "class": "danger",
+              "value": "3",
             },
         4: 
             {
-              "positive:": "satisfies the definition",
+              "text:": "satisfies the definition",
               "button": "doesn't satisfy the definition",
               "icon": "remove",
               "class": "danger",
+              "value": "4",
             },
-    ],
-    "result": [
+    },
+    "result": {
+        1:
+            {
+              "text:": "pass",
+              "button": "pass",
+              "icon": "ok",
+              "class": "success",
+              "value": "1",
+            },
         2:
             {
-              "positive:": "contains results information",
+              "text:": "contains results information",
               "button": "doesn't contain results information",
               "icon": "remove",
               "class": "danger",
+              "value": "2",
             },
         3: 
             {
-              "positive:": "satisfies the definition",
+              "text:": "satisfies the definition",
               "button": "doesn't satisfy the definition",
               "icon": "remove",
               "class": "danger",
+              "value": "3",
             },
-    ],
-    "conditions": [
+    },
+    "conditions": {
+        1:
+            {
+              "text:": "pass",
+              "button": "pass",
+              "icon": "ok",
+              "class": "success",
+              "value": "1",
+            },
         2:
             {
-              "positive:": "contains conditions information",
+              "text:": "contains conditions information",
               "button": "doesn't contain conditions information",
               "icon": "remove",
               "class": "danger",
+              "value": "2",
             },
         3: 
             {
-              "positive:": "satisfies the definition",
+              "text:": "satisfies the definition",
               "button": "doesn't satisfy the definition",
               "icon": "remove",
               "class": "danger",
+              "value": "3",
             },
-    ],
-    "location": [
+    },
+    "location": {
+        1:
+            {
+              "text:": "pass",
+              "button": "pass",
+              "icon": "ok",
+              "class": "success",
+              "value": "1",
+            },
         2:
             {
-              "positive:": "contains location information",
+              "text:": "contains location information",
               "button": "doesn't contain location information",
               "icon": "remove",
               "class": "danger",
+              "value": "2",
             },
         3: 
             {
-              "positive:": "consistent with documentation",
+              "text:": "consistent with documentation",
               "button": "not consistent with documentation",
               "icon": "remove",
               "class": "danger",
+              "value": "3",
             },
-    ],
+    },
 }
     
 """
