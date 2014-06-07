@@ -17,7 +17,12 @@
     <tr>
     <td><a href="{{url_for('organisations', organisation_code=s.headers.organisation_code)}}">{{ s.headers.organisation_name }}</a></td>
 	<td><a href="{{url_for('tests', id=s.sample.test_id)}}">{{ s.headers.test_description }}</a></td>
-    <td>{{ s.response }}</td>
+    <td>
+        <a class="btn btn-mini btn-{{ s.response.class }}">
+        <i class="icon icon-white icon-{{ s.response.icon }}"></i>
+        {{ s.response.button }}
+        </a>
+    </td>
     </tr>
 	{% endfor %}
     </tbody>
