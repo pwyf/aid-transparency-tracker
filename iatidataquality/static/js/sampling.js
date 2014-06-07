@@ -101,21 +101,7 @@ var setupNewSurveyForm = function(survey_data) {
 	var rendered_header = Mustache.render(header_template, header_data);
 	$('#header-insert').html(rendered_header);
 
-	buttons_data = {'buttons': [{'button_value': '1',
-			 'button_class': 'success',
-			 'button_text': 'Pass',
-			 'button_icon': 'ok',
-			},
-			{'button_value': '2',
-			 'button_class': 'danger',
-			 'button_text': 'Fail - not for this activity',
-			 'button_icon': 'remove',
-			},
-			{'button_value': '3',
-			 'button_class': 'danger',
-			 'button_text': "Fail - doesn't satisfy definition",
-			 'button_icon': 'remove',
-			}]}
+	buttons_data = {'buttons': survey_data['buttons']};
 	var buttons_template = $("#buttons-template").html();
 	var rendered_buttons = Mustache.render(buttons_template, buttons_data);
 	$('#buttons-insert').html(rendered_buttons);
