@@ -137,6 +137,37 @@
 	{{/ results }}
     </div>
 
+    <hr />
+
+    {{> xml-template}}
+
+	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
+
+</script>
+
+<script id="conditions-template" type="x-tmpl-mustache">
+
+    <h3>Activity {{ activity_title }} <code>{{ iati-identifier }}</code></h3>
+	<div>
+	  Description: {{ activity_description }}</span>
+	</div>
+    <hr />
+    <div class="row" id="data-content">
+	{{# conditions }}
+        <div class="span12">
+            <h4><span class="muted">Attached</span> {{ attached }}</h4>
+        </div>
+        <div class="span11 offset1">
+        	{{# conditions }}
+            <h5><span class="muted">Text</span> {{ text }}</h5>
+            <p><span class="muted">Type</span> {{ type }}
+        	{{/ conditions }}
+        </div>
+	{{/ conditions }}
+    </div>
+
+    <hr />
+
     {{> xml-template}}
 
 	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
@@ -159,6 +190,8 @@
         </div>
 	{{/ documents }}
     </div>
+
+    <hr />
 
     {{> xml-template}}
 
@@ -200,6 +233,8 @@
         </div>
 	{{/ documents }}
     </div>
+
+    <hr />
 
     {{> xml-template}}
 
