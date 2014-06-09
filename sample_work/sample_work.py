@@ -206,3 +206,12 @@ class ActivityInfo(object):
         elt = self.root.find(key)
         return getattr(elt, "text", "MISSING")
 
+class TestInfo(object):
+    def __init__(self, test_foxpath):
+        self.test_string = test_foxpath
+        self.test_id = self.id_of_string()
+
+    def id_of_string(self):
+        sql = '''select id from test where name = '%s';'''
+
+        return query(sql, (self.test_string,))
