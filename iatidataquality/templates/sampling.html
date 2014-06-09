@@ -123,6 +123,8 @@
 	{{/ documents }}
     </div>
 
+    {{> xml-template}}
+
 	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
 
 </script>
@@ -162,6 +164,13 @@
 	{{/ documents }}
     </div>
 
+    {{> xml-template}}
+
+	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
+
+</script>
+<script id="xml-template" type="x-tmpl-mustache">
+
     <div class="accordion" id="accordion-location">
         <div class="accordion-group">
             <div class="accordion-heading">
@@ -178,9 +187,8 @@
         </div>
     </div>
 
-	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
-
 </script>
+
 {% endraw %}
 
 
