@@ -184,8 +184,8 @@ class Location(object):
     def to_dict(self):
         data = {
             "name": self.elt.find('name').text,
-            "longitude": self.elt.find('coordinates').attrib['longitude'],
-            "latitude": self.elt.find('coordinates').attrib['latitude'],
+            "longitude": self.elt.xpath('coordinates/@longitude'),
+            "latitude": self.elt.xpath('coordinates/@latitude'),
             }
         return data   
 
