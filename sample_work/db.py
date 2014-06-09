@@ -85,6 +85,14 @@ def read_db_response():
         data = dict([ (keys_response[i], wi[i]) for i in range(0, 8) ])
         yield data
 
+
+def work_item_generator(f):
+    filename = default_filename()
+
+    for wi in read_db(filename):
+        yield f(wi)
+
+
 def save_response(work_item_uuid, response):
     filename = default_filename()
 
