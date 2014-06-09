@@ -284,6 +284,30 @@ class Results(object):
         for i in self.root.iterfind('result'):
             yield Result(i)
 
+class Condition(object):
+    def __init__(self, elt):
+        self.elt = elt
+
+    def __repr__(self):
+        return '''<Condition: %s>''' % self.elt
+
+    def to_dict(self):
+        data = {
+            "type": self.elt.xpath("@type"),
+            "text": self.elt.text,
+            }
+        return data
+
+class Conditions(object):
+    def __init__(self, xml_string):
+        root = lxml.etree.fromstring(xml_string)
+        self.root = root
+
+    def get_conditions(self):
+        return { 'attached': self.root.xpath("conditions/@attached"),
+                 'conditions': [ Condition(condition).to_dict()
+                        for condition in self.root.xpath('conditions/condition') ] }
+
 class ActivityInfo(object):
     def __init__(self, xml_string):
         self.root = lxml.etree.fromstring(xml_string)
