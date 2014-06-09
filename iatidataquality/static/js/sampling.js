@@ -26,7 +26,7 @@ var baseUrl = function() {
 	return url;
 }
 
-var setupLocation = function() {
+var setupLocation = function(survey_data) {
     if (typeof(map)!='undefined') {
         map.remove();
     }
@@ -107,7 +107,7 @@ var setupNewSurveyForm = function(survey_data) {
 	$('#buttons-insert').html(rendered_buttons);
 
 	if (kind=='location') {
-		setupLocation();
+		setupLocation(survey_data);
 	}
 };
 
