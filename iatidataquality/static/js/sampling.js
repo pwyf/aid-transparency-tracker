@@ -92,7 +92,11 @@ var setupNewSurveyForm = function(survey_data) {
 	var kind = survey_data['sample']['test_kind'];
 	var template = $('#' + kind + '-template').html();
 	Mustache.parse(template);   // optional, speeds up future uses
-	var rendered = Mustache.render(template, survey_data['sample']);
+	
+	var xmltmpl = $('#xml-template').html(),
+	partials = {"xml-template": xmltmpl};
+	
+	var rendered = Mustache.render(template, survey_data['sample'], partials);
 	$('#insert-here').html(rendered);
 
 	header_data = survey_data['headers'];
