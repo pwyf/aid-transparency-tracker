@@ -73,6 +73,8 @@ def make_sample_json(work_item):
                                                document_category_codes)
     results = sample_work.Results(work_item["xml_data"])
     locations = sample_work.Locations(work_item["xml_data"])
+    conditions = sample_work.Conditions(work_item["xml_data"]).get_conditions()
+
     docs = [ dl.to_dict() for dl in document_links.get_links() ]
 
     if work_item["test_kind"] == "location":
@@ -100,6 +102,7 @@ def make_sample_json(work_item):
                 "documents": docs,
                 "locations": locs,
                 "results": res,
+                "conditions": conditions,
                 "sampling_id": work_item["uuid"],
                 "test_id": work_item["test_id"],
                 "organisation_id": work_item["organisation_id"],
