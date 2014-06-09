@@ -26,8 +26,7 @@ def run():
     #print json.dumps(oo, indent=2)
 
 
-    filename = os.path.join(os.path.dirname(__file__), 
-                            '../sample_work.db')
+    filename = db.default_filename()
     db.make_db(filename, WorkItems(org_ids, test_ids))
 
 if __name__ == '__main__':
