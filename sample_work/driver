@@ -3,13 +3,24 @@
 import sys
 import json
 
-from sample_work import SampleOrgTest, DocumentLinks, WorkItems
+from sample_work import SampleOrgTest, DocumentLinks, \
+    WorkItems, TestInfo, NoMatchingTest
 import db
 import os
 
+import test_mapping
+
+def all_test_ids():
+    for k in test_mapping.test_to_kind.keys():
+        try:
+            t = TestInfo(k)
+            yield t.test_id
+        except NoMatchingTest:
+            continue
+
 def run():
     org_ids = [1, 2]
-    test_ids = [52, 53]
+    test_ids = [ i for i in all_test_ids() ]
 
     #oo = [o for o in WorkItems(org_ids, test_ids)]
     #print json.dumps(oo, indent=2)

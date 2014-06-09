@@ -2,6 +2,7 @@
 
 import sys
 import psycopg2
+from psycopg2.extensions import adapt
 import requests
 import random
 import lxml.etree
@@ -206,3 +207,19 @@ class ActivityInfo(object):
         elt = self.root.find(key)
         return getattr(elt, "text", "MISSING")
 
+class NoMatchingTest(Exception):
+    pass
+
+class TestInfo(object):
+    def __init__(self, test_foxpath):
+        self.test_string = test_foxpath
+        self.test_id = self.id_of_string()
+
+    def id_of_string(self):
+        sql = '''select id from test where name = %s;'''
+        q = sql % adapt(self.test_string).getquoted()
+
+        results = query(q)
+        if len(results) < 1:
+            raise NoMatchingTest(self.test_string)
+        return results[0][0]
