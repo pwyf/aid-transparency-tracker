@@ -106,6 +106,43 @@
     </div>
 </script>
 
+<script id="result-template" type="x-tmpl-mustache">
+
+    <h3>Activity {{ activity_title }} <code>{{ iati-identifier }}</code></h3>
+	<div>
+	  Description: {{ activity_description }}</span>
+	</div>
+    <hr />
+    <div class="row" id="data-content">
+	{{# results }}
+        <div class="span12">
+            <h4><span class="muted">Result</span> {{ title }}</h4>
+            <p><span class="muted">Description</span> {{ description }}
+        </div>
+        <div class="span11 offset1">
+        	{{# indicators }}
+            <h5><span class="muted">Indicator</span> {{ title }}</h5>
+            <p><span class="muted">Description</span> {{ description }}
+
+        	{{# periods }}
+            <ul>
+            <li>Target: {{ target }}</li>
+            <li>Actual: {{ actual }}</li>
+            </ul>
+            {{{ pct }}}
+        	{{/ periods }}
+
+        	{{/ indicators }}
+        </div>
+	{{/ results }}
+    </div>
+
+    {{> xml-template}}
+
+	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
+
+</script>
+
 <script id="document-template" type="x-tmpl-mustache">
 
     <h3>Activity {{ activity_title }} <code>{{ iati-identifier }}</code></h3>
