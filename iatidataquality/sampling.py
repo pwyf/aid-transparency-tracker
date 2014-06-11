@@ -140,8 +140,19 @@ def api_sampling_process(response):
     except Exception as e:
         return 'ERROR'
 
+def get_work_items():
+    return sample_db.work_item_generator(make_sample_json)
 
-work_items = sample_db.work_item_generator(make_sample_json)
+work_items = get_work_items()
+
+@app.route("/api/sampling/restart/")
+def api_sampling_restart():
+    global work_items
+    work_items = get_work_items()
+    out = {
+        "restarted": True
+    }
+    return json.dumps(out, indent=2)
 
 @app.route("/api/sampling/")
 def api_sampling():
@@ -151,12 +162,12 @@ def api_sampling():
         results = {
             "error": "Finished"
             }
-    except:
-        results = {
-            "error": "Unknown"
-            }
+    #except:
+    #    results = {
+    #        "error": "Unknown"
+    #        }
     return json.dumps(results, indent=2)
-                          
+
 
 @app.route("/sampling/")
 #@usermanagement.perms_required()
