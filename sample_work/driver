@@ -4,7 +4,7 @@ import sys
 import json
 
 from sample_work import SampleOrgTest, DocumentLinks, \
-    WorkItems, TestInfo, NoMatchingTest
+    WorkItems, TestInfo, NoMatchingTest, organisation_ids
 import db
 import os
 
@@ -18,8 +18,12 @@ def all_test_ids():
         except NoMatchingTest:
             continue
 
+def all_org_ids():
+    for o in organisation_ids():
+        yield o[0]
+
 def run():
-    org_ids = [1, 2]
+    org_ids = [ i for i in all_org_ids() ]
     test_ids = [ i for i in all_test_ids() ]
 
     #oo = [o for o in WorkItems(org_ids, test_ids)]

@@ -39,6 +39,9 @@ def query(*args):
     return c.fetchall()
 
 
+def organisation_ids():
+    return query('select id from organisation;')
+
 class WorkItems(object):
     def __init__(self, org_ids, test_ids):
         self.org_ids = org_ids
