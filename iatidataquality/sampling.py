@@ -68,24 +68,62 @@ def kind_to_list(kind):
     return kind_data
 
 def make_sample_json(work_item):
-    document_category_codes = dqcodelists.reformatCodelist('DocumentCategory')
-    document_links = sample_work.DocumentLinks(work_item["xml_data"], 
+    def get_docs(xml_strings):
+
+        def get_doc_from_xml(xml):
+            document_category_codes = dqcodelists.reformatCodelist('DocumentCategory')
+            document_links = sample_work.DocumentLinks(work_item["xml_data"], 
                                                document_category_codes)
-    results = sample_work.Results(work_item["xml_data"])
-    locations = sample_work.Locations(work_item["xml_data"])
-    conditions = sample_work.Conditions(work_item["xml_data"]).get_conditions()
+            docs = [ dl.to_dict() for dl in document_links.get_links() ]
+            return docs
 
-    docs = [ dl.to_dict() for dl in document_links.get_links() ]
+        data = [get_doc_from_xml(xml) for xml in xml_strings]
+        return data[0]+data[1]
 
+    def get_res(xml_strings):
+        def get_res_from_xml(xml):
+            results = sample_work.Results(work_item["xml_data"])
+            res = [ ln.to_dict() for ln in results.get_results() ]
+            return res
+        
+        data = [get_res_from_xml(xml) for xml in xml_strings]
+        return data[0]+data[1]
+
+    def get_locs(xml_strings):
+        def get_loc_from_xml(xml):
+            locations = sample_work.Locations(work_item["xml_data"])
+            locs = [ ln.to_dict() for ln in locations.get_locations() ]
+            return locs
+    
+        data = [get_loc_from_xml(xml) for xml in xml_strings]
+        return data[0]+data[1]
+
+    def get_conds(xml_strings):
+        def get_cond_from_xml(xml):
+            conditions = sample_work.Conditions(work_item["xml_data"]).get_conditions()
+            return conditions
+        data = [get_cond_from_xml(xml) for xml in xml_strings]
+        return data[0]+data[1]        
+
+    xml_strings = [work_item["xml_data"],
+                   work_item["xml_parent_data"]]
+    docs = get_docs(xml_strings)
+    
+    
     if work_item["test_kind"] == "location":
-        locs = [ ln.to_dict() for ln in locations.get_locations() ]
+        locs = get_locs(xml_strings)
     else:
         locs = []
 
     if work_item["test_kind"] == "result":
-        res = [ ln.to_dict() for ln in results.get_results() ]
+        res = get_res(xml_strings)
     else:
         res = []
+
+    if work_item["test_kind"] == "conditions":
+        conditions = get_conds(xml_strings)
+    else:
+        conditions = []
 
     activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
