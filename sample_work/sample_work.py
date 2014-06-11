@@ -135,6 +135,31 @@ class SampleOrgTest(object):
         assert len(activities) == 1
         return lxml.etree.tostring(activities[0], pretty_print=True)
 
+    def xml_of_parent_activity(self, activity):
+        activity_id, pkg = activity
+        xml = self.xml_of_package(pkg)
+
+        xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
+        activities = xml.xpath(xpath_str % activity_id)
+        assert len(activities) == 1
+        activity_xml = activities[0]
+
+        xpath_str = '''related-activity[@type='1']/@ref'''
+        related_activity_ids = activity_xml.xpath(xpath_str)
+        
+        count_relateds = len(related_activity_ids)
+        if 0 == count_relateds:
+            return None
+
+        assert 1 == count_relateds
+
+        xpath_str = '''//iati-activity[iati-identifier/text()="%s"]'''
+        
+        parent_id = related_activity_ids[0]
+
+        return lxml.etree.tostring(xml.xpath(xpath_str % parent_id))
+
+
 class DocumentLink(object):
     def __init__(self, url, title, elt, codelists):
         self.elt = elt
