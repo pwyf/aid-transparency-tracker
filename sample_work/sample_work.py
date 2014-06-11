@@ -112,7 +112,7 @@ class SampleOrgTest(object):
                           left join package on result.package_id = package.id
                           where organisation_id = %s 
                             and test_id = %s 
-                            and result_data != 0''', 
+                            and result_data = 1''', 
                      [self.org_id, self.test_id])
         ids = [ i for i in rows ]
         return ids
