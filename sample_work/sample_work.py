@@ -71,7 +71,8 @@ class WorkItems(object):
 
                 for act_id in sample_ids:
                     act = sot.xml_of_activity(act_id)
-                
+                    parent_act = sot.xml_of_parent_activity(act_id)
+
                     u = str(uuid.uuid4())
 
                     args = {
@@ -81,6 +82,7 @@ class WorkItems(object):
                         "activity_id": act_id[0],
                         "package_id": act_id[1],
                         "xml_data": act,
+                        "xml_parent_data": parent_act,
                         "test_kind": test_kind
                         }
                     
@@ -156,8 +158,8 @@ class SampleOrgTest(object):
         xpath_str = '''//iati-activity[iati-identifier/text()="%s"]'''
         
         parent_id = related_activity_ids[0]
-
-        return lxml.etree.tostring(xml.xpath(xpath_str % parent_id))
+        
+        return lxml.etree.tostring(xml.xpath(xpath_str % parent_id)[0])
 
 
 class DocumentLink(object):

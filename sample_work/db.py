@@ -6,7 +6,8 @@ create_sql = """
         activity_id varchar(100) not null,
         package_id varchar(100) not null,
         xml_data text not null,
-        test_kind varchar(20)
+        xml_parent_data text,
+        test_kind varchar(20) not null
     );
 """
 create_sql2 = """
@@ -20,7 +21,7 @@ from sqlite3 import dbapi2 as sqlite
 import os
 
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
-        "xml_data", "test_kind"]
+        "xml_data", "xml_parent_data", "test_kind"]
 
 keys_response = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "test_kind", "response"]
@@ -43,8 +44,9 @@ def make_db(filename, work_items):
 
         c.execute("""insert into sample_work_item 
                         ("uuid", "organisation_id", "test_id", "activity_id",
-                         "package_id", "xml_data", "test_kind")
-                        values (?,?,?,?,?,?,?);
+                         "package_id", "xml_data", 
+                         "xml_parent_data", "test_kind")
+                        values (?,?,?,?,?,?,?,?);
                   """, wi_info)
 
     database.commit()
@@ -55,11 +57,12 @@ def read_db(filename):
     c = database.cursor()
 
     c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
-                         "package_id", "xml_data", "test_kind"
+                         "package_id", "xml_data", "xml_parent_data", 
+                         "test_kind"
                  from sample_work_item;""")
 
     for wi in c.fetchall():
-        data = dict([ (keys[i], wi[i]) for i in range(0, 7) ])
+        data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
 
         yield data
 
