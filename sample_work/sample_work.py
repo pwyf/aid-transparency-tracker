@@ -10,6 +10,7 @@ import json
 import os
 import uuid
 import sys
+import re
 
 config_file = os.path.join(os.path.abspath(
         os.path.join(os.path.dirname(__file__), '..')), 'config.py')
@@ -208,8 +209,8 @@ class Location(object):
     def to_dict(self):
         data = {
             "name": self.elt.find('name').text,
-            "longitude": self.elt.find('coordinates').attrib['longitude'],
-            "latitude": self.elt.find('coordinates').attrib['latitude'],
+            "longitude": self.elt.xpath('coordinates/@longitude'),
+            "latitude": self.elt.xpath('coordinates/@latitude'),
             }
         return data   
 
@@ -221,6 +222,116 @@ class Locations(object):
     def get_locations(self):
         for i in self.root.iterfind('location'):
             yield Location(i)
+
+class Period(object):
+    def __init__(self, elt):
+        self.elt = elt
+
+    def to_dict(self):
+        def format_pct(value):
+            return '<div class="progress"><div class="bar" style="width: ' + str(round(value,2)) + '%;"></div></div>'
+
+        def calc_pct(target, actual):
+            if (target and actual):
+                try:
+                    target = re.sub(",", "", target[0])
+                    target = re.sub("%", "", target)
+                    actual = re.sub(",", "", actual[0])
+                    actual = re.sub("%", "", actual)
+                    return format_pct((float(actual) / float(target)) * 100.00)
+                except Exception, e:
+                    return ""
+
+        data = {
+            'start_date': self.elt.xpath('period-start/@iso-date'),
+            'end_date': self.elt.xpath('period-end/@iso-date'),
+            'target': self.elt.xpath('target/@value'),
+            'actual': self.elt.xpath('actual/@value'),
+            'pct': calc_pct(self.elt.xpath('target/@value'), 
+                            self.elt.xpath('actual/@value'))
+        }
+        return data
+
+class Indicator(object):
+    def __init__(self,elt):
+        self.elt = elt
+
+    def elt_text_or_BLANK(self, key):
+        elt = self.elt.find(key)
+        return getattr(elt, "text", "")
+
+    def to_dict(self):
+        def get_period(period):
+            return Period(period).to_dict()
+
+        def get_periods(periods):
+            return [ get_period(period)
+                        for period in periods ]
+        data = {
+            "title": self.elt_text_or_BLANK("title"),
+            "description": self.elt_text_or_BLANK("description"),
+            "periods": get_periods(self.elt.xpath('period')),
+        }
+        return data
+
+class Result(object):
+    def __init__(self, elt):
+        self.elt = elt
+
+    def __repr__(self):
+        return '''<Result: %s>''' % self.elt
+
+    def elt_text_or_BLANK(self, key):
+        elt = self.elt.find(key)
+        return getattr(elt, "text", "")
+
+    def to_dict(self):
+        def get_indicator(indicator):
+            return Indicator(indicator).to_dict()
+        
+        def get_indicators(indicators):
+            return [ get_indicator(indicator) 
+                        for indicator in indicators ]
+
+        data = {
+            "title": self.elt_text_or_BLANK("title"),
+            "description": self.elt_text_or_BLANK("description"),
+            "indicators": get_indicators(self.elt.xpath('indicator')),
+            }
+        return data
+
+class Results(object):
+    def __init__(self, xml_string):
+        root = lxml.etree.fromstring(xml_string)
+        self.root = root
+
+    def get_results(self):
+        for i in self.root.iterfind('result'):
+            yield Result(i)
+
+class Condition(object):
+    def __init__(self, elt):
+        self.elt = elt
+
+    def __repr__(self):
+        return '''<Condition: %s>''' % self.elt
+
+    def to_dict(self):
+        data = {
+            "type": self.elt.xpath("@type"),
+            "text": self.elt.text,
+            }
+        return data
+
+class Conditions(object):
+    def __init__(self, xml_string):
+        root = lxml.etree.fromstring(xml_string)
+        self.root = root
+
+    def get_conditions(self):
+        return { 'attached': self.root.xpath("conditions/@attached"),
+                 'conditions': [ Condition(condition).to_dict()
+                        for condition in self.root.xpath('conditions/condition') ] }
 
 class ActivityInfo(object):
     def __init__(self, xml_string):

@@ -71,13 +71,21 @@ def make_sample_json(work_item):
     document_category_codes = dqcodelists.reformatCodelist('DocumentCategory')
     document_links = sample_work.DocumentLinks(work_item["xml_data"], 
                                                document_category_codes)
+    results = sample_work.Results(work_item["xml_data"])
     locations = sample_work.Locations(work_item["xml_data"])
+    conditions = sample_work.Conditions(work_item["xml_data"]).get_conditions()
+
     docs = [ dl.to_dict() for dl in document_links.get_links() ]
 
     if work_item["test_kind"] == "location":
         locs = [ ln.to_dict() for ln in locations.get_locations() ]
     else:
         locs = []
+
+    if work_item["test_kind"] == "result":
+        res = [ ln.to_dict() for ln in results.get_results() ]
+    else:
+        res = []
 
     activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
@@ -93,6 +101,8 @@ def make_sample_json(work_item):
                 "iati-identifier": work_item["activity_id"],
                 "documents": docs,
                 "locations": locs,
+                "results": res,
+                "conditions": conditions,
                 "sampling_id": work_item["uuid"],
                 "test_id": work_item["test_id"],
                 "organisation_id": work_item["organisation_id"],
