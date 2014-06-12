@@ -27,6 +27,9 @@ finally:
 
 IATI_DIR = config.DATA_STORAGE_DIR
 
+class NoIATIActivityFound(Exception):
+    pass
+
 def save_url(url, filename):
     resp = requests.get(url)
     with file(filename, 'w') as f:
@@ -73,8 +76,11 @@ class WorkItems(object):
                 test_kind = self.kind_of_test(test_id)
 
                 for act_id in sample_ids:
-                    act = sot.xml_of_activity(act_id)
-                    parent_act = sot.xml_of_parent_activity(act_id)
+                    try:
+                        act = sot.xml_of_activity(act_id)
+                        parent_act = sot.xml_of_parent_activity(act_id)
+                    except NoIATIActivityFound:
+                        continue
 
                     u = str(uuid.uuid4())
 
@@ -137,7 +143,10 @@ class SampleOrgTest(object):
         xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
 
         activities = xml.xpath(xpath_str % activity_id)
-        assert len(activities) == 1
+        try:
+            assert len(activities) == 1
+        except AssertionError:
+            raise NoIATIActivityFound
         return lxml.etree.tostring(activities[0], pretty_print=True)
 
     def xml_of_parent_activity(self, activity):
