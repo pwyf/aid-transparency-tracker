@@ -23,8 +23,8 @@ import os
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "xml_parent_data", "test_kind"]
 
-keys_response = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
-        "xml_data", "test_kind", "response"]
+keys_response = ["uuid", "organisation_id", "test_id", "activity_id", "package_id", 
+        "xml_data", "xml_parent_data", "test_kind", "response"]
 
 def default_filename():
     return os.path.join(os.path.dirname(__file__), '../sample_work.db')
@@ -78,6 +78,7 @@ def read_db_response():
                 sample_work_item.activity_id as activity_id,
                 sample_work_item.package_id as package_id, 
                 sample_work_item.xml_data as xml_data, 
+                sample_work_item.xml_parent_data as xml_parent_data, 
                 sample_work_item.test_kind as test_kind,
                 sample_result.response as response
                 from sample_work_item
@@ -85,7 +86,7 @@ def read_db_response():
                 sample_work_item.uuid=sample_result.uuid;""")
 
     for wi in c.fetchall():
-        data = dict([ (keys_response[i], wi[i]) for i in range(0, 8) ])
+        data = dict([ (keys_response[i], wi[i]) for i in range(0, 9) ])
         yield data
 
 
