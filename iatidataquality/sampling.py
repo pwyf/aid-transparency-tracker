@@ -71,6 +71,8 @@ def make_sample_json(work_item):
     def get_docs(xml_strings):
 
         def get_doc_from_xml(xml):
+            if xml == None:
+                return []
             document_category_codes = dqcodelists.reformatCodelist('DocumentCategory')
             document_links = sample_work.DocumentLinks(work_item["xml_data"], 
                                                document_category_codes)
@@ -82,6 +84,8 @@ def make_sample_json(work_item):
 
     def get_res(xml_strings):
         def get_res_from_xml(xml):
+            if xml == None:
+                return []
             results = sample_work.Results(work_item["xml_data"])
             res = [ ln.to_dict() for ln in results.get_results() ]
             return res
@@ -91,6 +95,8 @@ def make_sample_json(work_item):
 
     def get_locs(xml_strings):
         def get_loc_from_xml(xml):
+            if xml == None:
+                return []
             locations = sample_work.Locations(work_item["xml_data"])
             locs = [ ln.to_dict() for ln in locations.get_locations() ]
             return locs
@@ -100,6 +106,8 @@ def make_sample_json(work_item):
 
     def get_conds(xml_strings):
         def get_cond_from_xml(xml):
+            if xml == None:
+                return []
             conditions = sample_work.Conditions(work_item["xml_data"]).get_conditions()
             return conditions
         data = [get_cond_from_xml(xml) for xml in xml_strings]
@@ -158,6 +166,7 @@ def make_sample_json(work_item):
                 "organisation_code": work_item_org.organisation_code,
             },
             "buttons": kind_to_list(work_item["test_kind"]),
+            "response": {}
         }
     if 'response' in work_item:
         data['response'] = get_response(work_item["test_kind"], 
