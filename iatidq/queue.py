@@ -56,8 +56,8 @@ def handle_queue_generator(queue_name):
     try:
         connection = get_connection('localhost')
         channel = connection.channel()
-        #channel.queue_declare(queue=queue_name, durable=True)
-        #channel.basic_qos(prefetch_count=1)
+        channel.queue_declare(queue=queue_name, durable=True)
+        channel.basic_qos(prefetch_count=1)
         for method, properties, body in channel.basic_get(queue_name):
             if not method_frame:
                 break
