@@ -26,6 +26,12 @@
     <td>
         {{ s.response.unsure|safe }}
     </td>
+    <td>
+        <a href="{{url_for('sampling', id=s.sample.sampling_id) }}">
+        <i class="icon icon-circle-arrow-right"></i>
+        </a>
+    </td>
+    </td>
     </tr>
 	{% endfor %}
     </tbody>
