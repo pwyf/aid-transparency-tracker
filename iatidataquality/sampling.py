@@ -214,7 +214,8 @@ def api_sampling_restart():
     return json.dumps(out, indent=2)
 
 @app.route("/api/sampling/")
-def api_sampling():
+@app.route("/api/sampling/<id>/")
+def api_sampling(id=None):
     try:
         results = work_items.next()
     except StopIteration:
@@ -229,8 +230,9 @@ def api_sampling():
 
 
 @app.route("/sampling/")
+@app.route("/sampling/<id>/")
 #@usermanagement.perms_required()
-def sampling():
+def sampling(id=None):
     return render_template("sampling.html",
          admin=usermanagement.check_perms('admin'),
          loggedinuser=current_user)
