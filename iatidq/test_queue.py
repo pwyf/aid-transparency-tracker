@@ -310,14 +310,28 @@ def check_file(test_functions, codelists, file_name,
 
     return rv
 
-def dequeue_download(body, test_functions, codelists, subprocess):
+def check_file_in_subprocess(filename, runtime_id, package_id):
+    import subprocess
+
+    this_dir = os.path.dirname(__file__)
+    path = os.path.join(this_dir, '..', 'bin', 'dqtool')
+
+    rv = subprocess.call([path, "--mode", "test-package",
+                          "--package-id", str(package_id),
+                          "--runtime-id", str(runtime_id),
+                          "--filename", filename])
+
+def dequeue_download(body, test_functions, codelists, use_subprocess):
     try:
         args = json.loads(body)
-        check_file(test_functions, 
-                   codelists,
-                   args['filename'],
-                   args['runtime_id'],
-                   args['package_id'])
+        if not use_subprocess:
+            check_file(test_functions, 
+                       codelists,
+                       args['filename'],
+                       args['runtime_id'],
+                       args['package_id'])
+        else:
+            check_file_in_subprocess(filename, runtime_id, package_id)
     except Exception, e:
         print "Exception in dequeue_download", e
 
