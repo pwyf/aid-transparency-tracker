@@ -324,12 +324,17 @@ def check_file_in_subprocess(filename, runtime_id, package_id):
 def dequeue_download(body, test_functions, codelists, use_subprocess):
     try:
         args = json.loads(body)
+
+        filename = args['filename']
+        runtime_id = args['runtime_id']
+        package_id = args['package_id']
+
         if not use_subprocess:
             check_file(test_functions, 
                        codelists,
-                       args['filename'],
-                       args['runtime_id'],
-                       args['package_id'])
+                       filename,
+                       runtime_id,
+                       package_id)
         else:
             check_file_in_subprocess(filename, runtime_id, package_id)
     except Exception, e:
