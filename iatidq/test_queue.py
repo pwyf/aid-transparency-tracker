@@ -348,7 +348,6 @@ def _test_one_package(filename, package_id, runtime_id):
     import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
-    print "Package: %s" % package_name
     print "Package ID: %d" % package_id
     print "Runtime: %d" % runtime_id
 
@@ -366,6 +365,7 @@ def test_one_package(filename, package_name, runtime_id=None):
     if runtime_id is None:
         runtime_id = testrun.start_new_testrun().id
 
+    print "Package: %s" % package_name
     _test_one_package(filename, package_id, runtime_id)
 
 def run_test_queue(subprocess):
