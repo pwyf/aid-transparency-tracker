@@ -310,7 +310,7 @@ def check_file(test_functions, codelists, file_name,
 
     return rv
 
-def dequeue_download(body, test_functions, codelists):
+def dequeue_download(body, test_functions, codelists, subprocess):
     try:
         args = json.loads(body)
         check_file(test_functions, 
@@ -356,7 +356,7 @@ def run_test_queue(subprocess):
     codelists = dqcodelists.generateCodelists()
 
     for body in queue.handle_queue_generator(download_queue):
-        dequeue_download(body, test_functions, codelists)
+        dequeue_download(body, test_functions, codelists, subprocess)
 
 def test_queue_once():
     from dqparsetests import test_functions as tf
@@ -364,7 +364,9 @@ def test_queue_once():
     import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
-    callback_fn = lambda body: dequeue_download(body, test_functions, codelists)
+    subprocess = False
+    callback_fn = lambda body: dequeue_download(body, test_functions, 
+                                                codelists, subprocess)
     queue.exhaust_queue(download_queue, callback_fn)
 
 def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
