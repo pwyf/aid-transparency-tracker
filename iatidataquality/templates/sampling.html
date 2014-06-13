@@ -269,6 +269,10 @@
 
 {% endraw %}
 
+<script type="text/javascript">
+var api_sampling_url = "{{ url_for('api_sampling') }}";
+var api_sampling_process_url = "{{ url_for('api_sampling_process') }}";
+</script>
 
 <script src="{{url_for('static', filename='js/mustache.js')}}" type="text/javascript">
 </script>
