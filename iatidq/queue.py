@@ -62,7 +62,7 @@ def handle_queue_generator(queue_name):
             method_frame, properties, body = channel.basic_get(queue_name)
             if not method_frame:
                 break
-            channel.basic_ack(method.delivery_tag)
+            channel.basic_ack(method_frame.delivery_tag)
             yield body
     finally:
         requeued_messages = channel.cancel()
