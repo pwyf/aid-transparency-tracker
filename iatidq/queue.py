@@ -59,7 +59,7 @@ def handle_queue_generator(queue_name):
         channel.queue_declare(queue=queue_name, durable=True)
         channel.basic_qos(prefetch_count=1)
         while True:
-            method, properties, body = channel.basic_get(queue_name)
+            method_frame, properties, body = channel.basic_get(queue_name)
             if not method_frame:
                 break
             channel.basic_ack(method.delivery_tag)
