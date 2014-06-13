@@ -223,6 +223,7 @@ class Location(object):
     def to_dict(self):
         data = {
             "name": self.elt.xpath('name/text()'),
+            "description": self.elt.xpath('description/text()'),
             "longitude": self.elt.xpath('coordinates/@longitude'),
             "latitude": self.elt.xpath('coordinates/@latitude'),
             }
