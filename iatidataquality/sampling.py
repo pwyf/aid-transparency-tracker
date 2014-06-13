@@ -184,6 +184,7 @@ def make_sample_json(work_item):
     return data
 
 
+@app.route("/api/sampling/process/", methods=['POST'])
 @app.route("/api/sampling/process/<response>", methods=['POST'])
 def api_sampling_process(response):
     data = request.form
