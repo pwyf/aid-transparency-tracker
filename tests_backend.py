@@ -20,6 +20,6 @@ if __name__ == '__main__':
     directory = config.DATA_STORAGE_DIR
     ensure_download_dir(directory)
 
-    subprocess == "--subprocess" in sys.argv
+    subprocess = "--subprocess" in sys.argv
 
     run_test_queue(subprocess)
