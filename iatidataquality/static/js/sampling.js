@@ -13,19 +13,6 @@ $(".btn-unsure").click(function(e){
     $(this).toggleClass("btn-default btn-warning");
 });
 
-var baseUrl = function() {
-	var url = window.location.pathname;
-	if(url[url.length - 1] == '/') {
-		url = url.substring(0, url.length - 1);
-	}
-
-	var to = url.lastIndexOf('/');
-	to = to == -1 ? url.length : to + 1;
-	url = url.substring(0, to);
-
-	return url;
-}
-
 var setupLocation = function(survey_data) {
     if (typeof(map)!='undefined') {
         map.remove();
@@ -116,9 +103,7 @@ var setupNewSurveyForm = function(survey_data) {
 };
 
 var getNewData = function() {
-	var url = baseUrl();
-
-	$.getJSON(url + "api/sampling", function(data) { 
+	$.getJSON(api_sampling_url, function(data) { 
         setupNewSurveyForm(data);
 	});
 };
@@ -130,9 +115,7 @@ $(document).ready(function(){
 $(document).on("click", ".advance", function(e) {
     e.preventDefault();
 
-	var url = baseUrl();
-
-    url += "api/sampling/process/" + $(this).attr('value');
+    var url = api_sampling_process_url + $(this).attr('value');
     $.post(url, $("form").serialize(), 
 		   function(returndata){
 			   getNewData();
