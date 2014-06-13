@@ -13,8 +13,13 @@ import config
 from iatidq.test_queue import run_test_queue
 from iatidq.util import ensure_download_dir
 
+import sys
+
 if __name__ == '__main__':
     print "Starting up..."
     directory = config.DATA_STORAGE_DIR
     ensure_download_dir(directory)
-    run_test_queue()
+
+    subprocess = "--subprocess" in sys.argv
+
+    run_test_queue(subprocess)

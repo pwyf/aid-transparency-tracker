@@ -13,7 +13,7 @@ python-dateutil==1.5
 wsgiref==0.1.2
 ckan
 ckanclient
-pika==0.9.8
+pika==0.9.13
 supervisor
 foxpath>=0.99.11
 psycopg2

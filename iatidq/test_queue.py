@@ -310,31 +310,44 @@ def check_file(test_functions, codelists, file_name,
 
     return rv
 
-def dequeue_download(body, test_functions, codelists):
+def check_file_in_subprocess(filename, runtime_id, package_id):
+    import subprocess
+
+    this_dir = os.path.dirname(__file__)
+    path = os.path.join(this_dir, '..', 'bin', 'dqtool')
+
+    rv = subprocess.call([path, "--mode", "test-package",
+                          "--package-id", str(package_id),
+                          "--runtime-id", str(runtime_id),
+                          "--filename", filename])
+
+def dequeue_download(body, test_functions, codelists, use_subprocess):
     try:
         args = json.loads(body)
-        check_file(test_functions, 
-                   codelists,
-                   args['filename'],
-                   args['runtime_id'],
-                   args['package_id'])
+
+        filename = args['filename']
+        runtime_id = args['runtime_id']
+        package_id = args['package_id']
+
+        if not use_subprocess:
+            check_file(test_functions, 
+                       codelists,
+                       filename,
+                       runtime_id,
+                       package_id)
+        else:
+            check_file_in_subprocess(filename, runtime_id, package_id)
     except Exception, e:
         print "Exception in dequeue_download", e
 
-def test_one_package(filename, package_name):
+def _test_one_package(filename, package_id, runtime_id):
     import testrun
 
     from dqparsetests import test_functions as tf
     test_functions = tf()
     import dqcodelists
     codelists = dqcodelists.generateCodelists()
-    
-    package = models.Package.query.filter_by(
-        package_name=package_name).first()
-    package_id = package.id
-    runtime_id = testrun.start_new_testrun().id
 
-    print "Package: %s" % package_name
     print "Package ID: %d" % package_id
     print "Runtime: %d" % runtime_id
 
@@ -342,16 +355,27 @@ def test_one_package(filename, package_name):
                filename,
                runtime_id,
                package_id)
-    
 
-def run_test_queue():
+def test_one_package(filename, package_name, runtime_id=None):
+    
+    package = models.Package.query.filter_by(
+        package_name=package_name).first()
+    package_id = package.id
+
+    if runtime_id is None:
+        runtime_id = testrun.start_new_testrun().id
+
+    print "Package: %s" % package_name
+    _test_one_package(filename, package_id, runtime_id)
+
+def run_test_queue(subprocess):
     from dqparsetests import test_functions as tf
     test_functions = tf()
     import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
     for body in queue.handle_queue_generator(download_queue):
-        dequeue_download(body, test_functions, codelists)
+        dequeue_download(body, test_functions, codelists, subprocess)
 
 def test_queue_once():
     from dqparsetests import test_functions as tf
@@ -359,7 +383,9 @@ def test_queue_once():
     import dqcodelists
     codelists = dqcodelists.generateCodelists()
 
-    callback_fn = lambda body: dequeue_download(body, test_functions, codelists)
+    subprocess = False
+    callback_fn = lambda body: dequeue_download(body, test_functions, 
+                                                codelists, subprocess)
     queue.exhaust_queue(download_queue, callback_fn)
 
 def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
