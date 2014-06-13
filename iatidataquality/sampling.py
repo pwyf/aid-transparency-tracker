@@ -50,10 +50,18 @@ def get_test_indicator_info(test_id):
 def get_org_info(organisation_id):
     return dqorganisations.organisation_by_id(organisation_id)
 
-def get_response(kind, response):
+def get_response(kind, response, unsure):
+    def get_unsureness(unsure):
+        if (unsure == 1):
+            return '<a class="btn btn-danger btn-mini"><i class="icon icon-white icon-info-sign"></i> <b>Unsure</b></a>'
+        return ""
+
+
     kind_data = test_mapping.kind_to_status[kind]
     response_data = kind_data.get(response)
+    
     if response_data is not None:
+        response_data['unsure'] = get_unsureness(unsure)
         return response_data
     return {
               "text:": "not yet sampled",
@@ -170,7 +178,8 @@ def make_sample_json(work_item):
         }
     if 'response' in work_item:
         data['response'] = get_response(work_item["test_kind"], 
-					work_item['response'])
+                    work_item['response'], 
+                    work_item['unsure'])
 
     return data
 
@@ -179,10 +188,13 @@ def make_sample_json(work_item):
 def api_sampling_process(response):
     data = request.form
     try:
+        unsure = False
+        if 'unsure' in data:
+            unsure = True
         assert 'sampling_id' in data
         work_item_uuid = data["sampling_id"]
         response = int(response)
-        sample_db.save_response(work_item_uuid, response)
+        sample_db.save_response(work_item_uuid, response, unsure)
         return 'OK'
     except Exception as e:
         return 'ERROR'
