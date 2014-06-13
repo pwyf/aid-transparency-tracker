@@ -107,7 +107,7 @@ def make_sample_json(work_item):
     def get_conds(xml_strings):
         def get_cond_from_xml(xml):
             if xml == None:
-                return []
+                return {}
             conditions = sample_work.Conditions(work_item["xml_data"]).get_conditions()
             return conditions
         data = [get_cond_from_xml(xml) for xml in xml_strings]
