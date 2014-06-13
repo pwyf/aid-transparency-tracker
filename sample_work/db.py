@@ -13,7 +13,8 @@ create_sql = """
 create_sql2 = """
     create table sample_result (
         uuid char(36) unique not null,
-        response int not null
+        response int not null,
+        unsure int not null
     );
 """
 
@@ -23,8 +24,9 @@ import os
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "xml_parent_data", "test_kind"]
 
-keys_response = ["uuid", "organisation_id", "test_id", "activity_id", "package_id", 
-        "xml_data", "xml_parent_data", "test_kind", "response"]
+keys_response = ["uuid", "organisation_id", "test_id", "activity_id",
+    "package_id", "xml_data", "xml_parent_data", "test_kind", "response",
+    "unsure"]
 
 def default_filename():
     return os.path.join(os.path.dirname(__file__), '../sample_work.db')
@@ -80,13 +82,14 @@ def read_db_response():
                 sample_work_item.xml_data as xml_data, 
                 sample_work_item.xml_parent_data as xml_parent_data, 
                 sample_work_item.test_kind as test_kind,
-                sample_result.response as response
+                sample_result.response as response,
+                sample_result.unsure as unsure
                 from sample_work_item
                 left join sample_result on
                 sample_work_item.uuid=sample_result.uuid;""")
 
     for wi in c.fetchall():
-        data = dict([ (keys_response[i], wi[i]) for i in range(0, 9) ])
+        data = dict([ (keys_response[i], wi[i]) for i in range(0, 10) ])
         yield data
 
 
@@ -97,12 +100,12 @@ def work_item_generator(f):
         yield f(wi)
 
 
-def save_response(work_item_uuid, response):
+def save_response(work_item_uuid, response, unsure=False):
     filename = default_filename()
 
     database = sqlite.connect(filename)
     c = database.cursor()
         
-    c.execute('''insert into sample_result ("uuid", "response")
-                       values (?, ?);''', (work_item_uuid, response))
+    c.execute('''insert into sample_result ("uuid", "response", "unsure")
+              values (?, ?, ?);''', (work_item_uuid, response, unsure))
     database.commit()
