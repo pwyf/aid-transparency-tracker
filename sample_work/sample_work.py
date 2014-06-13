@@ -209,7 +209,7 @@ class DocumentLinks(object):
     def get_links(self):
         for i in self.root.iterfind('document-link'):
             url = i.attrib["url"]
-            title = i.find('title').text
+            title = i.xpath('title/text()')
             codelists = self.codelists
             yield DocumentLink(url, title, i, codelists)
 
@@ -222,7 +222,7 @@ class Location(object):
 
     def to_dict(self):
         data = {
-            "name": self.elt.find('name').text,
+            "name": self.elt.xpath('name/text()'),
             "longitude": self.elt.xpath('coordinates/@longitude'),
             "latitude": self.elt.xpath('coordinates/@latitude'),
             }
