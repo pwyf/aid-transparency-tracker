@@ -321,7 +321,7 @@ def dequeue_download(body, test_functions, codelists):
     except Exception, e:
         print "Exception in dequeue_download", e
 
-def test_one_package(filename, package_name):
+def test_one_package(filename, package_name, runtime_id=None):
     import testrun
 
     from dqparsetests import test_functions as tf
@@ -332,7 +332,9 @@ def test_one_package(filename, package_name):
     package = models.Package.query.filter_by(
         package_name=package_name).first()
     package_id = package.id
-    runtime_id = testrun.start_new_testrun().id
+
+    if runtime_id is None:
+        runtime_id = testrun.start_new_testrun().id
 
     print "Package: %s" % package_name
     print "Package ID: %d" % package_id
@@ -342,7 +344,6 @@ def test_one_package(filename, package_name):
                filename,
                runtime_id,
                package_id)
-    
 
 def run_test_queue():
     from dqparsetests import test_functions as tf
