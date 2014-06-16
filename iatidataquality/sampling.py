@@ -188,17 +188,18 @@ def make_sample_json(work_item):
 @app.route("/api/sampling/process/<response>", methods=['POST'])
 def api_sampling_process(response):
     data = request.form
-    try:
-        unsure = False
-        if 'unsure' in data:
-            unsure = True
-        assert 'sampling_id' in data
-        work_item_uuid = data["sampling_id"]
-        response = int(response)
-        sample_db.save_response(work_item_uuid, response, unsure)
-        return 'OK'
-    except Exception as e:
-        return 'ERROR'
+    #FIXME: add error handling back in
+    #try:
+    unsure = False
+    if 'unsure' in data:
+        unsure = True
+    assert 'sampling_id' in data
+    work_item_uuid = data["sampling_id"]
+    response = int(response)
+    sample_db.save_response(work_item_uuid, response, unsure)
+    return 'OK'
+    #except Exception as e:
+    #    return 'ERROR'
 
 def get_work_items():
     return sample_db.work_item_generator(make_sample_json)
