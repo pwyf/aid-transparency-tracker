@@ -20,6 +20,7 @@ create_sql2 = """
 
 from sqlite3 import dbapi2 as sqlite
 import os
+import config
 
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "xml_parent_data", "test_kind"]
@@ -29,7 +30,7 @@ keys_response = ["uuid", "organisation_id", "test_id", "activity_id",
     "unsure"]
 
 def default_filename():
-    return os.path.join(os.path.dirname(__file__), '../sample_work.db')
+    return config.DB_FILENAME
 
 def make_db(filename, work_items):
     if os.path.exists(filename):
