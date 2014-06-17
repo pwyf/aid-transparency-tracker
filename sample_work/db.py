@@ -110,6 +110,7 @@ def read_db_response():
     database = sqlite.connect(filename)
     c = database.cursor()
 
+    # this can all be replaced with a select against sample_full
     c.execute("""select sample_work_item.uuid as uuid,
                 sample_work_item.organisation_id as organisation_id, 
                 sample_work_item.test_id as test_id,
