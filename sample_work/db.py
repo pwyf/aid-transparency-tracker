@@ -20,6 +20,7 @@ create_sql2 = """
 create_sql_offered = """
     create table sample_offer (
         uuid char(36) unique not null,
+        offered_time DATETIME not null,
         offered bool not null
     );
 """
@@ -123,6 +124,20 @@ def save_response(work_item_uuid, response, unsure=False):
     try:
         c.execute('''insert into sample_result ("uuid", "response", "unsure")
                        values (?, ?, ?);''', (work_item_uuid, response, unsure))
+    except sqlite3.IntegrityError:
+        database.rollback()
+        raise
+    
+    database.commit()
+
+def save_offer(work_item_uuid):
+    filename = default_filename()
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    try:
+        c.execute('''insert into sample_offer ("uuid", "offered_time", "offered")
+                       values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, 1))
     except sqlite3.IntegrityError:
         database.rollback()
         raise
