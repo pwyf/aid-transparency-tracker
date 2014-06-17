@@ -116,7 +116,6 @@ def save_response(work_item_uuid, response, unsure=False):
                        values (?, ?, ?);''', (work_item_uuid, response, unsure))
     except sqlite3.IntegrityError:
         database.rollback()
-        return False
+        raise
     
     database.commit()
-    return True

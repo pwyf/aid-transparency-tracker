@@ -26,6 +26,7 @@ import lxml.etree
 
 import os
 from sqlite3 import dbapi2 as sqlite
+import sqlite3
 from sample_work import sample_work
 from sample_work import db as sample_db
 from sample_work import test_mapping
@@ -187,15 +188,14 @@ def make_sample_json(work_item):
 def api_sampling_process(response):
     data = request.form
     try:
-        unsure = False
-        if 'unsure' in data:
-            unsure = True
+        unsure = 'unsure' in data
         assert 'sampling_id' in data
         work_item_uuid = data["sampling_id"]
         response = int(response)
-        result = sample_db.save_response(work_item_uuid, response, unsure)
-        if result:
-            return 'OK'
+
+        sample_db.save_response(work_item_uuid, response, unsure)
+        return 'OK'
+    except sqlite3.IntegrityError:
         return "EXISTS"
     except Exception as e:
         return 'ERROR'
