@@ -77,11 +77,17 @@ def read_db(filename):
     c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
                          "package_id", "xml_data", "xml_parent_data", 
                          "test_kind"
-                 from sample_work_item;""")
+                 from sample_full where offered is null limit 1;""")
 
     for wi in c.fetchall():
         data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
 
+        uuid = wi[0] # hack
+        c2 = database.cursor()
+        c2.execute("""insert into sample_offer ("uuid", "offered")
+                        values (?, ?)""", (uuid, True))
+        db.commit()
+        
         yield data
 
 def read_db_response():
