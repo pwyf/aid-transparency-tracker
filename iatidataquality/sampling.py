@@ -200,14 +200,11 @@ def api_sampling_process(response):
     except Exception as e:
         return 'ERROR'
 
-def get_work_items():
-    return sample_db.work_item_generator(make_sample_json)
-
 @app.route("/api/sampling/")
 @app.route("/api/sampling/<id>/")
 def api_sampling(id=None):
     try:
-        results = get_work_items()
+        results = sample_db.work_item_generator(make_sample_json)
     except sample_db.NoMoreSamplingWork:
         results = {
             "error": "Finished"
