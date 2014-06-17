@@ -37,6 +37,8 @@ import sqlite3
 import os
 import config
 
+class NoMoreSamplingWork(Exception): pass
+
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "xml_parent_data", "test_kind"]
 
@@ -84,17 +86,23 @@ def read_db(filename):
                    and offered is not null
                  limit 1;""")
 
-    for wi in c.fetchall():
-        data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
+    wis = c.fetchall()
+    if 0 == len(wis):
+        raise NoMoreSamplingWork
 
-        work_item_uuid = wi[0] # hack
-        try:
-            save_offer(database, work_item_uuid)
-            database.commit()
-            yield data
-        except:
-            database.rollback()
-            raise
+    # ignore the case where limit 1 nevertheless returns >1 result
+
+    wi = wis[0]
+    data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
+
+    work_item_uuid = wi[0] # hack
+    try:
+        save_offer(database, work_item_uuid)
+        database.commit()
+        return data
+    except:
+        database.rollback()
+        raise
 
 def read_db_response():
     filename = default_filename()
@@ -124,8 +132,8 @@ def read_db_response():
 def work_item_generator(f):
     filename = default_filename()
 
-    for wi in read_db(filename):
-        yield f(wi)
+    wi = read_db(filename)
+    return f(wi)
 
 def save_response(work_item_uuid, response, unsure=False):
     filename = default_filename()

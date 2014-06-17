@@ -203,23 +203,12 @@ def api_sampling_process(response):
 def get_work_items():
     return sample_db.work_item_generator(make_sample_json)
 
-work_items = get_work_items()
-
-@app.route("/api/sampling/restart/")
-def api_sampling_restart():
-    global work_items
-    work_items = get_work_items()
-    out = {
-        "restarted": True
-    }
-    return json.dumps(out, indent=2)
-
 @app.route("/api/sampling/")
 @app.route("/api/sampling/<id>/")
 def api_sampling(id=None):
     try:
-        results = work_items.next()
-    except StopIteration:
+        results = get_work_items()
+    except sample_db.NoMoreSamplingWork:
         results = {
             "error": "Finished"
             }
