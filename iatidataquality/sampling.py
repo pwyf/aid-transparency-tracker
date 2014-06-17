@@ -193,9 +193,10 @@ def api_sampling_process(response):
         assert 'sampling_id' in data
         work_item_uuid = data["sampling_id"]
         response = int(response)
-        result = sample_db.save_response(work_item_uuid, response, unsure)
-        if result:
-            return 'OK'
+
+        sample_db.save_response(work_item_uuid, response, unsure)
+        return 'OK'
+    except sqlite3.IntegrityError:
         return "EXISTS"
     except Exception as e:
         return 'ERROR'
