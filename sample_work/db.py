@@ -17,9 +17,18 @@ create_sql2 = """
         unsure int not null
     );
 """
+create_sql_offered = """
+    create table sample_offer (
+        uuid char(36) unique not null,
+        offered bool not null
+    );
+"""
+
 create_sql3 = """
     create view sample_full as
-        select * from sample_work_item left join sample_result using (uuid);
+        select * from sample_work_item 
+            left join sample_result using (uuid)
+            left join sample_offer using (uuid);
 """
 
 from sqlite3 import dbapi2 as sqlite
@@ -44,7 +53,7 @@ def make_db(filename, work_items):
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    stmts = [create_sql, create_sql2, create_sql3]
+    stmts = [create_sql, create_sql2, create_sql_offered, create_sql3]
 
     [ c.execute(stmt) for stmt in stmts ]
 
