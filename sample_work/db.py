@@ -83,10 +83,10 @@ def read_db(filename):
     for wi in c.fetchall():
         data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
 
-        uuid = wi[0] # hack
+        work_item_uuid = wi[0] # hack
         c2 = database.cursor()
         c2.execute("""insert into sample_offer ("uuid", "offered")
-                        values (?, ?)""", (uuid, True))
+                        values (?, ?)""", (work_item_uuid, True))
         db.commit()
         
         yield data
