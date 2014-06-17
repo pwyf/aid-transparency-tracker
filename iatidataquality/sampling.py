@@ -26,6 +26,7 @@ import lxml.etree
 
 import os
 from sqlite3 import dbapi2 as sqlite
+import sqlite3
 from sample_work import sample_work
 from sample_work import db as sample_db
 from sample_work import test_mapping
