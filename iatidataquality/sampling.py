@@ -189,9 +189,7 @@ def make_sample_json(work_item):
 def api_sampling_process(response):
     data = request.form
     try:
-        unsure = False
-        if 'unsure' in data:
-            unsure = True
+        unsure = 'unsure' in data
         assert 'sampling_id' in data
         work_item_uuid = data["sampling_id"]
         response = int(response)
