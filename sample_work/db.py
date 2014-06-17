@@ -84,12 +84,13 @@ def read_db(filename):
         data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
 
         work_item_uuid = wi[0] # hack
-        c2 = database.cursor()
-        c2.execute("""insert into sample_offer ("uuid", "offered")
-                        values (?, ?)""", (work_item_uuid, True))
-        db.commit()
-        
-        yield data
+        try:
+            save_offer(database, work_item_uuid)
+            db.commit()
+            yield data
+        except:
+            db.rollback()
+            raise
 
 def read_db_response():
     filename = default_filename()
@@ -139,11 +140,5 @@ def save_response(work_item_uuid, response, unsure=False):
 def save_offer(database, work_item_uuid):
     c = database.cursor()
 
-    try:
-        c.execute('''insert into sample_offer ("uuid", "offered_time", "offered")
-                       values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, True))
-    except sqlite3.IntegrityError:
-        database.rollback()
-        raise
-    
-    database.commit()
+    c.execute('''insert into sample_offer ("uuid", "offered_time", "offered")
+                   values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, True))
