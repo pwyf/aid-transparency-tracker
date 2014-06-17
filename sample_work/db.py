@@ -78,7 +78,7 @@ def read_db(filename):
     c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
                          "package_id", "xml_data", "xml_parent_data", 
                          "test_kind"
-                 from sample_full where offered is null limit 1;""")
+                 from sample_full where response is not null limit 1;""")
 
     for wi in c.fetchall():
         data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
