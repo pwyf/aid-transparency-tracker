@@ -86,10 +86,10 @@ def read_db(filename):
         work_item_uuid = wi[0] # hack
         try:
             save_offer(database, work_item_uuid)
-            db.commit()
+            database.commit()
             yield data
         except:
-            db.rollback()
+            database.rollback()
             raise
 
 def read_db_response():
