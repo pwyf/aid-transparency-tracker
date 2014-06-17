@@ -136,14 +136,12 @@ def save_response(work_item_uuid, response, unsure=False):
     
     database.commit()
 
-def save_offer(work_item_uuid):
-    filename = default_filename()
-    database = sqlite.connect(filename)
+def save_offer(database, work_item_uuid):
     c = database.cursor()
 
     try:
         c.execute('''insert into sample_offer ("uuid", "offered_time", "offered")
-                       values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, 1))
+                       values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, True))
     except sqlite3.IntegrityError:
         database.rollback()
         raise
