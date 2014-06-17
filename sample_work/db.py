@@ -44,9 +44,9 @@ def make_db(filename, work_items):
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    c.execute(create_sql)
-    c.execute(create_sql2)
-    c.execute(create_sql3)
+    stmts = [create_sql, create_sql2, create_sql3]
+
+    [ c.execute(stmt) for stmt in stmts ]
 
     for wi in work_items:
         wi_info = tuple(map(lambda k: wi[k], keys))
