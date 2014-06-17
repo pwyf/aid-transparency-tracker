@@ -112,10 +112,11 @@ def get_sample_result(work_item_uuid):
 
 def save_response(work_item_uuid, response, unsure=False):
     if get_sample_result(work_item_uuid):
-        return
+        return False
     filename = default_filename()
     database = sqlite.connect(filename)
     c = database.cursor()
     c.execute('''insert into sample_result ("uuid", "response", "unsure")
               values (?, ?, ?);''', (work_item_uuid, response, unsure))
     database.commit()
+    return True
