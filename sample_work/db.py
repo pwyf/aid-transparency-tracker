@@ -17,6 +17,10 @@ create_sql2 = """
         unsure int not null
     );
 """
+create_sql3 = """
+    create view sample_full as
+        select * from sample_work_item left join sample_result using (uuid);
+"""
 
 from sqlite3 import dbapi2 as sqlite
 import sqlite3
@@ -42,6 +46,7 @@ def make_db(filename, work_items):
 
     c.execute(create_sql)
     c.execute(create_sql2)
+    c.execute(create_sql3)
 
     for wi in work_items:
         wi_info = tuple(map(lambda k: wi[k], keys))
