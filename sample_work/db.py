@@ -81,9 +81,9 @@ def read_db(filename):
                          "package_id", "xml_data", "xml_parent_data", 
                          "test_kind"
                  from sample_full 
-                 where response is not null 
-                   and offered != 't'
-                   and offered is not null
+                 where response is null 
+                   and (offered != 't'
+                   or offered is null)
                  limit 1;""")
 
     wis = c.fetchall()
