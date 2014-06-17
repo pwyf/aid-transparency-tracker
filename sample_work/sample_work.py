@@ -36,7 +36,9 @@ def save_url(url, filename):
         f.write(resp.content)
 
 def query(*args):
-    db = psycopg2.connect(database='iatidq')
+    import config
+    db_config = config.db_config
+    db = psycopg2.connect(**db_config)
     c = db.cursor()
     c.execute(*args)
     return c.fetchall()
