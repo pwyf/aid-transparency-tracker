@@ -21,11 +21,11 @@ module_name = os.path.splitext(module_name)[0]
 path = list(sys.path)
 sys.path.insert(0, directory)
 try:
-    config = __import__(module_name)
+    iatidq_config = __import__(module_name)
 finally:
     sys.path[:] = path # restore
 
-IATI_DIR = config.DATA_STORAGE_DIR
+IATI_DIR = iatidq_config.DATA_STORAGE_DIR
 
 class NoIATIActivityFound(Exception):
     pass
