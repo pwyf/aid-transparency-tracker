@@ -19,6 +19,7 @@ create_sql2 = """
 """
 
 from sqlite3 import dbapi2 as sqlite
+import sqlite3
 import os
 import config
 
@@ -100,23 +101,17 @@ def work_item_generator(f):
     for wi in read_db(filename):
         yield f(wi)
 
-def get_sample_result(work_item_uuid):
-    filename = default_filename()
-    database = sqlite.connect(filename)
-    c = database.cursor()
-    c.execute("""select * from sample_result
-                where uuid=?""", [work_item_uuid])
-    if c.fetchall():
-        return True
-    return False
-
 def save_response(work_item_uuid, response, unsure=False):
-    if get_sample_result(work_item_uuid):
-        return False
     filename = default_filename()
     database = sqlite.connect(filename)
     c = database.cursor()
-    c.execute('''insert into sample_result ("uuid", "response", "unsure")
-              values (?, ?, ?);''', (work_item_uuid, response, unsure))
+
+    try:
+        c.execute('''insert into sample_result ("uuid", "response", "unsure")
+                       values (?, ?, ?);''', (work_item_uuid, response, unsure))
+    except sqlite3.IntegrityError:
+        database.rollback()
+        return False
+    
     database.commit()
     return True
