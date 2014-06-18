@@ -36,6 +36,7 @@ from sqlite3 import dbapi2 as sqlite
 import sqlite3
 import os
 import config
+import logging
 
 class NoMoreSamplingWork(Exception): pass
 
@@ -101,6 +102,7 @@ def read_db(filename):
         database.commit()
         return data
     except:
+        logging.info("error saving UUID: %s" % work_item_uuid)
         database.rollback()
         raise
 
