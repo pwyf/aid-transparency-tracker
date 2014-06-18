@@ -185,6 +185,7 @@ def make_sample_json(work_item):
 
 @app.route("/api/sampling/process/", methods=['POST'])
 @app.route("/api/sampling/process/<response>", methods=['POST'])
+@usermanagement.perms_required()
 def api_sampling_process(response):
     data = request.form
     try:
@@ -202,6 +203,7 @@ def api_sampling_process(response):
 
 @app.route("/api/sampling/")
 @app.route("/api/sampling/<id>/")
+@usermanagement.perms_required()
 def api_sampling(id=None):
     try:
         results = sample_db.work_item_generator(make_sample_json)
@@ -218,14 +220,14 @@ def api_sampling(id=None):
 
 @app.route("/sampling/")
 @app.route("/sampling/<id>/")
-#@usermanagement.perms_required()
+@usermanagement.perms_required()
 def sampling(id=None):
     return render_template("sampling.html",
          admin=usermanagement.check_perms('admin'),
          loggedinuser=current_user)
 
 @app.route("/sampling/list/")
-#@usermanagement.perms_required()
+@usermanagement.perms_required()
 def sampling_list():
     samples = []
     for wi in sample_db.read_db_response():
