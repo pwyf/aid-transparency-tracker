@@ -83,7 +83,7 @@ def read_db(filename):
                          "test_kind"
                  from sample_full 
                  where response is null 
-                   and (offered != 't'
+                   and (offered != 1
                    or offered is null)
                  limit 1;""")
 
