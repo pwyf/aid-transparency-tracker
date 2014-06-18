@@ -117,6 +117,11 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
     aresults = aggregations.aggregate_percentages(data)
 
     with db.session.begin():
+        db.session.query(models.AggregateResult).filter(
+            models.AggregateResult.package_id==package_id, 
+            models.AggregateResult.aggregateresulttype_id==agg_type
+            ).delete(synchronize_session=False)
+
         for aresult in aresults:
             a = models.AggregateResult()
             a.runtime_id = runtime
@@ -168,6 +173,11 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
     aresults = aggregations.aggregate_percentages_org(data)
 
     with db.session.begin():
+        db.session.query(models.AggregateResult).filter(
+            models.AggregateResult.package_id==package_id, 
+            models.AggregateResult.aggregateresulttype_id==agg_type
+            ).delete(synchronize_session=False)
+
         for aresult in aresults:
             a = models.AggregateResult()
             a.runtime_id = runtime
