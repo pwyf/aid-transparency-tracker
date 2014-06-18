@@ -102,7 +102,7 @@ def read_db(filename):
         database.commit()
         return data
     except:
-        logging.info("error saving UUID: %s" % work_item_uuid)
+        logging.error("error saving UUID: %s" % work_item_uuid)
         database.rollback()
         raise
 
