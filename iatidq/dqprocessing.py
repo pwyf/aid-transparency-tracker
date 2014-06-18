@@ -119,7 +119,7 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
     with db.session.begin():
         db.session.query(models.AggregateResult).filter(
             models.AggregateResult.package_id==package_id, 
-            models.AggregateResult.aggregateresulttype_id==agg_type
+            models.AggregateResult.aggregateresulttype_id==agg_type.id
             ).delete(synchronize_session=False)
 
         for aresult in aresults:
@@ -175,7 +175,7 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
     with db.session.begin():
         db.session.query(models.AggregateResult).filter(
             models.AggregateResult.package_id==package_id, 
-            models.AggregateResult.aggregateresulttype_id==agg_type
+            models.AggregateResult.aggregateresulttype_id==agg_type.id
             ).delete(synchronize_session=False)
 
         for aresult in aresults:
