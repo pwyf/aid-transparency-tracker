@@ -76,6 +76,8 @@
                   <li{% if active_page == "packages" %} class="active"{%endif%}><a href="{{url_for('packages_manage')}}">Manage packages</a></li>
                   <li{% if active_page == "tests" %} class="active"{%endif%}><a href="{{url_for('tests')}}">Tests</a></li>
                   <li{% if active_page == "users" %} class="active"{%endif%}><a href="{{url_for('users')}}">Users</a></li>
+                  <li{% if active_page == "sampling" %} class="active"{%endif%}><a href="{{url_for('sampling')}}">Sampling</a></li>
+                  <li{% if active_page == "sampling_list" %} class="active"{%endif%}><a href="{{url_for('sampling_list')}}">List samples</a></li>
                   {% endif %}
                   <li><a href="{{url_for('logout')}}">Log out</a></li>
                 </ul>
