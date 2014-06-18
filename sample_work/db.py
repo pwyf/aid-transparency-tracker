@@ -157,3 +157,18 @@ def save_offer(database, work_item_uuid):
 
     c.execute('''insert into sample_offer ("uuid", "offered_time", "offered")
                    values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, True))
+
+def flush_offered_work():
+    filename = default_filename()
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    c.execute('''select uuid from sample_full
+                   where offered = 1 and response is null;''')
+
+    uuids = [ row[0] for row in c.fetchall() ]
+
+    for uuid in uuids:
+        c.execute('''delete from sample_offer where uuid = ?;''', (uuid,))
+
+    db.commit()
