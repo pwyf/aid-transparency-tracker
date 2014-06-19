@@ -22,16 +22,27 @@ def all_org_ids():
     for o in organisation_ids():
         yield o[0]
 
-def run():
-    org_ids = [ i for i in all_org_ids() ]
-    test_ids = [ i for i in all_test_ids() ]
-
-    #oo = [o for o in WorkItems(org_ids, test_ids)]
-    #print json.dumps(oo, indent=2)
-
-
-    filename = db.default_filename()
+def run(filename, org_ids, test_ids):
+    print "test ids:", test_ids
     db.make_db(filename, WorkItems(org_ids, test_ids))
 
 if __name__ == '__main__':
-    run()    
+    from optparse import OptionParser
+
+    default_filename = db.default_filename()
+    org_ids = [ i for i in all_org_ids() ]
+    test_ids = [ i for i in all_test_ids() ]
+
+    parser = OptionParser()
+    parser.add_option("--filename", dest="filename", action="store",
+                      default=default_filename)
+    parser.add_option("--org-ids", dest="org_ids", action="store")
+    parser.add_option("--test-ids", dest="test_ids", action="store")
+    options, rest = parser.parse_args()
+
+    if options.org_ids:
+        org_ids = map(int, options.org_ids.split(","))
+    if options.test_ids:
+        test_ids = map(int, options.test_ids.split(","))
+
+    run(options.filename, org_ids, test_ids)
