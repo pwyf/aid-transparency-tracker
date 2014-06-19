@@ -31,10 +31,9 @@ missing_result_id = 0
 class InvalidXPath(Exception): pass
 class MissingIdentifier(Exception): pass
 
-def delete_results(runtime_id, package_id):
+def delete_results(package_id):
     with db.session.begin():
         results = models.Result.query.filter(
-            models.Result.runtime_id==runtime_id,
             models.Result.package_id==package_id
             ).delete()
 
@@ -261,6 +260,9 @@ def unguarded_check_file(test_functions, codelists, file_name,
                 runtime_id, package_id):
     print "Filename to test: %s (%d)" % (file_name, package_id)
 
+    if rm_results:
+        delete_results(package_id)
+
     xml_parsed, data = parse_xml(file_name)
 
     dqprocessing.add_hardcoded_result(hardcoded_test.VALID_XML, 
@@ -271,9 +273,6 @@ def unguarded_check_file(test_functions, codelists, file_name,
         return False
 
     check_data(runtime_id, package_id, test_functions, codelists, data)
-
-    if rm_results:
-        delete_results(runtime_id, package_id)
 
     return True
 
