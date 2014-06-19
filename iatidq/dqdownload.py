@@ -32,7 +32,7 @@ def get_package(pkg, package, runtime_id):
     # recently than the database, then download it again
     check_package = package
 
-    if ((package.metadata_modified) != (pkg['metadata_modified'])):
+    if ((package.package_metadata_modified) != (pkg['metadata_modified'])):
         # if the package has been updated, 
         # then download it and update the package data
         update_package = True
@@ -67,12 +67,12 @@ def download_packages(runtime):
     for package in packages:
         name = package.package_name
         print name
-        print package.metadata_modified
+        print package.package_metadata_modified
         
         # Handle automatically retrieved packages (from Registry)
         if package.man_auto == 'auto':
             try:
-                if package.metadata_modified != registry_packages[name]:
+                if package.package_metadata_modified != registry_packages[name]:
                     print "Need to update package", name
                     # need to add status here, because otherwise the status could 
                     # be written to DB after the package has finished testing
@@ -81,7 +81,7 @@ def download_packages(runtime):
                     enqueue_download(package, runtime.id)
                 else:
                     print "Packages have the same ID"
-                    print "Metadata modified is", package.metadata_modified
+                    print "Metadata modified is", package.package_metadata_modified
                     print "Registry package name is", registry_packages[name]
             except KeyError, e:
                 if name not in registry_packages:
@@ -93,7 +93,7 @@ def download_packages(runtime):
 
         # Handle manually added packages
         else:
-            if ((package.metadata_modified == "") or (package.metadata_modified == None)):
+            if ((package.package_metadata_modified == "") or (package.package_metadata_modified == None)):
                 print "Need to update manual package", name
                 # need to add status here, because otherwise the status could 
                 # be written to DB after the package has finished testing
@@ -114,7 +114,7 @@ def download_package(runtime, package_name):
 
     pkg = registry.package_entity_get(package.package_name)
     try:
-        if pkg['metadata_modified'] == package.metadata_modified:
+        if pkg['metadata_modified'] == package.package_metadata_modified:
             add_test_status(package.id, package_status.UP_TO_DATE)
         else:
             get_package(pkg, package, runtime.id)
@@ -122,7 +122,7 @@ def download_package(runtime, package_name):
         print "Package has no resources"
         pass
     except KeyError:
-        print "Package resource has no metadata_modified"
+        print "Package resource has no package_metadata_modified"
         pass
 
 def run(package_name=None):

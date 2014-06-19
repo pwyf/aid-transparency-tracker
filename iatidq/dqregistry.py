@@ -195,7 +195,7 @@ def clear_hash(package_name):
     with db.session.begin():
         pkg = models.Package.query.filter_by(package_name=package_name).first()
         pkg.hash = ""
-        pkg.metadata_modified = ""
+        pkg.package_metadata_modified = ""
         db.session.add(pkg)
 
 if __name__ == "__main__":
