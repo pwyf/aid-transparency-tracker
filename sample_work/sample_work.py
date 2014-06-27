@@ -145,10 +145,9 @@ class SampleOrgTest(object):
         xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
 
         activities = xml.xpath(xpath_str % activity_id)
-        try:
-            assert len(activities) == 1
-        except AssertionError:
+        if 0 == len(activities):
             raise NoIATIActivityFound
+        assert len(activities) == 1
         return lxml.etree.tostring(activities[0], pretty_print=True)
 
     def xml_of_parent_activity(self, activity):
