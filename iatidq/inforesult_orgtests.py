@@ -139,6 +139,13 @@ def total_country_budgets(doc, totalbudgets):
         else:
             return percentage
 
+    def get_a_total_budget_over_zero(totalbudgets):
+        years = [0, 1, 2, 3]
+        for year in years:
+            if totalbudgets[year]['amount'] > 0:
+                return totalbudgets[year]['amount']
+        return 0.00
+
     def generate_total_years_data(budgetdata, year):
         total_countries = budgetdata['summary']['total_amount'][year]
         total_all = totalbudgets[year]['amount']
@@ -147,7 +154,8 @@ def total_country_budgets(doc, totalbudgets):
         except ZeroDivisionError:
             # Use current year's budget
             try:
-                budgetdata['summary']['total_pct'][year] = getCPAAdjustedPercentage(total_countries, totalbudgets[0]['amount'])
+                budgetdata['summary']['total_pct'][year] = getCPAAdjustedPercentage(total_countries, 
+                                get_a_total_budget_over_zero(totalbudgets))
             except ZeroDivisionError:
                 budgetdata['summary']['total_pct'][year] = 0.00
         budgetdata['summary']['num_countries'] = len(budgetdata['countries'])
