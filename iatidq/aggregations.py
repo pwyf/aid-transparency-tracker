@@ -60,7 +60,7 @@ def _aggregate_percentages(data, dims):
 
         if 0 == fail + success:
             return None
-        percentage = int((float(success)/(fail+success)) * 100)
+        percentage = float(success) / (fail + success) * 100.0
 
         data = {
             "percentage_passed": percentage,
