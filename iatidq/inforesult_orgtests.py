@@ -187,7 +187,7 @@ def country_strategy_papers(doc):
         return 0.00
 
     total_countries = len(countries)
-    strategy_papers = doc.xpath("//document-link[category/@code]")
+    strategy_papers = doc.xpath("//document-link[category/@code='B03']")
 
     countrycodelist = dqcodelists.reformatCodelist("countriesbasic")
 
