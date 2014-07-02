@@ -71,7 +71,7 @@ class CSVIndicatorInfo(object):
                  subcategory_name, order, weight):
         self.description = description
         self.name = name
-        self._id = _id
+        self.id = _id
         self.category_name = category_name
         self.subcategory_name = subcategory_name
         self.order = order
