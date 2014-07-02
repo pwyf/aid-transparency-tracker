@@ -49,6 +49,9 @@ footer {
 .clearer {
     clear:both;
 }
+.hidden-text {
+    display:none;
+}
 
 
 /* Main marketing message and sign up button */
