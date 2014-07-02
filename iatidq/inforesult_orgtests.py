@@ -38,13 +38,13 @@ def budget_within_year_scope(budget_end, year):
     # so out of scope).
 
     # Budgets are now within scope if they run until the end of
-    # 2014 (maximum 180 days).
+    # 2014 (maximum 177 days).
 
     try:
         now = datetime.datetime.now()
         date_budget_end = datetime.datetime.strptime(budget_end, "%Y-%m-%d")
 
-        future = datetime.timedelta(days=180+(365*(year-1)))
+        future = datetime.timedelta(days=177+(365*(year-1)))
         future_plus_oneyear = future+datetime.timedelta(days=365)
 
         if ((date_budget_end > (now+future)) and 
