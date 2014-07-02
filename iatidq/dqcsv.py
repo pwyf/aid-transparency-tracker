@@ -32,6 +32,13 @@ def get_publication_format(surveydata, indicator_id):
     return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedFormat', 
                                            'name', 'format_value')
     
+def get_frequency_multiplier(frequency):
+    if (frequency == "less than quarterly"):
+        return 0.5
+    elif (frequency == "quarterly"):
+        return 0.9
+    else:
+        return 1.0
 
 def write_agg_csv_result(out, organisation, freq, result):
     if result['results_pct'] == 0:
@@ -55,12 +62,7 @@ def write_agg_csv_result(out, organisation, freq, result):
 def write_organisation_publications_csv(out, organisation):
     aggregate_results = dqorganisations._organisation_indicators(organisation)
 
-    if (organisation.frequency == "less than quarterly"):
-        freq = 0.5
-    elif (organisation.frequency == "quarterly"):
-        freq = 0.9
-    else:
-        freq = 1.0
+    freq = get_frequency_multiplier(organisation.frequency)
 
     for resultid, result in aggregate_results.items():
         write_agg_csv_result(out, organisation, freq, result)
@@ -295,10 +297,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
 def write_organisation_publications_csv_index(out, organisation, history=False):
     aggregate_results = dqorganisations._organisation_indicators_split(organisation)
 
-    if (organisation.frequency == "less than quarterly"):
-        freq = 0.9
-    else:
-        freq = 1.0
+    freq = get_frequency_multiplier(organisation.frequency)
        
     organisation_survey = dqsurveys.getSurvey(organisation.organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)
