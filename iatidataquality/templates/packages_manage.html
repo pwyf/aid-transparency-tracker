@@ -10,8 +10,8 @@
     </script>
     <form action="" method="post">
     <div class="pull-right">
-    <input type="submit" name="refresh" class="btn" value="Refresh package list from Registry"/><br /><br />
-    <a href="{{url_for('packages_edit')}}" class="btn btn-success"><i class="icon-plus icon-white"></i>Add manual package</a>
+    <input type="submit" name="refresh" class="btn btn-mini" value="Refresh list from Registry"/> <a class="btn btn-mini" href="{{url_for('registry_deleted')}}">Check deleted packages</a></p>
+    <p><a href="{{url_for('packages_edit')}}" class="btn btn-success"><i class="icon-plus icon-white"></i>Add manual package</a></p>
     </div>
     <h1>Package management</h1>
     <p>Choose active packages</p>
@@ -19,15 +19,23 @@
     <p><a id="markall" class="btn pull-right btn-mini">Mark all active</a> <a id="unmarkall" class="btn pull-right btn-mini">Mark all inactive</a></p>
     <table class="table" id="packages">
     <thead>
-    <th>Registry ID</th><th>Name</th><th>Type</th><th>Active?</th>
+    <th>Registry ID</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Active</th>
+    <th></th>
     </thead>
     <tbody>
 	{% for pk in pkgs %}
-    <tr>
+    <tr{% if pk.deleted %} class="muted"{%endif%}>
 	<td><input type="hidden" name="package" value="{{pk.package_name}}" /><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td>
     <td>{{ pk.package_title }}</td>
     <td>{% if pk.man_auto=='man' %}<a href="{{url_for('packages_edit', package_name=pk.package_name)}}"><i class="icon-pencil"></i> Manual</a>{% endif %}</td>
     <td><input type="checkbox" {% if pk.active %}checked{%endif%} name="active_{{pk.package_name}}"/> <span>{% if pk.active %}Active{%endif%}</span></td>
+    <td>{% if pk.deleted %}
+        <i class="icon icon-remove" title="This package has been deleted"></i><span class="hidden-text">Deleted</span>
+        {% endif %}
+    </td>
     </tr>
 	{% endfor %}
     </tbody>
