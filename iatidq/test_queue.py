@@ -33,7 +33,7 @@ class MissingIdentifier(Exception): pass
 
 def delete_results(package_id):
     with db.session.begin():
-        results = models.Result.query.filter(
+        models.Result.query.filter(
             models.Result.package_id==package_id
             ).delete()
 
