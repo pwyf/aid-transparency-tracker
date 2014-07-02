@@ -22,7 +22,36 @@ REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,t
 
 CKANurl = 'http://iatiregistry.org/api'
 
+IATIUPDATES_URL = 'http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/'
+
 class PackageMissing(Exception): pass
+
+def _set_deleted_package(package_ckan_id, set_deleted=False):
+    with db.session.begin():
+        p = models.Package.query.filter(
+            models.Package.package_ckan_id==package_ckan_id
+            ).first()
+        if p:        
+            p.deleted = set_deleted
+            db.session.add(p)
+        return True
+    return False
+
+def check_deleted_packages():
+    data = urllib2.urlopen(IATIUPDATES_URL, timeout=60).read()
+    print IATIUPDATES_URL
+    data = json.loads(data)
+    count_deleted = 0
+    for pkg in data['data']:
+        # Need to do both in case a package is deleted and then resurrected
+        if pkg['deleted'] == True:
+            print "Should delete package", pkg['name']
+            _set_deleted_package(pkg['id'], True)
+            count_deleted +=1
+        else:            
+            _set_deleted_package(pkg['id'], False)
+    return count_deleted
+    
 
 # pg is sqlalchemy model; ckangroup is a ckan object
 def copy_pg_attributes(pg, ckangroup):
