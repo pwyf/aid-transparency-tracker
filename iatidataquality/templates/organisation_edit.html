@@ -117,7 +117,7 @@
     </thead>
     <tbody>
     {% for pp in organisationpackages %}
-    <tr>
+    <tr{% if pp.Package.deleted %} class="muted"{% endif %}>
     <td><a href="{{url_for('packages', package_name=pp.Package.package_name)}}">{{pp.Package.package_name}}</a></td>
     <td>{{pp.Package.package_title}}</td>
     <td>{{pp.OrganisationPackage.condition}}</td>
