@@ -196,7 +196,7 @@ def sum_for_publishers(packages, d, h, t):
          
     tmp = make_summary(
         test_id,
-        int(float(total_pct/packages_in_hierarchy)),
+        float(total_pct/packages_in_hierarchy),
         total_activities
         )
     tmp["indicator"] = IndicatorInfo(ok_tdata[0]).as_dict()
