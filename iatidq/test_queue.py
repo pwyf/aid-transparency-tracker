@@ -36,6 +36,9 @@ def delete_results(package_id):
         models.Result.query.filter(
             models.Result.package_id==package_id
             ).delete()
+        models.InfoResult.query.filter(
+            models.InfoResult.package_id==package_id
+            ).delete()
 
 def get_result_identifier(activity):
     try:
