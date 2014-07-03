@@ -482,21 +482,14 @@ def _organisation_indicators(organisation, aggregation_type=2):
     return data
 
 def _organisation_indicators_inforesults(organisation):
-    # Get the maximum runtime ID for this organisation,
-    # for InfoResults that can be joined to an Indicator
+    # Get InfoResults that can be joined to an Indicator
     #  -- if they can't be joined to an indicator then
     #     the results just contain coverage data.
-    inforesult_runtime_id = db.session.query(
-                                    func.max(InfoResult.runtime_id).label('runtime_id')
-        ).filter(InfoResult.organisation_id==organisation.id
-        ).join(InfoType
-        ).join(IndicatorInfoType
-        ).first()
+
     inforesult_data = db.session.query(InfoResult,
                                      Indicator,
                                      InfoType
         ).filter(InfoResult.organisation_id==organisation.id
-        ).filter(InfoResult.runtime_id==inforesult_runtime_id.runtime_id
         ).join(InfoType
         ).join(IndicatorInfoType
         ).join(Indicator
