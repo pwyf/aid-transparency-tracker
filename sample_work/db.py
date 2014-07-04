@@ -210,12 +210,12 @@ def get_summary_org_test(results):
                                            x['test_id']== orgtest[1]), results)
         success = filter(lambda x: x['response'] == 1, orgtest_results)
         fail = filter(lambda x: x['response'] != 1, orgtest_results)
-
+        
         totalsuccess = sum(map(lambda x: x['count'], success))
         totalfail = sum(map(lambda x: x['count'], fail))
-
+        
         pct = float(totalsuccess)/(totalsuccess+totalfail)*100
-        passfail = pct>50
+        passfail = pct>=50.0
         if passfail: 
             passfail_class='success'
             passfail_text='PASS'
@@ -227,7 +227,7 @@ def get_summary_org_test(results):
                     'organisation': dqorganisations.organisation_by_id(orgtest[0]),
                     'test_id': orgtest[1],
                     'test': dqtests.tests(orgtest[1]),
-                    'success': round(pct*100, 2),
+                    'success': round(pct, 2),
                     'total': totalsuccess+totalfail,
                     'results': orgtest_results,
                     'pass': passfail,
