@@ -209,7 +209,7 @@ def get_summary_org_test(results):
         orgtest_results = filter(lambda x: (x['organisation_id'] == orgtest[0] and 
                                            x['test_id']== orgtest[1]), results)
         success = len(filter(lambda x: x['response'] == 1, orgtest_results))
-        fail = len(filter(lambda x: x['response'] != 1, orgtest_results)
+        fail = len(filter(lambda x: x['response'] != 1, orgtest_results))
         passfail = success>=50
         if passfail: 
             passfail_class='success'
