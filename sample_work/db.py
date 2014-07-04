@@ -228,7 +228,7 @@ def get_summary_org_test(results):
                     'passfail_text': passfail_text,
                     'passfail_class': passfail_class,
                     })
-        return ot
+    return ot
 
 def get_passed_failed(ot, ok=True):
     if ok:
