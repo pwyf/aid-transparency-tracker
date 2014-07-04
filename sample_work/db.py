@@ -206,9 +206,10 @@ def get_summary_org_test(results):
     ot = []
 
     for orgtest in orgtests:
-        orgtest_results = filter(lambda x: (x['organisation_id']==orgtest[0] and 
-                                           x['test_id']==orgtest[1]), results)
-        success=float(len(filter(lambda x: x['response'] ==1, orgtest_results)))/len(orgtest_results)*100
+        orgtest_results = filter(lambda x: (x['organisation_id'] == orgtest[0] and 
+                                           x['test_id']== orgtest[1]), results)
+        success = len(filter(lambda x: x['response'] == 1, orgtest_results))
+        fail = len(filter(lambda x: x['response'] != 1, orgtest_results)
         passfail = success>=50
         if passfail: 
             passfail_class='success'
@@ -222,7 +223,7 @@ def get_summary_org_test(results):
                     'test_id': orgtest[1],
                     'test': dqtests.tests(orgtest[1]),
                     'success': success,
-                    'total': len(orgtest_results),
+                    'total': success+fail,
                     'results': orgtest_results,
                     'pass': passfail,
                     'passfail_text': passfail_text,
