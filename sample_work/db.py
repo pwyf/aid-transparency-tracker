@@ -37,6 +37,7 @@ import sqlite3
 import os
 import config
 import logging
+import json
 
 class NoMoreSamplingWork(Exception): pass
 
@@ -46,6 +47,8 @@ keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
 keys_response = ["uuid", "organisation_id", "test_id", "activity_id",
     "package_id", "xml_data", "xml_parent_data", "test_kind", "response",
     "unsure"]
+
+total_results_response = ["organisation_id", "test_id", "response", "count"]
 
 def default_filename():
     return config.DB_FILENAME
@@ -172,3 +175,95 @@ def flush_offered_work():
         c.execute('''delete from sample_offer where uuid = ?;''', (uuid,))
 
     db.commit()
+    
+def get_total_results():
+    
+    filename = default_filename()
+    database = sqlite.connect(filename)
+    c = database.cursor()
+    
+    c.execute("""
+    select sample_work_item.organisation_id, 
+           sample_work_item.test_id,
+           sample_result.response,
+           count(sample_work_item.uuid)
+    from sample_work_item
+    join sample_result on sample_result.uuid=sample_work_item.uuid
+    group by organisation_id, 
+             test_id,
+             sample_result.response;
+    """)
+    
+    out = []
+    for wi in c.fetchall():
+        data = dict([ (total_results_response[i], wi[i]) for i in range(0, 4) ])
+        out.append(data)
+    return out
+
+def get_summary_org_test(results):
+    from iatidq import dqorganisations, dqtests
+    orgtests = set(map(lambda x: (x['organisation_id'], x['test_id']), results))
+    ot = []
+
+    for orgtest in orgtests:
+        orgtest_results = filter(lambda x: (x['organisation_id']==orgtest[0] and 
+                                           x['test_id']==orgtest[1]), results)
+        success=float(len(filter(lambda x: x['response'] ==1, orgtest_results)))/len(orgtest_results)*100
+        passfail = success>=50
+        if passfail: 
+            passfail_class='success'
+            passfail_text='PASS'
+        else:
+            passfail_class='important'
+            passfail_text='FAIL'
+        
+        ot.append({ 'organisation_id': orgtest[0],
+                    'organisation': dqorganisations.organisation_by_id(orgtest[0]),
+                    'test_id': orgtest[1],
+                    'test': dqtests.tests(orgtest[1]),
+                    'success': success,
+                    'total': len(orgtest_results),
+                    'results': orgtest_results,
+                    'pass': passfail,
+                    'passfail_text': passfail_text,
+                    'passfail_class': passfail_class,
+                    })
+        return ot
+
+def get_passed_failed(ot, ok=True):
+    if ok:
+        return filter(lambda x: x['pass'] == True, ot)
+    else:
+        return filter(lambda x: x['pass'] == False, ot)
+
+def passes_failures(passes=True):
+    results = get_total_results()
+    ot = get_summary_org_test(results)
+    pf = get_passed_failed(ot, passes)
+    return map(lambda x: ({'organisation_id': x['organisation_id'], 'test_id': x['test_id']}), pf)
+
+def get_passes_from_db():
+    with open('passes.json', 'w') as outfile:
+        json.dump(passes_failures(), outfile)
+
+def get_uuid_by_org_test(org, test):
+    filename = default_filename()
+    database = sqlite.connect(filename)
+    c = database.cursor()
+    
+    c.execute("""
+    select sample_work_item.uuid
+    from sample_work_item
+    where organisation_id=%s
+    and test_id=%s
+    """ % (org, test))
+    
+    return c.fetchall()
+
+def update_db_for_passes():
+    with open('passes.json', 'r') as readfile:
+        data = json.load(readfile)
+        for ot in data:
+            work_item_uuids = get_uuid_by_org_test(ot['organisation_id'], ot['test_id'])
+            for uuid in work_item_uuids:
+                save_response(uuid[0], 0)
