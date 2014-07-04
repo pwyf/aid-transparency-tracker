@@ -186,7 +186,7 @@ def get_total_results():
     select sample_work_item.organisation_id, 
            sample_work_item.test_id,
            sample_result.response,
-           count(sample_work_item.uuid)
+           count(sample_work_item.uuid) as count
     from sample_work_item
     join sample_result on sample_result.uuid=sample_work_item.uuid
     group by organisation_id, 
@@ -208,9 +208,14 @@ def get_summary_org_test(results):
     for orgtest in orgtests:
         orgtest_results = filter(lambda x: (x['organisation_id'] == orgtest[0] and 
                                            x['test_id']== orgtest[1]), results)
-        success = len(filter(lambda x: x['response'] == 1, orgtest_results))
-        fail = len(filter(lambda x: x['response'] != 1, orgtest_results))
-        passfail = success>=50
+        success = filter(lambda x: x['response'] == 1, orgtest_results)
+        fail = filter(lambda x: x['response'] != 1, orgtest_results)
+
+        totalsuccess = sum(map(lambda x: x['count'], success))
+        totalfail = sum(map(lambda x: x['count'], fail))
+
+        pct = float(totalsuccess)/(totalsuccess+totalfail)
+        passfail = pct>50
         if passfail: 
             passfail_class='success'
             passfail_text='PASS'
@@ -222,8 +227,8 @@ def get_summary_org_test(results):
                     'organisation': dqorganisations.organisation_by_id(orgtest[0]),
                     'test_id': orgtest[1],
                     'test': dqtests.tests(orgtest[1]),
-                    'success': success,
-                    'total': success+fail,
+                    'success': round(pct*100, 2),
+                    'total': totalsuccess+totalfail,
                     'results': orgtest_results,
                     'pass': passfail,
                     'passfail_text': passfail_text,
