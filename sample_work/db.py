@@ -214,7 +214,7 @@ def get_summary_org_test(results):
         totalsuccess = sum(map(lambda x: x['count'], success))
         totalfail = sum(map(lambda x: x['count'], fail))
 
-        pct = float(totalsuccess)/(totalsuccess+totalfail)
+        pct = float(totalsuccess)/(totalsuccess+totalfail)*100
         passfail = pct>50
         if passfail: 
             passfail_class='success'
