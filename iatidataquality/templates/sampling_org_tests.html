@@ -1,0 +1,29 @@
+{% set active_page='sampling'%}{% extends "layout.html" %}
+{% block title %}Sampling{% endblock %}
+{% block content %}
+    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script >
+    $(function() {
+    $("table#samples").tablesorter({ sortList: [[0,0]] });
+    });
+    </script>
+    <h1>Samples</h1>
+    <table class="table" id="samples">
+    <thead>
+    <th>Organisation</th><th>Test</th><th>Results</th><th>Samples</th>
+    </thead>
+    <tbody>
+	{% for ot in orgtests %}
+    <tr>
+    <td>{{ot.organisation.organisation_name}}</td>
+	<td>{{ot.test.description}}</td>
+    <td>{{ot.success}}</td>
+    <td>{{ot.total}}</td>
+    <td>
+        <span class="label label-{{ot.passfail_class}}">{{ot.passfail_text}}
+        </span></td>
+    </tr>
+	{% endfor %}
+    </tbody>
+    </table>
+{% endblock %}
