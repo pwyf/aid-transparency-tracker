@@ -236,3 +236,13 @@ def sampling_list():
          admin=usermanagement.check_perms('admin'),
          loggedinuser=current_user,
          samples=samples)
+
+@app.route("/sampling/orglist/")
+@usermanagement.perms_required()
+def sampling_orglist():
+    orgtests = sample_db.get_total_results()
+    data = sample_db.get_summary_org_test(orgtests)
+    return render_template("sampling_org_tests.html",
+         admin=usermanagement.check_perms('admin'),
+         loggedinuser=current_user,
+         orgtests=data)
