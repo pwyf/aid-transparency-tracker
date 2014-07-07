@@ -160,7 +160,10 @@ class SampleOrgTest(object):
         
         parent_id = related_activity_ids[0]
         
-        return lxml.etree.tostring(xml.xpath(xpath_str % parent_id)[0])
+        try:
+            return lxml.etree.tostring(xml.xpath(xpath_str % parent_id)[0])
+        except IndexError:
+            return None
 
 
 class DocumentLink(object):
