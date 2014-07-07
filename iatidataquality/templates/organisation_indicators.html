@@ -93,9 +93,9 @@
         <tbody>
         {% for indicator, result in results.non_zero.items() %}
             {% if result.indicator.indicator_category_name == 'activity' %}
-                {% set points = ((result.results_pct*freq/2.0)+50)|round(1) %}
+                {% set points = ((result.results_pct*freq/2.0)+50)|round(2) %}
             {% else %}
-                {% set points = ((result.results_pct/2.0)+50)|round(1) %}
+                {% set points = ((result.results_pct/2.0)+50)|round(2) %}
             {% endif %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td>{{result.indicator.indicator_category_name|title}}</td>
@@ -116,7 +116,7 @@
                 </div>
             </td>
 	        <td></td>
-            <td class="pct muted">{{result.results_pct|round(1)}}</td>
+            <td class="pct muted">{{result.results_pct|round(2)}}</td>
             <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
 
                 <div id="calculation{{result.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
@@ -131,13 +131,13 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Data quality</td><td>{{result.results_pct|round(1)}}%</td><td>% of activities that passed tests</td>
+                            <td>Data quality</td><td>{{result.results_pct|round(2)}}%</td><td>% of activities that passed tests</td>
                         </tr>
                         <tr class="muted">
                             <td>Convert percentage to points</td><td>÷ 2</td><td></td>
                         </tr>
                         <tr>
-                            <td>Points</td><td>{{(result.results_pct/2)|round(1)}}</td><td></td>
+                            <td>Points</td><td>{{(result.results_pct/2)|round(2)}}</td><td></td>
                         </tr>
                         {% if result.indicator.indicator_category_name =='activity' %}
                         <tr class="muted">
@@ -155,13 +155,13 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Data quality points</td><td>{{(result.results_pct*freq/2)|round(1)}}</td><td></td>
+                            <td>Data quality points</td><td>{{(result.results_pct*freq/2)|round(2)}}</td><td></td>
                         </tr>
                         <tr>
                             <td>Publication format points</td><td>50.0</td><td></td>
                         </tr>
                         <tr class="success">
-                            <td><b>Total points for this indicator</b></td><td>{{((result.results_pct*freq/2)+50)|round(1)}}</td><td></td>
+                            <td><b>Total points for this indicator</b></td><td>{{((result.results_pct*freq/2)+50)|round(2)}}</td><td></td>
                         </tr>
                         </tbody>
                         </table>
@@ -204,9 +204,9 @@
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                     </div>
                 </div>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
-            <td class="pct">{{testdata.results_pct|round(1)}}</td>
+            <td class="pct">{{testdata.results_pct|round(2)}}</td>
             <td></td>
-            <td>{{testdata["results_num"]|round(1)}}</td>
+            <td>{{testdata["results_num"]|round(2)}}</td>
             <td></td>
             </tr>
             {% endfor %}
@@ -342,8 +342,8 @@
                 </div>
 
 {% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
-            <td class="pct">{{testdata.results_pct|float|round(1)}}</td>
-            <td>{{testdata["results_num"]|round(1)}}</td>
+            <td class="pct">{{testdata.results_pct|float|round(2)}}</td>
+            <td>{{testdata["results_num"]|round(2)}}</td>
             <td></td>
             <td></td>
             <td></td>
