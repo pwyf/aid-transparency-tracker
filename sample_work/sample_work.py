@@ -135,7 +135,10 @@ class SampleOrgTest(object):
         activities = xml.xpath(xpath_str % activity_id)
         if 0 == len(activities):
             raise NoIATIActivityFound
-        assert len(activities) == 1
+        # Some publishers are re-using iati identifiers, so unfortunately
+        # we can't rely on this assertion.
+        # At least we know we have >0 though.
+        # assert len(activities) == 1
         return lxml.etree.tostring(activities[0], pretty_print=True)
 
     def xml_of_parent_activity(self, activity):
