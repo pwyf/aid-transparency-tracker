@@ -11,21 +11,9 @@ import os
 import uuid
 import sys
 import re
+import config
 
-config_file = os.path.join(os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..')), 'config.py')
-
-directory, module_name = os.path.split(config_file)
-module_name = os.path.splitext(module_name)[0]
-
-path = list(sys.path)
-sys.path.insert(0, directory)
-try:
-    iatidq_config = __import__(module_name)
-finally:
-    sys.path[:] = path # restore
-
-IATI_DIR = iatidq_config.DATA_STORAGE_DIR
+IATI_DIR = config.DATA_STORAGE_DIR
 
 class NoIATIActivityFound(Exception):
     pass
