@@ -252,6 +252,10 @@ def get_passes_from_db():
     with open('passes.json', 'w') as outfile:
         json.dump(passes_failures(), outfile)
 
+def get_fails_from_db():
+    with open('fails.json', 'w') as outfile:
+        json.dump(passes_failures(False), outfile)
+
 def get_uuid_by_org_test(org, test):
     filename = default_filename()
     database = sqlite.connect(filename)
