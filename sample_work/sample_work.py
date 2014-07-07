@@ -147,7 +147,10 @@ class SampleOrgTest(object):
 
         xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
         activities = xml.xpath(xpath_str % activity_id)
-        assert len(activities) == 1
+
+        # More than one IATI activity could be found (if a publisher re-using
+        # iati-identifiers, but should be >0.
+        assert len(activities) > 0
         activity_xml = activities[0]
 
         xpath_str = '''related-activity[@type='1']/@ref'''
@@ -157,7 +160,7 @@ class SampleOrgTest(object):
         if 0 == count_relateds:
             return None
 
-        assert 1 == count_relateds
+        assert 0 < count_relateds
 
         xpath_str = '''//iati-activity[iati-identifier/text()="%s"]'''
         
