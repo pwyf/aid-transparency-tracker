@@ -382,6 +382,9 @@ def _organisation_detail(organisation, aggregation_type):
     s = summary.PublisherSummary(aggregate_results, conditions=pconditions)
     return s.summary()
 
+def make_publisher_summary(organisation, aggregation_type):
+    return _organisation_detail(organisation, aggregation_type):
+
 def info_result_tuple(ir):
     ind = {
         'description': ir.Indicator.description,

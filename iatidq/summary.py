@@ -321,3 +321,7 @@ class PublisherIndicatorsSummary(PublisherSummary):
 
         simple_out = publisher_simple(out, cdtns)
         return publisher_indicators(indicators, indicators_tests, simple_out)
+
+
+class SummaryCreator(object):
+    pass
