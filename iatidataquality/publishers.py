@@ -134,7 +134,7 @@ def publisher_detail_xls(id=None):
             os.unlink(filename)
 
 def publisher_summary(publisher_id, p_group):
-    return summary.PublisherIndicatorsSummaryCreator(
+    return summary.PackageIndicatorsSummaryCreator(
         publisher_id, p_group).summary
 
 

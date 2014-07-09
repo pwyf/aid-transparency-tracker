@@ -409,7 +409,7 @@ class PackageSummaryCreator(SummaryCreator):
         self._summary = PublisherSummary(self._aggregate_results, {})
 
 
-class PublisherIndicatorsSummaryCreator(SummaryCreator):
+class PackageIndicatorsSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
         from models import *
 
