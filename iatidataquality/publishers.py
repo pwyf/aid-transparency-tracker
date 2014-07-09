@@ -55,7 +55,7 @@ def publisher_detail(id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = summary.PublisherSummaryCreator(p_group).summary
+    aggregate_results = summary.PackageGroupSummaryCreator(p_group).summary
 
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results,
@@ -70,7 +70,7 @@ def publisher_detail_json(id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = summary.PublisherSummaryCreator(p_group).summary
+    aggregate_results = summary.PackageGroupSummaryCreator(p_group).summary
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None
@@ -86,7 +86,7 @@ def publisher_detail_csv(id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = summary.PublisherSummaryCreator(p_group).summary
+    aggregate_results = summary.PackageGroupSummaryCreator(p_group).summary
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None
@@ -114,7 +114,7 @@ def publisher_detail_xls(id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = summary.PublisherSummaryCreator(p_group).summary
+    aggregate_results = summary.PackageGroupSummaryCreator(p_group).summary
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None

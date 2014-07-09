@@ -452,7 +452,7 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
             conditions=pconditions)
 
 
-class PublisherSummaryCreator(SummaryCreator):
+class PackageGroupSummaryCreator(SummaryCreator):
     def __init__(self, p_group):
         from models import *
 
