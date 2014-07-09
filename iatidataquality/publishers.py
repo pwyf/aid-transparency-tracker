@@ -146,7 +146,7 @@ def publisher(publisher_id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = publisher_summary(publisher_id, p_group)
+    aggregate_results = publisher_summary(publisher_id, p_group).summary
 
     latest_runtime=1
 
