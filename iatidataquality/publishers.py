@@ -46,18 +46,6 @@ def publishers():
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
 
-# FIXME: duplication
-def _publisher_detail_ungrouped_fixed(p_group):
-    return db.session.query(Indicator.id,
-                                     Test.id,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(PackageGroup.id==p_group.id)
-
-
 
 @app.route("/publishers/<id>/detail")
 def publisher_detail(id=None):

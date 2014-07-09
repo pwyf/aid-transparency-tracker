@@ -493,7 +493,7 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
     def __init__(self, publisher_id, p_group):
         from models import *
         
-        self._aggregate_results = _publisher_detail_ungrouped_fixed(p_group)\
+        self._aggregate_results = self._publisher_detail_ungrouped_fixed(p_group)\
             .group_by(AggregateResult.result_hierarchy, 
                       Test.id, 
                       AggregateResult.package_id,
@@ -511,3 +511,15 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
         pconditions = {}
         self._summary = PublisherIndicatorsSummary(self._aggregate_results, 
                                                    conditions=pconditions)
+
+    def _publisher_detail_ungrouped_fixed(self, p_group):
+        from models import *
+        
+        return db.session.query(Indicator.id,
+                                     Test.id,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(PackageGroup.id==p_group.id)
