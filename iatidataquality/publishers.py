@@ -146,26 +146,8 @@ def publisher_detail_xls(id=None):
             os.unlink(filename)
 
 def publisher_summary(publisher_id, p_group):
-    aggregate_results = _publisher_detail_ungrouped_fixed(p_group)\
-        .group_by(AggregateResult.result_hierarchy, 
-                   Test.id, 
-                   AggregateResult.package_id,
-                   Indicator,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num,
-                   AggregateResult.package_id
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(PackageGroup
-        ).all()
-
-    pconditions = {}
-
-    s = summary.PublisherIndicatorsSummary(aggregate_results, 
-                                           conditions=pconditions)
-    return s.summary()
+    return summary.PublisherIndicatorsSummaryCreator(
+        publisher_id, p_group).summary
 
 
 @app.route("/publishers/<publisher_id>/")

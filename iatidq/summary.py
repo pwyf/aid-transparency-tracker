@@ -489,3 +489,25 @@ class PublisherSummaryCreator(SummaryCreator):
         ).filter(PackageGroup.id==p_group.id)
 
 
+class PublisherIndicatorsSummaryCreator(SummaryCreator):
+    def __init__(self, publisher_id, p_group):
+        from models import *
+        
+        self._aggregate_results = _publisher_detail_ungrouped_fixed(p_group)\
+            .group_by(AggregateResult.result_hierarchy, 
+                      Test.id, 
+                      AggregateResult.package_id,
+                      Indicator,
+                      AggregateResult.results_data,
+                      AggregateResult.results_num,
+                      AggregateResult.package_id
+                      ).join(IndicatorTest
+                      ).join(Test
+                      ).join(AggregateResult
+                      ).join(Package
+                      ).join(PackageGroup
+                      ).all()
+
+        pconditions = {}
+        self._summary = PublisherIndicatorsSummary(self._aggregate_results, 
+                                                   conditions=pconditions)
