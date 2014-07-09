@@ -324,4 +324,88 @@ class PublisherIndicatorsSummary(PublisherSummary):
 
 
 class SummaryCreator(object):
-    pass
+    @property
+    def summary(self):
+        return self._summary
+
+
+class PublisherSummaryCreator(SummaryCreator):
+    def __init__(self, organisation, aggregation_type):
+        from models import *
+
+        aggregate_results = db.session.query(
+            Indicator.id,
+            Test.id,
+            AggregateResult.results_data,
+            AggregateResult.results_num,
+            AggregateResult.result_hierarchy,
+            AggregateResult.package_id,
+            func.max(AggregateResult.runtime_id)
+            ).filter(
+            AggregateResult.organisation_id==organisation.id
+            ).filter(
+                AggregateResult.aggregateresulttype_id == aggregation_type
+            )
+
+        aggregate_results2 = aggregate_results.group_by(
+            Indicator.id,
+            AggregateResult.result_hierarchy, 
+            Test.id, 
+            AggregateResult.package_id,
+            AggregateResult.results_data,
+            AggregateResult.results_num
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
+        ).all()
+
+        conditions = OrganisationCondition.query.filter_by(
+            organisation_id=organisation.id
+            ).all()
+        
+        self._summary = summary.PublisherSummary(
+            aggregate_results, conditions=pconditions)
+
+
+class PublisherIndicatorsSummaryCreator(SummaryCreator):
+    def __init__(self, organisation, aggregation_type):
+        from models import *
+
+        aggregate_results = db.session.query(Indicator.id,
+                                     Test.id,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(Organisation.organisation_code==organisation.organisation_code
+        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
+        ).filter(AggregateResult.organisation_id == organisation.id
+        ).group_by(AggregateResult.result_hierarchy, 
+                   Test.id, 
+                   AggregateResult.package_id,
+                   Indicator.id,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num,
+                   AggregateResult.package_id
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
+        ).order_by(Indicator.indicator_type, 
+                   Indicator.indicator_category_name, 
+                   Indicator.indicator_subcategory_name
+        ).all()
+
+        pconditions = OrganisationCondition.query.filter_by(
+            organisation_id=organisation.id
+            ).all()
+
+        self._summary = summary.PublisherIndicatorsSummary(
+            aggregate_results, 
+            conditions=pconditions)
