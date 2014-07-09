@@ -11,21 +11,9 @@ import os
 import uuid
 import sys
 import re
+import config
 
-config_file = os.path.join(os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..')), 'config.py')
-
-directory, module_name = os.path.split(config_file)
-module_name = os.path.splitext(module_name)[0]
-
-path = list(sys.path)
-sys.path.insert(0, directory)
-try:
-    iatidq_config = __import__(module_name)
-finally:
-    sys.path[:] = path # restore
-
-IATI_DIR = iatidq_config.DATA_STORAGE_DIR
+IATI_DIR = config.DATA_STORAGE_DIR
 
 class NoIATIActivityFound(Exception):
     pass
@@ -147,7 +135,10 @@ class SampleOrgTest(object):
         activities = xml.xpath(xpath_str % activity_id)
         if 0 == len(activities):
             raise NoIATIActivityFound
-        assert len(activities) == 1
+        # Some publishers are re-using iati identifiers, so unfortunately
+        # we can't rely on this assertion.
+        # At least we know we have >0 though.
+        # assert len(activities) == 1
         return lxml.etree.tostring(activities[0], pretty_print=True)
 
     def xml_of_parent_activity(self, activity):
@@ -156,7 +147,10 @@ class SampleOrgTest(object):
 
         xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
         activities = xml.xpath(xpath_str % activity_id)
-        assert len(activities) == 1
+
+        # More than one IATI activity could be found (if a publisher re-using
+        # iati-identifiers, but should be >0.
+        assert len(activities) > 0
         activity_xml = activities[0]
 
         xpath_str = '''related-activity[@type='1']/@ref'''
@@ -166,13 +160,16 @@ class SampleOrgTest(object):
         if 0 == count_relateds:
             return None
 
-        assert 1 == count_relateds
+        assert 0 < count_relateds
 
         xpath_str = '''//iati-activity[iati-identifier/text()="%s"]'''
         
         parent_id = related_activity_ids[0]
         
-        return lxml.etree.tostring(xml.xpath(xpath_str % parent_id)[0])
+        try:
+            return lxml.etree.tostring(xml.xpath(xpath_str % parent_id)[0])
+        except IndexError:
+            return None
 
 
 class DocumentLink(object):

@@ -1,4 +1,4 @@
-{% macro ind_commitment(surveydata, rows, workflow, indicator) %}
+{% macro ind_commitment(surveydata, rows, workflow, indicator, organisation) %}
         {% if surveydata.donorcomments %}
         {% set data = surveydata.donorcomments %}
         {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
@@ -33,14 +33,19 @@
 
         <tr>
             <td><span>Donor review</span></td>
-            <td>{{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
-            </td>
-            <td class="restrict_text_commitment">
-            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
-            </td>
-            <td class="restrict_text_commitment">
-            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
-            </td>
+
+            {% if organisation.organisation_responded >= 3 %}
+                <td colspan="3">No response</td>
+            {% else %}
+                <td>{{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
+                </td>
+                <td class="restrict_text_commitment">
+                {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
+                </td>
+                <td class="restrict_text_commitment">
+                {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            {% endif %}
         </tr>
         {% endif %}
         {% if surveydata.pwyfreview %}
@@ -74,13 +79,17 @@
         {% endif %}
         <tr>
             <td><span>Independent reviewer</span></td>
-            <td>
-            <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
-            </td>
-            <td class="restrict_text_commitment"></td>
-            <td class="restrict_text_commitment">
-            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
-            </td>
+            {% if organisation.no_independent_reviewer %}
+                <td colspan="3">No independent reviewer</td>
+            {% else %}
+                <td>
+                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                </td>
+                <td class="restrict_text_commitment"></td>
+                <td class="restrict_text_commitment">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            {% endif %}
         </tr>
         {% endif %}
         {% if (surveydata.pwyffinal) %}
@@ -112,13 +121,17 @@
          
             <tr>
                 <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
-                <td>
-                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
-                </td>
-                <td class="restrict_text_commitment"></td>
-                <td class="restrict_text_commitment">
-                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
-                </td>
+                {% if organisation.organisation_responded >= 3 %}
+                    <td colspan="3">No response</td>
+                {% else %}
+                    <td>
+                    <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                    </td>
+                    <td class="restrict_text_commitment"></td>
+                    <td class="restrict_text_commitment">
+                    {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                    </td>
+                {% endif %}
             </tr>
 
 

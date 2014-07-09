@@ -38,6 +38,7 @@ import os
 import config
 import logging
 import json
+from uuid import UUID
 
 class NoMoreSamplingWork(Exception): pass
 
@@ -109,14 +110,14 @@ def read_db(filename):
         database.rollback()
         raise
 
-def read_db_response():
+def read_db_response(uuid=None):
     filename = default_filename()
 
     database = sqlite.connect(filename)
     c = database.cursor()
 
     # this can all be replaced with a select against sample_full
-    c.execute("""select sample_work_item.uuid as uuid,
+    query = """select sample_work_item.uuid as uuid,
                 sample_work_item.organisation_id as organisation_id, 
                 sample_work_item.test_id as test_id,
                 sample_work_item.activity_id as activity_id,
@@ -128,12 +129,23 @@ def read_db_response():
                 sample_result.unsure as unsure
                 from sample_work_item
                 left join sample_result on
-                sample_work_item.uuid=sample_result.uuid;""")
+                sample_work_item.uuid=sample_result.uuid %s;"""
+
+    if uuid:
+        # Ensure uuid var is really a uuid
+        UUID(uuid)
+        whereclause = """
+                where sample_work_item.uuid="%s" """ % uuid
+    else:
+        whereclause = ""
+
+    stmt = query % (whereclause,)
+
+    c.execute(stmt)
 
     for wi in c.fetchall():
         data = dict([ (keys_response[i], wi[i]) for i in range(0, 10) ])
         yield data
-
 
 def work_item_generator(f):
     filename = default_filename()
@@ -153,6 +165,22 @@ def save_response(work_item_uuid, response, unsure=False):
         database.rollback()
         raise
     
+    database.commit()
+
+def update_response(work_item_uuid, response, unsure=False):
+    filename = default_filename()
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    result = c.execute('''update sample_result set response=?, unsure=?
+                       where uuid=?;''', (response, unsure, work_item_uuid))
+   
+    try:
+        assert result.rowcount > 0
+    except AssertionError:
+        database.rollback()
+        raise
+
     database.commit()
 
 def save_offer(database, work_item_uuid):
@@ -252,6 +280,10 @@ def get_passes_from_db():
     with open('passes.json', 'w') as outfile:
         json.dump(passes_failures(), outfile)
 
+def get_fails_from_db():
+    with open('fails.json', 'w') as outfile:
+        json.dump(passes_failures(False), outfile)
+
 def get_uuid_by_org_test(org, test):
     filename = default_filename()
     database = sqlite.connect(filename)
@@ -272,4 +304,4 @@ def update_db_for_passes():
         for ot in data:
             work_item_uuids = get_uuid_by_org_test(ot['organisation_id'], ot['test_id'])
             for uuid in work_item_uuids:
-                save_response(uuid[0], 0)
+                save_response(uuid[0], 1)
