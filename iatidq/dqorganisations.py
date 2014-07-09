@@ -388,7 +388,7 @@ def info_result_tuple(ir):
 def _organisation_indicators(organisation, aggregation_type=2):
     s = summary.PublisherIndicatorsSummaryCreator(organisation,
                                                   aggregation_type)
-    data = s.summary.summary()
+    data = s.summary.summary()  ## FIXME
     
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)
