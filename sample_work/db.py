@@ -38,6 +38,7 @@ import os
 import config
 import logging
 import json
+from uuid import UUID
 
 class NoMoreSamplingWork(Exception): pass
 
@@ -109,14 +110,14 @@ def read_db(filename):
         database.rollback()
         raise
 
-def read_db_response():
+def read_db_response(uuid=None):
     filename = default_filename()
 
     database = sqlite.connect(filename)
     c = database.cursor()
 
     # this can all be replaced with a select against sample_full
-    c.execute("""select sample_work_item.uuid as uuid,
+    query = """select sample_work_item.uuid as uuid,
                 sample_work_item.organisation_id as organisation_id, 
                 sample_work_item.test_id as test_id,
                 sample_work_item.activity_id as activity_id,
@@ -128,12 +129,23 @@ def read_db_response():
                 sample_result.unsure as unsure
                 from sample_work_item
                 left join sample_result on
-                sample_work_item.uuid=sample_result.uuid;""")
+                sample_work_item.uuid=sample_result.uuid %s;"""
+
+    if uuid:
+        # Ensure uuid var is really a uuid
+        UUID(uuid)
+        whereclause = """
+                where sample_work_item.uuid="%s" """ % uuid
+    else:
+        whereclause = ""
+
+    stmt = query % (whereclause,)
+
+    c.execute(stmt)
 
     for wi in c.fetchall():
         data = dict([ (keys_response[i], wi[i]) for i in range(0, 10) ])
         yield data
-
 
 def work_item_generator(f):
     filename = default_filename()
