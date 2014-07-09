@@ -17,7 +17,7 @@
     <tbody>
 	{% for p in p_groups %}
     <tr>
-	<td><a href="{{url_for('publisher', id=p.name)}}">{{ p.name }}</a></td><td>{{ p.title }}</td><td><a href="http://iatiregistry.org/publisher/{{p.name}}">http://iatiregistry.org/publisher/{{p.name}}</td>
+	<td><a href="{{url_for('publisher', publisher_id=p.name)}}">{{ p.name }}</a></td><td>{{ p.title }}</td><td><a href="http://iatiregistry.org/publisher/{{p.name}}">http://iatiregistry.org/publisher/{{p.name}}</td>
     </tr>
 	{% endfor %}
     </tbody>
