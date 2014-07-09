@@ -351,7 +351,7 @@ def addFeedback(data):
 
 def make_publisher_summary(organisation, aggregation_type):
     s = summary.PublisherSummaryCreator(organisation, aggregation_type)
-    return s.summary
+    return s.summary.summary() ## FIXME
 
 def info_result_tuple(ir):
     ind = {
