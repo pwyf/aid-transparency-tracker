@@ -200,7 +200,7 @@ def packages(package_name=None, runtime_id=None):
 
     if latest_runtime:
         summary_results = summary.PackageSummaryCreator(
-            package, latest_runtime, aggregation_type)
+            package, latest_runtime, aggregation_type).summary
     else:
         summary_results = None
         pconditions = None
