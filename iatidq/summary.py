@@ -328,6 +328,10 @@ class SummaryCreator(object):
     def summary(self):
         return self._summary
 
+    @property
+    def aggregate_results(self):
+        return self._aggregate_results
+
 
 class PublisherSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
@@ -365,9 +369,43 @@ class PublisherSummaryCreator(SummaryCreator):
         conditions = OrganisationCondition.query.filter_by(
             organisation_id=organisation.id
             ).all()
+
+        self._aggregate_results = aggregate_results
         
         self._summary = summary.PublisherSummary(
             aggregate_results, conditions=pconditions)
+
+
+class PackageSummaryCreator(SummaryCreator):
+    def __init__(self, package, latest_runtime, aggregation_type):
+        from models import *
+
+        p = package
+
+        db.session.query(
+        Indicator.id,
+        Test.id,
+        AggregateResult.results_data,
+        AggregateResult.results_num,
+        AggregateResult.result_hierarchy,
+        AggregateResult.package_id
+        ).filter(
+        AggregateResult.package_id==p[0].id,
+        AggregateResult.runtime_id==latest_runtime.id,
+        AggregateResult.aggregateresulttype_id==aggregation_type
+        ).group_by(
+            AggregateResult.result_hierarchy, 
+            Test.id,
+            AggregateResult.package_id,
+            Indicator.id,
+            AggregateResult.results_data,
+            AggregateResult.results_num,
+            AggregateResult.package_id
+            ).join(IndicatorTest
+            ).join(Test
+            ).join(AggregateResult
+            ).all()
+
 
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):
@@ -405,6 +443,8 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
         pconditions = OrganisationCondition.query.filter_by(
             organisation_id=organisation.id
             ).all()
+
+        self._aggregate_results = aggregate_results
 
         self._summary = summary.PublisherIndicatorsSummary(
             aggregate_results, 
