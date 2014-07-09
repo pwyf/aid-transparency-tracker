@@ -370,10 +370,10 @@ class PublisherSummaryCreator(SummaryCreator):
             organisation_id=organisation.id
             ).all()
 
-        self._aggregate_results = aggregate_results
+        self._aggregate_results = aggregate_results2
         
         self._summary = PublisherSummary(
-            aggregate_results, conditions=pconditions)
+            self._aggregate_results, conditions=pconditions)
 
 
 class PackageSummaryCreator(SummaryCreator):
