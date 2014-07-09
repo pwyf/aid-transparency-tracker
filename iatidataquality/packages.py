@@ -226,9 +226,9 @@ def packages(package_name=None, runtime_id=None):
         aggregate_results = package_aggregation(package, latest_runtime, aggregation_type)
 
         s = summary.PublisherSummary(aggregate_results, pconditions)
-        aggregate_results = s.summary()
+        summary_results = s.summary()
     else:
-        aggregate_results = None
+        summary_results = None
         pconditions = None
         flat_results = None
         latest_runtime = None
@@ -236,7 +236,7 @@ def packages(package_name=None, runtime_id=None):
     organisations = dqpackages.packageOrganisations(package.Package.id)
  
     return render_template("package.html", package=package, runtimes=runtimes, 
-                           results=aggregate_results, 
+                           results=summary_results, 
                            latest_runtime=latest_runtime, latest=latest, 
                            pconditions=pconditions,
                            organisations=organisations,
