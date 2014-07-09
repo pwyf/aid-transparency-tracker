@@ -1,4 +1,4 @@
-{% macro ind_commitment(surveydata, rows, workflow, indicator) %}
+{% macro ind_commitment(surveydata, rows, workflow, indicator, organisation) %}
         <tr>
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
@@ -61,13 +61,18 @@
         {% endif %}
         <tr>
             <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
-            <td>
-            <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
-            </td>
-            <td class="restrict_text_commitment"></td>
-            <td class="restrict_text_commitment">
-            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
-            </td>
+
+            {% if organisation.no_independent_reviewer %}
+                <td colspan="3">No independent reviewer</td>
+            {% else %}
+                <td>
+                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                </td>
+                <td class="restrict_text_commitment"></td>
+                <td class="restrict_text_commitment">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            {% endif %}
         </tr>
         {% endif %}
         {% if (surveydata.pwyffinal) and (workflow.Workflow.name != 'cso') %}
