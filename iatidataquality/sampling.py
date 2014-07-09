@@ -201,30 +201,66 @@ def api_sampling_process(response):
     except Exception as e:
         return 'ERROR'
 
-@app.route("/api/sampling/")
-@app.route("/api/sampling/<id>/")
+
+@app.route("/api/sampling/update/", methods=['POST'])
+@app.route("/api/sampling/update/<response>", methods=['POST'])
 @usermanagement.perms_required()
-def api_sampling(id=None):
+def api_sampling_update(response):
+    data = request.form
     try:
-        results = sample_db.work_item_generator(make_sample_json)
-    except sample_db.NoMoreSamplingWork:
-        results = {
-            "error": "Finished"
-            }
-    #except:
-    #    results = {
-    #        "error": "Unknown"
-    #        }
+        unsure = 'unsure' in data
+        assert 'sampling_id' in data
+        work_item_uuid = data["sampling_id"]
+        response = int(response)
+
+        sample_db.update_response(work_item_uuid, response, unsure)
+        flash('Updated response for that sample', 'success')
+        return url_for('sampling_list')
+    except AssertionError:
+        return "NO SUCH UUID"
+    except Exception as e:
+        return 'ERROR'
+
+@app.route("/api/sampling/")
+@app.route("/api/sampling/<uuid>/")
+@usermanagement.perms_required()
+def api_sampling(uuid=None):
+    if not uuid:
+        try:
+            results = sample_db.work_item_generator(make_sample_json)
+        except sample_db.NoMoreSamplingWork:
+            results = {
+                "error": "Finished"
+                }
+        #except:
+        #    results = {
+        #        "error": "Unknown"
+        #        }
+    else:
+        def make_wi(uuid):
+            return sample_db.read_db_response(uuid).next()
+        results = make_sample_json(make_wi(uuid))
     return json.dumps(results, indent=2)
 
 
 @app.route("/sampling/")
-@app.route("/sampling/<id>/")
+@app.route("/sampling/<uuid>/")
 @usermanagement.perms_required()
-def sampling(id=None):
+def sampling(uuid=None):
+    if uuid:
+        update = "true"
+        api_process_url = url_for('api_sampling_update')
+        api_sampling_url = url_for('api_sampling', uuid=uuid)
+    else:
+        update = "false"
+        api_process_url = url_for('api_sampling_process')
+        api_sampling_url = url_for('api_sampling')
     return render_template("sampling.html",
          admin=usermanagement.check_perms('admin'),
-         loggedinuser=current_user)
+         loggedinuser=current_user,
+         update=update,
+         api_process_url=api_process_url,
+         api_sampling_url=api_sampling_url)
 
 @app.route("/sampling/list/")
 @usermanagement.perms_required()
