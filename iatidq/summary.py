@@ -366,7 +366,7 @@ class PublisherSummaryCreator(SummaryCreator):
         ).join(Organisation
         ).all()
 
-        conditions = OrganisationCondition.query.filter_by(
+        pconditions = OrganisationCondition.query.filter_by(
             organisation_id=organisation.id
             ).all()
 
