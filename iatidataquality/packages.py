@@ -199,9 +199,8 @@ def packages(package_name=None, runtime_id=None):
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
     if latest_runtime:
-        s = summary.PackageSummaryCreator(package, latest_runtime, 
-                                          aggregation_type)
-        summary_results = s.summary()
+        summary_results = summary.PackageSummaryCreator(
+            package, latest_runtime, aggregation_type)
     else:
         summary_results = None
         pconditions = None

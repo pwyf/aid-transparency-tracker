@@ -406,7 +406,7 @@ class PackageSummaryCreator(SummaryCreator):
             ).join(AggregateResult
             ).all()
 
-        self._summary = PublisherSummary(self._aggregate_results, {})
+        self._summary = PublisherSummary(self._aggregate_results, {}).summary()
 
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):
