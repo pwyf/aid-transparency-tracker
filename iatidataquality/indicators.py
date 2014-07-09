@@ -33,7 +33,6 @@ from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpack
 import StringIO
 import unicodecsv
 import tempfile
-import spreadsheet
 
 
 @app.route("/indicators/")
