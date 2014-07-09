@@ -46,16 +46,6 @@ def publishers():
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
 
-def _publisher_detail_ungrouped(p_group):
-    return db.session.query(Indicator,
-                                     Test.id,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(PackageGroup.id==p_group.id)
-
 # FIXME: duplication
 def _publisher_detail_ungrouped_fixed(p_group):
     return db.session.query(Indicator.id,
@@ -67,30 +57,7 @@ def _publisher_detail_ungrouped_fixed(p_group):
                                      func.max(AggregateResult.runtime_id)
         ).filter(PackageGroup.id==p_group.id)
 
-## FIXME: major duplication of code deteceted
-def _publisher_detail(p_group):
-    aggregate_results = _publisher_detail_ungrouped(p_group)\
-        .group_by(Indicator.id,
-                   AggregateResult.result_hierarchy, 
-                   Test.id, 
-                   AggregateResult.package_id,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(PackageGroup
-        ).all()
 
-    """pconditions = PublisherCondition.query.filter_by(
-        publisher_id=p_group.id).all()"""
-    # Publisherconditions have been removed in favour
-    #  of organisation conditions
-    pconditions = {}
-
-    s = summary.PublisherSummary(aggregate_results, conditions=pconditions)
-    return s.summary()
 
 @app.route("/publishers/<id>/detail")
 def publisher_detail(id=None):
@@ -100,7 +67,7 @@ def publisher_detail(id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = _publisher_detail(p_group)
+    aggregate_results = summary.PublisherSummaryCreator(p_group).summary
 
     return render_template("publisher.html", p_group=p_group, pkgs=pkgs, 
                            results=aggregate_results,
@@ -115,7 +82,7 @@ def publisher_detail_json(id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = _publisher_detail(p_group)
+    aggregate_results = summary.PublisherSummaryCreator(p_group).summary
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None
@@ -131,7 +98,7 @@ def publisher_detail_csv(id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = _publisher_detail(p_group)
+    aggregate_results = summary.PublisherSummaryCreator(p_group).summary
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None
@@ -159,7 +126,7 @@ def publisher_detail_xls(id=None):
             ).filter(Package.package_group == p_group.id
             ).order_by(Package.package_name).all()
 
-    aggregate_results = _publisher_detail(p_group)
+    aggregate_results = summary.PublisherSummaryCreator(p_group).summary
     latest_runtime=1
     """except Exception, e:
         latest_runtime = None

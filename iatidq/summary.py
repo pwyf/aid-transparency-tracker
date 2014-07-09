@@ -372,7 +372,7 @@ class PublisherSummaryCreator(SummaryCreator):
 
         self._aggregate_results = aggregate_results
         
-        self._summary = summary.PublisherSummary(
+        self._summary = PublisherSummary(
             aggregate_results, conditions=pconditions)
 
 
@@ -447,6 +447,45 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
 
         self._aggregate_results = aggregate_results
 
-        self._summary = summary.PublisherIndicatorsSummary(
+        self._summary = PublisherIndicatorsSummary(
             aggregate_results, 
             conditions=pconditions)
+
+
+class PublisherSummaryCreator(SummaryCreator):
+    def __init__(self, p_group):
+        from models import *
+
+        self._aggregate_results = self._publisher_detail_ungrouped(p_group)\
+            .group_by(Indicator.id,
+                   AggregateResult.result_hierarchy, 
+                   Test.id, 
+                   AggregateResult.package_id,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num
+            ).join(IndicatorTest
+            ).join(Test
+            ).join(AggregateResult
+            ).join(Package
+            ).join(PackageGroup
+            ).all()
+
+        """pconditions = PublisherCondition.query.filter_by(
+             publisher_id=p_group.id).all()"""
+        # Publisherconditions have been removed in favour
+        #  of organisation conditions
+        self._summary = PublisherSummary(self._aggregate_results, conditions={})
+
+    def _publisher_detail_ungrouped(self, p_group):
+        from models import *
+
+        return db.session.query(Indicator,
+                                     Test.id,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id,
+                                     func.max(AggregateResult.runtime_id)
+        ).filter(PackageGroup.id==p_group.id)
+
+
