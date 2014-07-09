@@ -382,17 +382,17 @@ class PackageSummaryCreator(SummaryCreator):
 
         p = package
 
-        db.session.query(
-        Indicator.id,
-        Test.id,
-        AggregateResult.results_data,
-        AggregateResult.results_num,
-        AggregateResult.result_hierarchy,
-        AggregateResult.package_id
+        self._aggregate_results = db.session.query(
+            Indicator.id,
+            Test.id,
+            AggregateResult.results_data,
+            AggregateResult.results_num,
+            AggregateResult.result_hierarchy,
+            AggregateResult.package_id
         ).filter(
-        AggregateResult.package_id==p[0].id,
-        AggregateResult.runtime_id==latest_runtime.id,
-        AggregateResult.aggregateresulttype_id==aggregation_type
+            AggregateResult.package_id==p[0].id,
+            AggregateResult.runtime_id==latest_runtime.id,
+            AggregateResult.aggregateresulttype_id==aggregation_type
         ).group_by(
             AggregateResult.result_hierarchy, 
             Test.id,
@@ -406,6 +406,7 @@ class PackageSummaryCreator(SummaryCreator):
             ).join(AggregateResult
             ).all()
 
+        self._summary = PublisherSummary(self._aggregate_results, {})
 
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):
