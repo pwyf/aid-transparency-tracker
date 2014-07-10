@@ -1,0 +1,15 @@
+
+What I'd like to see for the interface for #425
+
+We have some modules in sample_work/ that know about what's in the sqlite
+database, e.g., db.py ; I want to be able just to call a function in one 
+of them and get the results back, thus:
+
+
+from sample_work import db as sample_db
+
+for organisation_id, test_id in sample_db.get_all_sample_failure():
+	...
+	...
+
+where get_all_sample_failures() is either an iterator or a generator
