@@ -12,6 +12,13 @@ import itertools
 import models # damn!
 import pprint
 
+COL_INDICATOR = 0
+COL_TEST = 1
+COL_RESULTS_DATA = 2
+COL_RESULTS_NUM = 3
+COL_RESULTS_HIERARCHY = 4
+COL_PACKAGE = 5
+
 class NoRelevantResults(Exception): pass
 
 def reform_dict(d):
