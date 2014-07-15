@@ -32,7 +32,7 @@ def remove_empty_dicts(h):
 
 
 class TestInfo(object):
-    def __init__(self, test_id, results_pct, results_num):
+    def __init__(self, test_id, results_pct, results_num, sampling_ok=True):
         test = models.Test.query.filter(models.Test.id == test_id).first()
         self.test_id = test_id
         self.test_name = test.name
@@ -41,6 +41,11 @@ class TestInfo(object):
         self.test_level = test.test_level
         self.results_pct = results_pct
         self.results_num = results_num
+        self.sampling_ok = sampling_ok
+        if sampling_ok:
+            self.results_score = self.results_pct
+        else:
+            self.results_score = 0.0
 
     def as_dict(self):
         return {
@@ -52,7 +57,9 @@ class TestInfo(object):
                 "test_level": self.test_level
                 },
             "results_pct": self.results_pct,
-            "results_num": self.results_num
+            "results_num": self.results_num,
+            "sampling_ok": self.sampling_ok,
+            "results_score": self.results_score
             }
 
 
