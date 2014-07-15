@@ -42,10 +42,21 @@ class TestInfo(object):
         self.results_pct = results_pct
         self.results_num = results_num
         self.sampling_ok = sampling_ok
+        if test_id in [44, 43]:
+            print test.name
+
+            if test_id == 44:
+                sampling_ok = False
         if sampling_ok:
             self.results_score = self.results_pct
         else:
             self.results_score = 0.0
+        if test_id in [44, 43]:
+            print self.results_pct
+            print self.results_score
+
+        self.results_pct = self.results_score
+
 
     def as_dict(self):
         return {
@@ -184,7 +195,7 @@ def sum_for_publishers(packages, d, h, t):
     # aggregate data across multiple packages for a single publisher ;
     # for each package, add percentage for each ;
     # need below to only include packages that are in this hierarchy
-
+    
     relevant = lambda p: (h, t, p) in d
     relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
 
