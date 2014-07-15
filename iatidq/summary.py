@@ -109,8 +109,8 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     return dict([ (i, per_indicator(i)) for i in indicators ])
 
 
-def make_summary(test_id, results_pct, results_num):
-    t = TestInfo(test_id, results_pct, results_num, True)
+def make_summary(test_id, results_pct, results_num, sampling_ok):
+    t = TestInfo(test_id, results_pct, results_num, sampling_ok)
     return t.as_dict()
 
 def publisher_simple(out, cdtns):
@@ -171,7 +171,8 @@ def publisher_simple(out, cdtns):
         tmp = make_summary(
             out[okhierarchy][t]['test']["id"],
             (results_weighted_pct_average_numerator / results_num),
-            results_num
+            results_num,
+            True
             )
         tmp["indicator"] = out[okhierarchy][t]['indicator']
         return tmp
@@ -205,7 +206,8 @@ def sum_for_publishers(packages, d, h, t):
     tmp = make_summary(
         test_id,
         float(total_pct/packages_in_hierarchy),
-        total_activities
+        total_activities,
+        True
         )
     tmp["indicator"] = IndicatorInfo(ok_tdata[0]).as_dict()
     tmp["result_hierarchy"] = total_activities
