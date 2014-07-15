@@ -18,7 +18,6 @@ db = SQLAlchemy(app)
 import usermanagement
 import api
 import routes
-import publishers
 import publisher_conditions
 import tests
 import organisations
