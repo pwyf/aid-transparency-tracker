@@ -32,7 +32,7 @@ def remove_empty_dicts(h):
 
 
 class TestInfo(object):
-    def __init__(self, test_id, results_pct, results_num, sampling_ok=True):
+    def __init__(self, test_id, results_pct, results_num, sampling_ok):
         test = models.Test.query.filter(models.Test.id == test_id).first()
         self.test_id = test_id
         self.test_name = test.name
@@ -110,7 +110,7 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
 
 
 def make_summary(test_id, results_pct, results_num):
-    t = TestInfo(test_id, results_pct, results_num)
+    t = TestInfo(test_id, results_pct, results_num, True)
     return t.as_dict()
 
 def publisher_simple(out, cdtns):
