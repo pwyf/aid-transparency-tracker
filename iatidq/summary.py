@@ -101,6 +101,7 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     
     return dict([ (i, per_indicator(i)) for i in indicators ])
 
+
 def make_summary(test_id, results_pct, results_num):
     t = TestInfo(test_id, results_pct, results_num)
     return t.as_dict()
@@ -374,6 +375,7 @@ class PublisherSummaryCreator(SummaryCreator):
         
         self._summary = PublisherSummary(
             self._aggregate_results, conditions=pconditions)
+
 
 
 class PackageSummaryCreator(SummaryCreator):
