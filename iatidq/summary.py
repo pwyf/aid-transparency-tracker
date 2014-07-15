@@ -16,7 +16,7 @@ COL_INDICATOR = 0
 COL_TEST = 1
 COL_RESULTS_DATA = 2
 COL_RESULTS_NUM = 3
-COL_RESULTS_HIERARCHY = 4
+COL_HIERARCHY = 4
 COL_PACKAGE = 5
 
 class NoRelevantResults(Exception): pass
@@ -197,8 +197,8 @@ def sum_for_publishers(packages, d, h, t):
     relevant = lambda p: (h, t, p) in d
     relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
 
-    pct = lambda i: i[2]
-    activities = lambda i: i[3]
+    pct = lambda i: i[COL_RESULTS_DATA]
+    activities = lambda i: i[COL_RESULTS_NUM]
 
     total_pct        = reduce(operator.add, map(pct,        relevant_data), 0)
     total_activities = reduce(operator.add, map(activities, relevant_data), 0)
@@ -236,8 +236,8 @@ class Summary(object):
             return self.aggregate()
 
         def replace_first(tupl, newval):
-            return tuple([newval] + list(tupl)[1:])
-        switch_first = lambda t: replace_first(t, t[0])
+            return tuple([newval] + list(tupl)[COL_TEST:])
+        switch_first = lambda t: replace_first(t, t[COL_INDICATOR])
         self.data = map(switch_first, self.data)
 
         return self.aggregate()
@@ -246,11 +246,11 @@ class Summary(object):
         return self._summary
 
     def gen_hierarchies(self):
-        for i in set(map(lambda x: (x[4]), self.data)):
+        for i in set(map(lambda x: (x[COL_HIERARCHY]), self.data)):
             yield i
 
     def gen_tests(self):
-        for i in set(map(lambda x: (x[1]), self.data)):
+        for i in set(map(lambda x: (x[COL_TEST]), self.data)):
             yield i
 
     def get_conditions(self):
@@ -263,17 +263,13 @@ class Summary(object):
                     ), self.conditions))
 
     def restructure_data(self):
-        # (h, t, p) -> _
-        # h: hierarchy
-        # t: test
-        # p: ???
-        return lambda x: ((x[4], x[1], x[5]), (x))
+        return lambda x: ((x[COL_HIERARCHY], x[COL_TEST], x[COL_PACKAGE]), (x))
 
     def setmap(self, lam):
         return set(map(lam, self.data))
 
     def get_indicator_data(self):
-        ind_f = lambda x: x[0]
+        ind_f = lambda x: x[COL_INDICATOR]
         return ind_f
 
 
@@ -288,10 +284,10 @@ class Summary(object):
 
         indicators = self.setmap(self.get_indicator_data())
 
-        ind_test_f = lambda x: (x[0], x[1])
+        ind_test_f = lambda x: (x[COL_INDICATOR], x[COL_TEST])
         indicators_tests = list(self.setmap(ind_test_f))
 
-        pkg_f = lambda x: x[5]
+        pkg_f = lambda x: x[COL_PACKAGE]
         packages = self.setmap(pkg_f)
 
         summary = lambda h, t: sum_for_publishers(packages, d, h, t)
