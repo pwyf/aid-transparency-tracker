@@ -42,11 +42,7 @@ class TestInfo(object):
         self.results_raw_score = results_pct
         self.results_num = results_num
         self.sampling_ok = sampling_ok
-        if test_id in [44, 43]:
-            print test.name
 
-            if test_id == 44:
-                sampling_ok = False
         if sampling_ok:
             self.results_pct = self.results_raw_score
         else:
