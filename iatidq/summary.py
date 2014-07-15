@@ -401,8 +401,7 @@ class PackageSummaryCreator(SummaryCreator):
             AggregateResult.package_id,
             Indicator.id,
             AggregateResult.results_data,
-            AggregateResult.results_num,
-            AggregateResult.package_id
+            AggregateResult.results_num
             ).join(IndicatorTest
             ).join(Test
             ).join(AggregateResult
@@ -430,8 +429,7 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
                    AggregateResult.package_id,
                    Indicator.id,
                    AggregateResult.results_data,
-                   AggregateResult.results_num,
-                   AggregateResult.package_id
+                   AggregateResult.results_num
         ).join(IndicatorTest
         ).join(Test
         ).join(AggregateResult
