@@ -39,7 +39,7 @@ class TestInfo(object):
         self.test_description = test.description
         self.test_group = test.test_group
         self.test_level = test.test_level
-        self.results_pct = results_pct
+        self.results_raw_score = results_pct
         self.results_num = results_num
         self.sampling_ok = sampling_ok
         if test_id in [44, 43]:
@@ -48,14 +48,9 @@ class TestInfo(object):
             if test_id == 44:
                 sampling_ok = False
         if sampling_ok:
-            self.results_score = self.results_pct
+            self.results_pct = self.results_raw_score
         else:
-            self.results_score = 0.0
-        if test_id in [44, 43]:
-            print self.results_pct
-            print self.results_score
-
-        self.results_pct = self.results_score
+            self.results_pct = 0.0
 
 
     def as_dict(self):
@@ -70,7 +65,7 @@ class TestInfo(object):
             "results_pct": self.results_pct,
             "results_num": self.results_num,
             "sampling_ok": self.sampling_ok,
-            "results_score": self.results_score
+            "results_raw_score": self.results_raw_score
             }
 
 
