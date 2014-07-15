@@ -333,11 +333,10 @@ class SummaryCreator(object):
     def aggregate_results(self):
         return self._aggregate_results
 
+from models import *
 
 class PublisherSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
-        from models import *
-
         aggregate_results = db.session.query(
             Indicator.id,
             Test.id,
@@ -380,8 +379,6 @@ class PublisherSummaryCreator(SummaryCreator):
 
 class PackageSummaryCreator(SummaryCreator):
     def __init__(self, package, latest_runtime, aggregation_type):
-        from models import *
-
         p = package
 
         self._aggregate_results = db.session.query(
@@ -412,8 +409,6 @@ class PackageSummaryCreator(SummaryCreator):
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
-        from models import *
-
         aggregate_results = db.session.query(Indicator.id,
                                      Test.id,
                                      AggregateResult.results_data,
