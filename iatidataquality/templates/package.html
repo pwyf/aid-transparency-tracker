@@ -53,11 +53,7 @@
             </form>
         </div>
         <h1>
-		  {% if latest %}
 		  Latest results
-		  {% else %}
-		  Runtime {{latest_runtime.id}}
-		  {% endif %}
 		  <code>{{latest_runtime.runtime_datetime}}</code>
 		</h1>
 
@@ -66,7 +62,7 @@
         <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
         <table class="table" id="results">
         <thead>
-        <th>Test</th><th>% Passed</th><th>Total results</th>{% if latest %}<th>Details</th>{%endif%}
+        <th>Test</th><th>% Passed</th><th>Total results</th><th>Details</th>
         </thead>
         <tbody>
         {% for test, result in values.items() %}
@@ -74,7 +70,7 @@
 	    <td><a href="{{url_for('tests', id=result.test.id)}}">{{ result.test.description }}</a>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition[1]}}"></i>{%endif%}</td>
         <td class="pct">{{result.results_pct|round|int}}</td>
         <td>{{result.results_num}}</td>
-        {% if latest%}<td><a href="#" class="showResult" id="result{{result.test.id}}hierarchy{{h}}"><i class="icon-chevron-down"></i></a></td>{%endif%}
+        <td><a href="#" class="showResult" id="result{{result.test.id}}hierarchy{{h}}"><i class="icon-chevron-down"></i></a></td>
         </tr>
         {% endfor%}
         </tbody>
