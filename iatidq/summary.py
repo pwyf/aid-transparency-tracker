@@ -197,6 +197,11 @@ def sum_for_publishers(packages, d, h, t):
     relevant = lambda p: (h, t, p) in d
     relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
 
+    ## FIXME
+    # this is an appalling hack
+    def indicator_for_test(test_id):
+        return relevant_data[-1][0]
+
     pct = lambda i: i[COL_RESULTS_DATA]
     activities = lambda i: i[COL_RESULTS_NUM]
 
@@ -208,9 +213,7 @@ def sum_for_publishers(packages, d, h, t):
     if total_activities <= 0:
         return {}
 
-    ## FIXME
-    # this is an appalling hack
-    indicator_id = relevant_data[-1][0]
+    indicator_id = indicator_for_test(t)
 
     tmp = make_summary(
         t,
