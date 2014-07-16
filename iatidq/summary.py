@@ -223,6 +223,7 @@ def sum_for_publishers(packages, d, h, t):
     return tmp
 
 
+import sys
 
 class Summary(object):
     def __init__(self, data, conditions=None, manual=False):
