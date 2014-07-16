@@ -173,19 +173,19 @@ def packages(package_name=None, runtime_id=None):
                     ).group_by(Runtime.id
                     ).filter(AggregateResult.package_id==package.Package.id
                     ).first()
-            return runtime.Runtime, True
+            return runtime.Runtime
 
     try:
-        latest_runtime, latest = get_latest_runtime()
+        latest_runtime = get_latest_runtime()
     except Exception:
         latest_runtime = None
-        latest = None
+    latest_runtime = None
 
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
-    latest = True
-
+    # this test should really ask "have we ever had an aggregation"
+    
     if latest_runtime:
         summary_results = summary.PackageSummaryCreator(
             package, latest_runtime, aggregation_type).summary
@@ -193,7 +193,6 @@ def packages(package_name=None, runtime_id=None):
         summary_results = None
         pconditions = None
         flat_results = None
-        latest_runtime = None
 
     organisations = dqpackages.packageOrganisations(package.Package.id)
  
