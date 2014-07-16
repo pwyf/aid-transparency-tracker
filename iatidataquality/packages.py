@@ -145,21 +145,7 @@ def packages(package_name=None, runtime_id=None):
                          ).filter(Package.package_name == package_name
                                   ).outerjoin(PackageGroup).first()
 
-    def get_pconditions():
-        return {}
-        # Publisher conditions have been removed in favour
-        #  of organisation conditions. need to consider how to
-        #  possibly include this again here.
-        """if p is None:
-            p = db.session.query(Package).\
-                filter(Package.package_name == id).first()
-            return {}
-        else:
-        # Get publisher-specific conditions.
-            return PublisherCondition.query.filter_by(
-                publisher_id=p[1].id).all()"""
-
-    #pconditions = get_pconditions()
+    # see older code in repo for what used to be here
     pconditions = {}
 
     # Get list of runtimes
