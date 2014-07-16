@@ -129,8 +129,7 @@ def packages_edit(package_name=None):
 
 @app.route("/packages/")
 @app.route("/packages/<package_name>/")
-@app.route("/packages/<package_name>/runtimes/<runtime_id>/")
-def packages(package_name=None, runtime_id=None):
+def packages(package_name=None):
     if package_name is None:
         packages = Package.query.filter_by(active=True).order_by(
             Package.package_name).all()
