@@ -176,7 +176,7 @@ def packages(package_name=None, runtime_id=None):
 
     organisations = dqpackages.packageOrganisations(package.Package.id)
  
-    return render_template("package.html", package=package, runtimes=runtimes, 
+    return render_template("package.html", package=package, 
                            results=summary_results, 
                            pconditions=pconditions,
                            organisations=organisations,
