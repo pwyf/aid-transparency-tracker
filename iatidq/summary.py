@@ -209,11 +209,9 @@ def sum_for_publishers(packages, d, h, t):
         return {}
 
     ok_tdata = relevant_data[-1] ## FIXME: this is obviously wrong
-
-    test_id = ok_tdata[1]
          
     tmp = make_summary(
-        test_id,
+        t,
         float(total_pct/packages_in_hierarchy),
         total_activities,
         True
