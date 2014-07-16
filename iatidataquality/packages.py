@@ -184,6 +184,8 @@ def packages(package_name=None, runtime_id=None):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
+    latest = True
+
     if latest_runtime:
         summary_results = summary.PackageSummaryCreator(
             package, latest_runtime, aggregation_type).summary
