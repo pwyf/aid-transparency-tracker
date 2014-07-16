@@ -24,16 +24,6 @@ def aggregate_results(runtime, package_id):
         # for each package, get results for this runtime
         # compute % pass for each hierarchy and test
         # write to db
-    check_existing_results = db.session.query(models.AggregateResult
-            ).filter(models.AggregateResult.runtime_id==runtime
-            ).filter(models.AggregateResult.package_id==package_id
-            ).first()
-
-    if check_existing_results:
-        status = "Already aggregated"
-        aresults = "None"
-        return {"status": status, "data": aresults}
-
     def get_organisation_ids():
         return [ o.Organisation.id for o in 
                  dqpackages.packageOrganisations(package_id) ]
