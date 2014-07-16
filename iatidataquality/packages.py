@@ -199,7 +199,6 @@ def packages(package_name=None, runtime_id=None):
  
     return render_template("package.html", package=package, runtimes=runtimes, 
                            results=summary_results, 
-                           latest_runtime=latest_runtime, latest=latest, 
                            pconditions=pconditions,
                            organisations=organisations,
                            all_aggregation_types=all_aggregation_types,
