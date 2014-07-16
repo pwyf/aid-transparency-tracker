@@ -208,8 +208,9 @@ def sum_for_publishers(packages, d, h, t):
     if total_activities <= 0:
         return {}
 
-    ok_tdata = relevant_data[-1] ## FIXME: this is obviously wrong
-    indicator_id = ok_tdata[0]
+    ## FIXME
+    # this is an appalling hack
+    indicator_id = relevant_data[-1][0]
 
     tmp = make_summary(
         t,
