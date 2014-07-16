@@ -159,26 +159,6 @@ def packages(package_name=None, runtime_id=None):
     except Exception:
         return abort(404)
 
-    def get_latest_runtime():
-        if runtime_id:
-            # If a runtime is specified in the request, get the data
-            return (db.session.query(Runtime
-                        ).filter(Runtime.id==runtime_id
-                        ).first(), False)
-        else:
-            # Select the highest runtime; then get data for that one
-            runtime = db.session.query(Runtime,
-                                    func.max(Runtime.id)
-                    ).join(AggregateResult
-                    ).group_by(Runtime.id
-                    ).filter(AggregateResult.package_id==package.Package.id
-                    ).first()
-            return runtime.Runtime
-
-    try:
-        latest_runtime = get_latest_runtime()
-    except Exception:
-        latest_runtime = None
     latest_runtime = None
 
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
