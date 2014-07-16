@@ -94,6 +94,12 @@ def get_results(runtime, package_id, agg_type):
     results += results2
     return set([r.id for r in results])
 
+def delete_aggregations(sess, package_id, agg_type):
+    sess.query(models.AggregateResult).filter(
+        models.AggregateResult.package_id==package_id, 
+        models.AggregateResult.aggregateresulttype_id==agg_type.id
+        ).delete(synchronize_session=False)
+
 def aggregate_results_single_org(runtime, package_id, agg_type):
     status = "Updating"
 
@@ -117,10 +123,7 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
     aresults = aggregations.aggregate_percentages(data)
 
     with db.session.begin():
-        db.session.query(models.AggregateResult).filter(
-            models.AggregateResult.package_id==package_id, 
-            models.AggregateResult.aggregateresulttype_id==agg_type.id
-            ).delete(synchronize_session=False)
+        delete_aggregations(db.session, package_id, agg_type)
 
         for aresult in aresults:
             a = models.AggregateResult()
@@ -173,10 +176,7 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
     aresults = aggregations.aggregate_percentages_org(data)
 
     with db.session.begin():
-        db.session.query(models.AggregateResult).filter(
-            models.AggregateResult.package_id==package_id, 
-            models.AggregateResult.aggregateresulttype_id==agg_type.id
-            ).delete(synchronize_session=False)
+        delete_aggregations(db.session, package_id, agg_type)
 
         for aresult in aresults:
             a = models.AggregateResult()
