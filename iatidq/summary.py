@@ -222,7 +222,6 @@ def sum_for_publishers(packages, d, h, t):
         True
         )
     tmp["indicator"] = IndicatorInfo(indicator_id).as_dict()
-    tmp["result_hierarchy"] = total_activities
     return tmp
 
 
