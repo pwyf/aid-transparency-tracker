@@ -148,17 +148,6 @@ def packages(package_name=None, runtime_id=None):
     # see older code in repo for what used to be here
     pconditions = {}
 
-    # Get list of runtimes
-    try:
-        runtimes = db.session.query(AggregateResult.runtime_id,
-                                    Runtime.runtime_datetime
-            ).filter(AggregateResult.package_id==package.Package.id
-            ).distinct(
-            ).join(Runtime
-            ).all()
-    except Exception:
-        return abort(404)
-
     latest_runtime = None
 
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
