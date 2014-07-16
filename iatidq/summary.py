@@ -209,14 +209,15 @@ def sum_for_publishers(packages, d, h, t):
         return {}
 
     ok_tdata = relevant_data[-1] ## FIXME: this is obviously wrong
-         
+    indicator_id = ok_tdata[0]
+
     tmp = make_summary(
         t,
         float(total_pct/packages_in_hierarchy),
         total_activities,
         True
         )
-    tmp["indicator"] = IndicatorInfo(ok_tdata[0]).as_dict()
+    tmp["indicator"] = IndicatorInfo(indicator_id).as_dict()
     tmp["result_hierarchy"] = total_activities
     return tmp
 
