@@ -170,42 +170,6 @@ def publisher_simple(all_test_info, out, cdtns):
     return dict([ (t, per_test(t)) for t in tests ])
 
 
-def sum_for_publishers(test_info, indicator_info, packages, d, h, t):
-    # aggregate data across multiple packages for a single publisher ;
-    # for each package, add percentage for each ;
-    # need below to only include packages that are in this hierarchy
-    
-    relevant = lambda p: (h, t, p) in d
-    relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
-
-    ## FIXME
-    # this is an appalling hack
-    def indicator_for_test(test_id):
-        return relevant_data[-1][0]
-
-    pct = lambda i: i[COL_RESULTS_DATA]
-    activities = lambda i: i[COL_RESULTS_NUM]
-
-    total_pct        = reduce(operator.add, map(pct,        relevant_data), 0)
-    total_activities = reduce(operator.add, map(activities, relevant_data), 0)
-
-    packages_in_hierarchy = len(relevant_data)
-
-    if total_activities <= 0:
-        return {}
-
-    indicator_id = indicator_for_test(t)
-
-    tmp = test_info.as_dict(
-        t,
-        float(total_pct/packages_in_hierarchy),
-        total_activities,
-        True
-        )
-    tmp["indicator"] = indicator_info.as_dict(indicator_id)
-    return tmp
-
-
 class Summary(object):
     def __init__(self, data, conditions, manual=False):
         self.data = data
@@ -263,7 +227,7 @@ class Summary(object):
         pkg_f = lambda x: x[COL_PACKAGE]
         packages = self.setmap(pkg_f)
 
-        summary = lambda h, t: sum_for_publishers(self.tests, self.indicators, 
+        summary = lambda h, t: self.sum_for_publishers(self.tests, self.indicators, 
                                                   packages, d, h, t)
 
         return self.summarise_results(hierarchies, 
@@ -300,6 +264,41 @@ class Summary(object):
     def add_indicator_info(self, out, indicators,
                            indicators_tests):
         return out
+
+    def sum_for_publishers(self, test_info, indicator_info, packages, d, h, t):
+        # aggregate data across multiple packages for a single publisher ;
+        # for each package, add percentage for each ;
+        # need below to only include packages that are in this hierarchy
+    
+        relevant = lambda p: (h, t, p) in d
+        relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
+
+        ## FIXME
+        # this is an appalling hack
+        def indicator_for_test(test_id):
+            return relevant_data[-1][0]
+
+        pct = lambda i: i[COL_RESULTS_DATA]
+        activities = lambda i: i[COL_RESULTS_NUM]
+
+        total_pct        = reduce(operator.add, map(pct,        relevant_data), 0)
+        total_activities = reduce(operator.add, map(activities, relevant_data), 0)
+
+        packages_in_hierarchy = len(relevant_data)
+
+        if total_activities <= 0:
+            return {}
+
+        indicator_id = indicator_for_test(t)
+
+        tmp = test_info.as_dict(
+            t,
+            float(total_pct/packages_in_hierarchy),
+            total_activities,
+            True
+            )
+        tmp["indicator"] = indicator_info.as_dict(indicator_id)
+        return tmp
 
 
 class PublisherSummary(Summary):
