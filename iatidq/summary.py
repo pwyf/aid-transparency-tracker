@@ -268,7 +268,6 @@ class Summary(object):
         ind_f = lambda x: x[COL_INDICATOR]
         return ind_f
 
-
     def aggregate(self):
         hierarchies = self.gen_hierarchies()
         tests = self.gen_tests()
