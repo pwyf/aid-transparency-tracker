@@ -337,8 +337,11 @@ class OrgConditions(object):
                     (x.operation, x.description)
                     ), cc))
 
+    def _key(self, test_id, hierarchy):
+        return (test_id, 'activity hierarchy', str(hierarchy))
+
     def is_relevant(self, test_id, hierarchy):
-        key = (test_id, 'activity hierarchy', str(hierarchy))
+        key = self._key(test_id, hierarchy)
 
         if not self._conditions:
             return True
@@ -352,11 +355,11 @@ class OrgConditions(object):
         return True
 
     def has_condition(self, test_id, hierarchy):
-        key = (test_id, 'activity hierarchy', str(hierarchy))
+        key = self._key(test_id, hierarchy)
         return key in self._conditions
 
     def get_condition(self, test_id, hierarchy):
-        key = (test_id, 'activity hierarchy', str(hierarchy))
+        key = self._key(test_id, hierarchy)
         return self._conditions[key]
 
 
