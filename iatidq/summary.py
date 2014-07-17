@@ -115,9 +115,10 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
     
     return dict([ (i, per_indicator(i)) for i in indicators ])
 
-def publisher_simple(all_test_info, out, cdtns):
+def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators):
     hierarchies = set(out)
     tests = set()
+
     for h in hierarchies:
         tests.update(set(out[h]))
 
@@ -160,12 +161,13 @@ def publisher_simple(all_test_info, out, cdtns):
         okhierarchy = get_okhierarchy(out, t)
 
         tmp = all_test_info.as_dict(
-            out[okhierarchy][t]['test']["id"],
+            t,
             (results_weighted_pct_average_numerator / results_num),
             results_num,
             True
             )
-        tmp["indicator"] = out[okhierarchy][t]['indicator']
+        indicator_id = indicator_lookup[t]
+        tmp["indicator"] = indicators.as_dict(indicator_id)
         return tmp
 
     return dict([ (t, per_test(t)) for t in tests ])
@@ -188,7 +190,8 @@ class Summary(object):
 
     def summarise_results(self, hierarchies, 
                       tests, indicators,
-                      indicators_tests, summary_f):
+                      indicators_tests, indicator_lookup, 
+                      summary_f):
 
         def add_condition(i):
             h, t, tdata = i
@@ -205,10 +208,10 @@ class Summary(object):
 
         out = remove_empty_dicts(out)
         return self.add_indicator_info(out, indicators,
-                                       indicators_tests)
+                                       indicators_tests, indicator_lookup)
 
     def add_indicator_info(self, out, indicators,
-                           indicators_tests):
+                           indicators_tests, indicator_lookup):
         return out
 
 
@@ -276,7 +279,8 @@ class NewPublisherSummary(PublisherSummary):
             return tmp
 
         return self.summarise_results(hierarchies, tests, indicators, 
-                                      indicators_tests, summary_f)
+                                      indicators_tests, indicator_lookup,
+                                      summary_f)
 
 
 class NewPackageSummary(NewPublisherSummary):
@@ -294,9 +298,10 @@ class NewPackageSummary(NewPublisherSummary):
 
 class PublisherIndicatorsSummary(NewPublisherSummary):
     def add_indicator_info(self, out, indicators,
-                           indicators_tests):
+                           indicators_tests, indicator_lookup):
 
-        simple_out = publisher_simple(self.tests, out, self.conditions)
+        simple_out = publisher_simple(self.tests, out, self.conditions,
+                                      indicator_lookup, self.indicators)
         return publisher_indicators(self.indicators, indicators, 
                                     indicators_tests, simple_out)
 
