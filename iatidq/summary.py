@@ -323,7 +323,6 @@ class PublisherIndicatorsSummary(PublisherSummary):
 from models import *
 
 
-# FIXME: factor out the common stuff below
 class OrgConditions(object):
     def __init__(self, organisation_id):
         # None is passed as organisation_id for case of no conditions wanted;
