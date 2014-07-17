@@ -172,7 +172,7 @@ def publisher_simple(all_test_info, out, cdtns):
 
 
 class Summary(object):
-    def __init__(self, data, conditions, manual=False):
+    def __init__(self, data, conditions):
         self.data = data
         self.conditions = conditions
         self.manual = manual
@@ -181,9 +181,6 @@ class Summary(object):
         self._summary = self.calculate()
 
     def calculate(self):
-        if self.manual:
-            return self.aggregate()
-
         def replace_first(tupl, newval):
             return tuple([newval] + list(tupl)[COL_TEST:])
         switch_first = lambda t: replace_first(t, t[COL_INDICATOR])
