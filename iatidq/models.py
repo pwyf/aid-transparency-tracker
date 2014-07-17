@@ -163,6 +163,11 @@ class AggregateResult(db.Model):
     result_hierarchy = Column(Integer)
     results_data = Column(Float)
     results_num = Column(Integer)
+    __table_args__ = (UniqueConstraint('package_id', 
+                                       'test_id', 
+                                       'result_hierarchy', 
+                                       'aggregateresulttype_id', 
+                                       'organisation_id'),)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
