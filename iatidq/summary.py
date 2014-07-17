@@ -40,36 +40,32 @@ def remove_empty_dicts(h):
 
 
 class TestInfo(object):
-    def __init__(self, test_id, results_pct, results_num, sampling_ok):
-        test = models.Test.query.filter(models.Test.id == test_id).first()
-        self.test_id = test_id
-        self.test_name = test.name
-        self.test_description = test.description
-        self.test_group = test.test_group
-        self.test_level = test.test_level
-        self.results_raw_score = results_pct
-        self.results_num = results_num
-        self.sampling_ok = sampling_ok
+    def __init__(self):
+        self.tests = dict([ (t.id, t) for t in
+                            models.Test.query.all() ])
+
+    # rename some of the formal args
+    def as_dict(self, test_id, results_pct, results_num, sampling_ok):
+        test = self.tests[test_id]
+        results_raw_score = results_pct
 
         if sampling_ok:
-            self.results_pct = self.results_raw_score
+            results_pct = results_raw_score
         else:
-            self.results_pct = 0.0
+            results_pct = 0.0
 
-
-    def as_dict(self):
         return {
             "test": {
-                "id": self.test_id,
-                "name": self.test_name,
-                "description": self.test_description,
-                "test_group": self.test_group,
-                "test_level": self.test_level
+                "id": test_id,
+                "name": test.name,
+                "description": test.description,
+                "test_group": test.test_group,
+                "test_level": test.test_level
                 },
-            "results_pct": self.results_pct,
-            "results_num": self.results_num,
-            "sampling_ok": self.sampling_ok,
-            "results_raw_score": self.results_raw_score
+            "results_pct": results_pct,
+            "results_num": results_num,
+            "sampling_ok": sampling_ok,
+            "results_raw_score": results_raw_score
             }
 
 
@@ -118,12 +114,7 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
     
     return dict([ (i, per_indicator(i)) for i in indicators ])
 
-
-def make_summary(test_id, results_pct, results_num, sampling_ok):
-    t = TestInfo(test_id, results_pct, results_num, sampling_ok)
-    return t.as_dict()
-
-def publisher_simple(out, cdtns):
+def publisher_simple(all_test_info, out, cdtns):
     hierarchies = set(out)
     tests = set()
     for h in hierarchies:
@@ -167,7 +158,7 @@ def publisher_simple(out, cdtns):
         # least one must, because we wouldn't be here otherwise.
         okhierarchy = get_okhierarchy(out, t)
 
-        tmp = make_summary(
+        tmp = all_test_info.as_dict(
             out[okhierarchy][t]['test']["id"],
             (results_weighted_pct_average_numerator / results_num),
             results_num,
@@ -179,7 +170,7 @@ def publisher_simple(out, cdtns):
     return dict([ (t, per_test(t)) for t in tests ])
 
 
-def sum_for_publishers(indicator_info, packages, d, h, t):
+def sum_for_publishers(test_info, indicator_info, packages, d, h, t):
     # aggregate data across multiple packages for a single publisher ;
     # for each package, add percentage for each ;
     # need below to only include packages that are in this hierarchy
@@ -205,7 +196,7 @@ def sum_for_publishers(indicator_info, packages, d, h, t):
 
     indicator_id = indicator_for_test(t)
 
-    tmp = make_summary(
+    tmp = test_info.as_dict(
         t,
         float(total_pct/packages_in_hierarchy),
         total_activities,
@@ -221,6 +212,7 @@ class Summary(object):
         self.conditions = conditions
         self.manual = manual
         self.indicators = IndicatorInfo()
+        self.tests = TestInfo()
         self._summary = self.calculate()
 
     def calculate(self):
@@ -271,7 +263,7 @@ class Summary(object):
         pkg_f = lambda x: x[COL_PACKAGE]
         packages = self.setmap(pkg_f)
 
-        summary = lambda h, t: sum_for_publishers(self.indicators, 
+        summary = lambda h, t: sum_for_publishers(self.tests, self.indicators, 
                                                   packages, d, h, t)
 
         return self.summarise_results(hierarchies, 
@@ -318,7 +310,7 @@ class PublisherIndicatorsSummary(PublisherSummary):
     def add_indicator_info(self, out, indicators,
                            indicators_tests):
 
-        simple_out = publisher_simple(out, self.conditions)
+        simple_out = publisher_simple(self.tests, out, self.conditions)
         return publisher_indicators(self.indicators, indicators, 
                                     indicators_tests, simple_out)
 
