@@ -306,14 +306,7 @@ class PublisherSummary(Summary):
     pass
 
 
-class PublisherIndicatorsSummary(PublisherSummary):
-    def add_indicator_info(self, out, indicators,
-                           indicators_tests):
-
-        simple_out = publisher_simple(self.tests, out, self.conditions)
-        return publisher_indicators(self.indicators, indicators, 
-                                    indicators_tests, simple_out)
-
+class NewPublisherSummary(PublisherSummary):
     def __init__(self, conditions, organisation_id, aggregation_type):
         self.conditions = conditions
         self.indicators = IndicatorInfo()
@@ -372,6 +365,15 @@ class PublisherIndicatorsSummary(PublisherSummary):
 
         return self.summarise_results(hierarchies, tests, indicators, 
                                       indicators_tests, summary_f)
+
+
+class PublisherIndicatorsSummary(NewPublisherSummary):
+    def add_indicator_info(self, out, indicators,
+                           indicators_tests):
+
+        simple_out = publisher_simple(self.tests, out, self.conditions)
+        return publisher_indicators(self.indicators, indicators, 
+                                    indicators_tests, simple_out)
 
 
 from models import *
