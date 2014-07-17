@@ -286,9 +286,8 @@ class Summary(object):
 
         def add_condition(i):
             h, t, tdata = i
-            if not self.conditions.is_empty():
-                if self.conditions.has_condition(t, h):
-                    tdata["condition"] = self.conditions.get_condition(t, h)
+            if self.conditions.has_condition(t, h):
+                tdata["condition"] = self.conditions.get_condition(t, h)
             return h, t, tdata
 
         summaries = (add_condition(i) for i in summaries(summary))
@@ -349,9 +348,6 @@ class OrgConditions(object):
             return False
 
         return True
-
-    def is_empty(self):
-        return not self._conditions
 
     def has_condition(self, test_id, hierarchy):
         key = (test_id, 'activity hierarchy', str(hierarchy))
