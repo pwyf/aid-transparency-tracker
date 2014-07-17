@@ -143,10 +143,19 @@ db.Index('result_runpack',
 db.Index('result_test',
          Result.test_id)
 
+# there should be a uniqueness constraint, roughly:
+#
+# alter table aggregateresult add unique  (
+#   package_id, test_id, result_hierarchy, aggregateresulttype_id, 
+#   organisation_id
+# );
+#
+# but after normalisation the package/organisation thing should go away
+
 class AggregateResult(db.Model):
     __tablename__='aggregateresult'
     id = Column(Integer,primary_key=True)
-    runtime_id=Column(Integer, ForeignKey('runtime.id'), nullable=False)
+    runtime_id=Column(Integer, ForeignKey('runtime.id'))
     package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
     organisation_id = Column(Integer, ForeignKey('organisation.id'))
     aggregateresulttype_id = Column(Integer, ForeignKey('aggregationtype.id'),

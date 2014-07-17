@@ -349,38 +349,9 @@ def addFeedback(data):
     return feedback
 
 
-def _organisation_detail_ungrouped(organisation, aggregation_type):
-    return db.session.query(Indicator.id,
-                                     Test.id,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(AggregateResult.organisation_id==organisation.id
-        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type)
-
-def _organisation_detail(organisation, aggregation_type):
-    aggregate_results = _organisation_detail_ungrouped(organisation, aggregation_type)\
-        .group_by(Indicator.id,
-                   AggregateResult.result_hierarchy, 
-                   Test.id, 
-                   AggregateResult.package_id,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
-        ).all()
-
-    pconditions = OrganisationCondition.query.filter_by(organisation_id=organisation.id
-            ).all()
-
-    s = summary.PublisherSummary(aggregate_results, conditions=pconditions)
-    return s.summary()
+def make_publisher_summary(organisation, aggregation_type):
+    s = summary.PublisherSummaryCreator(organisation, aggregation_type)
+    return s.summary.summary() ## FIXME
 
 def info_result_tuple(ir):
     ind = {
@@ -415,41 +386,9 @@ def info_result_tuple(ir):
             })
 
 def _organisation_indicators(organisation, aggregation_type=2):
-    aggregate_results = db.session.query(Indicator.id,
-                                     Test.id,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
-        ).filter(Organisation.organisation_code==organisation.organisation_code
-        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
-        ).filter(AggregateResult.organisation_id == organisation.id
-        ).group_by(AggregateResult.result_hierarchy, 
-                   Test.id, 
-                   AggregateResult.package_id,
-                   Indicator.id,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num,
-                   AggregateResult.package_id
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
-        ).order_by(Indicator.indicator_type, 
-                   Indicator.indicator_category_name, 
-                   Indicator.indicator_subcategory_name
-        ).all()
-
-    pconditions = OrganisationCondition.query.filter_by(
-        organisation_id=organisation.id
-            ).all()
-
-    s = summary.PublisherIndicatorsSummary(aggregate_results, 
-                                           conditions=pconditions)
-    data = s.summary()
+    s = summary.PublisherIndicatorsSummaryCreator(organisation,
+                                                  aggregation_type)
+    data = s.summary.summary()  ## FIXME
     
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)

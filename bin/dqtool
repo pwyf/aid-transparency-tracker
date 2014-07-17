@@ -134,18 +134,37 @@ def compare_summary(options):
 
     organisation = dqorganisations.organisation_by_code(organisation_code)
 
-    aggregate_results = dqorganisations._organisation_detail(
-        organisation, aggregation_type)
+    from iatidq import summary
 
-    aggregate_results = json.loads(json.dumps(aggregate_results, 
-                                              sort_keys=True))
+    s = summary.PublisherSummaryCreator(organisation, aggregation_type)
+    observed_summary_results = json.loads(json.dumps(s.summary.summary(), 
+                                                     sort_keys=True))
 
-    if aggregate_results == expected_data:
+    if observed_summary_results == expected_data:
         print "PASS"
         sys.exit(0)
     else:
-        print json.dumps(aggregate_results, indent=2, sort_keys=True)
+        print json.dumps(observed_summary_results, indent=2, sort_keys=True)
         sys.exit(1)
+
+def compare_indicators_summary(options): 
+    assert options.organisation_code
+
+    organisation_code = options.organisation_code.decode('ascii')
+
+    aggregation_type = 2
+
+    from iatidq import dqorganisations
+    
+    organisation = dqorganisations.organisation_by_code(organisation_code)
+
+    from iatidq import summary
+
+    s = summary.PublisherIndicatorsSummaryCreator(organisation,
+                                                  aggregation_type)
+    print json.dumps(s.summary.summary(),
+                                sort_keys=True,
+                                indent=2)
 
 def make_survey_data(options):
     from iatidq import dqorganisations
@@ -348,6 +367,7 @@ modes = {
     "reload-package": reload_package,
     "compare-aggregation": compare_aggregation,
     "compare-summary": compare_summary,
+    "compare-indicators-summary": compare_indicators_summary,
     "list-modes": list_modes,
     "make-survey-data": make_survey_data,
     "make-csv-output": make_csv_output,
@@ -382,6 +402,7 @@ def run():
     parser.add_option("--package-id", type="int", dest="package_id",
                       action="store", default=None,
                       help="Numerican id of package")
+
     options, rest = parser.parse_args()
 
     if not options.mode:

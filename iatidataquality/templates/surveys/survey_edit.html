@@ -20,7 +20,7 @@
 
     <tbody>
     {% for i, indicator in org_indicators["commitment"].items() %}
-      {{ ind_commitment(surveydata, rows, workflow, indicator) }}
+      {{ ind_commitment(surveydata, rows, workflow, indicator, organisation) }}
     {% endfor %}
     </tbody>
     </table>
@@ -38,7 +38,7 @@
 
     <tbody>
     {% for i, indicator in org_indicators["zero"].items() %}
-      {{ ind_zero(surveydata, rows, twentytwelvedata, old_publication_status, publishedstatuses, publishedformats, workflow, indicator, years, year_data) }}
+      {{ ind_zero(surveydata, rows, twentytwelvedata, old_publication_status, publishedstatuses, publishedformats, workflow, indicator, years, year_data, organisation) }}
     {% endfor %}
     </tbody>
     </table>

@@ -411,7 +411,7 @@ def _organisation_publication_detail(organisation_code, aggregation_type,
 
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
-    aggregate_results = dqorganisations._organisation_detail(
+    aggregate_results = dqorganisations.make_publisher_summary(
         organisation, aggregation_type)
 
     return render_template("organisation_detail.html", 

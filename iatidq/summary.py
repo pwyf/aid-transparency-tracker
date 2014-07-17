@@ -101,6 +101,7 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
     
     return dict([ (i, per_indicator(i)) for i in indicators ])
 
+
 def make_summary(test_id, results_pct, results_num):
     t = TestInfo(test_id, results_pct, results_num)
     return t.as_dict()
@@ -321,3 +322,125 @@ class PublisherIndicatorsSummary(PublisherSummary):
 
         simple_out = publisher_simple(out, cdtns)
         return publisher_indicators(indicators, indicators_tests, simple_out)
+
+
+class SummaryCreator(object):
+    @property
+    def summary(self):
+        return self._summary
+
+    @property
+    def aggregate_results(self):
+        return self._aggregate_results
+
+from models import *
+
+class PublisherSummaryCreator(SummaryCreator):
+    def __init__(self, organisation, aggregation_type):
+        aggregate_results = db.session.query(
+            Indicator.id,
+            Test.id,
+            AggregateResult.results_data,
+            AggregateResult.results_num,
+            AggregateResult.result_hierarchy,
+            AggregateResult.package_id
+            ).filter(
+            AggregateResult.organisation_id==organisation.id
+            ).filter(
+                AggregateResult.aggregateresulttype_id == aggregation_type
+            )
+
+        aggregate_results2 = aggregate_results.group_by(
+            Indicator.id,
+            AggregateResult.result_hierarchy, 
+            Test.id, 
+            AggregateResult.package_id,
+            AggregateResult.results_data,
+            AggregateResult.results_num
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
+        ).all()
+
+        pconditions = OrganisationCondition.query.filter_by(
+            organisation_id=organisation.id
+            ).all()
+
+        self._aggregate_results = aggregate_results2
+        
+        self._summary = PublisherSummary(
+            self._aggregate_results, conditions=pconditions)
+
+
+
+class PackageSummaryCreator(SummaryCreator):
+    def __init__(self, package, latest_runtime, aggregation_type):
+        p = package
+
+        self._aggregate_results = db.session.query(
+            Indicator.id,
+            Test.id,
+            AggregateResult.results_data,
+            AggregateResult.results_num,
+            AggregateResult.result_hierarchy,
+            AggregateResult.package_id
+        ).filter(
+            AggregateResult.package_id==p[0].id,
+            AggregateResult.aggregateresulttype_id==aggregation_type
+        ).group_by(
+            AggregateResult.result_hierarchy, 
+            Test.id,
+            AggregateResult.package_id,
+            Indicator.id,
+            AggregateResult.results_data,
+            AggregateResult.results_num
+            ).join(IndicatorTest
+            ).join(Test
+            ).join(AggregateResult
+            ).all()
+
+        self._summary = PublisherSummary(self._aggregate_results, {}).summary()
+
+
+class PublisherIndicatorsSummaryCreator(SummaryCreator):
+    def __init__(self, organisation, aggregation_type):
+        aggregate_results = db.session.query(Indicator.id,
+                                     Test.id,
+                                     AggregateResult.results_data,
+                                     AggregateResult.results_num,
+                                     AggregateResult.result_hierarchy,
+                                     AggregateResult.package_id
+        ).filter(Organisation.organisation_code==organisation.organisation_code
+        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
+        ).filter(AggregateResult.organisation_id == organisation.id
+        ).group_by(AggregateResult.result_hierarchy, 
+                   Test.id, 
+                   AggregateResult.package_id,
+                   Indicator.id,
+                   AggregateResult.results_data,
+                   AggregateResult.results_num
+        ).join(IndicatorTest
+        ).join(Test
+        ).join(AggregateResult
+        ).join(Package
+        ).join(OrganisationPackage
+        ).join(Organisation
+        ).order_by(Indicator.indicator_type, 
+                   Indicator.indicator_category_name, 
+                   Indicator.indicator_subcategory_name
+        ).all()
+
+        pconditions = OrganisationCondition.query.filter_by(
+            organisation_id=organisation.id
+            ).all()
+
+        self._aggregate_results = aggregate_results
+
+        self._summary = PublisherIndicatorsSummary(
+            aggregate_results, 
+            conditions=pconditions)
+
+

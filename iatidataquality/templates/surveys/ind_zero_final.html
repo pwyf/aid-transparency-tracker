@@ -8,7 +8,8 @@
   workflow,
   indicator,
   years,
-  year_data
+  year_data,
+  organisation
 ) %}
 
         {% if surveydata.donorcomments %}
@@ -54,21 +55,25 @@
         {% set data = surveydata['donorreview'] %}
         <tr>
             <td><span>Donor review</span></td>
-            <td>
-              {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
-                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
-              {% else %}
-                <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.title}}</span>
-              {% endif %}<br />
-            <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.title}}</span>
-            </td>
-            <td class="restrict_text">
-            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
-            </td>
-            <td class="restrict_text">
-            {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
-            </td>
+            {% if organisation.organisation_responded >= 3 %}
+                <td colspan="3">No response</td>
+            {% else %}
+                <td>
+                  {% if indicator.indicator.indicator_ordinal %}
+                    <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+                    {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+                  {% else %}
+                    <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.title}}</span>
+                  {% endif %}<br />
+                <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.title}}</span>
+                </td>
+                <td class="restrict_text">
+                {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
+                </td>
+                <td class="restrict_text">
+                {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            {% endif %}
         </tr>
         {% endif %}
         {% if surveydata.pwyfreview %}
@@ -108,13 +113,17 @@
             {% endif %}
             <tr>
                 <td><span>Independent reviewer</span></td>
-                <td>
-                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
-                </td>
-                <td class="restrict_text"></td>
-                <td class="restrict_text">
-                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
-                </td>
+                {% if not organisation.no_independent_reviewer %}
+                    <td>
+                    <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                    </td>
+                    <td class="restrict_text"></td>
+                    <td class="restrict_text">
+                    {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                    </td>
+                {% else %}
+                    <td colspan="3">No independent reviewer</td>
+                {% endif %}
             </tr>
             {% endif %}
 
@@ -146,13 +155,18 @@
         {% set accepted_class = 'important' %}
         <tr>
             <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
-            <td>
-            <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
-            </td>
-            <td class="restrict_text"></td>
-            <td class="restrict_text">
-            {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
-            </td>
+            
+            {% if organisation.organisation_responded >= 3 %}
+                <td colspan="3">No response</td>
+            {% else %}
+                <td>
+                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                </td>
+                <td class="restrict_text"></td>
+                <td class="restrict_text">
+                {{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}
+                </td>
+            {% endif %}
         </tr>
         {% endif %}
         {% endif %}

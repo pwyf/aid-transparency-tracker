@@ -55,30 +55,6 @@ def packages_manage():
         flash("Updated packages", "success")
     return redirect(url_for('packages_manage'))
 
-def package_aggregation(p, latest_runtime, aggregation_type):
-    return db.session.query(
-        Indicator.id,
-        Test.id,
-        AggregateResult.results_data,
-        AggregateResult.results_num,
-        AggregateResult.result_hierarchy,
-        AggregateResult.package_id
-        ).filter(
-        AggregateResult.package_id==p[0].id,
-        AggregateResult.runtime_id==latest_runtime.id,
-        AggregateResult.aggregateresulttype_id==aggregation_type
-        ).group_by(
-            AggregateResult.result_hierarchy, 
-            Test.id,
-            AggregateResult.package_id,
-            Indicator.id,
-            AggregateResult.results_data,
-            AggregateResult.results_num,
-            AggregateResult.package_id
-            ).join(IndicatorTest
-            ).join(Test
-            ).join(AggregateResult
-            ).all()
                    
 @app.route("/packages/new/", methods=['POST', 'GET'])
 @app.route("/packages/<package_name>/edit/", methods=['POST', 'GET'])
@@ -153,8 +129,7 @@ def packages_edit(package_name=None):
 
 @app.route("/packages/")
 @app.route("/packages/<package_name>/")
-@app.route("/packages/<package_name>/runtimes/<runtime_id>/")
-def packages(package_name=None, runtime_id=None):
+def packages(package_name=None):
     if package_name is None:
         packages = Package.query.filter_by(active=True).order_by(
             Package.package_name).all()
@@ -169,75 +144,28 @@ def packages(package_name=None, runtime_id=None):
                          ).filter(Package.package_name == package_name
                                   ).outerjoin(PackageGroup).first()
 
-    def get_pconditions():
-        return {}
-        # Publisher conditions have been removed in favour
-        #  of organisation conditions. need to consider how to
-        #  possibly include this again here.
-        """if p is None:
-            p = db.session.query(Package).\
-                filter(Package.package_name == id).first()
-            return {}
-        else:
-        # Get publisher-specific conditions.
-            return PublisherCondition.query.filter_by(
-                publisher_id=p[1].id).all()"""
-
-    #pconditions = get_pconditions()
+    # see older code in repo for what used to be here
     pconditions = {}
 
-    # Get list of runtimes
-    try:
-        runtimes = db.session.query(AggregateResult.runtime_id,
-                                    Runtime.runtime_datetime
-            ).filter(AggregateResult.package_id==package.Package.id
-            ).distinct(
-            ).join(Runtime
-            ).all()
-    except Exception:
-        return abort(404)
-
-    def get_latest_runtime():
-        if runtime_id:
-            # If a runtime is specified in the request, get the data
-            return (db.session.query(Runtime
-                        ).filter(Runtime.id==runtime_id
-                        ).first(), False)
-        else:
-            # Select the highest runtime; then get data for that one
-            runtime = db.session.query(Runtime,
-                                    func.max(Runtime.id)
-                    ).join(AggregateResult
-                    ).group_by(Runtime.id
-                    ).filter(AggregateResult.package_id==package.Package.id
-                    ).first()
-            return runtime.Runtime, True
-
-    try:
-        latest_runtime, latest = get_latest_runtime()
-    except Exception:
-        latest_runtime = None
-        latest = None
+    latest_runtime = None
 
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
 
+    # this test should really ask "have we ever had an aggregation"
+    
     if latest_runtime:
-        aggregate_results = package_aggregation(package, latest_runtime, aggregation_type)
-
-        s = summary.PublisherSummary(aggregate_results, pconditions)
-        aggregate_results = s.summary()
+        summary_results = summary.PackageSummaryCreator(
+            package, latest_runtime, aggregation_type).summary
     else:
-        aggregate_results = None
+        summary_results = None
         pconditions = None
         flat_results = None
-        latest_runtime = None
 
     organisations = dqpackages.packageOrganisations(package.Package.id)
  
-    return render_template("package.html", package=package, runtimes=runtimes, 
-                           results=aggregate_results, 
-                           latest_runtime=latest_runtime, latest=latest, 
+    return render_template("package.html", package=package, 
+                           results=summary_results, 
                            pconditions=pconditions,
                            organisations=organisations,
                            all_aggregation_types=all_aggregation_types,
