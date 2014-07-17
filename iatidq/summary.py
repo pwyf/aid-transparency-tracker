@@ -123,6 +123,20 @@ def make_summary(test_id, results_pct, results_num, sampling_ok):
     t = TestInfo(test_id, results_pct, results_num, sampling_ok)
     return t.as_dict()
 
+def is_relevant(cdtns, t, hierarchy):
+    key = (t, 'activity hierarchy', str(hierarchy))
+
+    if not cdtns:
+        return True
+
+    if key not in cdtns:
+        return True
+
+    if cdtns[key][0] == 0:
+        return False
+
+    return True
+
 def publisher_simple(out, cdtns):
     hierarchies = set(out)
     tests = set()
@@ -135,21 +149,10 @@ def publisher_simple(out, cdtns):
         results_weighted_pct_average_numerator = 0.0
 
         def relevant(hierarchy):
-            key = (t,'activity hierarchy', str(hierarchy)) 
-
             if t not in out[hierarchy]:
                 return False
 
-            if not cdtns:
-                return True
-
-            if key not in cdtns:
-                return True
-
-            if cdtns[key][0] == 0:
-                return False
-
-            return True
+            return is_relevant(cdtns, t, hierarchy)
 
         # This makes sure information about a test is returned.
         def get_okhierarchy(out, t):
