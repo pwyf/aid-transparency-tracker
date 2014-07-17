@@ -260,7 +260,7 @@ class Summary(object):
 
     def get_conditions(self, cc):
         if not cc:
-            return None
+            return {}
 
         return dict(map(lambda x: (
                     (x.test_id, x.condition, x.condition_value),
