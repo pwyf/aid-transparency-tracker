@@ -368,9 +368,6 @@ class SummaryCreator(object):
     def aggregate_results(self):
         return self._aggregate_results
 
-    def conditions_for_organisation(self, organisation_id):
-        return OrgConditions(organisation_id)
-
 
 class PublisherSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
@@ -402,7 +399,7 @@ class PublisherSummaryCreator(SummaryCreator):
         ).join(Organisation
         ).all()
 
-        pconditions = self.conditions_for_organisation(organisation.id)
+        pconditions = OrgConditions(organisation.id)
 
         self._aggregate_results = aggregate_results2
         
@@ -437,7 +434,8 @@ class PackageSummaryCreator(SummaryCreator):
             ).join(AggregateResult
             ).all()
 
-        self._summary = PublisherSummary(self._aggregate_results, []).summary()
+        self._summary = PublisherSummary(self._aggregate_results, 
+                                         OrgConditions(None)).summary()
 
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):
@@ -468,7 +466,7 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
                    Indicator.indicator_subcategory_name
         ).all()
 
-        pconditions = self.conditions_for_organisation(organisation.id)
+        pconditions = OrgConditions(organisation.id)
 
         self._aggregate_results = aggregate_results
 
