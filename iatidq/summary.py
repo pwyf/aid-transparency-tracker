@@ -231,11 +231,11 @@ class Summary(object):
 
         return self.summarise_results(hierarchies, 
                                  tests, indicators,
-                                 indicators_tests, packages, summary)
+                                 indicators_tests, summary)
 
     def summarise_results(self, hierarchies, 
                       tests, indicators,
-                      indicators_tests, packages, summary):
+                      indicators_tests, summary):
 
         def summaries(summary_f):
             for h, t in itertools.product(hierarchies, tests):
