@@ -317,21 +317,23 @@ class NewPublisherSummary(PublisherSummary):
         # make list of data; hand over to 
         # summarise_results(hierarchies, tests, indicators, 
         #                   indicators_tests, summary_f):
+        where_clause = '''WHERE organisation_id = %d AND 
+                            aggregateresulttype_id = %d''' % (organisation_id,
+                                                              aggregation_type)
+
         conn = db.session.connection()
 
         sql = '''SELECT DISTINCT result_hierarchy
                    FROM aggregateresult
-                   WHERE organisation_id = %d AND 
-                         aggregateresulttype_id = %d;'''
-        stmt = sql % (organisation_id, aggregation_type)
+                   %s;'''
+        stmt = sql % where_clause
         hierarchies = [ h[0] for h in conn.execute(stmt) ]
 
         sql = '''SELECT DISTINCT indicator_id, test_id
                    FROM aggregateresult
                    JOIN indicatortest USING (test_id)
-                   WHERE organisation_id = %d AND 
-                         aggregateresulttype_id = %d;'''
-        stmt = sql % (organisation_id, aggregation_type)
+                   %s;'''
+        stmt = sql % where_clause
         indicators_tests = [ it for it in conn.execute(stmt) ]
         tests = [ it[1] for it in indicators_tests ]
         indicators = [ it[0] for it in indicators_tests ]
@@ -341,10 +343,9 @@ class NewPublisherSummary(PublisherSummary):
         sql = '''SELECT result_hierarchy, test_id, AVG(results_data) AS pct,
                         SUM(results_num) AS total_activities
                    FROM aggregateresult
-                   WHERE organisation_id = %d AND 
-                         aggregateresulttype_id = %d
+                   %s
                    GROUP BY test_id, result_hierarchy;'''
-        stmt = sql % (organisation_id, aggregation_type)
+        stmt = sql % where_clause
         data = dict([ ((ar[0], ar[1]), ar) for ar in (conn.execute(stmt)) ])
         conn.close()
         del(conn)
