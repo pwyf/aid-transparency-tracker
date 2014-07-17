@@ -175,7 +175,6 @@ class Summary(object):
     def __init__(self, data, conditions):
         self.data = data
         self.conditions = conditions
-        self.manual = manual
         self.indicators = IndicatorInfo()
         self.tests = TestInfo()
         self._summary = self.calculate()
