@@ -232,7 +232,7 @@ def sum_for_publishers(packages, d, h, t):
 class Summary(object):
     def __init__(self, data, conditions=None, manual=False):
         self.data = data
-        self.conditions = conditions
+        self.conditions = self.get_conditions(conditions)
         self.manual = manual
         self._summary = self.calculate()
 
@@ -258,14 +258,14 @@ class Summary(object):
         for i in set(map(lambda x: (x[COL_TEST]), self.data)):
             yield i
 
-    def get_conditions(self):
-        if not self.conditions:
+    def get_conditions(self, cc):
+        if not cc:
             return None
 
         return dict(map(lambda x: (
                     (x.test_id, x.condition, x.condition_value),
                     (x.operation, x.description)
-                    ), self.conditions))
+                    ), cc))
 
     def restructure_data(self):
         return lambda x: ((x[COL_HIERARCHY], x[COL_TEST], x[COL_PACKAGE]), (x))
@@ -281,7 +281,6 @@ class Summary(object):
     def aggregate(self):
         hierarchies = self.gen_hierarchies()
         tests = self.gen_tests()
-        cdtns = self.get_conditions()
     
         d_f = self.restructure_data()
 
@@ -298,11 +297,11 @@ class Summary(object):
         summary = lambda h, t: sum_for_publishers(packages, d, h, t)
 
         return self.summarise_results(hierarchies, 
-                                 tests, cdtns, indicators,
+                                 tests, indicators,
                                  indicators_tests, packages, d, summary)
 
     def summarise_results(self, hierarchies, 
-                      tests, cdtns, indicators,
+                      tests, indicators,
                       indicators_tests, packages, d, summary):
 
         def summaries(summary_f):
@@ -313,8 +312,8 @@ class Summary(object):
             h, t, tdata = i
             if self.conditions:
                 key = (t, 'activity hierarchy', str(h))
-                if key in cdtns:
-                    tdata["condition"] = cdtns[key]
+                if key in self.conditions:
+                    tdata["condition"] = self.conditions[key]
             return h, t, tdata
 
         summaries = (add_condition(i) for i in summaries(summary))
@@ -327,10 +326,10 @@ class Summary(object):
         out = reform_dict(tmp_out)
 
         out = remove_empty_dicts(out)
-        return self.add_indicator_info(out, cdtns, indicators,
+        return self.add_indicator_info(out, indicators,
                                        indicators_tests)
 
-    def add_indicator_info(self, out, cdtns, indicators,
+    def add_indicator_info(self, out, indicators,
                            indicators_tests):
         return out
 
@@ -340,10 +339,10 @@ class PublisherSummary(Summary):
 
 
 class PublisherIndicatorsSummary(PublisherSummary):
-    def add_indicator_info(self, out, cdtns, indicators,
+    def add_indicator_info(self, out, indicators,
                            indicators_tests):
 
-        simple_out = publisher_simple(out, cdtns)
+        simple_out = publisher_simple(out, self.conditions)
         return publisher_indicators(indicators, indicators_tests, simple_out)
 
 
