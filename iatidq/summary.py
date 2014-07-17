@@ -146,11 +146,13 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators):
         if results_num == 0:
             raise NoRelevantResults("Results_num == 0 for test: %d" % t)
 
+        sampling_ok = True
+
         tmp = all_test_info.as_dict(
             t,
             (results_weighted_pct_average_numerator / results_num),
             results_num,
-            True
+            sampling_ok
             )
         indicator_id = indicator_lookup[t]
         tmp["indicator"] = indicators.as_dict(indicator_id)
