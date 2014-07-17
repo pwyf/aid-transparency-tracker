@@ -123,20 +123,6 @@ def make_summary(test_id, results_pct, results_num, sampling_ok):
     t = TestInfo(test_id, results_pct, results_num, sampling_ok)
     return t.as_dict()
 
-def is_relevant(cdtns, test_id, hierarchy):
-    key = (test_id, 'activity hierarchy', str(hierarchy))
-
-    if not cdtns:
-        return True
-
-    if key not in cdtns:
-        return True
-
-    if cdtns[key][0] == 0:
-        return False
-
-    return True
-
 def publisher_simple(out, cdtns):
     hierarchies = set(out)
     tests = set()
@@ -152,7 +138,7 @@ def publisher_simple(out, cdtns):
             if t not in out[hierarchy]:
                 return False
 
-            return is_relevant(cdtns, t, hierarchy)
+            return cdtns.is_relevant(t, hierarchy)
 
         # This makes sure information about a test is returned.
         def get_okhierarchy(out, t):
@@ -230,7 +216,7 @@ def sum_for_publishers(packages, d, h, t):
 
 
 class Summary(object):
-    def __init__(self, data, conditions=[], manual=False):
+    def __init__(self, data, conditions, manual=False):
         self.data = data
         self.conditions = conditions
         self.manual = manual
@@ -300,10 +286,9 @@ class Summary(object):
 
         def add_condition(i):
             h, t, tdata = i
-            if self.conditions:
-                key = (t, 'activity hierarchy', str(h))
-                if key in self.conditions:
-                    tdata["condition"] = self.conditions[key]
+            if not self.conditions.is_empty():
+                if self.conditions.has_condition(t, h):
+                    tdata["condition"] = self.conditions.get_condition(t, h)
             return h, t, tdata
 
         summaries = (add_condition(i) for i in summaries(summary))
@@ -338,6 +323,42 @@ class PublisherIndicatorsSummary(PublisherSummary):
 
 from models import *
 
+class OrgConditions(object):
+    def __init__(self, organisation_id):
+        cc = OrganisationCondition.query.filter_by(
+            organisation_id=organisation_id
+            ).all()
+        self._conditions = dict(map(lambda x: (
+                    (x.test_id, x.condition, x.condition_value),
+                    (x.operation, x.description)
+                    ), cc))
+
+    def is_relevant(self, test_id, hierarchy):
+        key = (test_id, 'activity hierarchy', str(hierarchy))
+
+        if not self._conditions:
+            return True
+
+        if key not in self._conditions:
+            return True
+
+        if self._conditions[key][0] == 0:
+            return False
+
+        return True
+
+    def is_empty(self):
+        return not self._conditions
+
+    def has_condition(self, test_id, hierarchy):
+        key = (test_id, 'activity hierarchy', str(hierarchy))
+        return key in self._conditions
+
+    def get_condition(self, test_id, hierarchy):
+        key = (test_id, 'activity hierarchy', str(hierarchy))
+        return self._conditions[key]
+
+
 class SummaryCreator(object):
     @property
     def summary(self):
@@ -348,13 +369,7 @@ class SummaryCreator(object):
         return self._aggregate_results
 
     def conditions_for_organisation(self, organisation_id):
-        cc = OrganisationCondition.query.filter_by(
-            organisation_id=organisation_id
-            ).all()
-        return dict(map(lambda x: (
-                    (x.test_id, x.condition, x.condition_value),
-                    (x.operation, x.description)
-                    ), cc))
+        return OrgConditions(organisation_id)
 
 
 class PublisherSummaryCreator(SummaryCreator):
