@@ -123,8 +123,8 @@ def make_summary(test_id, results_pct, results_num, sampling_ok):
     t = TestInfo(test_id, results_pct, results_num, sampling_ok)
     return t.as_dict()
 
-def is_relevant(cdtns, t, hierarchy):
-    key = (t, 'activity hierarchy', str(hierarchy))
+def is_relevant(cdtns, test_id, hierarchy):
+    key = (test_id, 'activity hierarchy', str(hierarchy))
 
     if not cdtns:
         return True
