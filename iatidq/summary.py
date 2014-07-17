@@ -369,6 +369,19 @@ class NewPublisherSummary(PublisherSummary):
                                       indicators_tests, summary_f)
 
 
+class NewPackageSummary(NewPublisherSummary):
+    def __init__(self, conditions, package_id, aggregation_type):
+        self.conditions = conditions
+        self.indicators = IndicatorInfo()
+        self.tests = TestInfo()
+
+        where_clause = '''WHERE package_id = %d AND 
+                            aggregateresulttype_id = %d''' % (package_id,
+                                                              aggregation_type)
+
+        self._summary = self.calculate(where_clause)
+
+
 class PublisherIndicatorsSummary(NewPublisherSummary):
     def add_indicator_info(self, out, indicators,
                            indicators_tests):
@@ -443,33 +456,12 @@ class PublisherSummaryCreator(SummaryCreator):
 
 
 class PackageSummaryCreator(SummaryCreator):
-    def __init__(self, package, latest_runtime, aggregation_type):
-        p = package
+    def __init__(self, package_id, latest_runtime, aggregation_type):
+        
 
-        self._aggregate_results = db.session.query(
-            Indicator.id,
-            Test.id,
-            AggregateResult.results_data,
-            AggregateResult.results_num,
-            AggregateResult.result_hierarchy,
-            AggregateResult.package_id
-        ).filter(
-            AggregateResult.package_id==p[0].id,
-            AggregateResult.aggregateresulttype_id==aggregation_type
-        ).group_by(
-            AggregateResult.result_hierarchy, 
-            Test.id,
-            AggregateResult.package_id,
-            Indicator.id,
-            AggregateResult.results_data,
-            AggregateResult.results_num
-            ).join(IndicatorTest
-            ).join(Test
-            ).join(AggregateResult
-            ).all()
-
-        self._summary = PublisherSummary(self._aggregate_results, 
-                                         OrgConditions(None)).summary()
+        self._summary = NewPackageSummary(OrgConditions(None),
+                                          package_id, 
+                                          aggregation_type).summary()
 
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):

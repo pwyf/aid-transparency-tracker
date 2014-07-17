@@ -156,7 +156,7 @@ def packages(package_name=None):
     
     if latest_runtime:
         summary_results = summary.PackageSummaryCreator(
-            package, latest_runtime, aggregation_type).summary
+            package[0].id, latest_runtime, aggregation_type).summary
     else:
         summary_results = None
         pconditions = None
