@@ -233,13 +233,13 @@ class Summary(object):
                                  tests, indicators,
                                  indicators_tests, summary)
 
+    def generate_summaries(self, hierarchies, tests, summary_f):
+        for h, t in itertools.product(hierarchies, tests):
+            yield h, t, summary_f(h, t)
+
     def summarise_results(self, hierarchies, 
                       tests, indicators,
                       indicators_tests, summary):
-
-        def summaries(summary_f):
-            for h, t in itertools.product(hierarchies, tests):
-                yield h, t, summary_f(h, t)
 
         def add_condition(i):
             h, t, tdata = i
@@ -247,7 +247,8 @@ class Summary(object):
                 tdata["condition"] = self.conditions.get_condition(t, h)
             return h, t, tdata
 
-        summaries = (add_condition(i) for i in summaries(summary))
+        summaries = (add_condition(i) for i in self.generate_summaries(
+                hierarchies, tests, summary))
 
         even_more_tmp_out = [ ((h, t), tdata) for h, t, tdata in summaries ]
         for i in even_more_tmp_out:
