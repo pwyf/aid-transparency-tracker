@@ -199,10 +199,7 @@ class Summary(object):
         summaries = (add_condition(i) for i in self.generate_summaries(
                 hierarchies, tests, summary_f))
 
-        even_more_tmp_out = [ ((h, t), tdata) for h, t, tdata in summaries ]
-        for i in even_more_tmp_out:
-            pass # print >>sys.stderr, i
-        tmp_out = dict(even_more_tmp_out)
+        tmp_out = dict([ ((h, t), tdata) for h, t, tdata in summaries ])
 
         out = reform_dict(tmp_out)
 
