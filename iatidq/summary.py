@@ -227,8 +227,7 @@ class Summary(object):
         pkg_f = lambda x: x[COL_PACKAGE]
         packages = self.setmap(pkg_f)
 
-        summary = lambda h, t: self.sum_for_publishers(self.tests, self.indicators, 
-                                                  packages, d, h, t)
+        summary = lambda h, t: self.sum_for_publishers(packages, d, h, t)
 
         return self.summarise_results(hierarchies, 
                                  tests, indicators,
@@ -265,7 +264,7 @@ class Summary(object):
                            indicators_tests):
         return out
 
-    def sum_for_publishers(self, test_info, indicator_info, packages, d, h, t):
+    def sum_for_publishers(self, packages, d, h, t):
         # aggregate data across multiple packages for a single publisher ;
         # for each package, add percentage for each ;
         # need below to only include packages that are in this hierarchy
@@ -291,13 +290,13 @@ class Summary(object):
 
         indicator_id = indicator_for_test(t)
 
-        tmp = test_info.as_dict(
+        tmp = self.tests.as_dict(
             t,
             float(total_pct/packages_in_hierarchy),
             total_activities,
             True
             )
-        tmp["indicator"] = indicator_info.as_dict(indicator_id)
+        tmp["indicator"] = self.indicators.as_dict(indicator_id)
         return tmp
 
 
