@@ -325,6 +325,9 @@ from models import *
 
 class OrgConditions(object):
     def __init__(self, organisation_id):
+        # None is passed as organisation_id for case of no conditions wanted;
+        # this might not generate the empty list in cc, which is what is
+        # intended
         cc = OrganisationCondition.query.filter_by(
             organisation_id=organisation_id
             ).all()
