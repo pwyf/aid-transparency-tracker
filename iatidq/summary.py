@@ -232,7 +232,7 @@ def sum_for_publishers(packages, d, h, t):
 class Summary(object):
     def __init__(self, data, conditions=[], manual=False):
         self.data = data
-        self.conditions = self.get_conditions(conditions)
+        self.conditions = conditions
         self.manual = manual
         self._summary = self.calculate()
 
@@ -257,12 +257,6 @@ class Summary(object):
     def gen_tests(self):
         for i in set(map(lambda x: (x[COL_TEST]), self.data)):
             yield i
-
-    def get_conditions(self, cc):
-        return dict(map(lambda x: (
-                    (x.test_id, x.condition, x.condition_value),
-                    (x.operation, x.description)
-                    ), cc))
 
     def restructure_data(self):
         return lambda x: ((x[COL_HIERARCHY], x[COL_TEST], x[COL_PACKAGE]), (x))
@@ -355,9 +349,13 @@ class SummaryCreator(object):
         return self._aggregate_results
 
     def conditions_for_organisation(self, organisation_id):
-        return OrganisationCondition.query.filter_by(
+        cc = OrganisationCondition.query.filter_by(
             organisation_id=organisation_id
             ).all()
+        return dict(map(lambda x: (
+                    (x.test_id, x.condition, x.condition_value),
+                    (x.operation, x.description)
+                    ), cc))
 
 
 class PublisherSummaryCreator(SummaryCreator):
