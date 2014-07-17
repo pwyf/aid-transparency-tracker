@@ -47,10 +47,12 @@ class TestInfo(object):
     def as_dict(self, test_id, results_raw_score, results_num, sampling_ok):
         test = self.tests[test_id]
 
-        if sampling_ok:
-            results_pct = results_raw_score
-        else:
-            results_pct = 0.0
+        sampling_factor = {
+            True: 1.0,
+            False: 0.0
+            }[sampling_ok]
+
+        results_pct = results_raw_score * sampling_factor
 
         return {
             "test": {
