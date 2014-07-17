@@ -344,6 +344,8 @@ class PublisherIndicatorsSummary(PublisherSummary):
         return publisher_indicators(indicators, indicators_tests, simple_out)
 
 
+from models import *
+
 class SummaryCreator(object):
     @property
     def summary(self):
@@ -353,7 +355,10 @@ class SummaryCreator(object):
     def aggregate_results(self):
         return self._aggregate_results
 
-from models import *
+    def conditions_for_organisation(self, organisation_id):
+        return OrganisationCondition.query.filter_by(
+            organisation_id=organisation_id
+            ).all()
 
 class PublisherSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
@@ -385,9 +390,7 @@ class PublisherSummaryCreator(SummaryCreator):
         ).join(Organisation
         ).all()
 
-        pconditions = OrganisationCondition.query.filter_by(
-            organisation_id=organisation.id
-            ).all()
+        pconditions = self.conditions_for_organisation(organisation.id)
 
         self._aggregate_results = aggregate_results2
         
@@ -453,9 +456,7 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
                    Indicator.indicator_subcategory_name
         ).all()
 
-        pconditions = OrganisationCondition.query.filter_by(
-            organisation_id=organisation.id
-            ).all()
+        pconditions = self.conditions_for_organisation(organisation.id)
 
         self._aggregate_results = aggregate_results
 
