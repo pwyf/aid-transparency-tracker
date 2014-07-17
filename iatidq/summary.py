@@ -259,9 +259,6 @@ class Summary(object):
             yield i
 
     def get_conditions(self, cc):
-        if not cc:
-            return {}
-
         return dict(map(lambda x: (
                     (x.test_id, x.condition, x.condition_value),
                     (x.operation, x.description)
