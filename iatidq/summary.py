@@ -311,16 +311,17 @@ class NewPublisherSummary(PublisherSummary):
         self.conditions = conditions
         self.indicators = IndicatorInfo()
         self.tests = TestInfo()
-        self._summary = self.calculate(organisation_id, aggregation_type)
 
-    def calculate(self, organisation_id, aggregation_type):
-        # make list of data; hand over to 
-        # summarise_results(hierarchies, tests, indicators, 
-        #                   indicators_tests, summary_f):
         where_clause = '''WHERE organisation_id = %d AND 
                             aggregateresulttype_id = %d''' % (organisation_id,
                                                               aggregation_type)
 
+        self._summary = self.calculate(where_clause)
+
+    def calculate(self, where_clause):
+        # make list of data; hand over to 
+        # summarise_results(hierarchies, tests, indicators, 
+        #                   indicators_tests, summary_f):
         conn = db.session.connection()
 
         sql = '''SELECT DISTINCT result_hierarchy
