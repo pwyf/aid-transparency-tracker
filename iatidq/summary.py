@@ -230,7 +230,7 @@ def sum_for_publishers(packages, d, h, t):
 
 
 class Summary(object):
-    def __init__(self, data, conditions=None, manual=False):
+    def __init__(self, data, conditions=[], manual=False):
         self.data = data
         self.conditions = self.get_conditions(conditions)
         self.manual = manual
