@@ -360,6 +360,7 @@ class SummaryCreator(object):
             organisation_id=organisation_id
             ).all()
 
+
 class PublisherSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
         aggregate_results = db.session.query(
