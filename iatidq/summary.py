@@ -179,56 +179,8 @@ class Summary(object):
         self.tests = TestInfo()
         self._summary = self.calculate()
 
-    def calculate(self):
-        def replace_first(tupl, newval):
-            return tuple([newval] + list(tupl)[COL_TEST:])
-        switch_first = lambda t: replace_first(t, t[COL_INDICATOR])
-        self.data = map(switch_first, self.data)
-
-        return self.aggregate()
-
     def summary(self):
         return self._summary
-
-    def gen_hierarchies(self):
-        for i in set(map(lambda x: (x[COL_HIERARCHY]), self.data)):
-            yield i
-
-    def gen_tests(self):
-        for i in set(map(lambda x: (x[COL_TEST]), self.data)):
-            yield i
-
-    def restructure_data(self):
-        return lambda x: ((x[COL_HIERARCHY], x[COL_TEST], x[COL_PACKAGE]), (x))
-
-    def setmap(self, lam):
-        return set(map(lam, self.data))
-
-    def get_indicator_data(self):
-        ind_f = lambda x: x[COL_INDICATOR]
-        return ind_f
-
-    def aggregate(self):
-        hierarchies = self.gen_hierarchies()
-        tests = self.gen_tests()
-    
-        d_f = self.restructure_data()
-
-        d = dict(map(d_f, self.data))
-
-        indicators = self.setmap(self.get_indicator_data())
-
-        ind_test_f = lambda x: (x[COL_INDICATOR], x[COL_TEST])
-        indicators_tests = list(self.setmap(ind_test_f))
-
-        pkg_f = lambda x: x[COL_PACKAGE]
-        packages = self.setmap(pkg_f)
-
-        summary = lambda h, t: self.sum_for_publishers(packages, d, h, t)
-
-        return self.summarise_results(hierarchies, 
-                                 tests, indicators,
-                                 indicators_tests, summary)
 
     def generate_summaries(self, hierarchies, tests, summary_f):
         for h, t in itertools.product(hierarchies, tests):
@@ -261,41 +213,6 @@ class Summary(object):
     def add_indicator_info(self, out, indicators,
                            indicators_tests):
         return out
-
-    def sum_for_publishers(self, packages, d, h, t):
-        # aggregate data across multiple packages for a single publisher ;
-        # for each package, add percentage for each ;
-        # need below to only include packages that are in this hierarchy
-    
-        relevant = lambda p: (h, t, p) in d
-        relevant_data = map(lambda p: d[(h, t, p)], filter(relevant, packages))
-
-        ## FIXME
-        # this is an appalling hack
-        def indicator_for_test(test_id):
-            return relevant_data[-1][0]
-
-        pct = lambda i: i[COL_RESULTS_DATA]
-        activities = lambda i: i[COL_RESULTS_NUM]
-
-        total_pct        = reduce(operator.add, map(pct,        relevant_data), 0)
-        total_activities = reduce(operator.add, map(activities, relevant_data), 0)
-
-        packages_in_hierarchy = len(relevant_data)
-
-        if total_activities <= 0:
-            return {}
-
-        indicator_id = indicator_for_test(t)
-
-        tmp = self.tests.as_dict(
-            t,
-            float(total_pct/packages_in_hierarchy),
-            total_activities,
-            True
-            )
-        tmp["indicator"] = self.indicators.as_dict(indicator_id)
-        return tmp
 
 
 class PublisherSummary(Summary):
