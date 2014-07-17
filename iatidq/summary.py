@@ -434,41 +434,12 @@ class SummaryCreator(object):
 
 class PublisherSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
-        aggregate_results = db.session.query(
-            Indicator.id,
-            Test.id,
-            AggregateResult.results_data,
-            AggregateResult.results_num,
-            AggregateResult.result_hierarchy,
-            AggregateResult.package_id
-            ).filter(
-            AggregateResult.organisation_id==organisation.id
-            ).filter(
-                AggregateResult.aggregateresulttype_id == aggregation_type
-            )
+        organisation_id = organisation.id
+        pconditions = OrgConditions(organisation_id)
 
-        aggregate_results2 = aggregate_results.group_by(
-            Indicator.id,
-            AggregateResult.result_hierarchy, 
-            Test.id, 
-            AggregateResult.package_id,
-            AggregateResult.results_data,
-            AggregateResult.results_num
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
-        ).all()
-
-        pconditions = OrgConditions(organisation.id)
-
-        self._aggregate_results = aggregate_results2
-        
-        self._summary = PublisherSummary(
-            self._aggregate_results, conditions=pconditions)
-
+        self._summary = NewPublisherSummary(pconditions, 
+                                            organisation_id, 
+                                            aggregation_type)
 
 
 class PackageSummaryCreator(SummaryCreator):
