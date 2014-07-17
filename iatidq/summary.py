@@ -12,6 +12,7 @@ import itertools
 import models # damn!
 import pprint
 import sys
+from iatidq import db
 
 COL_INDICATOR = 0
 COL_TEST = 1
@@ -78,7 +79,7 @@ class IndicatorInfo(object):
         return self.inds[indicator_id]
 
     def as_dict_minus_group(self, indicator_id):
-        tmp = self.inds[indicator_id]
+        tmp = dict(self.inds[indicator_id]) # deep copy or you mutate >1 time
         del(tmp['indicatorgroup_id'])
         return tmp
 
@@ -314,6 +315,67 @@ class PublisherIndicatorsSummary(PublisherSummary):
                                     indicators_tests, simple_out)
 
 
+class NewPublisherIndicatorsSummary(PublisherIndicatorsSummary):
+    def __init__(self, conditions, organisation_id, aggregation_type):
+        self.conditions = conditions
+        self.indicators = IndicatorInfo()
+        self.tests = TestInfo()
+        self._summary = self.calculate(organisation_id, aggregation_type)
+
+    def calculate(self, organisation_id, aggregation_type):
+        # make list of data; hand over to 
+        # summarise_results(hierarchies, tests, indicators, 
+        #                   indicators_tests, summary_f):
+        conn = db.session.connection()
+
+        sql = '''SELECT DISTINCT result_hierarchy
+                   FROM aggregateresult
+                   WHERE organisation_id = %d AND 
+                         aggregateresulttype_id = %d;'''
+        stmt = sql % (organisation_id, aggregation_type)
+        hierarchies = [ h[0] for h in conn.execute(stmt) ]
+
+        sql = '''SELECT DISTINCT indicator_id, test_id
+                   FROM aggregateresult
+                   JOIN indicatortest USING (test_id)
+                   WHERE organisation_id = %d AND 
+                         aggregateresulttype_id = %d;'''
+        stmt = sql % (organisation_id, aggregation_type)
+        indicators_tests = [ it for it in conn.execute(stmt) ]
+        tests = [ it[1] for it in indicators_tests ]
+        indicators = [ it[0] for it in indicators_tests ]
+
+        indicator_lookup = dict([ (it[1], it[0]) for it in indicators_tests ])
+
+        sql = '''SELECT result_hierarchy, test_id, AVG(results_data) AS pct,
+                        SUM(results_num) AS total_activities
+                   FROM aggregateresult
+                   WHERE organisation_id = %d AND 
+                         aggregateresulttype_id = %d
+                   GROUP BY test_id, result_hierarchy;'''
+        stmt = sql % (organisation_id, aggregation_type)
+        data = dict([ ((ar[0], ar[1]), ar) for ar in (conn.execute(stmt)) ])
+        conn.close()
+        del(conn)
+
+        def summary_f(hierarchy, test_id):
+            key = (hierarchy, test_id)
+            if key not in data:
+                return {}
+
+            aresult = data[key]
+            sampling_ok = True
+            indicator_id = indicator_lookup[test_id]
+
+            tmp = self.tests.as_dict(test_id, aresult[2], aresult[3], 
+                                     sampling_ok)
+            tmp["indicator"] = self.indicators.as_dict(indicator_id)
+            return tmp
+
+        return self.summarise_results(hierarchies, tests, indicators, 
+                                      indicators_tests, summary_f)
+
+
 from models import *
 
 
@@ -439,38 +501,10 @@ class PackageSummaryCreator(SummaryCreator):
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):
     def __init__(self, organisation, aggregation_type):
-        aggregate_results = db.session.query(Indicator.id,
-                                     Test.id,
-                                     AggregateResult.results_data,
-                                     AggregateResult.results_num,
-                                     AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id
-        ).filter(Organisation.organisation_code==organisation.organisation_code
-        ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
-        ).filter(AggregateResult.organisation_id == organisation.id
-        ).group_by(AggregateResult.result_hierarchy, 
-                   Test.id, 
-                   AggregateResult.package_id,
-                   Indicator.id,
-                   AggregateResult.results_data,
-                   AggregateResult.results_num
-        ).join(IndicatorTest
-        ).join(Test
-        ).join(AggregateResult
-        ).join(Package
-        ).join(OrganisationPackage
-        ).join(Organisation
-        ).order_by(Indicator.indicator_type, 
-                   Indicator.indicator_category_name, 
-                   Indicator.indicator_subcategory_name
-        ).all()
+        organisation_id = organisation.id
+        pconditions = OrgConditions(organisation_id)
 
-        pconditions = OrgConditions(organisation.id)
-
-        self._aggregate_results = aggregate_results
-
-        self._summary = PublisherIndicatorsSummary(
-            aggregate_results, 
-            conditions=pconditions)
-
+        self._summary = NewPublisherIndicatorsSummary(pconditions, 
+                                                      organisation_id, 
+                                                      aggregation_type)
 
