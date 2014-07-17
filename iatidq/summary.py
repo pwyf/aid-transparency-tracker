@@ -74,21 +74,21 @@ class TestInfo(object):
 
 
 class IndicatorInfo(object):
-    def __init__(self, indicator_id):
-        self.indicator_id = indicator_id
-        self.ind = models.Indicator.query.filter(
-            models.Indicator.id == self.indicator_id).first()
+    def __init__(self):
+        self.inds = dict([ (i.id, i.as_dict()) for i in 
+                           models.Indicator.query.all() ])
 
-    def as_dict(self):
-        return self.ind.as_dict()
+    def as_dict(self, indicator_id):
+        return self.inds[indicator_id]
 
-    def as_dict_minus_group(self):
-        tmp = self.ind.as_dict()
+    def as_dict_minus_group(self, indicator_id):
+        tmp = self.inds[indicator_id]
         del(tmp['indicatorgroup_id'])
         return tmp
 
 
-def publisher_indicators(indicators, indicators_tests, simple_out):
+def publisher_indicators(indicator_info, indicators, indicators_tests,
+                         simple_out):
     # get all tests which belong to a specific indicator
     # average the results for all tests in that indicator
     def per_indicator(indicator):
@@ -110,7 +110,7 @@ def publisher_indicators(indicators, indicators_tests, simple_out):
             indicator_test_data.append(indic_info)
 
         return {
-            "indicator": IndicatorInfo(indicator).as_dict_minus_group(),
+            "indicator": indicator_info.as_dict_minus_group(indicator),
             "tests": indicator_test_data,
             "results_pct": (results_weighted_pct_average_numerator/results_num),
             "results_num": results_num
@@ -179,7 +179,7 @@ def publisher_simple(out, cdtns):
     return dict([ (t, per_test(t)) for t in tests ])
 
 
-def sum_for_publishers(packages, d, h, t):
+def sum_for_publishers(indicator_info, packages, d, h, t):
     # aggregate data across multiple packages for a single publisher ;
     # for each package, add percentage for each ;
     # need below to only include packages that are in this hierarchy
@@ -211,7 +211,7 @@ def sum_for_publishers(packages, d, h, t):
         total_activities,
         True
         )
-    tmp["indicator"] = IndicatorInfo(indicator_id).as_dict()
+    tmp["indicator"] = indicator_info.as_dict(indicator_id)
     return tmp
 
 
@@ -220,6 +220,7 @@ class Summary(object):
         self.data = data
         self.conditions = conditions
         self.manual = manual
+        self.indicators = IndicatorInfo()
         self._summary = self.calculate()
 
     def calculate(self):
@@ -270,7 +271,8 @@ class Summary(object):
         pkg_f = lambda x: x[COL_PACKAGE]
         packages = self.setmap(pkg_f)
 
-        summary = lambda h, t: sum_for_publishers(packages, d, h, t)
+        summary = lambda h, t: sum_for_publishers(self.indicators, 
+                                                  packages, d, h, t)
 
         return self.summarise_results(hierarchies, 
                                  tests, indicators,
@@ -317,7 +319,8 @@ class PublisherIndicatorsSummary(PublisherSummary):
                            indicators_tests):
 
         simple_out = publisher_simple(out, self.conditions)
-        return publisher_indicators(indicators, indicators_tests, simple_out)
+        return publisher_indicators(self.indicators, indicators, 
+                                    indicators_tests, simple_out)
 
 
 from models import *
