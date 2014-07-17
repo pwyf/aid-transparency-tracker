@@ -133,15 +133,6 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators):
 
             return cdtns.is_relevant(t, hierarchy)
 
-        # This makes sure information about a test is returned.
-        def get_okhierarchy(out, t):
-            for h in out:
-                if (t in out[h] and 'test' in out[h][t]):
-                    return h
-            raise NoRelevantResults(
-                "Summary could not be generated for test %d" % t
-                )
-
         for hierarchy in filter(relevant, hierarchies):
             test_info = out[hierarchy][t]
             
@@ -154,11 +145,6 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators):
 
         if results_num == 0:
             raise NoRelevantResults("Results_num == 0 for test: %d" % t)
-
-        # Result aggregation throws away hierarchies if there are 0 results.
-        # This means some hierarchies won't have the 'test' dict. But, at
-        # least one must, because we wouldn't be here otherwise.
-        okhierarchy = get_okhierarchy(out, t)
 
         tmp = all_test_info.as_dict(
             t,
