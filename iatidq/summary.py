@@ -358,8 +358,7 @@ class PublisherSummaryCreator(SummaryCreator):
             AggregateResult.results_data,
             AggregateResult.results_num,
             AggregateResult.result_hierarchy,
-            AggregateResult.package_id,
-            func.max(AggregateResult.runtime_id)
+            AggregateResult.package_id
             ).filter(
             AggregateResult.organisation_id==organisation.id
             ).filter(
@@ -405,7 +404,6 @@ class PackageSummaryCreator(SummaryCreator):
             AggregateResult.package_id
         ).filter(
             AggregateResult.package_id==p[0].id,
-            AggregateResult.runtime_id==latest_runtime.id,
             AggregateResult.aggregateresulttype_id==aggregation_type
         ).group_by(
             AggregateResult.result_hierarchy, 
@@ -429,8 +427,7 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
                                      AggregateResult.results_data,
                                      AggregateResult.results_num,
                                      AggregateResult.result_hierarchy,
-                                     AggregateResult.package_id,
-                                     func.max(AggregateResult.runtime_id)
+                                     AggregateResult.package_id
         ).filter(Organisation.organisation_code==organisation.organisation_code
         ).filter(AggregateResult.aggregateresulttype_id == aggregation_type
         ).filter(AggregateResult.organisation_id == organisation.id

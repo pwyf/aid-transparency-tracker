@@ -24,16 +24,6 @@ def aggregate_results(runtime, package_id):
         # for each package, get results for this runtime
         # compute % pass for each hierarchy and test
         # write to db
-    check_existing_results = db.session.query(models.AggregateResult
-            ).filter(models.AggregateResult.runtime_id==runtime
-            ).filter(models.AggregateResult.package_id==package_id
-            ).first()
-
-    if check_existing_results:
-        status = "Already aggregated"
-        aresults = "None"
-        return {"status": status, "data": aresults}
-
     def get_organisation_ids():
         return [ o.Organisation.id for o in 
                  dqpackages.packageOrganisations(package_id) ]
@@ -100,6 +90,7 @@ def delete_aggregations(sess, package_id, agg_type):
         models.AggregateResult.aggregateresulttype_id==agg_type.id
         ).delete(synchronize_session=False)
 
+
 def aggregate_results_single_org(runtime, package_id, agg_type):
     status = "Updating"
 
@@ -127,7 +118,6 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
 
         for aresult in aresults:
             a = models.AggregateResult()
-            a.runtime_id = runtime
             a.package_id = aresult["package_id"]
             a.test_id = aresult["test_id"]
             a.result_hierarchy = aresult["hierarchy"]
@@ -180,7 +170,6 @@ def aggregate_results_orgs(runtime, package_id, organisation_ids, agg_type):
 
         for aresult in aresults:
             a = models.AggregateResult()
-            a.runtime_id = runtime
             a.package_id = aresult["package_id"]
             a.test_id = aresult["test_id"]
             a.result_hierarchy = aresult["hierarchy"]
