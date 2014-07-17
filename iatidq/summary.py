@@ -11,6 +11,7 @@ import operator
 import itertools
 import models # damn!
 import pprint
+import sys
 
 COL_INDICATOR = 0
 COL_TEST = 1
@@ -315,7 +316,11 @@ class Summary(object):
 
         summaries = (add_condition(i) for i in summaries(summary))
 
-        tmp_out = dict([ ((h, t), tdata) for h, t, tdata in summaries ])
+        even_more_tmp_out = [ ((h, t), tdata) for h, t, tdata in summaries ]
+        for i in even_more_tmp_out:
+            pass # print >>sys.stderr, i
+        tmp_out = dict(even_more_tmp_out)
+
         out = reform_dict(tmp_out)
 
         out = remove_empty_dicts(out)
