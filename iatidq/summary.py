@@ -44,10 +44,8 @@ class TestInfo(object):
         self.tests = dict([ (t.id, t) for t in
                             models.Test.query.all() ])
 
-    # rename some of the formal args
-    def as_dict(self, test_id, results_pct, results_num, sampling_ok):
+    def as_dict(self, test_id, results_raw_score, results_num, sampling_ok):
         test = self.tests[test_id]
-        results_raw_score = results_pct
 
         if sampling_ok:
             results_pct = results_raw_score
