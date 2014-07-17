@@ -239,7 +239,7 @@ class Summary(object):
 
     def summarise_results(self, hierarchies, 
                       tests, indicators,
-                      indicators_tests, summary):
+                      indicators_tests, summary_f):
 
         def add_condition(i):
             h, t, tdata = i
@@ -248,7 +248,7 @@ class Summary(object):
             return h, t, tdata
 
         summaries = (add_condition(i) for i in self.generate_summaries(
-                hierarchies, tests, summary))
+                hierarchies, tests, summary_f))
 
         even_more_tmp_out = [ ((h, t), tdata) for h, t, tdata in summaries ]
         for i in even_more_tmp_out:
