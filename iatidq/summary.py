@@ -162,13 +162,6 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators):
 
 
 class Summary(object):
-    def __init__(self, data, conditions):
-        self.data = data
-        self.conditions = conditions
-        self.indicators = IndicatorInfo()
-        self.tests = TestInfo()
-        self._summary = self.calculate()
-
     def summary(self):
         return self._summary
 
