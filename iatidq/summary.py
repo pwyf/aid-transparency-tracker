@@ -266,8 +266,13 @@ class NewPublisherSummary(PublisherSummary):
                                       summary_f)
 
     def get_sampling_data(self, organisation_id):
+        sql = '''SELECT test_id FROM sampling_failure
+                   WHERE organisation_id = %s;'''
+        failed_test_ids = [ row[0] for row in 
+                            db.engine.execute(sql, (organisation_id,)) ]
+
         def ok(t):
-            return True # in reality, do lookup
+            return t not in failed_test_ids
 
         return dict([ (t, ok(t)) for t in self.tests.tests.keys() ])
 
