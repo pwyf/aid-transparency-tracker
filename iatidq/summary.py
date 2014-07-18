@@ -115,7 +115,8 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
     
     return dict([ (i, per_indicator(i)) for i in indicators ])
 
-def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators):
+def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators,
+                     sampling_data):
     hierarchies = set(out)
     tests = set()
 
@@ -146,7 +147,7 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators):
         if results_num == 0:
             raise NoRelevantResults("Results_num == 0 for test: %d" % t)
 
-        sampling_ok = True
+        sampling_ok = sampling_data[t]
 
         tmp = all_test_info.as_dict(
             t,
@@ -205,6 +206,7 @@ class NewPublisherSummary(PublisherSummary):
         self.conditions = conditions
         self.indicators = IndicatorInfo()
         self.tests = TestInfo()
+        self.sampling_data = self.get_sampling_data(organisation_id)
 
         where_clause = '''WHERE organisation_id = %d AND 
                             aggregateresulttype_id = %d''' % (organisation_id,
@@ -251,7 +253,7 @@ class NewPublisherSummary(PublisherSummary):
                 return {}
 
             aresult = data[key]
-            sampling_ok = True
+            sampling_ok = self.sampling_data[test_id]
             indicator_id = indicator_lookup[test_id]
 
             tmp = self.tests.as_dict(test_id, aresult[2], aresult[3], 
@@ -263,12 +265,19 @@ class NewPublisherSummary(PublisherSummary):
                                       indicators_tests, indicator_lookup,
                                       summary_f)
 
+    def get_sampling_data(self, organisation_id):
+        def ok(t):
+            return True # in reality, do lookup
+
+        return dict([ (t, ok(t)) for t in self.tests.tests.keys() ])
+
 
 class NewPackageSummary(NewPublisherSummary):
     def __init__(self, conditions, package_id, aggregation_type):
         self.conditions = conditions
         self.indicators = IndicatorInfo()
         self.tests = TestInfo()
+        self.sampling_data = self.get_sampling_data(None)
 
         where_clause = '''WHERE package_id = %d AND 
                             aggregateresulttype_id = %d''' % (package_id,
@@ -276,13 +285,15 @@ class NewPackageSummary(NewPublisherSummary):
 
         self._summary = self.calculate(where_clause)
 
+        
 
 class PublisherIndicatorsSummary(NewPublisherSummary):
     def add_indicator_info(self, out, indicators,
                            indicators_tests, indicator_lookup):
 
         simple_out = publisher_simple(self.tests, out, self.conditions,
-                                      indicator_lookup, self.indicators)
+                                      indicator_lookup, self.indicators,
+                                      self.sampling_data)
         return publisher_indicators(self.indicators, indicators, 
                                     indicators_tests, simple_out)
 
