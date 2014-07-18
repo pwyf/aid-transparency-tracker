@@ -785,3 +785,11 @@ class UserActivity(db.Model):
     activity_data = Column(UnicodeText)
     ip_address = Column(UnicodeText)
     activity_date = Column(DateTime)
+
+
+class SamplingFailure(db.Model):
+    __tablename__ = 'sampling_failure'
+    organisation_id = Column(Integer, ForeignKey('organisation.id'), 
+                             primary_key=True)
+    test_id = Column(Integer, ForeignKey('test.id'),
+                     primary_key=True)
