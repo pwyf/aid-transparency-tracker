@@ -347,8 +347,8 @@ def update_frequencies(options):
     iatidq.dqorganisations.downloadOrganisationFrequency()
 
 def update_sampling(options):
-    import iatidq.sample_work.db
-    sampling_failures = iatidq.sample_work.db.passes_failures()
+    import sample_work.db
+    sampling_failures = sample_work.db.passes_failures()
 
     db.engine.execute('delete from sampling_failure;')
     sql = '''insert into sampling_failure (organisation_id, test_id)
