@@ -346,6 +346,18 @@ def update_frequencies(options):
     import iatidq.dqorganisations
     iatidq.dqorganisations.downloadOrganisationFrequency()
 
+def update_sampling(options):
+    import sample_work.db
+    sampling_failures = sample_work.db.passes_failures()
+
+    db.engine.execute('delete from sampling_failure;')
+    sql = '''insert into sampling_failure (organisation_id, test_id)
+               values (%s, %s);'''
+
+    for sf in sampling_failures:
+        db.engine.execute(sql, (sf["organisation_id"], sf["test_id"]))
+
+
 def list_modes(options):
     for key in sorted(modes.keys()):
         print key
@@ -366,7 +378,8 @@ modes = {
     "associate-test": associate_test,
     "test-package": test_package,
     "check-package-results": check_package_results,
-    "update-frequencies": update_frequencies
+    "update-frequencies": update_frequencies,
+    "update-sampling": update_sampling
     }
 
 def run():
