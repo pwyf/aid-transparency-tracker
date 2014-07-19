@@ -12,6 +12,7 @@ Objective:
 High level goals
 ----------------
 
+* establish an agreed set of coding standards
 * clean up each python and template file, one by one
 * get rid of runtime
 * normalise schema
@@ -20,8 +21,7 @@ High level goals
 * make organisation conditions incapable of causing missing data exceptions
 * create test identifiers
 * sort out queue handling, such that queues can run in parallel / background
-* factor preliminaries of summaries together
-  * have summary and indicatorsummary objects
+* have summary and indicatorsummary objects
 * fix tests for summaries
 * split test runner into own repo
   * allow write access to result/aggregatedresult
