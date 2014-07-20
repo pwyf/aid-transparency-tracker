@@ -274,7 +274,10 @@ def passes_failures(passes=True):
     results = get_total_results()
     ot = get_summary_org_test(results)
     pf = get_passed_failed(ot, passes)
-    return map(lambda x: ({'organisation_id': x['organisation_id'], 'test_id': x['test_id']}), pf)
+    return map(lambda x: ({
+                'organisation_id': x['organisation_id'], 
+                'test_id': x['test_id']
+                }), pf)
 
 def get_passes_from_db():
     with open('passes.json', 'w') as outfile:
