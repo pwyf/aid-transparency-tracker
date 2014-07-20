@@ -124,7 +124,7 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators,
         tests.update(set(out[h]))
 
     def per_test(t):
-        results_pct = 0.0
+        results_pct = 0.0 # why does this not get used?
         results_num = 0.0
         results_weighted_pct_average_numerator = 0.0
 
