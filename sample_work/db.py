@@ -234,8 +234,10 @@ def get_summary_org_test(results):
     ot = []
 
     for orgtest in orgtests:
-        orgtest_results = filter(lambda x: (x['organisation_id'] == orgtest[0] and 
-                                           x['test_id']== orgtest[1]), results)
+        orgtest_results = filter(lambda x: (
+                x['organisation_id'] == orgtest[0] and 
+                x['test_id'] == orgtest[1]
+                ), results)
 
         success = filter(lambda x: x['response'] == 1, orgtest_results)
         fail    = filter(lambda x: x['response'] != 1, orgtest_results)
