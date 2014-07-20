@@ -93,5 +93,9 @@ is largely still relevant:
 * run stuff through pylint
 * remove any and all repetitiveness (particularly those long lists of config data in dictionaries; use tuples to avoid implying that the dictionary keys mean something whcih might change from item to item)
 * the idea of making collections of indicators (e.g., twentytwelve data) and then hacking extra keys into them because we know that this key is likely to be accessed by a survey template is wrong in principle and very risky in practice (throws an exception (Error 500) if we screw it up)
-* should establish and adhere to a house style, e.g., max line width of 79 columns, max levels of indentation 4, max function length 40 lines
+* should establish and adhere to a house style, e.g., 
+  * max line width of 79 columns
+  * max levels of indentation 4
+  * max function length 40 lines
+  * no abuse of dicts as structs
 * remove the “magic numbers”, i.e., unexplained constant numbers passed around without explanation in the source code
