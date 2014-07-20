@@ -39,6 +39,8 @@ rid of the "runtime" concept, and tidy up a few loose ends:
   * row should be uniquely identified by (activity_id, test_id, hierarchy)
 * activity table:
   * row should be uniquely identified by (package_id, organisation_id)
+* if the relationship between indicators and tests is one-to-many, the DB
+  should respect that
 
 We'll need to get there gradually, and ultimately have one result table per
 test level
