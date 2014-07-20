@@ -268,10 +268,7 @@ def get_summary_org_test(results):
     return ot
 
 def get_passed_failed(ot, ok=True):
-    if ok:
-        return filter(lambda x: x['pass'] == True, ot)
-    else:
-        return filter(lambda x: x['pass'] == False, ot)
+    return filter(lambda x: x['pass'] == ok, ot)
 
 def passes_failures(passes=True):
     results = get_total_results()
