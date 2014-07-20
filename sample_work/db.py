@@ -236,15 +236,18 @@ def get_summary_org_test(results):
     for orgtest in orgtests:
         orgtest_results = filter(lambda x: (x['organisation_id'] == orgtest[0] and 
                                            x['test_id']== orgtest[1]), results)
+
         success = filter(lambda x: x['response'] == 1, orgtest_results)
-        fail = filter(lambda x: x['response'] != 1, orgtest_results)
+        fail    = filter(lambda x: x['response'] != 1, orgtest_results)
         
         totalsuccess = sum(map(lambda x: x['count'], success))
-        totalfail = sum(map(lambda x: x['count'], fail))
+        totalfail    = sum(map(lambda x: x['count'], fail))
         
-        pct = float(totalsuccess)/(totalsuccess+totalfail)*100
-        passfail = pct>=50.0
-        if passfail: 
+        pct = float(totalsuccess) / (totalsuccess + totalfail) * 100
+
+        passfail = pct >= 50.0
+
+        if passfail:
             passfail_class='success'
             passfail_text='PASS'
         else:
