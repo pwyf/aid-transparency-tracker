@@ -305,6 +305,7 @@ def update_db_for_passes():
     with open('passes.json', 'r') as readfile:
         data = json.load(readfile)
         for ot in data:
-            work_item_uuids = get_uuid_by_org_test(ot['organisation_id'], ot['test_id'])
+            work_item_uuids = get_uuid_by_org_test(ot['organisation_id'], 
+                                                   ot['test_id'])
             for uuid in work_item_uuids:
                 save_response(uuid[0], 1)
