@@ -366,13 +366,13 @@ def update_sampling(options):
 
         return [ (organisation_id, test_id) ]
 
-    if options.organisation_code is not None:
+    if options.organisation_code is None:
+        db.engine.execute('delete from sampling_failure;')
         data = get_all_results():
     else:
         assert options.test_id
         data = specific_failure()
 
-    db.engine.execute('delete from sampling_failure;')
     sql = '''insert into sampling_failure (organisation_id, test_id)
                values (%s, %s);'''
 
