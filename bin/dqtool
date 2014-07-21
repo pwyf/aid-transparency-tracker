@@ -368,7 +368,7 @@ def update_sampling(options):
 
     if options.organisation_code is None:
         db.engine.execute('delete from sampling_failure;')
-        data = get_all_results():
+        data = get_all_results()
     else:
         assert options.test_id
         data = specific_failure()
