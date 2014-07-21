@@ -377,7 +377,7 @@ def update_sampling(options):
                values (%s, %s);'''
 
     for sf in data:
-        db.engine.execute(sql, (sf["organisation_id"], sf["test_id"]))
+        db.engine.execute(sql, sf)
 
 
 def list_modes(options):
