@@ -350,7 +350,7 @@ def update_sampling(options):
     import sample_work.db
     results = sample_work.db.get_total_results()
     ots = sample_work.db.get_summary_org_test(results)
-    failed = lambda ot : ot['passfail']
+    failed = lambda ot : ot['pass']
     sampling_failures = filter(failed, ots)
 
     db.engine.execute('delete from sampling_failure;')
