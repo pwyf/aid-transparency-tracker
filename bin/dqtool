@@ -348,16 +348,35 @@ def update_frequencies(options):
 
 def update_sampling(options):
     import sample_work.db
-    results = sample_work.db.get_total_results()
-    ots = sample_work.db.get_summary_org_test(results)
-    failed = lambda ot : not ot['pass']
-    sampling_failures = filter(failed, ots)
+
+    def get_all_results():
+        results = sample_work.db.get_total_results()
+        ots = sample_work.db.get_summary_org_test(results)
+        failed = lambda ot : not ot['pass']
+        sampling_failures = filter(failed, ots)
+        return [
+            (sf["organisation_id"], sf["test_id"]) for sf in sampling_failures
+            ]
+
+    def specific_failure():
+        organisation_code = options.organisation_code.decode('ascii')
+        test_id = options.test_id
+        organisation_id = iatidq.dqorganisations.organisationid_by_code(
+            organisation_code)
+
+        return [ (organisation_id, test_id) ]
+
+    if options.organisation_code is not None:
+        data = get_all_results():
+    else:
+        assert options.test_id
+        data = specific_failure()
 
     db.engine.execute('delete from sampling_failure;')
     sql = '''insert into sampling_failure (organisation_id, test_id)
                values (%s, %s);'''
 
-    for sf in sampling_failures:
+    for sf in data:
         db.engine.execute(sql, (sf["organisation_id"], sf["test_id"]))
 
 
