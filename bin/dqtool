@@ -348,7 +348,10 @@ def update_frequencies(options):
 
 def update_sampling(options):
     import sample_work.db
-    sampling_failures = sample_work.db.passes_failures()
+    results = sample_work.db.get_total_results()
+    ots = sample_work.db.get_summary_org_test(results)
+    failed = lambda ot : ot['passfail']
+    sampling_failures = filter(failed, ots)
 
     db.engine.execute('delete from sampling_failure;')
     sql = '''insert into sampling_failure (organisation_id, test_id)
