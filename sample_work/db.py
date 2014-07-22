@@ -54,6 +54,11 @@ total_results_response = ["organisation_id", "test_id", "response", "count"]
 def default_filename():
     return config.DB_FILENAME
 
+def create_db(c):
+    stmts = [create_sql, create_sql2, create_sql_offered, create_sql3]
+
+    [ c.execute(stmt) for stmt in stmts ]
+
 def make_db(filename, work_items):
     if os.path.exists(filename):
         os.unlink(filename)
@@ -61,9 +66,7 @@ def make_db(filename, work_items):
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    stmts = [create_sql, create_sql2, create_sql_offered, create_sql3]
-
-    [ c.execute(stmt) for stmt in stmts ]
+    create_db(c)
 
     for wi in work_items:
         wi_info = tuple(map(lambda k: wi[k], keys))
