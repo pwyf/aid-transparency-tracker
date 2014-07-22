@@ -6,6 +6,7 @@ test_to_kind = {
 	"document-link/category[@code='B06'] exists?": "org-document",
     "location exists (if activity-status/@code is at least 2 and recipient-region/@code is not 998)?": "location",
     "location/coordinates exists (if activity-status/@code is at least 2 and recipient-region/@code is not 998)?": "location",
+    "location/coordinates or location/point exists (if activity-status/@code is at least 2 and recipient-region/@code is not 998)?": "location",
     "document-link/category[@code='A09'] exists (if activity-status/@code is at least 2)?": "document",
     "document-link/category[@code='A07'] exists (if activity-status/@code is at least 3)?": "document",
     "document-link/category[@code='A02'] or description[@type='2'] exists (if activity-status/@code is at least 2)?": "document",
