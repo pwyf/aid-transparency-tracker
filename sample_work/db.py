@@ -59,14 +59,15 @@ def create_db(c):
 
     [ c.execute(stmt) for stmt in stmts ]
 
-def make_db(filename, work_items):
+def make_db(filename, work_items, create):
     if os.path.exists(filename):
         os.unlink(filename)
 
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    create_db(c)
+    if create:
+        create_db(c)
 
     for wi in work_items:
         wi_info = tuple(map(lambda k: wi[k], keys))

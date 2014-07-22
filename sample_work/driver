@@ -24,7 +24,7 @@ def all_org_ids():
 
 def run(filename, org_ids, test_ids):
     print "test ids:", test_ids
-    db.make_db(filename, WorkItems(org_ids, test_ids))
+    db.make_db(filename, WorkItems(org_ids, test_ids), True)
 
 if __name__ == '__main__':
     from optparse import OptionParser
