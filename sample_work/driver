@@ -22,9 +22,9 @@ def all_org_ids():
     for o in organisation_ids():
         yield o[0]
 
-def run(filename, org_ids, test_ids):
+def run(filename, org_ids, test_ids, create):
     print "test ids:", test_ids
-    db.make_db(filename, WorkItems(org_ids, test_ids), True)
+    db.make_db(filename, WorkItems(org_ids, test_ids), create)
 
 if __name__ == '__main__':
     from optparse import OptionParser
@@ -38,11 +38,15 @@ if __name__ == '__main__':
                       default=default_filename)
     parser.add_option("--org-ids", dest="org_ids", action="store")
     parser.add_option("--test-ids", dest="test_ids", action="store")
+    parser.add_option("--update", dest="update", action="store_true",
+                      default=False)
+
     options, rest = parser.parse_args()
 
     if options.org_ids:
         org_ids = map(int, options.org_ids.split(","))
     if options.test_ids:
         test_ids = map(int, options.test_ids.split(","))
+    create = options.update != True
 
-    run(options.filename, org_ids, test_ids)
+    run(options.filename, org_ids, test_ids, create)
