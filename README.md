@@ -124,3 +124,8 @@ Checking if tests are complete
     bin/dqtool --mode check-package-results --all --organisation GB-1
 
 
+Updating sampling poisoning
+===========================
+
+    bin/dqtool --mode update-sampling
+
