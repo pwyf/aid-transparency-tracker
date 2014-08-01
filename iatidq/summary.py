@@ -92,7 +92,6 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
         indicator_test_data = []
         results_pct = 0.0
         results_num = 0.0
-        results_weighted_pct_average_numerator = 0.0
 
         relevant = lambda test: (indicator, test) in indicators_tests
 
@@ -100,16 +99,14 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
             indic_info = simple_out[test]
             results_pct += indic_info["results_pct"]
             results_num += indic_info["results_num"]
-            results_weighted_pct_average_numerator += (
-                indic_info["results_pct"] * 
-                indic_info["results_num"]
-                )
             indicator_test_data.append(indic_info)
+
+        num_tests = len(filter(relevant, simple_out.keys()))
 
         return {
             "indicator": indicator_info.as_dict_minus_group(indicator),
             "tests": indicator_test_data,
-            "results_pct": (results_weighted_pct_average_numerator/results_num),
+            "results_pct": (results_pct/num_tests),
             "results_num": results_num
             }
     
