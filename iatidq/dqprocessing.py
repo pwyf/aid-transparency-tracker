@@ -50,6 +50,7 @@ def aggregate_results(runtime, package_id):
 def get_results(runtime, package_id, agg_type):
 
     if agg_type.test_id is not None:
+        # Find all activities that passed the "current" test
         results = db.session.query(distinct(models.Result.result_identifier)).filter(
             models.Result.test_id == agg_type.test_id
             ).filter(
@@ -58,6 +59,7 @@ def get_results(runtime, package_id, agg_type):
     else:
         results = db.session.query(distinct(models.Result.result_identifier))
 
+    # Get a subset of those activities' results, by package and runtime
     results = results.filter(
         models.Result.runtime_id == runtime
         ).filter(
