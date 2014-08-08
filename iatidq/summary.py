@@ -205,8 +205,12 @@ class NewPublisherSummary(PublisherSummary):
         self.tests = TestInfo()
         self.sampling_data = self.get_sampling_data(organisation_id)
 
-        where_clause = '''WHERE organisation_id = %d AND 
+        where_clause = '''JOIN organisationpackage ON 
+                            aggregateresult.package_id = organisationpackage.package_id
+                            WHERE aggregateresult.organisation_id = %d AND 
+                            organisationpackage.organisation_id = %d AND
                             aggregateresulttype_id = %d''' % (organisation_id,
+                                                              organisation_id,
                                                               aggregation_type)
 
         self._summary = self.calculate(where_clause)
