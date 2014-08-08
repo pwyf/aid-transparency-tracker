@@ -429,9 +429,12 @@ def _organisation_indicators_inforesults(organisation):
                                      Indicator,
                                      InfoType
         ).filter(InfoResult.organisation_id==organisation.id
+        ).filter(OrganisationPackage.organisation_id==organisation.id
         ).join(InfoType
         ).join(IndicatorInfoType
         ).join(Indicator
+        ).join(Package
+        ).join(OrganisationPackage
         ).group_by(InfoResult,  
                    Indicator,
                    InfoType                   
