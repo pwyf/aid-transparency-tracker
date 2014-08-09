@@ -210,13 +210,11 @@ class NewPublisherSummary(PublisherSummary):
         self.sampling_data = self.get_sampling_data(organisation_id)
 
         join_clause = '''
-            JOIN organisationpackage USING (package_id)
+            JOIN organisationpackage USING (package_id, organisation_id)
         '''
 
         where_clause = '''WHERE aggregateresult.organisation_id = %d AND 
-                            organisationpackage.organisation_id = %d AND
                             aggregateresulttype_id = %d''' % (organisation_id,
-                                                              organisation_id,
                                                               aggregation_type)
 
         self._summary = self.calculate(join_clause, where_clause)
