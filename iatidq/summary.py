@@ -210,8 +210,7 @@ class NewPublisherSummary(PublisherSummary):
         self.sampling_data = self.get_sampling_data(organisation_id)
 
         join_clause = '''
-            JOIN organisationpackage ON 
-              aggregateresult.package_id = organisationpackage.package_id
+            JOIN organisationpackage USING (package_id)
         '''
 
         where_clause = '''WHERE aggregateresult.organisation_id = %d AND 
