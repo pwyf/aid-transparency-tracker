@@ -393,10 +393,10 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
                                                    aggregation_type)
 
 
-# select example_summary.domain, sum(results_data * results_num::float/t1.total) 
-# from example_summary, 
+# select domain, sum(results_data * results_num::float/t1.total) 
+# from example_summary join
 #      (select domain, sum(results_num) as total 
 #         from example_summary 
 #         group by domain) as t1 
-# where example_summary.domain = t1.domain 
+# using (domain) 
 # group by example_summary.domain;
