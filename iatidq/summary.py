@@ -209,17 +209,20 @@ class NewPublisherSummary(PublisherSummary):
         self.tests = TestInfo()
         self.sampling_data = self.get_sampling_data(organisation_id)
 
-        where_clause = '''JOIN organisationpackage ON 
-                            aggregateresult.package_id = organisationpackage.package_id
-                            WHERE aggregateresult.organisation_id = %d AND 
+        join_clause = '''
+            JOIN organisationpackage ON 
+              aggregateresult.package_id = organisationpackage.package_id
+        '''
+
+        where_clause = '''WHERE aggregateresult.organisation_id = %d AND 
                             organisationpackage.organisation_id = %d AND
                             aggregateresulttype_id = %d''' % (organisation_id,
                                                               organisation_id,
                                                               aggregation_type)
 
-        self._summary = self.calculate(where_clause)
+        self._summary = self.calculate(join_clause, where_clause)
 
-    def calculate(self, where_clause):
+    def calculate(self, join_clause, where_clause):
         # make list of data; hand over to 
         # summarise_results(hierarchies, tests, indicators, 
         #                   indicators_tests, summary_f):
@@ -227,15 +230,15 @@ class NewPublisherSummary(PublisherSummary):
 
         sql = '''SELECT DISTINCT result_hierarchy
                    FROM aggregateresult
-                   %s;'''
-        stmt = sql % where_clause
+                   %s %s;'''
+        stmt = sql % (join_clause, where_clause)
         hierarchies = [ h[0] for h in conn.execute(stmt) ]
 
         sql = '''SELECT DISTINCT indicator_id, test_id
                    FROM aggregateresult
                    JOIN indicatortest USING (test_id)
-                   %s;'''
-        stmt = sql % where_clause
+                   %s %s;'''
+        stmt = sql % (join_clause, where_clause)
         indicators_tests = [ it for it in conn.execute(stmt) ]
         tests = [ it[1] for it in indicators_tests ]
         indicators = [ it[0] for it in indicators_tests ]
@@ -245,9 +248,9 @@ class NewPublisherSummary(PublisherSummary):
         sql = '''SELECT result_hierarchy, test_id, AVG(results_data) AS pct,
                         SUM(results_num) AS total_activities
                    FROM aggregateresult
-                   %s
+                   %s %s
                    GROUP BY test_id, result_hierarchy;'''
-        stmt = sql % where_clause
+        stmt = sql % (join_clause, where_clause)
         data = dict([ ((ar[0], ar[1]), ar) for ar in (conn.execute(stmt)) ])
         conn.close()
         del(conn)
@@ -289,11 +292,13 @@ class NewPackageSummary(NewPublisherSummary):
         self.tests = TestInfo()
         self.sampling_data = self.get_sampling_data(None)
 
+        join_clause = ""
+        
         where_clause = '''WHERE package_id = %d AND 
                             aggregateresulttype_id = %d''' % (package_id,
                                                               aggregation_type)
 
-        self._summary = self.calculate(where_clause)
+        self._summary = self.calculate(join_clause, where_clause)
 
         
 
