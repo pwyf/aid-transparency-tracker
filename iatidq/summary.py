@@ -94,14 +94,15 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
         results_num = 0.0
 
         relevant = lambda test: (indicator, test) in indicators_tests
+        tests = filter(relevant, simple_out.keys())
 
-        for test in filter(relevant, simple_out.keys()):
+        for test in tests:
             indic_info = simple_out[test]
             results_pct += indic_info["results_pct"]
             results_num += indic_info["results_num"]
             indicator_test_data.append(indic_info)
 
-        num_tests = len(filter(relevant, simple_out.keys()))
+        num_tests = len(tests)
 
         return {
             "indicator": indicator_info.as_dict_minus_group(indicator),
@@ -112,6 +113,9 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
     
     return dict([ (i, per_indicator(i)) for i in indicators ])
 
+
+# The value of this function is immediately consumed by the one above it;
+# it's only used in that one place
 def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators,
                      sampling_data):
     hierarchies = set(out)
