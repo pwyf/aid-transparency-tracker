@@ -243,7 +243,9 @@ class NewPublisherSummary(PublisherSummary):
         indicator_lookup = dict([ (it[1], it[0]) for it in indicators_tests ])
 
         # The WITH-clause sets up "org_aresult" as though it were a table
-        # resembling the results of the query in the clause
+        # resembling the results of the query in the clause; it contains
+        # only the aggregate results relevant to the organisation and
+        # aggregationtype under consideration
 
         # the joined SELECT subquery (named t1) gets us the right totals
 
