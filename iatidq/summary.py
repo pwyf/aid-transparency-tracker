@@ -400,3 +400,29 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
 #         group by domain) as t1 
 # using (domain) 
 # group by example_summary.domain;
+
+# select org55_aggresult.* from 
+# (select result_hierarchy, test_id, results_data, results_num 
+#  from aggregateresult 
+#  join organisationpackage USING (package_id, organisation_id) 
+#  where aggregateresult.organisation_id = 55 
+#    and aggregateresulttype_id=2
+# ) as org55_aggresult;
+
+_sql = """with org55_aggresult as (
+	 select result_hierarchy, test_id, results_data, results_num 
+	 from aggregateresult 
+	 join organisationpackage USING (package_id, organisation_id) 
+     where aggregateresult.organisation_id = 55 
+       and aggregateresulttype_id=2
+)
+select result_hierarchy, test_id, 
+       sum(results_data * results_num::float/t1.total) as pct,
+       sum(results_num) as total_activities
+from org55_aggresult join
+  (select result_hierarchy, test_id, sum(results_num) as total
+   from org55_aggresult
+   group by result_hierarchy, test_id) as t1
+using (result_hierarchy, test_id)
+group by org55_aggresult.result_hierarchy, org55_aggresult.test_id
+"""
