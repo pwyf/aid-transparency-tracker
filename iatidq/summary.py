@@ -242,11 +242,34 @@ class NewPublisherSummary(PublisherSummary):
 
         indicator_lookup = dict([ (it[1], it[0]) for it in indicators_tests ])
 
-        sql = '''SELECT result_hierarchy, test_id, AVG(results_data) AS pct,
-                        SUM(results_num) AS total_activities
-                   FROM aggregateresult
-                   %s %s
-                   GROUP BY test_id, result_hierarchy;'''
+        # The WITH-clause sets up "org_aresult" as though it were a table
+        # resembling the results of the query in the clause
+
+        # the joined SELECT subquery (named t1) gets us the right totals
+
+        # the sum(results_data * results_num / total) calculation is
+        # arithmetically equivalent to doing an average, since everything
+        # is divided by the total
+
+        sql = '''
+            WITH org_aresult AS (
+              SELECT result_hierarchy, test_id, results_data, results_num
+              FROM aggregateresult
+              %s %s
+            )
+            SELECT result_hierarchy,
+                   test_id,
+                   SUM(results_data * results_num::float / t1.total) AS pct,
+                   SUM(results_num) AS total_activities
+            FROM org_aresult
+            JOIN (
+              SELECT result_hierarchy, test_id, SUM(results_num) AS total
+              FROM org_aresult
+              GROUP BY result_hierarchy, test_id) AS t1
+            USING (result_hierarchy, test_id)
+            GROUP BY org_aresult.result_hierarchy, org_aresult.test_id;
+        '''
+        
         stmt = sql % (join_clause, where_clause)
         data = dict([ ((ar[0], ar[1]), ar) for ar in (conn.execute(stmt)) ])
         conn.close()
@@ -392,6 +415,7 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
                                                    organisation_id, 
                                                    aggregation_type)
 
+# The model for the big SQL query at the core of the class:
 
 # select domain, sum(results_data * results_num::float/t1.total) 
 # from example_summary join
@@ -400,30 +424,3 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
 #         group by domain) as t1 
 # using (domain) 
 # group by example_summary.domain;
-
-# select org55_aggresult.* from 
-# (select result_hierarchy, test_id, results_data, results_num 
-#  from aggregateresult 
-#  join organisationpackage USING (package_id, organisation_id) 
-#  where aggregateresult.organisation_id = 55 
-#    and aggregateresulttype_id=2
-# ) as org55_aggresult;
-
-_sql = """
-with org55_aggresult as (
-  select result_hierarchy, test_id, results_data, results_num 
-  from aggregateresult 
-  join organisationpackage USING (package_id, organisation_id) 
-  where aggregateresult.organisation_id = 55 
-    and aggregateresulttype_id=2
-)
-select result_hierarchy, test_id, 
-       sum(results_data * results_num::float/t1.total) as pct,
-       sum(results_num) as total_activities
-from org55_aggresult
-join (select result_hierarchy, test_id, sum(results_num) as total
-      from org55_aggresult
-      group by result_hierarchy, test_id) as t1
-using (result_hierarchy, test_id)
-group by org55_aggresult.result_hierarchy, org55_aggresult.test_id
-"""
