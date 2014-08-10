@@ -269,7 +269,7 @@ class NewPublisherSummary(PublisherSummary):
               FROM org_aresult
               GROUP BY result_hierarchy, test_id) AS t1
             USING (result_hierarchy, test_id)
-            GROUP BY org_aresult.result_hierarchy, org_aresult.test_id;
+            GROUP BY result_hierarchy, test_id;
         '''
         
         stmt = sql % (join_clause, where_clause)
