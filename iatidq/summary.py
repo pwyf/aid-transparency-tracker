@@ -26,9 +26,10 @@ class NoRelevantResults(Exception): pass
 def reform_dict(d):
     def inner(hier):
         HIER = 0
+        TEST = 1
         matches_first = lambda ht: ht[HIER] == hier
         return dict([ (test, d[(hier, test)]) for test in 
-                      map(lambda ht: ht[1], filter(matches_first, d.keys())) ])
+                      map(lambda ht: ht[TEST], filter(matches_first, d.keys())) ])
 
     return dict([ (hier, inner(hier))
                    for hier in set( hier for hier, test in d.keys() ) ])
