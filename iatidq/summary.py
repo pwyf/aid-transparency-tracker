@@ -43,8 +43,8 @@ def reform_dict(d):
 def remove_empty_dicts(d):
     has_keys = lambda kvp: len(kvp[1])
     return dict([ 
-            (K, dict(filter(has_keys, V.items()))) 
-            for K, V in d.items() 
+            (hier, dict(filter(has_keys, V.items()))) 
+            for hier, V in d.items() 
             ])
 
 
