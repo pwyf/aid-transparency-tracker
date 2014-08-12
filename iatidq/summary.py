@@ -24,6 +24,12 @@ COL_PACKAGE = 5
 class NoRelevantResults(Exception): pass
 
 def reform_dict(d):
+    """
+    Takes dictionary with keys of the form (hierarchy, test)
+    and returns a dict of dicts of the form
+      {hierarchy1: {test1: ..., test2: ...}, hierarchy2: ...}
+    """
+
     def inner(hier):
         HIER = 0
         TEST = 1
