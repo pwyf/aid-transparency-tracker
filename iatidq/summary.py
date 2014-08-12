@@ -24,9 +24,9 @@ COL_PACKAGE = 5
 class NoRelevantResults(Exception): pass
 
 def reform_dict(d):
-    def inner(k1):
-        matches_first = lambda i: i[0] == k1
-        return dict([ (k2, d[(k1, k2)]) for k2 in 
+    def inner(hier):
+        matches_first = lambda i: i[0] == hier
+        return dict([ (k2, d[(hier, k2)]) for k2 in 
                       map(lambda i: i[1], filter(matches_first, d.keys())) ])
 
     return dict([ (hier, inner(hier))
