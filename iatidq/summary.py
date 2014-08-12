@@ -29,8 +29,8 @@ def reform_dict(d):
         return dict([ (k2, d[(k1, k2)]) for k2 in 
                       map(lambda i: i[1], filter(matches_first, d.keys())) ])
 
-    return dict([ (k1, inner(k1))
-                   for k1 in set( k1 for k1, k2 in d.keys() ) ])
+    return dict([ (hier, inner(hier))
+                   for hier in set( hier for hier, test in d.keys() ) ])
 
 def remove_empty_dicts(h):
     has_keys = lambda kvp: len(kvp[1])
