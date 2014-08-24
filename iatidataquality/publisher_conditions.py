@@ -147,6 +147,7 @@ def ipc_step2():
 
     results = get_results()
 
+    ## FIXME: duplicate code?
     if results:
         flash('Parsed conditions', "success")
         return render_template(
