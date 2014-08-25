@@ -4,7 +4,8 @@
 {% endblock %}
 {% block content %}
 
-    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#packages").tablesorter({ sortList: [[0,0]] });
@@ -13,11 +14,17 @@
 
     </script>
     <div class="pull-right">
-        <button type="button" class="btn" data-toggle="collapse" data-target="#packages_div">
+        <button type="button" class="btn" 
+				data-toggle="collapse" data-target="#packages_div">
         <i class="icon-file"></i> <b>Packages</b>
         </button>
     </div>
-	<h1><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a> &raquo; Detailed view</h1>
+	<h1>
+	  <a href="{{url_for('organisations', 
+			   organisation_code=organisation.organisation_code)}}">
+		{{organisation.organisation_name}}
+	  </a> &raquo; Detailed view
+	</h1>
 
     <div id="packages_div" class="collapse">
     <h2>Packages</h2>
@@ -28,7 +35,7 @@
     <tbody>
 	{% for pk in packages %}
     <tr>
-	<td><a href="{{url_for('packages', package_name=pk.Package.package_name)}}">{{ pk.Package.package_name }}</a></td><td>{{ pk.Package.package_title }}</td><td>{{ pk.Package.package_country }}</td><td>{{ pk.Package.package_license }}</td><!--<td></td>-->
+	  <td><a href="{{url_for('packages', package_name=pk.Package.package_name)}}">{{ pk.Package.package_name }}</a></td><td>{{ pk.Package.package_title }}</td><td>{{ pk.Package.package_country }}</td><td>{{ pk.Package.package_license }}</td><!--<td></td>-->
     </tr>
 	{% endfor %}
     </tbody>
