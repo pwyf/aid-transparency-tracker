@@ -193,8 +193,13 @@
             </td>
 
 	        <td>
-            {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}<span class="label label-default">No survey data yet.</span>{% endif %}</td>
-            </tr>
+            {% if result.results_pct > 0 %}
+			  <span class="label label-success">IATI</span>
+			{% else %}
+			  <span class="label label-default">No survey data yet.</span>
+			{% endif %}
+			</td>
+          </tr>
             {% if lastyearsdata[result.indicator.name]["iati_manual"] == 'manual' %}
 
             <tr id="tr-{{result["indicator"]["id"]}}-details" 
@@ -211,7 +216,7 @@
               </td>
             </tr>
             {% endif %}
-        {%endfor%}
+        {% endfor %}
         </tbody>
         </table>
         </fieldset>
@@ -319,11 +324,11 @@
 
           </tr>
             {% endif %}
-        {%endfor%}
+        {% endfor %}
         </tbody>
         </table>
         </fieldset>
-    {%endif%}
+    {% endif %}
 
     <script src="{{url_for('static', filename='js/organisationPublication.js')}}"></script>
 
