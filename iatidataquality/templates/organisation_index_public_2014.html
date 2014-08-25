@@ -224,7 +224,7 @@
         </thead>
         <tbody>
         {% for indicator, result in results.publication_activity.items() %}
-            <tr id="indicator-{{result["indicator"]["id"]}}">
+          <tr id="indicator-{{result["indicator"]["id"]}}">
 
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
 
@@ -289,8 +289,14 @@
             </td>
 
 	        <td>
-            {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}<span class="label label-default">No survey data yet.</span>{% endif %}</td>
-            </tr>
+            {% if result.results_pct > 0 %}
+			<span class="label label-success">IATI</span>
+			{% else %}
+			<span class="label label-default">No survey data yet.</span>
+			{% endif %}
+			</td>
+
+          </tr>
             {% if lastyearsdata[result.indicator.name]["iati_manual"] == 'manual' %}
 
             <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
