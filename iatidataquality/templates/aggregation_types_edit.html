@@ -1,8 +1,11 @@
 {% set active_page='aggregationtype'%}{% extends "layout.html" %}
 {% block title %}{% if aggregationtype%}Edit{%else%}New{%endif%} Aggregation Types{% endblock %}
 {% block content %}
-	{% if aggregationtype%}<h1>Edit aggregation type {{aggregationtype.name}}</h1>
-    {% else %}<h1>New aggregation type</h1>{%endif%}
+	{% if aggregationtype %}
+       <h1>Edit aggregation type {{aggregationtype.name}}</h1>
+    {% else %}
+       <h1>New aggregation type</h1>
+    {% endif %}
     <form name="aggregationtypeupdate" method="post" action="">
     <table class="table">
     <thead>
