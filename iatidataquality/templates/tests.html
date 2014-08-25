@@ -1,18 +1,26 @@
 {% set active_page='tests'%}{% extends "layout.html" %}
 {% block title %}Tests{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
-    <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='js/deletePrompt.js')}}"></script>
     <script >
+
     $(function() {
     $("table#tests").tablesorter({ sortList: [[0,0]] });
     });
     </script>
+
 	<h1>Select a test</h1>
+
     <div class="pull-right">
-    <a href="{{url_for('tests_new')}}" class="btn btn-success"><i class="icon-plus icon-white"></i>New</a>
-    <a href="{{url_for('import_tests')}}" class="btn">Import tests</a>
+      <a href="{{url_for('tests_new')}}" class="btn btn-success">
+		<i class="icon-plus icon-white"></i>New</a>
+
+      <a href="{{url_for('import_tests')}}" class="btn">Import tests</a>
     </div>
+
     <table class="table" id="tests">
     <thead>
     <th>ID</th><th>Name</th><th>Description</th><th></th>
