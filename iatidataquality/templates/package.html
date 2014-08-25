@@ -7,13 +7,15 @@
 {% endif %}
 {% block title %}{{package.package_title}} &raquo; Packages{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#package").tablesorter({ sortList: [[0,0]] });
     $("table#results").tablesorter({ sortList: [[0,0]] });
     });
     </script>
+
 	<h1>{{package.package_title}}<code>{{package.package_name}}</code></h1>
     <table class="table" id="package">
     <tbody>
