@@ -109,14 +109,20 @@
 		 aria-hidden="true"> 
 
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" data-dismiss="modal" 
+					aria-hidden="true">×</button>
             <form method="post" action="">
             <h3 id="addPackagesModalLabel">Add Packages</h3>
         </div>
+
         <div class="modal-body">
         {% for package in packages %}
-            <label for="package_{{package.id}}"><input type="checkbox" value="{{package.id}}" id="package_{{package.id}}" name="package" /> {{package.package_name}}</label>
-        {%endfor%}
+            <label for="package_{{package.id}}">
+			  <input type="checkbox" value="{{package.id}}" 
+					 id="package_{{package.id}}" name="package" /> 
+			  {{package.package_name}}
+			</label>
+        {% endfor %}
 
         </div>
         <div class="modal-footer">
