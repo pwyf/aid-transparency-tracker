@@ -12,7 +12,13 @@
 
     {% if admin %}
 
-    <div class="pull-right"><a class="btn btn-success" href="{{url_for('organisation_new')}}"><i class="icon-plus icon-white"></i><b> New organisation</b></a></div>
+    <div class="pull-right">
+	  <a class="btn btn-success" href="{{url_for('organisation_new')}}">
+		<i class="icon-plus icon-white"></i>
+		<b> New organisation</b>
+	  </a>
+	</div>
+
     {% endif %}
 	<h1>Organisations</h1>
     <p class="lead"> The following organisations are included in the <a href="http://www.publishwhatyoufund.org/index/2014-ati/">2014 Aid Transparency Index</a>. Each organisation's page contains an initial assessment of the quality of the aid information they publish. Publish What You Fund will work with these organisations and independent reviewers over the course of the 2014 Index data collection period to verify this data. </p>
