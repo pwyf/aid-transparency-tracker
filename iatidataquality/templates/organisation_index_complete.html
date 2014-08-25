@@ -466,21 +466,26 @@
                             <td>Publication format points</td><td>50.0</td><td></td>
                         </tr>
                         <tr class="success">
-                            <td><b>Total points for this indicator</b></td><td>{{((result.results_pct*freq/2)+50)|round}}</td><td></td>
+                            <td><b>Total points for this indicator</b></td>
+							<td>{{((result.results_pct*freq/2)+50)|round}}</td>
+							<td></td>
                         </tr>
                         {% else %}
                         <tr>
                             <td>Publication format points</td><td>{{points}}</td><td></td>
                         </tr>
                         <tr class="success">
-                            <td><b>Total points for this indicator</b></td><td>{{points}}</td><td></td>
+                            <td><b>Total points for this indicator</b></td>
+							<td>{{points}}</td>
+							<td></td>
                         </tr>
                         {% endif %}
                         </tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <button class="btn" data-dismiss="modal" 
+								aria-hidden="true">Close</button>
                     </div>
                 </div>
             </td>
