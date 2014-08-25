@@ -49,19 +49,34 @@
 		</td>
     </tr>
     <tr>
-        <td>Indicator type:</td><td><input type="text" name="indicator_type" value="{{indicator.indicator_type}}" /></td>
+        <td>Indicator type:</td>
+		<td><input type="text" name="indicator_type" 
+				   value="{{indicator.indicator_type}}" />
+		</td>
     </tr>
     <tr>
-        <td>Indicator category:</td><td><input type="text" name="indicator_category_name" value="{{indicator.indicator_category_name}}" /></td>
+        <td>Indicator category:</td>
+		<td><input type="text" name="indicator_category_name" 
+				   value="{{indicator.indicator_category_name}}" />
+		</td>
     </tr>
     <tr>
-        <td>Indicator subcategory:</td><td><input type="text" name="indicator_subcategory_name" value="{{indicator.indicator_subcategory_name}}" /></td>
+        <td>Indicator subcategory:</td>
+		<td><input type="text" name="indicator_subcategory_name"
+				   value="{{indicator.indicator_subcategory_name}}" />
+		</td>
     </tr>
     <tr>
-        <td>Ordinal:</td><td><input type="checkbox" name="indicator_ordinal" value="1" {% if indicator.indicator_ordinal %}checked{%endif%} /></td>
+        <td>Ordinal:</td>
+		<td><input type="checkbox" name="indicator_ordinal" value="1" 
+				   {% if indicator.indicator_ordinal %}checked{% endif %} />
+		</td>
     </tr>    
     <tr>
-        <td>Ignore format:</td><td><input type="checkbox" name="indicator_noformat" value="1" {% if indicator.indicator_noformat %}checked{%endif%} /></td>
+        <td>Ignore format:</td>
+		<td><input type="checkbox" name="indicator_noformat" value="1" 
+				   {% if indicator.indicator_noformat %}checked{% endif %} />
+		</td>
     </tr>    
     <tr>
         <td>Order:</td><td><input type="text" name="indicator_order" value="{{indicator.indicator_order}}" /></td>
