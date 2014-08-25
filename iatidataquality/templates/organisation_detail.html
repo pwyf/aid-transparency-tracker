@@ -35,7 +35,16 @@
     <tbody>
 	{% for pk in packages %}
     <tr>
-	  <td><a href="{{url_for('packages', package_name=pk.Package.package_name)}}">{{ pk.Package.package_name }}</a></td><td>{{ pk.Package.package_title }}</td><td>{{ pk.Package.package_country }}</td><td>{{ pk.Package.package_license }}</td><!--<td></td>-->
+	  <td>
+		<a href="{{url_for('packages', 
+				 package_name=pk.Package.package_name)}}">
+		  {{ pk.Package.package_name }}
+	    </a>
+	  </td>
+	  <td>{{ pk.Package.package_title }}</td>
+	  <td>{{ pk.Package.package_country }}</td>
+	  <td>{{ pk.Package.package_license }}</td>
+	  <!--<td></td>-->
     </tr>
 	{% endfor %}
     </tbody>
