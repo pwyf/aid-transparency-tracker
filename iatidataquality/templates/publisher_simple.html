@@ -21,11 +21,12 @@
     <h3>Latest results </h3>
 
     <div class="clearer">&nbsp;</div>
-        <fieldset><legend>Simple view</legend>
-        <table class="table" id="results">
+    <fieldset><legend>Simple view</legend>
+      <table class="table" id="results">
         <thead>
-        <th>Test</th><th>% Passed</th><th>Total results</th><th>Detail</th>
+          <th>Test</th><th>% Passed</th><th>Total results</th><th>Detail</th>
         </thead>
+
         <tbody>
         {% for test, result in results.items() %}
         <tr id="tr{{result["test"]["id"]}}" class="group-{% if result["test"]["test_group"] %}{{result["test"]["test_group"]}}{% else %}unknown{%endif%}{% if result["condition"] %} condition-hidden alert{%endif%}">
