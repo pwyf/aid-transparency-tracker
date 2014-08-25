@@ -53,9 +53,13 @@
 
     {% if results %}
     <div class="pull-right testruns">
-        <form action="" method="GET" id="aggregation_type_form" class="form-inline">
+        <form action="" method="GET" 
+			  id="aggregation_type_form" class="form-inline">
+
             <a id="showAllTests" class="btn" href="#">Show all tests</a>
+
             <select name="aggregation_type" id="aggregation_type">
+
                 {% for agt in all_aggregation_types %}
                 <option value="{{agt.AggregationType.id}}"{% if agt.AggregationType.id==aggregation_type %} selected{%endif%}>{{agt.AggregationType.name}}</option>
                 {% endfor %}
