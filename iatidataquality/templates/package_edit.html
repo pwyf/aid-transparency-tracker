@@ -39,19 +39,34 @@
     </tr>
     <tr>
         <td>Title</td>
-        <td><input type="text" value="{{package.package_title}}" name="package_title" placeholder="e.g. DFID Activity File Tanzania" /></td>
+        <td>
+		  <input type="text" value="{{package.package_title}}" 
+				 name="package_title" 
+				 placeholder="e.g. DFID Activity File Tanzania" />
+		</td>
     </tr>
     <tr>
         <td>URL</td>
-        <td><input type="text" value="{{package.source_url}}" name="source_url" placeholder="e.g. http://projects.dfid.gov.uk/iati/Country/TZ" /></td>
+        <td>
+		  <input type="text" value="{{package.source_url}}" 
+				 name="source_url" 
+				 placeholder="e.g. http://projects.dfid.gov.uk/iati/Country/TZ" />
+		</td>
     </tr>
     <tr>
         <td>Organisation</td>
         <td><select name="organisation">
             <option value=""></option>
+
         {% for organisation in organisations %}
-            <option value="{{organisation.id}}" {% if organisation.id==package_org_id %}selected{% endif %}>{{organisation.organisation_name}}</option>
+            <option value="{{organisation.id}}" 
+					{% if organisation.id == package_org_id %}
+					selected
+					{% endif %}>
+			  {{organisation.organisation_name}}
+			</option>
         {% endfor%}
+
         </select></td>
     </tr>
     <tr>
