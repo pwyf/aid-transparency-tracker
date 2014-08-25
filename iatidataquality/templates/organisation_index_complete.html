@@ -434,21 +434,33 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Data quality</td><td>{{result.results_pct|round}}%</td><td>% of activities that passed tests</td>
+                            <td>Data quality</td>
+							<td>{{result.results_pct|round}}%</td>
+							<td>% of activities that passed tests</td>
                         </tr>
                         <tr class="muted">
-                            <td>Convert percentage to points</td><td>÷ 2</td><td></td>
+                            <td>Convert percentage to points</td>
+							<td>÷ 2</td>
+							<td></td>
                         </tr>
                         <tr>
-                            <td>Points</td><td>{{(result.results_pct/2)|round}}</td><td></td>
+                            <td>Points</td>
+							<td>{{(result.results_pct/2)|round}}</td>
+							<td></td>
                         </tr>
                         {% if result.indicator.indicator_category_name =='activity' %}
                         <tr class="muted">
-                            <td>Frequency</td><td>x {{freq}}</td><td>{{organisation.frequency|title}}: {{organisation.frequency_comment}}</td>
+                            <td>Frequency</td><td>x {{freq}}</td>
+							<td>
+							  {{organisation.frequency|title}}: 
+							  {{organisation.frequency_comment}}
+							</td>
                         </tr>
                         {% endif %}
                         <tr>
-                            <td><b>Total data quality points</b></td><td>{{points-50}}</td><td></td>
+                            <td><b>Total data quality points</b></td>
+							<td>{{points-50}}</td>
+							<td></td>
                         </tr>
                         </tbody>
                         </table>
