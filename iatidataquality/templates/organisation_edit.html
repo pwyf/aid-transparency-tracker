@@ -87,10 +87,18 @@
     </tr>
     <tr>
         <td>No independent reviewer:</td>
-        <td><input type="checkbox" name="no_independent_reviewer" value="1" {% if organisation.no_independent_reviewer %}checked{%endif%}/></td>
+        <td><input type="checkbox" name="no_independent_reviewer"
+				   value="1" 
+				   {% if organisation.no_independent_reviewer %}
+				   checked
+				   {% endif %}/>
+		</td>
     </tr>
     <tr>
-    <td colspan="2"><input type="submit" value="Update" class="btn" name="updateorganisation"/></td>
+    <td colspan="2">
+	  <input type="submit" value="Update" class="btn" 
+			 name="updateorganisation"/>
+	</td>
     </tr>
     </tbody>
     </table>
