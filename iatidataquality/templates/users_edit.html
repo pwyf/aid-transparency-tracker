@@ -96,12 +96,22 @@
     </table>
 
     {% endif %}
-    <div id="addPermission" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel" aria-hidden="true"> 
+    <div id="addPermission" class="modal hide fade" tabindex="-1" 
+		 role="dialog" aria-labelledby="addFeedbackModalLabel" 
+		 aria-hidden="true"> 
+
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+            <button type="button" class="close" data-dismiss="modal" 
+					aria-hidden="true">×</button>
+
             <form method="post" action="">
-            <h3 id="addFeedbackModalLabel">Add permissions for {{user.username}}</h3>
+
+              <h3 id="addFeedbackModalLabel">
+				Add permissions for {{user.username}}
+			  </h3>
         </div>
+
         <div class="modal-body">
             <p>Add permissions to this user.</p>
             <table class="table">
