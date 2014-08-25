@@ -2,11 +2,20 @@
 {% block title %}Import organisation conditions{% endblock %}
 {% block content %}
     
-    <form action="{{url_for('import_organisation_conditions', step=2)}}" method="post">
+    <form action="{{url_for('import_organisation_conditions', step=2)}}" 
+		  method="post">
     <fieldset>
         <legend>Import conditions</legend>
-        <p><label for="url">URL:</label><input type="text" value="http://raw.github.com/markbrough/IATI-Data-Quality/master/tests/organisation_structures.txt" name="url" /></p>
-        <p><input type="submit" value="Import organisation conditions" class="btn" name="remote" /></p>
+        <p>
+		  <label for="url">URL:</label>
+		  <input type="text" 
+				 value="http://raw.github.com/markbrough/IATI-Data-Quality/master/tests/organisation_structures.txt" name="url" />
+		</p>
+        <p>
+		  <input type="submit" 
+				 value="Import organisation conditions"
+				 class="btn" name="remote" />
+		</p>
     </fieldset>
     </form>
 {% endblock %}
