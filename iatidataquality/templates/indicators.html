@@ -65,16 +65,31 @@
         {% if indicator.indicator_type != type %}
         {% set type = indicator.indicator_type %}
         {% set cat = indicator.indicator_category_name %}
-        <tr class="info"><td colspan="{% if admin %}4{%else%}3{%endif%}"><b>{{type|title}}{% if cat != "" %}
-        &ndash; {{cat|title}}{% endif %}</b></td></tr>
+        <tr class="info">
+		  <td colspan="{% if admin %}4{%else%}3{%endif%}">
+			<b>
+			  {{type|title}}{% if cat != "" %} &ndash; {{cat|title}}{% endif %}
+			</b>
+		  </td>
+		</tr>
         {% endif %}
         <tr id="indicator-{{indicator.id}}">
         <td>{{indicator.indicator_order}}</td>
 	    <td>{{indicator.description}}</td>
         {% if admin %}
         <td>
-            <a href="{{url_for('indicators_edit', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}"><i class="icon-pencil"></i></a>
-            <a href="{{url_for('indicators_delete', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}" data-confirm="Are you sure you want to delete Indicator {{indicator.name}}?"><i class="icon-trash"></i></a>
+            <a href="{{url_for('indicators_edit', 
+					 indicatorgroup=indicatorgroup.name, 
+					 indicator=indicator.name)}}">
+			  <i class="icon-pencil"></i>
+			</a>
+            <a href="{{url_for('indicators_delete', 
+					 indicatorgroup=indicatorgroup.name, 
+					 indicator=indicator.name)}}" 
+			   data-confirm="Are you sure you want to delete 
+							 Indicator {{indicator.name}}?">
+			  <i class="icon-trash"></i>
+			</a>
         </td>
         {% endif %}
         <td><a href="#" class="showTests" id="showindicator-{{indicator.id}}"><i class="icon-chevron-down align-right"></i></a></td>
