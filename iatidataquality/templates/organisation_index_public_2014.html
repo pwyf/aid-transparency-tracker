@@ -184,27 +184,32 @@
                         {% endif %}
                     {% endif %}
                     {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
-                    <a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down align-right"></i></a>
+                    <a href="#" class="showTests" 
+					   id="showindicator-{{result.indicator.id}}">
+					  <i class="icon-chevron-down align-right"></i>
+					</a>
                     {% endif %}
                 {% endif %}
             </td>
+
 	        <td>
             {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}<span class="label label-default">No survey data yet.</span>{% endif %}</td>
             </tr>
             {% if lastyearsdata[result.indicator.name]["iati_manual"] == 'manual' %}
 
-            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
-            <td colspan="4">
-            <h5>Evidence</h5>
-            <p>
-			  {{lastyearsdata[result.indicator.name].survey_source}}
-			</p>
-            <h5>Comments</h5>
-            <p>
-			  {{lastyearsdata[result.indicator.name].survey_comment}}
-			</p>
-            </td>
-            <tr />
+            <tr id="tr-{{result["indicator"]["id"]}}-details" 
+				class="group-{{result["indicator"]["id"]}} hidden">
+              <td colspan="4">
+				<h5>Evidence</h5>
+				<p>
+				  {{lastyearsdata[result.indicator.name].survey_source}}
+				</p>
+				<h5>Comments</h5>
+				<p>
+				  {{lastyearsdata[result.indicator.name].survey_comment}}
+				</p>
+              </td>
+            </tr>
             {% endif %}
         {%endfor%}
         </tbody>
@@ -299,18 +304,20 @@
           </tr>
             {% if lastyearsdata[result.indicator.name]["iati_manual"] == 'manual' %}
 
-            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+          <tr id="tr-{{result["indicator"]["id"]}}-details" 
+			  class="group-{{result["indicator"]["id"]}} hidden">
             <td colspan="4">
-            <h5>Evidence</h5>
-            <p>
-			  {{lastyearsdata[result.indicator.name].survey_source}}
-			</p>
-            <h5>Comments</h5>
-            <p>
-			  {{lastyearsdata[result.indicator.name].survey_comment}}
-			</p>
+              <h5>Evidence</h5>
+              <p>
+				{{lastyearsdata[result.indicator.name].survey_source}}
+			  </p>
+              <h5>Comments</h5>
+              <p>
+				{{lastyearsdata[result.indicator.name].survey_comment}}
+			  </p>
             </td>
-            <tr />
+
+          </tr>
             {% endif %}
         {%endfor%}
         </tbody>
