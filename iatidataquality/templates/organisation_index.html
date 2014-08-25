@@ -6,11 +6,19 @@
     <div class="container">
         <div class="pull-right">
             {% if admin %}
-            <a class="btn" href="{{url_for('organisation_edit', organisation_code=organisation.organisation_code)}}"><i class="icon-wrench"></i> Manage organisation</a>
+            <a class="btn" 
+			   href="{{url_for('organisation_edit', 
+					 organisation_code=organisation.organisation_code)}}">
+			  <i class="icon-wrench"></i> Manage organisation</a>
             {% endif %}
+
             {% if allowed_to_view_survey %}
-            <a class="btn" href="{{url_for('organisation_survey', organisation_code=organisation.organisation_code)}}"><i class="icon-info-sign"></i> View survey</a>
+            <a class="btn" 
+			   href="{{url_for('organisation_survey', 
+					 organisation_code=organisation.organisation_code)}}">
+			  <i class="icon-info-sign"></i> View survey</a>
             {% endif %}
+
             {% if show_researcher_button %}
             <a class="btn" href="{{url_for('organisation_survey_edit', 
                                             organisation_code=organisation.organisation_code, 
