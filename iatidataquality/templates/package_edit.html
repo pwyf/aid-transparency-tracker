@@ -55,19 +55,21 @@
     </tr>
     <tr>
         <td>Organisation</td>
-        <td><select name="organisation">
+        <td>
+		  <select name="organisation">
             <option value=""></option>
-
-        {% for organisation in organisations %}
+			
+			{% for organisation in organisations %}
             <option value="{{organisation.id}}" 
 					{% if organisation.id == package_org_id %}
 					selected
 					{% endif %}>
 			  {{organisation.organisation_name}}
 			</option>
-        {% endfor%}
+			{% endfor%}
 
-        </select></td>
+          </select>
+		</td>
     </tr>
     <tr>
         <td>Hash (leave blank to make this package update)</td>
