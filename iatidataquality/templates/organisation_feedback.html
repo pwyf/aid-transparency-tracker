@@ -115,7 +115,8 @@
             </table>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button class="btn" data-dismiss="modal" 
+					aria-hidden="true">Close</button>
             <a id="addfeedbackbtn" class="btn btn-success">Add structure</a>
         </div>
     </form>
@@ -123,5 +124,6 @@
     <script>
     var organisation_code = "{{organisation.organisation_code}}";
     </script>
-    <script src="{{url_for('static', filename='js/organisationFeedback.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='js/organisationFeedback.js')}}"></script>
 {% endblock %}
