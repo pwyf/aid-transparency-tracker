@@ -165,11 +165,17 @@
     </form>
     </div>
 
-    <div id="addPermissionsSet" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel" aria-hidden="true"> 
+    <div id="addPermissionsSet" class="modal hide fade" 
+		 tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel" 
+		 aria-hidden="true"> 
+
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <button type="button" class="close" data-dismiss="modal" 
+					aria-hidden="true">×</button>
             <form method="post" action="">
-            <h3 id="addFeedbackModalLabel">Add permissions Set for {{user.username}}</h3>
+              <h3 id="addFeedbackModalLabel">
+				Add permissions Set for {{user.username}}
+			  </h3>
         </div>
         <div class="modal-body">
             <p>Add a group of permissions to this user.</p>
@@ -178,9 +184,12 @@
             <tr>
             <td>Name</td>
             <td><select id="setname">
-                <option value="csoresearcher">CSO Researcher, can view organisation and edit survey</option>
-                <option value="donor">Donor, can view organisation and edit survey</option>
-                <option value="csocomments">CSO commenter, can view organisation and provide comments on survey</option>
+                <option value="csoresearcher">CSO Researcher, 
+				  can view organisation and edit survey</option>
+                <option value="donor">Donor, can view organisation 
+				  and edit survey</option>
+                <option value="csocomments">CSO commenter, 
+				  can view organisation and provide comments on survey</option>
             </select></td>
             </tr>
             <tr>
@@ -188,7 +197,9 @@
             <td> <select id="setvalue">
                  <option value="" selected></option>
                  {% for organisation in organisations %}
-                 <option value="{{organisation.organisation_code}}">{{organisation.organisation_name}}</option>
+                 <option value="{{organisation.organisation_code}}">
+				   {{organisation.organisation_name}}
+				 </option>
                  {% endfor %}
                  </select>
             </td>
@@ -197,10 +208,13 @@
             </table>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a id="addpermissionSetbtn" class="btn btn-success" href="">Add permission</a>
+            <button class="btn" data-dismiss="modal" 
+					aria-hidden="true">Close</button>
+            <a id="addpermissionSetbtn" class="btn btn-success" 
+			   href="">Add permission</a>
         </div>
     </form>
     </div>
-   <script src="{{url_for('static', filename='js/userPermissions.js')}}"></script>
+   <script src="{{url_for('static', 
+				filename='js/userPermissions.js')}}"></script>
 {% endblock %}
