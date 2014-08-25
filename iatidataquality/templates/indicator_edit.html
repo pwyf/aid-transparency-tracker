@@ -16,22 +16,37 @@
     </thead>
     <tbody>
     <tr>
-	<td>Name:</td><td><input type="text" name="name" value="{{ indicator.name }}"/></td>
+	<td>Name:</td>
+	<td><input type="text" name="name" value="{{ indicator.name }}"/></td>
     </tr>
     <tr>
-    <td>Description:</td><td><input type="text" name="description" value="{{indicator.description}}"/></td>
+    <td>Description:</td>
+	<td>
+	  <input type="text" name="description" 
+			 value="{{indicator.description}}"/>
+	</td>
     </tr>
     <tr>
     <td>Parent indicator group:</td>
         <td><select name="indicatorgroup_id">
             {% for indicatorgroup in indicatorgroups %}
-            <option value="{{indicatorgroup.id}}" {% if indicator.indicatorgroupid==indicatorgroup.id%}selected {%endif%}>{{indicatorgroup.name}}</option>
+            <option value="{{indicatorgroup.id}}" 
+					{% if indicator.indicatorgroupid==indicatorgroup.id %}
+					selected 
+					{% endif %}
+					>{{indicatorgroup.name}}
+			</option>
             {% endfor %}
             </select>
         </td>
     </tr>
     <tr>
-        <td>Long description:</td><td><textarea name="longdescription">{{indicator.longdescription}}</textarea></td>
+        <td>Long description:</td>
+		<td>
+		  <textarea name="longdescription">
+			{{indicator.longdescription}}
+		  </textarea>
+		</td>
     </tr>
     <tr>
         <td>Indicator type:</td><td><input type="text" name="indicator_type" value="{{indicator.indicator_type}}" /></td>
