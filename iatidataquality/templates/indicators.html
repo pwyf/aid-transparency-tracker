@@ -9,12 +9,40 @@
     }
     </style>
     <div class="pull-right">
-    <p><a class="btn btn-success" href="{{url_for('indicatorgroups_edit', indicatorgroup=indicatorgroup.name)}}"><i class="icon-white icon-pencil"></i> <b>Edit Group</b></a>
-    <a class="btn btn-danger" href="{{url_for('indicatorgroups_delete', indicatorgroup=indicatorgroup.name)}}" data-confirm="Are you sure you want to delete indicator group {{indicatorgroup.name}}? This action will also delete all indicators associated with this group, and cannot be undone."><i class="icon-white icon-trash"></i> <b>Delete Group</b></a></p>
+    <p>
+	  <a class="btn btn-success" 
+		 href="{{url_for('indicatorgroups_edit', 
+			   indicatorgroup=indicatorgroup.name)}}">
+		<i class="icon-white icon-pencil"></i> <b>Edit Group</b></a>
 
-    <p><a class="btn btn-success" href="{{url_for('indicators_new', indicatorgroup=indicatorgroup.name)}}"><i class="icon-white icon-plus"></i> <b>New Indicator</b></a></p>
-    <p><a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', indicatorgroup=indicatorgroup.name)}}"><i class="icon-download"></i> <b>CSV of associated tests</b></a></p>
-    <p><a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', indicatorgroup=indicatorgroup.name, option="no")}}"><i class="icon-download"></i> <b>CSV of unassociated tests</b></a></p>
+      <a class="btn btn-danger" 
+		 href="{{url_for('indicatorgroups_delete', 
+			   indicatorgroup=indicatorgroup.name)}}" 
+		 data-confirm="Are you sure you want to delete indicator group 
+					   {{indicatorgroup.name}}? This action will also 
+					   delete all indicators associated with this group, 
+					   and cannot be undone.">
+		<i class="icon-white icon-trash"></i> <b>Delete Group</b></a>
+	</p>
+
+    <p>
+	  <a class="btn btn-success" href="{{url_for('indicators_new', 
+									   indicatorgroup=indicatorgroup.name)}}">
+		<i class="icon-white icon-plus"></i> <b>New Indicator</b></a>
+	</p>
+
+    <p>
+	  <a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', 
+									indicatorgroup=indicatorgroup.name)}}">
+		<i class="icon-download"></i> <b>CSV of associated tests</b></a>
+	</p>
+
+    <p>
+	  <a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', 
+									indicatorgroup=indicatorgroup.name, 
+									option="no")}}">
+		<i class="icon-download"></i> <b>CSV of unassociated tests</b></a>
+	</p>
     </div>
     {% endif %}
 	<h1>{{indicatorgroup.description}}</h1>
