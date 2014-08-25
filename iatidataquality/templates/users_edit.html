@@ -10,9 +10,14 @@
 {% block content %}
 
     <ul class="breadcrumb">
-    <li><a href="{{url_for('users')}}">Users</a> <span class="divider">/</span></li>
+
+    <li>
+	  <a href="{{url_for('users')}}">Users</a> 
+	  <span class="divider">/</span>
+	</li>
     <li class="active">{{user.username}}</li>
     </ul>
+
 	{% if user%}<h1>Edit user {{user.username}}</h1>
     {% else %}<h1>New user</h1>{%endif%}
     <form name="userupdate" method="post" action="">
