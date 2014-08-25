@@ -154,22 +154,32 @@
             {% endif %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
-            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">{{result["indicator"]["description"]}}</a>
-                <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+            <td><a href="#indicator{{result["indicator"]["id"]}}" 
+				   role="button" data-toggle="modal">
+				{{result["indicator"]["description"]}}
+			  </a>
+                <div id="indicator{{result["indicator"]["id"]}}" 
+					 class="modal hide fade" tabindex="-1" role="dialog" 
+					 aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                        <button type="button" class="close" 
+								data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="indicatorHeader">
+						  Indicator: {{result["indicator"]["description"]}}
+						</h3>
                     </div>
                     <div class="modal-body">
                         {{result.indicator.longdescription}}
                     </div>
                     <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <button class="btn" data-dismiss="modal" 
+								aria-hidden="true">Close</button>
                     </div>
                 </div>
             </td>
 	        <td>
-            {% if result.results_pct > 0 %}<span class="label label-success">IATI</span>{% else %}{% if surveydata %}                {% if (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class == 'success') or (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class == 'label-inverse') %}
+            {% if result.results_pct > 0 %}
+			<span class="label label-success">IATI</span>{% else %}{% if surveydata %}                {% if (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class == 'success') or (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class == 'label-inverse') %}
             <span class="label label-{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].format_class}}">{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].title}}</span>{% endif %}{% endif %}{% endif %}</td>
             <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
 
