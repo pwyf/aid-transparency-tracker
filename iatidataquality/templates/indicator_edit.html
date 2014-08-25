@@ -1,5 +1,12 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
-{% block title %}{% if indicator%}Edit{%else%}New{%endif%} Indicator {{indicator.name}} &raquo; Indicators{% endblock %}
+{% block title %}
+  {% if indicator %}
+    Edit
+  {% else %}
+    New
+  {% endif %} 
+  Indicator {{indicator.name}} &raquo; Indicators
+{% endblock %}
 {% block content %}
 	<h1>Indicator {{indicator.name}}</h1>
     <form name="indicatorupdate" method="post" action="">
