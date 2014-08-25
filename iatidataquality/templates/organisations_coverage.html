@@ -12,8 +12,15 @@
 
     {% if admin %}
 
-    <div class="pull-right"><a class="btn btn-success" href="{{url_for('organisation_new')}}"><i class="icon-plus icon-white"></i><b> New organisation</b></a></div>
+    <div class="pull-right">
+	  <a class="btn btn-success" href="{{url_for('organisation_new')}}">
+		<i class="icon-plus icon-white"></i>
+		<b> New organisation</b>
+	  </a>
+	</div>
+
     {% endif %}
+
 	<h1>Organisations &raquo; Coverage</h1>
     <p class="lead">This table shows the total value of expenditure and disbursements under transactions for current activities.</p>
     <div class="alert alert-info">
@@ -32,12 +39,14 @@
     </thead>
     <tbody>
 	{% for organisation in organisations %}
+
     <tr>
-	<td><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{ organisation.organisation_name }}</a></td>
-    <td>{% if coverage_data[organisation.id].found is not none %}{{coverage_data[organisation.id].found}}{% endif %}</td>
-    <td>{% if coverage_data[organisation.id].total is not none %}{{coverage_data[organisation.id].total}}{% endif %}</td>
-    <td>{% if coverage_data[organisation.id].found is not none %}{{coverage_data[organisation.id].pct}}{% endif %}</td>
+	  <td><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{ organisation.organisation_name }}</a></td>
+      <td>{% if coverage_data[organisation.id].found is not none %}{{coverage_data[organisation.id].found}}{% endif %}</td>
+      <td>{% if coverage_data[organisation.id].total is not none %}{{coverage_data[organisation.id].total}}{% endif %}</td>
+      <td>{% if coverage_data[organisation.id].found is not none %}{{coverage_data[organisation.id].pct}}{% endif %}</td>
     </tr>
+
 	{% endfor %}
     </tbody>
     </table>
