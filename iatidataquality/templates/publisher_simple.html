@@ -30,9 +30,15 @@
         <tbody>
         {% for test, result in results.items() %}
 
-        <tr id="tr{{result["test"]["id"]}}" class="group-{% if result["test"]["test_group"] %}{{result["test"]["test_group"]}}{% else %}unknown{%endif%}{% if result["condition"] %} condition-hidden alert{%endif%}">
+        <tr id="tr{{result["test"]["id"]}}" 
+			class="group-{% if result["test"]["test_group"] %}{{result["test"]["test_group"]}}{% else %}unknown{%endif%}{% if result["condition"] %} condition-hidden alert{%endif%}">
 
-        <td><a href="{{url_for('indicatortests', indicatorgroup='pwyf123', indicator=result["indicator"]["name"])}}">{{result["indicator"]["name"]}}</a></td>
+        <td>
+		  <a href="{{url_for('indicatortests', 
+					 indicatorgroup='pwyf123', 
+					 indicator=result["indicator"]["name"])}}">
+			{{result["indicator"]["name"]}}</a>
+		</td>
 
 	    <td><a href="{{url_for('tests', id=result["test"]["id"])}}">{{ result["test"]["description"] }}</a>{% if result["condition"] %} <i class="icon-info-sign" title="{{result["condition"]}}"></i>{%endif%}</td>
 
