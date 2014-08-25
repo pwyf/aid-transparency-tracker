@@ -32,12 +32,19 @@
     <tr><td>Organisations</td>
         <td>
         {% for organisation in organisations %}
-        <a href="{{url_for('organisations', organisation_code=organisation.Organisation.organisation_code)}}">{{organisation.Organisation.organisation_name}}</a> 
+        <a href="{{url_for('organisations', 
+			 organisation_code=organisation.Organisation.organisation_code)}}">
+		  {{organisation.Organisation.organisation_name}}</a> 
         {% endfor %}
         </td>
     {% endif %}
     <tr>
-    <td>Link</td><td><a href="http://iatiregistry.org/dataset/{{package.package_name}}">http://iatiregistry.org/dataset/{{ package.package_name }}</a></td>
+    <td>Link</td>
+	<td>
+	  <a href="http://iatiregistry.org/dataset/{{package.package_name}}">
+		http://iatiregistry.org/dataset/{{ package.package_name }}
+	  </a>
+	</td>
     </tr>
     </tbody>
     </table>
