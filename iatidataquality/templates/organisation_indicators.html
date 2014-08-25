@@ -66,17 +66,29 @@
     </div>
 
     <a id="iati"></a>
+
     <hr />
-        <fieldset>
-        <div class="pull-right">
-            <form action="" method="GET" id="aggregation_type_form" class="form-inline"><a href="{{url_for('organisation_publication_detail', organisation_code=organisation.organisation_code)}}" class="btn">Detail</a> 
-                <select name="aggregation_type" id="aggregation_type">
-                    {% for agt in all_aggregation_types %}
-                    <option value="{{agt.AggregationType.id}}"{% if agt.AggregationType.id==aggregation_type %} selected{%endif%}>{{agt.AggregationType.name}}</option>
-                    {% endfor %}
-                </select>
-            </form>
-        </div>
+    <fieldset>
+      <div class="pull-right">
+        <form action="" method="GET" id="aggregation_type_form" 
+			  class="form-inline">
+		  <a href="{{url_for('organisation_publication_detail', 
+				   organisation_code=organisation.organisation_code)}}" 
+			 class="btn">Detail
+		  </a> 
+          <select name="aggregation_type" id="aggregation_type">
+            {% for agt in all_aggregation_types %}
+            <option value="{{agt.AggregationType.id}}"
+					{% if agt.AggregationType.id==aggregation_type %} 
+					selected{% endif %}>
+			  {{agt.AggregationType.name}}
+			</option>
+            {% endfor %}
+          </select>
+        </form>
+
+      </div>
+
         <h3>Published to the IATI Registry</h3>
         
         <p class="lead">Information published to the IATI Registry can score up
