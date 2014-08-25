@@ -125,7 +125,15 @@
         {% if pp.Package.man_auto=='man' %}<a href="{{url_for('packages_edit', package_name=pp.Package.package_name)}}"><i class="icon-pencil"></i></a>{% endif %}
     </td>
     <td>
-        <a href="{{url_for('organisationpackage_delete', organisation_code=organisation.organisation_code, package_name=pp.Package.package_name, organisationpackage_id=pp.OrganisationPackage.id)}}" data-confirm="Are you sure you want to remove Package {{pp.Package.package_name}} from {{organisation.organisation_code}}? This action will not delete the package itself."><i class="icon-trash"></i></a>
+        <a href="{{url_for('organisationpackage_delete', 
+				 organisation_code=organisation.organisation_code, 
+				 package_name=pp.Package.package_name, 
+				 organisationpackage_id=pp.OrganisationPackage.id)}}" 
+		   data-confirm="Are you sure you want to remove 
+						 Package {{pp.Package.package_name}} from 
+						 {{organisation.organisation_code}}? 
+						 This action will not delete the package itself.">
+		  <i class="icon-trash"></i></a>
     </td>
     </tr>
     {% endfor %}
