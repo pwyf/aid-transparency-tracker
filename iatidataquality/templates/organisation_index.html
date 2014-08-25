@@ -87,7 +87,11 @@
 
         <div class="span6">
             <h3>Index scoring approach</h3>
-            <p>Information published in more accessible formats is scored more highly. IATI is the only international standard for publishing comprehensive, comparable, timely and accessible data, which are critical components of aid transparency.</p>
+            <p>Information published in more accessible formats is
+            scored more highly. IATI is the only international
+            standard for publishing comprehensive, comparable, timely
+            and accessible data, which are critical components of aid
+            transparency.</p>
         </div>
     </div>
 
@@ -95,6 +99,8 @@
 	  // sorry about global
 	  var organisation_code = "{{organisation.organisation_code}}";
 	</script>
-    <script src="{{url_for('static', filename='js/organisationIndex.js')}}"></script>
+
+    <script src="{{url_for('static', filename='js/organisationIndex.js')}}">
+	</script>
 
 {% endblock %}
