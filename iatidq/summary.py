@@ -24,19 +24,27 @@ COL_PACKAGE = 5
 class NoRelevantResults(Exception): pass
 
 def reform_dict(d):
-    def inner(k1):
-        matches_first = lambda i: i[0] == k1
-        return dict([ (k2, d[(k1, k2)]) for k2 in 
-                      map(lambda i: i[1], filter(matches_first, d.keys())) ])
+    """
+    Takes dictionary with keys of the form (hierarchy, test)
+    and returns a dict of dicts of the form
+      {hierarchy1: {test1: ..., test2: ...}, hierarchy2: ...}
+    """
 
-    return dict([ (k1, inner(k1))
-                   for k1 in set( k1 for k1, k2 in d.keys() ) ])
+    def inner(hier):
+        HIER = 0
+        TEST = 1
+        matches_first = lambda ht: ht[HIER] == hier
+        return dict([ (test, d[(hier, test)]) for test in 
+                      map(lambda ht: ht[TEST], filter(matches_first, d.keys())) ])
 
-def remove_empty_dicts(h):
+    return dict([ (hier, inner(hier))
+                   for hier in set( hier for hier, test in d.keys() ) ])
+
+def remove_empty_dicts(d):
     has_keys = lambda kvp: len(kvp[1])
     return dict([ 
-            (K, dict(filter(has_keys, V.items()))) 
-            for K, V in h.items() 
+            (hier, dict(filter(has_keys, test_data.items()))) 
+            for hier, test_data in d.items() 
             ])
 
 
