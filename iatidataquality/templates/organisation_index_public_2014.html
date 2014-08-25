@@ -35,18 +35,18 @@
     </div>
 
 
-        <a id="commitment"></a>
-        <hr />
-        <fieldset>
-        <h3>Commitment</h3>
-        <table class="table" id="results_commitment">
+    <a id="commitment"></a>
+    <hr />
+    <fieldset>
+      <h3>Commitment</h3>
+      <table class="table" id="results_commitment">
         <thead>
-        <th width="50%">Indicator</th>
-        <th width="25%">2013</th>
-        <th width="25%">2014</th>
+          <th width="50%">Indicator</th>
+          <th width="25%">2013</th>
+          <th width="25%">2014</th>
         </thead>
         <tbody>
-        {% for indicator, result in results.commitment.items() %}
+          {% for indicator, result in results.commitment.items() %}
 
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">
