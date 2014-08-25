@@ -1,7 +1,8 @@
 {% set active_page='sampling'%}{% extends "layout.html" %}
 {% block title %}Sampling{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#samples").tablesorter({ sortList: [[0,0]] });
