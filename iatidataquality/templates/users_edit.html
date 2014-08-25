@@ -20,6 +20,7 @@
 
 	{% if user%}<h1>Edit user {{user.username}}</h1>
     {% else %}<h1>New user</h1>{%endif%}
+
     <form name="userupdate" method="post" action="">
     <table class="table">
     <thead>
@@ -27,27 +28,28 @@
     </thead>
     <tbody>
     <tr>
-	<td>Username:</td><td><input type="text" name="username" value="{{ user.username }}"/></td>
+	  <td>Username:</td><td><input type="text" name="username" value="{{ user.username }}"/></td>
     </tr>
     <tr>
-	<td>Name:</td><td><input type="text" name="name" value="{{ user.name }}"/></td>
+	  <td>Name:</td><td><input type="text" name="name" value="{{ user.name }}"/></td>
     </tr>
     <tr>
-    <td>Email address:</td><td><input type="text" name="email_address" value="{{user.email_address}}" /></td>
+      <td>Email address:</td><td><input type="text" name="email_address" value="{{user.email_address}}" /></td>
     </tr>
     <tr>
-    <td>Organisation:</td><td><input type="text" name="organisation" value="{{user.organisation}}" /></td>
+      <td>Organisation:</td><td><input type="text" name="organisation" value="{{user.organisation}}" /></td>
     </tr>
     {% if not user %}
     <tr>
-    <td>Password:</td><td><input type="text" name="password" /></td>
+      <td>Password:</td><td><input type="text" name="password" /></td>
     </tr>
     {% endif %}
     <tr>
-    <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
+      <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
     </tr>
     </tbody>
     </table>
+
     </form>
     {% if user %}<a class="btn btn-success" href="#addPermission" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add permissions</b></a>
                  <a class="btn btn-success" href="#addPermissionsSet" role="button" data-toggle="modal"><i class="icon-white icon-th-large"></i> <b>Add set of permissions</b></a>
