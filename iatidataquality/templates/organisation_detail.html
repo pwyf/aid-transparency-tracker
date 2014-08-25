@@ -95,17 +95,27 @@
                         <p>Each indicator in the 2014 Index can comprise
 						   several tests, which are automatically run on 
 						  the data.</p>
+
                         {% if result.test.test_level == 3 %}
+
                         <p>This test is run on <b>organisation files</b>.</p>
+
                         {% elif result.test.test_level == 2 %}
+
                         <p>This test is run on <b>each package of data</b>.</p>
+
                         {% elif result.test.test_level == 1 %}
+
                         <p>This test is run for <b>each activity</b> 
 						  in your data.</p>
+
                         {% elif result.test.test_level == 0 %}
+
                         <p>This test is run for <b>each transaction</b> 
 						  in your data.</p>
+
                         {% endif %}
+
                         <p>The specific test expression is:</p>
                         <code>{{result.test.name}}</code>
                     </div>
