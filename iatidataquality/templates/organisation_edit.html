@@ -75,7 +75,12 @@
         <td>
             <select name="organisation_responded">
             {% for dr in donorresponses.items() %}
-            <option value="{{dr[0]}}" {% if dr[1].id==organisation.organisation_responded %}selected{% endif %}>{{dr[1].text|title}}</option>
+            <option value="{{dr[0]}}" 
+					{% if dr[1].id == organisation.organisation_responded %}
+					selected
+					{% endif %}>
+			  {{dr[1].text|title}}
+			</option>
             {% endfor %}
             </select>
         </td>
