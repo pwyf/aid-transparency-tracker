@@ -24,15 +24,19 @@
     <tbody>
     <tr>
         <td>Description</td>
-        <td><input type="text" value="{{pc.description}}" name="description" /></td>
+        <td><input type="text" value="{{pc.description}}" 
+				   name="description" /></td>
     </tr>
     <tr>
         <td>Organisation ID</td>
         <td>
         <select name="organisation_id">
         {% for organisation in organisations %}
-        <option value="{{organisation.id}}"{% if pc.organisation_id == organisation.id %} selected{%endif%}>{{organisation.organisation_name}}</option>
-        {%endfor%}
+        <option value="{{organisation.id}}"
+				{% if pc.organisation_id == organisation.id %}
+				selected
+				{% endif %}>{{organisation.organisation_name}}</option>
+        {% endfor %}
         </select>
         </td>
     </tr>
@@ -41,7 +45,10 @@
         <td>
         <select name="test_id">
         {% for test in tests %}
-        <option value="{{test.id}}"{% if pc.test_id == test.id %} selected{%endif%}>{{test.description}}</option>
+        <option value="{{test.id}}"
+				{% if pc.test_id == test.id %} selected{% endif %}>
+		  {{test.description}}
+		</option>
         {%endfor%}
         </select></td>
     </tr>
@@ -49,8 +56,8 @@
         <td>Operation</td>
         <td>
         <select name="operation">
-        <option value="1"{% if pc.operation == 1 %} selected{%endif%}>Show</option>
-        <option value="0"{% if pc.operation == 0 %} selected{%endif%}>Don't show</option>
+        <option value="1"{% if pc.operation == 1 %} selected{% endif %}>Show</option>
+        <option value="0"{% if pc.operation == 0 %} selected{% endif %}>Don't show</option>
         </select></td>
     </tr>
     <tr>
@@ -59,7 +66,8 @@
     </tr>
     <tr>
         <td>Condition value</td>
-        <td><input type="text" value="{{pc.condition_value}}" name="condition_value" /></td>
+        <td><input type="text" value="{{pc.condition_value}}" 
+				   name="condition_value" /></td>
     </tr>
     <tr>
         <td>File</td>
@@ -71,7 +79,8 @@
     </tr>
     <tr>
         <td>Active</td>
-        <td><input type="checkbox" value="1" name="active"{% if pc.active%} checked{%endif%} /></td>
+        <td><input type="checkbox" value="1" name="active"
+				   {% if pc.active%} checked{% endif %} /></td>
     </tr>
     <tr>
     <td colspan="2">

@@ -13,13 +13,19 @@
 	<td>Description</td><td>{{pc.description}}</td>
     </tr>    
     <tr>
-	<td>Organisation</td><td><a href="{{url_for('organisations', organisation_code=pc.organisation_code)}}">{{pc.organisation_name}}</a></td>
+	<td>Organisation</td>
+	<td><a href="{{url_for('organisations', 
+				 organisation_code=pc.organisation_code)}}">
+		{{pc.organisation_name}}</a>
+	</td>
     </tr>  
     <tr>
-	<td>Test</td><td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_name}}</a></td>
+	<td>Test</td>
+	<td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_name}}</a></td>
     </tr>  
     <tr>
-	<td>Operation</td><td>{% if pc.operation==0%}Hide{%else%}Display{%endif%}</td>
+	<td>Operation</td>
+	<td>{% if pc.operation==0%}Hide{%else%}Display{%endif%}</td>
     </tr>  
     <tr>
 	<td>Condition</td><td>{{pc.condition}}</td>
@@ -28,7 +34,11 @@
 	<td>Condition value</td><td>{{pc.condition_value}}</td>
     </tr>   
     <tr>
-	<td colspan="2"><a class="btn" href="{{url_for('organisation_conditions_editor', id=pc.id)}}">Edit</a></td>
+	<td colspan="2">
+	  <a class="btn" 
+		 href="{{url_for('organisation_conditions_editor', id=pc.id)}}">
+		Edit</a>
+	</td>
     </tr>
     </tbody>
     </table>
