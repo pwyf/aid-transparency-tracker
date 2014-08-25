@@ -81,7 +81,16 @@
     <tbody>
     {% for permission in permissions %}
     <tr id="permission{{permission.id}}">
-    <td>{{permission.permission_name}}</td><td>{{permission.permission_method}}</td><td>{{permission.permission_value}}</td><td><a href="" data-confirm="Are you sure you want to delete this permission?" data-permission-id="{{permission.id}}"><i class="icon-trash"></i></td></tr>
+    <td>{{permission.permission_name}}</td>
+	<td>{{permission.permission_method}}</td>
+	<td>{{permission.permission_value}}</td>
+	<td>
+	  <a href="" 
+		 data-confirm="Are you sure you want to delete this permission?" 
+		 data-permission-id="{{permission.id}}">
+		<i class="icon-trash"></i>
+	</td>
+	</tr>
     {% endfor %}
     </tbody>
     </table>
