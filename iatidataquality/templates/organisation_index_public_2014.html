@@ -120,16 +120,17 @@
 
     <a id="publication_organisation"></a>
     <hr />
-        <fieldset>
-        <h3>Publication &ndash; Organisation</h3>
-        <table class="table" id="results_publication">
+    <fieldset>
+      <h3>Publication &ndash; Organisation</h3>
+      <table class="table" id="results_publication">
         <thead>
-        <th width="20%">Subgroup</th>
-        <th width="30%">Indicator</th>
-        <th width="25%">2013</th>
-        <th width="25%">2014</th>
+          <th width="20%">Subgroup</th>
+          <th width="30%">Indicator</th>
+          <th width="25%">2013</th>
+          <th width="25%">2014</th>
         </thead>
         <tbody>
+
         {% for indicator, result in results.publication_organisation.items() %}
             <tr id="indicator-{{result["indicator"]["id"]}}">
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
