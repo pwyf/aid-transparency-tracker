@@ -305,10 +305,15 @@
 				   role="button" data-toggle="modal">
 				{{testdata["test"]["description"]}}
 			  </a>
-                <div id="test{{testdata["test"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="testHeader" aria-hidden="true">
+                <div id="test{{testdata["test"]["id"]}}" 
+					 class="modal hide fade" tabindex="-1" role="dialog" 
+					 aria-labelledby="testHeader" aria-hidden="true">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="testHeader">Test: {{testdata.test.description}}</h3>
+                        <button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">×</button>
+                        <h3 id="testHeader">
+						  Test: {{testdata.test.description}}
+						</h3>
                     </div>
                     <div class="modal-body">
                         <p>One or more tests are automatically run on the data collected for each indicator.</p>
