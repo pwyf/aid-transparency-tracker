@@ -57,8 +57,18 @@
     </form>
 
     {% if user %}
-	<a class="btn btn-success" href="#addPermission" role="button" data-toggle="modal"><i class="icon-white icon-plus"></i> <b>Add permissions</b></a>
-                 <a class="btn btn-success" href="#addPermissionsSet" role="button" data-toggle="modal"><i class="icon-white icon-th-large"></i> <b>Add set of permissions</b></a>
+	<a class="btn btn-success" href="#addPermission" role="button" 
+	   data-toggle="modal">
+	  <i class="icon-white icon-plus"></i> 
+	  <b>Add permissions</b>
+	</a>
+
+    <a class="btn btn-success" href="#addPermissionsSet" role="button" 
+	   data-toggle="modal">
+	  <i class="icon-white icon-th-large"></i> 
+	  <b>Add set of permissions</b>
+	</a>
+
     <h2>Permissions</h2>
     <table class="table" id="permissions">
     <thead>
