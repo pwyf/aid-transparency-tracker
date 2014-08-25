@@ -484,12 +484,15 @@
                     </div>
                 </div>
             </td>
-            <td><a href="#" class="showTests" id="showindicator-{{result.indicator.id}}"><i class="icon-chevron-down"></i></a></td>
+            <td><a href="#" class="showTests" 
+				   id="showindicator-{{result.indicator.id}}">
+				<i class="icon-chevron-down"></i></a></td>
             </tr>
             {% if result.results_pct > 0 %}
             <tr class="group-{{result["indicator"]["id"]}} hidden">
             <td colspan="5">
-            <p>This indicator was scored using the IATI data published by {{organisation.organisation_name}}.</p>
+            <p>This indicator was scored using the IATI data published by 
+			  {{organisation.organisation_name}}.</p>
             <table class="table">
             <thead>
             <th>Test name</th>
