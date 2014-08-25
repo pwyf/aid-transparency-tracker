@@ -460,10 +460,14 @@
                         <tbody>
                         {% if result.results_pct > 0 %}
                         <tr>
-                            <td>Data quality points</td><td>{{(result.results_pct*freq/2)|round}}</td><td></td>
+                            <td>Data quality points</td>
+							<td>{{(result.results_pct*freq/2)|round}}</td>
+							<td></td>
                         </tr>
                         <tr>
-                            <td>Publication format points</td><td>50.0</td><td></td>
+                            <td>Publication format points</td>
+							<td>50.0</td>
+							<td></td>
                         </tr>
                         <tr class="success">
                             <td><b>Total points for this indicator</b></td>
@@ -472,7 +476,9 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td>Publication format points</td><td>{{points}}</td><td></td>
+                            <td>Publication format points</td>
+							<td>{{points}}</td>
+							<td></td>
                         </tr>
                         <tr class="success">
                             <td><b>Total points for this indicator</b></td>
