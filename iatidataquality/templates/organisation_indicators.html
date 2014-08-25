@@ -140,27 +140,28 @@
             {% else %}
                 {% set points = ((result.results_pct/2.0)+50)|round(2) %}
             {% endif %}
+
             <tr id="indicator-{{result["indicator"]["id"]}}">
-            <td>{{result.indicator.indicator_category_name|title}}</td>
-            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
-            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">
-                {{result["indicator"]["indicator_order"]}}. {{result["indicator"]["description"]}}</a>
+              <td>{{result.indicator.indicator_category_name|title}}</td>
+              <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+              <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">
+                  {{result["indicator"]["indicator_order"]}}. {{result["indicator"]["description"]}}</a>
                 <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
-                    </div>
-                    <div class="modal-body">
-                        {{result.indicator.longdescription}}
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    </div>
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                  </div>
+                  <div class="modal-body">
+                    {{result.indicator.longdescription}}
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                  </div>
                 </div>
-            </td>
-	        <td></td>
-            <td class="pct muted">{{result.results_pct|round(2)}}</td>
-            <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
+              </td>
+	          <td></td>
+              <td class="pct muted">{{result.results_pct|round(2)}}</td>
+              <td><a href="#calculation{{result.indicator.id}}" role="button" data-toggle="modal">{{points}}</a>
 
                 <div id="calculation{{result.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -255,7 +256,7 @@
             {% endfor %}
         {% else %}
         <tr><td colspan="5"><b>No IATI data found.</b></td></tr>
-        {%endfor%}
+        {% endfor %}
         </tbody>
         </table>
         <div class="row">
@@ -400,7 +401,7 @@
             </td>
             </tr>
             {% endfor %}
-        {%endfor%}
+        {% endfor %}
         </tbody>
         </table>
         <div class="row">
