@@ -6,7 +6,9 @@
 
     <div class="pull-right">
         <a class="btn btn-success" 
-		   href="{{url_for('login', next='/organisations/' + organisation.organisation_code + '/publication')}}">
+		   href="{{url_for('login', 
+				 next='/organisations/' + organisation.organisation_code 
+				 + '/publication')}}">
 		  <i class="icon-lock icon-white"></i> 
 		  <b>Login &raquo; {{ organisation.organisation_name }}</b>
 		</a>
