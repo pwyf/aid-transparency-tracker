@@ -1,13 +1,16 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}Indicators{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
-    <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='js/deletePrompt.js')}}"></script>
     <script >
     $(function() {
     $("table#tests").tablesorter({ sortList: [[0,0]] });
     });
     </script>
+
 	<h1>Indicator {{indicator.description}} <code><a href="{{url_for('indicators', indicatorgroup=indicatorgroup.name)}}">{{indicatorgroup.name}}</a>/{{indicator.name}}</code></h1>
     <div class="pull-right">
     <p><a class="btn btn-success" href="{{url_for('indicators_edit', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}"><i class="icon-white icon-pencil"></i> <b>Edit Indicator</b></a>
