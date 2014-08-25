@@ -37,7 +37,8 @@
 	  <a href="{{url_for('users_edit', username=user.username)}}">
 		<i class="icon-pencil"></i>
 	  </a>
-	  <a href="{{url_for('users_delete', username=user.username)}}" data-confirm="Are you sure you want to delete user {{user.username}}?">
+	  <a href="{{url_for('users_delete', username=user.username)}}" 
+		 data-confirm="Are you sure you want to delete user {{user.username}}?">
 		<i class="icon-trash"></i>
 	  </a>
 	</td>
