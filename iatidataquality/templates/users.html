@@ -14,8 +14,12 @@
 	<h1>Users</h1>
 
     <div class="pull-right">
-    <a class="btn btn-success" href="{{url_for('users_edit')}}"><i class="icon-white icon-plus"></i> <b>New</b></a>
+      <a class="btn btn-success" href="{{url_for('users_edit')}}">
+		<i class="icon-white icon-plus"></i> 
+		<b>New</b>
+	  </a>
     </div>
+	
     <table class="table" id="users">
     <thead>
     <th>Username</th><th>Name</th><th>Email</th><th>Organisation</th><th></th>
