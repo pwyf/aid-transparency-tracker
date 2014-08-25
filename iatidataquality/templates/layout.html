@@ -100,19 +100,32 @@
                 </a>
                 <ul class="dropdown-menu">
                   {% if admin %}
+
                   <li{% if active_page == "organisations_coverage" %} class="active"{% endif %}><a href="{{url_for('organisations_coverage')}}">Organisations coverage</a></li>
+
                   <li{% if active_page == "import_tests" %} class="active"{% endif %}><a href="{{url_for('import_tests')}}">Import tests</a></li>
+
                   <li{% if active_page == "pc" %} class="active"{% endif %}><a href="{{url_for('organisation_conditions')}}">Organisation conditions</a></li>
+
                   <li{% if active_page == "import_conditions" %} class="active"{% endif %}><a href="{{url_for('import_organisation_conditions')}}">Import organisation conditions</a></li>
+
                   <li{% if active_page == "registry_refresh" %} class="active"{% endif %}><a href="{{url_for('registry_refresh')}}">Refresh from Registry</a></li>
+
                   <li{% if active_page == "registry_download" %} class="active"{% endif %}><a href="{{url_for('registry_download')}}">Run tests</a></li>
+
                   <li{% if active_page == "indicators" %} class="active"{% endif %}><a href="{{url_for('indicatorgroups')}}">Indicators</a></li>
+
                   <li{% if active_page == "packages" %} class="active"{% endif %}><a href="{{url_for('packages_manage')}}">Manage packages</a></li>
+
                   <li{% if active_page == "tests" %} class="active"{% endif %}><a href="{{url_for('tests')}}">Tests</a></li>
+
                   <li{% if active_page == "users" %} class="active"{% endif %}><a href="{{url_for('users')}}">Users</a></li>
+
                   <li{% if active_page == "sampling" %} class="active"{% endif %}><a href="{{url_for('sampling')}}">Sampling</a></li>
+
                   <li{% if active_page == "sampling_list" %} class="active"{% endif %}><a href="{{url_for('sampling_list')}}">List samples</a></li>
                   {% endif %}
+
                   <li><a href="{{url_for('logout')}}">Log out</a></li>
                 </ul>
               </li>
