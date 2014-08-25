@@ -34,8 +34,16 @@
 					   value="{{test.id}}"/>
 			  <a href="{{url_for('tests', id=test.id)}}">{{test.name}}</a>
 			</td>
-            <td><input type="hidden" name="pc[{{num}}{{loop.index}}][operation]" value="{{result.operation}}"/>{{result.operation}}</td>
-            <td><input type="hidden" name="pc[{{num}}{{loop.index}}][condition]" value="{{result.condition}}"/>{{result.condition}}</td>
+            <td><input type="hidden" 
+					   name="pc[{{num}}{{loop.index}}][operation]" 
+					   value="{{result.operation}}"/>
+			  {{result.operation}}
+			</td>
+            <td><input type="hidden" 
+					   name="pc[{{num}}{{loop.index}}][condition]" 
+					   value="{{result.condition}}"/>
+			  {{result.condition}}
+			</td>
             <td><input type="hidden" name="pc[{{num}}{{loop.index}}][condition_value]" value="{{result.condition_value}}"/>{{result.condition_value}}</td>
             <td><input type="hidden" name="pc[{{num}}{{loop.index}}][description]" value="{{result.description}}"/>{{result.description}}</td></tr>
             {% endfor%}
