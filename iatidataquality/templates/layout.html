@@ -65,6 +65,7 @@
                   <li ><a href="/plan/">Plan</a></li>
                 </ul>
               </li>
+
               <li{% if active_page == "index" %} class="active"{%endif%}><a href="{{url_for('home')}}">Home</a></li>
               <li{% if active_page == "organisations" %} class="active"{%endif%}><a href="{{url_for('organisations')}}">Organisations</a></li>
               <li{% if active_page == "indicators" %} class="active"{%endif%}><a href="{{url_for('indicatorgroups')}}">Indicators</a></li>
