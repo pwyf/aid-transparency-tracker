@@ -23,9 +23,22 @@
 		<tbody>
 		  {% for package in packages %}
 		  <tr>
-			<td><input type="hidden" name="package" value="{{package.package_name}}" /><a href="{{url_for('packages', package_name=package.package_name)}}">{{ package.package_name }}</a></td>
+			<td>
+			  <input type="hidden" name="package" 
+					 value="{{package.package_name}}" />
+			  <a href="{{url_for('packages', 
+					   package_name=package.package_name)}}">
+				{{ package.package_name }}</a>
+			</td>
 			<td>{{ package.package_title }}</td>
-			<td>{% if package.man_auto=='man' %}<a href="{{url_for('packages_edit', package_name=package.package_name)}}"><i class="icon-pencil"></i></a>{% endif %}</td>
+			<td>
+			  {% if package.man_auto=='man' %}
+			  <a href="{{url_for('packages_edit', 
+					   package_name=package.package_name)}}">
+				<i class="icon-pencil"></i>
+			  </a>
+			  {% endif %}
+			</td>
 		  </tr>
 		  {% endfor %}
 		</tbody>
