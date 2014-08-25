@@ -2,7 +2,8 @@
 {% block title %}{{p_group.title}} &raquo; Publishers{% endblock %}
 {% block content %}
 
-   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+   <script src="{{url_for('static', 
+				filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#packages").tablesorter({ sortList: [[0,0]] });
@@ -16,7 +17,9 @@
     <div class="pull-right testruns">
         <p><a id="showAllTests" class="btn" href="#">Show all tests</a></p>
     </div>
+
     <h3>Latest results </h3>
+
     <div class="clearer">&nbsp;</div>
         <fieldset><legend>Simple view</legend>
         <table class="table" id="results">
