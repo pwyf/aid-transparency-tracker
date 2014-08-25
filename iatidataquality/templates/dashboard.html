@@ -32,15 +32,20 @@
                 <h1>Organisations</h1>
                 <p class="lead">See data for individual organisations</p>
                 <p>
-                <a class="btn btn-primary" href="{{url_for('organisations')}}">Organisations »</a>
+                <a class="btn btn-primary" 
+				   href="{{url_for('organisations')}}">Organisations »</a>
                 </p>
             </div>
             <div class="span6">
                 <h1>Data verification</h1>
-                <p class="lead">Donors and independent reviewers can log in to check the data</p>
-                <form class="form-inline" action="{{url_for('login')}}" method="post">
-                <input name="username" type="text" class="input-small" placeholder="Username">
-                <input name="password" type="password" class="input-small" placeholder="Password">
+                <p class="lead">Donors and independent reviewers can
+                log in to check the data</p>
+                <form class="form-inline" 
+					  action="{{url_for('login')}}" method="post">
+                <input name="username" type="text" 
+					   class="input-small" placeholder="Username">
+                <input name="password" type="password" 
+					   class="input-small" placeholder="Password">
                 <button type="submit" class="btn">Sign in</button>
                 </form>
             </div>
