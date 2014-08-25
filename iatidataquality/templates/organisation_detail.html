@@ -1,5 +1,7 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
-{% block title %}{{organisation.organisation_name}} &raquo; Detail &raquo; Organisations{% endblock %}
+{% block title %}
+  {{organisation.organisation_name}} &raquo; Detail &raquo; Organisations
+{% endblock %}
 {% block content %}
 
     <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
