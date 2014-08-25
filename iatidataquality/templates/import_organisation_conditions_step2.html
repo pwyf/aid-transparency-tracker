@@ -49,12 +49,25 @@
 			  {{result.condition}}
 			</td>
 
-            <td><input type="hidden" name="pc[{{num}}{{loop.index}}][condition_value]" value="{{result.condition_value}}"/>{{result.condition_value}}</td>
-            <td><input type="hidden" name="pc[{{num}}{{loop.index}}][description]" value="{{result.description}}"/>{{result.description}}</td></tr>
+            <td><input type="hidden" 
+					   name="pc[{{num}}{{loop.index}}][condition_value]" 
+					   value="{{result.condition_value}}"/>
+			  {{result.condition_value}}
+			</td>
+
+            <td><input type="hidden" 
+					   name="pc[{{num}}{{loop.index}}][description]" 
+					   value="{{result.description}}"/>
+			  {{result.description}}
+			</td>
+			</tr>
             {% endfor%}
         {%endfor%}
     <tr>
-        <td colspan="7"><input type="submit" value="Add conditions" class="btn btn-success" /></td>
+        <td colspan="7">
+		  <input type="submit" value="Add conditions"
+				 class="btn btn-success" />
+		</td>
     </tr>
     </tbody>
     </table>
