@@ -9,9 +9,11 @@
   Organisations
 {% endblock %}
 {% block content %}
-    <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='js/deletePrompt.js')}}"></script>
 
-    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script src="{{url_for('static', 
+				 filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#organisationpackage").tablesorter({ sortList: [[0,0]] });
