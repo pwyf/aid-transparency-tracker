@@ -47,7 +47,9 @@
 	  </td>
 	  <td>{{pc.description}}</td>
 	  <td>
-		<a href="{{url_for('organisations', organisation_code=pc.organisation_code)}}">{{pc.organisation_name}}</a>
+		<a href="{{url_for('organisations', 
+				 organisation_code=pc.organisation_code)}}">
+		  {{pc.organisation_name}}</a>
 	  </td>
 	  <td>
 		<a href="{{url_for('tests', id=pc.test_id)}}">
