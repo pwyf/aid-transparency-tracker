@@ -1,7 +1,8 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
 {% block title %}Organisations &raquo; Coverage{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+   <script src="{{url_for('static', 
+				filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
     $("table#organisations").tablesorter({ sortList: [[0,0]] });
