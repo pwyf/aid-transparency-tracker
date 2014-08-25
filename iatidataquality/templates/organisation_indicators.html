@@ -99,38 +99,41 @@
 	  </p>
 
       {% if organisation.frequency == "less than quarterly" %}
-        <div class="alert alert-info">
-            <h3>Frequency of publication</h3>
-            <p class="lead">It looks like you publish less often than
-            quarterly, so the maximum you can score for IATI data is
-            75 points. The total points for the relevant indicators have been
-            adjusted accordingly.</p>
-        </div>
-        {% set freq=0.5 %}
-        {% elif organisation.frequency == "quarterly" %}
-        <div class="alert alert-info">
-            <h3>Frequency of publication</h3>
-            <p class="lead">It looks like you publish quarterly and not monthly,
-            so the maximum you can score for IATI data is 95 points. The total 
-            points for the relevant indicators have been adjusted 
-            accordingly.</p>
-        </div>
-        {% set freq=0.9 %}
-        {% else %}
-        {% set freq=1.0 %}
-        {% endif %}
-        <table class="table" id="results_iati">
+
+      <div class="alert alert-info">
+        <h3>Frequency of publication</h3>
+        <p class="lead">It looks like you publish less often than
+          quarterly, so the maximum you can score for IATI data is
+          75 points. The total points for the relevant indicators have been
+          adjusted accordingly.</p>
+      </div>
+
+      {% set freq=0.5 %}
+      {% elif organisation.frequency == "quarterly" %}
+      <div class="alert alert-info">
+        <h3>Frequency of publication</h3>
+        <p class="lead">It looks like you publish quarterly and not monthly,
+          so the maximum you can score for IATI data is 95 points. The total 
+          points for the relevant indicators have been adjusted 
+          accordingly.</p>
+      </div>
+      {% set freq=0.9 %}
+      {% else %}
+      {% set freq=1.0 %}
+      {% endif %}
+      <table class="table" id="results_iati">
         <thead>
-        <th>Category</th>
-        <th>Subgroup</th>
-        <th>Indicator</th>
-        <th><span class="th_test hidden">Test</span></th>
-        <th>% Passed</th>
-        <th>Points</th>
-        <th><span class="th_test hidden">Total results</span></th>
-        <th>Detail</th>
+          <th>Category</th>
+          <th>Subgroup</th>
+          <th>Indicator</th>
+          <th><span class="th_test hidden">Test</span></th>
+          <th>% Passed</th>
+          <th>Points</th>
+          <th><span class="th_test hidden">Total results</span></th>
+          <th>Detail</th>
         </thead>
         <tbody>
+
         {% for indicator, result in results.non_zero.items() %}
             {% if result.indicator.indicator_category_name == 'activity' %}
                 {% set points = ((result.results_pct*freq/2.0)+50)|round(2) %}
