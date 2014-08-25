@@ -53,16 +53,22 @@
 				   role="button" data-toggle="modal">
 				{{result["indicator"]["description"]}}
 			  </a>
-              <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
+              <div id="indicator{{result["indicator"]["id"]}}" 
+				   class="modal hide fade" tabindex="-1" role="dialog" 
+				   aria-labelledby="indicatorHeader" aria-hidden="true">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h3 id="indicatorHeader">Indicator: {{result["indicator"]["description"]}}</h3>
+                  <button type="button" class="close" data-dismiss="modal" 
+						  aria-hidden="true">×</button>
+                  <h3 id="indicatorHeader">
+					Indicator: {{result["indicator"]["description"]}}
+				  </h3>
                 </div>
                 <div class="modal-body">
                   {{result.indicator.longdescription}}
                     </div>
                 <div class="modal-footer">
-                  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                  <button class="btn" data-dismiss="modal" 
+						  aria-hidden="true">Close</button>
                 </div>
               </div>
             </td>
@@ -73,13 +79,13 @@
             No survey data yet.
             </td>
             {% endif %}
-            <td><a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down"></i></a></td>
+            <td><a href="#" class="showTests" 
+				   id="showindicator-{{result["indicator"]["id"]}}">
+				<i class="icon-chevron-down"></i></a></td>
             </tr>
-            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+            <tr id="tr-{{result["indicator"]["id"]}}-details" 
+				class="group-{{result["indicator"]["id"]}} hidden">
             <td colspan="4">
-            <!--
-            <a class="btn-small btn btn-primary pull-right"><i class="icon icon-white icon-list"></i> <b>Indicator history</b></a>
-            -->
             <h5>Evidence</h5>
 			{% if surveydata %}
             <p>{{surveydata[result.indicator.id].OrganisationSurveyData.published_source}}</p>
