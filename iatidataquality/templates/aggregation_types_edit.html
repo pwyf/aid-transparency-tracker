@@ -28,7 +28,11 @@
     <td>Test:</td>
 	<td><select name="test_id" disabled><option value=""></option>
 	{% for test in tests %}
-        <option value="{{test.id}}"{% if test.id==aggregationtype.test_id %} selected{%endif%}>{{test.id}}. {{test.description}}</option>{%endfor%}
+        <option value="{{test.id}}"
+          {% if test.id==aggregationtype.test_id %} 
+            selected
+          {% endif %}>{{test.id}}. {{test.description}}</option>
+    {% endfor %}
     </select></td>
     </tr>
     <tr>
