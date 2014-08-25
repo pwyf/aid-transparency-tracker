@@ -61,7 +61,15 @@
 	    <td>{{ it.Test.name }}</td>
         <td>{{ it.Test.description}}</td>
         <td>
-            <a href="{{url_for('indicatortests_delete', indicatorgroup=indicatorgroup.name, indicator=indicator.name, indicatortest=it.IndicatorTest.id)}}" data-confirm="Are you sure you want to remove Test {{it.Test.name}} from {{indicator.name}}? This action will not delete the test itself."><i class="icon-trash"></i></a>
+            <a href="{{url_for('indicatortests_delete', 
+					 indicatorgroup=indicatorgroup.name, 
+					 indicator=indicator.name, 
+					 indicatortest=it.IndicatorTest.id)}}" 
+			   data-confirm="Are you sure you want to remove 
+							 Test {{it.Test.name}} from {{indicator.name}}? 
+							 This action will not delete the test itself.">
+			  <i class="icon-trash"></i>
+			</a>
         </td>
         </tr>
 	    {% endfor %}
