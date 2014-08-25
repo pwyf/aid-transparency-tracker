@@ -87,36 +87,36 @@
 			  </td>
               {% else %}
 
-                <td>
-				  {{lastyearsdata[result.indicator.name].survey_ordinal_value}}% 
-				  <a href="#" class="showTests" 
-					 id="showindicator-{{result["indicator"]["id"]}}">
-					<i class="icon-chevron-down align-right"></i></a>
-				</td>
+              <td>
+				{{lastyearsdata[result.indicator.name].survey_ordinal_value}}% 
+				<a href="#" class="showTests" 
+				   id="showindicator-{{result["indicator"]["id"]}}">
+				  <i class="icon-chevron-down align-right"></i></a>
+			  </td>
 
-                <td>
-				  <span class="label label-default">No survey data 
-					yet.</span>
-				</td>
+              <td>
+				<span class="label label-default">No survey data 
+				  yet.</span>
+			  </td>
 
             </tr>
 
-                <tr id="tr-{{result["indicator"]["id"]}}-details" 
-					class="group-{{result["indicator"]["id"]}} hidden">
+            <tr id="tr-{{result["indicator"]["id"]}}-details" 
+				class="group-{{result["indicator"]["id"]}} hidden">
 
-                <td colspan="3">
+              <td colspan="3">
                 <h5>Evidence</h5>
 			    <p>{{lastyearsdata[result.indicator.name].survey_source}}</p>
                 <h5>Comments</h5>
 			    <p>{{lastyearsdata[result.indicator.name].survey_comment}}</p>
-                </td>
-            {% endif %}
+              </td>
+              {% endif %}
             </tr>
-        {% endfor %}
+			{% endfor %}
         </tbody>
-        </table>
-        </fieldset>
-
+      </table>
+    </fieldset>
+	
 
     <a id="publication_organisation"></a>
     <hr />
