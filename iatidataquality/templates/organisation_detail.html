@@ -83,12 +83,23 @@
         {% for test, result in values.items() %}
           {% if result and result.test %}
           <tr id="tr{{result.test.id}}h{{h}}" 
-			  class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{%endif%}{% if result.condition %} condition-hidden alert{%endif%}">
-			<td><a href="#test{{result.test.id}}" role="button" data-toggle="modal">{{result.test.description}}</a>
-                <div id="test{{result.test.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="testHeader" aria-hidden="true">
+			  class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{% endif %}{% if result.condition %} condition-hidden alert{% endif %}">
+
+			<td><a href="#test{{result.test.id}}" role="button" 
+				   data-toggle="modal">{{result.test.description}}</a>
+
+                <div id="test{{result.test.id}}" class="modal hide fade" 
+					 tabindex="-1" role="dialog" aria-labelledby="testHeader"
+					 aria-hidden="true">
+
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="testHeader">Test: {{result.test.description}}</h3>
+                        <button type="button" class="close" 
+								data-dismiss="modal" 
+								aria-hidden="true">×</button>
+
+                        <h3 id="testHeader">
+						  Test: {{result.test.description}}
+						</h3>
                     </div>
 
                     <div class="modal-body">
