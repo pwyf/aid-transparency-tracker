@@ -31,7 +31,7 @@
         {% for test, result in results.items() %}
 
         <tr id="tr{{result["test"]["id"]}}" 
-			class="group-{% if result["test"]["test_group"] %}{{result["test"]["test_group"]}}{% else %}unknown{%endif%}{% if result["condition"] %} condition-hidden alert{%endif%}">
+			class="group-{% if result["test"]["test_group"] %}{{result["test"]["test_group"]}}{% else %}unknown{% endif %}{% if result["condition"] %} condition-hidden alert{% endif %}">
 
         <td>
 		  <a href="{{url_for('indicatortests', 
@@ -42,7 +42,12 @@
 
 	    <td>
 		  <a href="{{url_for('tests', id=result["test"]["id"])}}">
-			{{ result["test"]["description"] }}</a>{% if result["condition"] %} <i class="icon-info-sign" title="{{result["condition"]}}"></i>{%endif%}</td>
+			{{ result["test"]["description"] }}
+		  </a>
+		  {% if result["condition"] %} 
+		  <i class="icon-info-sign" title="{{result["condition"]}}"></i>
+		  {% endif %}
+		</td>
 
         <td class="pct">{{result.results_pct|round|int}}</td>
 
