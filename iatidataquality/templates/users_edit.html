@@ -28,16 +28,20 @@
     </thead>
     <tbody>
     <tr>
-	  <td>Username:</td><td><input type="text" name="username" value="{{ user.username }}"/></td>
+	  <td>Username:</td><td><input type="text" name="username" 
+								   value="{{ user.username }}"/></td>
     </tr>
     <tr>
-	  <td>Name:</td><td><input type="text" name="name" value="{{ user.name }}"/></td>
+	  <td>Name:</td><td><input type="text" name="name" 
+							   value="{{ user.name }}"/></td>
     </tr>
     <tr>
-      <td>Email address:</td><td><input type="text" name="email_address" value="{{user.email_address}}" /></td>
+      <td>Email address:</td><td><input type="text" name="email_address" 
+										value="{{user.email_address}}" /></td>
     </tr>
     <tr>
-      <td>Organisation:</td><td><input type="text" name="organisation" value="{{user.organisation}}" /></td>
+      <td>Organisation:</td><td><input type="text" name="organisation" 
+									   value="{{user.organisation}}" /></td>
     </tr>
     {% if not user %}
     <tr>
