@@ -1,13 +1,16 @@
 {% set active_page='registry'%}{% extends "layout.html" %}
 {% block title %}Manage Packages{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+   <script src="{{url_for('static',
+				filename='jquery.tablesorter.min.js')}}"></script>
     <script >
+
     $(function() {
     $("table#packages").tablesorter({ sortList: [[0,0]] });
     });
 
     </script>
+
     <form action="" method="post">
     <div class="pull-right">
     <input type="submit" name="refresh" class="btn btn-mini" value="Refresh list from Registry"/> <a class="btn btn-mini" href="{{url_for('registry_deleted')}}">Check deleted packages</a></p>
