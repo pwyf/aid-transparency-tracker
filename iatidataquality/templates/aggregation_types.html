@@ -26,11 +26,14 @@
     </td>
     <td>{{aggregationtype.AggregationType.description}}</td>
     <td>
-	  <a href="{{url_for('tests', id=aggregationtype.Test.id)}}">{{aggregationtype.Test.description}}</a>
+	  <a href="{{url_for('tests', 
+	     id=aggregationtype.Test.id)}}">{{aggregationtype.Test.description}}</a>
 	</td>
     <td>{{aggregationtype.AggregationType.test_result}}</td>
     <td>
-	  <a href="{{url_for('aggregationtypes_edit', aggregationtype_id=aggregationtype.AggregationType.id)}}"><i class="icon-pencil"></i></a>
+	  <a href="{{url_for('aggregationtypes_edit', 
+			   aggregationtype_id=aggregationtype.AggregationType.id)}}">
+		<i class="icon-pencil"></i></a>
 	</td>
     </tr>
 	{% endfor %}
