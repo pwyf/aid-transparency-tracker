@@ -89,14 +89,16 @@
 
       </div>
 
-        <h3>Published to the IATI Registry</h3>
+      <h3>Published to the IATI Registry</h3>
         
-        <p class="lead">Information published to the IATI Registry can score up
-        to 100 points based on the quality and frequency of publication. This is determined by running a
-		  series of tests on the data. You can see more details
-		  by clicking on the <i class="icon icon-chevron-down"></i> icon.</p>
+      <p class="lead">Information published to the IATI Registry can
+        score up to 100 points based on the quality and frequency of
+        publication. This is determined by running a series of tests
+        on the data. You can see more details by clicking on
+        the <i class="icon icon-chevron-down"></i> icon.
+	  </p>
 
-        {% if organisation.frequency == "less than quarterly" %}
+      {% if organisation.frequency == "less than quarterly" %}
         <div class="alert alert-info">
             <h3>Frequency of publication</h3>
             <p class="lead">It looks like you publish less often than
