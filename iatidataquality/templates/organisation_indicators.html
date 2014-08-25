@@ -2,7 +2,10 @@
 {% block title %}{{organisation.organisation_name}} &raquo; Organisations{% endblock %}
 {% block content %}
 
-    <h1><a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
+    <h1><a href="{{url_for('organisations', 
+				 organisation_code=organisation.organisation_code)}}">
+		{{organisation.organisation_name}}</a>
+	</h1>
 
     {% if results %}
 
