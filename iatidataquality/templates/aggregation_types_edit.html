@@ -21,7 +21,9 @@
     <tbody>
     <tr>
 	<td>Name:</td>
-	<td><input type="text" name="name" value="{{ aggregationtype.name }}"/></td>
+	<td>
+      <input type="text" name="name" value="{{ aggregationtype.name }}"/>
+    </td>
     </tr>
     <tr>
     <td>Description:</td>
@@ -43,9 +45,15 @@
     </select></td>
     </tr>
     <tr>
-    <td>Expected result:</td><td><select name="test_result" disabled>
-        <option value="0"{% if aggregationtype.test_result==0 %} selected{% endif %}>0</option>
-        <option value="1"{% if aggregationtype.test_result==1 %} selected{% endif %}>1</option>
+    <td>Expected result:</td><td>
+    <select name="test_result" disabled>
+        <option value="0" 
+		{% if aggregationtype.test_result==0 %} selected{% endif %}
+				>0</option>
+
+        <option value="1"
+		{% if aggregationtype.test_result==1 %} selected{% endif %}
+				>1</option>
     </select></td>
     </tr>
     <tr>
