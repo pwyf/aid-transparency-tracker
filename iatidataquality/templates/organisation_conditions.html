@@ -28,7 +28,14 @@
 	  <b>Import feedback</b>
 	</button>
 
-    <a class="btn btn-danger" data-confirm="Are you sure you want to clear all remaining publisher feedback? This will not remove any feedback that has already been imported. This action cannot be undone." href="{{url_for('organisationfeedback_clear')}}"><i class="icon icon-trash icon-white"></i> <b>Clear feedback</b></a>
+    <a class="btn btn-danger" 
+	   data-confirm="Are you sure you want to clear all remaining
+	   publisher feedback? This will not remove any feedback that has
+	   already been imported. This action cannot be undone."
+	   href="{{url_for('organisationfeedback_clear')}}">
+	  <i class="icon icon-trash icon-white"></i> 
+	  <b>Clear feedback</b>
+	</a>
     </form>
     {% endif %}
 
