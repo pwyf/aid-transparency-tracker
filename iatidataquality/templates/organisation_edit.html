@@ -165,22 +165,33 @@
             <select name="packagegroup">
             <option value="" selected></option>
             {% for packagegroup in packagegroups %}
-                <option value="{{packagegroup.id}}"> {{packagegroup.name}}</option>
+                <option value="{{packagegroup.id}}"> 
+				  {{packagegroup.name}}</option>
             {%endfor%}
             </select>
             </td>
         </tr>
         <tr>
-            <td>Condition (optional, must be unicode): </td><td><input type="text" name="condition" /></td>
+            <td>Condition (optional, must be unicode): </td>
+			<td><input type="text" name="condition" /></td>
         </tr>
         <tr>
-            <td colspan="2"><label for="applyfuture"><input type="checkbox" name="applyfuture" id="applyfuture"/> Also apply to new packages in this package group</label></td>
+            <td colspan="2">
+			  <label for="applyfuture">
+				<input type="checkbox" name="applyfuture" id="applyfuture"/>
+				Also apply to new packages in this package group
+			  </label>
+			</td>
         </tbody>
         </table>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <input type="submit" value="Add all packages in this package group to this organisation" name="addpackagegroup" class="btn btn-success" />
+            <button class="btn" data-dismiss="modal" 
+					aria-hidden="true">Close</button>
+            <input type="submit" 
+				   value="Add all packages in this package group to this 
+						  organisation" name="addpackagegroup" 
+				   class="btn btn-success" />
         </div>
     </form>
     </div>
