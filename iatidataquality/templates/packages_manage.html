@@ -58,21 +58,47 @@
 
     <tbody>
 	{% for pk in pkgs %}
-    <tr{% if pk.deleted %} class="muted"{%endif%}>
-	<td><input type="hidden" name="package" value="{{pk.package_name}}" /><a href="{{url_for('packages', id=pk.package_name)}}">{{ pk.package_name }}</a></td>
-    <td>{{ pk.package_title }}</td>
-    <td>{% if pk.man_auto=='man' %}<a href="{{url_for('packages_edit', package_name=pk.package_name)}}"><i class="icon-pencil"></i> Manual</a>{% endif %}</td>
-    <td><input type="checkbox" {% if pk.active %}checked{%endif%} name="active_{{pk.package_name}}"/> <span>{% if pk.active %}Active{%endif%}</span></td>
-    <td>{% if pk.deleted %}
-        <i class="icon icon-remove" title="This package has been deleted"></i><span class="hidden-text">Deleted</span>
-        {% endif %}
-    </td>
-    </tr>
-	{% endfor %}
+
+      <tr{% if pk.deleted %} class="muted"{% endif %}>
+		<td>
+		  <input type="hidden" name="package" value="{{pk.package_name}}" />
+		  <a href="{{url_for('packages', id=pk.package_name)}}">
+			{{ pk.package_name }}
+		  </a>
+		</td>
+
+		<td>{{ pk.package_title }}</td>
+
+		<td>
+		  {% if pk.man_auto=='man' %}
+		  <a href="{{url_for('packages_edit', package_name=pk.package_name)}}">
+			<i class="icon-pencil"></i> Manual
+		  </a>
+		  {% endif %}
+		</td>
+
+		<td>
+		  <input type="checkbox" {% if pk.active %}checked{% endif %} 
+				 name="active_{{pk.package_name}}"/> 
+		  <span>{% if pk.active %}Active{% endif %}</span>
+		</td>
+
+		<td>
+		  {% if pk.deleted %}
+          <i class="icon icon-remove" title="This package has been deleted"></i>
+		  <span class="hidden-text">Deleted</span>
+          {% endif %}
+		</td>
+      </tr>
+	  {% endfor %}
     </tbody>
+
     </table>
-    <input class="btn btn-success" type="submit" value="Activate selected packages" />
-    </form> 
+
+  <input class="btn btn-success" type="submit" 
+		 value="Activate selected packages" />
+</form> 
     
 <script src="{{url_for('static', filename='js/managePackages.js')}}"></script>
+
 {% endblock %}
