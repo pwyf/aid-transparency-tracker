@@ -1,5 +1,7 @@
 {% set active_page='pc'%}{% extends "layout.html" %}
-{% block title %}{%if pc.id%}{{pc.id}}{%else%}New{%endif%} &raquo; Organisation Conditions{% endblock %}
+{% block title %}
+  {% if pc.id %}{{pc.id}}{% else %}New{% endif %} &raquo; Organisation Conditions
+{% endblock %}
 {% block content %}
     <form action="" method="post">
     <h1>{% if pc.id %}Edit organisation condition {{pc.id}}{% else %}Create a new organisation condition{%endif%}</h1>
