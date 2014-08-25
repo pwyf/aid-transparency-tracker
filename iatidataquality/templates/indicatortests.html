@@ -11,7 +11,13 @@
     });
     </script>
 
-	<h1>Indicator {{indicator.description}} <code><a href="{{url_for('indicators', indicatorgroup=indicatorgroup.name)}}">{{indicatorgroup.name}}</a>/{{indicator.name}}</code></h1>
+	<h1>Indicator {{indicator.description}} 
+	  <code>
+		<a href="{{url_for('indicators', indicatorgroup=indicatorgroup.name)}}">
+		  {{indicatorgroup.name}}
+		</a>/{{indicator.name}}</code>
+	</h1>
+
     <div class="pull-right">
     <p><a class="btn btn-success" href="{{url_for('indicators_edit', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}"><i class="icon-white icon-pencil"></i> <b>Edit Indicator</b></a>
     <a class="btn btn-danger" href="{{url_for('indicators_delete', indicatorgroup=indicatorgroup.name, indicator=indicator.name)}}" data-confirm="Are you sure you want to delete indicator {{indicator.name}}? This action cannot be undone."><i class="icon-white icon-trash"></i> <b>Delete Indicator</b></a></p>
