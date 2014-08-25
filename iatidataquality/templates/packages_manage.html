@@ -47,14 +47,15 @@
 	<a id="unmarkall" class="btn pull-right btn-mini">Mark all inactive</a>
   </p>
 
-    <table class="table" id="packages">
+  <table class="table" id="packages">
     <thead>
-    <th>Registry ID</th>
-    <th>Name</th>
-    <th>Type</th>
-    <th>Active</th>
-    <th></th>
+      <th>Registry ID</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Active</th>
+      <th></th>
     </thead>
+
     <tbody>
 	{% for pk in pkgs %}
     <tr{% if pk.deleted %} class="muted"{%endif%}>
