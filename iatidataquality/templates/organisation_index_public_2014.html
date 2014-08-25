@@ -78,9 +78,14 @@
             </td>
 
             {% if lastyearsdata[result.indicator.name].result == '' %}
-                <td><span class="label label-default">Not in 2013 Index</span></td>
-                <td><span class="label label-default">No survey data yet.</span></td>
-                </tr>
+                <td>
+				  <span class="label label-default">Not in 2013 Index</span>
+				</td>
+                <td>
+				  <span class="label label-default">No survey data 
+					yet.</span>
+				</td>
+            </tr>
             {% else %}
 
                 <td>{{lastyearsdata[result.indicator.name].survey_ordinal_value}}% <a href="#" class="showTests" id="showindicator-{{result["indicator"]["id"]}}"><i class="icon-chevron-down align-right"></i></a></td>
