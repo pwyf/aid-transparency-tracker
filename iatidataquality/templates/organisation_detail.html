@@ -107,7 +107,11 @@
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                     </div>
-                </div>{% if result.condition %} <i class="icon-info-sign" title="{{result.condition[1]}}"></i>{%endif%}</td>
+                </div>
+				{% if result.condition %} 
+				<i class="icon-info-sign" title="{{result.condition[1]}}"></i>
+				{% endif %}
+			</td>
         <td class="pct">{{result.results_pct|round|int}}</td>
         <td>{{result.results_num}}</td>
         <td>
