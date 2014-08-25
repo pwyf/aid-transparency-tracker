@@ -13,7 +13,15 @@
 	<h1>Indicator Groups</h1>
     <div class="pull-right">
 
-      <a class="btn btn-success" href="{{url_for('indicators_import')}}"><i class="icon-white icon-plus"></i> <b>Import</b></a> <a class="btn btn-success" href="{{url_for('indicatorgroups_new')}}"><i class="icon-white icon-plus"></i> <b>New</b></a>
+      <a class="btn btn-success" href="{{url_for('indicators_import')}}">
+		<i class="icon-white icon-plus"></i> 
+		<b>Import</b>
+	  </a> 
+
+	  <a class="btn btn-success" href="{{url_for('indicatorgroups_new')}}">
+		<i class="icon-white icon-plus"></i> 
+		<b>New</b>
+	  </a>
 
     </div>
     <table class="table" id="tests">
@@ -24,12 +32,24 @@
 	{% for indicatorgroup in indicatorgroups %}
     <tr>
 	<td>
-        <a href="{{url_for('indicators', indicatorgroup=indicatorgroup.name)}}">{{ indicatorgroup.name }}</a>
+        <a href="{{url_for('indicators', 
+				 indicatorgroup=indicatorgroup.name)}}">
+		  {{ indicatorgroup.name }}
+		</a>
     </td>
     <td>{{indicatorgroup.description}}</td>
     <td>
-        <a href="{{url_for('indicatorgroups_edit', indicatorgroup=indicatorgroup.name)}}"><i class="icon-pencil"></i></a> 
-        <a href="{{url_for('indicatorgroups_delete', indicatorgroup=indicatorgroup.name)}}" data-confirm="Are you sure you want to delete indicator group {{indicatorgroup.name}}? This action will also delete all indicators associated with this group, and cannot be undone."><i class="icon-trash"></i></a>
+        <a href="{{url_for('indicatorgroups_edit', 
+				 indicatorgroup=indicatorgroup.name)}}">
+		  <i class="icon-pencil"></i>
+		</a> 
+        <a href="{{url_for('indicatorgroups_delete', 
+				 indicatorgroup=indicatorgroup.name)}}" 
+		   data-confirm="Are you sure you want to delete indicator group 
+						 {{indicatorgroup.name}}? This action will also 
+						 delete all indicators associated with this group, 
+						 and cannot be undone.">
+		  <i class="icon-trash"></i></a>
     </td>
     </tr>
 	{% endfor %}
