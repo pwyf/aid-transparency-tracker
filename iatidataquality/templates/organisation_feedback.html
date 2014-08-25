@@ -1,6 +1,10 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
-{% block title %}Publication structure &raquo; {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+{% block title %}
+  Publication structure &raquo; 
+  {{organisation.organisation_name}} &raquo; Organisations
+{% endblock %}
 {% block content %}
+
 	<h1>Organisation: <a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a> <code>{{organisation.organisation_code}}</code></h1>
     <h3>Tell us how you structure your data</h3>
     <p >IATI allows organisations to structure their data according to their own business model. We know that different organisations have used this feature to place different information in different places - for example, project documents only at "program" level (<code>hierarchy 1</code>) and transactions only at "project" level (<code>hierarchy 2</code>).</p>
