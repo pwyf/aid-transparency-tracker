@@ -27,6 +27,7 @@
     <a href="{{url_for('import_organisation_conditions')}}" class="btn">Import data</a>
     <a href="{{url_for('export_organisation_conditions')}}" class="btn">Export data</a>
     </div>
+
     <table class="table" id="pcs">
     <thead>
       <th>ID</th>
@@ -35,10 +36,20 @@
       <th>Test</th>
       <th></th>
     </thead>
+
     <tbody>
     {% for pc in pcs %}
     <tr>
-	<td><a href="{{url_for('organisation_conditions', id=pc.id)}}">{{ pc.id }}</a></td><td>{{pc.description}}</td><td><a href="{{url_for('organisations', organisation_code=pc.organisation_code)}}">{{pc.organisation_name}}</td><td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_description}}</a></td>
+	  <td>
+		<a href="{{url_for('organisation_conditions', id=pc.id)}}">
+		  {{ pc.id }}
+		</a>
+	  </td>
+	  <td>{{pc.description}}</td>
+	  <td>
+		<a href="{{url_for('organisations', organisation_code=pc.organisation_code)}}">{{pc.organisation_name}}</a>
+	  </td>
+	  <td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_description}}</a></td>
     <td>
     <a data-confirm="Are you sure you want to delete this organisation condition? This action cannot be undone." href="{{url_for('organisation_condition_delete', id=pc.id)}}"><i class="icon icon-trash"></i></a>
     </td>
