@@ -1,5 +1,7 @@
 {% set active_page='tests'%}{% extends "layout.html" %}
-{% block title %}{%if test.id%}{{test.id}}{%else%}New{%endif%} &raquo; Tests{% endblock %}
+{% block title %}
+  {% if test.id %}{{test.id}}{% else %}New{% endif %} &raquo; Tests
+{% endblock %}
 {% block content %}
     <form action="" method="post">
     <h1>{%if test.id%}Edit test {{test.id}}{%else%}New test{%endif%}</h1>
@@ -15,19 +17,23 @@
     </tr>
     <tr>
         <td>Description</td>
-        <td><input type="text" value="{{test.description}}" name="description" /></td>
+        <td><input type="text" value="{{test.description}}" 
+				   name="description" /></td>
     </tr>
     <tr>
         <td>Level</td>
-        <td><input type="text" value="{{test.test_level}}" name="test_level" /></td>
+        <td><input type="text" value="{{test.test_level}}" 
+				   name="test_level" /></td>
     </tr>
     <tr>
         <td>Active</td>
-        <td><input type="checkbox" name="active" value="1"{% if (test.active==1) %} checked{%endif%} /></td>
+        <td><input type="checkbox" name="active" 
+				   value="1"{% if (test.active==1) %} checked{%endif%} /></td>
     </tr>
     <tr>
         <td>Group</td>
-        <td><input type="text" value="{{test.test_group}}" name="test_group" /></td>
+        <td><input type="text" value="{{test.test_group}}" 
+				   name="test_group" /></td>
     </tr>
     <tr>
     <td colspan="2">
