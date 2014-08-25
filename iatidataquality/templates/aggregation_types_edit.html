@@ -13,10 +13,16 @@
     </thead>
     <tbody>
     <tr>
-	<td>Name:</td><td><input type="text" name="name" value="{{ aggregationtype.name }}"/></td>
+	<td>Name:</td>
+	<td><input type="text" name="name" value="{{ aggregationtype.name }}"/></td>
     </tr>
     <tr>
-    <td>Description:</td><td><textarea name="description">{{aggregationtype.description}}</textarea></td>
+    <td>Description:</td>
+	<td>
+	  <textarea name="description">
+		{{aggregationtype.description}}
+	  </textarea>
+	</td>
     </tr>
     <tr>
     <td>Test:</td><td><select name="test_id" disabled><option value=""></option>{%for test in tests%}
