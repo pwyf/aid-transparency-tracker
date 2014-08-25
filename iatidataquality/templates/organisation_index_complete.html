@@ -522,7 +522,11 @@
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                     </div>
-                </div>{% if testdata["condition"] %} <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>{%endif%}</td>
+                </div>
+				{% if testdata["condition"] %} 
+				<i class="icon-info-sign" title="{{testdata["condition"]}}"></i>
+				{% endif %}
+			</td>
             <td class="pct">{{testdata.results_pct|round|int}}</td>
             <td>{{testdata["results_num"]|round|int}}</td>
             </tr>
@@ -533,7 +537,8 @@
             </tr>
             {% else %}
 
-            <tr id="tr-{{result["indicator"]["id"]}}-details" class="group-{{result["indicator"]["id"]}} hidden">
+            <tr id="tr-{{result["indicator"]["id"]}}-details" 
+				class="group-{{result["indicator"]["id"]}} hidden">
             <td colspan="5">
             <h5>Evidence</h5>
             <p>
