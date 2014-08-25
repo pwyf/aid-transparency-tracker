@@ -73,20 +73,25 @@
         </td>
         </tr>
 	    {% endfor %}
-    {%endif%}
+    {% endif %}
     </tbody>
     </table>
 
-<div id="addTests" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="addTestsModalLabel" aria-hidden="true"> 
+<div id="addTests" class="modal hide fade" tabindex="-1" role="dialog" 
+	 aria-labelledby="addTestsModalLabel" aria-hidden="true"> 
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <button type="button" class="close" data-dismiss="modal" 
+				aria-hidden="true">×</button>
         <form method="post" action="">
         <h3 id="addTestsModalLabel">Add Tests</h3>
     </div>
     <div class="modal-body">
     {% for test in alltests %}
-        <label for="test_{{test.id}}"><input type="checkbox" value="{{test.id}}" id="test_{{test.id}}" name="test" /> {{test.name}}</label>
-    {%endfor%}
+        <label for="test_{{test.id}}">
+		  <input type="checkbox" value="{{test.id}}" id="test_{{test.id}}" 
+				 name="test" /> {{test.name}}
+		</label>
+    {% endfor %}
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
