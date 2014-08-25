@@ -85,6 +85,7 @@
         <form method="post" action="">
         <h3 id="addTestsModalLabel">Add Tests</h3>
     </div>
+
     <div class="modal-body">
     {% for test in alltests %}
         <label for="test_{{test.id}}">
@@ -93,6 +94,7 @@
 		</label>
     {% endfor %}
     </div>
+
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
         <input type="submit" value="Add tests to this indicator" class="btn btn-success" />
