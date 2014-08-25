@@ -1,6 +1,14 @@
 {% set active_page='users'%}{% extends "layout.html" %}
-{% block title %}{% if user%}Edit{%else%}New{%endif%} Users{% endblock %}
+{% block title %}
+  {% if user %}
+    Edit
+  {% else %}
+    New
+  {% endif %} 
+  Users
+{% endblock %}
 {% block content %}
+
     <ul class="breadcrumb">
     <li><a href="{{url_for('users')}}">Users</a> <span class="divider">/</span></li>
     <li class="active">{{user.username}}</li>
