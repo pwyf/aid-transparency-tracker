@@ -40,7 +40,9 @@
 			{{result["indicator"]["name"]}}</a>
 		</td>
 
-	    <td><a href="{{url_for('tests', id=result["test"]["id"])}}">{{ result["test"]["description"] }}</a>{% if result["condition"] %} <i class="icon-info-sign" title="{{result["condition"]}}"></i>{%endif%}</td>
+	    <td>
+		  <a href="{{url_for('tests', id=result["test"]["id"])}}">
+			{{ result["test"]["description"] }}</a>{% if result["condition"] %} <i class="icon-info-sign" title="{{result["condition"]}}"></i>{%endif%}</td>
 
         <td class="pct">{{result.results_pct|round|int}}</td>
 
