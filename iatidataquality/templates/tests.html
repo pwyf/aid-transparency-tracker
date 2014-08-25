@@ -32,8 +32,11 @@
     <td>{{ t.name }}</td>
     <td>{{ t.description }}</td>
     <td>
-        <a href="{{url_for('tests_editor', id=t.id)}}"><i class="icon-pencil"></i></a> 
-        <a href="{{url_for('tests_delete', id=t.id)}}" data-confirm="Are you sure you want to delete test {{t.name}}?"><i class="icon-trash"></i></a>
+        <a href="{{url_for('tests_editor', id=t.id)}}">
+		  <i class="icon-pencil"></i></a> 
+        <a href="{{url_for('tests_delete', id=t.id)}}" 
+		   data-confirm="Are you sure you want to delete test {{t.name}}?">
+		  <i class="icon-trash"></i></a>
     </td>
     </tr>
 	{% endfor %}
