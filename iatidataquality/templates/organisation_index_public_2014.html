@@ -49,8 +49,13 @@
           {% for indicator, result in results.commitment.items() %}
 
             <tr id="indicator-{{result["indicator"]["id"]}}">
-            <td><a href="#indicator{{result["indicator"]["id"]}}" role="button" data-toggle="modal">
-            {{result["indicator"]["indicator_order"]}}. {{result["indicator"]["description"]}}</a>
+
+            <td>
+			  <a href="#indicator{{result["indicator"]["id"]}}" 
+				 role="button" data-toggle="modal">
+				{{result["indicator"]["indicator_order"]}}. 
+				{{result["indicator"]["description"]}}
+			  </a>
                 <div id="indicator{{result["indicator"]["id"]}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
