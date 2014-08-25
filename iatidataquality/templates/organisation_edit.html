@@ -1,5 +1,13 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
-{% block title %}{% if organisation%}Edit{%else%}New{%endif%} Organisation {{organisation.organisation_name}} &raquo; Organisations{% endblock %}
+{% block title %}
+  {% if organisation%}
+    Edit
+  {% else %}
+    New
+  {% endif %} 
+  Organisation {{organisation.organisation_name}} &raquo; 
+  Organisations
+{% endblock %}
 {% block content %}
     <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
 
