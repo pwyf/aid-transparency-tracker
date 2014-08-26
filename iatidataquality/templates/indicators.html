@@ -69,20 +69,16 @@
 		<td>{{indicator_type}}</td>
 	    <td>{{description}}</td>
           {{#admin}}
-<!--        <td>
-            <a href="{{url_for('indicators_edit', 
-					 indicatorgroup=indicatorgroup.name, 
-					 indicator=indicator.name)}}">
+        <td>
+            <a href="{{links.edit}}">
 			  <i class="icon-pencil"></i>
 			</a>
-            <a href="{{url_for('indicators_delete', 
-					 indicatorgroup=indicatorgroup.name, 
-					 indicator=indicator.name)}}" 
+            <a href="{{links.delete}}" 
 			   data-confirm="Are you sure you want to delete 
 							 Indicator {{name}}?">
 			  <i class="icon-trash"></i>
 			</a>
-        </td> -->
+        </td>
           {{/admin}}
         <td><a href="#" class="showTests" 
 			   id="showindicator-{{id}}">

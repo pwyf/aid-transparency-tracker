@@ -113,6 +113,9 @@ def indicators_comparison(indicatorgroup, indicator):
 def indicators(indicatorgroup=None):
     its = {}
     indicators = dqindicators.indicatorsTests(indicatorgroup)
+
+    indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
+
     for indicator in indicators:
         ind_id = indicator.Indicator.id
         if ind_id not in its:
@@ -129,9 +132,16 @@ def indicators(indicatorgroup=None):
             test_data['test_id'] = test_data['id']
             del(test_data['id'])
             its[ind_id]['test'].append(test_data)
+        its[ind_id]["links"] = {
+            "edit": url_for('indicators_edit', 
+                            indicatorgroup=indicatorgroup.name, 
+                            indicator=indicator.Indicator.name),
+            "delete": url_for('indicators_delete', 
+                              indicatorgroup=indicatorgroup.name, 
+                              indicator=indicator.Indicator.name)
+            }
 
     its = util.resort_indicator_tests(its)
-    indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
 
     links = {
         "edit_group": url_for('indicatorgroups_edit', 
