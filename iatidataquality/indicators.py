@@ -129,12 +129,27 @@ def indicators(indicatorgroup=None):
     its = util.resort_indicator_tests(its)
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
 
+    links = {
+        "edit_group": url_for('indicatorgroups_edit', 
+                              indicatorgroup=indicatorgroup.name),
+        "delete_group": url_for('indicatorgroups_delete', 
+                                indicatorgroup=indicatorgroup.name),
+        "new_indicator": url_for('indicators_new', 
+                                 indicatorgroup=indicatorgroup.name),
+        "csv_assoc_tests": url_for('indicatorgroup_tests_csv', 
+                                   indicatorgroup=indicatorgroup.name),
+        "csv_unassoc_tests": url_for('indicatorgroup_tests_csv', 
+                                     indicatorgroup=indicatorgroup.name,
+                                     option="no")
+        }
+
     indicator_data = [ v for k,v in its.items() ]
 
     json_data = json.dumps({ 
             "indicator": indicator_data,
             "indicatorgroup": indicatorgroup.as_dict(),
-            "admin": usermanagement.check_perms('admin')
+            "admin": usermanagement.check_perms('admin'),
+            "links": links
             }, indent=2)
 
     return render_template("indicators.html", 

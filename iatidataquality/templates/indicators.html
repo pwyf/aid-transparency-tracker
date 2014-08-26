@@ -9,8 +9,8 @@
 <script type="text/template" id="template-source">
 
     {{#admin}}
-    <!-- 
-    <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
+	{{#links}}
+
     <style>
     code {
         white-space: normal;
@@ -19,13 +19,11 @@
     <div class="pull-right">
     <p>
 	  <a class="btn btn-success" 
-		 href="{{url_for('indicatorgroups_edit', 
-			   indicatorgroup=indicatorgroup.name)}}">
+		 href="{{edit_group}}">
 		<i class="icon-white icon-pencil"></i> <b>Edit Group</b></a>
 
       <a class="btn btn-danger" 
-		 href="{{url_for('indicatorgroups_delete', 
-			   indicatorgroup=indicatorgroup.name)}}" 
+		 href="{{delete_group}}" 
 		 data-confirm="Are you sure you want to delete indicator group 
 					   {{indicatorgroup.name}}? This action will also 
 					   delete all indicators associated with this group, 
@@ -34,24 +32,21 @@
 	</p>
 
     <p>
-	  <a class="btn btn-success" href="{{url_for('indicators_new', 
-									   indicatorgroup=indicatorgroup.name)}}">
+	  <a class="btn btn-success" href="{{new_indicator}}">
 		<i class="icon-white icon-plus"></i> <b>New Indicator</b></a>
 	</p>
 
     <p>
-	  <a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', 
-									indicatorgroup=indicatorgroup.name)}}">
+	  <a class="btn btn-mini" href="{{csv_assoc_tests}}">
 		<i class="icon-download"></i> <b>CSV of associated tests</b></a>
 	</p>
 
     <p>
-	  <a class="btn btn-mini" href="{{url_for('indicatorgroup_tests_csv', 
-									indicatorgroup=indicatorgroup.name, 
-									option="no")}}">
+	  <a class="btn btn-mini" href="{{csv_unassoc_tests}}">
 		<i class="icon-download"></i> <b>CSV of unassociated tests</b></a>
 	</p>
-    </div> -->
+    </div>
+	{{/links}}
     {{/admin}}
 	<h1>{{indicatorgroup.description}}</h1>
 	<h3>Indicators</h3>
@@ -123,4 +118,5 @@
 {% block final_scripts %}
     <script src="{{url_for('static', 
 				 filename='js/organisationPublication.js')}}"></script>
+    <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
 {% endblock %}
