@@ -128,7 +128,11 @@ def indicators(indicatorgroup=None):
 
     indicator_data = [ v for k,v in its.items() ]
 
-    json_data = json.dumps({ "indicator": indicator_data }, indent=2)
+    json_data = json.dumps({ 
+            "indicator": indicator_data,
+            "indicatorgroup": indicatorgroup.as_dict(),
+            "admin": usermanagement.check_perms('admin')
+            }, indent=2)
 
     return render_template("indicators.html", 
                         indicatorgroup=indicatorgroup, 
