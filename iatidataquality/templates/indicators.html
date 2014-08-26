@@ -1,7 +1,15 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}Indicators{% endblock %}
 {% block content %}
-    {% if admin %}
+
+<div id="template-target">
+</div>
+
+{% raw %}
+<script type="text/template" id="template-source">
+
+    {{#admin}}
+    <!-- 
     <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
     <style>
     code {
@@ -43,31 +51,24 @@
 									option="no")}}">
 		<i class="icon-download"></i> <b>CSV of unassociated tests</b></a>
 	</p>
-    </div>
-    {% endif %}
+    </div> -->
+    {{/admin}}
 	<h1>{{indicatorgroup.description}}</h1>
 	<h3>Indicators</h3>
-    <table class="table" id="tests">
+
+    <table class="table x-template" id="tests">
     <thead>
     <th width="10%">No</th>
-    <th colspan="2" width="{% if admin %}80%{% else %}90%{% endif %}">
+    <th colspan="2" width="{{#admin}}80%{{/admin}}{{#admin}}90%{{/admin}}">
 	  Description
 	</th>
-    {% if admin %}
+    {{#admin}}
     <th width="10%">Edit</th>
-    {% endif %}
+    {{/admin}}
     </thead>
     <tbody>
-    {% if indicators %}
-        {% set typecolspan = "2" %}
-        {% if admin %}
-          {% set typecolspan = "3" %}
-        {% endif %}
-	    {% for i, indicator in indicators.items() %}
-          {% if indicator.indicator_type != type %}
-            {% set type = indicator.indicator_type %}
-            {% set cat = indicator.indicator_category_name %}
-        <tr class="info">
+	  {{#indicator}}
+<!--     <tr class="info">
 		  <td colspan="{% if admin %}4{% else %}3{% endif %}">
 			<b>
 			  {{type|title}}
@@ -76,13 +77,12 @@
 			  {% endif %}
 			</b>
 		  </td>
-		</tr>
-          {% endif %}
-        <tr id="indicator-{{indicator.id}}">
-        <td>{{indicator.indicator_order}}</td>
-	    <td>{{indicator.description}}</td>
-          {% if admin %}
-        <td>
+		</tr> -->
+        <tr id="indicator-{{id}}">
+        <td>{{indicator_order}}</td>
+	    <td>{{description}}</td>
+          {{#admin}}
+<!--        <td>
             <a href="{{url_for('indicators_edit', 
 					 indicatorgroup=indicatorgroup.name, 
 					 indicator=indicator.name)}}">
@@ -92,31 +92,33 @@
 					 indicatorgroup=indicatorgroup.name, 
 					 indicator=indicator.name)}}" 
 			   data-confirm="Are you sure you want to delete 
-							 Indicator {{indicator.name}}?">
+							 Indicator {{name}}?">
 			  <i class="icon-trash"></i>
 			</a>
-        </td>
-          {% endif %}
+        </td> -->
+          {{/admin}}
         <td><a href="#" class="showTests" 
-			   id="showindicator-{{indicator.id}}">
+			   id="showindicator-{{id}}">
 			<i class="icon-chevron-down align-right"></i></a>
 		</td>
         </tr>
-        <tr class="group-{{indicator.id}} hidden">
+        <tr class="group-{{id}} hidden">
             <td></td>
-            <td colspan="2">{{indicator.longdescription}}</td>
+            <td colspan="2">{{longdescription}}</td>
         </tr>
-            {% for test in indicator.tests %}
-                <tr id="tr{{test.id}}" class="group-{{indicator.id}} hidden">
+		    {{#tests}}
+                <tr id="tr{{test_id}}" class="group-{{id}} hidden">
                 <td></td>
-                <td><i>{{ test.description}}</i></td>
-	            <td><code>{{ test.name }}</code></td>
+                <td><i>{{ description}}</i></td>
+	            <td><code>{{ name }}</code></td>
                 </tr>
-            {% endfor %}
-	    {% endfor %}
-    {% endif %}
+		    {{/tests}}
+        {{/indicator}}
     </tbody>
     </table>
+</script>
+{% endraw %}
+
     <script src="{{url_for('static', 
 				 filename='js/organisationPublication.js')}}"></script>
 {% endblock %}
