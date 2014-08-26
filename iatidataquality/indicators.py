@@ -119,6 +119,8 @@ def indicators(indicatorgroup=None):
             its[ind_id] = {}
         its[ind_id].update(indicator.Indicator.as_dict())
         its[ind_id]["indicator_type"] = its[ind_id]["indicator_type"].title()
+        if its[ind_id]["indicator_category_name"]:
+            its[ind_id]["indicator_type"] += " - " + its[ind_id]["indicator_category_name"]
         if True:
             if ('test' not in its[ind_id]):
                 its[ind_id]['test'] = []
