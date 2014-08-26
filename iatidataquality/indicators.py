@@ -121,7 +121,10 @@ def indicators(indicatorgroup=None):
             if ('tests' not in its[indicator.Indicator.id]):
                 its[indicator.Indicator.id]['tests'] = []
         if indicator.Test:
-            its[indicator.Indicator.id]['tests'].append(indicator.Test.as_dict())
+            test_data = indicator.Test.as_dict()
+            test_data['test_id'] = test_data['id']
+            del(test_data['id'])
+            its[indicator.Indicator.id]['tests'].append(test_data)
 
     its = util.resort_indicator_tests(its)
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
