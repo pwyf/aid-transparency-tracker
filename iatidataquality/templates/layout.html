@@ -41,6 +41,13 @@
       })();
 
     </script>
+
+	{% if json_data %}
+	<script type="text/javascript">
+	  var json_data = {{ json_data | safe }};
+    </script>
+	{% endif %}
+
 </head>
 <body>
 
@@ -273,5 +280,17 @@
 		</p>
     </div>
     </div></footer>
+	{% if json_data %}
+	<script src="{{url_for('static', filename='js/mustache.js')}}" 
+			type="text/javascript">
+	</script>
+	<script type="text/javascript">
+	  $(".x-template").each(function(idx, elt) {
+	    var elem = $(elt);
+	    var rendered = Mustache.render(elem.html(), json_data);
+	    elem.html(rendered);
+	  });
+	</script>
+	{% endif %}
 </body>
 </html>
