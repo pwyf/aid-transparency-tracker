@@ -285,11 +285,9 @@
 			type="text/javascript">
 	</script>
 	<script type="text/javascript">
-	  $(".x-template").each(function(idx, elt) {
-	    var elem = $(elt);
-	    var rendered = Mustache.render(elem.html(), json_data);
-	    elem.html(rendered);
-	  });
+	  var template = $("#template-source").html();
+	  var rendered = Mustache.render(template, json_data);
+	  $("#template-target").html(rendered);
 	</script>
 	{% endif %}
 </body>
