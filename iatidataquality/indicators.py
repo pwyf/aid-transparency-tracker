@@ -126,7 +126,9 @@ def indicators(indicatorgroup=None):
     its = util.resort_indicator_tests(its)
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
 
-    json_data = json.dumps({}, indent=2)
+    indicator_data = [ v for k,v in its.items() ]
+
+    json_data = json.dumps({ "indicator": indicator_data }, indent=2)
 
     return render_template("indicators.html", 
                         indicatorgroup=indicatorgroup, 
