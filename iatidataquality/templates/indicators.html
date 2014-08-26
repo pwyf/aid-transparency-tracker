@@ -70,7 +70,10 @@
         <tr class="info">
 		  <td colspan="{% if admin %}4{% else %}3{% endif %}">
 			<b>
-			  {{type|title}}{% if cat != "" %} &ndash; {{cat|title}}{% endif %}
+			  {{type|title}}
+			  {% if cat != "" %}
+			  &ndash; {{cat|title}}
+			  {% endif %}
 			</b>
 		  </td>
 		</tr>
