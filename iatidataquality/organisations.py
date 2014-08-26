@@ -597,11 +597,3 @@ def _organisation_indicators_summary(organisation, aggregation_type=2):
 
     return totalscore, totalindicators
     
-
-@app.route('/tmp/inforesult/<package_code>/<runtime_id>')
-def tmp_inforesult(package_code, runtime_id):
-    import json
-    from iatidq import inforesult
-
-    return json.dumps(inforesult.info_results(package_code, runtime_id), 
-                      indent=2)
