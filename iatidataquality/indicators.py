@@ -117,9 +117,10 @@ def indicators(indicatorgroup=None):
         if indicator.Indicator.id not in its:
             its[indicator.Indicator.id] = {}
         its[indicator.Indicator.id].update(indicator.Indicator.as_dict())
-        if indicator.Test:
+        if True:
             if ('tests' not in its[indicator.Indicator.id]):
                 its[indicator.Indicator.id]['tests'] = []
+        if indicator.Test:
             its[indicator.Indicator.id]['tests'].append(indicator.Test.as_dict())
 
     its = util.resort_indicator_tests(its)
