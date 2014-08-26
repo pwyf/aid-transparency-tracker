@@ -124,11 +124,15 @@ def indicators(indicatorgroup=None):
 
     its = util.resort_indicator_tests(its)
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
+
+    json_data = json.dumps({}, indent=2)
+
     return render_template("indicators.html", 
                         indicatorgroup=indicatorgroup, 
                         indicators=its,
                         admin=usermanagement.check_perms('admin'),
-                        loggedinuser=current_user)
+                        loggedinuser=current_user,
+                        json_data=json_data)
 
 @app.route("/indicators/<indicatorgroup>_tests.csv")
 @app.route("/indicators/<indicatorgroup>_<option>tests.csv")
