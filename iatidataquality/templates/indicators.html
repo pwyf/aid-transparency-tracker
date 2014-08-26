@@ -50,7 +50,9 @@
     <table class="table" id="tests">
     <thead>
     <th width="10%">No</th>
-    <th colspan="2" width="{% if admin %}80%{%else%}90%{%endif%}">Description</th>
+    <th colspan="2" width="{% if admin %}80%{% else %}90%{% endif %}">
+	  Description
+	</th>
     {% if admin %}
     <th width="10%">Edit</th>
     {% endif %}
