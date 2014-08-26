@@ -118,7 +118,9 @@
     </table>
 </script>
 {% endraw %}
+{% endblock %}
 
+{% block final_scripts %}
     <script src="{{url_for('static', 
 				 filename='js/organisationPublication.js')}}"></script>
 {% endblock %}
