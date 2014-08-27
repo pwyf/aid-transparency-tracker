@@ -296,6 +296,11 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
 
     org_indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
 
+    lastyearsdata = iatidq.survey.mapping.get_organisation_results(
+        organisation_code, 
+        [i.name for i in org_indicators]
+        )
+
     result = {
         "commitment": util.resort_sqlalchemy_indicator(
                                     aggregate_results['commitment']).values(),
@@ -304,11 +309,6 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         "publication_activity": util.resort_dict_indicator(
                                 aggregate_results['publication_activity']).values()
         }
-
-    lastyearsdata = iatidq.survey.mapping.get_organisation_results(
-        organisation_code, 
-        [i.name for i in org_indicators]
-        )
 
     published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
     publishedformats = dict(map(name_tuple, dqsurveys.publishedFormatsAll()))
@@ -336,7 +336,8 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
 			   organisation_code=organisation.organisation_code)
             },
         "organisation": organisation.as_dict(),
-        "result": result
+        "result": result,
+        "lastyearsdata": lastyearsdata
         }
     
     json_data = json.dumps(payload, indent=2)
