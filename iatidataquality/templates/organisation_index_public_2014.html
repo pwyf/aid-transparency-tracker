@@ -170,12 +170,12 @@
 
             <td>
 			  <span class="label label-{{lastyearsdata_format}}">{{lastyearsdata_title}}</span>
-                    {% if lastyearsdata.iati_manual != 'iati' %}
+                    {{^lastyearsdata_iati}}
                     <a href="#" class="showTests" 
 					   id="showindicator-{{indicator.id}}"><!-- FIXME: this line could be wrong -->
 					  <i class="icon-chevron-down align-right"></i>
 					</a>
-                    {% endif %}
+                    {{/lastyearsdata_iati}}
             </td>
 
 	        <td>

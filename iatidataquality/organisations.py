@@ -308,10 +308,11 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         name = res["indicator"]["name"]
         lyd = lastyearsdata[name]
         tmp["lastyearsdata"] = lyd
+        tmp["lastyearsdata_iati"] = lyd["iati_manual"] == "iati"
 
         def format_and_title():
             if lyd["total_points"] > 0:
-                if lyd["iati_manual"] == "iati":
+                if tmp["lastyearsdata_iati"]:
                     return ("success", "IATI")
                 else:
                     pub_format = publishedformats[lyd["publication_format"]]
