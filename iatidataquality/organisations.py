@@ -326,6 +326,8 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         tmp["lastyearsdata_format"] = ly_format
         tmp["lastyearsdata_title"] = ly_title
 
+        tmp["uses_iati"] = res["results_pct"] > 0
+
         return tmp
 
     result = {
