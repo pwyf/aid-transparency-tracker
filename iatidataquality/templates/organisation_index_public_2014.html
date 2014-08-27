@@ -176,7 +176,8 @@
 
                         <span class="label label-success">IATI</span>
                         {% else %}
-                        <span class="label label-{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].format_class}}">{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].title}}</span> 
+                        <span class="label label-{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].format_class}}">
+						  {{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].title}}</span> 
                         {% endif %}
                     {% else %}
                         {% if lastyearsdata[result.indicator.name]['publication_status'] == 'sometimes' %}
