@@ -220,7 +220,8 @@
         <th width="25%">2014</th>
         </thead>
         <tbody>
-        {% for indicator, result in results.publication_activity.items() %}
+		{{#result.publication_activity}}
+
           <tr id="indicator-{{result["indicator"]["id"]}}">
 
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
@@ -311,7 +312,7 @@
 
           </tr>
             {% endif %}
-        {% endfor %}
+		{{/result.publication_activity}}
         </tbody>
         </table>
         </fieldset>
