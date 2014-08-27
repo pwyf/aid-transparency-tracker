@@ -282,6 +282,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                            loggedinuser=current_user,
                            years=years)
 
+# this function is unacceptably long; it really wants to be a class
 def organisation_publication_unauthorised(organisation_code, aggregation_type):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
