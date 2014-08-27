@@ -301,13 +301,22 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         [i.name for i in org_indicators]
         )
 
+    def add_last_years_data(res):
+        tmp = dict(res)
+        name = res["indicator"]["name"]
+        tmp["lastyearsdata"] = lastyearsdata[name]
+        return tmp
+
     result = {
-        "commitment": util.resort_sqlalchemy_indicator(
-                                    aggregate_results['commitment']).values(),
-        "publication_organisation": util.resort_dict_indicator(
-                                aggregate_results['publication_organisation']).values(),
-        "publication_activity": util.resort_dict_indicator(
-                                aggregate_results['publication_activity']).values()
+        "commitment": map(add_last_years_data, 
+                          util.resort_sqlalchemy_indicator(
+                aggregate_results['commitment']).values()),
+        "publication_organisation": map(add_last_years_data,
+                                        util.resort_dict_indicator(
+                aggregate_results['publication_organisation']).values()),
+        "publication_activity": map(add_last_years_data,
+                                    util.resort_dict_indicator(
+                aggregate_results['publication_activity']).values())
         }
 
     published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
@@ -336,8 +345,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
 			   organisation_code=organisation.organisation_code)
             },
         "organisation": organisation.as_dict(),
-        "result": result,
-        "lastyearsdata": lastyearsdata
+        "result": result
         }
     
     json_data = json.dumps(payload, indent=2)
