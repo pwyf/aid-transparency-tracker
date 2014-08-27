@@ -325,6 +325,18 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
 
     years = dict(get_ordinal_values_years())
 
+    payload = {
+        "links": {
+            "login": url_for('login', next='/organisations/' 
+                             + organisation.organisation_code 
+                             + '/publication'),
+            "orgpage": url_for('organisations', 
+			   organisation_code=organisation.organisation_code)
+            }
+        }
+    
+    json_data = json.dumps(payload, indent=2)
+
     return render_template("organisation_index_public_2014.html",
                            organisation=organisation,
                            results=aggregate_results,
@@ -336,6 +348,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
                            lastyearsdata=lastyearsdata,
                            publishedformats=publishedformats,
                            years=years,
+                           json_data=json_data,
                            old_publication_status = surveys.get_old_publication_status())
 
 @app.route("/organisations/<organisation_code>/publication/")

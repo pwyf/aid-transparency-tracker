@@ -4,19 +4,20 @@
 {% endblock %}
 {% block content %}
 
+<div id="template-target">
+</div>
+
+{% raw %}
+<script type="text/template" id="template-source">
     <div class="pull-right">
-        <a class="btn btn-success" 
-		   href="{{url_for('login', 
-				 next='/organisations/' + organisation.organisation_code 
-				 + '/publication')}}">
+        <a class="btn btn-success" href="{{ links.login }}">
 		  <i class="icon-lock icon-white"></i> 
 		  <b>Login &raquo; {{ organisation.organisation_name }}</b>
 		</a>
     </div>
 
     <h1>
-	  <a href="{{url_for('organisations', 
-			   organisation_code=organisation.organisation_code)}}">
+	  <a href="{{ links.orgpage }}">
 		{{organisation.organisation_name}}</a>
 	</h1>
 
@@ -330,6 +331,11 @@
         </fieldset>
     {% endif %}
 
+</script>
+{% endraw %}
+{% endblock %}
+
+{% block final_scripts %}
     <script src="{{url_for('static', filename='js/organisationPublication.js')}}"></script>
 
 {% endblock %}
