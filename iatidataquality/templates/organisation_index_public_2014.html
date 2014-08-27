@@ -169,21 +169,7 @@
             </td>
 
             <td>
-                    {% if lastyearsdata.total_points|int>0 %}
-                        {% if lastyearsdata.iati_manual == 'iati' %}
-
-                        <span class="label label-success">IATI</span>
-                        {% else %}
-                        <span class="label label-{{publishedformats[lastyearsdata.publication_format].format_class}}">
-						  {{publishedformats[lastyearsdata.publication_format].title}}</span> 
-                        {% endif %}
-                    {% else %}
-                        {% if lastyearsdata.publication_status == 'sometimes' %}
-                        <span class="label label-default">Sometimes published</span>
-                        {% else %}
-                        <span class="label label-inverse">Not published</span>
-                        {% endif %}
-                    {% endif %}
+			  <span class="label label-{{lastyearsdata_format}}">{{lastyearsdata_title}}</span>
                     {% if lastyearsdata.iati_manual != 'iati' %}
                     <a href="#" class="showTests" 
 					   id="showindicator-{{result.indicator.id}}">
