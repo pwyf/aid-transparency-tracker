@@ -296,12 +296,14 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
 
     org_indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
 
-    aggregate_results['commitment'] = util.resort_sqlalchemy_indicator(
-                                    aggregate_results['commitment'])
-    aggregate_results['publication_organisation'] = util.resort_dict_indicator(
-                                aggregate_results['publication_organisation'])
-    aggregate_results['publication_activity'] = util.resort_dict_indicator(
-                                aggregate_results['publication_activity'])
+    result = {
+        "commitment": util.resort_sqlalchemy_indicator(
+                                    aggregate_results['commitment']).values(),
+        "publication_organisation": util.resort_dict_indicator(
+                                aggregate_results['publication_organisation']).values(),
+        "publication_activity": util.resort_dict_indicator(
+                                aggregate_results['publication_activity']).values()
+        }
 
     lastyearsdata = iatidq.survey.mapping.get_organisation_results(
         organisation_code, 
@@ -332,7 +334,9 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
                              + '/publication'),
             "orgpage": url_for('organisations', 
 			   organisation_code=organisation.organisation_code)
-            }
+            },
+        "organisation": organisation.as_dict(),
+        "result": result
         }
     
     json_data = json.dumps(payload, indent=2)

@@ -49,6 +49,7 @@
           <th width="25%">2014</th>
         </thead>
         <tbody>
+		  {{#result.commitment}}
           {% for indicator, result in results.commitment.items() %}
 
             <tr id="indicator-{{result["indicator"]["id"]}}">
@@ -116,6 +117,7 @@
               {% endif %}
             </tr>
 			{% endfor %}
+			{{/result.commitment}}
         </tbody>
       </table>
     </fieldset>
@@ -133,18 +135,17 @@
           <th width="25%">2014</th>
         </thead>
         <tbody>
-
-        {% for indicator, result in results.publication_organisation.items() %}
-          <tr id="indicator-{{result["indicator"]["id"]}}">
-            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+		  {{#result.publication_organisation}}
+          <tr id="indicator-{{indicator.id}}">
+            <td>{{indicator.indicator_subcategory_name}}</td>
             <td>
-			  <a href="#indicator{{result["indicator"]["id"]}}" 
+			  <a href="#indicator{{indicator.id}}" 
 				 role="button" data-toggle="modal">
-                {{result["indicator"]["indicator_order"]}}. 
-				{{result["indicator"]["description"]}}
+                {{indicator.indicator_order}}. 
+				{{indicator.description}}
 			  </a>
 
-              <div id="indicator{{result["indicator"]["id"]}}" 
+              <div id="indicator{{indicator.id}}" 
 				   class="modal hide fade" tabindex="-1" role="dialog" 
 				   aria-labelledby="indicatorHeader" aria-hidden="true">
 
@@ -152,12 +153,12 @@
                   <button type="button" class="close" data-dismiss="modal" 
 						  aria-hidden="true">×</button>
 				  <h3 id="indicatorHeader">
-					Indicator: {{result["indicator"]["description"]}}
+					Indicator: {{indicator.description}}
 				  </h3>
                 </div>
 
                 <div class="modal-body">
-                  {{result.indicator.longdescription}}
+                  {{indicator.longdescription}}
                 </div>
 
                 <div class="modal-footer">
@@ -217,7 +218,7 @@
               </td>
             </tr>
             {% endif %}
-        {% endfor %}
+			{{/result.publication_organisation}}
         </tbody>
         </table>
         </fieldset>
