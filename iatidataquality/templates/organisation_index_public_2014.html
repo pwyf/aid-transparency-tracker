@@ -187,10 +187,10 @@
 			{{/uses_iati}}
 			</td>
           </tr>
-            {% if lastyearsdata.iati_manual == 'manual' %}
+            {{#lastyearsdata_manual}}
 
-            <tr id="tr-{{result["indicator"]["id"]}}-details" 
-				class="group-{{result["indicator"]["id"]}} hidden">
+            <tr id="tr-{{indicator.id}}-details" 
+				class="group-{{indicator.id}} hidden">
               <td colspan="4">
 				<h5>Evidence</h5>
 				<p>
@@ -202,7 +202,7 @@
 				</p>
               </td>
             </tr>
-            {% endif %}
+			{{/lastyearsdata_manual}}
 			{{/result.publication_organisation}}
         </tbody>
         </table>

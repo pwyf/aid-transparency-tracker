@@ -309,6 +309,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         lyd = lastyearsdata[name]
         tmp["lastyearsdata"] = lyd
         tmp["lastyearsdata_iati"] = lyd["iati_manual"] == "iati"
+        tmp["lastyearsdata_manual"] = lyd["iati_manual"] == "manual"
 
         def format_and_title():
             if lyd["total_points"] > 0:
