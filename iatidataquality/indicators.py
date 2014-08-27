@@ -167,8 +167,6 @@ def indicators(indicatorgroup=None):
             }, indent=2)
 
     return render_template("indicators.html", 
-                        indicatorgroup=indicatorgroup, 
-                        indicators=its,
                         admin=usermanagement.check_perms('admin'),
                         loggedinuser=current_user,
                         json_data=json_data)
