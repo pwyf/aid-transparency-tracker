@@ -304,7 +304,9 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
     def annotate(res):
         tmp = dict(res)
         name = res["indicator"]["name"]
-        tmp["lastyearsdata"] = lastyearsdata[name]
+        lyd = lastyearsdata[name]
+        tmp["lastyearsdata"] = lyd
+
         return tmp
 
     result = {
