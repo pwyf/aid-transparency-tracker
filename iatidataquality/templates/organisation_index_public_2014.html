@@ -81,7 +81,7 @@
                 </div>
               </td>
 
-              {% if lastyearsdata[result.indicator.name].result == '' %}
+              {% if lastyearsdata.result == '' %}
               <td>
 				<span class="label label-default">Not in 2013 Index</span>
 			  </td>
@@ -92,7 +92,7 @@
               {% else %}
 
               <td>
-				{{lastyearsdata[result.indicator.name].survey_ordinal_value}}% 
+				{{lastyearsdata.survey_ordinal_value}}% 
 				<a href="#" class="showTests" 
 				   id="showindicator-{{result["indicator"]["id"]}}">
 				  <i class="icon-chevron-down align-right"></i></a>
@@ -110,9 +110,9 @@
 
               <td colspan="3">
                 <h5>Evidence</h5>
-			    <p>{{lastyearsdata[result.indicator.name].survey_source}}</p>
+			    <p>{{lastyearsdata.survey_source}}</p>
                 <h5>Comments</h5>
-			    <p>{{lastyearsdata[result.indicator.name].survey_comment}}</p>
+			    <p>{{lastyearsdata.survey_comment}}</p>
               </td>
               {% endif %}
             </tr>
@@ -168,25 +168,25 @@
               </div>
             </td>
 
-            <td>{% if lastyearsdata[result.indicator.name].result == '' %}
+            <td>{% if lastyearsdata.result == '' %}
                 <span class="label label-default">Not in 2013 Index</span>
                 {% else %}
-                    {% if lastyearsdata[result.indicator.name]["total_points"]|int>0 %}
-                        {% if lastyearsdata[result.indicator.name]['iati_manual'] == 'iati' %}
+                    {% if lastyearsdata["total_points"]|int>0 %}
+                        {% if lastyearsdata['iati_manual'] == 'iati' %}
 
                         <span class="label label-success">IATI</span>
                         {% else %}
-                        <span class="label label-{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].format_class}}">
-						  {{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].title}}</span> 
+                        <span class="label label-{{publishedformats[lastyearsdata['publication_format']].format_class}}">
+						  {{publishedformats[lastyearsdata['publication_format']].title}}</span> 
                         {% endif %}
                     {% else %}
-                        {% if lastyearsdata[result.indicator.name]['publication_status'] == 'sometimes' %}
+                        {% if lastyearsdata['publication_status'] == 'sometimes' %}
                         <span class="label label-default">Sometimes published</span>
                         {% else %}
                         <span class="label label-inverse">Not published</span>
                         {% endif %}
                     {% endif %}
-                    {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
+                    {% if lastyearsdata['iati_manual'] != 'iati' %}
                     <a href="#" class="showTests" 
 					   id="showindicator-{{result.indicator.id}}">
 					  <i class="icon-chevron-down align-right"></i>
@@ -203,7 +203,7 @@
 			{% endif %}
 			</td>
           </tr>
-            {% if lastyearsdata[result.indicator.name]["iati_manual"] == 'manual' %}
+            {% if lastyearsdata["iati_manual"] == 'manual' %}
 
             <tr id="tr-{{result["indicator"]["id"]}}-details" 
 				class="group-{{result["indicator"]["id"]}} hidden">
@@ -272,27 +272,27 @@
             </td>
 
             <td>
-			  {% if lastyearsdata[result.indicator.name].result == '' %}
+			  {% if lastyearsdata.result == '' %}
               <span class="label label-default">Not in 2013 Index</span>
               {% else %}
-                {% if lastyearsdata[result.indicator.name]["total_points"]|int>0 %}
-                  {% if lastyearsdata[result.indicator.name]['iati_manual'] == 'iati' %}
+                {% if lastyearsdata["total_points"]|int>0 %}
+                  {% if lastyearsdata['iati_manual'] == 'iati' %}
 
                 <span class="label label-success">IATI</span>
                   {% else %}
-                <span class="label label-{{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].format_class}}">
-				  {{publishedformats[lastyearsdata[result.indicator.name]['publication_format']].title}}
+                <span class="label label-{{publishedformats[lastyearsdata['publication_format']].format_class}}">
+				  {{publishedformats[lastyearsdata['publication_format']].title}}
 				</span> 
 
                   {% endif %}
                 {% else %}
-                  {% if lastyearsdata[result.indicator.name]['publication_status'] == 'sometimes' %}
+                  {% if lastyearsdata['publication_status'] == 'sometimes' %}
                 <span class="label label-default">Sometimes published</span>
                   {% else %}
                 <span class="label label-inverse">Not published</span>
                   {% endif %}
                 {% endif %}
-                {% if lastyearsdata[result.indicator.name]['iati_manual'] != 'iati' %}
+                {% if lastyearsdata['iati_manual'] != 'iati' %}
                 <a href="#" class="showTests" 
 				   id="showindicator-{{result.indicator.id}}">
 				  <i class="icon-chevron-down align-right"></i>
@@ -310,18 +310,18 @@
 			</td>
 
           </tr>
-            {% if lastyearsdata[result.indicator.name]["iati_manual"] == 'manual' %}
+            {% if lastyearsdata["iati_manual"] == 'manual' %}
 
           <tr id="tr-{{result["indicator"]["id"]}}-details" 
 			  class="group-{{result["indicator"]["id"]}} hidden">
             <td colspan="4">
               <h5>Evidence</h5>
               <p>
-				{{lastyearsdata[result.indicator.name].survey_source}}
+				{{lastyearsdata.survey_source}}
 			  </p>
               <h5>Comments</h5>
               <p>
-				{{lastyearsdata[result.indicator.name].survey_comment}}
+				{{lastyearsdata.survey_comment}}
 			  </p>
             </td>
 
