@@ -301,11 +301,29 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         [i.name for i in org_indicators]
         )
 
+    publishedformats = dict(map(name_tuple, dqsurveys.publishedFormatsAll()))
+
     def annotate(res):
         tmp = dict(res)
         name = res["indicator"]["name"]
         lyd = lastyearsdata[name]
         tmp["lastyearsdata"] = lyd
+
+        def format_and_title():
+            if lyd["total_points"] > 0:
+                if lyd["iati_manual"] == "iati":
+                    return ("success", "IATI")
+                else:
+                    pub_format = publishedformats[lyd["publication_format"]]
+                    return (pub_format.format_class, pub_format.title)
+            elif lyd["publication_status"] == "sometimes":
+                return ("default", "Sometimes published")
+            else:
+                return ("inverse", "Not published")
+
+        ly_format, ly_title = format_and_title()
+        tmp["lastyearsdata_format"] = ly_format
+        tmp["lastyearsdata_title"] = ly_title
 
         return tmp
 
@@ -322,7 +340,6 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         }
 
     published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats = dict(map(name_tuple, dqsurveys.publishedFormatsAll()))
 
     published_status_by_id[None] = {
         'name': 'Unknown',
