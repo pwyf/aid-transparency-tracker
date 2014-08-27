@@ -282,53 +282,6 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                            loggedinuser=current_user,
                            years=years)
 
-def organisation_publication_complete(organisation_code, aggregation_type):
-    aggregation_type=integerise(request.args.get('aggregation_type', 2))
-    all_aggregation_types = dqaggregationtypes.aggregationTypes()
-
-    organisation = Organisation.query.filter_by(
-        organisation_code=organisation_code).first_or_404()
-
-    aggregate_results = dqorganisations._organisation_indicators_complete_split(
-        organisation, aggregation_type)
-        
-    organisation_survey = dqsurveys.getSurvey(organisation_code)
-    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-
-    surveydata, surveydata_workflow = dqsurveys.get_survey_data_and_workflow(
-        organisation_survey, surveydata)
-
-    published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatsAll()))
-
-    published_status_by_id[None] = {
-        'name': 'Unknown',
-        'publishedstatus_class': 'label-inverse'
-        }
-
-    publishedformats[None] = {
-        'name': 'Unknown',
-        'format_class': 'label-inverse'
-        }
-
-    latest_runtime=1
-
-    years = dict(get_ordinal_values_years())
-
-    return render_template("organisation_index_complete.html",
-                           organisation=organisation,
-                           results=aggregate_results,
-                           runtime=latest_runtime,
-                           all_aggregation_types=all_aggregation_types,
-                           aggregation_type=aggregation_type,
-                           surveydata=surveydata,
-                           published_status=published_status_by_id,
-                           published_format=publishedformats,
-                           surveydata_workflow=surveydata_workflow,
-                           admin=usermanagement.check_perms('admin'),
-                           loggedinuser=current_user,
-                           years=years)
-
 def organisation_publication_unauthorised(organisation_code, aggregation_type):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.aggregationTypes()
