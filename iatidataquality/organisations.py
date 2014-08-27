@@ -301,20 +301,20 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         [i.name for i in org_indicators]
         )
 
-    def add_last_years_data(res):
+    def annotate(res):
         tmp = dict(res)
         name = res["indicator"]["name"]
         tmp["lastyearsdata"] = lastyearsdata[name]
         return tmp
 
     result = {
-        "commitment": map(add_last_years_data, 
+        "commitment": map(annotate, 
                           util.resort_sqlalchemy_indicator(
                 aggregate_results['commitment']).values()),
-        "publication_organisation": map(add_last_years_data,
+        "publication_organisation": map(annotate,
                                         util.resort_dict_indicator(
                 aggregate_results['publication_organisation']).values()),
-        "publication_activity": map(add_last_years_data,
+        "publication_activity": map(annotate,
                                     util.resort_dict_indicator(
                 aggregate_results['publication_activity']).values())
         }
