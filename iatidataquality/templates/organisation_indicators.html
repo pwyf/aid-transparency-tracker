@@ -411,8 +411,8 @@
 				   id="showindicator-{{indicator.id}}">
 				<i class="icon-chevron-down align-right"></i></a></td>
             </tr>
-            
-            {% for testdata in result["tests"] %}
+
+            {{#tests}}
             <tr id="tr{{testdata["test"]["id"]}}" 
 				class="group-{{indicator.id}} hidden">
             <td>
@@ -488,7 +488,7 @@
             {{result.indicator.indicator_category_name}} file.
             </td>
             </tr>
-            {% endfor %}
+            {{/tests}}
 		{{/result.zero}}
         </tbody>
         </table>
