@@ -367,7 +367,7 @@
 	        <td></td>
             <td><span class="label label-inverse">NOT FOUND</span></td>
 
-            {% if surveydata %}
+            {{#surveydata}}
             <td>
 			  {% if result.indicator.indicator_ordinal %}
               <span class="label label-{{years[surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value].class}}">
@@ -389,11 +389,12 @@
             <td></td>
               {% endif %}
             <td>{{points}}</td>
-            {% else %}
+            {{/surveydata}}
+			{{^surveydata}}
             <td colspan="3">
             No survey data yet.
             </td>
-            {% endif %}
+            {{/surveydata}}
 
             <td><a href="#" class="showTests" 
 				   id="showindicator-{{indicator.id}}">
