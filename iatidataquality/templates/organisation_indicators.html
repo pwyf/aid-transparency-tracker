@@ -123,12 +123,6 @@
 
 		{{#result.non_zero}}
 
-            {% if result.indicator.indicator_category_name == 'activity' %}
-                {% set points = ((result.results_pct*freq/2.0)+50)|round(2) %}
-            {% else %}
-                {% set points = ((result.results_pct/2.0)+50)|round(2) %}
-            {% endif %}
-
             <tr id="indicator-{{indicator.id}}">
               <td>{{indicator.indicator_category_name}}</td>
               <td>{{indicator.indicator_subcategory_name}}</td>
