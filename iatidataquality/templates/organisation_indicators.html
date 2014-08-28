@@ -281,17 +281,12 @@
                     <div class="modal-body">
                         <p>One or more tests are automatically run on 
 						  the data collected for each indicator.</p>
-                        {% if testdata.test.test_level ==3 %}
-                        <p>This test is run on <b>organisation files</b>.</p>
-                        {% elif testdata.test.test_level ==2 %}
-                        <p>This test is run on <b>each package of data</b>.</p>
-                        {% elif testdata.test.test_level ==1 %}
-                        <p>This test is run for <b>each activity</b> 
-						  in the data.</p>
-                        {% elif testdata.test.test_level ==0 %}
-                        <p>This test is run for <b>each transaction</b> 
-						  in the data.</p>
-                        {% endif%}
+
+						<p>This test is run 
+						  {{test.level_preposition}}
+						  <b>{{test.level_description}}</b>
+						  {{test.level_coda}}.</p>
+
                         <p>The specific test expression is:</p>
                         <code>{{testdata.test.name}}</code>
                     </div>
@@ -467,16 +462,12 @@
                         <p>Each indicator in the 2014 Index can be
                         comprised of several tests, which are
                         automatically run on the data.</p>  
-						{% if testdata.test.test_level == 3 %}
-                        <p>This test is run on <b>organisation files</b>.</p>
-                        {% elif testdata.test.test_level == 2 %}
-                        <p>This test is run on <b>each package of data</b>.</p>
-                        {% elif testdata.test.test_level == 1 %}
-                        <p>This test is run for <b>each activity</b>
-                        in your data.</p>  
-						{% elif testdata.test.test_level == 0 %}
-                        <p>This test is run for <b>each transaction</b> in your data.</p>
-                        {% endif %}
+						
+						<p>This test is run 
+						  {{test.level_preposition}}
+						  <b>{{test.level_description}}</b>
+						  {{test.level_coda}}.</p>
+
                         <p>The specific test expression is:</p>
                         <code>{{testdata.test.name}}</code>
                     </div>
