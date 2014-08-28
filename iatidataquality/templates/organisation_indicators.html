@@ -234,7 +234,7 @@
             </tr>
 
 			{{#tests}}
-            <tr id="tr{{testdata["test"]["id"]}}" 
+            <tr id="tr{{id}}" 
 				class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
 				{{indicator.indicator_category_name}}
@@ -245,9 +245,9 @@
             <td><span class="hidden">
 				{{indicator.description}}.
 			</span></td>
-	        <td><a href="#test{{testdata["test"]["id"]}}" role="button" 
-				   data-toggle="modal">{{testdata["test"]["description"]}}</a>
-                <div id="test{{testdata["test"]["id"]}}" class="modal hide fade"
+	        <td><a href="#test{{id}}" role="button" 
+				   data-toggle="modal">{{description}}</a>
+                <div id="test{{id}}" class="modal hide fade"
 					 tabindex="-1" role="dialog" aria-labelledby="testHeader" 
 					 aria-hidden="true">
                     <div class="modal-header">
@@ -407,7 +407,7 @@
             </tr>
 
             {{#tests}}
-            <tr id="tr{{testdata["test"]["id"]}}" 
+            <tr id="tr{{id}}" 
 				class="group-{{indicator.id}} hidden">
             <td>
 			  <span class="hidden">
@@ -424,11 +424,11 @@
 				{{indicator.description}}.
 			  </span>
 			</td>
-	        <td><a href="#test{{testdata["test"]["id"]}}" 
+	        <td><a href="#test{{id}}" 
 				   role="button" data-toggle="modal">
-				{{testdata["test"]["description"]}}
+				{{description}}
 			  </a>
-              <div id="test{{testdata["test"]["id"]}}" 
+              <div id="test{{id}}" 
 				   class="modal hide fade" tabindex="-1" 
 				   role="dialog" aria-labelledby="testHeader" 
 				   aria-hidden="true">
