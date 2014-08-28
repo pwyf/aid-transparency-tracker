@@ -186,14 +186,14 @@
 							<td>{{(result.results_pct/2)|round(2)}}</td>
 							<td></td>
                         </tr>
-                        {% if result.indicator.indicator_category_name =='activity' %}
+                        {{#is_activity}}
                         <tr class="muted">
                             <td>Frequency</td>
 							<td>x {{freq}}</td>
 							<td>{{organisation.frequency}}: 
 							  {{organisation.frequency_comment}}</td>
                         </tr>
-                        {% endif %}
+                        {{/is_activity}}
                         <tr>
                             <td><b>Total data quality points</b></td>
 							<td>{{points-50}}</td><td></td>
