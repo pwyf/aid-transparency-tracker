@@ -327,7 +327,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         "freq": freq_score,
         "freq_alert": freq_alert,
         "result": {
-            "non_zero": aggregate_results["non_zero"].values()
+            "non_zero": aggregate_results["non_zero"].values(),
             "zero": aggregate_results["zero"].values()
             }
         }
