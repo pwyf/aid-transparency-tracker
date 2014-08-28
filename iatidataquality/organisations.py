@@ -390,6 +390,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                 tmp["status_class"], tmp["status_text"] = status_class_and_text()
                 tmp["format_class"], tmp["format_text"] = format_class_and_text()
 
+        tmp["results_pct_rounded"] = round(tmp["results_pct"], 2)
+        tmp["results_pct_halved_rounded"] = round(tmp["results_pct"]/2.0, 2)
 
         return tmp
 

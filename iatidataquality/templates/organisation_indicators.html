@@ -151,7 +151,7 @@
                 </div>
               </td>
 	          <td></td>
-              <td class="pct muted">{{result.results_pct|round(2)}}</td>
+              <td class="pct muted">{{results_pct_rounded}}</td>
               <td><a href="#calculation{{indicator.id}}" role="button" 
 					 data-toggle="modal">{{points}}</a>
 
@@ -174,7 +174,7 @@
                         <tbody>
                         <tr>
                             <td>Data quality</td>
-							<td>{{result.results_pct|round(2)}}%</td>
+							<td>{{results_pct_rounded}}%</td>
 							<td>% of activities that passed tests</td>
                         </tr>
                         <tr class="muted">
@@ -183,7 +183,7 @@
                         </tr>
                         <tr>
                             <td>Points</td>
-							<td>{{(result.results_pct/2)|round(2)}}</td>
+							<td>{{(results_pct_rounded}}</td>
 							<td></td>
                         </tr>
                         {{#is_activity}}
