@@ -320,6 +320,18 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
     else:
         freq_alert = None
 
+    def annotate(res):
+        tmp = dict(res)
+
+        tmp["is_activity"] = (
+            tmp["indicator"]["indicator_category_name"] == "activity")
+
+        multiplier = {True: freq_score, False: 1}[tmp["is_activity"]]
+
+        tmp["points"] = round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
+
+        return tmp
+
     # todo
     # result.indicator.indicator_category_name == 'activity'
     # points
@@ -339,8 +351,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         "freq": freq_score,
         "freq_alert": freq_alert,
         "result": {
-            "non_zero": aggregate_results["non_zero"].values(),
-            "zero": aggregate_results["zero"].values()
+            "non_zero": map(annotate, aggregate_results["non_zero"].values()),
+            "zero":     map(annotate, aggregate_results["zero"].values())
             }
         }
     json_data = json.dumps(payload, indent=2)
