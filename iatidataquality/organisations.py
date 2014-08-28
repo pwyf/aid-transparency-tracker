@@ -328,6 +328,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         "freq_alert": freq_alert,
         "result": {
             "non_zero": aggregate_results["non_zero"].values()
+            "zero": aggregate_results["zero"].values()
             }
         }
     json_data = json.dumps(payload, indent=2)
