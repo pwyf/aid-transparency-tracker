@@ -325,6 +325,17 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
             tmp2 = dict(t)
             tmp2["results_pct_rounded"] = round(tmp2["results_pct"], 2)
             tmp2["results_num_rounded"] = round(tmp2["results_num"], 2)
+
+            if "test_level" not in tmp2["test"]: # hopeless
+                return tmp2
+
+            test_level = tmp2["test"]["test_level"]
+            level = test_level_description[test_level]
+            preposition, description, coda = level
+            tmp2["level_preposition"] = preposition
+            tmp2["level_description"] = description
+            tmp2["level_coda"] = coda
+
             return tmp2
 
         tmp = dict(res)

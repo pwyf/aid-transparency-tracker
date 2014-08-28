@@ -245,29 +245,30 @@
             <td><span class="hidden">
 				{{indicator.description}}.
 			</span></td>
-	        <td><a href="#test{{id}}" role="button" 
-				   data-toggle="modal">{{description}}</a>
-                <div id="test{{id}}" class="modal hide fade"
+	        <td><a href="#test{{test.id}}" role="button" 
+				   data-toggle="modal">{{test.description}}</a>
+                <div id="test{{test.id}}" class="modal hide fade"
 					 tabindex="-1" role="dialog" aria-labelledby="testHeader" 
 					 aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">×</button>
                         <h3 id="testHeader">
-						  Test: {{description}}
+						  Test: {{test.description}}
 						</h3>
                     </div>
                     <div class="modal-body">
                         <p>One or more tests are automatically run on 
 						  the data collected for each indicator.</p>
 
+						{{#test.test_level}}
 						<p>This test is run 
-						  {{test.level_preposition}}
+						  {{level_preposition}}
 						  <b>{{level_description}}</b>
 						  {{level_coda}}.</p>
-
+						{{/test.test_level}}
                         <p>The specific test expression is:</p>
-                        <code>{{name}}</code>
+                        <code>{{test.name}}</code>
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" 
@@ -443,9 +444,9 @@
                         automatically run on the data.</p>  
 						
 						<p>This test is run 
-						  {{test.level_preposition}}
-						  <b>{{test.level_description}}</b>
-						  {{test.level_coda}}.</p>
+						  {{level_preposition}}
+						  <b>{{level_description}}</b>
+						  {{level_coda}}.</p>
 
                         <p>The specific test expression is:</p>
                         <code>{{name}}</code>
