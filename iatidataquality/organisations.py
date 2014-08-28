@@ -315,14 +315,20 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         }
 
     freq_score = frequencies.get(organisation.frequency, 1.0)
-    freq_alert = frequencies.get(organisation.frequency, None)
+    if organisation.frequency in frequencies:
+        freq_alert = { "text": frequencies.get(organisation.frequency) }
+    else:
+        freq_alert = None
 
     payload = {
         "organisation": organisation.as_dict(),
         "links": links,
         "agg_type": agg_type,
         "freq": freq_score,
-        "freq_alert": { "text": freq_alert }
+        "freq_alert": freq_alert,
+        "result": {
+            "non_zero": aggregate_results["non_zero"].values()
+            }
         }
     json_data = json.dumps(payload, indent=2)
 

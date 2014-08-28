@@ -121,7 +121,8 @@
         </thead>
         <tbody>
 
-        {% for indicator, result in results.non_zero.items() %}
+		{{#result.non_zero}}
+
             {% if result.indicator.indicator_category_name == 'activity' %}
                 {% set points = ((result.results_pct*freq/2.0)+50)|round(2) %}
             {% else %}
@@ -289,9 +290,10 @@
             <td></td>
             </tr>
             {% endfor %}
-        {% else %}
+        {{/result.non_zero}}
+		{{^result.non_zero}}
         <tr><td colspan="5"><b>No IATI data found.</b></td></tr>
-        {% endfor %}
+		{{/result.non_zero}}
         </tbody>
         </table>
         <div class="row">
