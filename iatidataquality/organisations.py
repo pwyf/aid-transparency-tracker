@@ -333,11 +333,9 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         return tmp
 
     # todo
-    # result.indicator.indicator_category_name == 'activity'
     # points
     # result.results_pct|round(2)
     # (result.results_pct/2)|round(2)
-    # result.indicator.indicator_category_name =='activity'
     # points-50
     # testdata["condition"]
     # testdata.results_pct|round(2)
