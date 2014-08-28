@@ -48,15 +48,15 @@
         </thead>
         <tbody>
 		  {{#result.commitment}}
-            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <tr id="indicator-{{indicator.id}}">
 
               <td>
-				<a href="#indicator{{result["indicator"]["id"]}}" 
+				<a href="#indicator{{indicator.id}}" 
 				   role="button" data-toggle="modal">
 				  {{indicator.indicator_order}}. 
 				  {{indicator.description}}
 				</a>
-                <div id="indicator{{result["indicator"]["id"]}}" 
+                <div id="indicator{{indicator.id}}" 
 					 class="modal hide fade" tabindex="-1" role="dialog" 
 					 aria-labelledby="indicatorHeader" aria-hidden="true">
 
@@ -80,7 +80,7 @@
               <td>
 				{{lastyearsdata.survey_ordinal_value}}% 
 				<a href="#" class="showTests" 
-				   id="showindicator-{{result["indicator"]["id"]}}">
+				   id="showindicator-{{indicator.id}}">
 				  <i class="icon-chevron-down align-right"></i></a>
 			  </td>
 
@@ -91,8 +91,8 @@
 
             </tr>
 
-            <tr id="tr-{{result["indicator"]["id"]}}-details" 
-				class="group-{{result["indicator"]["id"]}} hidden">
+            <tr id="tr-{{indicator.id}}-details" 
+				class="group-{{indicator.id}} hidden">
 
               <td colspan="3">
                 <h5>Evidence</h5>
