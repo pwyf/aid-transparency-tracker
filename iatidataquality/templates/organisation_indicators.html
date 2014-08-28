@@ -239,7 +239,7 @@
 			</td>
             </tr>
 
-            {% for testdata in result["tests"] %}
+			{{#tests}}
             <tr id="tr{{testdata["test"]["id"]}}" 
 				class="group-{{result["indicator"]["id"]}} hidden">
             <td><span class="hidden">
@@ -289,7 +289,7 @@
             <td>{{testdata["results_num"]|round(2)}}</td>
             <td></td>
             </tr>
-            {% endfor %}
+		  {{/tests}}
         {{/result.non_zero}}
 		{{^result.non_zero}}
         <tr><td colspan="5"><b>No IATI data found.</b></td></tr>
