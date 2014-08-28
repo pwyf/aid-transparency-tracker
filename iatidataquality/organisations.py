@@ -322,7 +322,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         "links": links,
         "agg_type": agg_type,
         "freq": freq_score,
-        "freq_alert": freq_alert
+        "freq_alert": { "text": freq_alert }
         }
     json_data = json.dumps(payload, indent=2)
 
