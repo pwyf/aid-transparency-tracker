@@ -435,7 +435,7 @@
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" 
 						  aria-hidden="true">×</button>
-                  <h3 id="testHeader">Test: {{testdata.test.description}}</h3>
+                  <h3 id="testHeader">Test: {{description}}</h3>
                     </div>
                     <div class="modal-body">
                         <p>Each indicator in the 2014 Index can be
@@ -448,7 +448,7 @@
 						  {{test.level_coda}}.</p>
 
                         <p>The specific test expression is:</p>
-                        <code>{{testdata.test.name}}</code>
+                        <code>{{name}}</code>
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" 
@@ -457,11 +457,11 @@
                 </div>
 
 				{{#condition}}
-			  <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>
+			  <i class="icon-info-sign" title="{{condition}}"></i>
 				{{/condition}}
 			</td>
-            <td class="pct">{{testdata.results_pct|float|round(2)}}</td>
-            <td>{{testdata["results_num"]|round(2)}}</td>
+            <td class="pct">{{results_pct_rounded}}</td>
+            <td>{{results_num_rounded}}</td>
             <td></td>
             <td></td>
             <td></td>
