@@ -334,8 +334,6 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         return tmp
 
     # todo
-    # points
-    # points-50
     # testdata["condition"]
     # testdata.results_pct|round(2)
     # testdata["results_num"]|round(2)
