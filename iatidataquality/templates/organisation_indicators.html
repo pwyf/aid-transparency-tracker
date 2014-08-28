@@ -254,7 +254,7 @@
                         <button type="button" class="close" data-dismiss="modal"
 								aria-hidden="true">×</button>
                         <h3 id="testHeader">
-						  Test: {{testdata.test.description}}
+						  Test: {{description}}
 						</h3>
                     </div>
                     <div class="modal-body">
@@ -263,11 +263,11 @@
 
 						<p>This test is run 
 						  {{test.level_preposition}}
-						  <b>{{test.level_description}}</b>
-						  {{test.level_coda}}.</p>
+						  <b>{{level_description}}</b>
+						  {{level_coda}}.</p>
 
                         <p>The specific test expression is:</p>
-                        <code>{{testdata.test.name}}</code>
+                        <code>{{name}}</code>
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" 
@@ -278,9 +278,9 @@
 				<i class="icon-info-sign" title="{{condition}}"></i>
 				{{/condition}}
 			</td>
-            <td class="pct">{{testdata.results_pct|round(2)}}</td>
+            <td class="pct">{{results_pct_rounded}}</td>
             <td></td>
-            <td>{{testdata["results_num"]|round(2)}}</td>
+            <td>{{results_num_rounded}}</td>
             <td></td>
             </tr>
 		  {{/tests}}

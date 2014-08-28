@@ -321,6 +321,12 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         freq_alert = None
 
     def annotate(res):
+        def annotate_test(t):
+            tmp2 = dict(t)
+            tmp2["results_pct_rounded"] = round(tmp2["results_pct"], 2)
+            tmp2["results_num_rounded"] = round(tmp2["results_num"], 2)
+            return tmp2
+
         tmp = dict(res)
 
         tmp["is_activity"] = (
@@ -331,9 +337,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         tmp["points"] = round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
         tmp["points_minus_50"] = tmp["points"] - 50
 
-        tmp["tests"] = dict(res["tests"]) # yes, really
-        tmp["tests"]["results_pct_rounded"] = round(tmp["tests"]["results_pct"], 2)
-        tmp["tests"]["results_num_rounded"] = round(tmp["tests"]["results_num"], 2)
+        tmp["tests"] = map(annotate_test, res["tests"])
 
         return tmp
 
