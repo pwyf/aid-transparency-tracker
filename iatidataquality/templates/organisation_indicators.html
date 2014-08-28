@@ -129,22 +129,22 @@
                 {% set points = ((result.results_pct/2.0)+50)|round(2) %}
             {% endif %}
 
-            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <tr id="indicator-{{indicator.id}}">
               <td>{{result.indicator.indicator_category_name|title}}</td>
               <td>{{result.indicator.indicator_subcategory_name|title}}</td>
-              <td><a href="#indicator{{result["indicator"]["id"]}}" 
+              <td><a href="#indicator{{indicator.id}}" 
 					 role="button" data-toggle="modal">
-                  {{result["indicator"]["indicator_order"]}}. 
-				  {{result["indicator"]["description"]}}
+                  {{indicator.indicator_order}}. 
+				  {{indicator.description}}
 				</a>
-                <div id="indicator{{result["indicator"]["id"]}}" 
+                <div id="indicator{{indicator.id}}" 
 					 class="modal hide fade" tabindex="-1" role="dialog" 
 					 aria-labelledby="indicatorHeader" aria-hidden="true">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" 
 							aria-hidden="true">×</button>
                     <h3 id="indicatorHeader">
-					  Indicator: {{result["indicator"]["description"]}}
+					  Indicator: {{indicator.description}}
 					</h3>
                   </div>
                   <div class="modal-body">
@@ -241,7 +241,7 @@
 
 			{{#tests}}
             <tr id="tr{{testdata["test"]["id"]}}" 
-				class="group-{{result["indicator"]["id"]}} hidden">
+				class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
 				{{result.indicator.indicator_category_name|title}}
 			</span></td>
@@ -249,7 +249,7 @@
 				{{result.indicator.indicator_subcategory_name|title}}
 			</span></td>
             <td><span class="hidden">
-				{{result["indicator"]["description"]}}.
+				{{indicator.description}}.
 			</span></td>
 	        <td><a href="#test{{testdata["test"]["id"]}}" role="button" 
 				   data-toggle="modal">{{testdata["test"]["description"]}}</a>
@@ -352,15 +352,15 @@
                 {% set points = "" %}
             {% endif %}
 
-            <tr id="indicator-{{result["indicator"]["id"]}}">
+            <tr id="indicator-{{indicator.id}}">
             <td>{{result.indicator.indicator_category_name|title}}</td>
             <td>{{result.indicator.indicator_subcategory_name|title}}</td>
-            <td><a href="#indicator{{result["indicator"]["id"]}}" 
+            <td><a href="#indicator{{indicator.id}}" 
 				   role="button" data-toggle="modal">
-                {{result["indicator"]["indicator_order"]}}. 
-				{{result["indicator"]["description"]}}
+                {{indicator.indicator_order}}. 
+				{{indicator.description}}
 			  </a>
-                <div id="indicator{{result["indicator"]["id"]}}" 
+                <div id="indicator{{indicator.id}}" 
 					 class="modal hide fade" tabindex="-1" role="dialog" 
 					 aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -368,7 +368,7 @@
 								data-dismiss="modal" 
 								aria-hidden="true">×</button>
                         <h3 id="indicatorHeader">
-						  Indicator: {{result["indicator"]["description"]}}
+						  Indicator: {{indicator.description}}
 						</h3>
                     </div>
                     <div class="modal-body">
@@ -407,13 +407,13 @@
             </td>
             {% endif %}
             <td><a href="#" class="showTests" 
-				   id="showindicator-{{result["indicator"]["id"]}}">
+				   id="showindicator-{{indicator.id}}">
 				<i class="icon-chevron-down align-right"></i></a></td>
             </tr>
             
             {% for testdata in result["tests"] %}
             <tr id="tr{{testdata["test"]["id"]}}" 
-				class="group-{{result["indicator"]["id"]}} hidden">
+				class="group-{{indicator.id}} hidden">
             <td>
 			  <span class="hidden">
 				{{result.indicator.indicator_category_name|title}}
@@ -426,7 +426,7 @@
 			</td>
             <td>
 			  <span class="hidden">
-				{{result["indicator"]["description"]}}.
+				{{indicator.description}}.
 			  </span>
 			</td>
 	        <td><a href="#test{{testdata["test"]["id"]}}" 
@@ -472,7 +472,7 @@
             <td></td>
             </tr>
             {% else %}
-            <tr class="group-{{result["indicator"]["id"]}} hidden">
+            <tr class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
 				{{result.indicator.indicator_category_name|title}}
 			</span></td>
@@ -480,7 +480,7 @@
 				{{result.indicator.indicator_subcategory_name|title}}
 			</span></td>
             <td><span class="hidden">
-				{{result["indicator"]["description"]}}.
+				{{indicator.description}}.
 			</span></td>
             <td colspan="6"><b>No data quality results available.</b><br />
             This may be because you have not yet published an 
