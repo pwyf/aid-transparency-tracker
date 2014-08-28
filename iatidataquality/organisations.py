@@ -329,6 +329,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         multiplier = {True: freq_score, False: 1}[tmp["is_activity"]]
 
         tmp["points"] = round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
+        tmp["points_minus_50"] = tmp["points"] - 50
 
         return tmp
 
