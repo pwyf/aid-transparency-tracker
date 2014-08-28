@@ -379,15 +379,15 @@
 			  </span>
               {% endif %}
 			</td>
-            {% if published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class != 'important' %}
+              {% if published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class != 'important' %}
             <td>
 			  <span class="label label-{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].format_class}}">
 				{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].title}}
 			  </span>
 			</td>
-            {% else %}
+              {% else %}
             <td></td>
-            {% endif %}
+              {% endif %}
             <td>{{points}}</td>
             {% else %}
             <td colspan="3">
