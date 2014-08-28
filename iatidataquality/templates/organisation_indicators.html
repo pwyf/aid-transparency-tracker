@@ -336,18 +336,6 @@
         <tbody>
 		{{#result.zero}}
 
-            {% if surveydata %}
-              {% if result.indicator.indicator_ordinal and surveydata[result.indicator.id].PublishedFormat %}
-                {% set points = ((surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value|float/3) * surveydata[result.indicator.id].PublishedFormat.format_value * 50)|round(2) %}
-              {% elif surveydata[result.indicator.id].PublishedStatus and surveydata[result.indicator.id].PublishedFormat %}
-                {% set points = (surveydata[result.indicator.id].PublishedStatus.publishedstatus_value * surveydata[result.indicator.id].PublishedFormat.format_value * 50) %}
-              {% else %}
-                {% set points = 0 %}
-              {% endif %}
-            {% else %}
-                {% set points = "" %}
-            {% endif %}
-
             <tr id="indicator-{{indicator.id}}">
             <td>{{indicator.indicator_category_name}}</td>
             <td>{{indicator.indicator_subcategory_name}}</td>
