@@ -266,11 +266,12 @@
             </td>
 
 	        <td>
-            {% if result.results_pct > 0 %}
-			<span class="label label-success">IATI</span>
-			{% else %}
-			<span class="label label-default">No survey data yet.</span>
-			{% endif %}
+			{{#uses_iati}}
+			  <span class="label label-success">IATI</span>
+			{{/uses_iati}}
+			{{^uses_iati}}
+			  <span class="label label-default">No survey data yet.</span>
+			{{/uses_iati}}
 			</td>
 
           </tr>
