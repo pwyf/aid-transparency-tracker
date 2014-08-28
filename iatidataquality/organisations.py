@@ -345,7 +345,11 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
         multiplier = {True: freq_score, False: 1}[tmp["is_activity"]]
 
-        tmp["points"] = round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
+        def points():
+            return round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
+
+        tmp["points"] = points()
+
         tmp["points_minus_50"] = tmp["points"] - 50
 
         tmp["tests"] = map(annotate_test, res["tests"])
