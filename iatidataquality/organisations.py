@@ -301,10 +301,28 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     agg_type = [ agg_detail(agt) for agt in all_aggregation_types ]
 
+    frequencies = { 
+        "less than quarterly": (0.5,
+                                """It looks like you publish less often than
+          quarterly, so the maximum you can score for IATI data is
+          75 points. The total points for the relevant indicators have been
+          adjusted accordingly"""),
+        "quarterly": (0.9,
+                      """It looks like you publish quarterly and not monthly,
+          so the maximum you can score for IATI data is 95 points. The total 
+          points for the relevant indicators have been adjusted 
+          accordingly.""")
+        }
+
+    freq_score = frequencies.get(organisation.frequency, 1.0)
+    freq_alert = frequencies.get(organisation.frequency, None)
+
     payload = {
         "organisation": organisation.as_dict(),
         "links": links,
-        "agg_type": agg_type
+        "agg_type": agg_type,
+        "freq": freq_score,
+        "freq_alert": freq_alert
         }
     json_data = json.dumps(payload, indent=2)
 
