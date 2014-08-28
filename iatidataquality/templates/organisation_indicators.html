@@ -466,7 +466,8 @@
             <td></td>
             <td></td>
             </tr>
-            {% else %}
+		    {{/tests}}
+			{{^tests}}
             <tr class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
 				{{indicator.indicator_category_name}}
