@@ -24,6 +24,9 @@ def aggregationTypes(aggregationtype_id=None):
         checkATs = models.AggregationType.query.filter_by(id=aggregationtype_id).first()
     return checkATs
 
+def allAggregationTypes():
+    return db.session.query(models.AggregationType).all()
+
 def addAggregationType(data):
     checkAT = models.AggregationType.query.filter_by(name=data["name"]).first()
     if not checkAT:
