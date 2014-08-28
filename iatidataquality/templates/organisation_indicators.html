@@ -4,7 +4,11 @@
 {% endblock %}
 {% block content %}
 
+<div id="template-target">
+</div>
+
 {% raw %}
+<script type="text/template" id="template-source">
     <h1><a href="{{url_for('organisations', 
 				 organisation_code=organisation.organisation_code)}}">
 		{{organisation.organisation_name}}</a>
@@ -553,6 +557,7 @@
         </div>
         </fieldset>
     {% endif %}
+</script>
 {% endraw %}
 {% endblock %}
 
