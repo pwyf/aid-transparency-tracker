@@ -232,7 +232,7 @@ name_tuple = lambda x: (x.name, x)
 
 def organisation_publication_authorised(organisation_code, aggregation_type):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
-    all_aggregation_types = dqaggregationtypes.aggregationTypes()
+    all_aggregation_types = dqaggregationtypes.allAggregationTypes()
 
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
@@ -275,7 +275,36 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         0: ("for", "each transaction", "in your data")
         }
 
+    links = {
+        "organisation_page": url_for(
+            'organisations', 
+            organisation_code=organisation.organisation_code),
+        "organisation_detail": url_for(
+            'organisation_publication_detail', 
+            organisation_code=organisation.organisation_code),
+        "organisation_feedback": url_for(
+            'organisations_feedback', 
+            organisation_code=organisation.organisation_code)
+        }
+    if surveydata:
+        links.update({
+                "organisation_survey_edit": url_for(
+                    'organisation_survey_edit', 
+                    organisation_code=organisation.organisation_code, 
+                    workflow_name=surveydata_workflow)
+                })
+
+    def agg_detail(agt):
+        tmp = agt.as_dict()
+        tmp["selected"] = agt.id == aggregation_type
+        return tmp
+
+    agg_type = [ agg_detail(agt) for agt in all_aggregation_types ]
+
     payload = {
+        "organisation": organisation.as_dict(),
+        "links": links,
+        "agg_type": agg_type
         }
     json_data = json.dumps(payload, indent=2)
 
