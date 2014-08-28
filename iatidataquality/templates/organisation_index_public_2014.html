@@ -48,8 +48,6 @@
         </thead>
         <tbody>
 		  {{#result.commitment}}
-          {% for indicator, result in results.commitment.items() %}
-
             <tr id="indicator-{{result["indicator"]["id"]}}">
 
               <td>
@@ -114,7 +112,6 @@
               </td>
               {% endif %}
             </tr>
-			{% endfor %}
 			{{/result.commitment}}
         </tbody>
       </table>
