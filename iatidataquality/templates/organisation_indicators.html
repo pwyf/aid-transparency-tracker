@@ -130,8 +130,8 @@
             {% endif %}
 
             <tr id="indicator-{{indicator.id}}">
-              <td>{{indicator.indicator_category_name|title}}</td>
-              <td>{{indicator.indicator_subcategory_name|title}}</td>
+              <td>{{indicator.indicator_category_name}}</td>
+              <td>{{indicator.indicator_subcategory_name}}</td>
               <td><a href="#indicator{{indicator.id}}" 
 					 role="button" data-toggle="modal">
                   {{indicator.indicator_order}}. 
@@ -196,7 +196,7 @@
                         <tr class="muted">
                             <td>Frequency</td>
 							<td>x {{freq}}</td>
-							<td>{{organisation.frequency|title}}: 
+							<td>{{organisation.frequency}}: 
 							  {{organisation.frequency_comment}}</td>
                         </tr>
                         {% endif %}
@@ -243,10 +243,10 @@
             <tr id="tr{{testdata["test"]["id"]}}" 
 				class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
-				{{indicator.indicator_category_name|title}}
+				{{indicator.indicator_category_name}}
 			</span></td>
             <td><span class="hidden">
-				{{indicator.indicator_subcategory_name|title}}
+				{{indicator.indicator_subcategory_name}}
 			</span></td>
             <td><span class="hidden">
 				{{indicator.description}}.
@@ -354,8 +354,8 @@
             {% endif %}
 
             <tr id="indicator-{{indicator.id}}">
-            <td>{{indicator.indicator_category_name|title}}</td>
-            <td>{{indicator.indicator_subcategory_name|title}}</td>
+            <td>{{indicator.indicator_category_name}}</td>
+            <td>{{indicator.indicator_subcategory_name}}</td>
             <td><a href="#indicator{{indicator.id}}" 
 				   role="button" data-toggle="modal">
                 {{indicator.indicator_order}}. 
@@ -417,12 +417,12 @@
 				class="group-{{indicator.id}} hidden">
             <td>
 			  <span class="hidden">
-				{{indicator.indicator_category_name|title}}
+				{{indicator.indicator_category_name}}
 			  </span>
 			</td>
             <td>
 			  <span class="hidden">
-				{{indicator.indicator_subcategory_name|title}}
+				{{indicator.indicator_subcategory_name}}
 			  </span>
 			</td>
             <td>
@@ -475,10 +475,10 @@
             {% else %}
             <tr class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
-				{{indicator.indicator_category_name|title}}
+				{{indicator.indicator_category_name}}
 			</span></td>
             <td><span class="hidden">
-				{{indicator.indicator_subcategory_name|title}}
+				{{indicator.indicator_subcategory_name}}
 			</span></td>
             <td><span class="hidden">
 				{{indicator.description}}.
