@@ -420,18 +420,9 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     return render_template("organisation_indicators.html",
                            organisation=organisation,
-                           results=aggregate_results,
-                           runtime=latest_runtime,
-                           all_aggregation_types=all_aggregation_types,
-                           aggregation_type=aggregation_type,
-                           surveydata=surveydata,
-                           published_status=published_status_by_id,
-                           published_format=publishedformats,
-                           surveydata_workflow=surveydata_workflow,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,
-                           json_data=json_data,
-                           years=years)
+                           json_data=json_data)
 
 # this function is unacceptably long; it really wants to be a class
 def organisation_publication_unauthorised(organisation_code, aggregation_type):
