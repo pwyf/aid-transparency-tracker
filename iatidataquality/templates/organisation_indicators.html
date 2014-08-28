@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
 
+{% raw %}
     <h1><a href="{{url_for('organisations', 
 				 organisation_code=organisation.organisation_code)}}">
 		{{organisation.organisation_name}}</a>
@@ -561,7 +562,10 @@
         </div>
         </fieldset>
     {% endif %}
+{% endraw %}
+{% endblock %}
 
+{% block final_scripts %}
     <script src="{{url_for('static', 
 				 filename='js/organisationPublication.js')}}"></script>
 
