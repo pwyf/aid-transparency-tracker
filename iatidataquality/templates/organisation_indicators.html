@@ -130,8 +130,8 @@
             {% endif %}
 
             <tr id="indicator-{{indicator.id}}">
-              <td>{{result.indicator.indicator_category_name|title}}</td>
-              <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+              <td>{{indicator.indicator_category_name|title}}</td>
+              <td>{{indicator.indicator_subcategory_name|title}}</td>
               <td><a href="#indicator{{indicator.id}}" 
 					 role="button" data-toggle="modal">
                   {{indicator.indicator_order}}. 
@@ -148,7 +148,7 @@
 					</h3>
                   </div>
                   <div class="modal-body">
-                    {{result.indicator.longdescription}}
+                    {{indicator.longdescription}}
                   </div>
                   <div class="modal-footer">
                     <button class="btn" data-dismiss="modal" 
@@ -158,10 +158,10 @@
               </td>
 	          <td></td>
               <td class="pct muted">{{result.results_pct|round(2)}}</td>
-              <td><a href="#calculation{{result.indicator.id}}" role="button" 
+              <td><a href="#calculation{{indicator.id}}" role="button" 
 					 data-toggle="modal">{{points}}</a>
 
-                <div id="calculation{{result.indicator.id}}" 
+                <div id="calculation{{indicator.id}}" 
 					 class="modal hide fade" tabindex="-1" role="dialog" 
 					 aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -169,7 +169,7 @@
 								data-dismiss="modal" 
 								aria-hidden="true">×</button>
                         <h3 id="indicatorHeader">
-						  Score calculation for {{result.indicator.description}}
+						  Score calculation for {{indicator.description}}
 						</h3>
                     </div>
                     <div class="modal-body">
@@ -234,7 +234,7 @@
             </td>
             <td></td>
             <td><a href="#" class="showTests" 
-				   id="showindicator-{{result.indicator.id}}">
+				   id="showindicator-{{indicator.id}}">
 				<i class="icon-chevron-down align-right"></i></a>
 			</td>
             </tr>
@@ -243,10 +243,10 @@
             <tr id="tr{{testdata["test"]["id"]}}" 
 				class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
-				{{result.indicator.indicator_category_name|title}}
+				{{indicator.indicator_category_name|title}}
 			</span></td>
             <td><span class="hidden">
-				{{result.indicator.indicator_subcategory_name|title}}
+				{{indicator.indicator_subcategory_name|title}}
 			</span></td>
             <td><span class="hidden">
 				{{indicator.description}}.
@@ -354,8 +354,8 @@
             {% endif %}
 
             <tr id="indicator-{{indicator.id}}">
-            <td>{{result.indicator.indicator_category_name|title}}</td>
-            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+            <td>{{indicator.indicator_category_name|title}}</td>
+            <td>{{indicator.indicator_subcategory_name|title}}</td>
             <td><a href="#indicator{{indicator.id}}" 
 				   role="button" data-toggle="modal">
                 {{indicator.indicator_order}}. 
@@ -373,7 +373,7 @@
 						</h3>
                     </div>
                     <div class="modal-body">
-                        {{result.indicator.longdescription}}
+                        {{indicator.longdescription}}
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" 
@@ -417,12 +417,12 @@
 				class="group-{{indicator.id}} hidden">
             <td>
 			  <span class="hidden">
-				{{result.indicator.indicator_category_name|title}}
+				{{indicator.indicator_category_name|title}}
 			  </span>
 			</td>
             <td>
 			  <span class="hidden">
-				{{result.indicator.indicator_subcategory_name|title}}
+				{{indicator.indicator_subcategory_name|title}}
 			  </span>
 			</td>
             <td>
@@ -475,17 +475,17 @@
             {% else %}
             <tr class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
-				{{result.indicator.indicator_category_name|title}}
+				{{indicator.indicator_category_name|title}}
 			</span></td>
             <td><span class="hidden">
-				{{result.indicator.indicator_subcategory_name|title}}
+				{{indicator.indicator_subcategory_name|title}}
 			</span></td>
             <td><span class="hidden">
 				{{indicator.description}}.
 			</span></td>
             <td colspan="6"><b>No data quality results available.</b><br />
             This may be because you have not yet published an 
-            {{result.indicator.indicator_category_name}} file.
+            {{indicator.indicator_category_name}} file.
             </td>
             </tr>
             {{/tests}}
