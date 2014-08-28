@@ -80,13 +80,14 @@
 			 class="btn">Detail
 		  </a> 
           <select name="aggregation_type" id="aggregation_type">
-            {% for agt in all_aggregation_types %}
-            <option value="{{agt.AggregationType.id}}"
-					{% if agt.AggregationType.id==aggregation_type %} 
-					selected{% endif %}>
-			  {{agt.AggregationType.name}}
+			{{#agg_type}}
+            <option value="{{id}}"
+					{{#selected}}
+					selected
+					{{/selected}}>
+			  {{name}}
 			</option>
-            {% endfor %}
+            {{/agg_type}}
           </select>
         </form>
 
