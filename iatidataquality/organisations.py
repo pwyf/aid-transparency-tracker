@@ -351,7 +351,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         "result": {
             "non_zero": map(annotate, aggregate_results["non_zero"].values()),
             "zero":     map(annotate, aggregate_results["zero"].values())
-            }
+            },
+        "surveydata": surveydata
         }
     json_data = json.dumps(payload, indent=2)
 
