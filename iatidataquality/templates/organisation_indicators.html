@@ -456,9 +456,9 @@
                     </div>
                 </div>
 
-				{% if testdata["condition"] %} 
+				{{#condition}}
 			  <i class="icon-info-sign" title="{{testdata["condition"]}}"></i>
-				{% endif %}
+				{{/condition}}
 			</td>
             <td class="pct">{{testdata.results_pct|float|round(2)}}</td>
             <td>{{testdata["results_num"]|round(2)}}</td>
