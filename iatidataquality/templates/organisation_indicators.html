@@ -367,15 +367,17 @@
 	        <td></td>
             <td><span class="label label-inverse">NOT FOUND</span></td>
             {% if surveydata %}
-                <td>{% if result.indicator.indicator_ordinal %}
+                <td>
+				  {% if result.indicator.indicator_ordinal %}
                     <span class="label label-{{years[surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value].class}}">
 					  {{years[surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value].text}}
 					</span>                    
-                {% else %}
+				  {% else %}
                     <span class="label label-{{published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class}}">
 					  {{published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].title}}
 					</span>
-                {% endif %}</td>
+                  {% endif %}
+				</td>
                 {% if published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status].publishedstatus_class != 'important' %}
             <td><span class="label label-{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].format_class}}">
 				{{published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format].title}}
