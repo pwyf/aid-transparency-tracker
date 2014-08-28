@@ -222,19 +222,18 @@
         <tbody>
 		{{#result.publication_activity}}
 
-          <tr id="indicator-{{result["indicator"]["id"]}}">
+          <tr id="indicator-{{indicator.id}}">
 
-            <td>{{result.indicator.indicator_subcategory_name|title}}</td>
+            <td>{{indicator.indicator_subcategory_name}}</td>
 
             <td>
-			  <a href="#indicator{{result["indicator"]["id"]}}" 
+			  <a href="#indicator{{indicator.id}}" 
 				 role="button" data-toggle="modal">
-
-                {{result["indicator"]["indicator_order"]}}. 
-				{{result["indicator"]["description"]}}
+                {{indicator.indicator_order}}. 
+				{{indicator.description}}
 			  </a>
               
-			  <div id="indicator{{result["indicator"]["id"]}}" 
+			  <div id="indicator{{indicator.id}}" 
 				   class="modal hide fade" tabindex="-1" role="dialog" 
 				   aria-labelledby="indicatorHeader" aria-hidden="true">
 
@@ -243,7 +242,7 @@
 								data-dismiss="modal" 
 								aria-hidden="true">×</button>
                         <h3 id="indicatorHeader">
-						  Indicator: {{result["indicator"]["description"]}}
+						  Indicator: {{indicator.description}}
 						</h3>
                     </div>
                     <div class="modal-body">
