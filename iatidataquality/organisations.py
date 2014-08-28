@@ -268,6 +268,10 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     years = dict(get_ordinal_values_years())
 
+    payload = {
+        }
+    json_data = json.dumps(payload, indent=2)
+
     return render_template("organisation_indicators.html",
                            organisation=organisation,
                            results=aggregate_results,
@@ -280,6 +284,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                            surveydata_workflow=surveydata_workflow,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,
+                           json_data=json_data,
                            years=years)
 
 # this function is unacceptably long; it really wants to be a class
