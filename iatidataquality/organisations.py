@@ -396,8 +396,6 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
     annotate_zero = lambda res : annotate(res, True)
     annotate_nonzero = lambda res : annotate(res, False)
 
-    # todo
-    # testdata["condition"]
     # testdata.results_pct|round(2)
     # testdata["results_num"]|round(2)
     # as far as line 296
