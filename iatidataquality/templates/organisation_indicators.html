@@ -9,8 +9,7 @@
 
 {% raw %}
 <script type="text/template" id="template-source">
-    <h1><a href="{{url_for('organisations', 
-				 organisation_code=organisation.organisation_code)}}">
+    <h1><a href="{{links.organisation_page}}">
 		{{organisation.organisation_name}}</a>
 	</h1>
 
@@ -77,8 +76,7 @@
       <div class="pull-right">
         <form action="" method="GET" id="aggregation_type_form" 
 			  class="form-inline">
-		  <a href="{{url_for('organisation_publication_detail', 
-				   organisation_code=organisation.organisation_code)}}" 
+		  <a href="{{links.organisation_detail}}" 
 			 class="btn">Detail
 		  </a> 
           <select name="aggregation_type" id="aggregation_type">
@@ -325,7 +323,7 @@
             <div class="span6">
                 <h4>How do you structure your data?</h4>
                 <p>If you use multiple hierarchies in your IATI data, please tell us how the data is structured as this could make a difference to your score.</p>
-                <p><a href="{{url_for('organisations_feedback', organisation_code=organisation.organisation_code)}}" class="btn">Provide structure &raquo;</a></p>
+                <p><a href="{{links.organisations_feedback}}" class="btn">Provide structure &raquo;</a></p>
             </div>
         </div>
         </fieldset>
@@ -334,9 +332,7 @@
         <fieldset>
         {% if surveydata %}
         <div class="pull-right">
-        <a href="{{url_for('organisation_survey_edit', 
-				 organisation_code=organisation.organisation_code, 
-				 workflow_name=surveydata_workflow)}}" 
+        <a href="{{links.organisation_survey_edit}}" 
 		   class="btn btn-primary">Review manually collected data</a>
         </div>
         {% endif %}
