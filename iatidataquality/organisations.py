@@ -320,7 +320,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
     else:
         freq_alert = None
 
-    def annotate(res):
+    def annotate(res, zero):
         def annotate_test(t):
             tmp2 = dict(t)
             tmp2["results_pct_rounded"] = round(tmp2["results_pct"], 2)
@@ -352,6 +352,9 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
         return tmp
 
+    annotate_zero = lambda res : annotate(res, True)
+    annotate_nonzero = lambda res : annotate(res, False)
+
     # todo
     # testdata["condition"]
     # testdata.results_pct|round(2)
@@ -365,8 +368,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         "freq": freq_score,
         "freq_alert": freq_alert,
         "result": {
-            "non_zero": map(annotate, aggregate_results["non_zero"].values()),
-            "zero":     map(annotate, aggregate_results["zero"].values())
+            "non_zero": map(annotate_nonzero, aggregate_results["non_zero"].values()),
+            "zero":map(annotate_zero, aggregate_results["zero"].values())
             },
         "surveydata": surveydata
         }
