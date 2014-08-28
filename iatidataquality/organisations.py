@@ -346,11 +346,29 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         multiplier = {True: freq_score, False: 1}[tmp["is_activity"]]
 
         def points():
-            return round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
+            if not zero:
+                return round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
+
+            ind_id = res["indicator"]["id"]
+            
+            if surveydata:
+                if (res["indicator"]["indicator_ordinal"] and surveydata[ind_id].PublishedFormat):
+                    return round(
+                        (surveydata[ind_id].OrganisationSurveyData.ordinal_value/3.0) * 
+                        surveydata[ind_id].PublishedFormat.format_value * 50, 2)
+                elif (surveydata[ind_id].PublishedStatus and surveydata[ind_id].PublishedFormat):
+                    return (
+                        surveydata[ind_id].PublishedStatus.publishedstatus_value * 
+                        surveydata[ind_id].PublishedFormat.format_value * 50)
+                else:
+                    return 0
+            else:
+                return ""
 
         tmp["points"] = points()
-
-        tmp["points_minus_50"] = tmp["points"] - 50
+        if not zero:
+            tmp["points_minus_50"] = tmp["points"] - 50
+            # it all fails if the other branch tries to use this value
 
         tmp["tests"] = map(annotate_test, res["tests"])
 
