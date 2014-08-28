@@ -374,17 +374,19 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
         if zero:
             if surveydata:
+                osd = surveydata[result.indicator.id].OrganisationSurveyData
+
                 def status_class_and_text():
                     if tmp["indicator"]["indicator_ordinal"]:
-                        return (years[surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value]["class"], 
-                                years[surveydata[result.indicator.id].OrganisationSurveyData.ordinal_value]["text"])
+                        return (years[osd.ordinal_value]["class"], 
+                                years[osd.ordinal_value]["text"])
                     else:
-                        return (published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status]["publishedstatus_class"], 
-                                published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status]["title"])
+                        return (published_status[osd.published_status]["publishedstatus_class"], 
+                                published_status[osd.published_status]["title"])
                 def format_class_and_text():
-                    if published_status[surveydata[result.indicator.id].OrganisationSurveyData.published_status]["publishedstatus_class"] != 'important':
-                        return (published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format]["format_class"], 
-                                published_format[surveydata[result.indicator.id].OrganisationSurveyData.published_format]["title"])
+                    if published_status[osd.published_status]["publishedstatus_class"] != 'important':
+                        return (published_format[osd.published_format]["format_class"], 
+                                published_format[osd.published_format]["title"])
                     else:
                         return ("", "")
                 tmp["status_class"], tmp["status_text"] = status_class_and_text()
