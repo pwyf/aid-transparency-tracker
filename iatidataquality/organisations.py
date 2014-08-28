@@ -268,6 +268,13 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     years = dict(get_ordinal_values_years())
 
+    test_level_description = {
+        3: ("on", "organisation files", ""),
+        2: ("on", "each package of data", ""),
+        1: ("for", "each activity", "in your data"),
+        0: ("for", "each transaction", "in your data")
+        }
+
     payload = {
         }
     json_data = json.dumps(payload, indent=2)
