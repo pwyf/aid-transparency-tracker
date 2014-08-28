@@ -274,9 +274,9 @@
 								aria-hidden="true">Close</button>
                     </div>
                 </div>
-				{% if testdata["condition"] %} 
-				<i class="icon-info-sign" title="{{testdata["condition"]}}"></i>
-				{% endif %}
+				{{#condition}} 
+				<i class="icon-info-sign" title="{{condition}}"></i>
+				{{/condition}}
 			</td>
             <td class="pct">{{testdata.results_pct|round(2)}}</td>
             <td></td>
