@@ -11,7 +11,6 @@ which_packages = [
     (u'dfid-ml', True),
     (u'dfid-589', True),
     (u'dfid-ph', True),
-    (u'worldbank-789', True),
     (u'worldbank-ao', True),
     ]
 
@@ -22,20 +21,6 @@ default_minimal_organisations = [
             'packagegroup_name': 'worldbank',
             'condition': None,
             'package_name': 'worldbank-ao',
-             "organisation_total_spend": "11703.48",
-             "organisation_total_spend_source": None,
-             "organisation_currency": None,
-             "organisation_currency_conversion": None,
-             "organisation_currency_conversion_source": None,
-             "organisation_largest_recipient": None,
-             "organisation_largest_recipient_source": None
-            },
-            {
-            'organisation_name': 'World Bank',
-            'organisation_code': '44002',
-            'packagegroup_name': 'worldbank',
-            'condition': None,
-            'package_name': 'worldbank-789',
              "organisation_total_spend": "11703.48",
              "organisation_total_spend_source": None,
              "organisation_currency": None,
