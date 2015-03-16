@@ -6,8 +6,8 @@ from iatidq import app
 
 ORGANISATION_MAP_FILE = 'organisations_with_identifiers.csv'
 # Trying to avoid proliferation of files...
-OLD_YEAR = '2013'
-NEW_YEAR = '2014'
+OLD_YEAR = '2014'
+NEW_YEAR = '2015'
 OLD_ORG_FIELD_ID = OLD_YEAR + '_organisation_code'
 NEW_ORG_FIELD_ID = 'organisation_code'
 OLD_INDICATORS_FILE = OLD_YEAR + '_' + NEW_YEAR + '_indicators.csv'
