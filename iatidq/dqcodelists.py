@@ -87,6 +87,7 @@ def handle_codelist(codelists_url, row):
         db.session.add(codelist)
         
     codelist_url = (CODELIST_API % ("codelist/" + row['name'] + ".csv"))
+    print codelist_url
 
     f = urllib2.urlopen(codelist_url)
 
