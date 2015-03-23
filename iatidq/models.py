@@ -162,7 +162,7 @@ class AggregateResult(db.Model):
     aggregateresulttype_id = Column(Integer, ForeignKey('aggregationtype.id'),
                                     nullable=False)
     test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
-    result_hierarchy = Column(Integer)
+    result_hierarchy = Column(Integer, nullable=False)
     results_data = Column(Float)
     results_num = Column(Integer)
     __table_args__ = (UniqueConstraint('package_id', 
