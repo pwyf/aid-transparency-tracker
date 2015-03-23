@@ -23,6 +23,11 @@ def aggregationTypes(aggregationtype_id=None):
     else:
         checkATs = models.AggregationType.query.filter_by(id=aggregationtype_id).first()
     return checkATs
+    
+def aggregationtype_by_name(name):
+    checkAT = db.session.query(models.AggregationType
+                    ).filter(name=name).first()
+    return checkAT
 
 def allAggregationTypes():
     return db.session.query(models.AggregationType).all()
