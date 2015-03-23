@@ -108,7 +108,13 @@ def total_country_budgets(doc, totalbudgets):
     years = [0, 1, 2, 3]
 
     def get_country_data(budget, budgetdata, year):
-        country = budget.find('recipient-country').get('code')
+        country_el = budget.find('recipient-country')
+        if country_el:
+            country = country_el.get('code')
+            country_name = country_el.text
+        else: 
+            country = None
+            country_name = None
         country_budget_end = budget.find('period-end').get('iso-date')
         if budget_within_year_scope(country_budget_end, year):
             if country in budgetdata['countries']:
@@ -116,7 +122,7 @@ def total_country_budgets(doc, totalbudgets):
             else:
                 budgetdata['countries'][country] = {
                     year: budget.find('value').text,
-                    'name': budget.find('recipient-country').text
+                    'name': country_name
                 }
             budgetdata['summary']['total_amount'][year]+=fixVal(budget.find('value').text)
         return budgetdata
@@ -239,8 +245,13 @@ def all_countries(doc):
         # Check if the country is still active: if there is 
         # an end date later than today, then include it
         if (date_later_than_now(country_budget_date) and budget_has_value(recipient_country_budget)):
-            code = recipient_country_budget.find('recipient-country').get('code')
-            name = recipient_country_budget.find('recipient-country').text
+            country_el = recipient_country_budget.find('recipient-country')
+            if country_el: 
+                code = country_el.get('code')
+                name = country_el.text
+            else:
+                code = None
+                name = None
             countries[code] = name
     return countries
 
