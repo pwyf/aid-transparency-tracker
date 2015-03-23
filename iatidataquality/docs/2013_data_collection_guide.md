@@ -14,7 +14,7 @@ Surveys are to be completed using information relating to the country that recei
 
 Please note that we are only looking at aid information which is:
 
-* **Current**: For the purposes of the Index, "current" is defined as
+* **Current**: For the purposes of the review, "current" is defined as
 published within the 12 months immediately prior to the data
 collection period (1 April-15 May 2015 for EU agencies and 1 April-1 June for U.S. agencies), so information published on
 1 April 2014 or later and that relates to that period is accepted as
@@ -46,7 +46,7 @@ will be asked to confirm if these responses are representative as a whole.
 1. Go to the 'Publication' section of the survey.
 2. The information items we are looking for are listed. To see a definition for 
 each information item, click on it.
-3.	The response to each information item that was used in the 2014 Index is available for reference. This may help identify where the information you are looking can be found (for example, links to project databases). Please note that this information may not be relevant for the 2014 Index if the country being assessed has changed. In addition, new information may be available or some of the links may be broken.  
+3.	The response to each information item that was used in the 2014 Index is available for reference. This may help identify where the information you are looking can be found (for example, links to project databases). Please note that this information may not be relevant for the 2015 review if the country being assessed has changed. In addition, new information may be available or some of the links may be broken.  
 3. Check if you can find the information we are looking for and select an answer from a choice of 'always 
 published', 'sometimes published' or 'not published'. 
 4. If the information is published, provide a URL as evidence. If the information is not published, please 
