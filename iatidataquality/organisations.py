@@ -316,7 +316,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     freq_score = frequencies.get(organisation.frequency, 1.0)
     if organisation.frequency in frequencies:
-        freq_alert = { "text": frequencies.get(organisation.frequency) }
+        freq_alert = { "text": frequencies.get(organisation.frequency)[1] }
     else:
         freq_alert = None
 
