@@ -355,18 +355,20 @@ def make_publisher_summary(organisation, aggregation_type):
 
 def info_result_tuple(ir):
     ind = {
-        'description': ir.Indicator.description,
-        'name': ir.Indicator.name,
-        'id': ir.Indicator.id,
-        'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
-        'indicator_type': ir.Indicator.indicator_type,
-        'indicator_category_name': ir.Indicator.indicator_category_name,
-        'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name,
-        'longdescription': ir.Indicator.longdescription,
-        'indicator_noformat': ir.Indicator.indicator_noformat,
-        'indicator_ordinal': ir.Indicator.indicator_ordinal,
-        'indicator_order': ir.Indicator.indicator_order,
-        'indicator_weight': ir.Indicator.indicator_weight
+    'description': ir.Indicator.description,
+    'name': ir.Indicator.name,
+    'id': ir.Indicator.id,
+    'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
+    'indicator_type': ir.Indicator.indicator_type,
+    'indicator_category_name': ir.Indicator.indicator_category_name,
+    'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name_text,
+    'indicator_category_name_text': ir.Indicator.indicator_category_name,
+    'indicator_subcategory_name_text': ir.Indicator.indicator_subcategory_name_text,
+    'longdescription': ir.Indicator.longdescription,
+    'indicator_noformat': ir.Indicator.indicator_noformat,
+    'indicator_ordinal': ir.Indicator.indicator_ordinal,
+    'indicator_order': ir.Indicator.indicator_order,
+    'indicator_weight': ir.Indicator.indicator_weight
         }
 
     return (ir.Indicator.id, 
@@ -400,23 +402,25 @@ def _organisation_indicators(organisation, aggregation_type=2):
         if indc.id in data:
             continue
         data[indc.id] = {
-            'results_num': 0,
-            'results_pct': 0,
-            'indicator': {
-                'description': indc.description,
-                'name': indc.name,
-                'id': indc.id,
-                'indicatorgroup_id': indc.indicatorgroup_id,
-                'indicator_type': indc.indicator_type,
-                'indicator_category_name': indc.indicator_category_name,
-                'indicator_subcategory_name': indc.indicator_subcategory_name,
-                'longdescription': indc.longdescription,
-                'indicator_noformat': indc.indicator_noformat,
-                'indicator_ordinal': indc.indicator_ordinal,
-                'indicator_order': indc.indicator_order,
-                'indicator_weight': indc.indicator_weight
-                },
-            'tests': {}
+        'results_num': 0,
+        'results_pct': 0,
+        'indicator': {
+            'description': indc.description,
+            'name': indc.name,
+            'id': indc.id,
+            'indicatorgroup_id': indc.indicatorgroup_id,
+            'indicator_type': indc.indicator_type,
+            'indicator_category_name': indc.indicator_category_name,
+            'indicator_subcategory_name': indc.indicator_subcategory_name,
+            'indicator_category_name_text': indc.indicator_category_name_text,
+            'indicator_subcategory_name_text': indc.indicator_subcategory_name_text,
+            'longdescription': indc.longdescription,
+            'indicator_noformat': indc.indicator_noformat,
+            'indicator_ordinal': indc.indicator_ordinal,
+            'indicator_order': indc.indicator_order,
+            'indicator_weight': indc.indicator_weight
+            },
+        'tests': {}
             }
     return data
 
