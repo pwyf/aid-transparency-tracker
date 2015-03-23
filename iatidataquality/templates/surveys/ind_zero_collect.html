@@ -28,10 +28,10 @@
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                     </div>
                 </div></td>
-            <td><span class="muted">2013</span></td>
+            <td><span class="muted">2014</span></td>
             <td>
             {% if twentytwelvedata[indicator.indicator.name].result == '' %}
-                <span class="badge">No 2013 data</span>
+                <span class="badge">No 2014 data</span>
             {% else %}
                 {% if not indicator.indicator.indicator_ordinal %}
                 <span class="badge badge-{{old_publication_status[twentytwelvedata[indicator.indicator.name].publication_status].class}}" title="Researcher's initial assessment">{{ old_publication_status[twentytwelvedata[indicator.indicator.name].publication_status].text }}</span>
