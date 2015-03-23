@@ -1,6 +1,6 @@
 # Guide for Independent Reviewers
 
-We have conducted an initial assessment of 68 donor organisations, reviewing their overall commitment to aid transparency and checking what information they publish on their activities. This information will be included in the 2014 Aid Transparency Index.
+We have conducted an initial assessment of donor organisations, reviewing their overall commitment to aid transparency and checking what information they publish on their activities. This information will be included in the 2015 mid-term progress review.
 
 Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/index/2014-ati/).
 
@@ -14,12 +14,12 @@ Surveys have been completed using information relating to the country that recei
 
 Please note that we are only looking at aid information which is:
 
-* **Current**: For the purposes of the Index, "current" is defined as
+* **Current**: For the purposes of this review, "current" is defined as
 published within the 12 months immediately prior to the data
-collection period (1 April-30 to June 2014), so information published on
-1 April 2013 or later and that relates to that period is accepted as
-current. Information published after 1 April 2013 but relating to a
-period prior to then, for example 2012 CRS data, will not be accepted
+collection period (1 April-15 May 2015 for EU agencies and 1 April-1 June 2015 for U.S. agencies), so information published on
+1 April 2014 or later and that relates to that period is accepted as
+current. Information published after 1 April 2014 but relating to a
+period prior to then, for example 2013 OECD DAC CRS data, will not be accepted
 as current. Documents that are not current under this definition are
 accepted only if they are up to date with their regular cycle of
 publication (for example, annual audits and evaluation reports) or if
@@ -68,4 +68,4 @@ Once you finish reviewing the survey and have provided feedback, please click on
 
 After you submit your response, Publish What You Fund will review all feedback received and take a final decision on what information is currently published. You will be informed when we have completed our review.
 
-Thank you for reviewing the survey. If you have any questions or comments on using the Aid Transparency Tracker please get in touch: 2014tracker@publishwhatyoufund.org
+Thank you for reviewing the survey. If you have any questions or comments on using the Aid Transparency Tracker please get in touch: tracker@publishwhatyoufund.org
