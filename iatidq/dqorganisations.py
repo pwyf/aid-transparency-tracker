@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, app, dqaggregationtypes
+from iatidq import db, app
 
 from sqlalchemy import func
 
@@ -387,9 +387,7 @@ def info_result_tuple(ir):
                 ]
             })
 
-def _organisation_indicators(organisation,
-    aggregation_type=dqaggregationtypes.aggregationtype_by_name(
-    "Current data")):
+def _organisation_indicators(organisation, aggregation_type=2):
     s = summary.PublisherIndicatorsSummaryCreator(organisation,
                                                   aggregation_type)
     data = s.summary.summary()  ## FIXME
@@ -447,9 +445,7 @@ def _organisation_indicators_inforesults(organisation):
         ).all()
     return inforesult_data
 
-def _organisation_indicators_complete_split(organisation,
-    aggregation_type=dqaggregationtypes.aggregationtype_by_name(
-    "Current data")):
+def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     
     commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
@@ -465,13 +461,11 @@ def _organisation_indicators_complete_split(organisation,
              "publication_organisation": publication_organisation_results,
              "commitment": commitment_results}
 
-def _organisation_indicators_split(organisation,
-    aggregation_type=dqaggregationtypes.aggregationtype_by_name(
-    "Current data")):
+def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
-    
-    commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
-                                                     u"commitment")
+    commitment_data = dqindicators.indicators_subset(
+                    app.config["INDICATOR_GROUP"], 
+                    u"commitment")
     commitment = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
     if not results:
         indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
