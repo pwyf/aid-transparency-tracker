@@ -329,7 +329,7 @@ class Indicator(db.Model):
         return self.indicator_category_name.title()
     
     @hybrid_property
-    def indicator_subcategory_name(self):
+    def indicator_subcategory_name_text(self):
         return self.indicator_subcategory_name.title()
 
     def setup(self,
