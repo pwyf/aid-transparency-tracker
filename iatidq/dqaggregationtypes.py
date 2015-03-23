@@ -26,7 +26,7 @@ def aggregationTypes(aggregationtype_id=None):
     
 def aggregationtype_by_name(name):
     checkAT = db.session.query(models.AggregationType
-                    ).filter(name=name).first()
+                    ).filter_by(name=name).first()
     return checkAT
 
 def allAggregationTypes():
