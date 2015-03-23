@@ -1,12 +1,12 @@
 #Guide for Data Collection
 
-Thank you for agreeing to contribute to the 2014 Aid Transparency Index process. The data you are collecting 
+Thank you for agreeing to contribute to the 2015 mid-term progress review. The data you are collecting 
 will help to accurately capture the levels of aid information available, show changes over time and facilitate 
 clear, practical improvements in the availability of aid information.
 
 ##Filling the survey questionnaire
 
-For the 2014 Aid Transparency Index, data will be collected using two tools - a Data Quality tool and a survey. 
+Data will be collected using two tools - a Data Quality tool and a survey. 
 
 If the organisation is an IATI publisher then some of its data will be collected and scored automatically using  the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) will be collected  manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/index/2014-ati/).
 
@@ -16,10 +16,10 @@ Please note that we are only looking at aid information which is:
 
 * **Current**: For the purposes of the Index, "current" is defined as
 published within the 12 months immediately prior to the data
-collection period (1 April-30 June 2014), so information published on
-1 April 2013 or later and that relates to that period is accepted as
-current. Information published after 1 April 2013 but relating to a
-period prior to then, for example 2012 CRS data, will not be accepted
+collection period (1 April-15 May 2015 for EU agencies and 1 April-1 June for U.S. agencies), so information published on
+1 April 2014 or later and that relates to that period is accepted as
+current. Information published after 1 April 2014 but relating to a
+period prior to then, for example 2013 OECD DAC CRS data, will not be accepted
 as current. Documents that are not current under this definition are
 accepted only if they are up to date with their regular cycle of
 publication (for example, annual audits and evaluation reports) or if
@@ -46,7 +46,7 @@ will be asked to confirm if these responses are representative as a whole.
 1. Go to the 'Publication' section of the survey.
 2. The information items we are looking for are listed. To see a definition for 
 each information item, click on it.
-3.	The response to each information item that was used in the 2013 Index is available for reference. This may help identify where the information you are looking can be found (for example, links to project databases). Please note that this information may not be relevant for the 2014 Index if the country being assessed has changed. In addition, new information may be available or some of the links may be broken.  
+3.	The response to each information item that was used in the 2014 Index is available for reference. This may help identify where the information you are looking can be found (for example, links to project databases). Please note that this information may not be relevant for the 2014 Index if the country being assessed has changed. In addition, new information may be available or some of the links may be broken.  
 3. Check if you can find the information we are looking for and select an answer from a choice of 'always 
 published', 'sometimes published' or 'not published'. 
 4. If the information is published, provide a URL as evidence. If the information is not published, please 
@@ -86,4 +86,4 @@ If you are unable to finish answering all questions in a single session or would
 
 Once you have completed the survey, please click on the 'submit' button at the bottom of the page. The survey will then be reviewed by Publish What You Fund before being sent to the donor for final comments. 
 
-Thank you for completing this survey. If you have any questions or comments on using the Aid Transparency Tracker please get in touch: 2014tracker@publishwhatyoufund.org
+Thank you for completing this survey. If you have any questions or comments on using the Aid Transparency Tracker please get in touch: tracker@publishwhatyoufund.org
