@@ -2,15 +2,15 @@
 
 We have conducted an initial assessment of your organisation's commitment to aid transparency and publication of information on
 specific activities. This information has been collected for inclusion
-in the 2014 Aid Transparency Index. Thank you for agreeing to review
+in the 2015 mid-term progress review. Thank you for agreeing to review
 this assessment.
 
-Details of the indicators used in the Index, including how each
+Details of the indicators used, including how each
 indicator is scored and weighted, can be found in the [scoring guide](http://www.publishwhatyoufund.org/index/2014-ati/)
 
 ## Reviewing the assessment
 
-For the 2014 Aid Transparency Index, data has been collected using two
+The data for this review has been collected using two
 tools - a Data Quality tool and a survey. If your organisation is an
 IATI publisher then some of the data has been collected and scored
 automatically using the Data Quality tool. Separate instructions on
@@ -24,7 +24,7 @@ information as appropriate.
 
 Surveys have been completed using information relating to the country
 that received the largest amount of aid by value from your
-organisation. OECD DAC's 2012 [CRS](http://www.oecd.org/dac/stats/usersguidetothecreditorreportingsystemcrsaidactivitiesdatabase.htm) data has been used for determining the largest recipient. If this information was not available in the CRS,
+organisation. OECD DAC's 2013 [CRS](http://www.oecd.org/dac/stats/usersguidetothecreditorreportingsystemcrsaidactivitiesdatabase.htm) data has been used for determining the largest recipient. If this information was not available in the CRS,
 then the largest recipient was determined using the latest annual
 report for the organisation or related organisation/ministry. For
 activity level questions, five activities have been selected at random
@@ -34,12 +34,12 @@ whole.
 
 Please note that we are only looking at aid information which is:
 
-* **Current**: For the purposes of the Index, "current" is defined as
+* **Current**: For the purposes of this review, "current" is defined as
 published within the 12 months immediately prior to the data
-collection period (1 April-30 June 2014), so information published on
-1 April 2013 or later and that relates to that period is accepted as
-current. Information published after 1 April 2013 but relating to a
-period prior to then, for example 2012 CRS data, will not be accepted
+collection period (1 April-15 May 2015 for EU agencies and 1 April-1 June 2015 for U.S. agencies), so information published on
+1 April 2014 or later and that relates to that period is accepted as
+current. Information published after 1 April 2014 but relating to a
+period prior to then, for example 2013 OECD DAC CRS data, will not be accepted
 as current. Documents that are not current under this definition are
 accepted only if they are up to date with their regular cycle of
 publication (for example, annual audits and evaluation reports) or if
@@ -110,4 +110,4 @@ decision.
 
 Thank you for reviewing the survey. If you have any questions or
 comments on using the Aid Transparency Tracker please get in touch:
-2014tracker@publishwhatyoufund.org 
+tracker@publishwhatyoufund.org 
