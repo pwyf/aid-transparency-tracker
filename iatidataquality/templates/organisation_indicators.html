@@ -124,8 +124,8 @@
 		{{#result.non_zero}}
 
             <tr id="indicator-{{indicator.id}}">
-              <td>{{indicator.indicator_category_name}}</td>
-              <td>{{indicator.indicator_subcategory_name}}</td>
+              <td>{{indicator.indicator_category_name_text}}</td>
+              <td>{{indicator.indicator_subcategory_name_text}}</td>
               <td><a href="#indicator{{indicator.id}}" 
 					 role="button" data-toggle="modal">
                   {{indicator.indicator_order}}. 
@@ -237,10 +237,10 @@
             <tr id="tr{{id}}" 
 				class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
-				{{indicator.indicator_category_name}}
+				{{indicator.indicator_category_name_text}}
 			</span></td>
             <td><span class="hidden">
-				{{indicator.indicator_subcategory_name}}
+				{{indicator.indicator_subcategory_name_text}}
 			</span></td>
             <td><span class="hidden">
 				{{indicator.description}}.
@@ -337,8 +337,8 @@
 		{{#result.zero}}
 
             <tr id="indicator-{{indicator.id}}">
-            <td>{{indicator.indicator_category_name}}</td>
-            <td>{{indicator.indicator_subcategory_name}}</td>
+            <td>{{indicator.indicator_category_name_text}}</td>
+            <td>{{indicator.indicator_subcategory_name_text}}</td>
             <td><a href="#indicator{{indicator.id}}" 
 				   role="button" data-toggle="modal">
                 {{indicator.indicator_order}}. 
@@ -396,12 +396,12 @@
 				class="group-{{indicator.id}} hidden">
             <td>
 			  <span class="hidden">
-				{{indicator.indicator_category_name}}
+				{{indicator.indicator_category_name_text}}
 			  </span>
 			</td>
             <td>
 			  <span class="hidden">
-				{{indicator.indicator_subcategory_name}}
+				{{indicator.indicator_subcategory_name_text}}
 			  </span>
 			</td>
             <td>
@@ -455,17 +455,17 @@
 			{{^tests}}
             <tr class="group-{{indicator.id}} hidden">
             <td><span class="hidden">
-				{{indicator.indicator_category_name}}
+				{{indicator.indicator_category_name_text}}
 			</span></td>
             <td><span class="hidden">
-				{{indicator.indicator_subcategory_name}}
+				{{indicator.indicator_subcategory_name_text}}
 			</span></td>
             <td><span class="hidden">
 				{{indicator.description}}.
 			</span></td>
             <td colspan="6"><b>No data quality results available.</b><br />
             This may be because you have not yet published an 
-            {{indicator.indicator_category_name}} file.
+            {{indicator.indicator_category_name_text}} file.
             </td>
             </tr>
             {{/tests}}
