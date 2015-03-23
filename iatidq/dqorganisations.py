@@ -389,7 +389,7 @@ def info_result_tuple(ir):
 
 def _organisation_indicators(organisation,
     aggregation_type=dqaggregationtypes.aggregationtype_by_name(
-    "Current data"):
+    "Current data")):
     s = summary.PublisherIndicatorsSummaryCreator(organisation,
                                                   aggregation_type)
     data = s.summary.summary()  ## FIXME
@@ -449,7 +449,7 @@ def _organisation_indicators_inforesults(organisation):
 
 def _organisation_indicators_complete_split(organisation,
     aggregation_type=dqaggregationtypes.aggregationtype_by_name(
-    "Current data"):
+    "Current data")):
     results = _organisation_indicators(organisation, aggregation_type)
     
     commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
@@ -467,7 +467,7 @@ def _organisation_indicators_complete_split(organisation,
 
 def _organisation_indicators_split(organisation,
     aggregation_type=dqaggregationtypes.aggregationtype_by_name(
-    "Current data"):
+    "Current data")):
     results = _organisation_indicators(organisation, aggregation_type)
     
     commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
