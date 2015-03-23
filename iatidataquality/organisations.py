@@ -343,7 +343,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         tmp["is_activity"] = (
             tmp["indicator"]["indicator_category_name"] == "activity")
 
-        multiplier = {True: freq_score, False: 1}[tmp["is_activity"]]
+        multiplier = {True: freq_score[0], False: 1}[tmp["is_activity"]]
 
         def points():
             if not zero:
