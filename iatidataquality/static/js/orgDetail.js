@@ -129,7 +129,7 @@ $('#aggregation_type').focus(function(){
         var warning_text = "Do you want to switch to show all data? This may include data from several years ago. Please note that the 2014 Index will only consider current data.";
     } else {
         // changing to current data
-        var warning_text = "Do you want to switch to show only current data? The 2014 Index will only consider current data - defined as projects that are currently operational, or ended less than 13 months ago.";
+        var warning_text = "Do you want to switch to show only current data? The review will only consider current data - defined as projects that are currently operational, or ended less than 13 months ago.";
     }
     if (!$('#dataConfirmModal').length) {
 		$('body').append(
