@@ -8,6 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 from sqlalchemy import *
+from sqlalchemy.ext.hybrid import hybrid_property
 from iatidq import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -322,6 +323,14 @@ class Indicator(db.Model):
     indicator_noformat = Column(Boolean)
     indicator_order = Column(Integer, nullable=False)
     indicator_weight = Column(Float(precision=4))
+    
+    @hybrid_property
+    def indicator_category_name_text(self):
+        return self.indicator_category_name.title()
+    
+    @hybrid_property
+    def indicator_subcategory_name(self):
+        return self.indicator_subcategory_name.title()
 
     def setup(self,
                  name,
