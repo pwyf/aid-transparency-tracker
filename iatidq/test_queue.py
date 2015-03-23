@@ -186,7 +186,7 @@ def test_organisation(runtime_id, package_id, data, test_functions, codelists,
                 newresult.test_id = test_id
                 newresult.result_data = the_result
                 newresult.result_identifier = None
-                newresult.result_hierarchy = None
+                newresult.result_hierarchy = 0
                 newresult.organisation_id = organisation_id
                 db.session.add(newresult)
 
@@ -202,9 +202,9 @@ def parse_xml(file_name):
 
 def check_data(runtime_id, package_id, test_functions, codelists, data):
     def get_result_hierarchy(activity):
-        hierarchy = activity.get('hierarchy', default=None)
+        hierarchy = activity.get('hierarchy', default=0)
         if hierarchy is "":
-            return None
+            return 0
         return hierarchy
 
     def run_test_activity(organisation_id, activity):
