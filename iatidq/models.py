@@ -9,6 +9,7 @@
 
 from sqlalchemy import *
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy_utils import get_hybrid_properties
 from iatidq import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -363,7 +364,10 @@ class Indicator(db.Model):
         return self.name+u', '+unicode(self.id)
 
     def as_dict(self):
-       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+       d = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+       d.update({col: getattr(self, col) for col in
+                get_hybrid_properties(Indicator).keys()})
+       return d
 
 class IndicatorTest(db.Model):
     __tablename__ = 'indicatortest'
