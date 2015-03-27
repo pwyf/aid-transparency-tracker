@@ -109,7 +109,7 @@ def total_country_budgets(doc, totalbudgets):
 
     def get_country_data(budget, budgetdata, year):
         country_el = budget.find('recipient-country')
-        if country_el:
+        if country_el is not None:
             country = country_el.get('code')
             country_name = country_el.text
         else: 
@@ -246,7 +246,7 @@ def all_countries(doc):
         # an end date later than today, then include it
         if (date_later_than_now(country_budget_date) and budget_has_value(recipient_country_budget)):
             country_el = recipient_country_budget.find('recipient-country')
-            if country_el: 
+            if country_el is not None:
                 code = country_el.get('code')
                 name = country_el.text
             else:
