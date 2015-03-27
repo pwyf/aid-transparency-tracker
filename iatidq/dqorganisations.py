@@ -454,7 +454,7 @@ def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     
     commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
                                                      u"commitment")
-    commitment_results = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
+    commitment_results = dict(map(lambda x: (x.id, {'indicator': x.as_dict() }), commitment_data))
 
     publication_organisation = lambda kv: (kv[1]["indicator"]["indicator_category_name"]=="organisation")
     publication_activity = lambda kv: (kv[1]["indicator"]["indicator_category_name"]=="activity")
