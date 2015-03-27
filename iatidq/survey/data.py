@@ -132,6 +132,8 @@ def publishedFormatAll():
         models.PublishedFormat.name != 'document'
         ).filter(
         models.PublishedFormat.name != 'iati'
+        ).filter(
+        models.PublishedFormat.name != 'not-applicable'
         ).all()
     return checkPF
 
