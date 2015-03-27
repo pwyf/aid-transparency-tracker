@@ -51,8 +51,8 @@ def jsonify(*args, **kwargs):
         mimetype='application/json')
 
 def resort_sqlalchemy_indicator(data):
-    resort_fn = lambda x, y: cmp(x[1]['indicator'].indicator_order,
-                                        y[1]['indicator'].indicator_order)
+    resort_fn = lambda x, y: cmp(x[1]['indicator']["indicator_order"],
+                                    y[1]['indicator']["indicator_order"])
     new = sorted(data.items(),
                     cmp=resort_fn)
     return collections.OrderedDict(new)
