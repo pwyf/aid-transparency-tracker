@@ -143,22 +143,22 @@ def downloadOrganisationFrequency():
 def _updateOrganisationFrequency(fh):
 
     def get_frequency():
-        d = fh.read()
-        packagegroups = json.loads(d)["data"]
+        d = unicodecsv.DictReader(fh)
+        packagegroups = d
         
         for packagegroup in packagegroups:
-            freq = packagegroup["frequency_code"]
+            freq = packagegroup["Frequency"]
 
-            if freq==1:
+            if freq == "Monthly":
                 frequency = "monthly"
-                comment = packagegroup["frequency_comment"]
-            elif freq ==2:
+                comment = "Updated monthly"
+            elif freq == "Quarterly":
                 frequency = "quarterly"
-                comment = packagegroup["frequency_comment"]
+                comment = "Updated quarterly"
             else:
                 frequency = "less than quarterly"
-                comment = packagegroup["frequency_comment"]
-            yield packagegroup["publisher"], frequency, comment
+                comment = "Updated less than quarterly"
+            yield packagegroup["Publisher Name"], frequency, comment
 
     for packagegroup, frequency, comment in get_frequency():
         organisations = dqpackages.packageGroupOrganisations(packagegroup)
@@ -282,11 +282,13 @@ def addOrganisationPackageGroup(data):
         packagegroup_id=data['packagegroup_id']
                 ).first()
 
+    print xx
     if checkPG is not None:
         # Confirm that it's already been added
         return checkPG
 
     with db.session.begin():
+        print "trying to add packagegroup!", data
         newPG = OrganisationPackageGroup()
         newPG.setup(
             organisation_id = data["organisation_id"],
