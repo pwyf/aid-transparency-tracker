@@ -362,8 +362,10 @@ def info_result_tuple(ir):
     'indicator_type': ir.Indicator.indicator_type,
     'indicator_category_name': ir.Indicator.indicator_category_name,
     'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name_text,
-    'indicator_category_name_text': ir.Indicator.indicator_category_name,
-    'indicator_subcategory_name_text': ir.Indicator.indicator_subcategory_name_text,
+    'indicator_category_name_text':
+                 ir.Indicator.indicator_category_name_text,
+    'indicator_subcategory_name_text':
+                 ir.Indicator.indicator_subcategory_name_text,
     'longdescription': ir.Indicator.longdescription,
     'indicator_noformat': ir.Indicator.indicator_noformat,
     'indicator_ordinal': ir.Indicator.indicator_ordinal,
