@@ -148,6 +148,10 @@ def refresh_package(package, packages_groups):
     # Setup packagegroup outside of package transaction
     package_name = packages_groups.get(package["name"]) #odd
     packagegroup = setup_package_group(package_name)
+    if packagegroup:
+        packagegroup_id = packagegroup.id
+    else:
+        packagegroup_id = None
 
     with db.session.begin():
         print package['name']
@@ -157,7 +161,7 @@ def refresh_package(package, packages_groups):
             pkg = models.Package()
 
         copy_pkg_attributes(pkg, package)
-        pkg.package_group = packagegroup.id
+        pkg.package_group = None
         pkg.man_auto = u'auto'
         db.session.add(pkg)
 
