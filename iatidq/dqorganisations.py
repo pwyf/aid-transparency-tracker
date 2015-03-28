@@ -470,7 +470,7 @@ def _organisation_indicators_split(organisation, aggregation_type=2):
     commitment_data = dqindicators.indicators_subset(
                     app.config["INDICATOR_GROUP"], 
                     u"commitment")
-    commitment = dict(map(lambda x: (x.id, {'indicator': x }), commitment_data))
+    commitment = dict(map(lambda x: (x.id, {'indicator': x.as_dict() }), commitment_data))
     if not results:
         indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
         indicators_restructured = dict(map(lambda x: (x.id, {'indicator': {'name': x.name } }), indicators))
