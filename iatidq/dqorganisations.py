@@ -282,7 +282,6 @@ def addOrganisationPackageGroup(data):
         packagegroup_id=data['packagegroup_id']
                 ).first()
 
-    print xx
     if checkPG is not None:
         # Confirm that it's already been added
         return checkPG
