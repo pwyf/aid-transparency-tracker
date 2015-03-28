@@ -101,34 +101,34 @@ def copy_pg_fields(pg, ckangroup):
             pass
 
 def create_package_group(group, handle_country=True):
-    pg = models.PackageGroup()
-    pg.name = group
-    pg.man_auto = u"auto"
-    
-    # Query CKAN
-    import ckanclient
-    registry = ckanclient.CkanClient(base_location=CKANurl)
-    ckangroup = registry.group_entity_get(group)
+    with db.session.begin():
+        pg = models.PackageGroup()
+        pg.name = group
+        pg.man_auto = u"auto"
 
-    copy_pg_attributes(pg, ckangroup)
-    copy_pg_misc_attributes(pg, ckangroup, handle_country)
-    copy_pg_fields(pg, ckangroup)
+        # Query CKAN
+        import ckanclient
+        registry = ckanclient.CkanClient(base_location=CKANurl)
+        ckangroup = registry.group_entity_get(group)
 
-    db.session.add(pg)
+        copy_pg_attributes(pg, ckangroup)
+        copy_pg_misc_attributes(pg, ckangroup, handle_country)
+        copy_pg_fields(pg, ckangroup)
+
+        db.session.add(pg)
     return pg
 
 # package: a sqla model; pkg: a ckan object
-def setup_package_group(package, pkg, packages_groups):
+def setup_package_group(group):
     with util.report_error(None, "Error saving package_group"):
-        # there is a group, so use that group ID, or create one
+        # there is a group, so use that group name, or create one
 
-        group = packages_groups.get(package.package_name)
         if group is not None:
             pg = models.PackageGroup.query.filter_by(name=group).first()
             if pg is None:
                 pg = create_package_group(group, handle_country=False)
                 print "Created new group"
-            package.package_group = pg.id
+            return pg
 
 # FIXME: compare this with similar function in download_queue
 
@@ -145,6 +145,10 @@ def copy_pkg_attributes(pkg, package):
 # Don't get revision ID; 
 # empty var will trigger download of file elsewhere
 def refresh_package(package, packages_groups):
+    # Setup packagegroup outside of package transaction
+    package_name = packages_groups.get(package["name"]) #odd
+    packagegroup = setup_package_group(package_name)
+
     with db.session.begin():
         print package['name']
         pkg = models.Package.query.filter_by(
@@ -153,8 +157,7 @@ def refresh_package(package, packages_groups):
             pkg = models.Package()
 
         copy_pkg_attributes(pkg, package)
-        setup_package_group(pkg, package, packages_groups)
-
+        pkg.package_group = packagegroup.id
         pkg.man_auto = u'auto'
         db.session.add(pkg)
 
