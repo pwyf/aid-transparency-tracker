@@ -161,7 +161,7 @@ def refresh_package(package, packages_groups):
             pkg = models.Package()
 
         copy_pkg_attributes(pkg, package)
-        pkg.package_group = None
+        pkg.package_group = packagegroup_id
         pkg.man_auto = u'auto'
         db.session.add(pkg)
 
