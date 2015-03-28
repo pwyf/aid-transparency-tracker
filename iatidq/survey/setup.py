@@ -39,6 +39,14 @@ def setupSurvey():
      {'name': 'iati',
       'title': 'IATI',
       'format_class': 'success',
+      'format_value': 1.0},
+     {'name': 'not-applicable',
+      'title': 'Format not applicable to this indicator',
+      'format_class': 'inverse',
+      'format_value': 1.0},
+     {'name': 'not-published',
+      'title': 'Not published',
+      'format_class': 'inverse',
       'format_value': 1.0}]
 
     for the_publishedformat in the_publishedformat:
