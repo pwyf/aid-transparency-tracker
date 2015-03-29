@@ -33,6 +33,7 @@ def add_partial(regex):
 
 def parsePC(organisation_structures):
 
+
     def organisation_and_test_level(groups):
         like = '%' + groups[1] + '%'
         organisation = models.Organisation.query.filter_by(organisation_code=groups[0]).first()
@@ -46,6 +47,7 @@ def parsePC(organisation_structures):
     @add_partial('(\S*) does not use (\S*) at activity level')
     def doesnt_use_at_activity_level(activity, groups):
         organisation, tests = organisation_and_test_level(groups)
+        if not organisation or not tests: return {}
         return {'organisation':organisation, 
                 'tests': tests, 
                 'operation': 0, 
@@ -55,6 +57,7 @@ def parsePC(organisation_structures):
     @add_partial('(\S*) does not use (\S*) at activity hierarchy (\d*)')
     def doesnt_use_at_activity_hierarchy(activity, groups):
         organisation, tests = organisation_and_test_level(groups)
+        if not organisation or not tests: return {}
         return {'organisation':organisation, 
                 'tests': tests, 
                 'operation': 0, 
