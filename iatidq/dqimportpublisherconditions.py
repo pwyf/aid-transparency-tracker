@@ -28,14 +28,16 @@ def _parsePCresults(results):
 def importPCsFromText(text):
     results = {}
     for n, line in enumerate(text.split("\n")):
-        results[n]=line
+        if line != "\n":
+            results[n]=line
     return _parsePCresults(results)
 
 def _importPCs(fh, local=True):
     results = {}
     for n, line in enumerate(fh):
-        text = line.strip('\n')
-        results[n]=text
+        if line != "\n":
+            text = line.strip('\n')
+            results[n]=text
     return _parsePCresults(results)
 
 def importPCsFromFile(filename='tests/organisation_structures.txt', local=True):
