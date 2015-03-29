@@ -146,8 +146,8 @@ def copy_pkg_attributes(pkg, package):
 # empty var will trigger download of file elsewhere
 def refresh_package(package, packages_groups):
     # Setup packagegroup outside of package transaction
-    package_name = packages_groups.get(package["name"]) #odd
-    packagegroup = setup_package_group(package_name)
+    packagegroup_name = packages_groups.get(package["name"]) #odd
+    packagegroup = setup_package_group(packagegroup_name)
     if packagegroup:
         packagegroup_id = packagegroup.id
     else:
