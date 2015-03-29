@@ -56,6 +56,18 @@ def copy_package_fields(package, pkg):
             setattr(package, field_name, pkg["extras"][field])
 
 def metadata_to_db(pkg, package_name, success, runtime_id):
+    # Setup packagegroup outside of package transaction
+    if pkg.get('organization') and pkg['organization'].get('name'):
+        packagegroup_name = pkg['organization']['name']
+        packagegroup = setup_package_group(packagegroup_name)
+        if packagegroup is not None:
+            packagegroup_id = packagegroup.id
+        else:
+            packagegroup_id = None
+    else:
+        packagegroup_name = None
+        packagegroup_id = None
+
     with db.session.begin():
         package = models.Package.query.filter_by(
             package_name=package_name).first()
@@ -64,14 +76,11 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         package.source_url = pkg['resources'][0]['url']
         package.hash = pkg['resources'][0]['hash']
 
-        if pkg.get('organization') and pkg['organization'].get('name'):
-            packagegroup_name = pkg['organization']['name']
-        else:
-            packagegroup_name = None
+
         packages_groups = {pkg['name']: packagegroup_name}
 
         copy_package_attributes(package, pkg)
-        setup_package_group(package, pkg, packages_groups)
+        package.package_group = packagegroup_id
         copy_package_fields(package, pkg)
 
         db.session.add(package)
