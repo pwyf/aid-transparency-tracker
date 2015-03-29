@@ -172,20 +172,21 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
         frequency_multiplier=1
         if iati_manual == "commitment":
             indicator_ordinal = 1
-            indicator_info = CSVIndicatorInfo(i.description, i.name, i.id,
-                                              "commitment", 
-                                              i.indicator_subcategory_name,
-                                              i.indicator_order,
-                                              i.indicator_weight)
+            indicator_info = CSVIndicatorInfo(i["description"], i["name"],
+                                          i["id"],
+                                          "commitment",
+                                          i["indicator_subcategory_name"],
+                                          i["indicator_order"],
+                                          i["indicator_weight"])
             iati_manual = "manual"
             survey_category = "commitment"
         else:
             indicator_info = CSVIndicatorInfo(i["description"], i["name"],
-                                              i["id"],
-                                              i["indicator_category_name"],
-                                              i["indicator_subcategory_name"],
-                                              i["indicator_order"],
-                                              i["indicator_weight"])
+                                          i["id"],
+                                          i["indicator_category_name"],
+                                          i["indicator_subcategory_name"],
+                                          i["indicator_order"],
+                                          i["indicator_weight"])
 
             indicator_ordinal = i["indicator_ordinal"]
             survey_category = "publication"
