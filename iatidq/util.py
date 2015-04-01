@@ -37,7 +37,8 @@ def ensure_download_dir(directory):
 
 def download_file(url, path):
     with file(path, 'w') as localFile:
-        webFile = urllib2.urlopen(url, headers=download_headers)
+        req = urllib2.Request(url, headers=download_headers)
+        webFile = urllib2.urlopen(req)
         localFile.write(webFile.read())
         webFile.close()
 
