@@ -15,6 +15,8 @@ from flask import request, current_app
 import traceback
 import collections
 
+download_headers = {'User-Agent': "PWYF/Aid Transparency Tracker"}
+
 @contextlib.contextmanager
 def report_error(success, failure):
     try:
@@ -35,7 +37,7 @@ def ensure_download_dir(directory):
 
 def download_file(url, path):
     with file(path, 'w') as localFile:
-        webFile = urllib2.urlopen(url)
+        webFile = urllib2.urlopen(url, headers=download_headers)
         localFile.write(webFile.read())
         webFile.close()
 
