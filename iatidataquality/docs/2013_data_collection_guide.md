@@ -8,7 +8,7 @@ clear, practical improvements in the availability of aid information.
 
 Data will be collected using two tools - a Data Quality tool and a survey. 
 
-If the organisation is an IATI publisher then some of its data will be collected and scored automatically using  the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) will be collected  manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/index/2014-ati/).
+If the organisation is an IATI publisher then some of its data will be collected and scored automatically using  the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) will be collected  manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/files/2015/04/Technical-paper-2015-review_FINAL.docx).
 
 Surveys are to be completed using information relating to the country that received the largest amount of aid by value from that donor organisation. This information has been provided separately. 
 
