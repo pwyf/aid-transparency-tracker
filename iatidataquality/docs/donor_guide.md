@@ -6,7 +6,7 @@ in the 2015 mid-term progress review. Thank you for agreeing to review
 this assessment.
 
 Details of the indicators used, including how each
-indicator is scored and weighted, can be found in the [scoring guide](http://www.publishwhatyoufund.org/index/2014-ati/)
+indicator is scored and weighted, can be found in the [scoring guide](http://www.publishwhatyoufund.org/files/2015/04/Technical-paper-2015-review_FINAL.docx)
 
 ## Reviewing the assessment
 
