@@ -226,9 +226,9 @@ def get_ordinal_values_years():
 
 # this lambda and the things which use it exists in surveys.py as well
 # ... merge?
-id_tuple = lambda x: (x.id, x)
+id_tuple = lambda x: (x.id, x.as_dict())
 
-name_tuple = lambda x: (x.name, x)
+name_tuple = lambda x: (x.name, x.as_dict())
 
 def organisation_publication_authorised(organisation_code, aggregation_type):
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
@@ -374,19 +374,19 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
         if zero:
             if surveydata:
-                osd = surveydata[result.indicator.id].OrganisationSurveyData
+                osd = surveydata[tmp["indicator"]["id"]].OrganisationSurveyData.as_dict()
 
                 def status_class_and_text():
                     if tmp["indicator"]["indicator_ordinal"]:
-                        return (years[osd.ordinal_value]["class"], 
-                                years[osd.ordinal_value]["text"])
+                        return (years[osd["ordinal_value"]]["class"], 
+                                years[osd["ordinal_value"]]["text"])
                     else:
-                        return (published_status[osd.published_status]["publishedstatus_class"], 
-                                published_status[osd.published_status]["title"])
+                        return (published_status_by_id[osd["published_status"]]["publishedstatus_class"], 
+                                published_status_by_id[osd["published_status"]]["title"])
                 def format_class_and_text():
-                    if published_status[osd.published_status]["publishedstatus_class"] != 'important':
-                        return (published_format[osd.published_format]["format_class"], 
-                                published_format[osd.published_format]["title"])
+                    if published_status_by_id[osd["published_status"]]["publishedstatus_class"] != 'important':
+                        return (publishedformats[osd["published_format"]]["format_class"], 
+                                publishedformats[osd["published_format"]]["title"])
                     else:
                         return ("", "")
                 tmp["status_class"], tmp["status_text"] = status_class_and_text()
@@ -404,6 +404,16 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
     # testdata["results_num"]|round(2)
     # as far as line 296
 
+    def get_sd(data):
+        return {
+            "OrganisationSurveyData": data[0].as_dict(),
+            "Workflow": data[3].as_dict(),
+        }
+
+    def jsonsurvey(surveydata):
+        return dict(map(lambda x: (x[0], get_sd(x[1])),
+                             surveydata.items()))
+
     payload = {
         "organisation": organisation.as_dict(),
         "links": links,
@@ -414,7 +424,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
             "non_zero": map(annotate_nonzero, aggregate_results["non_zero"].values()),
             "zero":map(annotate_zero, aggregate_results["zero"].values())
             },
-        "surveydata": surveydata
+        "surveydata": jsonsurvey(surveydata)
         }
     json_data = json.dumps(payload, indent=2)
 
