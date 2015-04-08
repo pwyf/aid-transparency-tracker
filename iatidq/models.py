@@ -698,6 +698,9 @@ class OrganisationSurveyData(db.Model):
         if id is not None:
             self.id = id
 
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class PublishedFormat(db.Model):
     __tablename__ = 'publishedformat'
     id = Column(Integer, primary_key=True)
@@ -719,6 +722,9 @@ class PublishedFormat(db.Model):
         if id is not None:
             self.id = id
 
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class PublishedStatus(db.Model):
     __tablename__ = 'publishedstatus'
     id = Column(Integer, primary_key=True)
@@ -739,6 +745,9 @@ class PublishedStatus(db.Model):
         self.publishedstatus_value = publishedstatus_value
         if id is not None:
             self.id = id
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
     
 class Workflow(db.Model):
     __tablename__='workflow'
@@ -763,6 +772,9 @@ class Workflow(db.Model):
         self.duration = duration
         if id is not None:
             self.id = id
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 # WorkflowType: define what sort of workflow this should be.
 #   Will initially be hardcoded but this should make it easier
