@@ -255,12 +255,14 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
     publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatsAll()))
 
     published_status_by_id[None] = {
-        'name': 'Unknown',
+        'title': 'Unknown',
+        'title': 'unknown',
         'publishedstatus_class': 'label-inverse'
         }
 
     publishedformats[None] = {
-        'name': 'Unknown',
+        'title': 'Unknown',
+        'name': 'unknown',
         'format_class': 'label-inverse'
         }
 
