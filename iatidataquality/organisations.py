@@ -472,7 +472,8 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
                     return ("success", "IATI")
                 else:
                     pub_format = publishedformats[lyd["publication_format"]]
-                    return (pub_format.format_class, pub_format.title)
+                    return (pub_format["format_class"],
+                            pub_format["title"])
             elif lyd["publication_status"] == "sometimes":
                 return ("default", "Sometimes published")
             else:
