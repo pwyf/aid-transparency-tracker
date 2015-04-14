@@ -467,7 +467,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         tmp["lastyearsdata_manual"] = lyd["iati_manual"] == "manual"
 
         def format_and_title():
-            if lyd["total_points"] > 0:
+            if float(lyd["total_points"]) > 0:
                 if tmp["lastyearsdata_iati"]:
                     return ("success", "IATI")
                 else:
