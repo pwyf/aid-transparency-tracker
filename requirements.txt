@@ -24,3 +24,4 @@ flask-principal
 blinker
 markdown
 requests==2.5.1
+sqlalchemy_utils
