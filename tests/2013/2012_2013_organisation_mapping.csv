@@ -1,0 +1,73 @@
+2012_id,2013_id,donor_long,donor_short,agency_long,agency_short,donor_slug,agency_slug
+1,47111,Adaptation Fund,Adaptation Fund,,,af,
+2,46002,African Development Bank,AfDB,,,afdb,
+3,46004,Asian Development Bank,AsDB,,,asdb,
+4,AU-5,Australia,Australia,Australian Agency for International Development,,australia,
+5,AT-8,Austria,Austria,Austrian Development Agency,,austria,
+6,BE-10,Belgium,Belgium,Belgium Development Agency,,belgium,
+7,BR-1,Brazil,Brazil,Brazilian Cooperation Agency,,brazil,
+8,BG-1,Bulgaria,Bulgaria,Ministry of Foreign Affairs,,bulgaria,
+9,CA-1,Canada,Canada,Canadian International Development Agency,,canada,
+10,CN-1,China,China,Ministry of Commerce,,china,
+11,,Clean Technology Fund,CTF,,,ctf,
+12,CY-1,Cyprus,Cyprus,Planning Bureau,,cyprus,
+13,CZ-1,Czech Republic,Czech Republic,Czech Development Agency,,czech-republic,
+14,DK-2,Denmark,Denmark,Ministry of Foreign Affairs,,denmark,
+15,46015,European Bank for Reconstruction and Development,EBRD,,,ebrd,
+16,EU-4,European Commission,EC,ECHO,ECHO,ec,echo
+17,EU-5,European Commission,EC,DG Enlargement,Enlargement,ec,enlargement
+18,EU-1,European Commission,EC,DEVCO,DEVCO,ec,devco
+19,EE-1,Estonia,Estonia,Ministry of Foreign Affairs,,estonia,
+20,42004,European Investment Bank,EIB,,,eib,
+21,EU-6,European Commission,EC,Foreign Policy Instruments Service,FPI,ec,fpi
+22,FI-3,Finland,Finland,Ministry of Foreign Affairs,,finland,
+23,FR-3,France,France,French Development Agency,AFD,france,afd
+24,FR-6,France,France,Ministry of Foreign Affairs,MAE,france,mae
+25,FR-10,France,France,"Ministry of Economics, Finance and Industry",MINEFI,france,minefi
+26,US-EIN-562618866,Gates Foundation,Gates,,,gates,
+27,DE-1,Germany,Germany,GIZ,GIZ,germany,giz
+28,DE-2,Germany,Germany,KfW,KfW,germany,kfw
+29,47122,GAVI Alliance,GAVI,,,gavi,
+30,47044,Global Environment Facility,GEF,,,gef,
+31,47045,"The Global Fund to Fight AIDS, Tuberculosis and Malaria",Global Fund,,,global-fund,
+32,GR-3,Greece,Greece,HellenicAid,,greece,
+33,US-EIN-941655673,Hewlett Foundation,Hewlett,,,hewlett,
+34,HU-1,Hungary,Hungary,Ministry of Foreign Affairs,,hungary,
+35,46012,Inter-American Development Bank,IADB,,,iadb,
+36,IE-1,Ireland,Ireland,Irish Aid,,ireland,
+37,IT-4,Italy,Italy,Ministry of Foreign Affairs,,italy,
+38,JP-8,Japan,Japan,Japan International Cooperation Agency,JICA,japan,jica
+39,JP-2,Japan,Japan,Ministry of Foreign Affairs,MFA,japan,mfa
+40,KR-2,Korea,Korea,Economic Development Cooperation Fund,EDCF,korea,edcf
+41,KR-4,Korea,Korea,Korean International Cooperation Agency,KOICA,korea,koica
+42,LV-1,Latvia,Latvia,Ministry of Foreign Affairs,,latvia,
+43,LT-1,Lithuania,Lithuania,Ministry of Foreign Affairs,,lithuania,
+44,LU-1,Luxembourg,Luxembourg,Lux-Development,,luxembourg,
+45,MT-1,Malta,Malta,Ministry of Foreign Affairs,,malta,
+46,NL-1,Netherlands,Netherlands,Ministry of Foreign Affairs,,netherlands,
+47,NZ-2,New Zealand,New Zealand,New Zealand Aid,,new-zealand,
+48,NO-4,Norway,Norway,Ministry of Foreign Affairs,,norway,
+49,PL-1,Poland,Poland,Ministry of Foreign Affairs,,poland,
+50,PT-2,Portugal,Portugal,Cam??es &mdash; Instituto da Coopera????o e da L??ngua,,portugal,
+51,RO-1,Romania,Romania,Ministry of Foreign Affairs,,romania,
+52,SK-1,Slovakia,Slovakia,Slovak Agency for International Development Cooperation,,slovakia,
+53,SI-1,Slovenia,Slovenia,Ministry of Foreign Affairs,,slovenia,
+54,ES-5,Spain,Spain,Spanish Agency for International Development Cooperation,,spain,
+55,SE-6,Sweden,Sweden,Swedish International Development Cooperation Agency,,sweden,
+56,CH-4,Switzerland,Switzerland,Swiss Agency for Development and Cooperation,,switzerland,
+57,GB-4,United Kingdom,UK,Department of Energy and Climate Change,DECC,uk,decc
+58,GB-3,United Kingdom,UK,Foreign and Commonwealth Office,FCO,uk,fco
+59,GB-6,United Kingdom,UK,Ministry of Defence,MOD,uk,mod
+60,GB-2,United Kingdom,UK,CDC,CDC,uk,cdc
+61,GB-1,United Kingdom,UK,Department for International Development,DFID,uk,dfid
+62,41127,UNOCHA,UNOCHA,United Nations Office for the Coordination of Humanitarian Affairs,,unocha,
+63,41114,UNDP,UNDP,United Nations Development Programme,,undp,
+64,41122,UNICEF,UNICEF,United Nations Children???s Fund,,unicef,
+65,US-7,United States,US,Department of Defense,Defense,us,dod
+66,US-18,United States,US,Millennium Challenge Corporation,MCC,us,mcc
+67,US-14,United States,US,President???s Emergency Fund Plan for AIDS Relief,PEPFAR,us,pepfar
+68,US-11,United States,US,Department of State (INL Bureau),State,us,state
+69,US-6,United States,US,Department of the Treasury (Office of Technical Assistance),Treasury,us,treasury
+70,US-1,United States,US,US Agency for International Development,USAID,us,usaid
+71,44002,World Bank,World Bank,International Development Association and International Bank for Reconstruction and Development,IDA,world-bank,ida
+72,44004,World Bank,World Bank,International Finance Corporation,IFC,world-bank,ifc
