@@ -1,7 +1,0 @@
-GB-1 does not use transaction at activity hierarchy 1
-GB-1 does not use description at activity hierarchy 2
-GB-1 does not use document-link at activity hierarchy 2
-GB-1 does not use sector at activity hierarchy 1
-GB-1 does not use transaction at activity hierarchy 1
-GB-1 does not use recipient-country at activity hierarchy 1
-GB-1 does not use recipient-region at activity hierarchy 1
