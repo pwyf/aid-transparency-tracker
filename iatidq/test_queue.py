@@ -396,6 +396,8 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
 
     def add_info_result(info_id, result_data):
         with db.session.begin():
+            inforesult.delete_info_result(db.session, package_id, 
+                                          organisation_id, info_id)
             ir = models.InfoResult()
             ir.runtime_id = runtime_id
             ir.package_id = package_id
