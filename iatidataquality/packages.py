@@ -139,36 +139,11 @@ def packages(package_name=None):
              loggedinuser=current_user)
 
     # Get package data
-    package = db.session.query(Package,
-                         PackageGroup
-                         ).filter(Package.package_name == package_name
-                                  ).outerjoin(PackageGroup).first()
-
-    # see older code in repo for what used to be here
-    pconditions = {}
-
-    latest_runtime = None
-
-    aggregation_type=integerise(request.args.get('aggregation_type', 2))
-    all_aggregation_types = dqaggregationtypes.aggregationTypes()
-
-    # this test should really ask "have we ever had an aggregation"
-    
-    if latest_runtime:
-        summary_results = summary.PackageSummaryCreator(
-            package[0].id, latest_runtime, aggregation_type).summary
-    else:
-        summary_results = None
-        pconditions = None
-        flat_results = None
-
-    organisations = dqpackages.packageOrganisations(package.Package.id)
+    package = Package.query.filter_by(package_name = package_name
+                                  ).first()
+    organisations = dqpackages.packageOrganisations(package.id)
  
-    return render_template("package.html", package=package, 
-                           results=summary_results, 
-                           pconditions=pconditions,
+    return render_template("package.html", package=package,
                            organisations=organisations,
-                           all_aggregation_types=all_aggregation_types,
-                           aggregation_type=aggregation_type,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user)
