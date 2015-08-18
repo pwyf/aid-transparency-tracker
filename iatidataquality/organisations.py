@@ -199,7 +199,8 @@ def organisation_new():
 
     return render_template("organisation_edit.html", organisation=organisation,
                          admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+                         loggedinuser=current_user,
+                         donorresponses=donorresponse.RESPONSE_TYPES)
 
 def integerise(data):
     try:

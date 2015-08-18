@@ -232,15 +232,9 @@ def addOrganisation(data):
         newP.setup(
             organisation_name = data["organisation_name"],
             organisation_code = data["organisation_code"],
-            organisation_total_spend = checkNum(data["organisation_total_spend"]),
-            organisation_total_spend_source = data["organisation_total_spend_source"],
-            organisation_currency = data["organisation_currency"],
-            organisation_currency_conversion = checkNum(data["organisation_currency_conversion"]),
-            organisation_currency_conversion_source = data["organisation_currency_conversion_source"],
-            organisation_largest_recipient = data["organisation_largest_recipient"],
-            organisation_largest_recipient_source = data["organisation_largest_recipient_source"]
+            organisation_total_spend = 0,
+            organisation_currency_conversion = 1,
             )
-    #    update_model(data, newP, ["organisation_name", "organisation_code"])
         db.session.add(newP)
     return newP
 
