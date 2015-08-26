@@ -2,7 +2,7 @@ Flask==0.8
 Flask-SQLAlchemy==0.16
 Flask-Script==0.3.3
 Jinja2==2.6
-SQLAlchemy==0.7.7
+SQLAlchemy==1.0.8
 Werkzeug==0.8.3
 amqplib==1.0.2
 anyjson==0.3.1
@@ -24,4 +24,4 @@ flask-principal
 blinker
 markdown
 requests==2.5.1
-sqlalchemy_utils
+SQLAlchemy-Utils==0.30.17
