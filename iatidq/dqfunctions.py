@@ -30,12 +30,23 @@ def clear_revisions():
             pkg.package_revision_id = None
         
             db.session.add(pkg)
+            
+def packages_from_registry_with_offset(registry_url):
+    offset = 0
+    while True:
+        data = urllib2.urlopen(registry_url % offset, timeout=60).read()
+        print registry_url
+        data = json.loads(data)
+        if len(data["results"]) == 0: break
+        offset += 1000
+        for pkg in data["results"]:
+            yield pkg
 
 def packages_from_registry(registry_url):
     data = urllib2.urlopen(registry_url, timeout=60).read()
     print registry_url
     data = json.loads(data)
-    for pkg in data["data"]:
+    for pkg in data["results"]:
         yield pkg
 
 def get_package_organisations(iatiupdates_url):
