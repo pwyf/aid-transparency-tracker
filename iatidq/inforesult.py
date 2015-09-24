@@ -76,9 +76,9 @@ def info_results(package_id, runtime_id, organisation_id):
 
 def delete_info_result(sess, package_id, organisation_id, info_id):
     sess.query(models.InfoResult).filter(
-                            package_id=package_id,
-                            organisation_id=organisation_id,
-                            info_id=info_id
+                            package_id==package_id,
+                            organisation_id==organisation_id,
+                            info_id==info_id
                             ).delete(synchronize_session=False)
 
 def add_type(name, description):
