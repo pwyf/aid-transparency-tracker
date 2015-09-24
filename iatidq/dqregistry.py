@@ -185,8 +185,6 @@ def _refresh_packages():
     setup_orgs = app.config.get("SETUP_ORGS", [])
     counter = app.config.get("SETUP_PKG_COUNTER", None)
 
-    packages_groups = get_package_organisations(app.config["IATIUPDATES_URL"])
-
     for package in packages_from_iati_registry(REGISTRY_URL):
         package_name = package["name"]
         if len(setup_orgs) and ('-' in package_name):
@@ -195,6 +193,16 @@ def _refresh_packages():
                 continue
         registry = ckanclient.CkanClient(base_location=CKANurl)
         pkg = registry.package_entity_get(package_name)
+
+        #FIXME: could remove the next 5 lines and just
+        # fix refresh_package()
+
+        if pkg.get('organization') and pkg['organization'].get('name'):
+            packagegroup_name = pkg['organization']['name']
+        else:
+            packagegroup_name = None
+        packages_groups = {pkg['name']: packagegroup_name}
+
         refresh_package(pkg, packages_groups)
         if counter is not None:
             counter -= 1
