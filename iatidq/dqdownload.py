@@ -52,7 +52,7 @@ def get_package(pkg, package, runtime_id):
 
 def download_packages(runtime):
     # Check registry for packages list
-    registry_packages = [ (pkg["name"], pkg["metadata-modified"]) 
+    registry_packages = [ (pkg["name"], pkg["metadata_modified"]) 
                           for pkg in packages_from_registry_with_offset(REGISTRY_URL) ]
 
     print "Found", len(registry_packages),"packages on the IATI Registry"
