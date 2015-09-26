@@ -1,8 +1,8 @@
 # Guide for Independent Reviewers
 
-We have conducted an initial assessment of donor organisations, reviewing their overall commitment to aid transparency and checking what information they publish on their activities. This information will be included in the 2015 mid-term progress review.
+We have conducted an initial assessment of donor organisations, reviewing their overall commitment to aid transparency and checking what information they publish on their activities. This information will be included in the 2016 Aid Transparency Index.
 
-Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/files/2015/04/Technical-paper-2015-review_FINAL.docx).
+Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/files/2015/08/Technical-paper-2016-FINAL.docx).
 
 To ensure that the survey data is as accurate as possible, we would be grateful if you could check the responses and correct or add information as appropriate. 
 
@@ -14,16 +14,16 @@ Surveys have been completed using information relating to the country that recei
 
 Please note that we are only looking at aid information which is:
 
-* **Current**: For the purposes of this review, "current" is defined as
+* **Current**: For the purposes of the Index, "current" is defined as
 published within the 12 months immediately prior to the data
-collection period (1 April-15 May 2015 for EU agencies and 1 April-1 June 2015 for U.S. agencies), so information published on
-1 April 2014 or later and that relates to that period is accepted as
-current. Information published after 1 April 2014 but relating to a
-period prior to then, for example 2013 OECD DAC CRS data, will not be accepted
-as current. Documents that are not current under this definition are
-accepted only if they are up to date with their regular cycle of
-publication (for example, annual audits and evaluation reports) or if
-they have explicit extensions written into them. Information provided
+collection period (1 October 2015 &ndash; 15 Januar 2016), so information 
+published on 1 October 2014 or later and that relates to that period is 
+accepted as current. Information published after 1 October 2014 but 
+relating to a period prior to then, for example 2014 OECD DAC CRS data, 
+will not be accepted as current. Documents that are not current under this 
+definition are accepted only if they are up to date with their regular 
+cycle of publication (for example, annual audits and evaluation reports) 
+or if they have explicit extensions written into them. Information provided
 on static web pages is deemed as current unless information proving
 the contrary is available.
 
@@ -57,7 +57,7 @@ Given your familiarity with this donor organisation, we would like to receive yo
 1. Note whether you agree or disagree with Publish What You Fund's assessment. If you are unsure,please let us know using the comments box.
 1. In the comments box, please add any feedback or clarifications that you think will help us better understand your response. This is particularly helpful if you think the donor organisation's response is unclear or open to interpretation. Feel free to add any questions you have for us in the same box.
 
-More information on the scoring can be found in the [scoring guide](http://www.publishwhatyoufund.org/index/2014-ati/).
+More information on the scoring can be found in the [scoring guide](http://www.publishwhatyoufund.org/index/2016-aid-transparency-index/).
 
 
 ## Submitting the survey
