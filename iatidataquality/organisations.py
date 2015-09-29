@@ -414,6 +414,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
         }
 
     def jsonsurvey(surveydata):
+        if not surveydata: return None
         return dict(map(lambda x: (x[0], get_sd(x[1])),
                              surveydata.items()))
 
