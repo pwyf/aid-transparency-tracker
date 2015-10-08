@@ -96,7 +96,15 @@ class CSVRow(object):
     def write_to(self, stream, workflow):
         self._write(stream, workflow, *self.field_data)
 
-    def _write(self, out, workflow_name, organisation, indicator_info, indicator_total_weighted_points, indicator_category_subcategory, iati_manual, publication_format, publication_format_points, total_points, iati_data_quality_passed, iati_data_quality_points, freq, frequency_multiplier, iati_data_quality_total_points, survey_publication_status, survey_publication_status_value, survey_ordinal_value, survey_publication_format, survey_publication_format_value, survey_total_points):
+    def _write(self, out, workflow_name, organisation, indicator_info, 
+    indicator_total_weighted_points, indicator_category_subcategory, 
+    iati_manual, publication_format, publication_format_points, 
+    total_points, iati_data_quality_passed, iati_data_quality_points, 
+    freq, frequency_multiplier, iati_data_quality_total_points, 
+    survey_publication_status, survey_publication_status_value, 
+    survey_ordinal_value, survey_publication_format, 
+    survey_publication_format_value, survey_total_points, 
+    survey_source=None, survey_comment=None, survey_agree=None):
         data = {
             "id": organisation.organisation_code + "-" + indicator_info.name,
             "organisation_name": organisation.organisation_name, 
@@ -128,7 +136,9 @@ class CSVRow(object):
             data['survey_agree'] = survey_agree
         out.writerow(data)
     
-def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, surveydata, surveydata_workflow, published_status, published_format, history=False, workflows=None):
+def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, 
+    surveydata, surveydata_workflow, published_status, published_format, 
+    history=False, workflows=None):
 
     def calculate_ordinal_points(thevalue, theformat, thetype):
         if thetype == 'commitment':
@@ -262,7 +272,15 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, sur
                     survey_agree = surveydata[indicator_info.id].OrganisationSurveyData.published_accepted
                     print "writing csv row for", workflow.Workflow.name
 
-                    csv_row = CSVRow(organisation, indicator_info, indicator_total_weighted_points, indicator_category_subcategory, iati_manual, publication_format, publication_format_points, total_points, iati_data_quality_passed, iati_data_quality_points, freq, frequency_multiplier, iati_data_quality_total_points, survey_publication_status, survey_publication_status_value, survey_ordinal_value, survey_publication_format, survey_publication_format_value, survey_total_points)
+                    csv_row = CSVRow(organisation, indicator_info, 
+                        indicator_total_weighted_points, indicator_category_subcategory, 
+                        iati_manual, publication_format, publication_format_points, 
+                        total_points, iati_data_quality_passed, iati_data_quality_points, 
+                        freq, frequency_multiplier, iati_data_quality_total_points, 
+                        survey_publication_status, survey_publication_status_value, 
+                        survey_ordinal_value, survey_publication_format, 
+                        survey_publication_format_value, survey_total_points, 
+                        survey_source, survey_comment, survey_agree)
                     csv_row.write_to(out, workflow.Workflow.name)
         else:
             iati_data_quality_total_points = 0
