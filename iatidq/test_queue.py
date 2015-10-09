@@ -36,9 +36,6 @@ def delete_results(package_id):
         models.Result.query.filter(
             models.Result.package_id==package_id
             ).delete()
-        models.InfoResult.query.filter(
-            models.InfoResult.package_id==package_id
-            ).delete()
 
 def get_result_identifier(activity):
     try:
@@ -396,8 +393,12 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
 
     def add_info_result(info_id, result_data):
         with db.session.begin():
-            inforesult.delete_info_result(db.session, package_id, 
-                                          organisation_id, info_id)
+            models.InfoResult.query.filter(
+                models.InfoResult.package_id==package_id,
+                models.InfoResult.info_id==info_id,
+                models.InfoResult.organisation_id==organisation_id
+            ).delete()
+            
             ir = models.InfoResult()
             ir.runtime_id = runtime_id
             ir.package_id = package_id
