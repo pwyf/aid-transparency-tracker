@@ -14,6 +14,10 @@ from iatidq.test_queue import run_test_queue
 from iatidq.util import ensure_download_dir
 
 import sys
+import logging
+
+
+logging.basicConfig()
 
 if __name__ == '__main__':
     print "Starting up..."
