@@ -14,6 +14,11 @@ import config
 from iatidq.util import ensure_download_dir
 from iatidq.download_queue import run_download_queue
 
+import logging
+
+
+logging.basicConfig()
+
 if __name__ == '__main__':
     print "Starting up..."
     directory = config.DATA_STORAGE_DIR
