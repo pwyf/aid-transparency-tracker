@@ -58,9 +58,6 @@ class WorkItems(object):
         for org_id in self.org_ids:
             for test_id in self.test_ids:
                 sot = SampleOrgTest(org_id, test_id)
-                if not sot.qualifies():
-                    continue
-                act_ids = sot.activity_ids()
                 sample_ids = sot.sample_activity_ids(10)
 
                 test_kind = self.kind_of_test(test_id)
