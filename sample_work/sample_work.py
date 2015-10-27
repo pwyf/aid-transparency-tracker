@@ -31,7 +31,6 @@ def query(*args):
     c.execute(*args)
     return c.fetchall()
 
-
 def organisation_ids():
     return query('select id from organisation;')
 
@@ -201,10 +200,18 @@ class DocumentLinks(object):
         self.root = root
         self.codelists = codelists
 
+    def get_elt_text(self, elt, key):
+        # IATI 2.01
+        res = elt.xpath(key + '/narrative/text()')
+        if not res:
+            # IATI 1.05
+            res = elt.xpath(key + '/text()')
+        return res
+
     def get_links(self):
         for i in self.root.iterfind('document-link'):
             url = i.attrib["url"]
-            title = i.xpath('title/text()')
+            title = self.get_elt_text(i, 'title')
             codelists = self.codelists
             yield DocumentLink(url, title, i, codelists)
 
@@ -215,10 +222,18 @@ class Location(object):
     def __repr__(self):
         return '''<Location: %s>''' % self.elt
 
+    def get_elt_text(self, elt, key):
+        # IATI 2.01
+        res = elt.xpath(key + '/narrative/text()')
+        if not res:
+            # IATI 1.05
+            res = elt.xpath(key + '/text()')
+        return res
+
     def to_dict(self):
         data = {
-            "name": self.elt.xpath('name/text()'),
-            "description": self.elt.xpath('description/text()'),
+            "name": self.get_elt_text(self.elt, 'name'),
+            "description": self.get_elt_text(self.elt, 'description'),
             "longitude": self.elt.xpath('coordinates/@longitude'),
             "latitude": self.elt.xpath('coordinates/@latitude'),
             }
@@ -268,6 +283,8 @@ class Indicator(object):
 
     def elt_text_or_BLANK(self, key):
         elt = self.elt.find(key)
+        if elt and elt.find("narrative") is not None:
+            elt = elt.find("narrative")
         return getattr(elt, "text", "")
 
     def to_dict(self):
@@ -293,6 +310,8 @@ class Result(object):
 
     def elt_text_or_BLANK(self, key):
         elt = self.elt.find(key)
+        if elt and elt.find("narrative") is not None:
+            elt = elt.find("narrative")
         return getattr(elt, "text", "")
 
     def to_dict(self):
@@ -351,6 +370,8 @@ class ActivityInfo(object):
 
     def elt_text_or_MISSING(self, key):
         elt = self.root.find(key)
+        if elt and elt.find("narrative") is not None:
+            elt = elt.find("narrative")
         return getattr(elt, "text", "MISSING")
 
 class NoMatchingTest(Exception):
