@@ -266,13 +266,13 @@
 <script type="text/javascript">
 var api_sampling_url = "{{ api_sampling_url }}";
 var api_sampling_process_url = "{{ api_process_url }}";
-var update = {{ update }};
+var next_url = "{{ next_url }}";
 </script>
 
 <script src="{{url_for('static', filename='js/mustache.js')}}" 
 		type="text/javascript">
 </script>
-<script src="{{url_for('static', filename='js/sampling.js')}}" 
+<script src="{{url_for('static', filename='js/sampling.js')}}?b"
 		type="text/javascript">
 </script>
 {% endblock %}

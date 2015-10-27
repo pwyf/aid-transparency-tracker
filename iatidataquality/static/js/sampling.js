@@ -118,17 +118,14 @@ $(document).on("click", ".advance", function(e) {
     var url = api_sampling_process_url + $(this).attr('value');
     $.post(url, $("form").serialize(), 
         function(returndata){
-            if (update == true) {
-                if (returndata == "NO SUCH UUID"){
-                alert("That UUID could not be found");
-                } else {
-                window.location.assign(returndata);
-                }
-            } else {
-                if (returndata == 'EXISTS'){
-                    alert("That sample has already been submitted.");
-                }
-                getNewData();
+            if (returndata == 'OK' && next_url){
+              window.location.assign(next_url);
+            }
+            if (returndata == 'ERROR'){
+                alert("There was an error submitting that sample response.");
+            }
+            if (!next_url) {
+              getNewData();
             }
         }
     );

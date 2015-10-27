@@ -163,6 +163,13 @@ def save_response(work_item_uuid, response, unsure=False):
     database = sqlite.connect(filename)
     c = database.cursor()
 
+    result = c.execute('''update sample_result set response=?, unsure=?
+                       where uuid=?;''', (response, unsure, work_item_uuid))
+
+    if result.rowcount > 0:
+        database.commit()
+        return "update"
+
     try:
         c.execute('''insert into sample_result ("uuid", "response", "unsure")
                        values (?, ?, ?);''', (work_item_uuid, response, unsure))
@@ -171,22 +178,7 @@ def save_response(work_item_uuid, response, unsure=False):
         raise
     
     database.commit()
-
-def update_response(work_item_uuid, response, unsure=False):
-    filename = default_filename()
-    database = sqlite.connect(filename)
-    c = database.cursor()
-
-    result = c.execute('''update sample_result set response=?, unsure=?
-                       where uuid=?;''', (response, unsure, work_item_uuid))
-   
-    try:
-        assert result.rowcount > 0
-    except AssertionError:
-        database.rollback()
-        raise
-
-    database.commit()
+    return "create"
 
 def save_offer(database, work_item_uuid):
     c = database.cursor()
