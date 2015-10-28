@@ -230,12 +230,19 @@ class Location(object):
             res = elt.xpath(key + '/text()')
         return res
 
+    def get_point(self, elt):
+        point = elt.xpath('point/pos/text()')
+        if point:
+            return point[0].split(' ')
+        return elt.xpath('coordinates/@latitude'), elt.xpath('coordinates/@longitude')
+
     def to_dict(self):
+        lat, lng = self.get_point(self.elt)
         data = {
             "name": self.get_elt_text(self.elt, 'name'),
             "description": self.get_elt_text(self.elt, 'description'),
-            "longitude": self.elt.xpath('coordinates/@longitude'),
-            "latitude": self.elt.xpath('coordinates/@latitude'),
+            "latitude": lat,
+            "longitude": lng,
             }
         return data   
 
