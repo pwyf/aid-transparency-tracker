@@ -23,13 +23,16 @@ def save_url(url, filename):
     with file(filename, 'w') as f:
         f.write(resp.content)
 
-def query(*args):
+def query(*args, **kwargs):
     import config
     db_config = config.db_config
     db = psycopg2.connect(**db_config)
     c = db.cursor()
     c.execute(*args)
-    return c.fetchall()
+    if kwargs.get("write"):
+        db.commit()
+    else:
+        return c.fetchall()
 
 def organisation_ids():
     return query('select id from organisation;')
@@ -38,6 +41,11 @@ class WorkItems(object):
     def __init__(self, org_ids, test_ids):
         self.org_ids = org_ids
         self.test_ids = test_ids
+        query('''DROP TABLE IF EXISTS current_result''', write=True)
+        query('''CREATE TABLE current_result AS
+                   SELECT * FROM result
+                   WHERE test_id = ANY(%s)
+                   AND result_data > 0''', (test_ids,), write=True)
 
     def test_string_of_test_id(self, test_id):
         results = query('''select name from test where id = %s;''', (test_id,));
@@ -55,7 +63,9 @@ class WorkItems(object):
 
     def __iter__(self):
         for org_id in self.org_ids:
+            print("Org: {}".format(org_id))
             for test_id in self.test_ids:
+                print("Test: {}".format(test_id))
                 sot = SampleOrgTest(org_id, test_id)
                 sample_ids = sot.sample_activity_ids(10)
 
@@ -65,7 +75,7 @@ class WorkItems(object):
                     try:
                         act = sot.xml_of_activity(act_id)
                         parent_act = sot.xml_of_parent_activity(act_id)
-                    except NoIATIActivityFound:
+                    except:
                         continue
 
                     u = str(uuid.uuid4())
@@ -95,7 +105,7 @@ class SampleOrgTest(object):
             self.activities = []
 
     def qualifies(self):
-        rows = query('''select result_data from result 
+        rows = query('''select result_data from current_result
                           where organisation_id = %s 
                             and test_id = %s 
                             and result_data != 0''', 
@@ -103,8 +113,8 @@ class SampleOrgTest(object):
         return len(rows) >= 1
         
     def activity_ids(self):
-        rows = query('''select result_identifier, package_name from result
-                          left join package on result.package_id = package.id
+        rows = query('''select result_identifier, package_name from current_result
+                          left join package on current_result.package_id = package.id
                           where organisation_id = %s 
                             and test_id = %s 
                             and result_data = 1''', 
