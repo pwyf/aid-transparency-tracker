@@ -228,6 +228,7 @@ class DocumentLinks(object):
 class Location(object):
     def __init__(self, elt):
         self.elt = elt
+        self.point_re = re.compile(r"\s*([^\s]+)\s+([^\s]+)")
 
     def __repr__(self):
         return '''<Location: %s>''' % self.elt
@@ -243,7 +244,8 @@ class Location(object):
     def get_point(self, elt):
         point = elt.xpath('point/pos/text()')
         if point:
-            return point[0].split(' ')
+            res = self.point_re.match(point[0])
+            return res.groups()
         return elt.xpath('coordinates/@latitude'), elt.xpath('coordinates/@longitude')
 
     def to_dict(self):
