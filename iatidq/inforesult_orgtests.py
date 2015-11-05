@@ -198,7 +198,7 @@ def country_strategy_papers(doc):
         for strategy_paper in strategy_papers:
             if name is not None:
                 title = strategy_paper.find('title')
-                if not title.text:
+                if not title.text or not title.text.strip():
                     title = title.find('narrative')
                 if re.search(name, title.text, flags=re.IGNORECASE):
                     try:
