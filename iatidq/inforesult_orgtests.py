@@ -196,6 +196,14 @@ def country_strategy_papers(doc):
         # name of the country
         name = getCountryName(code, name, countrycodelist)
         for strategy_paper in strategy_papers:
+            recipient = strategy_paper.find('recipient-country')
+            if recipient is not None:
+                if recipient.get('code').lower() == code.lower():
+                    try:
+                        countries.pop(code)
+                    except Exception:
+                        pass
+                    continue
             if name is not None:
                 title = strategy_paper.find('title')
                 if not title.text or not title.text.strip():
