@@ -194,30 +194,12 @@ def api_sampling_process(response):
         work_item_uuid = data["sampling_id"]
         response = int(response)
 
-        sample_db.save_response(work_item_uuid, response, unsure)
+        create_or_update = sample_db.save_response(work_item_uuid, response, unsure)
+        if create_or_update == "create":
+            flash('Created response for that sample', 'success')
+        else:
+            flash('Updated response for that sample', 'success')
         return 'OK'
-    except sqlite3.IntegrityError:
-        return "EXISTS"
-    except Exception as e:
-        return 'ERROR'
-
-
-@app.route("/api/sampling/update/", methods=['POST'])
-@app.route("/api/sampling/update/<response>", methods=['POST'])
-@usermanagement.perms_required()
-def api_sampling_update(response):
-    data = request.form
-    try:
-        unsure = 'unsure' in data
-        assert 'sampling_id' in data
-        work_item_uuid = data["sampling_id"]
-        response = int(response)
-
-        sample_db.update_response(work_item_uuid, response, unsure)
-        flash('Updated response for that sample', 'success')
-        return url_for('sampling_list')
-    except AssertionError:
-        return "NO SUCH UUID"
     except Exception as e:
         return 'ERROR'
 
@@ -248,18 +230,17 @@ def api_sampling(uuid=None):
 @usermanagement.perms_required()
 def sampling(uuid=None):
     if uuid:
-        update = "true"
-        api_process_url = url_for('api_sampling_update')
+        next_url = url_for('sampling_list')
         api_sampling_url = url_for('api_sampling', uuid=uuid)
     else:
-        update = "false"
-        api_process_url = url_for('api_sampling_process')
+        next_url = ""
         api_sampling_url = url_for('api_sampling')
+
     return render_template("sampling.html",
          admin=usermanagement.check_perms('admin'),
          loggedinuser=current_user,
-         update=update,
-         api_process_url=api_process_url,
+         next_url=next_url,
+         api_process_url=url_for('api_sampling_process'),
          api_sampling_url=api_sampling_url)
 
 @app.route("/sampling/list/")

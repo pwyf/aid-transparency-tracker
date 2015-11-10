@@ -1,3 +1,6 @@
+import os.path
+
+
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672
 BROKER_VHOST = "/"
@@ -7,7 +10,7 @@ BROKER_PASSWORD = "guest"
 #SQLALCHEMY_DATABASE_URI = 'mysql+oursql://user:passwd@127.0.0.1/iatidq'
 #SQLALCHEMY_DATABASE_URI = 'sqlite:///dataquality.sqlite'
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2:///iatidq'
-DATA_STORAGE_DIR = "/the/absolute/path/to/your/data/"
+DATA_STORAGE_DIR = os.path.join(os.path.realpath(os.path.dirname(__file__)), 'relative', 'path', 'to', 'your', 'data')
 
 SECRET_KEY = "YOUR-REALLY-SECRET-KEY"
 

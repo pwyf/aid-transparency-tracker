@@ -92,8 +92,9 @@ def read_db(filename):
                          "test_kind"
                  from sample_full 
                  where response is null 
-                   and (offered != 1
-                   or offered is null)
+                   and (offered is null
+                   or offered_time < datetime('now', '-10 minute')
+                   )
                  limit 1;""")
 
     wis = c.fetchall()
@@ -163,6 +164,13 @@ def save_response(work_item_uuid, response, unsure=False):
     database = sqlite.connect(filename)
     c = database.cursor()
 
+    result = c.execute('''update sample_result set response=?, unsure=?
+                       where uuid=?;''', (response, unsure, work_item_uuid))
+
+    if result.rowcount > 0:
+        database.commit()
+        return "update"
+
     try:
         c.execute('''insert into sample_result ("uuid", "response", "unsure")
                        values (?, ?, ?);''', (work_item_uuid, response, unsure))
@@ -171,28 +179,15 @@ def save_response(work_item_uuid, response, unsure=False):
         raise
     
     database.commit()
-
-def update_response(work_item_uuid, response, unsure=False):
-    filename = default_filename()
-    database = sqlite.connect(filename)
-    c = database.cursor()
-
-    result = c.execute('''update sample_result set response=?, unsure=?
-                       where uuid=?;''', (response, unsure, work_item_uuid))
-   
-    try:
-        assert result.rowcount > 0
-    except AssertionError:
-        database.rollback()
-        raise
-
-    database.commit()
+    return "create"
 
 def save_offer(database, work_item_uuid):
     c = database.cursor()
 
-    c.execute('''insert into sample_offer ("uuid", "offered_time", "offered")
+    c.execute('''insert or ignore into sample_offer ("uuid", "offered_time", "offered")
                    values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, True))
+
+    c.execute('''update sample_offer set "offered_time" = CURRENT_TIMESTAMP WHERE "uuid" = ?;''', (work_item_uuid,))
 
 def flush_offered_work():
     filename = default_filename()

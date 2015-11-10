@@ -23,14 +23,16 @@ def save_url(url, filename):
     with file(filename, 'w') as f:
         f.write(resp.content)
 
-def query(*args):
+def query(*args, **kwargs):
     import config
     db_config = config.db_config
     db = psycopg2.connect(**db_config)
     c = db.cursor()
     c.execute(*args)
-    return c.fetchall()
-
+    if kwargs.get("write"):
+        db.commit()
+    else:
+        return c.fetchall()
 
 def organisation_ids():
     return query('select id from organisation;')
@@ -39,6 +41,11 @@ class WorkItems(object):
     def __init__(self, org_ids, test_ids):
         self.org_ids = org_ids
         self.test_ids = test_ids
+        query('''DROP TABLE IF EXISTS current_result''', write=True)
+        query('''CREATE TABLE current_result AS
+                   SELECT * FROM result
+                   WHERE test_id = ANY(%s)
+                   AND result_data > 0''', (test_ids,), write=True)
 
     def test_string_of_test_id(self, test_id):
         results = query('''select name from test where id = %s;''', (test_id,));
@@ -56,11 +63,10 @@ class WorkItems(object):
 
     def __iter__(self):
         for org_id in self.org_ids:
+            print("Org: {}".format(org_id))
             for test_id in self.test_ids:
+                print("Test: {}".format(test_id))
                 sot = SampleOrgTest(org_id, test_id)
-                if not sot.qualifies():
-                    continue
-                act_ids = sot.activity_ids()
                 sample_ids = sot.sample_activity_ids(10)
 
                 test_kind = self.kind_of_test(test_id)
@@ -69,7 +75,7 @@ class WorkItems(object):
                     try:
                         act = sot.xml_of_activity(act_id)
                         parent_act = sot.xml_of_parent_activity(act_id)
-                    except NoIATIActivityFound:
+                    except:
                         continue
 
                     u = str(uuid.uuid4())
@@ -99,7 +105,7 @@ class SampleOrgTest(object):
             self.activities = []
 
     def qualifies(self):
-        rows = query('''select result_data from result 
+        rows = query('''select result_data from current_result
                           where organisation_id = %s 
                             and test_id = %s 
                             and result_data != 0''', 
@@ -107,8 +113,8 @@ class SampleOrgTest(object):
         return len(rows) >= 1
         
     def activity_ids(self):
-        rows = query('''select result_identifier, package_name from result
-                          left join package on result.package_id = package.id
+        rows = query('''select result_identifier, package_name from current_result
+                          left join package on current_result.package_id = package.id
                           where organisation_id = %s 
                             and test_id = %s 
                             and result_data = 1''', 
@@ -204,26 +210,51 @@ class DocumentLinks(object):
         self.root = root
         self.codelists = codelists
 
+    def get_elt_text(self, elt, key):
+        # IATI 2.01
+        res = elt.xpath(key + '/narrative/text()')
+        if not res:
+            # IATI 1.05
+            res = elt.xpath(key + '/text()')
+        return res
+
     def get_links(self):
         for i in self.root.iterfind('document-link'):
             url = i.attrib["url"]
-            title = i.xpath('title/text()')
+            title = self.get_elt_text(i, 'title')
             codelists = self.codelists
             yield DocumentLink(url, title, i, codelists)
 
 class Location(object):
     def __init__(self, elt):
         self.elt = elt
+        self.point_re = re.compile(r"\s*([^\s]+)\s+([^\s]+)")
 
     def __repr__(self):
         return '''<Location: %s>''' % self.elt
 
+    def get_elt_text(self, elt, key):
+        # IATI 2.01
+        res = elt.xpath(key + '/narrative/text()')
+        if not res:
+            # IATI 1.05
+            res = elt.xpath(key + '/text()')
+        return res
+
+    def get_point(self, elt):
+        point = elt.xpath('point/pos/text()')
+        if point:
+            res = self.point_re.match(point[0])
+            return res.groups()
+        return elt.xpath('coordinates/@latitude'), elt.xpath('coordinates/@longitude')
+
     def to_dict(self):
+        lat, lng = self.get_point(self.elt)
         data = {
-            "name": self.elt.xpath('name/text()'),
-            "description": self.elt.xpath('description/text()'),
-            "longitude": self.elt.xpath('coordinates/@longitude'),
-            "latitude": self.elt.xpath('coordinates/@latitude'),
+            "name": self.get_elt_text(self.elt, 'name'),
+            "description": self.get_elt_text(self.elt, 'description'),
+            "latitude": lat,
+            "longitude": lng,
             }
         return data   
 
@@ -271,6 +302,8 @@ class Indicator(object):
 
     def elt_text_or_BLANK(self, key):
         elt = self.elt.find(key)
+        if elt and elt.find("narrative") is not None:
+            elt = elt.find("narrative")
         return getattr(elt, "text", "")
 
     def to_dict(self):
@@ -296,6 +329,8 @@ class Result(object):
 
     def elt_text_or_BLANK(self, key):
         elt = self.elt.find(key)
+        if elt and elt.find("narrative") is not None:
+            elt = elt.find("narrative")
         return getattr(elt, "text", "")
 
     def to_dict(self):
@@ -354,6 +389,8 @@ class ActivityInfo(object):
 
     def elt_text_or_MISSING(self, key):
         elt = self.root.find(key)
+        if elt and elt.find("narrative") is not None:
+            elt = elt.find("narrative")
         return getattr(elt, "text", "MISSING")
 
 class NoMatchingTest(Exception):
