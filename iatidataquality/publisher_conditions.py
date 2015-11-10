@@ -92,7 +92,7 @@ def update_organisation_condition(pc_id):
 @usermanagement.perms_required()
 def organisation_conditions_editor(id=None):
     organisations = Organisation.query.order_by(
-        Organisation.organisation_code).all()
+        Organisation.organisation_name).all()
     tests = Test.query.order_by(Test.id).all()
     if request.method == 'POST':
         update_organisation_condition(id)
@@ -111,7 +111,7 @@ def organisation_conditions_editor(id=None):
 @usermanagement.perms_required()
 def organisation_conditions_new(id=None):
     organisations = Organisation.query.order_by(
-        Organisation.organisation_code).all()
+        Organisation.organisation_name).all()
     tests = Test.query.order_by(Test.id).all()
 
     template_args = dict(
