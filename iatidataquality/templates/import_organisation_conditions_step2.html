@@ -1,6 +1,14 @@
 {% set active_page='import_conditions'%}{% extends "layout.html" %}
 {% block title %}Import organisation conditions{% endblock %}
 {% block content %}
+    <script src="{{url_for('static',
+         filename='jquery.tablesorter.min.js')}}"></script>
+
+    <script >
+    $(function() {
+    $("table").tablesorter({ sortList: [[1,0], [2,0]] });
+    });
+    </script>
     
     <form action="{{url_for('import_organisation_conditions', step=3)}}" 
 		  method="post">
@@ -63,14 +71,12 @@
 			</tr>
             {% endfor %}
         {% endfor %}
-    <tr>
-        <td colspan="7">
-		  <input type="submit" value="Add conditions"
-				 class="btn btn-success" />
-		</td>
-    </tr>
     </tbody>
     </table>
+
+    <input type="submit" value="Add conditions"
+       class="btn btn-success" />
+
     {% endif %}
     </form>
 {% endblock %}
