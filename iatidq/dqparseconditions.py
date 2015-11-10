@@ -35,13 +35,16 @@ def parsePC(organisation_structures):
 
 
     def organisation_and_test_level(groups):
-        like = '%' + groups[1] + '%'
         organisation = models.Organisation.query.filter_by(organisation_code=groups[0]).first()
         tests = db.session.query(
             models.Test.id, 
             models.Test.name, 
             models.Test.description
-            ).filter(models.Test.name.like(like)).all()
+            ).all()
+        # bit of a hack: we look for tests that include the condition
+        # before their first bracket.
+        like = re.compile(r'[^\(]*?{}'.format(groups[1]))
+        tests = filter(lambda test: like.match(test[1]) is not None, tests)
         return organisation, tests
 
     @add_partial('(\S*) does not use (\S*) at activity level')
