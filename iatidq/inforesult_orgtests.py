@@ -37,7 +37,7 @@ def budget_within_year_scope(budget_end, year):
         now = datetime.datetime.now()
         date_budget_end = datetime.datetime.strptime(budget_end, "%Y-%m-%d")
 
-        future = datetime.timedelta(days=203+(365*(year-1)))
+        future = datetime.timedelta(days=180+(365*(year-1)))
         future_plus_oneyear = future+datetime.timedelta(days=365)
 
         if ((date_budget_end > (now+future)) and 
