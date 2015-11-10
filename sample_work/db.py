@@ -92,8 +92,9 @@ def read_db(filename):
                          "test_kind"
                  from sample_full 
                  where response is null 
-                   and (offered != 1
-                   or offered is null)
+                   and (offered is null
+                   or offered_time < datetime('now', '-10 minute')
+                   )
                  limit 1;""")
 
     wis = c.fetchall()
@@ -183,8 +184,10 @@ def save_response(work_item_uuid, response, unsure=False):
 def save_offer(database, work_item_uuid):
     c = database.cursor()
 
-    c.execute('''insert into sample_offer ("uuid", "offered_time", "offered")
+    c.execute('''insert or ignore into sample_offer ("uuid", "offered_time", "offered")
                    values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, True))
+
+    c.execute('''update sample_offer set "offered_time" = CURRENT_TIMESTAMP WHERE "uuid" = ?;''', (work_item_uuid,))
 
 def flush_offered_work():
     filename = default_filename()
