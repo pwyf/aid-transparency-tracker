@@ -370,7 +370,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
         tmp["points"] = points()
         if not zero:
-            tmp["points_minus_50"] = tmp["points"] - 50
+            tmp["points_minus_50"] = round((tmp["points"] - 50), 2)
             # it all fails if the other branch tries to use this value
 
         tmp["tests"] = map(annotate_test, res["tests"])
