@@ -173,7 +173,9 @@ def total_country_budgets(doc, totalbudgets):
     return budgetdata
 
 def total_country_budgets_single_result(doc):
-    return total_country_budgets(doc, total_future_budgets(doc))['summary']['total_pct_all_years']
+    cbs = total_country_budgets(doc, total_future_budgets(doc))['summary']['total_pct_all_years']
+    if cbs > 0: return cbs
+    return total_sector_budgets_single_result(doc)
 
 def country_strategy_papers(doc):
     countries = all_countries(doc)
@@ -183,7 +185,7 @@ def country_strategy_papers(doc):
     # have an active country budget.)
 
     if len(countries)==0:
-        return 0.00
+        return total_sector_strategy_papers(doc)
 
     total_countries = len(countries)
     strategy_papers = doc.xpath("//document-link[category/@code='B03']")
@@ -214,7 +216,10 @@ def country_strategy_papers(doc):
                     except Exception:
                         pass
     print "Remaining countries are", countries
-    return 100-(float(len(countries))/float(total_countries))*100
+    csp = 100-(float(len(countries))/float(total_countries))*100
+    if csp > 0: return csp
+    print doc
+    return total_sector_strategy_papers(doc)
 
 def getCountryName(code, name, countrycodelist):
     if name is not None:
@@ -268,6 +273,61 @@ def total_budgets_available(doc):
         if data['available'] == True:
             available+=1
     return (float(available)/3.0)*100
+
+def total_sector_budgets(doc):
+    # Get budgets for each sector in each year
+    totalbudgets = doc.xpath("//total-budget")
+    years = [0,1,2,3]
+    sout = {}
+    for year in years:
+        sout[year] = {"budget-lines": {},
+                      "budget_total": 0.0,
+                      "budgetlines_total": 0.0,
+                      "budgetlines_pct": 0.0}
+        for tb in totalbudgets:
+            budget_end = tb.xpath("period-end/@iso-date")[0]
+            if budget_within_year_scope(budget_end, year):
+                budget_total = tb.xpath("value/text()")[0]
+                sout[year]["budget_total"] = float(budget_total)
+                budgetlines = tb.xpath("budget-line")
+                for bl in budgetlines:
+                    budget_ref = bl.get("ref")
+                    budget_name = bl.xpath("narrative/text()")[0]
+                    budget_value = bl.xpath("value/text()")[0]
+                    sout[year]["budget-lines"][budget_ref] = {
+                        "budget_name": budget_name,
+                        "budget_value": float(budget_value)
+                    }
+                    sout[year]["budgetlines_total"] += float(budget_value)
+                sout[year]["budgetlines_pct"] = min(
+                    (sout[year]["budgetlines_total"] /
+                     sout[year]["budget_total"] * 100),
+                     100)
+    return sout
+
+def total_sector_budgets_single_result(doc):
+    result = total_sector_budgets(doc)
+    return sum(by["budgetlines_pct"] for by in result.values()) / len(result)
+
+def total_sector_strategy_papers(doc):
+    all_budgets = total_sector_budgets(doc)
+    sector_names = set(sum(list(map(
+        lambda x: list(map(
+            lambda b: b['budget_name'],
+            x['budget-lines'].values()
+            )),
+        all_budgets.values()
+        )), []))
+
+    all_sector_document_titles = doc.xpath("//document-link[category/@code='B11']/title/narrative/text()|document-link[category/@code='B12']/title/narrative/text()")
+    found = 0.0
+    for sn in sector_names:
+        for asdt in all_sector_document_titles:
+            if asdt.find(sn) >= 0:
+                found +=1
+                break
+
+    return found/len(sector_names)*100
 
 """print "Total budgets..."
 print total_budgets_available(doc)
