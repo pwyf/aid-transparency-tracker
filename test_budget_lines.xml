@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<iati-organisations>
+	<iati-organisation>
+		<total-budget>
+			<period-start iso-date="2014-01-01"/>
+			<period-end iso-date="2014-12-31"/>
+			<value currency="USD" value-date="2014-01-01">250000000</value>
+			<budget-line ref="1">
+				<value currency="USD" value-date="2014-01-01">200000000</value>
+				<narrative>Global Health</narrative>
+			</budget-line>
+			<budget-line ref="2">
+				<value currency="USD" value-date="2014-01-01">10000000</value>
+				<narrative>Gender</narrative>
+			</budget-line>
+			<budget-line ref="3">
+				<value currency="USD" value-date="2014-01-01">10000000</value>
+				<narrative>Children</narrative>
+			</budget-line>
+		</total-budget>
+		<total-budget>
+			<period-start iso-date="2015-01-01"/>
+			<period-end iso-date="2015-12-31"/>
+			<value currency="USD" value-date="2014-01-01">250000000</value>
+			<budget-line ref="1">
+				<value currency="USD" value-date="2015-01-01">100000000</value>
+				<narrative>Global Health</narrative>
+			</budget-line>
+			<budget-line ref="2">
+				<value currency="USD" value-date="2015-01-01">100000000</value>
+				<narrative>Gender</narrative>
+			</budget-line>
+			<budget-line ref="3">
+				<value currency="USD" value-date="2015-01-01">10000000</value>
+				<narrative>Children</narrative>
+			</budget-line>
+		</total-budget>
+		<total-budget>
+			<period-start iso-date="2016-01-01"/>
+			<period-end iso-date="2016-12-31"/>
+			<value currency="USD" value-date="2014-01-01">500000000</value>
+			<budget-line ref="2">
+				<value currency="USD" value-date="2016-01-01">200000000</value>
+				<narrative>Gender</narrative>
+			</budget-line>
+		</total-budget>
+		<document-link>
+			<category code="B11" />
+		    <title>
+			    <narrative>Global Health sector strategy</narrative>	   
+		    </title>
+		</document-link>
+		<document-link>
+			<category code="B12" />
+		    <title>
+			    <narrative>Gender thematic strategy</narrative>	   
+		    </title>
+		</document-link>
+	</iati-organisation>
+</iati-organisations>
