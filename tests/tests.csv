@@ -36,7 +36,7 @@
 "objectives","Objectives","document-link/category[@code='A02'] or description[@type='2'] exists (if activity-status/@code is at least 2)?","Document - Objectives / Purpose of activity document",1
 "procurement-policy","Procurement policy","document-link/category[@code='B05'] exists?","Procurement policy",3
 "sector","Sector","sector or transaction/sector exists?","Sector ",1
-"sector","Sector","at least one (sector[@vocabulary=""DAC""]/@code|sector[not(@vocabulary)]/@code|sector[@vocabulary=""1""]/@code|transaction/sector[@vocabulary=""1""]/@code|transaction/sector[not(@vocabulary)]/@code) is on list Sector?","Sector uses standard codelist",1
+"sector","Sector","at least one sector[@vocabulary=""DAC""]/@code|sector[not(@vocabulary)]/@code|sector[@vocabulary=""1""]/@code|transaction/sector[@vocabulary=""1""]/@code|transaction/sector[not(@vocabulary)]/@code is on list Sector?","Sector uses standard codelist",1
 "strategy","Strategy","document-link/category[@code='B02'] exists?","Strategy",3
 "tenders","Tenders","document-link/category[@code='A10'] exists (if activity-status/@code is at least 2 and (default-aid-type/@code or transaction/aid-type/@code is not A01))?","Document - Tender",1
 "tied-aid-status","Tied Aid Status","default-tied-status or transaction/tied-status exists (if activity-status/@code is at least 2)?","Tied aid status",1
