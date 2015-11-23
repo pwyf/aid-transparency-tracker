@@ -34,14 +34,7 @@ def _set_deleted_package(package, set_deleted=False):
 def check_deleted_packages():
     offset = 0
     # all packages on IATI currently
-    registry_packages = []
-    while True:
-        data = urllib2.urlopen(REGISTRY_URL % offset, timeout=60).read()
-        data = json.loads(data)['results']
-        if data == []:
-            break
-        offset += 1000
-        registry_packages += [x['id'] for x in data]
+    registry_packages = [x['id'] for x in packages_from_iati_registry(REGISTRY_URL)]
     # all packages in the database currently
     db_packages = models.Package.query.all()
     count_deleted = 0
