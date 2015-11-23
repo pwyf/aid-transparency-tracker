@@ -25,9 +25,10 @@ CKANurl = 'http://iatiregistry.org/api'
 class PackageMissing(Exception): pass
 
 def _set_deleted_package(package, set_deleted=False):
-    with db.session.begin():
-        package.deleted = set_deleted
-        db.session.add(package)
+    if package.deleted != set_deleted:
+        with db.session.begin():
+            package.deleted = set_deleted
+            db.session.add(package)
         return True
     return False
 
@@ -44,8 +45,8 @@ def check_deleted_packages():
             _set_deleted_package(pkg, False)
         else:
             print "Should delete package", pkg.package_name
-            _set_deleted_package(pkg, True)
-            count_deleted +=1
+            if _set_deleted_package(pkg, True):
+                count_deleted += 1
     return count_deleted
     
 
