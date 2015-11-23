@@ -22,34 +22,37 @@ REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,t
 
 CKANurl = 'http://iatiregistry.org/api'
 
-IATIUPDATES_URL = 'http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/'
-
 class PackageMissing(Exception): pass
 
-def _set_deleted_package(package_ckan_id, set_deleted=False):
+def _set_deleted_package(package, set_deleted=False):
     with db.session.begin():
-        p = models.Package.query.filter(
-            models.Package.package_ckan_id==package_ckan_id
-            ).first()
-        if p:        
-            p.deleted = set_deleted
-            db.session.add(p)
+        package.deleted = set_deleted
+        db.session.add(package)
         return True
     return False
 
 def check_deleted_packages():
-    data = urllib2.urlopen(IATIUPDATES_URL, timeout=60).read()
-    print IATIUPDATES_URL
-    data = json.loads(data)
+    offset = 0
+    # all packages on IATI currently
+    registry_packages = []
+    while True:
+        data = urllib2.urlopen(REGISTRY_URL % offset, timeout=60).read()
+        data = json.loads(data)['results']
+        if data == []:
+            break
+        offset += 1000
+        registry_packages += [x['id'] for x in data]
+    # all packages in the database currently
+    db_packages = models.Package.query.all()
     count_deleted = 0
-    for pkg in data['data']:
+    for pkg in db_packages:
         # Need to do both in case a package is deleted and then resurrected
-        if pkg['deleted'] == True:
-            print "Should delete package", pkg['name']
-            _set_deleted_package(pkg['id'], True)
+        if pkg.package_ckan_id in registry_packages:
+            _set_deleted_package(pkg, False)
+        else:
+            print "Should delete package", pkg.package_name
+            _set_deleted_package(pkg, True)
             count_deleted +=1
-        else:            
-            _set_deleted_package(pkg['id'], False)
     return count_deleted
     
 
