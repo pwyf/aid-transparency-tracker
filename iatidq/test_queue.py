@@ -340,8 +340,6 @@ def dequeue_download(body, test_functions, codelists, use_subprocess):
         print "Exception in dequeue_download", e
 
 def _test_one_package(filename, package_id, runtime_id):
-    import testrun
-
     from dqparsetests import test_functions as tf
     test_functions = tf()
     import dqcodelists
@@ -356,6 +354,7 @@ def _test_one_package(filename, package_id, runtime_id):
                package_id)
 
 def test_one_package(filename, package_name, runtime_id=None):
+    import testrun
     
     package = models.Package.query.filter_by(
         package_name=package_name).first()
