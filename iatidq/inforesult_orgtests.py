@@ -250,7 +250,10 @@ def all_countries(doc):
             country_el = recipient_country_budget.find('recipient-country')
             if country_el is not None:
                 code = country_el.get('code')
-                name = country_el.text
+                if country_el.find('narrative') is not None:
+                    name = country_el.find('narrative').text
+                else:
+                    name = country_el.text
             else:
                 code = None
                 name = None
