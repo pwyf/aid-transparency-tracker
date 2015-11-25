@@ -48,7 +48,7 @@
     </td>
     <td>{{workflow.Workflow.title}}</td>
     <td>
-		{% if workflow.Workflow.id <= survey.Workflow.id %}
+		{% if workflow.Workflow.id == survey.Workflow.id or workflow.Workflow.name in surveydata %}
 	  <a href="{{url_for('organisation_survey_edit', 
 				 organisation_code=organisation.organisation_code, 
 				 workflow_name=workflow.Workflow.name)}}">
