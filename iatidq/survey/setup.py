@@ -74,57 +74,52 @@ def setupSurvey():
     for the_workflowType in the_workflowTypes:    
         addWorkflowType(the_workflowType)
     
-    # Workflows need to be created and then 
-    # updated with the leadsto attribute.
-    # They define what happens to the survey
-    # at each step.
+    # Workflows are created here.
+    # The order attribute defines the ordering
+    # of the survey steps.
 
     def the_workflows():
         return [
             {'name': 'researcher',
              'title': 'Researcher',
              'workflow_type': workflowTypeByName('collect').id,
-             'leadsto': getIDorNone(workflowByName('send')),
+             'order': 1,
              'duration': 14},
             {'name': 'send',
              'title': 'Send to donor',
              'workflow_type': workflowTypeByName('send').id,
-             'leadsto': getIDorNone(workflowByName('donorreview')),
+             'order': 2,
              'duration': 2},
             {'name': 'donorreview',
              'title': 'Donor review',
              'workflow_type': workflowTypeByName('review').id,
-             'leadsto': getIDorNone(workflowByName('pwyfreview')),
+             'order': 3,
              'duration': 21},
             {'name': 'cso',
              'title': 'Independent review',
              'workflow_type': workflowTypeByName('comment').id,
-             'leadsto': getIDorNone(workflowByName('pwyffinal')),
+             'order': 5,
              'duration': None},
             {'name': 'pwyfreview',
              'title': 'PWYF review',
              'workflow_type': workflowTypeByName('review').id,
-             'leadsto': getIDorNone(workflowByName('cso')),
+             'order': 4,
              'duration': 14},
             {'name': 'donorcomments',
              'title': 'Donor comments',
              'workflow_type': workflowTypeByName('comment').id,
-             'leadsto': getIDorNone(workflowByName('finalised')),
+             'order': 7,
              'duration': 7},
             {'name': 'pwyffinal',
              'title': 'PWYF final review',
              'workflow_type': workflowTypeByName('finalreview').id,
-             'leadsto': getIDorNone(workflowByName('donorcomments')),
+             'order': 6,
              'duration': 14},
             {'name': 'finalised',
              'title': 'Survey finalised',
              'workflow_type': workflowTypeByName('finalised').id,
-             'leadsto': None,
+             'order': 8,
              'duration': None}
             ]
     for the_workflow in the_workflows():
         addWorkflow(the_workflow)
-
-    # This will correct leadsto values
-    for the_workflow in the_workflows():
-        updateWorkflow(the_workflow)

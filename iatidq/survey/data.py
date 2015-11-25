@@ -294,14 +294,18 @@ def workflow_by_id(workflow_id):
 
 def advanceSurvey(organisationsurvey):
     # receives an OrganisationSurvey object
-    # updates currentworkflow_id to leadsto value
+    # updates currentworkflow_id to new value
     checkS=models.OrganisationSurvey.query.filter_by(id=organisationsurvey.id
             ).first()
     checkW = workflow_by_id(organisationsurvey.currentworkflow_id)
     if not (checkS and checkW):
         return False
+    try:
+        next_id = models.Workflow.query.filter_by(order=(checkW.order + 1)).first()
+    except AttributeError:
+        next_id = None
     with db.session.begin():
-        checkS.currentworkflow_id=checkW.leadsto
+        checkS.currentworkflow_id = next_id
         db.session.add(checkS)
     # FIXME
     # return None instead of False - the test for this is potentially 
@@ -316,27 +320,13 @@ def addWorkflow(data):
         newW = models.Workflow()
         newW.setup(
             name = data["name"],
-            leadsto = data["leadsto"],
+            order = data["order"],
             workflow_type = data["workflow_type"],
             duration = data["duration"],
             title = data["title"]
             )
         db.session.add(newW)
     return newW
-
-def updateWorkflow(data):
-    checkW = models.Workflow.query.filter_by(name=data["name"]
-                ).first()
-    if not checkW:
-        return None
-    with db.session.begin():
-        checkW.name = data["name"],
-        checkW.title = data["title"],
-        checkW.workflow_type = data["workflow_type"],
-        checkW.leadsto = data["leadsto"],
-        checkW.duration = data["duration"]
-        db.session.add(checkW)
-    return checkW
 
 def repairSurveyData(organisation_code):
     # for each currently active stage of the workflow
