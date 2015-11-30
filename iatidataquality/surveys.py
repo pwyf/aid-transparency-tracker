@@ -127,7 +127,7 @@ def __survey_process(organisation, workflow, request,
             if indicator.indicator_ordinal:
                 data['ordinal_value'] = request.form.get(str(indicator.id) + "-ordinal_value")
             else:
-                data['ordinal_value'] = 0
+                data['ordinal_value'] = None
 
         data['published_comment'] = request.form.get(str(indicator.id)+"-comments")
         data['published_source'] = request.form.get(str(indicator.id)+"-source")
