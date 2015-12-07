@@ -7,9 +7,15 @@
     <form action="" method="post">
     
     {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
-    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Send" name="submit" /> Send to donor</label>
+    <div class="control-group">
+      <input id="submit" type="submit" class="btn btn-success" value="Send" name="submit" />
+      <span class="muted">Send to donor</span>
+    </div>
     {% else %}
-    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Send" name="submit" disabled /> Already sent to donor</label>
+    <div class="control-group">
+      <input id="submit" type="submit" class="btn btn-success" value="Send" name="submit" disabled />
+      <span class="muted">Already sent to donor</span>
+    </div>
     {% endif%}
     
 
