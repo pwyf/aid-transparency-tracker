@@ -393,7 +393,6 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
     def add_info_result(info_id, result_data):
         with db.session.begin():
             models.InfoResult.query.filter(
-                models.InfoResult.package_id==package_id,
                 models.InfoResult.info_id==info_id,
                 models.InfoResult.organisation_id==organisation_id
             ).delete()
