@@ -158,7 +158,7 @@ def _updateOrganisationFrequency(fh):
             else:
                 frequency = "less than quarterly"
                 comment = "Updated less than quarterly"
-            yield packagegroup["Publisher Name"], frequency, comment
+            yield packagegroup["Publisher Registry Id"], frequency, comment
 
     for packagegroup, frequency, comment in get_frequency():
         organisations = dqpackages.packageGroupOrganisations(packagegroup)
