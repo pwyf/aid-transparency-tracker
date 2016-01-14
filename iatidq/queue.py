@@ -69,6 +69,17 @@ def handle_queue_generator(queue_name):
         channel.close()
         connection.close()
 
+def delete_queue(queue_name):
+    try:
+        connection = get_connection('localhost')
+        channel = connection.channel()
+        channel.queue_delete(queue=queue_name)
+    except:
+        pass
+    finally:
+        channel.close()
+        connection.close()
+
 def exhaust_queue(queue, callback_fn):
     try:
         connection = pika.BlockingConnection(

@@ -199,18 +199,10 @@ def make_csv_output(options):
     s = iatidq.dqcsv.make_csv(organisations, True, True)
     print s.read()
 
-def clear_queue(options):
+def clear_queues(options):
     from iatidq import queue
-    def run_queue(queue_name):
-        while True:
-            queue.handle_queue(queue_name, callback_fn)
 
-    def callback_fn(ch, method, properties, body):
-        print "Dequeuing"
-        ch.basic_ack(delivery_tag=method.delivery_tag)
-
-    the_queue='iati_download_queue'
-    [ run_queue(queue_name) for queue_name in
+    [ queue.delete_queue(queue_name) for queue_name in
                 ['iati_download_queue', 'iati_tests_queue'] ]
 
 def test_package(options):
@@ -396,7 +388,7 @@ modes = {
     "list-modes": list_modes,
     "make-survey-data": make_survey_data,
     "make-csv-output": make_csv_output,
-    "clear-queue": clear_queue,
+    "clear-queues": clear_queues,
     "associate-test": associate_test,
     "test-package": test_package,
     "check-package-results": check_package_results,
