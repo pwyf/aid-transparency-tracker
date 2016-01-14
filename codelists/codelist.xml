@@ -8,7 +8,7 @@
     <codelist>
         <name>ActivityStatus</name>
         <description>Lifecycle status of the activity from pipeline to completion</description>
-        <count>5</count>
+        <count>6</count>
         <fields>code,name,language</fields>
     </codelist>
     <codelist>
