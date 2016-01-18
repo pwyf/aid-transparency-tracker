@@ -182,6 +182,29 @@ def make_sample_json(work_item):
 
     return data
 
+# quick fix to make the sample list load faster
+# (since that page is used a lot)
+def make_simple_sample_json(work_item):
+    work_item_org = get_org_info(work_item["organisation_id"])
+    work_item_test = get_test_info(work_item["test_id"])
+
+    data = { "sample": {
+                "sampling_id": work_item["uuid"],
+                "test_id": work_item["test_id"],
+            },
+            "headers": {
+                "test_description": work_item_test.description,
+                "organisation_name": work_item_org.organisation_name,
+                "organisation_code": work_item_org.organisation_code,
+            },
+            "response": {}
+        }
+    if 'response' in work_item:
+        data['response'] = get_response(work_item["test_kind"],
+                    work_item['response'],
+                    work_item['unsure'])
+
+    return data
 
 @app.route("/api/sampling/process/", methods=['POST'])
 @app.route("/api/sampling/process/<response>", methods=['POST'])
@@ -248,7 +271,7 @@ def sampling(uuid=None):
 def sampling_list():
     samples = []
     for wi in sample_db.read_db_response():
-        samples.append(make_sample_json(wi))
+        samples.append(make_simple_sample_json(wi))
     return render_template("sampling_list.html",
          admin=usermanagement.check_perms('admin'),
          loggedinuser=current_user,
