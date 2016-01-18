@@ -245,7 +245,8 @@ class Location(object):
         point = elt.xpath('point/pos/text()')
         if point:
             res = self.point_re.match(point[0])
-            return res.groups()
+            if res:
+                return res.groups()
         return elt.xpath('coordinates/@latitude'), elt.xpath('coordinates/@longitude')
 
     def to_dict(self):
