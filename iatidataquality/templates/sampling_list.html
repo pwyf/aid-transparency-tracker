@@ -26,10 +26,10 @@
 		  {{ s.headers.test_description }}</a>
 	  </td>
       <td>
-        <a class="btn btn-mini btn-{{ s.response.class }}">
+        <span class="label label-{{ s.response.class }}">
           <i class="icon icon-white icon-{{ s.response.icon }}"></i>
           {{ s.response.button }}
-        </a>
+        </span>
       </td>
       <td>
         {{ s.response.unsure|safe }}
