@@ -45,7 +45,8 @@ class WorkItems(object):
         query('''CREATE TABLE current_result AS
                    SELECT * FROM result
                    WHERE test_id = ANY(%s)
-                   AND result_data > 0''', (test_ids,), write=True)
+                   AND organisation_id = ANY(%s)
+                   AND result_data > 0''', (test_ids, org_ids,), write=True)
 
     def test_string_of_test_id(self, test_id):
         results = query('''select name from test where id = %s;''', (test_id,));
