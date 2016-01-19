@@ -38,10 +38,10 @@ def organisation_ids():
     return query('select id from organisation;')
 
 class WorkItems(object):
-    def __init__(self, org_ids, test_ids, regen_results):
+    def __init__(self, org_ids, test_ids, create):
         self.org_ids = org_ids
         self.test_ids = test_ids
-        if regen_results:
+        if create:
             query('''DROP TABLE IF EXISTS current_result''', write=True)
             query('''CREATE TABLE current_result AS
                        SELECT * FROM result
