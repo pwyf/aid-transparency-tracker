@@ -22,9 +22,9 @@ def all_org_ids():
     for o in organisation_ids():
         yield o[0]
 
-def run(filename, org_ids, test_ids, create):
+def run(filename, org_ids, test_ids, create, regen_results):
     print "test ids:", test_ids
-    db.make_db(filename, WorkItems(org_ids, test_ids), create)
+    db.make_db(filename, WorkItems(org_ids, test_ids, regen_results), create)
 
 if __name__ == '__main__':
     from optparse import OptionParser
@@ -40,6 +40,9 @@ if __name__ == '__main__':
     parser.add_option("--test-ids", dest="test_ids", action="store")
     parser.add_option("--update", dest="update", action="store_true",
                       default=False)
+    parser.add_option("--regen-results", dest="regen_results", action="store_true",
+                      default=False, help="Use this option to force the temporary results\
+                      table to be regenerated")
 
     options, rest = parser.parse_args()
 
@@ -49,4 +52,4 @@ if __name__ == '__main__':
         test_ids = map(int, options.test_ids.split(","))
     create = options.update != True
 
-    run(options.filename, org_ids, test_ids, create)
+    run(options.filename, org_ids, test_ids, create, options.regen_results)
