@@ -12,7 +12,7 @@ Information provided in other formats (Excel, CSV, website, PDFs) will be
 collected manually via a survey. If the organisation is not an IATI 
 publisher then all the information will be collected via the survey. The 
 full list of information items we are looking for can be found 
-[here](http://www.publishwhatyoufund.org/files/2015/08/Technical-paper-2016-FINAL.docx).
+[here](http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf).
 
 Surveys are to be completed using information relating to the country that 
 received the largest amount of aid by value from that donor organisation. 

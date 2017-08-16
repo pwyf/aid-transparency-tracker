@@ -6,7 +6,7 @@ in the 2016 Aid Transparency Index. Thank you for agreeing to review
 this assessment.
 
 Details of the indicators used, including how each
-indicator is scored and weighted, can be found in the [scoring guide](http://www.publishwhatyoufund.org/files/2015/08/Technical-paper-2016-FINAL.docx)
+indicator is scored and weighted, can be found in the [scoring guide](http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf)
 
 ## Reviewing the assessment
 
