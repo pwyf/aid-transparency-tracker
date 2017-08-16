@@ -1,6 +1,6 @@
 # Guide for Independent Reviewers
 
-We have conducted an initial assessment of donor organisations, reviewing their overall commitment to aid transparency and checking what information they publish on their activities. This information will be included in the 2016 Aid Transparency Index.
+We have conducted an initial assessment of donor organisations, reviewing what information they publish on their activities. This information will be included in the 2016 Aid Transparency Index.
 
 Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/files/2015/08/Technical-paper-2016-FINAL.docx).
 

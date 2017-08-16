@@ -1,6 +1,6 @@
 # Guide for Donor Organisations
 
-We have conducted an initial assessment of your organisation's commitment to aid transparency and publication of information on
+We have conducted an initial assessment of your organisation's publication of information on
 specific activities. This information has been collected for inclusion
 in the 2016 Aid Transparency Index. Thank you for agreeing to review
 this assessment.
