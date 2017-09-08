@@ -336,14 +336,15 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                             organisation_code=organisation_code))
 
 
-def render_markdown(filename):
+def render_markdown(filename, **kwargs):
     path = os.path.join(os.path.dirname(__file__), 'docs', filename)
     with file(path) as f:
         plaintext = f.read()
         def _wrapped():
             content = Markup(markdown.markdown(plaintext))
             loggedinuser = current_user
-            return render_template('about_generic.html', **locals())
+            kwargs.update(locals())
+            return render_template('about_generic.html', **kwargs)
         return _wrapped()
 
 @app.route('/info/datacol')
