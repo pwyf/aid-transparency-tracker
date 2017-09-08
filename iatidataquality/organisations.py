@@ -172,10 +172,12 @@ def organisations(organisation_code=None):
 
     organisations = dqorganisations.organisations()
 
-    template_args = dict(organisations=organisations,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
-
+    template_args = {
+        'organisations': organisations,
+        'admin': usermanagement.check_perms('admin'),
+        'loggedinuser': current_user,
+        'ati_year': app.config['ATI_YEAR'],
+    }
     return render_template("organisations.html", **template_args)
 
 @app.route("/organisations/new/", methods=['GET','POST'])
@@ -433,6 +435,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
     json_data = json.dumps(payload, indent=2)
 
     return render_template("organisation_indicators.html",
+                           ati_year = app.config['ATI_YEAR'],
                            organisation=organisation,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,
