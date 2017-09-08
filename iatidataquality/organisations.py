@@ -531,7 +531,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
     
     json_data = json.dumps(payload, indent=2)
 
-    return render_template("organisation_index_public_2014.html",
+    return render_template("organisation_index_publication.html",
                            organisation=organisation,
                            results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
