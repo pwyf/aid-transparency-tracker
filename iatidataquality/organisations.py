@@ -541,6 +541,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
                            loggedinuser=current_user,
                            lastyearsdata=lastyearsdata,
                            publishedformats=publishedformats,
+                           ati_year=app.config['ATI_YEAR'],
                            years=years,
                            json_data=json_data,
                            old_publication_status = surveys.get_old_publication_status())
