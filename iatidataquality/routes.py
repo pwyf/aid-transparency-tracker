@@ -19,6 +19,7 @@ import usermanagement
 def home():
     return render_template("dashboard.html",
              admin=usermanagement.check_perms('admin'),
+             intro_html=app.config.get('INTRO_HTML'),
              loggedinuser=current_user)
 
 @app.errorhandler(404)
