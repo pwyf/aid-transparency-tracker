@@ -255,6 +255,8 @@ def organisation_survey_view(organisation_code, workflow,
     org_indicators['commitment'] = util.resort_sqlalchemy_indicator(org_indicators['commitment'])
     org_indicators['zero'] = util.resort_dict_indicator(org_indicators['zero'])
 
+    ati_year = app.config['ATI_YEAR']
+
     return render_template(
         "surveys/_survey_%s.html" % workflow.WorkflowType.name,
         **locals())
