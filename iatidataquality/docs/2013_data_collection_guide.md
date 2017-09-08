@@ -1,8 +1,8 @@
-#Guide for Data Collection
+# Guide for Data Collection
 
 Thank you for agreeing to contribute to the 2016 Index. The data you are collecting will help to accurately capture the levels of aid information available, show changes over time and facilitate clear, practical improvements in the availability of aid information.
 
-##Filling the survey questionnaire
+## Filling the survey questionnaire
 
 Data will be collected using two tools - a Data Quality tool and a survey. 
 
@@ -48,7 +48,7 @@ time.
 
 For activity level questions, **you should select at random a minimum of five activities in that country** to establish that the information is consistently published. While checking and verifying data, donor organisations will be asked to confirm if these responses are representative as a whole.
 
-###To answer each question:
+### To answer each question:
 
 1. Go to the 'Publication' section of the survey.
 2. The information items we are looking for are listed. To see a definition for each information item, click on it.
@@ -80,7 +80,7 @@ Criteria for selecting 'not published':
 * The information is not published. For activity level questions, this
 information is not being published for any of the projects assessed.
 
-##Submitting the survey
+## Submitting the survey
 
 If you are unable to finish answering all questions in a single session or would like to review your responses again before you submit the survey, please click on the 'save' button. You can return to your saved results by logging in again. 
 

@@ -36,7 +36,7 @@ where the information was found and any explanatory text is provided
 alongside each question. 
 
 
-###What donor organisations were asked to do:
+### What donor organisations were asked to do:
 
 Donor organisations were asked to check our responses to the survey and make any corrections or additions as needed. They were given the following selection of responses to choose from: 
 
@@ -47,7 +47,7 @@ Donor organisations were asked to check our responses to the survey and make any
 The evidence for where the information is found and any explanatory text is provided alongside each response.
 
 
-###Providing your feedback:
+### Providing your feedback:
 
 Given your familiarity with this donor organisation, we would like to receive your feedback on the survey.
 
