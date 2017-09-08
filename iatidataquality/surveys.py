@@ -348,7 +348,7 @@ def render_markdown(filename):
 
 @app.route('/info/datacol')
 def about_data_collection():
-    return render_markdown('2013_data_collection_guide.md')
+    return render_markdown('data_collection_guide.md')
 
 @app.route('/info/independent')
 def about_independent():
