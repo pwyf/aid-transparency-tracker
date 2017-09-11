@@ -24,13 +24,13 @@ def home():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('404.html',
+    return render_template("404.html",
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user), 404
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('500.html', error=e,
+    return render_template("500.html", error=e,
              error_class=e.__class__.__name__,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user), 500

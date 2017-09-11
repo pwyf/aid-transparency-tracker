@@ -346,7 +346,7 @@ def render_markdown(filename, **kwargs):
             content = Markup(markdown.markdown(plaintext))
             loggedinuser = current_user
             kwargs.update(locals())
-            return render_template('about_generic.html', **kwargs)
+            return render_template("about_generic.html", **kwargs)
         return _wrapped()
 
 @app.route('/info/datacol')
