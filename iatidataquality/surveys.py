@@ -84,7 +84,17 @@ def organisation_survey(organisation_code=None):
     checksurveyOK = dqsurveys.checkSurveyData(organisation_code)
 
     return render_template("surveys/survey.html", 
-                           **locals())
+        survey=survey,
+        surveydata=surveydata,
+        workflows=workflows,
+        pct_complete=pct_complete,
+        users=users,
+        organisation=organisation,
+        checksurveyOK=checksurveyOK,
+
+        loggedinuser=loggedinuser,
+        admin=admin,
+    )
 
 def getTimeRemainingNotice(deadline):
     # Skip this for now
