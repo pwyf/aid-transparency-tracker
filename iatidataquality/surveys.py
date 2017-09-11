@@ -72,9 +72,8 @@ def organisation_survey_repair(organisation_code):
 def organisation_survey(organisation_code=None):
     organisation = dqorganisations.organisations(organisation_code)
     # make sure survey exists
-    dqsurveys.getOrCreateSurveyById(organisation.id)
+    survey = dqsurveys.getOrCreateSurveyById(organisation.id)
 
-    survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
     workflows = dqsurveys.workflowsAll()
     pct_complete = completion_percentage(survey)
