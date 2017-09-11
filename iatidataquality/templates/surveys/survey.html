@@ -20,7 +20,7 @@
     {% if survey %}
     <p class="lead">Survey currently in {{survey.Workflow.title}} mode; {{pct_complete|int}}% complete.</p>
     <div class="progress">
-        <div class="bar" width="{{pct_complete}}%"></div>
+        <div class="bar" style="width: {{pct_complete}}%"></div>
     </div>
     {% else %}
     <p class="lead">No survey has been created for this organisation yet.</p>
