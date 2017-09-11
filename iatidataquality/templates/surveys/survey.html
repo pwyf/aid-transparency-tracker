@@ -18,7 +18,7 @@
     {%endif%}
     <h1>Survey for <a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
     {% if survey %}
-    <p class="lead">Survey currently in {{survey.Workflow.title}} mode; {{pct_complete|int}}% complete.</p>
+    <p class="lead">Survey currently in {{survey.workflow.title}} mode; {{pct_complete|int}}% complete.</p>
     <div class="progress">
         <div class="bar" style="width: {{pct_complete}}%"></div>
     </div>
@@ -36,7 +36,7 @@
     {% for workflow in workflows %}
     <tr>
     <td>
-	  {% if workflow.Workflow.id == survey.Workflow.id %}
+	  {% if workflow.Workflow.id == survey.workflow.id %}
 	  Ongoing
 	  {% else %}
 	    {% if workflow.Workflow.name in surveydata %}
@@ -48,7 +48,7 @@
     </td>
     <td>{{workflow.Workflow.title}}</td>
     <td>
-		{% if workflow.Workflow.id == survey.Workflow.id or workflow.Workflow.name in surveydata %}
+		{% if workflow.Workflow.id == survey.workflow.id or workflow.Workflow.name in surveydata %}
 	  <a href="{{url_for('organisation_survey_edit', 
 				 organisation_code=organisation.organisation_code, 
 				 workflow_name=workflow.Workflow.name)}}">

@@ -52,7 +52,7 @@ def completion_percentage(survey):
               'cso', 'donorcomments', 'pwyffinal', 'finalised']
 
     # can ValueError; used to raise NameError
-    idx = stages.index(survey.Workflow.name)
+    idx = stages.index(survey.workflow.name)
 
     return 100. * idx / (len(stages) - 1)
 

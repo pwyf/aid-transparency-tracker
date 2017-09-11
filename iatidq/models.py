@@ -645,6 +645,8 @@ class OrganisationSurvey(db.Model):
                              nullable=False)
     __table_args__ = (UniqueConstraint('organisation_id',),)
     
+    workflow = db.relationship('Workflow')
+
     def setup(self,
                  organisation_id,
                  currentworkflow_id,
