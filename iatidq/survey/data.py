@@ -7,20 +7,10 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, app
-
-from sqlalchemy import func
-
-
-import iatidq.summary
-
-import iatidq.models as models
-import csv
-import iatidq.util as util
-import unicodecsv
 import datetime
-import iatidq.dqindicators as dqindicators
-import iatidq.dqorganisations as dqorganisations
+
+from iatidq import db, app, models, dqindicators, dqorganisations
+
 
 class NoSuchSurvey(Exception): pass
 
