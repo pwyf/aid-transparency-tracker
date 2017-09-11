@@ -35,9 +35,7 @@ def create_survey(options):
 
     org_id = iatidq.dqorganisations.organisationid_by_code(organisation_code)
 
-    _ = iatidq.survey.data.getOrCreateSurvey({
-        "organisation_id": org_id
-    })
+    _ = iatidq.survey.data.getOrCreateSurveyById(org_id)
 
 def get_package_names(organisation_code):
     for p in iatidq.dqorganisations.organisationPackages(

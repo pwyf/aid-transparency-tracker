@@ -34,8 +34,8 @@ def getSurveyById(organisation_id):
     return models.OrganisationSurvey.query.filter_by(
         organisation_id=organisation_id).first()
 
-def getOrCreateSurvey(data):
-    existing_survey = getSurveyById(data["organisation_id"])
+def getOrCreateSurveyById(organisation_id):
+    existing_survey = getSurveyById(organisation_id)
 
     if existing_survey:
         return existing_survey
@@ -49,7 +49,7 @@ def getOrCreateSurvey(data):
         currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
 
         new_survey.setup(
-            organisation_id = data["organisation_id"],
+            organisation_id = organisation_id,
             currentworkflow_id = currentworkflow_id,
             currentworkflow_deadline = currentworkflow_deadline
             )
