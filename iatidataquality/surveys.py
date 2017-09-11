@@ -54,7 +54,7 @@ def completion_percentage(survey):
     # can ValueError; used to raise NameError
     idx = stages.index(survey.Workflow.name)
 
-    return float(idx + 1) / 8 * 100
+    return 100. * idx / (len(stages) - 1)
 
 @app.route("/organisations/<organisation_code>/survey/repair/")
 @usermanagement.perms_required('survey', 'view')
