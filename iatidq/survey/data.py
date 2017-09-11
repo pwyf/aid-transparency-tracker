@@ -35,12 +35,12 @@ def getSurveyById(organisation_id):
         organisation_id=organisation_id).first()
 
 def getOrCreateSurvey(data):
-    checkS = getSurveyById(data["organisation_id"])
+    existing_survey = getSurveyById(data["organisation_id"])
 
-    if checkS:
-        return checkS
+    if existing_survey:
+        return existing_survey
     with db.session.begin():
-        newS = models.OrganisationSurvey()
+        new_survey = models.OrganisationSurvey()
 
         workflow = workflowByName('researcher')
         currentworkflow_id = workflow.Workflow.id
@@ -48,13 +48,13 @@ def getOrCreateSurvey(data):
 
         currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
 
-        newS.setup(
+        new_survey.setup(
             organisation_id = data["organisation_id"],
             currentworkflow_id = currentworkflow_id,
             currentworkflow_deadline = currentworkflow_deadline
             )
-        db.session.add(newS)
-    return newS
+        db.session.add(new_survey)
+    return new_survey
 
 def addSurveyData(data):
     checkSD = models.OrganisationSurveyData.query.filter_by(
