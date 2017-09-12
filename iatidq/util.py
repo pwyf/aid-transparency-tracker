@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import contextlib
+from contextlib import contextmanager
 import os
 import urllib2
 import json
@@ -17,7 +17,7 @@ import collections
 
 download_headers = {'User-Agent': "PWYF/Aid Transparency Tracker"}
 
-@contextlib.contextmanager
+@contextmanager
 def report_error(success, failure):
     try:
         yield
