@@ -135,11 +135,6 @@ def downloadOrganisationFrequency():
     fh = urllib2.urlopen(app.config["ORG_FREQUENCY_API_URL"])
     return _updateOrganisationFrequency(fh)
 
-"""def downloadOrganisationFrequencyFromFile():
-    filename = 'tests/iati_registry_updater_frequency_check.csv'
-    with file(filename) as fh:
-        return _updateOrganisationFrequency(fh)"""
-
 def _updateOrganisationFrequency(fh):
 
     def get_frequency():
