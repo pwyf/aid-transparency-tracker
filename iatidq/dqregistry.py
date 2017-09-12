@@ -7,16 +7,18 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, app
-
-import urllib2
-import models
+import itertools
 import json
+import re
+import urllib2
+
 import ckanclient
 
+from iatidq import db, app
+import models
 import util
-
 from dqfunctions import packages_from_iati_registry, get_package_organisations
+
 
 REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
@@ -206,8 +208,6 @@ def _refresh_packages():
                 break
 
 def matching_packages(regexp):
-    import re
-    import itertools
     r = re.compile(regexp)
 
     pkgs = packages_from_iati_registry(REGISTRY_URL)
