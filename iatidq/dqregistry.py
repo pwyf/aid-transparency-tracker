@@ -20,7 +20,7 @@ import util
 from dqfunctions import packages_from_iati_registry, get_package_organisations
 
 
-REGISTRY_URL = "https://iatiregistry.org/api/3/search/dataset?fl=id,name,groups,title&start=%s&rows=1000"
+REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=1000'
 
 CKANurl = 'https://iatiregistry.org/api'
 
@@ -37,7 +37,7 @@ def _set_deleted_package(package, set_deleted=False):
 def check_deleted_packages():
     offset = 0
     # all packages on IATI currently
-    registry_packages = [x['id'] for x in packages_from_iati_registry(REGISTRY_URL)]
+    registry_packages = [x['id'] for x in packages_from_iati_registry(REGISTRY_TMPL)]
     # all packages in the database currently
     db_packages = models.Package.query.all()
     count_deleted = 0
@@ -183,7 +183,7 @@ def _refresh_packages():
     setup_orgs = app.config.get("SETUP_ORGS", [])
     counter = app.config.get("SETUP_PKG_COUNTER", None)
 
-    for package in packages_from_iati_registry(REGISTRY_URL):
+    for package in packages_from_iati_registry(REGISTRY_TMPL):
         package_name = package["name"]
         if len(setup_orgs) and ('-' in package_name):
             org, country = package_name.split('-', 1)
@@ -210,7 +210,7 @@ def _refresh_packages():
 def matching_packages(regexp):
     r = re.compile(regexp)
 
-    pkgs = packages_from_iati_registry(REGISTRY_URL)
+    pkgs = packages_from_iati_registry(REGISTRY_TMPL)
     pkgs = itertools.ifilter(lambda i: r.match(i["name"]), pkgs)
     for package in pkgs:
         yield package["name"]

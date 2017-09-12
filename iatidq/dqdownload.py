@@ -22,7 +22,7 @@ import package_status
 download_queue = 'iati_download_queue'
 
 IATIUPDATES_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
-REGISTRY_URL = "https://iatiregistry.org/api/3/search/dataset?fl=id,name,metadata_modified&start=%s&rows=1000"
+REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=1000'
 CKANurl = 'https://iatiregistry.org/api'
 
 def get_package(pkg, package, runtime_id):
@@ -53,7 +53,7 @@ def get_package(pkg, package, runtime_id):
 def download_packages(runtime):
     # Check registry for packages list
     registry_packages = [ (pkg["name"], pkg["metadata_modified"]) 
-                          for pkg in packages_from_iati_registry(REGISTRY_URL) ]
+                          for pkg in packages_from_iati_registry(REGISTRY_TMPL) ]
 
     print "Found", len(registry_packages),"packages on the IATI Registry"
     print "Checking for updates, calculating and queuing packages;"

@@ -41,17 +41,18 @@ def get_package_organisations(iatiupdates_url):
         out[pd['name']] = pd['organization']
     return out
 
-def packages_from_iati_registry(registry_url):
+def packages_from_iati_registry(registry_tmpl):
     offset = 0
     while True:
-        data = urllib2.urlopen(registry_url % (offset), timeout=60).read()
-        print (registry_url % (offset))
-        data = json.loads(data)
+        registry_url = registry_tmpl.format(offset)
+        data = urllib2.urlopen(registry_url, timeout=60).read()
+        print(registry_url)
+        data = json.loads(data)['result']
 
-        if len(data["results"]) < 1:
+        if len(data['results']) == 0:
             break          
 
-        for pkg in data["results"]:
+        for pkg in data['results']:
             yield pkg
 
         offset += 1000
