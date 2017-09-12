@@ -20,7 +20,7 @@ import util
 from dqfunctions import packages_from_iati_registry, get_package_organisations
 
 
-REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
+REGISTRY_URL = "https://iatiregistry.org/api/3/search/dataset?fl=id,name,groups,title&start=%s&rows=1000"
 
 CKANurl = 'http://iatiregistry.org/api'
 
