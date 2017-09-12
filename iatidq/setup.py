@@ -52,7 +52,7 @@ def create_aggregation_types(options):
                                            'test_result':'1'})
 
 def setup_common():
-    print "Creating DB"
+    print("Creating tables")
     db.create_all()
     print "Adding hardcoded tests"
     dqimporttests.hardcodedTests()
