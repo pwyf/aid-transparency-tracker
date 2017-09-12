@@ -14,7 +14,7 @@ from datetime import date, datetime
 from iatidq import db
 
 import models
-from dqfunctions import add_test_status, packages_from_registry, packages_from_registry_with_offset
+from dqfunctions import add_test_status, packages_from_registry, packages_from_iati_registry
 import package_status
 import testrun
 import package_status
@@ -53,7 +53,7 @@ def get_package(pkg, package, runtime_id):
 def download_packages(runtime):
     # Check registry for packages list
     registry_packages = [ (pkg["name"], pkg["metadata_modified"]) 
-                          for pkg in packages_from_registry_with_offset(REGISTRY_URL) ]
+                          for pkg in packages_from_iati_registry(REGISTRY_URL) ]
 
     print "Found", len(registry_packages),"packages on the IATI Registry"
     print "Checking for updates, calculating and queuing packages;"
