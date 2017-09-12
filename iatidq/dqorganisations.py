@@ -138,11 +138,10 @@ def downloadOrganisationFrequency():
 def _updateOrganisationFrequency(fh):
 
     def get_frequency():
-        d = unicodecsv.DictReader(fh)
-        packagegroups = d
+        rows = unicodecsv.DictReader(fh)
         
-        for packagegroup in packagegroups:
-            freq = packagegroup["Frequency"]
+        for row in rows:
+            freq = row["Frequency"]
 
             if freq == "Monthly":
                 frequency = "monthly"
@@ -153,7 +152,7 @@ def _updateOrganisationFrequency(fh):
             else:
                 frequency = "less than quarterly"
                 comment = "Updated less than quarterly"
-            yield packagegroup["Publisher Registry Id"], frequency, comment
+            yield row["Publisher Registry Id"], frequency, comment
 
     for packagegroup, frequency, comment in get_frequency():
         organisations = dqpackages.packageGroupOrganisations(packagegroup)
