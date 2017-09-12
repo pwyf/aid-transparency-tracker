@@ -149,9 +149,8 @@ def setup(options):
                           })
     print("Created a default user (admin) and password (CHANGEME). Please remember to change them!")
     
-    print "Importing all users and creating permissions"
-    
-    #dqusers.importUserDataFromFile(default_userdata_filename)
-    print "Finished importing users"
+    # print("Importing all users and creating permissions")
+    # dqusers.importUserDataFromFile(default_userdata_filename)
+    # print("Finished importing users")
 
     print "Setup complete."
