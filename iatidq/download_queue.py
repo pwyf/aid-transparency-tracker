@@ -19,7 +19,7 @@ import hardcoded_test
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
-CKANurl = 'http://iatiregistry.org/api'
+CKANurl = 'https://iatiregistry.org/api'
 
 def fixURL(url):
     # helper function to replace spaces with %20 

@@ -22,7 +22,7 @@ from dqfunctions import packages_from_iati_registry, get_package_organisations
 
 REGISTRY_URL = "https://iatiregistry.org/api/3/search/dataset?fl=id,name,groups,title&start=%s&rows=1000"
 
-CKANurl = 'http://iatiregistry.org/api'
+CKANurl = 'https://iatiregistry.org/api'
 
 class PackageMissing(Exception): pass
 

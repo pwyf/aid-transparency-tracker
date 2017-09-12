@@ -23,7 +23,7 @@ download_queue = 'iati_download_queue'
 
 IATIUPDATES_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
 REGISTRY_URL = "https://iatiregistry.org/api/3/search/dataset?fl=id,name,metadata_modified&start=%s&rows=1000"
-CKANurl = 'http://iatiregistry.org/api'
+CKANurl = 'https://iatiregistry.org/api'
 
 def get_package(pkg, package, runtime_id):
     new_package = False
