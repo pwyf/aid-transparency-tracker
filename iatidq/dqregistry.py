@@ -104,7 +104,6 @@ def create_package_group(group, handle_country=True):
         pg.man_auto = u"auto"
 
         # Query CKAN
-        import ckanclient
         registry = ckanclient.CkanClient(base_location=CKANurl)
         ckangroup = registry.group_entity_get(group)
 
