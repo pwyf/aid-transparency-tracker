@@ -31,13 +31,6 @@ def clear_revisions():
         
             db.session.add(pkg)
             
-def packages_from_registry(registry_url):
-    data = urllib2.urlopen(registry_url, timeout=60).read()
-    print registry_url
-    data = json.loads(data)
-    for pkg in data["results"]:
-        yield pkg
-
 def get_package_organisations(iatiupdates_url):
     data = urllib2.urlopen(iatiupdates_url, timeout=60).read()
     print iatiupdates_url
