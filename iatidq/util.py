@@ -27,8 +27,6 @@ def report_error(success, failure):
         if failure is not None:
             print failure, e
             #print traceback.print_exc()
-    finally:
-        pass
 
 def ensure_download_dir(directory):
     if not os.path.exists(directory):
