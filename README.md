@@ -86,7 +86,7 @@ Reinitialise
     python quickstart.py init-db
     python quickstart.py setup --minimal
     python quickstart.py refresh --minimal
-    bin/dqtool --mode=reload-packages --organisation=GB-1
+    bin/dqtool reload-packages --organisation-code=GB-1
     python download_once.py
     python tests_once.py
 
@@ -98,7 +98,7 @@ FIXME
 Run aggregation test
 ====================
 
-    bin/dqtool --mode compare-aggregation --organisation GB-1 --filename unittests/artefacts/json/dfid-sample-aggregation-data.json
+    bin/dqtool compare-aggregation --organisation-code GB-1 --filename unittests/artefacts/json/dfid-sample-aggregation-data.json
 
 This runs an aggregation on the packages for organisation GB-1 and compares
 the results with the stashed file in unittests/artefacts/json/dfid-sample-aggregation-data.json; if the results are different, then a new file is output
@@ -106,7 +106,7 @@ the results with the stashed file in unittests/artefacts/json/dfid-sample-aggreg
 Reload a package
 ================
 
-    bin/dqtool --mode reload-package --name dfid-tz
+    bin/dqtool reload-package --package-name dfid-tz
 
 Adding new tests
 ================
@@ -115,17 +115,17 @@ Adding new tests
 
 You will then need to associate each test with an indicator:
 
-    bin/dqtool --mode associate-test --test-id 52 --indicator conditions
+    bin/dqtool associate-test --test-id 52 --indicator conditions
 
 
 Checking if tests are complete
 ==============================
 
-    bin/dqtool --mode check-package-results --all --organisation GB-1
+    bin/dqtool check-package-results --all-packages --organisation-code GB-1
 
 
 Updating sampling poisoning
 ===========================
 
-    bin/dqtool --mode update-sampling
+    bin/dqtool update-sampling
 
