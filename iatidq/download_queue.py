@@ -7,15 +7,19 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import sys, os, json, ckan, ckanclient
-from datetime import date, datetime
+import json
+import os
+import sys
+
+import ckanclient
+
 import models, dqruntests, queue
 from dqprocessing import add_hardcoded_result
 from dqregistry import setup_package_group
 from util import report_error, download_file
-
 from iatidq import db, app
 import hardcoded_test
+
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
