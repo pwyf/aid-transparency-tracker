@@ -148,12 +148,12 @@ def setup_package_group(group):
 
 # pkg is sqlalchemy model; package is ckan object
 def copy_pkg_attributes(pkg, package):
-    components = [ 
-        ("id","package_ckan_id"),
-        ("name","package_name"),
-        ("title","package_title")
-        ]
-    for attr, key in components:
+    components = {
+        "id": "package_ckan_id",
+        "name": "package_name",
+        "title": "package_title",
+    }
+    for attr, key in components.items():
         setattr(pkg, key, package[attr])
     
 # Don't get revision ID; 
