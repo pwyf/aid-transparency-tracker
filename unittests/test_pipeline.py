@@ -10,11 +10,14 @@
 
 import os
 import sys
-import csv
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
+
+import lxml.etree
+import nose
+import nose.tools
 
 import iatidq
 import iatidq.dqparsetests
@@ -24,19 +27,12 @@ import iatidq.dqindicators
 import iatidq.test_queue
 import iatidq.dqcodelists
 import iatidq.dqorganisations
-import iatidq.test_level as test_level
 import iatidq.dqaggregationtypes
 import iatidq.dqtests
 import iatidq.setup
-
-from iatidq import db
-import lxml.etree
-
-import nose
-import nose.tools
-import sys
-
+from iatidq import db, test_level
 from iatidq.models import *
+
 
 def log(s):
     return
