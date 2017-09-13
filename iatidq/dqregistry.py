@@ -158,9 +158,13 @@ def copy_pkg_attributes(pkg, package):
     
 # Don't get revision ID; 
 # empty var will trigger download of file elsewhere
-def refresh_package(package, packages_groups):
+def refresh_package(package):
+    if package.get('organization') and package['organization'].get('name'):
+        packagegroup_name = package['organization']['name']
+    else:
+        packagegroup_name = None
+
     # Setup packagegroup outside of package transaction
-    packagegroup_name = packages_groups.get(package["name"]) #odd
     packagegroup = setup_package_group(packagegroup_name)
     if packagegroup:
         packagegroup_id = packagegroup.id
@@ -183,12 +187,7 @@ def refresh_package_by_name(package_name):
     registry = ckanclient.CkanClient(base_location=CKANurl)
     try:
         package = registry.package_entity_get(package_name)
-        if package.get('organization') and package['organization'].get('name'):
-            packagegroup_name = package['organization']['name']
-        else:
-            packagegroup_name = None
-        packages_groups = {package['name']: packagegroup_name}
-        refresh_package(package, packages_groups)
+        refresh_package(package)
     except ckanclient.CkanApiNotAuthorizedError:
         print "Error 403 (Not authorised) when retrieving '%s'" % package_name
     except ckanclient.CkanApiNotFoundError:
@@ -206,18 +205,9 @@ def _refresh_packages():
             if org not in setup_orgs:
                 continue
         registry = ckanclient.CkanClient(base_location=CKANurl)
-        pkg = registry.package_entity_get(package_name)
+        package = registry.package_entity_get(package_name)
 
-        #FIXME: could remove the next 5 lines and just
-        # fix refresh_package()
-
-        if pkg.get('organization') and pkg['organization'].get('name'):
-            packagegroup_name = pkg['organization']['name']
-        else:
-            packagegroup_name = None
-        packages_groups = {pkg['name']: packagegroup_name}
-
-        refresh_package(pkg, packages_groups)
+        refresh_package(package)
         if counter is not None:
             counter -= 1
             if counter <= 0:
