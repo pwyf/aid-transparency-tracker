@@ -20,8 +20,9 @@ import sample_work.db
 
 
 def clear_survey(options):
+    assert options.organisation_code
+
     organisation_code = options.organisation_code.decode('ascii')
-    assert organisation_code
 
     try:
         iatidq.survey.data.deleteSurveyData(organisation_code)
@@ -30,8 +31,9 @@ def clear_survey(options):
         sys.exit(1)
 
 def create_survey(options):
+    assert options.organisation_code
+
     organisation_code = options.organisation_code.decode('ascii')
-    assert organisation_code
 
     org_id = dqorganisations.organisationid_by_code(organisation_code)
 
@@ -59,8 +61,9 @@ def do_reload_package(package_name, no_refresh):
     iatidq.dqdownload.run(package_name=package_name)
 
 def reload_packages(options):
+    assert options.organisation_code
+
     organisation_code = options.organisation_code.decode('ascii')
-    assert organisation_code
 
     for p in get_package_names(organisation_code):
         try:
@@ -69,15 +72,17 @@ def reload_packages(options):
             print "Error reloading: %s" % e
 
 def reload_package(options):
+    assert options.package_name
+
     package_name = options.package_name.decode('ascii')
-    assert package_name
 
     do_reload_package(package_name, options.no_refresh)
 
 def compare_aggregation(options):
+    assert options.organisation_code
+
     organisation_code = options.organisation_code.decode('ascii')
     filename = options.filename
-    assert organisation_code
     assert filename
 
     expected_data = json.load(file(filename))
@@ -115,6 +120,7 @@ def associate_test(options):
 
 def compare_summary(options):
     assert options.organisation_code
+
     organisation_code = options.organisation_code.decode('ascii')
 
     aggregation_type = 2
@@ -342,68 +348,70 @@ def update_sampling(options):
     for sf in data:
         db.engine.execute(sql, sf)
 
+def create_subparser(subparsers, handler, command):
+    subparser = subparsers.add_parser(command)
+    subparser.set_defaults(handler=handler)
+    return subparser
 
-def list_modes(options):
-    for key in sorted(modes.keys()):
-        print key
+def main():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers()
 
-modes = {
-    "clear-survey": clear_survey,
-    "create-survey": create_survey,
-    "list-packages": list_packages,
-    "reload-packages": reload_packages,
-    "reload-package": reload_package,
-    "compare-aggregation": compare_aggregation,
-    "compare-summary": compare_summary,
-    "compare-indicators-summary": compare_indicators_summary,
-    "list-modes": list_modes,
-    "make-survey-data": make_survey_data,
-    "make-csv-output": make_csv_output,
-    "clear-queues": clear_queues,
-    "associate-test": associate_test,
-    "test-package": test_package,
-    "check-package-results": check_package_results,
-    "update-frequencies": update_frequencies,
-    "update-sampling": update_sampling
-    }
+    subparser = create_subparser(subparsers, clear_survey, 'clear-survey')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
 
-def run():
-    parser = optparse.OptionParser()
-    parser.add_option("--mode", dest="mode",
-                      action="store")
-    parser.add_option("--organisation", dest="organisation_code",
-                      action="store")
-    parser.add_option("--filename", dest="filename",
-                      action="store")
-    parser.add_option("--name", dest="package_name",
-                      action="store", help="Name of package, e.g., dfid-tz")
-    parser.add_option("--test-id", type="int", dest="test_id",
-                      action="store")
-    parser.add_option("--indicator", dest="indicator",
-                      action="store")
-    parser.add_option("--all-packages", dest="all_packages",
-                      action="store_true")
-    parser.add_option("--no-refresh", dest="no_refresh",
-                      action="store_true")
-    parser.add_option("--runtime-id", type="int", dest="runtime_id",
-                      action="store", default=None,
-                      help="Numerical id of runtime")
-    parser.add_option("--package-id", type="int", dest="package_id",
-                      action="store", default=None,
-                      help="Numerican id of package")
+    subparser = create_subparser(subparsers, create_survey, 'create-survey')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
 
-    options, rest = parser.parse_args()
+    subparser = create_subparser(subparsers, list_packages, 'list-packages')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
 
-    if not options.mode:
-        print "Must specify a mode; use\n\n dqtool --mode list-modes\n\nto see them"
-        sys.exit(1)
-    
-    if options.mode not in modes:
-        print "Mode must be one of:"
-        for mode in modes:
-            print "  ", mode
+    subparser = create_subparser(subparsers, reload_packages, 'reload-packages')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
+    subparser.add_argument('--no-refresh', dest='no_refresh', action='store_true')
 
-    modes[options.mode](options)
+    subparser = create_subparser(subparsers, reload_package, 'reload-package')
+    subparser.add_argument('--package-name', dest='package_name', action='store', help='Name of package, e.g., dfid-tz', required=True)
+    subparser.add_argument('--no-refresh', dest='no_refresh', action='store_true')
+
+    subparser = create_subparser(subparsers, compare_aggregation, 'compare-aggregation')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
+    subparser.add_argument('--filename', dest='filename', action='store')
+
+    subparser = create_subparser(subparsers, compare_summary, 'compare-summary')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
+
+    subparser = create_subparser(subparsers, compare_indicators_summary, 'compare-indicators-summary')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
+
+    subparser = create_subparser(subparsers, make_survey_data, 'make-survey-data')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
+
+    create_subparser(subparsers, make_csv_output, 'make-csv-output')
+
+    create_subparser(subparsers, clear_queues, 'clear-queues')
+
+    subparser = create_subparser(subparsers, associate_test, 'associate-test')
+    subparser.add_argument('--test-id', type=int, dest='test_id', action='store', required=True)
+    subparser.add_argument('--indicator', dest='indicator', action='store', required=True)
+
+    subparser = create_subparser(subparsers, test_package, 'test-package')
+    subparser.add_argument('--package-name', dest='package_name', action='store', help='Name of package, e.g., dfid-tz')
+    subparser.add_argument('--package-id', type=int, dest='package_id', action='store', default=None, help='Numerical ID of package')
+    subparser.add_argument('--filename', dest='filename', action='store', required=True)
+    subparser.add_argument('--runtime-id', dest='runtime_id', type=int, action='store', default=None, help='Numerical id of runtime')
+
+    subparser = create_subparser(subparsers, check_package_results, 'check-package-results')
+    subparser.add_argument('--package-name', dest='package_name', action='store', help='Name of package, e.g., dfid-tz')
+    subparser.add_argument('--all-packages', dest='all_packages', action='store_true')
+    subparser.add_argument('--organisation-code', dest='organisation_code', action='store')
+
+    create_subparser(subparsers, update_frequencies, 'update-frequencies')
+
+    create_subparser(subparsers, update_sampling, 'update-sampling')
+
+    args = parser.parse_args()
+    args.handler(args)
 
 if __name__ == '__main__':
-    run()
+    main()
