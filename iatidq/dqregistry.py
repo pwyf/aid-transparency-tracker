@@ -141,7 +141,7 @@ def setup_package_group(group):
             pg = models.PackageGroup.query.filter_by(name=group).first()
             if pg is None:
                 pg = create_package_group(group, handle_country=False)
-                print "Created new group"
+                print('Created new package group: {}'.format(group))
             return pg
 
 # FIXME: compare this with similar function in download_queue
