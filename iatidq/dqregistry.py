@@ -14,9 +14,7 @@ import urllib2
 
 import ckanclient
 
-from iatidq import db, app
-import models
-import util
+from iatidq import db, app, models, util
 from dqfunctions import get_package_organisations
 
 
