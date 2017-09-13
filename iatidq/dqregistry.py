@@ -17,14 +17,32 @@ import ckanclient
 from iatidq import db, app
 import models
 import util
-from dqfunctions import packages_from_iati_registry, get_package_organisations
+from dqfunctions import get_package_organisations
 
 
 REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=1000'
 
 CKANurl = 'https://iatiregistry.org/api'
 
+
 class PackageMissing(Exception): pass
+
+
+def packages_from_iati_registry(registry_tmpl):
+    offset = 0
+    while True:
+        registry_url = registry_tmpl.format(offset)
+        data = urllib2.urlopen(registry_url, timeout=60).read()
+        print(registry_url)
+        data = json.loads(data)['result']
+
+        if len(data['results']) == 0:
+            break
+
+        for pkg in data['results']:
+            yield pkg
+
+        offset += 1000
 
 def _set_deleted_package(package, set_deleted=False):
     if package.deleted != set_deleted:

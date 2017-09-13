@@ -14,7 +14,8 @@ from datetime import date, datetime
 from iatidq import db
 
 import models
-from dqfunctions import add_test_status, packages_from_iati_registry
+from dqfunctions import add_test_status
+from dqregistry import packages_from_iati_registry
 import package_status
 import testrun
 import package_status
