@@ -7,18 +7,12 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import sys, os, json, ckan, ckanclient, urllib2
-import queue
-from datetime import date, datetime
+import ckanclient
 
-from iatidq import db
+from iatidq import db, models, package_status, queue, testrun
+from iatidq.dqfunctions import add_test_status
+from iatidq.dqregistry import packages_from_iati_registry
 
-import models
-from dqfunctions import add_test_status
-from dqregistry import packages_from_iati_registry
-import package_status
-import testrun
-import package_status
 
 download_queue = 'iati_download_queue'
 
