@@ -156,7 +156,7 @@ def main():
     create_subparser(subparsers, init_db, 'init-db', help_text='Initialise DB')
 
     subparser = create_subparser(subparsers, enroll_tests, 'enroll-tests', help_text='Enroll a CSV file of tests')
-    subparser.add_argument('--filename', help='Set filename of data to test')
+    subparser.add_argument('--filename', help='Set filename of data to test', required=True)
     subparser.add_argument('--level', type=int, default=1, help='Test level (e.g. 1 == Activity)')
 
     create_subparser(subparsers, clear_revisionid, 'clear-revisionid', help_text='Clear CKAN revision ids')
@@ -181,8 +181,8 @@ def main():
     subparser.add_argument('--minimal', dest='minimal', action='store_true', default=False, help='Operate on a minimal set of packages')
 
     subparser = create_subparser(subparsers, enqueue_test, 'enqueue-test', help_text='Set a package to be tested (with --package-name')
-    subparser.add_argument('--package-name', dest='package_name', help='Set name of package to be tested')
-    subparser.add_argument('--filename', dest='filename', help='Set filename of data to test')
+    subparser.add_argument('--package-name', dest='package_name', help='Set name of package to be tested', required=True)
+    subparser.add_argument('--filename', dest='filename', help='Set filename of data to test', required=True)
 
     subparser = create_subparser(subparsers, refresh, 'refresh', help_text='Refresh')
     subparser.add_argument('--package-name', dest='package_name', help='Set name of package to be tested')
@@ -190,20 +190,20 @@ def main():
     subparser.add_argument('--matching', dest='matching', help='Regular expression for matching packages')
 
     subparser = create_subparser(subparsers, activate_packages, 'activate-packages', help_text='Mark all packages as active')
-    subparser.add_argument('--matching', dest='matching', help='Regular expression for matching packages')
+    subparser.add_argument('--matching', dest='matching', help='Regular expression for matching packages', required=True)
 
     create_subparser(subparsers, create_aggregation_types, 'create-aggregation-types', help_text='Create basic aggregation types.')
 
     subparser = create_subparser(subparsers, aggregate_results, 'aggregate-results', help_text='Trigger result aggregation')
-    subparser.add_argument('--runtime-id', dest='runtime_id', type=int, help='Runtime id (integer)')
-    subparser.add_argument('--package-id', dest='package_id', type=int, help='Package id (integer)')
+    subparser.add_argument('--runtime-id', dest='runtime_id', type=int, help='Runtime id (integer)', required=True)
+    subparser.add_argument('--package-id', dest='package_id', type=int, help='Package id (integer)', required=True)
 
     create_subparser(subparsers, create_inforesult_types, 'create-inforesult-types', help_text='Create basic infroresult types.')
 
     create_subparser(subparsers, setup_organisations, 'setup-organisations', help_text='Setup organisations.')
 
     subparser = create_subparser(subparsers, setup_users, 'setup-users', help_text='Setup users and permissions.')
-    subparser.add_argument('--filename', dest='filename', help='Set filename of data to test')
+    subparser.add_argument('--filename', dest='filename', help='Set filename of data to test', required=True)
     
     args = parser.parse_args()
     args.handler(args)
