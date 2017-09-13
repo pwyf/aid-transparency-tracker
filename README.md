@@ -44,7 +44,7 @@ Copy and edit the config.py.tmpl:
 
 Run the setup script to populate the database (append ` --minimal` if you want to try it out with just a few packages):
 
-    python quickstart.py --setup
+    python quickstart.py setup
 
 This will also create a default username and password; please create a new user and then delete the default one!
 
@@ -82,10 +82,10 @@ The survey component currently requires the existence of three files (could be a
 Reinitialise
 ============
 
-    python quickstart.py --drop-db
-    python quickstart.py --init-db
-    python quickstart.py --setup --minimal
-    python quickstart.py --refresh --minimal
+    python quickstart.py drop-db
+    python quickstart.py init-db
+    python quickstart.py setup --minimal
+    python quickstart.py refresh --minimal
     bin/dqtool --mode=reload-packages --organisation=GB-1
     python download_once.py
     python tests_once.py
@@ -111,7 +111,7 @@ Reload a package
 Adding new tests
 ================
 
-    ./quickstart.py --enroll-tests --filename tests/some-new-file.csv
+    python quickstart.py enroll-tests --filename tests/some-new-file.csv
 
 You will then need to associate each test with an indicator:
 
