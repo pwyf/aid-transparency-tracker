@@ -28,10 +28,10 @@ CKANurl = 'https://iatiregistry.org/api'
 class PackageMissing(Exception): pass
 
 
-def packages_from_iati_registry(registry_tmpl):
+def packages_from_iati_registry():
     offset = 0
     while True:
-        registry_url = registry_tmpl.format(offset)
+        registry_url = REGISTRY_TMPL.format(offset)
         data = urllib2.urlopen(registry_url, timeout=60).read()
         print(registry_url)
         data = json.loads(data)['result']
@@ -55,7 +55,7 @@ def _set_deleted_package(package, set_deleted=False):
 def check_deleted_packages():
     offset = 0
     # all packages on IATI currently
-    registry_packages = [x['id'] for x in packages_from_iati_registry(REGISTRY_TMPL)]
+    registry_packages = [x['id'] for x in packages_from_iati_registry()]
     # all packages in the database currently
     db_packages = models.Package.query.all()
     count_deleted = 0
@@ -201,7 +201,7 @@ def _refresh_packages():
     setup_orgs = app.config.get("SETUP_ORGS", [])
     counter = app.config.get("SETUP_PKG_COUNTER", None)
 
-    for package in packages_from_iati_registry(REGISTRY_TMPL):
+    for package in packages_from_iati_registry():
         package_name = package["name"]
         if len(setup_orgs) and ('-' in package_name):
             org, country = package_name.split('-', 1)
@@ -228,7 +228,7 @@ def _refresh_packages():
 def matching_packages(regexp):
     r = re.compile(regexp)
 
-    pkgs = packages_from_iati_registry(REGISTRY_TMPL)
+    pkgs = packages_from_iati_registry()
     pkgs = itertools.ifilter(lambda i: r.match(i["name"]), pkgs)
     for package in pkgs:
         yield package["name"]
