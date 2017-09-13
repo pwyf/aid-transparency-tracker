@@ -7,16 +7,19 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, abort, url_for, redirect, request, current_app, make_response
+import datetime
 from functools import wraps, update_wrapper
 import json
-from sqlalchemy import func
 import math
+import os
+import sys
+
+from flask import abort, url_for, request, current_app, make_response
+from sqlalchemy import func
 
 from iatidataquality import app, db
 
-import os
-import sys
+
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
@@ -25,12 +28,13 @@ from iatidq import dqdownload, dqpackages
 
 from iatidq.models import *
 
-import datetime
+
 class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
             return obj.isoformat()
         return json.JSONEncoder.default(self, obj)
+
 
 def jsonify(*args, **kwargs):
     return current_app.response_class(json.dumps(dict(*args, **kwargs),
