@@ -9,7 +9,7 @@
 
 import operator
 import itertools
-import models # damn!
+import models
 import pprint
 import sys
 from iatidq import db
@@ -343,7 +343,6 @@ class PublisherIndicatorsSummary(NewPublisherSummary):
                                     indicators_tests, simple_out)
 
 
-from models import *
 
 
 class OrgConditions(object):
@@ -353,7 +352,7 @@ class OrgConditions(object):
             self._conditions = {}
             return
 
-        cc = OrganisationCondition.query.filter_by(
+        cc = models.OrganisationCondition.query.filter_by(
             organisation_id=organisation_id
             ).all()
         self._conditions = dict(map(lambda x: (
