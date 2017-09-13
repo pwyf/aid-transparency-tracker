@@ -30,8 +30,7 @@ import iatidq.dqorganisations
 import iatidq.dqaggregationtypes
 import iatidq.dqtests
 import iatidq.setup
-from iatidq import db, test_level
-from iatidq.models import *
+from iatidq import db, models, test_level
 
 
 def log(s):
@@ -62,12 +61,12 @@ def teardown_func():
     pass
 
 def get_packagegroups_by_name(name):
-    return iatidq.models.PackageGroup.query.filter(
-        PackageGroup.name==name).all()
+    return models.PackageGroup.query.filter(
+        models.PackageGroup.name==name).all()
 
 def get_packages_by_name(name):
-    return iatidq.models.Package.query.filter(
-        Package.package_name==name).all()
+    return models.Package.query.filter(
+        models.Package.package_name==name).all()
 
 @nose.with_setup(setup_func, teardown_func)
 def test_refresh():
@@ -156,9 +155,9 @@ def _test_example_tests(publisher, country):
 
     # FIXME: THIS IS A TOTAL HACK
     with db.session.begin():
-        iatidq.models.Result.query.delete()
-        iatidq.models.AggregateResult.query.delete()
-        iatidq.models.AggregationType.query.delete()
+        models.Result.query.delete()
+        models.AggregateResult.query.delete()
+        models.AggregationType.query.delete()
 
     all_ag = create_aggregation_types({})
 
@@ -166,7 +165,7 @@ def _test_example_tests(publisher, country):
     from iatidq.testrun import start_new_testrun
     runtime = start_new_testrun()
 
-    results = iatidq.models.Result.query.all()
+    results = models.Result.query.all()
     assert len(results) == 0
 
     pkg = get_packages_by_name(package_name)[0]
@@ -185,12 +184,12 @@ def _test_example_tests(publisher, country):
                runtime.id,
                pkg.id)
 
-    results = iatidq.models.Result.query.all()
+    results = models.Result.query.all()
     assert len(results) > 0
     print >>sys.stderr, len(results)
 
-    aggtest_results = iatidq.models.AggregateResult.query.filter(
-        AggregateResult.aggregateresulttype_id == all_ag.id
+    aggtest_results = models.AggregateResult.query.filter(
+        models.AggregateResult.aggregateresulttype_id == all_ag.id
         ).all()
     for result in aggtest_results:
         assert result.runtime_id == runtime.id
@@ -206,8 +205,8 @@ def _test_example_tests(publisher, country):
         """activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"""
         ]
 
-    expected_test_ids = [ i.id for i in iatidq.models.Test.query.filter(
-        Test.name.in_(resultful_tests)).all() ]
+    expected_test_ids = [ i.id for i in models.Test.query.filter(
+        models.Test.name.in_(resultful_tests)).all() ]
     
     observed_test_ids = [ i.test_id for i in aggtest_results ]
 
