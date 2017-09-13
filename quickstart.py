@@ -138,57 +138,68 @@ def setup_users(options):
 def setup(options):
     iatidq.setup.setup(options)
 
-commands = [
-    ("drop-db", drop_db, "Delete DB"),
-    ("init-db", init_db, "Initialise DB"),
-    ("enroll-tests", enroll_tests, "Enroll a CSV file of tests"),
-    ("clear-revisionid", clear_revisionid, "Clear CKAN revision ids"),
-    ("import-codelists", import_codelists, "Import codelists"),
-    ("import-basic-countries", import_basic_countries, "Import basic list of countries"),
-    ("download", download, "Download packages"),
-    ("updatefrequency", updatefrequency, "Update frequency"),
-    ("import-indicators", import_indicators, "Import indicators. Will try to assign indicators to existing tests."),
-    ("import-organisations", import_organisations, "Import organisations. Will try to create and assign organisations to existing packages."),
-    ("setup", setup, "Quick setup. Will init db, add tests, add codelists, add indicators, refresh package data from Registry."),
-    ("enqueue-test", enqueue_test, "Set a package to be tested (with --package"),
-    ("refresh", refresh, "Refresh"),
-    ("activate-packages", activate_packages, "Mark all packages as active"),
-    ("create-aggregation-types", create_aggregation_types, "Create basic aggregation types."),
-    ("aggregate-results", aggregate_results, "Trigger result aggregation"),
-    ("create-inforesult-types", create_inforesult_types, "Create basic infroresult types."),
-    ("setup-organisations", setup_organisations, "Setup organisations."),
-    ("setup-users", setup_users, "Setup users and permissions."),
-]
+def create_subparser(subparsers, handler, command, help_text):
+    subparser = subparsers.add_parser(command, help=help_text)
+    subparser.set_defaults(handler=handler)
+    return subparser
 
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
-    for command_name, handler, help_text in commands:
-        subparser = subparsers.add_parser(command_name, help=help_text)
-        subparser.set_defaults(handler=handler)
-        _ = subparser.add_argument("--runtime-id", dest="runtime_id",
-                     type=int,
-                     help="Runtime id (integer)")
-        _ = subparser.add_argument("--package-id", dest="package_id",
-                     type=int,
-                     help="Package id (integer)")
-        _ = subparser.add_argument("--level", dest="level",
-                     type=int,
-                     default=1,
-                     help="Test level (e.g., 1 == Activity)")
-        _ = subparser.add_argument("--minimal", dest="minimal",
-                     action="store_true",
-                     default=False,
-                     help="Operate on a minimal set of packages")
-        _ = subparser.add_argument("--package", dest="package_name",
-                     help="Set name of package to be tested")
-        _ = subparser.add_argument("--filename", dest="filename",
-                     help="Set filename of data to test")
-        _ = subparser.add_argument("--local-folder", dest="local_folder",
-                     help="Set local folder where data to test is stored")
-        _ = subparser.add_argument("--matching", dest="matching",
-                     help="Regular expression for matching packages")
+    subparser = create_subparser(subparsers, drop_db, 'drop-db', help_text='Delete DB')
+
+    subparser = create_subparser(subparsers, init_db, 'init-db', help_text='Initialise DB')
+
+    subparser = create_subparser(subparsers, enroll_tests, 'enroll-tests', help_text='Enroll a CSV file of tests')
+    _ = subparser.add_argument('--filename', help='Set filename of data to test')
+    _ = subparser.add_argument('--level', type=int, default=1, help='Test level (e.g. 1 == Activity)')
+
+    subparser = create_subparser(subparsers, clear_revisionid, 'clear-revisionid', help_text='Clear CKAN revision ids')
+
+    subparser = create_subparser(subparsers, import_codelists, 'import-codelists', help_text='Import codelists')
+
+    subparser = create_subparser(subparsers, import_basic_countries, 'import-basic-countries', help_text='Import basic list of countries')
+
+    subparser = create_subparser(subparsers, download, 'download', help_text='Download packages')
+    _ = subparser.add_argument('--minimal', dest='minimal', action='store_true', default=False, help='Operate on a minimal set of packages')
+    _ = subparser.add_argument('--matching', dest='matching', help='Regular expression for matching packages')
+
+    subparser = create_subparser(subparsers, updatefrequency, 'updatefrequency', help_text='Update frequency')
+
+    subparser = create_subparser(subparsers, import_indicators, 'import-indicators', help_text='Import indicators. Will try to assign indicators to existing tests.')
+    _ = subparser.add_argument('--filename', dest='filename', help='Set filename of data to test')
+
+    subparser = create_subparser(subparsers, import_organisations, 'import-organisations', help_text='Import organisations. Will try to create and assign organisations to existing packages.')
+    _ = subparser.add_argument('--filename', dest='filename', help='Set filename of data to test')
+
+    subparser = create_subparser(subparsers, setup, 'setup', help_text='Quick setup. Will init db, add tests, add codelists, add indicators, refresh package data from Registry.')
+    _ = subparser.add_argument('--minimal', dest='minimal', action='store_true', default=False, help='Operate on a minimal set of packages')
+
+    subparser = create_subparser(subparsers, enqueue_test, 'enqueue-test', help_text='Set a package to be tested (with --package-name')
+    _ = subparser.add_argument('--package-name', dest='package_name', help='Set name of package to be tested')
+    _ = subparser.add_argument('--filename', dest='filename', help='Set filename of data to test')
+
+    subparser = create_subparser(subparsers, refresh, 'refresh', help_text='Refresh')
+    _ = subparser.add_argument('--package-name', dest='package_name', help='Set name of package to be tested')
+    _ = subparser.add_argument('--minimal', dest='minimal', action='store_true', default=False, help='Operate on a minimal set of packages')
+    _ = subparser.add_argument('--matching', dest='matching', help='Regular expression for matching packages')
+
+    subparser = create_subparser(subparsers, activate_packages, 'activate-packages', help_text='Mark all packages as active')
+    _ = subparser.add_argument('--matching', dest='matching', help='Regular expression for matching packages')
+
+    subparser = create_subparser(subparsers, create_aggregation_types, 'create-aggregation-types', help_text='Create basic aggregation types.')
+
+    subparser = create_subparser(subparsers, aggregate_results, 'aggregate-results', help_text='Trigger result aggregation')
+    _ = subparser.add_argument('--runtime-id', dest='runtime_id', type=int, help='Runtime id (integer)')
+    _ = subparser.add_argument('--package-id', dest='package_id', type=int, help='Package id (integer)')
+
+    subparser = create_subparser(subparsers, create_inforesult_types, 'create-inforesult-types', help_text='Create basic infroresult types.')
+
+    subparser = create_subparser(subparsers, setup_organisations, 'setup-organisations', help_text='Setup organisations.')
+
+    subparser = create_subparser(subparsers, setup_users, 'setup-users', help_text='Setup users and permissions.')
+    _ = subparser.add_argument('--filename', dest='filename', help='Set filename of data to test')
     
     args = parser.parse_args()
     args.handler(args)
