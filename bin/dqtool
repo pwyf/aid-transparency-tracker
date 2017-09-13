@@ -5,19 +5,18 @@ import json
 import os
 import sys
 
-
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-
-from iatidq import models
+from iatidq import db, dqorganisations, dqindicators, models, queue, summary
 import iatidq.survey
-import iatidq.dqorganisations
 import iatidq.dqpackages
 import iatidq.dqregistry
 import iatidq.dqdownload
 import iatidq.dqcsv
+import iatidq.test_queue
+import sample_work.db
 
 
 def clear_survey(options):
@@ -34,12 +33,12 @@ def create_survey(options):
     organisation_code = options.organisation_code.decode('ascii')
     assert organisation_code
 
-    org_id = iatidq.dqorganisations.organisationid_by_code(organisation_code)
+    org_id = dqorganisations.organisationid_by_code(organisation_code)
 
     _ = iatidq.survey.data.getOrCreateSurveyById(org_id)
 
 def get_package_names(organisation_code):
-    for p in iatidq.dqorganisations.organisationPackages(
+    for p in dqorganisations.organisationPackages(
         organisation_code=organisation_code):
         yield p.Package.package_name
 
@@ -81,14 +80,10 @@ def compare_aggregation(options):
     assert organisation_code
     assert filename
 
-    from iatidq import dqorganisations
-
     expected_data = json.load(file(filename))
 
     org_id = dqorganisations.organisationid_by_code(organisation_code)
 
-    from iatidq import db
-    
     sql = '''select package_id, aggregateresulttype_id, test_id, 
                   result_hierarchy, results_data, results_num 
            from aggregateresult where organisation_id = %s 
@@ -106,7 +101,6 @@ def compare_aggregation(options):
 def associate_test(options):
     assert options.test_id
     assert options.indicator
-    from iatidq import db
 
     sql = '''select id from indicator where name = %s'''
     results = db.engine.execute(sql, (options.indicator,)).fetchall()
@@ -125,11 +119,7 @@ def compare_summary(options):
 
     aggregation_type = 2
 
-    from iatidq import dqorganisations
-
     organisation = dqorganisations.organisation_by_code(organisation_code)
-
-    from iatidq import summary
 
     s = summary.PublisherSummaryCreator(organisation, aggregation_type)
     observed_summary_results = json.loads(json.dumps(s.summary.summary(), 
@@ -144,11 +134,7 @@ def compare_indicators_summary(options):
 
     aggregation_type = 2
 
-    from iatidq import dqorganisations
-    
     organisation = dqorganisations.organisation_by_code(organisation_code)
-
-    from iatidq import summary
 
     s = summary.PublisherIndicatorsSummaryCreator(organisation,
                                                   aggregation_type)
@@ -157,7 +143,6 @@ def compare_indicators_summary(options):
                                 indent=2)
 
 def make_survey_data(options):
-    from iatidq import dqorganisations
     assert options.organisation_code
 
     organisation_code = options.organisation_code.decode('ascii')
@@ -172,7 +157,6 @@ def make_survey_data_for_current_workflow(organisation_code):
 
     print "current workflow: %s" % workflow.name
 
-    from iatidq import dqindicators
     indicators = dqindicators.indicators(indicatorgroup=u"2014index")
 
     for indicator in indicators:
@@ -199,7 +183,6 @@ def make_csv_output(options):
     print s.read()
 
 def clear_queues(options):
-    from iatidq import queue
 
     [ queue.delete_queue(queue_name) for queue_name in
                 ['iati_download_queue', 'iati_tests_queue'] ]
@@ -213,9 +196,7 @@ def test_package(options):
     filename = options.filename
     assert filename
 
-    import iatidq.test_queue
-
-    runtime_id = options.runtime_id # which may be None
+    runtime_id = options.runtime_id  # which may be None
 
     if package_id is not None:
         assert runtime_id is not None
@@ -227,8 +208,6 @@ def test_packages(options):
     org_code = options.organisation_code
     assert org_code
 
-    from iatidq import db
-
     sql = '''
         select package_name from organisation 
             left join organisationpackage on organisation.id = organisation_id
@@ -238,7 +217,6 @@ def test_packages(options):
     results = db.engine.execute(sql, (org_code,))
     package_names = [ row[0] for row in results.fetchall() ]
     
-    import iatidq.test_queue
     for package_name in package_names:
         iatidq.test_queue.test_one_package(filename, package_name)
 
@@ -246,8 +224,6 @@ def test_packages(options):
 class NoAggregateResults(Exception): pass
 
 def get_aggregate_result_runtime_for_package(package_id):
-    from iatidq import db
-
     sql = '''select id, runtime_datetime from package_tested 
                left join runtime on runtime = id
                where package_id = %s;'''
@@ -277,7 +253,6 @@ def check_package_results(options):
         sort by timestamps
         report oldest timestamp'''
 
-    from iatidq import db
     first = lambda x : x.__getitem__(0)
 
     if options.all_packages:
@@ -334,12 +309,9 @@ def check_package_results(options):
         print "All packages tested; oldest was at: %s" % oldest.strftime('%Y-%m-%d %H:%M:%S')
 
 def update_frequencies(options):
-    import iatidq.dqorganisations
-    iatidq.dqorganisations.downloadOrganisationFrequency()
+    dqorganisations.downloadOrganisationFrequency()
 
 def update_sampling(options):
-    import sample_work.db
-
     def get_all_results():
         results = sample_work.db.get_total_results()
         ots = sample_work.db.get_summary_org_test(results)
@@ -352,7 +324,7 @@ def update_sampling(options):
     def specific_failure():
         organisation_code = options.organisation_code.decode('ascii')
         test_id = options.test_id
-        organisation_id = iatidq.dqorganisations.organisationid_by_code(
+        organisation_id = dqorganisations.organisationid_by_code(
             organisation_code)
 
         return [ (organisation_id, test_id) ]
