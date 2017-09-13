@@ -7,21 +7,16 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, app
+import urllib2
 
-from sqlalchemy import func
-
-import summary
-
-from models import *
-import csv
-import util
 import unicodecsv
+
+from iatidq import app, db
+from iatidq.models import *
+import summary
 import dqindicators
 import dqpackages
-import urllib2
-import datetime
-import json
+
 
 def update_model(src, dst, keys):
     for key in keys:
