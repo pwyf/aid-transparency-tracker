@@ -30,13 +30,13 @@ default_userdata_filename='tests/users.csv'
 default_indicator_filename='tests/indicators.csv'
 default_basic_countries_filename='tests/countries_basic.csv'
 
-def create_inforesult_types(options):
+def create_inforesult_types():
     print "Adding info result types"
     inforesult.importInfoTypesFromFile(
         default_infotypes_filename,
         test_level.ACTIVITY)
 
-def create_aggregation_types(options):
+def create_aggregation_types():
     print "Adding an aggregation type for all data"
     dqaggregationtypes.addAggregationType({'name':'All data',
                                            'description': '',
@@ -122,8 +122,8 @@ def setup(options):
     else:
         setup_packages()
 
-    create_aggregation_types(options)
-    create_inforesult_types(options)
+    create_aggregation_types()
+    create_inforesult_types()
 
     # associate with inforesults
     dqindicators.importIndicatorsFromFile(

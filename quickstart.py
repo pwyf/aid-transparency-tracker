@@ -108,10 +108,10 @@ def import_organisations(options):
         print "Error: please provide a filename"
 
 def create_aggregation_types(options):
-    iatidq.setup.create_aggregation_types(options)
+    iatidq.setup.create_aggregation_types()
 
 def create_inforesult_types(options):
-    iatidq.setup.create_inforesult_types(options)
+    iatidq.setup.create_inforesult_types()
 
 def updatefrequency(options):
     iatidq.dqorganisations.downloadOrganisationFrequency()
