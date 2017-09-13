@@ -57,7 +57,11 @@ def activate_packages(options):
     dqregistry.activate_packages(which_packages, clear_revision_id=True)
 
 def drop_db(options):
-    iatidq.db.drop_all()
+    print('\nWarning! This will drop all database tables!')
+    confirmed = raw_input('Are you really really sure? (y/N) ')
+    if confirmed.lower() == 'y':
+        iatidq.db.drop_all()
+        print('DB dropped.')
 
 def init_db(options):
     iatidq.db.create_all()
