@@ -80,8 +80,8 @@ def import_codelists(options):
 
 def import_basic_countries(options):
     filename = 'tests/countries_basic.csv'
-    codelist_name='countriesbasic'
-    codelist_description='Basic list of countries for running tests against'
+    codelist_name = 'countriesbasic'
+    codelist_description = 'Basic list of countries for running tests against'
     iatidq.dqcodelists.add_manual_codelist(filename, codelist_name, codelist_description)
 
 def download(options):
