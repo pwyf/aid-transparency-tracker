@@ -54,14 +54,14 @@ def check_deleted_packages():
 
 # pg is sqlalchemy model; ckangroup is a ckan object
 def copy_pg_attributes(pg, ckangroup):
-    mapping = [
-        ("title", "title"),
-        ("ckan_id", "id"),
-        ("revision_id", "revision_id"),
-        ("created_date", "created"),
-        ("state", "state")
-        ]
-    for attr, key in mapping:
+    mapping = {
+        "title": "title",
+        "ckan_id": "id",
+        "revision_id": "revision_id",
+        "created_date": "created",
+        "state": "state",
+    }
+    for attr, key in mapping.items():
         try:
             setattr(pg, attr, ckangroup[key])
         except Exception, e:

@@ -29,18 +29,18 @@ def fixURL(url):
 
 # package: a sqla model; pkg: a ckan object
 def copy_package_attributes(package, pkg):
-    mapping = [
-        ("package_ckan_id", "id"),
-        ("package_name", "name"),
-        ("package_title", "title"),
-        ("package_license_id", "license_id"),
-        ("package_license", "license"),
-        ("package_metadata_created", "metadata_created"),
-        ("package_metadata_modified", "metadata_modified"),
-        ("package_revision_id", "revision_id")
-        ]
+    mapping = {
+        "package_ckan_id": "id",
+        "package_name": "name",
+        "package_title": "title",
+        "package_license_id": "license_id",
+        "package_license": "license",
+        "package_metadata_created": "metadata_created",
+        "package_metadata_modified": "metadata_modified",
+        "package_revision_id": "revision_id",
+    }
 
-    for attr, key in mapping:
+    for attr, key in mapping.items():
         with report_error(None, None):
             setattr(package, attr, pkg[key])
 
