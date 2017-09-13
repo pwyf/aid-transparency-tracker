@@ -31,8 +31,8 @@ import iatidq.dqtests
 import iatidq.dqprocessing
 import iatidq.inforesult
 import iatidq.setup
-import iatidq.dqregistry as dqregistry
-from iatidq.minimal import which_packages
+from iatidq import dqregistry
+from iatidq import minimal as dqminimal
 
 
 def refresh(options):
@@ -40,7 +40,7 @@ def refresh(options):
     if options.package_name:
         pkg_names = [options.package_name]
     elif options.minimal:
-        pkg_names = [i[0] for i in which_packages]
+        pkg_names = [i[0] for i in dqminimal.which_packages]
     elif options.matching:
         pkg_names = [i for i in dqregistry.matching_packages(options.matching)]
 
@@ -51,10 +51,10 @@ def refresh(options):
 
 def activate_packages(options):
     assert options.matching
-    which_packages = [(i, True)
+    matching_packages = [(i, True)
                       for i in dqregistry.matching_packages(
             options.matching)]
-    dqregistry.activate_packages(which_packages, clear_revision_id=True)
+    dqregistry.activate_packages(matching_packages, clear_revision_id=True)
 
 def drop_db(options):
     print('\nWarning! This will drop all database tables!')
@@ -90,7 +90,7 @@ def import_basic_countries(options):
 
 def download(options):
     if options.minimal:
-        for package_name, _ in which_packages:
+        for package_name, _ in dqminimal.which_packages:
             iatidq.dqdownload.run(package_name=package_name)
     elif options.matching:
         for pkg_name in dqregistry.matching_packages(options.matching):
