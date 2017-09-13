@@ -11,7 +11,7 @@
 """ This script is to quickly get started with this tool, by:
         1) creating DB
         2) populating the list of packages from the Registry (will download basic data about all packages)
-        3) setting 3 to "active"
+        3) setting packages to "active"
 """
 
 import argparse
