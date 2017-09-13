@@ -164,8 +164,8 @@ def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
-    for arg, handler, help_text in commands:
-        subparser = subparsers.add_parser(arg, help=help_text)
+    for command_name, handler, help_text in commands:
+        subparser = subparsers.add_parser(command_name, help=help_text)
         subparser.set_defaults(handler=handler)
         _ = subparser.add_argument("--runtime-id", dest="runtime_id",
                      type=int,
