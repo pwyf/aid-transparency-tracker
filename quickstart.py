@@ -50,10 +50,10 @@ def refresh(options):
         dqregistry.refresh_packages()
 
 def activate_packages(options):
-    if options.matching:
-        which_packages = [(i, True) 
-                          for i in dqregistry.matching_packages(
-                options.matching)]
+    assert options.matching
+    which_packages = [(i, True)
+                      for i in dqregistry.matching_packages(
+            options.matching)]
     dqregistry.activate_packages(which_packages, clear_revision_id=True)
 
 def drop_db(options):
