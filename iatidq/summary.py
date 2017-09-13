@@ -7,12 +7,10 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import operator
 import itertools
-import models
-import pprint
-import sys
-from iatidq import db
+
+from iatidq import db, models
+
 
 COL_INDICATOR = 0
 COL_TEST = 1
