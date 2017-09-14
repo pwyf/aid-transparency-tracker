@@ -11,10 +11,6 @@
 import os
 import sys
 
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
 import lxml.etree
 import nose
 import nose.tools

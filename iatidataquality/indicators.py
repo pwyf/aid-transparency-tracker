@@ -24,10 +24,6 @@ import os
 import sys
 import json
 
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
 from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
 
 import StringIO

@@ -20,10 +20,6 @@ import iatidq.test_level as test_level
 import os
 import sys
 
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
 from iatidq import  dqtests
 
 test_list_location = "tests/activity_tests.csv"

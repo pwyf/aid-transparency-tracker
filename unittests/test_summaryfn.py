@@ -2,10 +2,6 @@ import os
 import sys
 import csv
 
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
 import iatidataquality
 import iatidq.summary
 

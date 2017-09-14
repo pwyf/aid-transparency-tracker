@@ -26,10 +26,6 @@ from iatidataquality import surveys
 from iatidq.dqcsv import make_csv
 from iatidq import util
 
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
 from iatidq import dqorganisations, dqpackages, dqaggregationtypes, donorresponse
 import iatidq.survey.data as dqsurveys
 import iatidq.inforesult
