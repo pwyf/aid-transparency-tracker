@@ -17,7 +17,7 @@
 import argparse
 import sys
 
-from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, setup
+from iatidq import db, dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, setup
 
 
 def refresh(options):
@@ -45,11 +45,11 @@ def drop_db(options):
     print('\nWarning! This will drop all database tables!')
     confirmed = raw_input('Are you really really sure? (y/N) ')
     if confirmed.lower() == 'y':
-        iatidq.db.drop_all()
+        db.drop_all()
         print('DB dropped.')
 
 def init_db(options):
-    iatidq.db.create_all()
+    db.create_all()
     dqimporttests.hardcodedTests()
 
 def enroll_tests(options):
@@ -122,7 +122,7 @@ def setup_organisations(options):
 
 def setup_users(options):
     assert options.filename
-    iatidq.dqusers.importUserDataFromFile(options.filename)
+    dqusers.importUserDataFromFile(options.filename)
 
 def setup(options):
     setup.setup(options)
