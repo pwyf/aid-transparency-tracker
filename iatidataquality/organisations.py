@@ -7,15 +7,17 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
-import StringIO
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import (LoginManager, current_user, login_required,
-                            login_user, logout_user, UserMixin, AnonymousUser,
-                            confirm_login, fresh_login_required)
-from sqlalchemy import func
 from datetime import datetime
+import json
+import os
+import operator
+import sys
+import StringIO
+
+from flask import render_template, flash, request, session, redirect, url_for, send_file
+from flask_login import current_user
+from sqlalchemy import func
+import unicodecsv
 
 from iatidataquality import app
 from iatidataquality import db
@@ -23,12 +25,6 @@ from iatidq import dqusers, dqindicators
 from iatidataquality import surveys
 from iatidq.dqcsv import make_csv
 from iatidq import util
-
-import os
-import sys
-import json
-
-import operator
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
@@ -38,10 +34,8 @@ from iatidq import dqorganisations, dqpackages, dqaggregationtypes, donorrespons
 import iatidq.survey.data as dqsurveys
 import iatidq.inforesult
 from iatidq.models import *
-
-import StringIO
-import unicodecsv
 import usermanagement
+
 
 def get_info_results(org_packages, organisation):
     for _, p in org_packages:

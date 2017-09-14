@@ -11,7 +11,7 @@
 # flask, but this is quicker than googling the runes for SQLAlchemy
 
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__.split('.')[0])
 app.config.from_pyfile('../config.py')

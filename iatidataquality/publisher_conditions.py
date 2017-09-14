@@ -9,8 +9,8 @@
 
 from flask import render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import current_user
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import current_user
 
 from iatidataquality import app
 from iatidataquality import db

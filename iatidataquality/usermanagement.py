@@ -7,12 +7,9 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file, current_app
-from flask.ext.login import (LoginManager, current_user, login_required,
-                            login_user, logout_user, UserMixin, AnonymousUser,
-                            confirm_login, fresh_login_required)
-from flask.ext.principal import Principal, Identity, AnonymousIdentity, \
+from flask import render_template, flash, request, session, redirect, url_for, current_app
+from flask_login import LoginManager, current_user, login_required, login_user, logout_user
+from flask_principal import Principal, Identity, AnonymousIdentity, \
      identity_changed, identity_loaded, Permission, RoleNeed, \
      UserNeed
 
@@ -22,6 +19,7 @@ from iatidataquality import app
 from iatidataquality import db
 from iatidq import dqusers
 from iatidq import user_activity_types
+
 
 principals = Principal(app)
 login_manager = LoginManager()

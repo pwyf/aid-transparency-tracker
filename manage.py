@@ -8,7 +8,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask.ext.script import Manager, Server
+from flask_script import Manager, Server
 import iatidataquality
 import iatidq.dqimporttests
 

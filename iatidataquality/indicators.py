@@ -10,8 +10,8 @@
 from flask import Flask, render_template, flash, request, Markup, \
     session, redirect, url_for, escape, Response, abort, send_file
 import StringIO
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import login_required, current_user
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import current_user
 from sqlalchemy import func
 from datetime import datetime
 

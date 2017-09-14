@@ -8,7 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__.split('.')[0])
