@@ -17,7 +17,8 @@
 import argparse
 import sys
 
-from iatidq import db, dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, setup
+from iatidq import db, dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers
+from iatidq import setup as dqsetup
 
 
 def refresh(options):
@@ -97,10 +98,10 @@ def import_organisations(options):
         print "Error: please provide a filename"
 
 def create_aggregation_types(options):
-    setup.create_aggregation_types()
+    dqsetup.create_aggregation_types()
 
 def create_inforesult_types(options):
-    setup.create_inforesult_types()
+    dqsetup.create_inforesult_types()
 
 def updatefrequency(options):
     dqorganisations.downloadOrganisationFrequency()
@@ -118,14 +119,14 @@ def aggregate_results(options):
                                           options.package_id)
 
 def setup_organisations(options):
-    setup.setup_organisations()
+    dqsetup.setup_organisations()
 
 def setup_users(options):
     assert options.filename
     dqusers.importUserDataFromFile(options.filename)
 
 def setup(options):
-    setup.setup(options)
+    dqsetup.setup(options)
 
 def create_subparser(subparsers, handler, command, help_text):
     subparser = subparsers.add_parser(command, help=help_text)
