@@ -16,7 +16,7 @@
     <div class="pull-right">
         <button type="button" class="btn" 
 				data-toggle="collapse" data-target="#packages_div">
-        <i class="icon-file"></i> <b>Packages</b>
+        <i class="icon-file"></i> <strong>Packages</strong>
         </button>
     </div>
 	<h1>
@@ -116,20 +116,20 @@
 
                         {% if result.test.test_level == 3 %}
 
-                        <p>This test is run on <b>organisation files</b>.</p>
+                        <p>This test is run on <strong>organisation files</strong>.</p>
 
                         {% elif result.test.test_level == 2 %}
 
-                        <p>This test is run on <b>each package of data</b>.</p>
+                        <p>This test is run on <strong>each package of data</strong>.</p>
 
                         {% elif result.test.test_level == 1 %}
 
-                        <p>This test is run for <b>each activity</b> 
+                        <p>This test is run for <strong>each activity</strong>
 						  in your data.</p>
 
                         {% elif result.test.test_level == 0 %}
 
-                        <p>This test is run for <b>each transaction</b> 
+                        <p>This test is run for <strong>each transaction</strong>
 						  in your data.</p>
 
                         {% endif %}

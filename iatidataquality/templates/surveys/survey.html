@@ -12,7 +12,7 @@
             <h5><i class="icon-info-sign"></i> This survey is broken.</h5>
             <a href="{{url_for('organisation_survey_repair', organisation_code=organisation.organisation_code)}}" class="btn btn-warning">
                 <i class="icon-wrench icon-white"></i> 
-                <b>Repair survey</b>
+                <strong>Repair survey</strong>
             </a>
         </div>
     {%endif%}
@@ -24,7 +24,7 @@
     </div>
     {% else %}
     <p class="lead">No survey has been created for this organisation yet.</p>
-    <p><a class="btn btn-success" href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name='create')}}"><i class="icon-plus icon-white"></i> <b>Create survey &raquo;</b></a></p>
+    <p><a class="btn btn-success" href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name='create')}}"><i class="icon-plus icon-white"></i> <strong>Create survey &raquo;</strong></a></p>
 
     {%endif%}
     <h3>Expected activities</h3>

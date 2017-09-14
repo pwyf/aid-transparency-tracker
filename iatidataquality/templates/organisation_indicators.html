@@ -34,8 +34,8 @@
           <h4>Information published to the IATI Registry</h4>
           
 		  <div class="pull-right"><a class="btn btn-mini scrollto"
-		  href="#iati"><b>Jump to
-		  indicators</b> <i class="icon-chevron-down"></i></a>
+		  href="#iati"><strong>Jump to
+		  indicators</strong> <i class="icon-chevron-down"></i></a>
 		  </div>
           
 		  <p>Maximum score: 100 points</p>
@@ -52,7 +52,7 @@
           <h4>Information published in other formats</h4>
           <div class="pull-right">
 			<a class="btn btn-mini scrollto" href="#noniati">
-			  <b>Jump to indicators</b> 
+			  <strong>Jump to indicators</strong>
 			  <i class="icon-chevron-down"></i></a>
 		  </div>
           <p>Maximum score: 50 points</p>
@@ -195,7 +195,7 @@
                         </tr>
                         {{/is_activity}}
                         <tr>
-                            <td><b>Total data quality points</b></td>
+                            <td><strong>Total data quality points</strong></td>
 							<td>{{points_minus_50}}</td><td></td>
                         </tr>
                         </tbody>
@@ -214,7 +214,7 @@
 							<td></td>
                         </tr>
                         <tr class="success">
-                            <td><b>Total points for this indicator</b></td>
+                            <td><strong>Total points for this indicator</strong></td>
 							<td>{{ points }}</td><td></td>
                         </tr>
                         </tbody>
@@ -264,7 +264,7 @@
 						{{#test.test_level}}
 						<p>This test is run 
 						  {{level_preposition}}
-						  <b>{{level_description}}</b>
+						  <strong>{{level_description}}</strong>
 						  {{level_coda}}.</p>
 						{{/test.test_level}}
                         <p>The specific test expression is:</p>
@@ -287,7 +287,7 @@
 		  {{/tests}}
         {{/result.non_zero}}
 		{{^result.non_zero}}
-        <tr><td colspan="5"><b>No IATI data found.</b></td></tr>
+        <tr><td colspan="5"><strong>No IATI data found.</strong></td></tr>
 		{{/result.non_zero}}
         </tbody>
         </table>
@@ -429,7 +429,7 @@
 						
 						<p>This test is run 
 						  {{level_preposition}}
-						  <b>{{level_description}}</b>
+						  <strong>{{level_description}}</strong>
 						  {{level_coda}}.</p>
 
                         <p>The specific test expression is:</p>
@@ -463,7 +463,7 @@
             <td><span class="hidden">
 				{{indicator.description}}.
 			</span></td>
-            <td colspan="6"><b>No data quality results available.</b><br />
+            <td colspan="6"><strong>No data quality results available.</strong><br />
             This may be because you have not yet published an 
             {{indicator.indicator_category_name_text}} file.
             </td>
