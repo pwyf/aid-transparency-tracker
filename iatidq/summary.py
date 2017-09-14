@@ -204,11 +204,7 @@ class Summary(object):
         return out
 
 
-class PublisherSummary(Summary):
-    pass
-
-
-class NewPublisherSummary(PublisherSummary):
+class NewPublisherSummary(Summary):
     def __init__(self, conditions, organisation_id, aggregation_type):
         self.conditions = conditions
         self.indicators = IndicatorInfo()
