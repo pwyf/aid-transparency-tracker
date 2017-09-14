@@ -7,21 +7,22 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import models, dqregistry 
-from iatidq import db, app
+from iatidq import app
+from iatidq import db
+from iatidq import dqaggregationtypes
+from iatidq import dqcodelists
+from iatidq import dqimporttests
+from iatidq import dqindicators
+from iatidq import dqminimal
+from iatidq import dqorganisations
+from iatidq import dqtests
+from iatidq import dqregistry
+from iatidq import dqusers
+from iatidq import inforesult
+from iatidq import models
+from iatidq import survey
+from iatidq import test_level
 
-import dqimporttests
-import dqorganisations
-import dqindicators
-import dqcodelists
-import test_level
-import dqaggregationtypes
-import dqtests
-import inforesult
-import iatidq.survey
-import dqusers
-
-from minimal import which_packages, default_minimal_organisations
 
 default_tests_filename="tests/tests.csv"
 default_infotypes_filename="tests/infotypes.csv"
@@ -77,7 +78,7 @@ def setup_common():
 
 def setup_packages_minimal():
     print "Creating packages"
-    pkg_names = [i[0] for i in which_packages]
+    pkg_names = [i[0] for i in dqminimal.which_packages]
 
     if pkg_names is not None:
         [ dqregistry.refresh_package_by_name(name) for name in pkg_names ]
@@ -85,7 +86,7 @@ def setup_packages_minimal():
         print "No packages are defined in quickstart"
 
 def setup_organisations_minimal():    
-    for organisation in default_minimal_organisations:
+    for organisation in dqminimal.default_minimal_organisations:
         inserted_organisation = dqorganisations.addOrganisation(
             organisation)
         if inserted_organisation is False:
@@ -138,7 +139,7 @@ def setup(options):
     print "Getting organisation frequency"
     dqorganisations.downloadOrganisationFrequency()
     print "Setting up survey"
-    iatidq.survey.setup.setupSurvey()
+    survey.setup.setupSurvey()
     user = dqusers.addUser({'username': "admin",
                             'password': "CHANGEME"
                           })

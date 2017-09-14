@@ -17,8 +17,7 @@
 import argparse
 import sys
 
-from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqorganisations, dqprocessing, dqregistry, dqruntests, setup
-from iatidq import minimal as dqminimal
+from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, setup
 
 
 def refresh(options):
