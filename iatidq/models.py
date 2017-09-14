@@ -7,12 +7,15 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
+from datetime import datetime
+
 from sqlalchemy import *
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_utils import get_hybrid_properties
-from iatidq import db
-from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from iatidq import db
+
 
 ## TEST RUNTIME-SPECIFIC DATA
 
