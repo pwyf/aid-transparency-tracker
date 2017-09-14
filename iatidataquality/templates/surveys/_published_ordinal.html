@@ -1,13 +1,13 @@
 {% macro published_ordinal(data, publishedstatuses, publishedformats, indicator, years) %}
         {% for i, year in years %}
-            <label for="{{indicator.indicator.id}}-ordinal_value-{{i}}">
+            <label for="{{indicator.indicator.id}}-ordinal_value-{{i}}" class="radio">
             <input type="radio" name="{{indicator.indicator.id}}-ordinal_value" value="{{i}}" id="{{indicator.indicator.id}}-ordinal_value-{{i}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.ordinal_value is not none and data[indicator.indicator.id].OrganisationSurveyData.ordinal_value|int == i %} checked{%endif%}> {{year.text}}</input></label>
         {% endfor %}
 
         {% if not indicator.indicator.indicator_noformat %}
         <b>Format:</b>
         {% for i, publishedformat in publishedformats.items() %}
-        <label for="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}">
+        <label for="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}" class="radio">
         <input type="radio" name="{{indicator.indicator.id}}-publishedformat" value="{{publishedformat.id}}" id="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_format == publishedformat.id %} checked{%endif%}> {{publishedformat.title}}</input></label>
         {% endfor %}
         {% else %}

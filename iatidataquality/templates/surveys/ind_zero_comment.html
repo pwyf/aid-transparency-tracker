@@ -170,11 +170,11 @@
         <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" />
         </td>
         <td>
-        <label for="{{indicator.indicator.id}}-agree-1">
+        <label for="{{indicator.indicator.id}}-agree-1" class="radio">
         <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if accepted == 1 %} checked{%endif%}> Agree</input>
         <br />
         <span class="muted">Agree</span></label>
-        <label for="{{indicator.indicator.id}}-agree-0">
+        <label for="{{indicator.indicator.id}}-agree-0" class="radio">
         <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if accepted == 0 %} checked{%endif%}> Disagree</input>
         <br />
         <span class="muted">Disagree</span></label>
