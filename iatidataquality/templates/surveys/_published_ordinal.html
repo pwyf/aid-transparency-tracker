@@ -11,7 +11,7 @@
         <input type="radio" name="{{indicator.indicator.id}}-publishedformat" value="{{publishedformat.id}}" id="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_format == publishedformat.id %} checked{%endif%}> {{publishedformat.title}}</input></label>
         {% endfor %}
         {% else %}
-        <p><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />Format does not apply to this indicator, as it is a document.</p>
+        <input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
         {% endif %}
 {% endmacro %}
 
