@@ -313,23 +313,6 @@ class NewPublisherSummary(PublisherSummary):
         return dict([ (t, ok(t)) for t in self.tests.tests.keys() ])
 
 
-class NewPackageSummary(NewPublisherSummary):
-    def __init__(self, conditions, package_id, aggregation_type):
-        self.conditions = conditions
-        self.indicators = IndicatorInfo()
-        self.tests = TestInfo()
-        self.sampling_data = self.get_sampling_data(None)
-
-        join_clause = ""
-        
-        where_clause = '''WHERE package_id = %d AND 
-                            aggregateresulttype_id = %d''' % (package_id,
-                                                              aggregation_type)
-
-        self._summary = self.calculate(join_clause, where_clause)
-
-        
-
 class PublisherIndicatorsSummary(NewPublisherSummary):
     def add_indicator_info(self, out, indicators,
                            indicators_tests, indicator_lookup):
@@ -402,15 +385,6 @@ class PublisherSummaryCreator(SummaryCreator):
         self._summary = NewPublisherSummary(pconditions, 
                                             organisation_id, 
                                             aggregation_type)
-
-
-class PackageSummaryCreator(SummaryCreator):
-    def __init__(self, package_id, latest_runtime, aggregation_type):
-        
-
-        self._summary = NewPackageSummary(OrgConditions(None),
-                                          package_id, 
-                                          aggregation_type).summary()
 
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):
