@@ -17,21 +17,7 @@
 import argparse
 import sys
 
-import iatidq
-
-import iatidq.dqfunctions
-import iatidq.dqimporttests
-import iatidq.dqdownload
-import iatidq.dqcodelists
-import iatidq.dqruntests
-import iatidq.dqindicators
-import iatidq.dqorganisations
-import iatidq.dqaggregationtypes
-import iatidq.dqtests
-import iatidq.dqprocessing
-import iatidq.inforesult
-import iatidq.setup
-from iatidq import dqregistry
+from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqorganisations, dqprocessing, dqregistry, dqruntests, setup
 from iatidq import minimal as dqminimal
 
 
@@ -65,82 +51,82 @@ def drop_db(options):
 
 def init_db(options):
     iatidq.db.create_all()
-    iatidq.dqimporttests.hardcodedTests()
+    dqimporttests.hardcodedTests()
 
 def enroll_tests(options):
     assert options.filename
     filename = options.filename.decode()
-    result = iatidq.dqimporttests.importTestsFromFile(
+    result = dqimporttests.importTestsFromFile(
         filename=filename, 
         level=options.level)
     if not result:
         print "Error importing"
 
 def clear_revisionid(options):
-    iatidq.dqfunctions.clear_revisions()
+    dqfunctions.clear_revisions()
 
 def import_codelists(options):
-    iatidq.dqcodelists.importCodelists()
+    dqcodelists.importCodelists()
 
 def import_basic_countries(options):
     filename = 'tests/countries_basic.csv'
     codelist_name = 'countriesbasic'
     codelist_description = 'Basic list of countries for running tests against'
-    iatidq.dqcodelists.add_manual_codelist(filename, codelist_name, codelist_description)
+    dqcodelists.add_manual_codelist(filename, codelist_name, codelist_description)
 
 def download(options):
     if options.minimal:
         for package_name, _ in dqminimal.which_packages:
-            iatidq.dqdownload.run(package_name=package_name)
+            dqdownload.run(package_name=package_name)
     elif options.matching:
         for pkg_name in dqregistry.matching_packages(options.matching):
-            iatidq.dqdownload.run(package_name=pkg_name)
+            dqdownload.run(package_name=pkg_name)
     else:
-        iatidq.dqdownload.run()
+        dqdownload.run()
 
 def import_indicators(options):
     if options.filename:
-        iatidq.dqindicators.importIndicatorsFromFile("pwyf2013",
+        dqindicators.importIndicatorsFromFile("pwyf2013",
                                                      options.filename)
     else:
-        iatidq.dqindicators.importIndicators()
+        dqindicators.importIndicators()
 
 def import_organisations(options):
     if options.filename:
-        iatidq.dqorganisations.importOrganisationPackagesFromFile(options.filename)
+        dqorganisations.importOrganisationPackagesFromFile(options.filename)
     else:
         print "Error: please provide a filename"
 
 def create_aggregation_types(options):
-    iatidq.setup.create_aggregation_types()
+    setup.create_aggregation_types()
 
 def create_inforesult_types(options):
-    iatidq.setup.create_inforesult_types()
+    setup.create_inforesult_types()
 
 def updatefrequency(options):
-    iatidq.dqorganisations.downloadOrganisationFrequency()
+    dqorganisations.downloadOrganisationFrequency()
 
 def enqueue_test(options):
     assert options.package_name
     assert options.filename
-    iatidq.dqruntests.enqueue_package_for_test(options.filename,
+    dqruntests.enqueue_package_for_test(options.filename,
                                                options.package_name)
 
 def aggregate_results(options):
     assert options.runtime_id
     assert options.package_id
-    iatidq.dqprocessing.aggregate_results(options.runtime_id, 
+    dqprocessing.aggregate_results(options.runtime_id, 
                                           options.package_id)
 
 def setup_organisations(options):
-    iatidq.setup.setup_organisations()
+    setup.setup_organisations()
 
 def setup_users(options):
     assert options.filename
     iatidq.dqusers.importUserDataFromFile(options.filename)
 
 def setup(options):
-    iatidq.setup.setup(options)
+    setup.setup(options)
 
 def create_subparser(subparsers, handler, command, help_text):
     subparser = subparsers.add_parser(command, help=help_text)
