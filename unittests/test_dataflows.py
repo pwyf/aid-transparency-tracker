@@ -1,22 +1,16 @@
+import json
 import os
 import sys
-import csv
 
 current = os.path.dirname(os.path.abspath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-import iatidq
-
 import nose
 import nose.tools
 
-import json
-import uuid
+from iatidq import db, dqregistry, models
 
-import iatidq.dqregistry
-from iatidq import db
-from iatidq import models
 
 def setup_func():
     with db.session.begin():
@@ -34,7 +28,7 @@ def teardown_func():
 def test_change_title():
     with file('unittests/artefacts/json/pkgdata-worldbank-tz.json') as f:
         package = json.load(f)
-    iatidq.dqregistry.refresh_package(package)
+    dqregistry.refresh_package(package)
 
     pkg = models.Package.query.filter_by(
         package_name=package['name']).first()
@@ -44,7 +38,7 @@ def test_change_title():
     assert new_title != pkg.package_title
 
     package['title'] = new_title
-    iatidq.dqregistry.refresh_package(package)
+    dqregistry.refresh_package(package)
     
     pkg = models.Package.query.filter_by(
         package_name=package['name']).first()
