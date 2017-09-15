@@ -1,14 +1,13 @@
 import os.path
 
 
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672
 BROKER_VHOST = "/"
 BROKER_USER = "guest"
 BROKER_PASSWORD = "guest"
 
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 #SQLALCHEMY_DATABASE_URI = 'mysql+oursql://user:passwd@127.0.0.1/iatidq'
 #SQLALCHEMY_DATABASE_URI = 'sqlite:///dataquality.sqlite'
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2:///iatidq'
