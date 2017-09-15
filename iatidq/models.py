@@ -10,7 +10,6 @@
 from datetime import datetime
 
 from sqlalchemy import *
-from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_utils import get_hybrid_properties
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -328,11 +327,11 @@ class Indicator(db.Model):
     indicator_order = Column(Integer, nullable=False)
     indicator_weight = Column(Float(precision=4))
     
-    @hybrid_property
+    @property
     def indicator_category_name_text(self):
         return self.indicator_category_name.title()
     
-    @hybrid_property
+    @property
     def indicator_subcategory_name_text(self):
         return self.indicator_subcategory_name.title()
 
