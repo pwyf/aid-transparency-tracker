@@ -204,7 +204,7 @@ class Summary(object):
         return out
 
 
-class NewPublisherSummary(Summary):
+class PublisherSummary(Summary):
     def __init__(self, conditions, organisation_id, aggregation_type):
         self.conditions = conditions
         self.indicators = IndicatorInfo()
@@ -309,7 +309,7 @@ class NewPublisherSummary(Summary):
         return dict([ (t, ok(t)) for t in self.tests.tests.keys() ])
 
 
-class PublisherIndicatorsSummary(NewPublisherSummary):
+class PublisherIndicatorsSummary(PublisherSummary):
     def add_indicator_info(self, out, indicators,
                            indicators_tests, indicator_lookup):
 
@@ -378,7 +378,7 @@ class PublisherSummaryCreator(SummaryCreator):
         organisation_id = organisation.id
         pconditions = OrgConditions(organisation_id)
 
-        self._summary = NewPublisherSummary(pconditions, 
+        self._summary = PublisherSummary(pconditions,
                                             organisation_id, 
                                             aggregation_type)
 
