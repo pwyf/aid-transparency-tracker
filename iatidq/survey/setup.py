@@ -123,7 +123,7 @@ def setupSurvey():
              'duration': None}
             ]
     for the_workflow in the_workflows():
-        addWorkflow(the_workflow)
+        getOrCreateWorkflow(the_workflow)
 
     # This will correct leadsto values
     for the_workflow in the_workflows():

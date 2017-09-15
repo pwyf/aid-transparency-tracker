@@ -284,7 +284,7 @@ def advanceSurvey(organisationsurvey):
     # return None instead of False - the test for this is potentially 
     # misleading
 
-def addWorkflow(data):
+def getOrCreateWorkflow(data):
     checkW = models.Workflow.query.filter_by(name=data["name"]
                 ).first()
     if checkW:
