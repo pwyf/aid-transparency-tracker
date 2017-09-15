@@ -12,7 +12,6 @@ from flask import Flask, render_template, flash, request, Markup, \
 import StringIO
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import current_user
-from sqlalchemy import func
 from datetime import datetime
 
 from iatidataquality import app

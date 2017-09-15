@@ -7,9 +7,8 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, aggregations, dqpackages
-import models
-from sqlalchemy import func, distinct
+from iatidq import db, aggregations, dqpackages, models
+
 
 def add_hardcoded_result(test_id, runtime_id, package_id, result_data):
     with db.session.begin():
@@ -52,13 +51,13 @@ def get_results(runtime, package_id, agg_type):
 
     if agg_type.test_id is not None:
         # Find all activities that passed the "current" test
-        results = db.session.query(distinct(models.Result.result_identifier)).filter(
+        results = db.session.query(db.distinct(models.Result.result_identifier)).filter(
             models.Result.test_id == agg_type.test_id
             ).filter(
             models.Result.result_data == '1'
             )
     else:
-        results = db.session.query(distinct(models.Result.result_identifier))
+        results = db.session.query(db.distinct(models.Result.result_identifier))
 
     # Get a subset of those activities' results, by package and runtime
     results = results.filter(
@@ -102,7 +101,7 @@ def aggregate_results_single_org(runtime, package_id, agg_type):
     data = db.session.query(models.Test.id,
                 models.Result.result_data,
                 models.Result.result_hierarchy,
-                func.count(models.Result.id),
+                db.func.count(models.Result.id),
                 models.Result.package_id
         ).filter(models.Result.runtime_id==runtime
         ).filter(models.Result.package_id==package_id

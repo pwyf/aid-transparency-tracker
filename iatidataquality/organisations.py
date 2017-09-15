@@ -16,7 +16,6 @@ import StringIO
 
 from flask import render_template, flash, request, session, redirect, url_for, send_file
 from flask_login import current_user
-from sqlalchemy import func
 import unicodecsv
 
 from iatidataquality import app
@@ -37,7 +36,7 @@ def get_info_results(org_packages, organisation):
     for _, p in org_packages:
         package_id = p.package_id
         runtime = db.session.query(
-            func.max(InfoResult.runtime_id)).filter(
+            db.func.max(InfoResult.runtime_id)).filter(
             InfoResult.package_id == package_id
             ).first()
         runtime, = runtime
