@@ -31,7 +31,6 @@ PyYAML==3.12
 requests==2.18.4
 six==1.10.0
 SQLAlchemy==1.1.14
-SQLAlchemy-Utils==0.32.16
 supervisor==3.3.3
 unicodecsv==0.14.1
 urllib3==1.22

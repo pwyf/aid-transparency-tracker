@@ -10,7 +10,6 @@
 from datetime import datetime
 
 from sqlalchemy import *
-from sqlalchemy_utils import get_hybrid_properties
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from iatidq import db
@@ -367,8 +366,6 @@ class Indicator(db.Model):
 
     def as_dict(self):
        d = {c.name: getattr(self, c.name) for c in self.__table__.columns}
-       d.update({col: getattr(self, col) for col in
-                get_hybrid_properties(Indicator).keys()})
        return d
 
 class IndicatorTest(db.Model):
