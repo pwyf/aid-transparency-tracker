@@ -3,51 +3,65 @@ from iatidq.survey.data import *
 
 def setupSurvey():
     the_publishedstatuses = [
-     {'name': 'always',
-      'title': 'Always',
-      'publishedstatus_class': 'success',
-      'publishedstatus_value': 1 },
-     {'name': 'sometimes',
-      'title': 'Sometimes',
-      'publishedstatus_class': 'warning',
-      'publishedstatus_value': 0},
-     {'name': 'not published',
-      'title': 'Not published',
-      'publishedstatus_class': 'important',
-      'publishedstatus_value': 0}]
+        {
+            'name': 'always',
+            'title': 'Always',
+            'publishedstatus_class': 'success',
+            'publishedstatus_value': 1
+        }, {
+            'name': 'sometimes',
+            'title': 'Sometimes',
+            'publishedstatus_class': 'warning',
+            'publishedstatus_value': 0
+        }, {
+            'name': 'not published',
+            'title': 'Not published',
+            'publishedstatus_class': 'important',
+            'publishedstatus_value': 0
+        }
+    ]
 
     for the_publishedstatus in the_publishedstatuses:
         addPublishedStatus(the_publishedstatus)
 
-    the_publishedformat = [{
-      'name': 'machine-readable',
-      'title': 'Machine-readable (CSV, Excel)',
-      'format_class': 'success',
-      'format_value': 1.0 },
-     {'name': 'website',
-      'title': 'Website',
-      'format_class': 'warning',
-      'format_value': 0.6666},
-     {'name': 'pdf',
-      'title': 'PDF',
-      'format_class': 'important',
-      'format_value': 0.3333},
-     {'name': 'document',
-      'title': 'Document',
-      'format_class': 'success',
-      'format_value': 1.0},
-     {'name': 'iati',
-      'title': 'IATI',
-      'format_class': 'success',
-      'format_value': 1.0},
-     {'name': 'not-applicable',
-      'title': 'Format not applicable to this indicator',
-      'format_class': 'inverse',
-      'format_value': 1.0},
-     {'name': 'not-published',
-      'title': 'Not published',
-      'format_class': 'inverse',
-      'format_value': 1.0}]
+    the_publishedformat = [
+        {
+            'name': 'machine-readable',
+            'title': 'Machine-readable (CSV, Excel)',
+            'format_class': 'success',
+            'format_value': 1.0
+        }, {
+            'name': 'website',
+            'title': 'Website',
+            'format_class': 'warning',
+            'format_value': 0.6666
+        }, {
+            'name': 'pdf',
+            'title': 'PDF',
+            'format_class': 'important',
+            'format_value': 0.3333
+        }, {
+            'name': 'document',
+            'title': 'Document',
+            'format_class': 'success',
+            'format_value': 1.0
+        }, {
+            'name': 'iati',
+            'title': 'IATI',
+            'format_class': 'success',
+            'format_value': 1.0
+        }, {
+            'name': 'not-applicable',
+            'title': 'Format not applicable to this indicator',
+            'format_class': 'inverse',
+            'format_value': 1.0
+        }, {
+            'name': 'not-published',
+            'title': 'Not published',
+            'format_class': 'inverse',
+            'format_value': 1.0
+        }
+    ]
 
     for the_publishedformat in the_publishedformat:
         addPublishedFormat(the_publishedformat)
@@ -56,20 +70,20 @@ def setupSurvey():
     # displayed to the user at that workflow stage
 
     the_workflowTypes = [
-    {'name': 'collect',
-     'title': 'Initial data collection'},
-    {'name': 'send',
-     'title': 'Send to next step'},
-    {'name': 'review',
-     'title': 'Review initial assessment'},
-    {'name': 'finalreview',
-     'title': "Review donor's review"},
-    {'name': 'comment',
-     'title': 'Agree/disagree and provide comments on current assessment'},
-    {'name': 'agreereview',
-     'title': 'Review all comments and reviews and make final decision'},
-    {'name': 'finalised',
-     'title': 'Survey finalised'}
+        {'name': 'collect',
+         'title': 'Initial data collection'},
+        {'name': 'send',
+         'title': 'Send to next step'},
+        {'name': 'review',
+         'title': 'Review initial assessment'},
+        {'name': 'finalreview',
+         'title': "Review donor's review"},
+        {'name': 'comment',
+         'title': 'Agree/disagree and provide comments on current assessment'},
+        {'name': 'agreereview',
+         'title': 'Review all comments and reviews and make final decision'},
+        {'name': 'finalised',
+         'title': 'Survey finalised'}
     ]
     for the_workflowType in the_workflowTypes:    
         addWorkflowType(the_workflowType)
