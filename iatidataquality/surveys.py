@@ -142,7 +142,7 @@ def __survey_process(organisation, workflow, request,
     
     if 'submit' in request.form:
         if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
-        # save data, change currentworkflow_id to leadsto
+        # save data, advance currentworkflow_id to next workflow
             dqsurveys.advanceSurvey(organisationsurvey)
             flash('Successfully submitted survey data', 'success')
         else:

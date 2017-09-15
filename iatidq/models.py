@@ -759,20 +759,28 @@ class Workflow(db.Model):
     id = Column(Integer,primary_key=True)
     name = Column(UnicodeText)
     title = Column(UnicodeText)
-    leadsto = Column(Integer, ForeignKey('workflow.id'))
+    order = Column(Integer)
     workflow_type = Column(Integer, ForeignKey('workflowtype.id'))
     duration = Column(Integer)
-    
+
+    def get_next(self):
+        cls = self.__class__
+        return cls.query.filter(
+            cls.order > self.order
+        ).order_by(
+            cls.order
+        ).first()
+
     def setup(self,
                  name,
                  title,
-                 leadsto,
+                 order,
                  workflow_type=None,
                  duration=None,
                  id=None):
         self.name = name
         self.title = title
-        self.leadsto = leadsto
+        self.order = order
         self.workflow_type = workflow_type
         self.duration = duration
         if id is not None:

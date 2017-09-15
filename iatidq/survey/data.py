@@ -271,15 +271,19 @@ def workflow_by_id(workflow_id):
 
 def advanceSurvey(organisationsurvey):
     # receives an OrganisationSurvey object
-    # updates currentworkflow_id to leadsto value
-    checkS=models.OrganisationSurvey.query.filter_by(id=organisationsurvey.id
+    # updates currentworkflow_id to next workflow
+    survey = models.OrganisationSurvey.query.filter_by(id=organisationsurvey.id
             ).first()
-    checkW = workflow_by_id(organisationsurvey.currentworkflow_id)
-    if not (checkS and checkW):
+    current_workflow = workflow_by_id(organisationsurvey.currentworkflow_id)
+    if not (survey and current_workflow):
         return False
     with db.session.begin():
-        checkS.currentworkflow_id=checkW.leadsto
-        db.session.add(checkS)
+        next_workflow = current_workflow.get_next()
+        if next_workflow:
+            survey.currentworkflow_id = next_workflow.id
+        else:
+            survey.currentworkflow_id = None
+        db.session.add(survey)
     # FIXME
     # return None instead of False - the test for this is potentially 
     # misleading
@@ -291,29 +295,9 @@ def getOrCreateWorkflow(data):
         return checkW
     with db.session.begin():
         newW = models.Workflow()
-        newW.setup(
-            name = data["name"],
-            leadsto = data["leadsto"],
-            workflow_type = data["workflow_type"],
-            duration = data["duration"],
-            title = data["title"]
-            )
+        newW.setup(**data)
         db.session.add(newW)
     return newW
-
-def updateWorkflow(data):
-    checkW = models.Workflow.query.filter_by(name=data["name"]
-                ).first()
-    if not checkW:
-        return None
-    with db.session.begin():
-        checkW.name = data["name"],
-        checkW.title = data["title"],
-        checkW.workflow_type = data["workflow_type"],
-        checkW.leadsto = data["leadsto"],
-        checkW.duration = data["duration"]
-        db.session.add(checkW)
-    return checkW
 
 def repairSurveyData(organisation_code):
     # for each currently active stage of the workflow
