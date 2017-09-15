@@ -169,7 +169,23 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators,
     return dict([ (t, per_test(t)) for t in tests ])
 
 
-class Summary(object):
+class PublisherSummary(object):
+    def __init__(self, conditions, organisation_id, aggregation_type):
+        self.conditions = conditions
+        self.indicators = IndicatorInfo()
+        self.tests = TestInfo()
+        self.sampling_data = self.get_sampling_data(organisation_id)
+
+        join_clause = '''
+            JOIN organisationpackage USING (package_id, organisation_id)
+        '''
+
+        where_clause = '''WHERE aggregateresult.organisation_id = %d AND
+                            aggregateresulttype_id = %d''' % (organisation_id,
+                                                              aggregation_type)
+
+        self._summary = self.calculate(join_clause, where_clause)
+
     def summary(self):
         return self._summary
 
@@ -202,24 +218,6 @@ class Summary(object):
     def add_indicator_info(self, out, indicators,
                            indicators_tests, indicator_lookup):
         return out
-
-
-class PublisherSummary(Summary):
-    def __init__(self, conditions, organisation_id, aggregation_type):
-        self.conditions = conditions
-        self.indicators = IndicatorInfo()
-        self.tests = TestInfo()
-        self.sampling_data = self.get_sampling_data(organisation_id)
-
-        join_clause = '''
-            JOIN organisationpackage USING (package_id, organisation_id)
-        '''
-
-        where_clause = '''WHERE aggregateresult.organisation_id = %d AND 
-                            aggregateresulttype_id = %d''' % (organisation_id,
-                                                              aggregation_type)
-
-        self._summary = self.calculate(join_clause, where_clause)
 
     def calculate(self, join_clause, where_clause):
         # make list of data; hand over to 
