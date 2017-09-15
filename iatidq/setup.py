@@ -140,15 +140,15 @@ def setup(options):
     dqorganisations.downloadOrganisationFrequency()
     print "Setting up survey"
     survey.setup.setupSurvey()
-    user = dqusers.addUser({'username': "admin",
-                            'password': "CHANGEME"
-                          })
-    permission = dqusers.addUserPermission({
-                            'user_id': user.id,
-                            'permission_name': 'admin',
-                            'permission_method': 'role'
-                          })
-    print("Created a default user (admin) and password (CHANGEME). Please remember to change them!")
+    # user = dqusers.addUser({'username': "admin",
+    #                         'password': "CHANGEME"
+    #                       })
+    # permission = dqusers.addUserPermission({
+    #                         'user_id': user.id,
+    #                         'permission_name': 'admin',
+    #                         'permission_method': 'role'
+    #                       })
+    # print("Created a default user (admin) and password (CHANGEME). Please remember to change them!")
     
     # print("Importing all users and creating permissions")
     # dqusers.importUserDataFromFile(default_userdata_filename)
