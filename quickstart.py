@@ -126,6 +126,9 @@ def setup_users(options):
     assert options.filename
     dqusers.importUserDataFromFile(options.filename)
 
+def create_admin(options):
+    dqsetup.setup_admin_user(options.username, options.password)
+
 def setup(options):
     dqsetup.setup(options)
 
@@ -191,6 +194,10 @@ def main():
 
     subparser = create_subparser(subparsers, setup_users, 'setup-users', help_text='Setup users and permissions.')
     subparser.add_argument('--filename', dest='filename', help='Set filename of data to test', required=True)
+
+    subparser = create_subparser(subparsers, create_admin, 'create-admin', help_text='Create an admin user.')
+    subparser.add_argument('--username', dest='username', help='The username of the new admin user')
+    subparser.add_argument('--password', dest='password', help='The password of the new admin user')
     
     args = parser.parse_args()
     args.handler(args)

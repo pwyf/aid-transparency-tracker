@@ -7,6 +7,8 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
+from getpass import getpass
+
 from iatidataquality import app, db
 from . import dqaggregationtypes
 from . import dqcodelists
@@ -114,6 +116,30 @@ def setup_packages():
     print "Refreshing package data from Registry"
     dqregistry.refresh_packages()
 
+def setup_admin_user(username=None, password=None):
+    print('Creating admin user ...')
+    if username:
+        print('Username: {}'.format(username))
+    else:
+        while not username:
+            username = raw_input('Username: ')
+    if password:
+        print('Password: <provided>')
+    else:
+        while not password:
+            password = getpass('Password: ')
+    user_dict = {
+        'username': username,
+        'password': password,
+    }
+    user = dqusers.addUser(user_dict)
+    permission = dqusers.addUserPermission({
+        'user_id': user.id,
+        'permission_name': 'admin',
+        'permission_method': 'role'
+    })
+    print('Admin user successfully created.')
+
 def setup(options):
     setup_common()
 
@@ -139,15 +165,8 @@ def setup(options):
     dqorganisations.downloadOrganisationFrequency()
     print "Setting up survey"
     survey.setup.setupSurvey()
-    # user = dqusers.addUser({'username': "admin",
-    #                         'password': "CHANGEME"
-    #                       })
-    # permission = dqusers.addUserPermission({
-    #                         'user_id': user.id,
-    #                         'permission_name': 'admin',
-    #                         'permission_method': 'role'
-    #                       })
-    # print("Created a default user (admin) and password (CHANGEME). Please remember to change them!")
+
+    setup_admin_user()
     
     # print("Importing all users and creating permissions")
     # dqusers.importUserDataFromFile(default_userdata_filename)
