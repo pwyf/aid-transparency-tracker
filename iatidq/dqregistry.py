@@ -14,8 +14,8 @@ import urllib2
 
 import ckanclient
 
-from iatidq import db, app, models, util
-from dqfunctions import get_package_organisations
+from iatidataquality import app, db
+from . import models, util
 
 
 REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=1000'

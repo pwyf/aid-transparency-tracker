@@ -1,17 +1,18 @@
 #!/usr/bin/env python
 
-import sys
+import os
+import random
+import re
+import uuid
+
 import psycopg2
 from psycopg2.extensions import adapt
 import requests
-import random
 import lxml.etree
-import json
-import os
-import uuid
-import sys
-import re
+
 import config
+import test_mapping
+
 
 IATI_DIR = config.DATA_STORAGE_DIR
 
@@ -24,7 +25,6 @@ def save_url(url, filename):
         f.write(resp.content)
 
 def query(*args, **kwargs):
-    import config
     db_config = config.db_config
     db = psycopg2.connect(**db_config)
     c = db.cursor()
@@ -58,8 +58,6 @@ class WorkItems(object):
         return self.kind_of_test_string(test_string)
 
     def kind_of_test_string(self, test_string):
-        import test_mapping
-
         return test_mapping.test_to_kind[test_string]
 
     def __iter__(self):

@@ -14,7 +14,7 @@ from flask import render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
 import unicodecsv
 
-from iatidataquality import app, usermanagement
+from . import app, usermanagement
 from iatidq import dqindicators, dqorganisations, util
 
 

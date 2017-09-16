@@ -17,7 +17,8 @@
 import argparse
 import sys
 
-from iatidq import db, dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers
+from iatidataquality import db
+from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers
 from iatidq import setup as dqsetup
 
 

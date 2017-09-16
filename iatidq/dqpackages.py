@@ -7,10 +7,11 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-import dqorganisations
-import models
 import unicodecsv
+
+from iatidataquality import db
+from . import dqorganisations, models
+
 
 def importManualPackages(organisation_code, filename, prefix_url):
     with file(filename) as fh:

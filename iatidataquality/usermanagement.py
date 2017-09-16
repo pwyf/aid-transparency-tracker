@@ -7,18 +7,17 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
+from collections import namedtuple
+from functools import partial, wraps
+
 from flask import render_template, flash, request, session, redirect, url_for, current_app
 from flask_login import LoginManager, current_user, login_required, login_user, logout_user
 from flask_principal import Principal, Identity, AnonymousIdentity, \
      identity_changed, identity_loaded, Permission, RoleNeed, \
      UserNeed
 
-from collections import namedtuple
-from functools import partial, wraps
-from iatidataquality import app
-from iatidataquality import db
-from iatidq import dqusers
-from iatidq import user_activity_types
+from . import app
+from iatidq import dqusers, user_activity_types
 
 
 principals = Principal(app)

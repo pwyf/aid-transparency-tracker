@@ -9,7 +9,8 @@
 
 import itertools
 
-from iatidq import db, models
+from iatidataquality import db
+from . import models
 
 
 COL_INDICATOR = 0

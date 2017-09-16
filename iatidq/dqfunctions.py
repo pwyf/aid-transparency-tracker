@@ -10,8 +10,9 @@
 import json
 import urllib2
 
-from iatidq import db
-import models
+from iatidataquality import db
+from . import models
+
 
 def add_test_status(package_id, status_id):
     with db.session.begin():

@@ -7,20 +7,12 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
+from flask import render_template, flash, request, redirect, url_for
 from flask_login import login_required, current_user
 
-from iatidataquality import app
-from iatidataquality import db
-import usermanagement
+from . import app, usermanagement
+from iatidq import dqimporttests, dqtests, test_level
 
-import iatidq.test_level as test_level
-
-import os
-import sys
-
-from iatidq import  dqtests
 
 test_list_location = "tests/activity_tests.csv"
 
@@ -100,7 +92,6 @@ def tests_new():
 @app.route("/tests/import/", methods=['GET', 'POST'])
 def import_tests():
     if (request.method == 'POST'):
-        import dqimporttests
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
             if (request.form.get('local')):
                 result = dqimporttests.importTestsFromFile(test_list_location, 

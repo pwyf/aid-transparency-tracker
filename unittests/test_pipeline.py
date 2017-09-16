@@ -11,22 +11,11 @@
 import os
 import sys
 
-import lxml.etree
 import nose
-import nose.tools
 
 import iatidq
-import iatidq.dqparsetests
-import iatidq.dqregistry
-import iatidq.dqimporttests
-import iatidq.dqindicators
-import iatidq.test_queue
-import iatidq.dqcodelists
-import iatidq.dqorganisations
-import iatidq.dqaggregationtypes
-import iatidq.dqtests
-import iatidq.setup
-from iatidq import db, models, test_level
+from iatidq import models, test_level
+from iatidataquality import db
 
 
 def log(s):
@@ -34,8 +23,8 @@ def log(s):
     print >>sys.stderr, s
 
 def setup_func():
-    iatidq.db.drop_all()
-    iatidq.db.create_all()
+    db.drop_all()
+    db.create_all()
 
 def __setup_organisations(pkg_id):
     org_data = [ 
@@ -144,10 +133,8 @@ def _test_example_tests(publisher, country):
 
     log("about to start testing")
  
-    from iatidq.dqparsetests import test_functions as tf
-    test_functions = tf()
-    from iatidq import dqcodelists
-    codelists = dqcodelists.generateCodelists()
+    test_functions = iatidq.dqparsetests.test_functions()
+    codelists = iatidq.dqcodelists.generateCodelists()
 
     # FIXME: THIS IS A TOTAL HACK
     with db.session.begin():
@@ -158,8 +145,7 @@ def _test_example_tests(publisher, country):
     all_ag = create_aggregation_types({})
 
 
-    from iatidq.testrun import start_new_testrun
-    runtime = start_new_testrun()
+    runtime = iatidq.testrun.start_new_testrun()
 
     results = models.Result.query.all()
     assert len(results) == 0

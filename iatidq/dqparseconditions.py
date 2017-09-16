@@ -7,11 +7,12 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-import re
-import sys
 from functools import partial
-import models
+import re
+
+from iatidataquality import db
+from . import models
+
 
 mappings = []
 

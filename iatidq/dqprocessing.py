@@ -7,7 +7,8 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, aggregations, dqpackages, models
+from iatidataquality import db
+from . import aggregations, dqpackages, models
 
 
 def add_hardcoded_result(test_id, runtime_id, package_id, result_data):

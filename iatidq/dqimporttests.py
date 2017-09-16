@@ -7,14 +7,11 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-import models
 import unicodecsv
 
-import util
+from iatidataquality import db
+from . import hardcoded_test, models, test_level, util
 
-import test_level
-import hardcoded_test
 
 def hardcodedTests():
     hardcoded_tests = [

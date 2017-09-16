@@ -7,19 +7,13 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
-from flask_sqlalchemy import SQLAlchemy
+from flask import render_template, flash, request, redirect, url_for
 from flask_login import current_user
 
-from iatidataquality import app
-from iatidataquality import db
+from . import app, usermanagement
+from iatidq import dqregistry, dqorganisations, dqpackages
+from iatidq.models import Package
 
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, summary, dqaggregationtypes, dqusers
-
-from iatidq.models import *
-
-import usermanagement
 
 def integerise(data):
     try:

@@ -11,12 +11,11 @@ import datetime
 from functools import wraps, update_wrapper
 import json
 import math
-import os
-import sys
+import urllib2
 
 from flask import abort, url_for, request, current_app, make_response
 
-from iatidataquality import app, db
+from . import app, db
 from iatidq import dqdownload, dqpackages
 from iatidq.models import Organisation, Package, PackageGroup, Result, Runtime, Test
 
@@ -195,8 +194,6 @@ def api_package(package_name):
 @app.route('/api/publishers/<publisher_id>')
 @support_jsonp
 def api_publisher_data(publisher_id):
-
-    import urllib2
     url = "http://staging.publishwhatyoufund.org/api/publishers/" + publisher_id
 
     req = urllib2.Request(url)

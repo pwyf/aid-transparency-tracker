@@ -2,7 +2,7 @@
 import os
 import unicodecsv
 
-from iatidq import app
+from iatidataquality import app
 
 ORGANISATION_MAP_FILE = 'organisations_with_identifiers.csv'
 # Trying to avoid proliferation of files...

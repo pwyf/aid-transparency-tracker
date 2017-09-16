@@ -9,9 +9,9 @@
 
 import ckanclient
 
-from iatidq import db, models, package_status, queue, testrun
-from iatidq.dqfunctions import add_test_status
-from iatidq.dqregistry import packages_from_iati_registry
+from . import models, package_status, queue, testrun
+from .dqfunctions import add_test_status
+from .dqregistry import packages_from_iati_registry
 
 
 download_queue = 'iati_download_queue'

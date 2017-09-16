@@ -11,7 +11,7 @@ from datetime import datetime
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from iatidq import db
+from iatidataquality import db
 
 
 ## TEST RUNTIME-SPECIFIC DATA

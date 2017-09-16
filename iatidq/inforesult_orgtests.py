@@ -1,7 +1,8 @@
-from lxml import etree
 import datetime
 import re
-from iatidq import dqcodelists
+
+from . import dqcodelists
+
 
 def fixVal(value):
     try:

@@ -7,20 +7,15 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import current_user
-
-from iatidataquality import app
-from iatidataquality import db
-
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages, dqpublishercondition
-from iatidq.models import *
-
 import StringIO
 
-import usermanagement
+from flask import render_template, flash, request, redirect, url_for, send_file
+from flask_login import current_user
+
+from . import app, db, usermanagement
+from iatidq import dqimportpublisherconditions, dqpublishercondition
+from iatidq.models import Organisation, OrganisationCondition, Test
+
 
 @app.route("/organisation_conditions/clear/")
 @usermanagement.perms_required()
@@ -63,8 +58,6 @@ def organisation_condition_delete(id=None):
 @app.route("/organisation_conditions/import_feedback/", methods=['POST'])
 @usermanagement.perms_required()
 def import_feedback():
-    from iatidq import dqimportpublisherconditions
-
     def get_results():
         if request.form.get('feedbacktext'):
             text = request.form.get('feedbacktext')
@@ -135,8 +128,6 @@ def ipc_step2():
     step = '2'
     if request.method != 'POST':
         return
-
-    from iatidq import dqimportpublisherconditions
 
     def get_results():
         if request.form.get('local'):

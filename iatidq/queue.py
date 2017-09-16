@@ -7,10 +7,12 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import pika
-import sys
-import time
 import json
+import time
+import sys
+
+import pika
+
 
 # FIXME: host= should be in config
 def enqueue(queue, args):

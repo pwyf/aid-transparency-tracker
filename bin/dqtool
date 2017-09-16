@@ -5,7 +5,8 @@ import json
 import os
 import sys
 
-from iatidq import db, dqorganisations, dqindicators, models, queue, summary
+from iatidataquality import db
+from iatidq import dqorganisations, dqindicators, models, queue, summary
 import iatidq.survey
 import iatidq.dqpackages
 import iatidq.dqregistry

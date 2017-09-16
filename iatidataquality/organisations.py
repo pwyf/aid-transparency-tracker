@@ -13,7 +13,7 @@ import operator
 from flask import render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
 
-from iatidataquality import app, db, surveys, usermanagement
+from . import app, db, surveys, usermanagement
 from iatidq import donorresponse, dqorganisations, dqpackages, dqaggregationtypes, dqindicators, util
 from iatidq.dqcsv import make_csv
 import iatidq.survey.data as dqsurveys

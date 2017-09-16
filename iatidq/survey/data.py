@@ -9,7 +9,8 @@
 
 import datetime
 
-from iatidq import db, app, models, dqindicators, dqorganisations
+from iatidataquality import app, db
+from iatidq import models, dqindicators, dqorganisations
 
 
 class NoSuchSurvey(Exception): pass

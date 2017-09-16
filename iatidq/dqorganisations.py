@@ -11,10 +11,8 @@ import urllib2
 
 import unicodecsv
 
-from iatidq import app, db, models
-import summary
-import dqindicators
-import dqpackages
+from iatidataquality import app, db
+from . import dqindicators, dqpackages, models, summary
 
 
 def update_model(src, dst, keys):

@@ -7,14 +7,11 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, app
-
-import models, dqprocessing, json, dqfunctions
-import queue
 import os
 
-import testrun
-import package_status
+from iatidataquality import app, db
+from . import dqfunctions, models, package_status, queue, testrun
+
 
 # FIXME: this should be in config
 tests_queue='iati_tests_queue'

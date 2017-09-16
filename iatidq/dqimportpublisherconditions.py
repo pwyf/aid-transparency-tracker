@@ -7,15 +7,12 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-
-import models
-import csv
-import util
 import urllib2
 
+from . import dqparseconditions
+
+
 def _parsePCresults(results):
-    import dqparseconditions
     test_functions = dqparseconditions.parsePC(results)
     tested_results = []
     for n, line in results.items():

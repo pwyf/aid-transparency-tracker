@@ -7,13 +7,15 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from contextlib import contextmanager
-import os
-import urllib2
-import json
-from flask import request, current_app
-import traceback
 import collections
+from contextlib import contextmanager
+import json
+import os
+import traceback
+import urllib2
+
+from flask import request, current_app
+
 
 download_headers = {'User-Agent': "PWYF/Aid Transparency Tracker"}
 

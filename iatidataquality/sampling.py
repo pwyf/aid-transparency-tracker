@@ -7,29 +7,16 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import current_user
-
-from iatidataquality import app
-from iatidataquality import db
-import usermanagement 
-
-from iatidq import dqusers, util, dqorganisations, dqtests, dqindicators, \
-    dqcodelists
-
-import unicodecsv
 import json
 
-import lxml.etree
+from flask import render_template, flash, request, url_for
+from flask_login import current_user
 
-import os
-from sqlite3 import dbapi2 as sqlite
-import sqlite3
-from sample_work import sample_work
+from . import app, usermanagement
+from iatidq import dqorganisations, dqtests, dqindicators, dqcodelists
+from sample_work import sample_work, test_mapping
 from sample_work import db as sample_db
-from sample_work import test_mapping
+
 
 def memodict(f):
     """ Memoization decorator for a function taking a single argument """

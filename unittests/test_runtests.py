@@ -1,18 +1,14 @@
-import os
-import sys
 import csv
+import os
 
 import foxpath
-
-import iatidq
-import iatidq.dqparsetests
-
-from iatidq import db
-
 import lxml.etree
-
 import nose
 import nose.tools
+
+import iatidq
+from iatidataquality import db
+
 
 TEST_GROUP = "TEST_TEST"
 
@@ -44,8 +40,7 @@ def create_tst(name):
 
 def check_against_files(test_str):
     test = create_tst(test_str)
-    from iatidq.dqparsetests import test_functions as tf
-    test_functions = tf()
+    test_functions = iatidq.dqparsetests.test_functions()
 
     data_files = [
         ("good.xml", True),

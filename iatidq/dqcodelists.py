@@ -12,9 +12,8 @@ from collections import defaultdict
 import requests
 import unicodecsv
 
-from iatidq import db, app
-import models
-import util
+from iatidataquality import app, db
+from . import models
 
 
 CODELIST_API = app.config["CODELIST_API"]

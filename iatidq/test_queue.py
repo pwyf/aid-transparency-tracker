@@ -7,20 +7,18 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import sys, os, json, ckan
 import itertools
-from datetime import date, datetime
-import models, dqprocessing, dqparsetests, dqpackages
-import dqfunctions, queue
-import dqprocessing
-from lxml import etree
+import json
+import os
 import re
+import subprocess
+import traceback
 
-from iatidq import db, app
-import test_level
-import test_result
-import package_status
-import hardcoded_test
+from lxml import etree
+
+from iatidataquality import db, app
+from . import dqcodelists, dqfunctions, dqpackages, dqparsetests, dqprocessing, hardcoded_test, models, package_status, queue, testrun, test_level, test_result
+
 
 # FIXME: this should be in config
 rm_results = app.config["REMOVE_RESULTS"]
@@ -297,7 +295,6 @@ def check_file(test_functions, codelists, file_name,
         rv = unguarded_check_file(test_functions, codelists, file_name, 
                                     runtime_id, package_id)
     except Exception, e:
-        import traceback
         traceback.print_exc()
         print "Exception in check_file ", e
         raise
@@ -310,8 +307,6 @@ def check_file(test_functions, codelists, file_name,
     return rv
 
 def check_file_in_subprocess(filename, runtime_id, package_id):
-    import subprocess
-
     this_dir = os.path.dirname(__file__)
     path = os.path.join(this_dir, '..', 'bin', 'dqtool')
 
@@ -340,9 +335,7 @@ def dequeue_download(body, test_functions, codelists, use_subprocess):
         print "Exception in dequeue_download", e
 
 def _test_one_package(filename, package_id, runtime_id):
-    from dqparsetests import test_functions as tf
-    test_functions = tf()
-    import dqcodelists
+    test_functions = dqparsetests.test_functions()
     codelists = dqcodelists.generateCodelists()
 
     print "Package ID: %d" % package_id
@@ -354,8 +347,6 @@ def _test_one_package(filename, package_id, runtime_id):
                package_id)
 
 def test_one_package(filename, package_name, runtime_id=None):
-    import testrun
-    
     package = models.Package.query.filter_by(
         package_name=package_name).first()
     package_id = package.id
@@ -367,18 +358,14 @@ def test_one_package(filename, package_name, runtime_id=None):
     _test_one_package(filename, package_id, runtime_id)
 
 def run_test_queue(subprocess):
-    from dqparsetests import test_functions as tf
-    test_functions = tf()
-    import dqcodelists
+    test_functions = dqparsetests.test_functions()
     codelists = dqcodelists.generateCodelists()
 
     for body in queue.handle_queue_generator(download_queue):
         dequeue_download(body, test_functions, codelists, subprocess)
 
 def test_queue_once():
-    from dqparsetests import test_functions as tf
-    test_functions = tf()
-    import dqcodelists
+    test_functions = dqparsetests.test_functions()
     codelists = dqcodelists.generateCodelists()
 
     subprocess = False
@@ -423,8 +410,6 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
             try:
                 result = lam(xmldata)
             except:
-                import sys
-                import traceback
                 traceback.print_exc()
                 result = 0
             add_info_result(it.id, result)

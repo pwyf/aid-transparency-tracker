@@ -1,11 +1,10 @@
 import json
-import os
-import sys
 
 import nose
 import nose.tools
 
-from iatidq import db, dqregistry, models
+from iatidataquality import db
+from iatidq import dqregistry, models
 
 
 def setup_func():

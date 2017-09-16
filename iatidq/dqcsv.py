@@ -8,9 +8,12 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 import StringIO
+
 import unicodecsv
-import dqorganisations
-import survey.data as dqsurveys
+
+from . import dqorganisations
+from .survey import data as dqsurveys
+
 
 id_tuple = lambda x: (x.id, x)
 

@@ -7,12 +7,13 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, app
+import pprint
 
-import models
-import csv
-import util
 import unicodecsv
+
+from iatidataquality import db, app
+from . import models
+
 
 def importIndicatorDescriptions():
     indicatorgroup_name = app.config["INDICATOR_GROUP"]
@@ -112,7 +113,6 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
             if checkI:
                 indicator = checkI
             else:
-                import pprint
                 pprint.pprint(row)
                 indicator = addIndicator({
                                 "name" : indicator_name,

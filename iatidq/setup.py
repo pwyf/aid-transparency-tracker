@@ -7,21 +7,20 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import app
-from iatidq import db
-from iatidq import dqaggregationtypes
-from iatidq import dqcodelists
-from iatidq import dqimporttests
-from iatidq import dqindicators
-from iatidq import dqminimal
-from iatidq import dqorganisations
-from iatidq import dqtests
-from iatidq import dqregistry
-from iatidq import dqusers
-from iatidq import inforesult
-from iatidq import models
-from iatidq import survey
-from iatidq import test_level
+from iatidataquality import app, db
+from . import dqaggregationtypes
+from . import dqcodelists
+from . import dqimporttests
+from . import dqindicators
+from . import dqminimal
+from . import dqorganisations
+from . import dqtests
+from . import dqregistry
+from . import dqusers
+from . import inforesult
+from . import models
+from . import survey
+from . import test_level
 
 
 default_tests_filename="tests/tests.csv"

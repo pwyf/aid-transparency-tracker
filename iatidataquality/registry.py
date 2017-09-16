@@ -7,16 +7,11 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from flask import flash, redirect, url_for
 
-from iatidataquality import app
-from iatidataquality import db
+from . import app, usermanagement
+from iatidq import dqdownload, dqregistry
 
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
-import usermanagement
 
 @app.route("/registry/refresh/")
 @usermanagement.perms_required()

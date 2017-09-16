@@ -7,13 +7,13 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import iatidq.models as models
-import foxpath
-import re
 import itertools
-import test_level
+import re
 
-from iatidq import db
+import foxpath
+
+from . import models, test_level
+
 
 comment = re.compile('#')
 blank = re.compile('^$')

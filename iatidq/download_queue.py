@@ -13,12 +13,11 @@ import sys
 
 import ckanclient
 
-import models, dqruntests, queue
-from dqprocessing import add_hardcoded_result
-from dqregistry import setup_package_group
-from util import report_error, download_file
-from iatidq import db, app
-import hardcoded_test
+from iatidataquality import app, db
+from . import hardcoded_test, models, dqruntests, queue
+from .dqprocessing import add_hardcoded_result
+from .dqregistry import setup_package_group
+from .util import report_error, download_file
 
 
 # FIXME: this should be in config

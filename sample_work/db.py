@@ -1,3 +1,15 @@
+import json
+import logging
+import os
+from uuid import UUID
+
+from sqlite3 import dbapi2 as sqlite
+import sqlite3
+
+import config
+from iatidq import dqorganisations, dqtests
+
+
 create_sql = """
     create table sample_work_item (
         uuid char(36) unique not null,
@@ -31,14 +43,6 @@ create_sql3 = """
             left join sample_result using (uuid)
             left join sample_offer using (uuid);
 """
-
-from sqlite3 import dbapi2 as sqlite
-import sqlite3
-import os
-import config
-import logging
-import json
-from uuid import UUID
 
 class NoMoreSamplingWork(Exception): pass
 
@@ -229,7 +233,6 @@ def get_total_results():
     return out
 
 def get_summary_org_test(results):
-    from iatidq import dqorganisations, dqtests
     orgtests = set(map(lambda x: (x['organisation_id'], x['test_id']), results))
     ot = []
 
