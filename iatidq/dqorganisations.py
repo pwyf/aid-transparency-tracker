@@ -12,7 +12,9 @@ import urllib2
 import unicodecsv
 
 from iatidataquality import app, db
-from . import dqindicators, dqpackages, models, summary
+from . import dqindicators, models, summary
+# FIXME: relative import to work around circular dependency
+import dqpackages
 
 
 def update_model(src, dst, keys):
