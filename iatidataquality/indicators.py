@@ -7,27 +7,15 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
-import StringIO
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import current_user
-from datetime import datetime
-
-from iatidataquality import app
-from iatidataquality import db
-from iatidq import dqusers, util
-import usermanagement
-
-import os
-import sys
 import json
-
-from iatidq import dqdownload, dqregistry, dqindicators, dqorganisations, dqpackages
-
 import StringIO
+
+from flask import render_template, flash, request, redirect, url_for, send_file
+from flask_login import current_user
 import unicodecsv
-import tempfile
+
+from iatidataquality import app, usermanagement
+from iatidq import dqindicators, dqorganisations, util
 
 
 @app.route("/indicators/")
