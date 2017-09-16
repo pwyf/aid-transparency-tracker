@@ -17,11 +17,8 @@ import sys
 from flask import abort, url_for, request, current_app, make_response
 
 from iatidataquality import app, db
-
-
 from iatidq import dqdownload, dqpackages
-
-from iatidq.models import *
+from iatidq.models import Organisation, Package, PackageGroup, Result, Runtime, Test
 
 
 class JSONEncoder(json.JSONEncoder):
