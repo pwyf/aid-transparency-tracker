@@ -7,29 +7,18 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from datetime import datetime
 import json
-import os
 import operator
-import sys
-import StringIO
 
-from flask import render_template, flash, request, session, redirect, url_for, send_file
+from flask import render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
-import unicodecsv
 
-from iatidataquality import app
-from iatidataquality import db
-from iatidq import dqusers, dqindicators
-from iatidataquality import surveys
+from iatidataquality import app, db, surveys, usermanagement
+from iatidq import donorresponse, dqorganisations, dqpackages, dqaggregationtypes, dqindicators, util
 from iatidq.dqcsv import make_csv
-from iatidq import util
-
-from iatidq import dqorganisations, dqpackages, dqaggregationtypes, donorresponse
 import iatidq.survey.data as dqsurveys
 import iatidq.inforesult
-from iatidq.models import *
-import usermanagement
+from iatidq.models import InfoResult, Organisation
 
 
 def get_info_results(org_packages, organisation):
