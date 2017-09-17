@@ -9,8 +9,10 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 from flask_script import Manager, Server
+
 import iatidataquality
 import iatidq.dqimporttests
+
 
 def run():
     iatidataquality.db.create_all()
