@@ -15,7 +15,6 @@ import iatidq.dqimporttests
 
 
 def run():
-    iatidataquality.db.create_all()
     iatidq.dqimporttests.hardcodedTests()
     manager = Manager(iatidataquality.app)
     server = Server(host='0.0.0.0')
