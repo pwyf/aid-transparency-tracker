@@ -11,7 +11,6 @@ et-xmlfile==1.0.1
 Flask==0.12.2
 Flask-Login==0.4.0
 Flask-Principal==0.4.0
-Flask-Script==2.0.6
 Flask-SQLAlchemy==2.2
 foxpath==1.0.3
 idna==2.6
