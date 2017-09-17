@@ -90,8 +90,8 @@ The survey component currently requires the existence of three files (could be a
 Reinitialise
 ============
 
-    python quickstart.py drop-db
-    python quickstart.py init-db
+    flask drop_db
+    flask init_db
     python quickstart.py setup --minimal
     python quickstart.py refresh --minimal
     bin/dqtool reload-packages --organisation-code=GB-1

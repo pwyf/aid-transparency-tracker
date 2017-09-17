@@ -43,17 +43,6 @@ def activate_packages(options):
             options.matching)]
     dqregistry.activate_packages(matching_packages, clear_revision_id=True)
 
-def drop_db(options):
-    print('\nWarning! This will drop all database tables!')
-    confirmed = raw_input('Are you really really sure? (y/N) ')
-    if confirmed.lower() == 'y':
-        db.drop_all()
-        print('DB dropped.')
-
-def init_db(options):
-    db.create_all()
-    dqimporttests.hardcodedTests()
-
 def enroll_tests(options):
     assert options.filename
     filename = options.filename.decode()
@@ -140,10 +129,6 @@ def create_subparser(subparsers, handler, command, help_text):
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
-
-    create_subparser(subparsers, drop_db, 'drop-db', help_text='Delete DB')
-
-    create_subparser(subparsers, init_db, 'init-db', help_text='Initialise DB')
 
     subparser = create_subparser(subparsers, enroll_tests, 'enroll-tests', help_text='Enroll a CSV file of tests')
     subparser.add_argument('--filename', help='Set filename of data to test', required=True)
