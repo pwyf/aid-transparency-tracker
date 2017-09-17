@@ -30,6 +30,14 @@ Set up a virtualenv:
 
     virtualenv ./pyenv
 
+Append the following to your virtualenv activate script:
+
+    export FLASK_APP=iatidataquality/__init__.py
+
+E.g. with:
+
+    echo "export FLASK_APP=iatidataquality/__init__.py" >> pyenv/bin/activate
+
 Activate the virtualenv:
 
     source ./pyenv/bin/activate
@@ -50,7 +58,7 @@ This will also create a default username and password; please create a new user 
 
 Run the server:
 
-    python manage.py runserver
+    flask run
 
 To get the download data and the tests running, run the backends (more details below):
 
