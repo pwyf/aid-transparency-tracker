@@ -140,10 +140,10 @@ def setup_admin_user(username=None, password=None):
     })
     print('Admin user successfully created.')
 
-def setup(options):
+def setup(minimal):
     setup_common()
 
-    if options.minimal:
+    if minimal:
         setup_packages_minimal()
     else:
         setup_packages()
@@ -156,7 +156,7 @@ def setup(options):
         default_indicator_group_name,
         default_infotypes_filename, True)
 
-    if options.minimal:
+    if minimal:
         setup_organisations_minimal()
     else:
         setup_organisations()

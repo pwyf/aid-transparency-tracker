@@ -118,9 +118,6 @@ def setup_users(options):
 def create_admin(options):
     dqsetup.setup_admin_user(options.username, options.password)
 
-def setup(options):
-    dqsetup.setup(options)
-
 def create_subparser(subparsers, handler, command, help_text):
     subparser = subparsers.add_parser(command, help=help_text)
     subparser.set_defaults(handler=handler)
@@ -151,9 +148,6 @@ def main():
 
     subparser = create_subparser(subparsers, import_organisations, 'import-organisations', help_text='Import organisations. Will try to create and assign organisations to existing packages.')
     subparser.add_argument('--filename', dest='filename', help='Set filename of data to test')
-
-    subparser = create_subparser(subparsers, setup, 'setup', help_text='Quick setup. Will init db, add tests, add codelists, add indicators, refresh package data from Registry.')
-    subparser.add_argument('--minimal', dest='minimal', action='store_true', default=False, help='Operate on a minimal set of packages')
 
     subparser = create_subparser(subparsers, enqueue_test, 'enqueue-test', help_text='Set a package to be tested (with --package-name')
     subparser.add_argument('--package-name', dest='package_name', help='Set name of package to be tested', required=True)

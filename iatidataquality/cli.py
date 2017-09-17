@@ -18,3 +18,12 @@ def drop_db():
     click.confirm('Are you really really sure?', abort=True)
     db.drop_all()
     click.echo('DB dropped.')
+
+@app.cli.command()
+@click.option('--minimal', is_flag=True, help='Operate on a minimal set of packages')
+def setup(minimal):
+    """
+    Quick setup. Will init db, add tests, add codelists,
+    add indicators, refresh package data from Registry
+    """
+    dqsetup.setup(minimal)

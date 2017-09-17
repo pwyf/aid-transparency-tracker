@@ -52,7 +52,7 @@ Copy and edit the config.py.tmpl:
 
 Run the setup script to populate the database (append ` --minimal` if you want to try it out with just a few packages):
 
-    python quickstart.py setup
+    flask setup
 
 This will also create a default username and password; please create a new user and then delete the default one!
 
@@ -92,7 +92,7 @@ Reinitialise
 
     flask drop_db
     flask init_db
-    python quickstart.py setup --minimal
+    flask setup --minimal
     python quickstart.py refresh --minimal
     bin/dqtool reload-packages --organisation-code=GB-1
     python download_once.py
