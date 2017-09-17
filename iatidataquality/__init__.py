@@ -31,7 +31,3 @@ from . import aggregationtypes
 from . import surveys
 from . import users
 from . import sampling
-
-
-from iatidq import dqimporttests
-dqimporttests.hardcodedTests()
