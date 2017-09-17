@@ -118,16 +118,10 @@ def setup_packages():
 
 def setup_admin_user(username=None, password=None):
     print('Creating admin user ...')
-    if username:
-        print('Username: {}'.format(username))
-    else:
-        while not username:
-            username = raw_input('Username: ')
-    if password:
-        print('Password: <provided>')
-    else:
-        while not password:
-            password = getpass('Password: ')
+    while not username:
+        username = raw_input('Username: ')
+    while not password:
+        password = getpass('Password: ')
     user_dict = {
         'username': username,
         'password': password,

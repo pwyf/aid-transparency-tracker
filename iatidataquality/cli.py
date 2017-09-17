@@ -27,3 +27,10 @@ def setup(minimal):
     add indicators, refresh package data from Registry
     """
     dqsetup.setup(minimal)
+
+@app.cli.command()
+@click.option('--username', prompt='Username')
+@click.password_option()
+def create_admin(username, password):
+    """Create an admin user."""
+    dqsetup.setup_admin_user(username, password)
