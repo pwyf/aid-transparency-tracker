@@ -34,7 +34,7 @@ process_name=%(process_num)s
 numprocs=1
 
 [program:webapp]
-command = ./manage.py runserver
+command = flask run
 process_name=%(process_num)s
 stopasgroup=true 
 killasgroup=true 
