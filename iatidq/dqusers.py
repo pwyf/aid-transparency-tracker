@@ -137,14 +137,6 @@ def _importUserData(fh):
 
     generate_permissions()
 
-def user_by_username(username=None):
-    if username:
-        user = models.User.query.filter_by(username=username
-                    ).first()
-        return user
-    return None
-
-
 def updateUser(data):
     with db.session.begin():
         checkU = models.User.query.filter_by(username=data["username"]

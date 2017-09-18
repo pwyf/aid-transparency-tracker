@@ -163,7 +163,7 @@ def on_identity_loaded(sender, identity):
 @app.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == "POST" and "username" in request.form:
-        user = dqusers.user_by_username(request.form["username"])
+        user = models.User.where(username=request.form["username"]).first()
         if (user and user.check_password(request.form["password"])):
             remember = request.form.get("remember", "no") == "yes"
             if login_user(user, remember=remember):

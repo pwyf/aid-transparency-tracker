@@ -34,7 +34,7 @@ def returnOrNone(value):
 @app.route("/users/<username>/edit/addpermission/", methods=['POST'])
 @usermanagement.perms_required()
 def users_edit_addpermission(username):
-    user = dqusers.user_by_username(username)
+    user = models.User.where(username=username).first()
     data = {
         'user_id': user.id,
         'permission_name': request.form['permission_name'],
@@ -65,7 +65,7 @@ def users_edit(username=None):
     permissions = {}
 
     if username:
-        user = dqusers.user_by_username(username)
+        user = models.User.where(username=username).first()
         permissions = dqusers.userPermissions(user.id)
         if request.method == 'POST':
             if user:
