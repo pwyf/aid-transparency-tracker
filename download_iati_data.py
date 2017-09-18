@@ -15,8 +15,8 @@ if __name__ == '__main__':
 
          ## Fetch packages from IATI Registry ##
 
-         NB, you need to run quickstart.py 
-         before running this script in order to populate the 
+         NB, you need to run `flask setup`
+         before running this script in order to populate the
          list of packages
           """
     dqdownload.run()
