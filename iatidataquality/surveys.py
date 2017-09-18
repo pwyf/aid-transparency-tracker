@@ -282,8 +282,8 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
 
     def no_permission():
         # If not logged in, redirect to login page
-        
-        if not current_user.is_authenticated():
+
+        if not current_user.is_authenticated:
             flash('You must log in to access that page.', 'error')
             return redirect(url_for('login', next=request.path))
 
