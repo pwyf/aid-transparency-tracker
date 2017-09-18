@@ -6,7 +6,7 @@
 
     <form action="" method="post">
 
-    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
+    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.id %}
     <div class="control-group">
       <input id="submit" type="submit" class="btn btn-success" value="Send" name="submit" />
       <span class="muted">Send to donor</span>

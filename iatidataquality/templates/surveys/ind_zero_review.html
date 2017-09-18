@@ -47,7 +47,7 @@
             {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}
             </td>
         </tr>
-        {% if workflow.Workflow.name=='pwyfreview' %}
+        {% if workflow.name=='pwyfreview' %}
 
         <tr>
             <td><span class="muted">Donor review</span></td>
@@ -70,15 +70,15 @@
             </td>
         </tr>
         {% endif %}
-        {% if (workflow.Workflow.name == 'pwyfreview') and (surveydata.pwyfreview) %}
+        {% if (workflow.name == 'pwyfreview') and (surveydata.pwyfreview) %}
         {% set data = surveydata.pwyfreview %}
         {% set source = data[indicator.indicator.id].OrganisationSurveyData.published_source %}
         {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
-        {% elif (workflow.Workflow.name == 'pwyfreview') %}
+        {% elif (workflow.name == 'pwyfreview') %}
         {% set data = surveydata.researcher %}
         {% set source = data[indicator.indicator.id].OrganisationSurveyData.published_source %}
         {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
-        {% elif (workflow.Workflow.name == 'donorreview') and (surveydata.donorreview) %}
+        {% elif (workflow.name == 'donorreview') and (surveydata.donorreview) %}
         {% set data = surveydata.donorreview %}
         {% set source = data[indicator.indicator.id].OrganisationSurveyData.published_source %}
         {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
@@ -88,7 +88,7 @@
         {% set source = "" %}
         {% endif %}
         <tr id="tr{{indicator.indicator.id}}">
-        <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>{{ workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
           {% if indicator.indicator.indicator_ordinal %}
             {{ published_ordinal(data, publishedstatuses, publishedformats, indicator, years) }}

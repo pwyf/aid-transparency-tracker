@@ -36,22 +36,22 @@
     {% for workflow in workflows %}
     <tr>
     <td>
-	  {% if workflow.Workflow.id == survey.workflow.id %}
+	  {% if workflow.id == survey.workflow.id %}
 	  Ongoing
 	  {% else %}
-	    {% if workflow.Workflow.name in surveydata %}
+	    {% if workflow.name in surveydata %}
 	    Complete
 	    {%else%}
 	    Expected
 	    {%endif%}
       {%endif%}
     </td>
-    <td>{{workflow.Workflow.title}}</td>
+    <td>{{workflow.title}}</td>
     <td>
-		{% if workflow.Workflow.id == survey.workflow.id or workflow.Workflow.name in surveydata %}
+		{% if workflow.id == survey.workflow.id or workflow.name in surveydata %}
 	  <a href="{{url_for('organisation_survey_edit',
 				 organisation_code=organisation.organisation_code,
-				 workflow_name=workflow.Workflow.name)}}">
+				 workflow_name=workflow.name)}}">
 		View &raquo;
 	  </a>
 		{% else %}

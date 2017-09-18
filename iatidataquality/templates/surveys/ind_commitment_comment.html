@@ -50,7 +50,7 @@
             </td>
         </tr>
         {% endif %}
-        {% if (surveydata.cso) and (workflow.Workflow.name != 'cso') %}
+        {% if (surveydata.cso) and (workflow.name != 'cso') %}
         {% set data = surveydata['cso'] %}
         {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}
         {% set accepted = 'Agree' %}
@@ -75,7 +75,7 @@
             {% endif %}
         </tr>
         {% endif %}
-        {% if (surveydata.pwyffinal) and (workflow.Workflow.name != 'cso') %}
+        {% if (surveydata.pwyffinal) and (workflow.name != 'cso') %}
         {% set data = surveydata.pwyffinal %}
             <tr>
                 <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
@@ -87,11 +87,11 @@
                 </td>
             </tr>
         {% endif %}
-        {% if ((workflow.Workflow.name == 'donorcomments') and (surveydata.donorcomments)) %}
+        {% if ((workflow.name == 'donorcomments') and (surveydata.donorcomments)) %}
             {% set data = surveydata.donorcomments %}
             {% set accepted = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
             {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
-        {% elif ((workflow.Workflow.name == 'cso') and (surveydata.cso)) %}
+        {% elif ((workflow.name == 'cso') and (surveydata.cso)) %}
             {% set data = surveydata.cso %}
             {% set accepted = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
             {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
@@ -101,7 +101,7 @@
         {% endif %}
 
         <tr id="tr{{indicator.indicator.id}}">
-        <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>{{ workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
         <label for="{{indicator.indicator.id}}-agree-1" class="radio">
         <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if accepted == 1 %} checked{%endif%}> Agree</input>

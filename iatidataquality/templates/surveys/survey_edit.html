@@ -43,8 +43,8 @@
     </tbody>
     </table>
     <!-- text below this line does not vary with workflow -->
-    {% if workflow.Workflow.name != 'finalised' %}
-    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
+    {% if workflow.name != 'finalised' %}
+    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.id %}
     <div class="control-group">
         <input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" />
         <span class="muted">Submit data (you cannot edit this survey once it's been submitted)</span>

@@ -5,16 +5,16 @@
 {% extends "surveys/survey_edit.html" %}
 
 {% set rows = surveydata|count %}
-{% if not workflow.Workflow.name in surveydata %}
+{% if not workflow.name in surveydata %}
   {% set rows = rows+1 %}
 {% endif %}
-{% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) and (workflow.Workflow.name != 'donorcomments') %}
+{% if (workflow.name != 'cso') and ('cso' in surveydata) and (workflow.name != 'donorcomments') %}
   {% set rows = rows-1 %}
 {% endif %}
-{% if (workflow.Workflow.name != 'donorcomments') and ('donorcomments' in surveydata) %}
+{% if (workflow.name != 'donorcomments') and ('donorcomments' in surveydata) %}
   {% set rows = rows-1 %}
 {% endif %}
-{% if ('pwyffinal' in surveydata) and (workflow.Workflow.name != 'donorcomments') %}
+{% if ('pwyffinal' in surveydata) and (workflow.name != 'donorcomments') %}
   {% set rows = rows-1 %}
 {% endif %}
 
@@ -25,7 +25,7 @@
 {% endblock %}
 
 {% block guidance %}
-		{% if workflow.Workflow.name != 'cso' %}
+		{% if workflow.name != 'cso' %}
 		<!-- text if we're not a CSO reviewer: -->
 
         <p class="lead">Thank you for taking part in the {{ ati_year }} Aid

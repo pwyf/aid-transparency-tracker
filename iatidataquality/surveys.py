@@ -17,14 +17,14 @@ from . import app, usermanagement
 from iatidq import dqindicators, dqorganisations, dqusers, donorresponse, util
 import iatidq.survey.data as dqsurveys
 import iatidq.survey.mapping
-from iatidq.models import Organisation
+from iatidq.models import Organisation, Workflow
 
 
 @app.route("/surveys/admin/")
 @usermanagement.perms_required()
 def surveys_admin():
     surveys = dqsurveys.surveys()
-    workflows = dqsurveys.workflowsAll()
+    workflows = Workflow.all()
     publishedstatuses=dqsurveys.publishedStatus()
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
@@ -65,7 +65,7 @@ def organisation_survey(organisation_code=None):
     survey = dqsurveys.getOrCreateSurveyById(organisation.id)
 
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-    workflows = dqsurveys.workflowsAll()
+    workflows = Workflow.all()
     pct_complete = completion_percentage(survey)
     users = dqusers.surveyPermissions(organisation_code)
     admin = usermanagement.check_perms('admin')
@@ -101,7 +101,7 @@ def __survey_process(organisation, workflow, request,
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     form_indicators = map(int, request.form.getlist('indicator'))
 
-    workflow_id = workflow.Workflow.id
+    workflow_id = workflow.id
     currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
@@ -135,7 +135,7 @@ def __survey_process(organisation, workflow, request,
         surveydata = dqsurveys.addSurveyData(data)
 
     if 'submit' in request.form:
-        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
+        if workflow.id == organisationsurvey.currentworkflow_id:
         # save data, advance currentworkflow_id to next workflow
             dqsurveys.advanceSurvey(organisationsurvey)
             flash('Successfully submitted survey data', 'success')
@@ -257,13 +257,12 @@ def organisation_survey_view(organisation_code, workflow,
     ati_year = app.config['ATI_YEAR']
 
     return render_template(
-        "surveys/_survey_%s.html" % workflow.WorkflowType.name,
+        "surveys/_survey_%s.html" % workflow.workflow_type.name,
         **locals())
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
-
-    workflow = dqsurveys.workflowByName(workflow_name)
+    workflow = Workflow.where(name=workflow_name).first()
     if not workflow:
         flash('That workflow does not exist.', 'error')
         return abort(404)
@@ -315,10 +314,10 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         "finalreview": _survey_process_finalreview
         }
 
-    workflow_name = workflow.WorkflowType.name
+    workflow_name = workflow.workflow_type.name
 
     if workflow_name == "send":
-        if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
+        if workflow.id == organisationsurvey.currentworkflow_id:
             _survey_process_send(
                 organisation_code, workflow, request, organisationsurvey)
         else:

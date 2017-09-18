@@ -33,9 +33,9 @@ def getOrCreateSurveyById(organisation_id):
     with db.session.begin():
         new_survey = models.OrganisationSurvey()
 
-        workflow = workflowByName('researcher')
-        currentworkflow_id = workflow.Workflow.id
-        deadline_days = datetime.timedelta(days=workflow.Workflow.duration)
+        workflow = models.Workflow.where(name='researcher').first()
+        currentworkflow_id = workflow.id
+        deadline_days = datetime.timedelta(days=workflow.duration)
 
         currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
 
@@ -233,29 +233,6 @@ def addWorkflowType(data):
         db.session.add(newWT)
     return newWT
 
-def workflowByName(workflow_name):
-    checkW = db.session.query(models.Workflow,
-                              models.WorkflowType
-                              ).filter_by(
-        name=workflow_name
-        ).join(models.WorkflowType,
-               models.WorkflowType.id==models.Workflow.workflow_type_id
-               ).first()
-    if checkW:
-        return checkW
-    return None
-
-def workflowsAll():
-    checkW = db.session.query(models.Workflow,
-                              models.WorkflowType
-                              ).join(
-        models.WorkflowType,
-        models.WorkflowType.id==models.Workflow.workflow_type_id
-        ).order_by(models.Workflow.id).all()
-    if checkW:
-        return checkW
-    return None
-
 def workflowTypeByName(workflowtype_name):
     checkWT = models.WorkflowType.query.filter_by(name=workflowtype_name
                                                   ).first()
@@ -317,14 +294,14 @@ def repairSurveyData(organisation_code):
 
     survey_data = getSurveyDataAllWorkflows(organisation_code)
     for workflow_name, v in survey_data.items():
-        workflow = workflowByName(workflow_name)
+        workflow = models.Workflow.where(name=workflow_name).first()
         survey_indicators = v.keys()
         for indicator, indicatordata in org_indicators.items():
             if indicator not in survey_indicators:
                 print "NOT FOUND:", indicator
                 data = {
                     'organisationsurvey_id' : survey.id,
-                    'workflow_id' : workflow.Workflow.id,
+                    'workflow_id' : workflow.id,
                     'indicator_id' : indicator,
                     'published_status_id' : None,
                     'published_source' : None,
@@ -355,7 +332,6 @@ def checkSurveyData(organisation_code):
 
     survey_data = getSurveyDataAllWorkflows(organisation_code)
     for workflow_name, v in survey_data.items():
-        workflow = workflowByName(workflow_name)
         survey_indicators = v.keys()
         for indicator in org_indicators:
             if indicator not in survey_indicators:

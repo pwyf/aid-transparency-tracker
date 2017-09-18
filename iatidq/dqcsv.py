@@ -11,7 +11,7 @@ import StringIO
 
 import unicodecsv
 
-from . import dqorganisations
+from . import dqorganisations, models
 from .survey import data as dqsurveys
 
 
@@ -229,10 +229,10 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
             else:
                 sd=surveydata
                 for workflow in workflows:
-                    print workflow.Workflow.name
+                    print workflow.name
                     if not sd:
                         continue
-                    surveydata = sd.get(workflow.Workflow.name)
+                    surveydata = sd.get(workflow.name)
                     if not surveydata:
                         continue
                     print "continuing"
@@ -273,7 +273,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
                     survey_source = surveydata[indicator_info.id].OrganisationSurveyData.published_source
                     survey_comment = surveydata[indicator_info.id].OrganisationSurveyData.published_comment
                     survey_agree = surveydata[indicator_info.id].OrganisationSurveyData.published_accepted
-                    print "writing csv row for", workflow.Workflow.name
+                    print "writing csv row for", workflow.name
 
                     csv_row = CSVRow(organisation, indicator_info,
                         indicator_total_weighted_points, indicator_category_subcategory,
@@ -284,7 +284,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
                         survey_ordinal_value, survey_publication_format,
                         survey_publication_format_value, survey_total_points,
                         survey_source, survey_comment, survey_agree)
-                    csv_row.write_to(out, workflow.Workflow.name)
+                    csv_row.write_to(out, workflow.name)
         else:
             iati_data_quality_total_points = 0
             iati_data_quality_points = 0
@@ -329,7 +329,7 @@ def write_organisation_publications_csv_index(out, organisation, history=False):
             organisation_survey, surveydata)
         workflows = None
     else:
-        workflows=dqsurveys.workflowsAll()
+        workflows = models.Workflow.all()
         surveydata_workflow=None
 
     published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))

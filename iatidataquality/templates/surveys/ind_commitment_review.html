@@ -22,7 +22,7 @@
             {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_comment}}
             </td>
         </tr>
-        {% if workflow.Workflow.name=='pwyfreview' %}
+        {% if workflow.name=='pwyfreview' %}
 
         <tr>
             <td><span class="muted">Donor review</span></td>
@@ -36,10 +36,10 @@
             </td>
         </tr>
         {% endif %}
-        {% if (workflow.Workflow.name == 'pwyfreview') and (surveydata.pwyfreview) %}
+        {% if (workflow.name == 'pwyfreview') and (surveydata.pwyfreview) %}
         {% set data = surveydata.pwyfreview %}
         {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
-        {% elif (workflow.Workflow.name == 'donorreview') and (surveydata.donorreview) %}
+        {% elif (workflow.name == 'donorreview') and (surveydata.donorreview) %}
         {% set data = surveydata.donorreview %}
         {% set comment = data[indicator.indicator.id].OrganisationSurveyData.published_comment %}
         {% else %}
@@ -48,11 +48,11 @@
         {% endif %}
 
         <tr id="tr{{indicator.indicator.id}}" class="commitment-indicator">
-        <td>{{ workflow.Workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
+        <td>{{ workflow.title }}<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
         <div class="control-group">
             <div class="controls">
-        {% if workflow.Workflow.name=='donorreview' %}
+        {% if workflow.name=='donorreview' %}
             <input type="hidden" name="{{indicator.indicator.id}}-ordinal_value" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}" class="commitment-indicator-value"{% else %} class="commitment-indicator-value" value="0"{%endif%} />
 
             <input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
@@ -65,7 +65,7 @@
         </td>
 
         <td class="restrict_text_commitment">
-        {% if workflow.Workflow.name=='donorreview' %}
+        {% if workflow.name=='donorreview' %}
             <input type="hidden" name="{{indicator.indicator.id}}-source" {% if surveydata %}value="{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}"{%endif%} />
             {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}
         {% else %}

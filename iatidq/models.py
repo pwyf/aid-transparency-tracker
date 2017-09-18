@@ -767,6 +767,8 @@ class Workflow(BaseModel):
     workflow_type_id = db.Column(db.Integer, db.ForeignKey('workflowtype.id'))
     duration = db.Column(db.Integer)
 
+    workflow_type = db.relationship('WorkflowType')
+
     def get_next(self):
         cls = self.__class__
         return cls.query.filter(

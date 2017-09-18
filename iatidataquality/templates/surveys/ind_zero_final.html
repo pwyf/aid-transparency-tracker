@@ -148,7 +148,7 @@
                 </td>
             </tr>
             {% endif %}
-        {% if (surveydata.donorcomments) and (workflow.Workflow.name != 'donorcomments') and (workflow.Workflow.name!='cso') %}
+        {% if (surveydata.donorcomments) and (workflow.name != 'donorcomments') and (workflow.name!='cso') %}
         {% set data = surveydata['donorcomments'] %}
         {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted != 1 %}
         {% set accepted = 'Disagree' %}

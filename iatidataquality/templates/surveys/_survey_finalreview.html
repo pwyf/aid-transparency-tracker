@@ -5,7 +5,7 @@
 {% extends "surveys/survey_edit.html" %}
 
 {% set rows = surveydata|count %}
-{% if not workflow.Workflow.name in surveydata %}
+{% if not workflow.name in surveydata %}
   {% set rows = rows+2 %}
 {% else %}
   {% set rows = rows+1 %}
