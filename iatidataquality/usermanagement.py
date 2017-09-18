@@ -17,7 +17,7 @@ from flask_principal import Principal, Identity, AnonymousIdentity, \
      UserNeed
 
 from . import app
-from iatidq import dqusers, user_activity_types
+from iatidq import dqusers, models, user_activity_types
 
 
 principals = Principal(app)
@@ -27,7 +27,7 @@ login_manager.login_view = "login"
 
 @login_manager.user_loader
 def load_user(id):
-    return dqusers.user(id)
+    return models.User.find(id)
 
 def role_permission(rolename):
     return Permission(RoleNeed(rolename))

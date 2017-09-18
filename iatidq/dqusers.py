@@ -137,15 +137,6 @@ def _importUserData(fh):
 
     generate_permissions()
 
-def user(user_id=None):
-    if user_id:
-        user = models.User.query.filter_by(id=user_id
-                    ).first()
-        return user
-    else:
-        users = models.User.query.all()
-        return users
-
 def user_by_username(username=None):
     if username:
         user = models.User.query.filter_by(username=username

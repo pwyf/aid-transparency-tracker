@@ -21,7 +21,7 @@ def users(username=None):
     if username:
         return redirect(url_for('users_edit', username=username))
     else:
-        users=dqusers.user()
+        users = models.User.all()
         return render_template("users.html", users=users,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
