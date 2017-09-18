@@ -34,27 +34,11 @@ def importOrganisationPackagesFromFile(filename):
         return _importOrganisationPackages(fh, True)
 
 def _importOrganisationPackages(fh, local):
-    def get_check_org(row):
-        checkOrg = organisations(row['organisation_code'])
-        if checkOrg:
-            return checkOrg
-        else:
-            return None
-
-    def get_organisation(checkOrg, row):
-        if checkOrg:
-            return checkOrg
-        return addOrganisation(
-            {"organisation_name": row["organisation_name"],
-             "organisation_code": row["organisation_code"],
-             "organisation_total_spend": row["organisation_total_spend"],
-             "organisation_total_spend_source": row["organisation_total_spend_source"],
-             "organisation_currency": row["organisation_currency"],
-             "organisation_currency_conversion": row["organisation_currency_conversion"],
-             "organisation_currency_conversion_source": row["organisation_currency_conversion_source"],
-             "organisation_largest_recipient": row["organisation_largest_recipient"],
-             "organisation_largest_recipient_source": row["organisation_largest_recipient_source"]
-             })
+    def get_or_create_organisation(row):
+        try:
+            return models.Organisation.where(organisation_code=row['organisation_code']).first_or_fail()
+        except:
+            return addOrganisation(row)
 
     def get_packages(organisation_code):
         return models.Package.query.filter(
@@ -74,11 +58,8 @@ def _importOrganisationPackages(fh, local):
     data = unicodecsv.DictReader(fh)
 
     for row in data:
-
-        checkOrg = get_check_org(row)
-
         condition = checkCondition(row)
-        organisation = get_organisation(checkOrg, row)
+        organisation = get_or_create_organisation(row)
         organisation_code = organisation.organisation_code
 
         def add_org_package(package):
@@ -158,8 +139,7 @@ def organisations(organisation_code=None):
     if organisation_code is None:
         return models.Organisation.sort('organisation_name').all()
     else:
-        return models.Organisation.query.filter_by(
-            organisation_code=organisation_code).first()
+        return models.Organisation.where(organisation_code=organisation_code).first()
 
 def organisationPackages(organisation_code=None):
     if organisation_code is None:
