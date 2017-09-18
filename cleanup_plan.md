@@ -2,7 +2,7 @@
 IATI Data Quality plan
 ======================
 
-Objective: 
+Objective:
 
 * get the code into a state where it can be maintained by people other than
   the original developers, roughtly by October
@@ -85,7 +85,7 @@ The list provided in the tracker report at the end of the 2013 engagement
 is largely still relevant:
 
 * “except KeyError” is basically a bug
-* review error handling in general, particularly 
+* review error handling in general, particularly
   * the suppression of errors (“except Foo: pass”)
   * overly broad (“try: a[x][y][0] = b[x][y][a[x]]; etc; except KeyError: …”)
   * getOrCreate() style should be replaced with “try: x = getFoo(); except foo.NonExistent: x = createFoo()”
@@ -93,7 +93,7 @@ is largely still relevant:
 * run stuff through pylint
 * remove any and all repetitiveness (particularly those long lists of config data in dictionaries; use tuples to avoid implying that the dictionary keys mean something whcih might change from item to item)
 * the idea of making collections of indicators (e.g., twentytwelve data) and then hacking extra keys into them because we know that this key is likely to be accessed by a survey template is wrong in principle and very risky in practice (throws an exception (Error 500) if we screw it up)
-* should establish and adhere to a house style, e.g., 
+* should establish and adhere to a house style, e.g.,
   * max line width of 79 columns
   * max levels of indentation 4
   * max function length 40 lines

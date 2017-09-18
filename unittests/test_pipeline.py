@@ -27,8 +27,8 @@ def setup_func():
     db.create_all()
 
 def __setup_organisations(pkg_id):
-    org_data = [ 
-        ('UK, DFID', 'GB-1', 
+    org_data = [
+        ('UK, DFID', 'GB-1',
          '''participating-org[@role="Extending"][@ref="GB-1"]'''),
         ('World Bank', '44002',
          '''participating-org[@role="Extending"][@ref="44002"]'''),
@@ -132,7 +132,7 @@ def _test_example_tests(publisher, country):
 
 
     log("about to start testing")
- 
+
     test_functions = iatidq.dqparsetests.test_functions()
     codelists = iatidq.dqcodelists.generateCodelists()
 
@@ -160,7 +160,7 @@ def _test_example_tests(publisher, country):
     #    setup_organisations(package_id)
     iatidq.setup.setup_organisations_minimal()
 
-    assert iatidq.test_queue.check_file(test_functions, 
+    assert iatidq.test_queue.check_file(test_functions,
                codelists,
                xml_filename,
                runtime.id,
@@ -176,7 +176,7 @@ def _test_example_tests(publisher, country):
     for result in aggtest_results:
         assert result.runtime_id == runtime.id
         assert result.package_id == pkg.id
-    
+
     resultful_tests = [
         'valid_xml',
         'description/text() exists?',
@@ -189,7 +189,7 @@ def _test_example_tests(publisher, country):
 
     expected_test_ids = [ i.id for i in models.Test.query.filter(
         models.Test.name.in_(resultful_tests)).all() ]
-    
+
     observed_test_ids = [ i.test_id for i in aggtest_results ]
 
     print "expected test ids: ", expected_test_ids
@@ -202,7 +202,7 @@ def _test_example_tests(publisher, country):
 @nose.with_setup(setup_func, teardown_func)
 def test_samples():
     data = [ ('worldbank', '789'),
-             ('dfid', 'ph') 
+             ('dfid', 'ph')
              ]
 
     #data = [ data[1] ]

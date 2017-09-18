@@ -89,7 +89,7 @@ class WorkItems(object):
                         "xml_parent_data": parent_act,
                         "test_kind": test_kind
                         }
-                    
+
                     yield args
 
 
@@ -105,18 +105,18 @@ class SampleOrgTest(object):
 
     def qualifies(self):
         rows = query('''select result_data from current_result
-                          where organisation_id = %s 
-                            and test_id = %s 
-                            and result_data != 0''', 
+                          where organisation_id = %s
+                            and test_id = %s
+                            and result_data != 0''',
                      [self.org_id, self.test_id])
         return len(rows) >= 1
-        
+
     def activity_ids(self):
         rows = query('''select result_identifier, package_name from current_result
                           left join package on current_result.package_id = package.id
-                          where organisation_id = %s 
-                            and test_id = %s 
-                            and result_data = 1''', 
+                          where organisation_id = %s
+                            and test_id = %s
+                            and result_data = 1''',
                      [self.org_id, self.test_id])
         ids = [ i for i in rows ]
         return ids
@@ -160,7 +160,7 @@ class SampleOrgTest(object):
 
         xpath_str = '''related-activity[@type='1']/@ref'''
         related_activity_ids = activity_xml.xpath(xpath_str)
-        
+
         count_relateds = len(related_activity_ids)
         if 0 == count_relateds:
             return None
@@ -168,9 +168,9 @@ class SampleOrgTest(object):
         assert 0 < count_relateds
 
         xpath_str = '''//iati-activity[iati-identifier/text()="%s"]'''
-        
+
         parent_id = related_activity_ids[0]
-        
+
         try:
             return lxml.etree.tostring(xml.xpath(xpath_str % parent_id)[0])
         except IndexError:
@@ -191,14 +191,14 @@ class DocumentLink(object):
         def getCategory(category, codelists):
             return {"category": codelists[category],
                     "category_code": category }
-        
+
         def getCategories(categories, codelists):
             return [ getCategory(category, codelists) for category in categories ]
-    
+
         data = {
             "name": self.title,
             "url": self.url,
-            "categories": getCategories(self.elt.xpath('category/@code'), 
+            "categories": getCategories(self.elt.xpath('category/@code'),
                                        self.codelists)
             }
         return data
@@ -256,7 +256,7 @@ class Location(object):
             "latitude": lat,
             "longitude": lng,
             }
-        return data   
+        return data
 
 class Locations(object):
     def __init__(self,xml_string):
@@ -291,7 +291,7 @@ class Period(object):
             'end_date': self.elt.xpath('period-end/@iso-date'),
             'target': self.elt.xpath('target/@value'),
             'actual': self.elt.xpath('actual/@value'),
-            'pct': calc_pct(self.elt.xpath('target/@value'), 
+            'pct': calc_pct(self.elt.xpath('target/@value'),
                             self.elt.xpath('actual/@value'))
         }
         return data
@@ -336,9 +336,9 @@ class Result(object):
     def to_dict(self):
         def get_indicator(indicator):
             return Indicator(indicator).to_dict()
-        
+
         def get_indicators(indicators):
-            return [ get_indicator(indicator) 
+            return [ get_indicator(indicator)
                         for indicator in indicators ]
 
         data = {

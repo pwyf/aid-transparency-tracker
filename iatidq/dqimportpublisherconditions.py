@@ -39,7 +39,7 @@ def _importPCs(fh, local=True):
 
 def importPCsFromFile(filename='tests/organisation_structures.txt', local=True):
     with file(filename) as fh:
-        return _importPCs(fh, local=True) 
+        return _importPCs(fh, local=True)
 
 def importPCsFromUrl(url):
     fh = urllib2.urlopen(url)

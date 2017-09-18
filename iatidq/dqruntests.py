@@ -18,7 +18,7 @@ tests_queue='iati_tests_queue'
 
 def load_packages(runtime, package_name=None):
     output = []
-    
+
     path = app.config["DATA_STORAGE_DIR"]
 
     def load_package(package):
@@ -54,7 +54,7 @@ def enqueue_package_for_test(filename, package_name):
     package_id = package.id
     runtime_id = testrun.start_new_testrun().id
     enqueue_download(filename, runtime_id, package_id)
-    
+
 # start testing all packages, or just one if provided
 def start_testing(package_name=None):
     newrun = testrun.start_new_testrun()

@@ -1,7 +1,7 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
 {% block title %}Organisations &raquo; Coverage{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', 
+   <script src="{{url_for('static',
 				filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
@@ -68,7 +68,7 @@
 	{% for organisation in organisations %}
 
     <tr>
-	  <td><a href="{{url_for('organisations', 
+	  <td><a href="{{url_for('organisations',
 				   organisation_code=organisation.organisation_code)}}">
 		  {{ organisation.organisation_name }}</a>
 	  </td>

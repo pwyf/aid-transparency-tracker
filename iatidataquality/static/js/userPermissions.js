@@ -2,7 +2,7 @@ $(document).on("click", "a[data-confirm]", function(ev) {
     var href = $(this).attr('href');
     if (!$('#dataConfirmModal').length) {
         $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
-    } 
+    }
     $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
     $('#dataConfirmOK').attr('data-permission-id', $(this).attr('data-permission-id')).addClass('deletepermission');
     $('#dataConfirmModal').modal({show:true});
@@ -78,7 +78,7 @@ $("#addpermissionSetbtn").click(function(e){
     permissions['csoresearcher'].push({
              'permission_name': 'survey_researcher',
              'permission_method': 'view',
-             'permission_value': value}, 
+             'permission_value': value},
             {'permission_name': 'survey_researcher',
              'permission_method': 'edit',
              'permission_value': value})

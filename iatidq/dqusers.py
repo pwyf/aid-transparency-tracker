@@ -45,7 +45,7 @@ def _importUserData(fh):
             "permission_value": organisation_id
             }
 
-    def getCSOPermissions(organisation_id, 
+    def getCSOPermissions(organisation_id,
                 role, active, primary, user):
         perms = []
         if active == 'active':
@@ -70,7 +70,7 @@ def _importUserData(fh):
 
         return [ perm(user, organisation_id, i) for i in perms ]
 
-    def getDonorPermissions(organisation_id, 
+    def getDonorPermissions(organisation_id,
                 role, active, primary, user):
         perms = []
         permissions = [{
@@ -110,10 +110,10 @@ def _importUserData(fh):
             primary = row['primary']
 
             if role == 'donor':
-                permissions += getDonorPermissions(organisation_id, 
+                permissions += getDonorPermissions(organisation_id,
                         role, active, primary, user)
             elif role == 'cso':
-                permissions += getCSOPermissions(organisation_id, 
+                permissions += getCSOPermissions(organisation_id,
                         role, active, primary, user)
             elif role == 'admin':
                 permissions.append({
@@ -131,7 +131,7 @@ def _importUserData(fh):
                 })
             else:
                 print "Warning: no role provided, so could not add user for row %s" % row
-            
+
         for permission in permissions:
             addUserPermission(permission)
 

@@ -97,7 +97,7 @@
             </td>
         </tr>
         {% endif %}
-        
+
             {% if surveydata.cso %}
             {% set data = surveydata['cso'] %}
             {% set accepted_val = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
@@ -155,7 +155,7 @@
         {% set accepted_class = 'important' %}
         <tr>
             <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
-            
+
             {% if organisation.organisation_responded >= 3 %}
                 <td colspan="3">No response</td>
             {% else %}

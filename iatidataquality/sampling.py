@@ -23,7 +23,7 @@ def memodict(f):
     class memodict(dict):
         def __missing__(self, key):
             ret = self[key] = f(key)
-            return ret 
+            return ret
     return memodict().__getitem__
 
 @memodict
@@ -47,7 +47,7 @@ def get_response(kind, response, unsure):
 
     kind_data = test_mapping.kind_to_status[kind]
     response_data = kind_data.get(response)
-    
+
     if response_data is not None:
         response_data['unsure'] = get_unsureness(unsure)
         return response_data
@@ -70,7 +70,7 @@ def make_sample_json(work_item):
             if xml == None:
                 return []
             document_category_codes = dqcodelists.reformatCodelist('DocumentCategory')
-            document_links = sample_work.DocumentLinks(work_item["xml_data"], 
+            document_links = sample_work.DocumentLinks(work_item["xml_data"],
                                                document_category_codes)
             docs = [ dl.to_dict() for dl in document_links.get_links() ]
             return docs
@@ -85,7 +85,7 @@ def make_sample_json(work_item):
             results = sample_work.Results(work_item["xml_data"])
             res = [ ln.to_dict() for ln in results.get_results() ]
             return res
-        
+
         data = [get_res_from_xml(xml) for xml in xml_strings]
         return data[0]+data[1]
 
@@ -96,7 +96,7 @@ def make_sample_json(work_item):
             locations = sample_work.Locations(work_item["xml_data"])
             locs = [ ln.to_dict() for ln in locations.get_locations() ]
             return locs
-    
+
         data = [get_loc_from_xml(xml) for xml in xml_strings]
         return data[0]+data[1]
 
@@ -107,13 +107,13 @@ def make_sample_json(work_item):
             conditions = [sample_work.Conditions(work_item["xml_data"]).get_conditions()]
             return conditions
         data = [get_cond_from_xml(xml) for xml in xml_strings]
-        return data[0]+data[1]        
+        return data[0]+data[1]
 
     xml_strings = [work_item["xml_data"],
                    work_item["xml_parent_data"]]
     docs = get_docs(xml_strings)
-    
-    
+
+
     if work_item["test_kind"] == "location":
         locs = get_locs(xml_strings)
     else:
@@ -163,8 +163,8 @@ def make_sample_json(work_item):
             "response": {}
         }
     if 'response' in work_item:
-        data['response'] = get_response(work_item["test_kind"], 
-                    work_item['response'], 
+        data['response'] = get_response(work_item["test_kind"],
+                    work_item['response'],
                     work_item['unsure'])
 
     return data

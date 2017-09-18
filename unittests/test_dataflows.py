@@ -34,7 +34,7 @@ def test_change_title():
 
     package['title'] = new_title
     dqregistry.refresh_package(package)
-    
+
     pkg = models.Package.query.filter_by(
         package_name=package['name']).first()
 

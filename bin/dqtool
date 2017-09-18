@@ -50,7 +50,7 @@ def list_packages(options):
 def do_reload_package(package_name, no_refresh):
     if not no_refresh:
         iatidq.dqregistry.refresh_package_by_name(package_name)
-    iatidq.dqregistry.activate_packages([(package_name, True)], 
+    iatidq.dqregistry.activate_packages([(package_name, True)],
                                         clear_revision_id=True)
     iatidq.dqregistry.clear_hash(package_name)
     iatidq.dqdownload.run(package_name=package_name)
@@ -84,9 +84,9 @@ def compare_aggregation(options):
 
     org_id = dqorganisations.organisationid_by_code(organisation_code)
 
-    sql = '''select package_id, aggregateresulttype_id, test_id, 
-                  result_hierarchy, results_data, results_num 
-           from aggregateresult where organisation_id = %s 
+    sql = '''select package_id, aggregateresulttype_id, test_id,
+                  result_hierarchy, results_data, results_num
+           from aggregateresult where organisation_id = %s
            order by id;'''
 
     results = map(list, db.engine.execute(sql, (org_id, )))
@@ -123,12 +123,12 @@ def compare_summary(options):
     organisation = models.Organisation.where(organisation_code=organisation_code).first_or_fail()
 
     s = summary.PublisherSummaryCreator(organisation, aggregation_type)
-    observed_summary_results = json.loads(json.dumps(s.summary.summary(), 
+    observed_summary_results = json.loads(json.dumps(s.summary.summary(),
                                                      sort_keys=True))
 
     print json.dumps(observed_summary_results, indent=2, sort_keys=True)
 
-def compare_indicators_summary(options): 
+def compare_indicators_summary(options):
     assert options.organisation_code
 
     organisation_code = options.organisation_code.decode('ascii')
@@ -176,7 +176,7 @@ def make_survey_data_for_current_workflow(organisation_code):
         iatidq.survey.data.addSurveyData(data)
 
     iatidq.survey.data.advanceSurvey(survey)
-        
+
 
 def make_csv_output(options):
     organisations = models.Organisation.query.all()
@@ -191,9 +191,9 @@ def clear_queues(options):
 def test_package(options):
     package_name = options.package_name
     package_id = options.package_id
-    
+
     assert package_name or package_id
-    
+
     filename = options.filename
     assert filename
 
@@ -210,14 +210,14 @@ def test_packages(options):
     assert org_code
 
     sql = '''
-        select package_name from organisation 
+        select package_name from organisation
             left join organisationpackage on organisation.id = organisation_id
-            left join package on package_id = package.id 
+            left join package on package_id = package.id
             where organisation_code = %s and active = 't';
     '''
     results = db.engine.execute(sql, (org_code,))
     package_names = [ row[0] for row in results.fetchall() ]
-    
+
     for package_name in package_names:
         iatidq.test_queue.test_one_package(filename, package_name)
 
@@ -225,7 +225,7 @@ def test_packages(options):
 class NoAggregateResults(Exception): pass
 
 def get_aggregate_result_runtime_for_package(package_id):
-    sql = '''select id, runtime_datetime from package_tested 
+    sql = '''select id, runtime_datetime from package_tested
                left join runtime on runtime = id
                where package_id = %s;'''
 
@@ -247,7 +247,7 @@ def check_package_results(options):
     assert package_name or options.all_packages
     if options.all_packages:
         assert options.organisation_code
-    
+
     ''' find list of expected aggregations
         is set complete?
         get timestamps
@@ -267,9 +267,9 @@ def check_package_results(options):
 
         org_id = rows[0][0]
 
-        sql = '''select package_id from organisationpackage 
-                   left join package on package_id = package.id 
-                   where organisation_id = %s and 
+        sql = '''select package_id from organisationpackage
+                   left join package on package_id = package.id
+                   where organisation_id = %s and
                    package_name not like %s;'''
         package_ids = [row[0] for row in db.engine.execute(
                 sql, (org_id, '%-org'))]

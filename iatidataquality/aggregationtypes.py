@@ -41,7 +41,7 @@ def get_aggregation_type(aggregationtype_id):
 
         if aggregationtype_id:
             return \
-                dqaggregationtypes.updateAggregationType(aggregationtype_id, 
+                dqaggregationtypes.updateAggregationType(aggregationtype_id,
                                                          data)
         else:
             return dqaggregationtypes.addAggregationType(data)
@@ -60,7 +60,7 @@ def aggregationtypes_edit(aggregationtype_id=None):
             flash('Could not add your aggregation type.', 'error')
 
     tests = dqtests.tests()
-    return render_template("aggregation_types_edit.html", 
+    return render_template("aggregation_types_edit.html",
                            aggregationtype=aggregationtype, tests=tests,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)

@@ -1,14 +1,14 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
 {% block title %}
-  Publication structure &raquo; 
+  Publication structure &raquo;
   {{organisation.organisation_name}} &raquo; Organisations
 {% endblock %}
 {% block content %}
 
-	<h1>Organisation: 
-	  <a href="{{url_for('organisations', 
+	<h1>Organisation:
+	  <a href="{{url_for('organisations',
 			   organisation_code=organisation.organisation_code)}}">
-		{{organisation.organisation_name}}</a> 
+		{{organisation.organisation_name}}</a>
 	  <code>{{organisation.organisation_code}}</code>
 	</h1>
 
@@ -30,9 +30,9 @@
 
 
     <p>
-	  <a class="btn btn-success" href="#addFeedback" 
+	  <a class="btn btn-success" href="#addFeedback"
 		 role="button" data-toggle="modal">
-		<i class="icon-white icon-plus"></i> 
+		<i class="icon-white icon-plus"></i>
 		<strong>Add conditions</strong></a>
 	</p>
 
@@ -44,16 +44,16 @@
     <tbody>
     </tbody>
     </table>
-    <input type="submit" value="Submit structure" 
+    <input type="submit" value="Submit structure"
 		   class="btn" name="submitstructure"/>
     </form>
 
-    <div id="addFeedback" class="modal hide fade" 
-		 tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel" 
-		 aria-hidden="true"> 
+    <div id="addFeedback" class="modal hide fade"
+		 tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel"
+		 aria-hidden="true">
 
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" 
+            <button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
             <form method="post" action="">
             <h3 id="addFeedbackModalLabel">
@@ -68,7 +68,7 @@
             <tr>
             <td>{{organisation.organisation_code}}</td>
             <td>
-			  <input type="hidden" id="uses" 
+			  <input type="hidden" id="uses"
 					 value="does not use" />does not use</td>
             </tr>
             <tr>
@@ -115,7 +115,7 @@
             </table>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" 
+            <button class="btn" data-dismiss="modal"
 					aria-hidden="true">Close</button>
             <a id="addfeedbackbtn" class="btn btn-success">Add structure</a>
         </div>
@@ -124,6 +124,6 @@
     <script>
     var organisation_code = "{{organisation.organisation_code}}";
     </script>
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/organisationFeedback.js')}}"></script>
 {% endblock %}

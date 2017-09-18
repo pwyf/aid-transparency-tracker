@@ -21,8 +21,8 @@
         {% endwith %}
     <div class="row">
     <p class="lead">
-      The Aid Transparency Tracker has been developed by Publish What You 
-      Fund to monitor progress made by organisations in making their aid 
+      The Aid Transparency Tracker has been developed by Publish What You
+      Fund to monitor progress made by organisations in making their aid
       information more transparent. It provides the data for the annual Aid
       Transparency Index.
     </p>
@@ -36,7 +36,7 @@
                 <h1>Organisations</h1>
                 <p class="lead">See data for individual organisations</p>
                 <p>
-                <a class="btn btn-primary" 
+                <a class="btn btn-primary"
 				   href="{{url_for('organisations')}}">Organisations »</a>
                 </p>
             </div>
@@ -44,11 +44,11 @@
                 <h1>Data verification</h1>
                 <p class="lead">Donors and independent reviewers can
                 log in to check the data</p>
-                <form class="form-inline" 
+                <form class="form-inline"
 					  action="{{url_for('login')}}" method="post">
-                <input name="username" type="text" 
+                <input name="username" type="text"
 					   class="input-small" placeholder="Username">
-                <input name="password" type="password" 
+                <input name="password" type="password"
 					   class="input-small" placeholder="Password">
                 <button type="submit" class="btn">Sign in</button>
                 </form>

@@ -24,7 +24,7 @@ def organisationfeedback_clear():
     dqpublishercondition.delete_publisher_feedback(feedback)
     flash('All remaining publisher feedback was successfully cleared', 'warning')
     return redirect(url_for('organisation_conditions'))
-        
+
 @app.route("/organisation_conditions/")
 @app.route("/organisation_conditions/<id>/")
 @usermanagement.perms_required()
@@ -47,7 +47,7 @@ def organisation_conditions(id=None):
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user,
              feedbackconditions=text)
-        
+
 @app.route("/organisation_conditions/<int:id>/delete/")
 @usermanagement.perms_required()
 def organisation_condition_delete(id=None):
@@ -93,9 +93,9 @@ def organisation_conditions_editor(id=None):
         return redirect(url_for('organisation_conditions_editor', id=pc.id))
     else:
         pc = OrganisationCondition.query.filter_by(id=id).first_or_404()
-        return render_template("organisation_condition_editor.html", 
-                               pc=pc, 
-                               organisations=organisations, 
+        return render_template("organisation_condition_editor.html",
+                               pc=pc,
+                               organisations=organisations,
                                tests=tests,
                                admin=usermanagement.check_perms('admin'),
                                loggedinuser=current_user)
@@ -109,7 +109,7 @@ def organisation_conditions_new(id=None):
 
     template_args = dict(
         pc={},
-        organisations=organisations, 
+        organisations=organisations,
         tests=tests,
         admin=usermanagement.check_perms('admin'),
         loggedinuser=current_user
@@ -121,7 +121,7 @@ def organisation_conditions_new(id=None):
         flash('Created new condition', "success")
         return redirect(url_for('organisation_conditions_editor', id=pc.id))
     else:
-        return render_template("organisation_condition_editor.html", 
+        return render_template("organisation_condition_editor.html",
                                **template_args)
 
 def ipc_step2():
@@ -142,8 +142,8 @@ def ipc_step2():
     if results:
         flash('Parsed conditions', "success")
         return render_template(
-            "import_organisation_conditions_step2.html", 
-            results=results, 
+            "import_organisation_conditions_step2.html",
+            results=results,
             step=step,
             admin=usermanagement.check_perms('admin'),
             loggedinuser=current_user)
@@ -163,14 +163,14 @@ def import_pc_row(row):
     condition_value = pc_form_value('condition_value')
 
     pc = OrganisationCondition.query.filter_by(
-        organisation_id=organisation_id, test_id=test_id, 
-        operation=operation, condition=condition, 
+        organisation_id=organisation_id, test_id=test_id,
+        operation=operation, condition=condition,
         condition_value=condition_value).first()
 
     with db.session.begin():
         if (pc is None):
             pc = OrganisationCondition()
-        
+
         pc.organisation_id=organisation_id
         pc.test_id=test_id
         pc.operation = operation
@@ -189,7 +189,7 @@ def ipc_step3():
 @usermanagement.perms_required()
 def import_organisation_conditions(step=None):
     # Step=1: form; submit to step2
-    # 
+    #
     if (step == '2'):
         return ipc_step2()
     elif (step=='3'):

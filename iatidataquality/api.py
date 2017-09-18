@@ -92,7 +92,7 @@ def test_tuples(data):
         except: fail = 0
         try: success = d[(p,1)]
         except: success = 0
-        out[p] = (success, fail+success) 
+        out[p] = (success, fail+success)
     return out
 
 def aggregated_test_results(data):
@@ -108,7 +108,7 @@ def results_by_org(data, packages):
         except KeyError:
             package['passed'] = 0
             package['total'] = 0
-    return package_dict 
+    return package_dict
 
 @app.route("/api/")
 def api_index():
@@ -129,7 +129,7 @@ def api_tests():
             )
     for test in tests:
         try:
-            test["percentage_passed"] = percentage_passed[test['id']] 
+            test["percentage_passed"] = percentage_passed[test['id']]
         except KeyError:
             test["percentage_passed"] = ""
     return jsonify({"tests": tests})
@@ -219,19 +219,19 @@ def api_package_activities(package_name, test_id, hierarchy_id=None):
 
     if (hierarchy_id):
         if (hierarchy_id=="None"): hierarchy_id=None
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data
-            ).filter(Package.package_name == package_name, 
-                     Result.runtime_id==latest_runtime.id, 
+            ).filter(Package.package_name == package_name,
+                     Result.runtime_id==latest_runtime.id,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).join(Package
             ).all()
     else:
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data
-            ).filter(Package.package_name == package_name, 
-                     Result.runtime_id==latest_runtime.id, 
+            ).filter(Package.package_name == package_name,
+                     Result.runtime_id==latest_runtime.id,
                      Result.test_id==test_id
             ).join(Package
             ).all()
@@ -255,16 +255,16 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
         # This is crude because it assumes there is only one result for this
         # test per activity-identifier. But that should be the case anyway.
         test_count = db.session.query(db.func.count(Result.result_identifier)
-            ).filter(PackageGroup.name == packagegroup_name, 
+            ).filter(PackageGroup.name == packagegroup_name,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).join(Package
             ).join(PackageGroup
             ).all()
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data,
                                         db.func.max(Result.runtime_id)
-            ).filter(PackageGroup.name == packagegroup_name, 
+            ).filter(PackageGroup.name == packagegroup_name,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).group_by(Result.result_identifier
@@ -278,15 +278,15 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
         # This is crude because it assumes there is only one result for this
         # test per activity-identifier. But that should be the case anyway.
         test_count = db.session.query(db.func.count(Result.result_identifier)
-            ).filter(PackageGroup.name == packagegroup_name, 
+            ).filter(PackageGroup.name == packagegroup_name,
                      Result.test_id==test_id
             ).join(Package
             ).join(PackageGroup
             ).all()
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data,
                                         db.func.count(Result.runtime_id)
-            ).filter(PackageGroup.name == packagegroup_name, 
+            ).filter(PackageGroup.name == packagegroup_name,
                      Result.test_id==test_id
             ).group_by(Result.result_identifier
             ).join(Package
@@ -294,7 +294,7 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
             ).limit(50
             ).offset(offset
             ).all()
-    
+
     test_results = dict(map(lambda x: (x[0],x[1]), test_results))
 
     if ((packagegroup == None) or (test_results==None)):
@@ -316,17 +316,17 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
     if (hierarchy_id):
         if (hierarchy_id=="None"): hierarchy_id=None
         """test_count = db.session.query(db.func.count(Result.result_identifier)
-            ).filter(Organisation.organisation_code == organisation_code, 
+            ).filter(Organisation.organisation_code == organisation_code,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).join(Package
             ).join(OrganisationPackage
             ).join(Organisation
             ).all()"""
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data,
                                         db.func.max(Result.runtime_id)
-            ).filter(Organisation.organisation_code == organisation_code, 
+            ).filter(Organisation.organisation_code == organisation_code,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).group_by(Result.result_identifier
@@ -339,16 +339,16 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
             ).all()
     else:
         """test_count = db.session.query(db.func.count(Result.result_identifier)
-            ).filter(Organisation.organisation_code == organisation_code, 
+            ).filter(Organisation.organisation_code == organisation_code,
                      Result.test_id==test_id
             ).join(Package
             ).join(OrganisationPackage
             ).join(Organisation
             ).all()"""
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data,
                                         db.func.max(Result.runtime_id)
-            ).filter(Organisation.organisation_code == organisation_code, 
+            ).filter(Organisation.organisation_code == organisation_code,
                      Result.test_id==test_id
             ).group_by(Result.result_identifier
             ).join(Package
@@ -357,7 +357,7 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
             ).limit(50
             ).offset(offset
             ).all()
-    
+
     test_results = dict(map(lambda x: (x[0],x[1]), test_results))
 
     if ((organisation_code == None) or (test_results==None)):

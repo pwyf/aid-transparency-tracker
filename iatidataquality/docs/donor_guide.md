@@ -36,8 +36,8 @@ Please note that we are only looking at aid information which is:
 
 * **Current**: For the purposes of the Index, "current" is defined as
 published within the 12 months immediately prior to the data
-collection period (1 October 2015 &ndash; 15 January 2016), so information 
-published on 1 October 2014 or later and that relates to that period is 
+collection period (1 October 2015 &ndash; 15 January 2016), so information
+published on 1 October 2014 or later and that relates to that period is
 accepted as current. Information published after 1 October 2014 but relating to a period prior to then, for example 2014 OECD DAC CRS data, will not be accepted as current. Documents that are not current under this definition are accepted only if they are up to date with their regular cycle of publication (for example, annual audits and evaluation reports) or if they have explicit extensions written into them. Information provided
 on static web pages is deemed as current unless information proving
 the contrary is available.
@@ -53,7 +53,7 @@ alongside each question.
 
 ### Choices for responses:
 
-1. Always published, i.e. systematically and regularly across all activities. 
+1. Always published, i.e. systematically and regularly across all activities.
 2. Sometimes published, i.e. sporadically or not including the current year.
 3. Not published.
 
@@ -90,7 +90,7 @@ information is not being published for any of the projects assessed.
 If you are unable to finish reviewing all the questions in a single
 session or would like to review your responses at a later stage before
 you submit the survey, please click on the 'save' button. You can
-return to your saved results by logging in again. 
+return to your saved results by logging in again.
 
 Once you finish reviewing the survey and have provided feedback,
 please click on the 'submit response' button at the bottom of the
@@ -105,4 +105,4 @@ decision.
 
 Thank you for reviewing the survey. If you have any questions or
 comments on using the Aid Transparency Tracker please get in touch:
-tracker@publishwhatyoufund.org 
+tracker@publishwhatyoufund.org

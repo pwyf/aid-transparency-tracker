@@ -35,7 +35,7 @@ def indicators_import():
     else:
         flash('Could not import your indicators', 'error')
     return redirect(url_for('indicatorgroups'))
-    
+
 @app.route("/indicators/<indicatorgroup>/edit/", methods=['GET', 'POST'])
 @usermanagement.perms_required()
 def indicatorgroups_edit(indicatorgroup=None):
@@ -74,7 +74,7 @@ def indicatorgroups_new():
             flash("Couldn't add IndicatorGroup. Maybe one already exists with the same name?", 'error')
     else:
         indicatorgroup = None
-    return render_template("indicatorgroups_edit.html", 
+    return render_template("indicatorgroups_edit.html",
                          indicatorgroup=indicatorgroup,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
@@ -116,40 +116,40 @@ def indicators(indicatorgroup=None):
             del(test_data['id'])
             its[ind_id]['test'].append(test_data)
         its[ind_id]["links"] = {
-            "edit": url_for('indicators_edit', 
-                            indicatorgroup=indicatorgroup.name, 
+            "edit": url_for('indicators_edit',
+                            indicatorgroup=indicatorgroup.name,
                             indicator=indicator.Indicator.name),
-            "delete": url_for('indicators_delete', 
-                              indicatorgroup=indicatorgroup.name, 
+            "delete": url_for('indicators_delete',
+                              indicatorgroup=indicatorgroup.name,
                               indicator=indicator.Indicator.name)
             }
 
     its = util.resort_indicator_tests(its)
 
     links = {
-        "edit_group": url_for('indicatorgroups_edit', 
+        "edit_group": url_for('indicatorgroups_edit',
                               indicatorgroup=indicatorgroup.name),
-        "delete_group": url_for('indicatorgroups_delete', 
+        "delete_group": url_for('indicatorgroups_delete',
                                 indicatorgroup=indicatorgroup.name),
-        "new_indicator": url_for('indicators_new', 
+        "new_indicator": url_for('indicators_new',
                                  indicatorgroup=indicatorgroup.name),
-        "csv_assoc_tests": url_for('indicatorgroup_tests_csv', 
+        "csv_assoc_tests": url_for('indicatorgroup_tests_csv',
                                    indicatorgroup=indicatorgroup.name),
-        "csv_unassoc_tests": url_for('indicatorgroup_tests_csv', 
+        "csv_unassoc_tests": url_for('indicatorgroup_tests_csv',
                                      indicatorgroup=indicatorgroup.name,
                                      option="no")
         }
 
     indicator_data = [ v for k,v in its.items() ]
 
-    json_data = json.dumps({ 
+    json_data = json.dumps({
             "indicator": indicator_data,
             "indicatorgroup": indicatorgroup.as_dict(),
             "admin": usermanagement.check_perms('admin'),
             "links": links
             }, indent=2)
 
-    return render_template("indicators.html", 
+    return render_template("indicators.html",
                         admin=usermanagement.check_perms('admin'),
                         loggedinuser=current_user,
                         json_data=json_data)
@@ -171,15 +171,15 @@ def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
 
     for d in data:
         if (option !="no"):
-            out.writerow({"test_name": d[2], 
-                          "test_description": d[3], 
+            out.writerow({"test_name": d[2],
+                          "test_description": d[3],
                           "test_level": d[4],
-                          "indicator_name": d[0], 
+                          "indicator_name": d[0],
                           "indicator_description": d[1], })
         else:
-            out.writerow({"test_name": d[0], 
-                          "test_description": d[1], 
-                          "test_level": d[2]})            
+            out.writerow({"test_name": d[0],
+                          "test_description": d[1],
+                          "test_level": d[2]})
     strIO.seek(0)
     if option ==None:
         option = ""
@@ -212,8 +212,8 @@ def indicators_new(indicatorgroup=None):
             flash("Couldn't add Indicator. Maybe one already exists with the same name?", 'error')
     else:
         indicator = None
-    return render_template("indicator_edit.html", 
-                         indicatorgroups=indicatorgroups, 
+    return render_template("indicator_edit.html",
+                         indicatorgroups=indicatorgroups,
                          indicator=indicator,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
@@ -240,8 +240,8 @@ def indicators_edit(indicatorgroup=None, indicator=None):
         flash('Successfully updated Indicator', 'success')
     else:
         indicator = dqindicators.indicators(indicatorgroup, indicator)
-    return render_template("indicator_edit.html", 
-                         indicatorgroups=indicatorgroups, 
+    return render_template("indicator_edit.html",
+                         indicatorgroups=indicatorgroups,
                          indicator=indicator,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
@@ -269,10 +269,10 @@ def indicatortests(indicatorgroup=None, indicator=None):
             else:
                 flash("Couldn't add test to your indicator.", 'error')
     indicatortests = dqindicators.indicatorTests(indicatorgroup.name, indicator.name)
-    return render_template("indicatortests.html", 
-                         indicatorgroup=indicatorgroup, 
-                         indicator=indicator, 
-                         indicatortests=indicatortests, 
+    return render_template("indicatortests.html",
+                         indicatorgroup=indicatorgroup,
+                         indicator=indicator,
+                         indicatortests=indicatortests,
                          alltests=alltests,
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user)
@@ -283,5 +283,5 @@ def indicatortests_delete(indicatorgroup=None, indicator=None, indicatortest=Non
     if dqindicators.deleteIndicatorTest(indicatortest):
         flash('Successfully removed test from indicator ' + indicator + '.', 'success')
     else:
-        flash('Could not remove test from indicator ' + indicator + '.', 'error')        
+        flash('Could not remove test from indicator ' + indicator + '.', 'error')
     return redirect(url_for('indicatortests', indicatorgroup=indicatorgroup, indicator=indicator))

@@ -1,5 +1,5 @@
 {% macro ind_commitment(surveydata, rows, workflow, indicator, organisation) %}
-        <tr> 
+        <tr>
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
@@ -129,7 +129,7 @@
 
                     <input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
                 </div>
-            </div>       
+            </div>
         </td>
 
         <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>

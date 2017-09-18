@@ -35,7 +35,7 @@ def inforesult_total_disbursements_commitments(data):
 
 def inforesult_total_disbursements_commitments_current(data):
     oneyear_ago = (datetime.datetime.utcnow()-datetime.timedelta(days=365))
-    
+
     def values():
         # Data will be a list of iati-activities, generated
         # by an xpath expression

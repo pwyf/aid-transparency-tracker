@@ -41,7 +41,7 @@ kind_to_status = {
               "class": "danger",
               "value": "2",
             },
-        3: 
+        3:
             {
               "text:": "specific to the activity",
               "button": "not specific to the activity",
@@ -49,7 +49,7 @@ kind_to_status = {
               "class": "danger",
               "value": "3",
             },
-        4: 
+        4:
             {
               "text:": "satisfies the definition",
               "button": "doesn't satisfy the definition",
@@ -75,7 +75,7 @@ kind_to_status = {
               "class": "danger",
               "value": "2",
             },
-        3: 
+        3:
             {
               "text:": "satisfies the definition",
               "button": "doesn't satisfy the definition",
@@ -101,7 +101,7 @@ kind_to_status = {
               "class": "danger",
               "value": "2",
             },
-        3: 
+        3:
             {
               "text:": "satisfies the definition",
               "button": "doesn't satisfy the definition",
@@ -127,7 +127,7 @@ kind_to_status = {
               "class": "danger",
               "value": "2",
             },
-        3: 
+        3:
             {
               "text:": "consistent with documentation",
               "button": "not consistent with documentation",
@@ -137,7 +137,7 @@ kind_to_status = {
             },
     },
 }
-    
+
 """
 org-document 	able to access 	unable to access
 org-document 	satisfies the definition 	doesn't satisfy the definition

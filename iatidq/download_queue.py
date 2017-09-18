@@ -25,7 +25,7 @@ download_queue = 'iati_download_queue'
 CKANurl = 'https://iatiregistry.org/api'
 
 def fixURL(url):
-    # helper function to replace spaces with %20 
+    # helper function to replace spaces with %20
     # (otherwise fails with some servers, e.g. US)
     url = url.replace(" ", "%20")
     return url
@@ -49,9 +49,9 @@ def copy_package_attributes(package, pkg):
 
 # package: a sqla model; pkg: a ckan object
 def copy_package_fields(package, pkg):
-    fields = [ 
+    fields = [
         "activity_period-from", "activity_period-to",
-        "activity_count", "country", "filetype", "verified" 
+        "activity_count", "country", "filetype", "verified"
         ]
     for field in fields:
         with report_error(None, None):
@@ -88,7 +88,7 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
 
         db.session.add(package)
 
-    add_hardcoded_result(hardcoded_test.URL_EXISTS, 
+    add_hardcoded_result(hardcoded_test.URL_EXISTS,
                          runtime_id, package.id, success)
 
 def manage_download(path, url):
@@ -112,7 +112,7 @@ def actually_save_file(package_name, orig_url, pkg, runtime_id):
 
     success = manage_download(path, url)
 
-    with report_error("  Wrote metadata to DB", 
+    with report_error("  Wrote metadata to DB",
                       "  Couldn't write metadata to DB"):
         metadata_to_db(pkg, package_name, success, runtime_id)
 

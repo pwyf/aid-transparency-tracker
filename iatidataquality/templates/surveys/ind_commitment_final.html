@@ -64,7 +64,7 @@
         {% endif %}
         {% if (surveydata.cso) %}
         {% set data = surveydata.cso %}
-    
+
         {% set accepted_val = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
 
         {% if accepted_val == 1 %}
@@ -106,7 +106,7 @@
         {% endif %}
         {% if (surveydata.donorcomments) %}
         {% set data = surveydata.donorcomments %}
-    
+
         {% set accepted_val = data[indicator.indicator.id].OrganisationSurveyData.published_accepted %}
         {% if accepted_val == 1 %}
         {% set accepted = 'Agree' %}
@@ -118,7 +118,7 @@
         {% set accepted = '' %}
         {% set accepted_class = '' %}
         {% endif %}
-         
+
             <tr>
                 <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
                 {% if organisation.organisation_responded >= 3 %}

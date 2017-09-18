@@ -4,7 +4,7 @@ We have conducted an initial assessment of donor organisations, reviewing what i
 
 Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf).
 
-To ensure that the survey data is as accurate as possible, we would be grateful if you could check the responses and correct or add information as appropriate. 
+To ensure that the survey data is as accurate as possible, we would be grateful if you could check the responses and correct or add information as appropriate.
 
 
 ## Reviewing the survey data
@@ -16,13 +16,13 @@ Please note that we are only looking at aid information which is:
 
 * **Current**: For the purposes of the Index, "current" is defined as
 published within the 12 months immediately prior to the data
-collection period (1 October 2015 &ndash; 15 Januar 2016), so information 
-published on 1 October 2014 or later and that relates to that period is 
-accepted as current. Information published after 1 October 2014 but 
-relating to a period prior to then, for example 2014 OECD DAC CRS data, 
-will not be accepted as current. Documents that are not current under this 
-definition are accepted only if they are up to date with their regular 
-cycle of publication (for example, annual audits and evaluation reports) 
+collection period (1 October 2015 &ndash; 15 Januar 2016), so information
+published on 1 October 2014 or later and that relates to that period is
+accepted as current. Information published after 1 October 2014 but
+relating to a period prior to then, for example 2014 OECD DAC CRS data,
+will not be accepted as current. Documents that are not current under this
+definition are accepted only if they are up to date with their regular
+cycle of publication (for example, annual audits and evaluation reports)
 or if they have explicit extensions written into them. Information provided
 on static web pages is deemed as current unless information proving
 the contrary is available.
@@ -33,14 +33,14 @@ The survey is looking for specific information items. Each response
 has been scored based on whether the information is 'always'
 published, 'sometimes' published or 'not published'. The evidence for
 where the information was found and any explanatory text is provided
-alongside each question. 
+alongside each question.
 
 
 ### What donor organisations were asked to do:
 
-Donor organisations were asked to check our responses to the survey and make any corrections or additions as needed. They were given the following selection of responses to choose from: 
+Donor organisations were asked to check our responses to the survey and make any corrections or additions as needed. They were given the following selection of responses to choose from:
 
-1. Always published, i.e. systematically and regularly across all activities. 
+1. Always published, i.e. systematically and regularly across all activities.
 2. Sometimes published, i.e. sporadically or not including the current year.
 3. Not published.
 
@@ -62,7 +62,7 @@ More information on the scoring can be found in the [scoring guide](http://www.p
 
 ## Submitting the survey
 
-If you are unable to finish reviewing all the questions in a single session or would like to review your responses at a later stage before you submit the survey, please click on the 'save' button. You can return to your saved results by logging in again. 
+If you are unable to finish reviewing all the questions in a single session or would like to review your responses at a later stage before you submit the survey, please click on the 'save' button. You can return to your saved results by logging in again.
 
 Once you finish reviewing the survey and have provided feedback, please click on the 'submit response' button at the bottom of the page.
 

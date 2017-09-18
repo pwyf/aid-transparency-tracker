@@ -66,7 +66,7 @@ def check_deleted_packages():
             if _set_deleted_package(pkg, True):
                 count_deleted += 1
     return count_deleted
-    
+
 
 # pg is sqlalchemy model; ckangroup is a ckan object
 def copy_pg_attributes(pg, ckangroup):
@@ -99,13 +99,13 @@ def copy_pg_misc_attributes(pg, ckangroup, handle_country):
 # pg is sqlalchemy model; ckangroup is a ckan object
 def copy_pg_fields(pg, ckangroup):
     fields = [
-        'publisher_iati_id', 'publisher_segmentation', 'publisher_type', 
-        'publisher_ui', 'publisher_organization_type', 
-        'publisher_frequency', 'publisher_thresholds', 'publisher_units', 
-        'publisher_contact', 'publisher_agencies', 
-        'publisher_field_exclusions', 'publisher_description', 
-        'publisher_record_exclusions', 'publisher_timeliness', 
-        'publisher_country', 'publisher_refs', 
+        'publisher_iati_id', 'publisher_segmentation', 'publisher_type',
+        'publisher_ui', 'publisher_organization_type',
+        'publisher_frequency', 'publisher_thresholds', 'publisher_units',
+        'publisher_contact', 'publisher_agencies',
+        'publisher_field_exclusions', 'publisher_description',
+        'publisher_record_exclusions', 'publisher_timeliness',
+        'publisher_country', 'publisher_refs',
         'publisher_constraints', 'publisher_data_quality'
         ]
 
@@ -155,8 +155,8 @@ def copy_pkg_attributes(pkg, package):
     }
     for attr, key in components.items():
         setattr(pkg, key, package[attr])
-    
-# Don't get revision ID; 
+
+# Don't get revision ID;
 # empty var will trigger download of file elsewhere
 def refresh_package(package):
     if package.get('organization') and package['organization'].get('name'):
@@ -193,7 +193,7 @@ def refresh_package_by_name(package_name):
     except ckanclient.CkanApiNotFoundError:
         print "Error 404 (Not found) when retrieving '%s'" % package_name
         raise
-        
+
 def _refresh_packages():
     setup_orgs = app.config.get("SETUP_ORGS", [])
     counter = app.config.get("SETUP_PKG_COUNTER", None)

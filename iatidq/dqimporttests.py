@@ -15,9 +15,9 @@ from . import hardcoded_test, models, test_level, util
 
 def hardcodedTests():
     hardcoded_tests = [
-        (hardcoded_test.URL_EXISTS, 
+        (hardcoded_test.URL_EXISTS,
          u'url_exists', u"Check that the xml file actually exists."),
-        (hardcoded_test.VALID_XML, 
+        (hardcoded_test.VALID_XML,
          u'valid_xml', u"Check that xml is well structured"),
         (hardcoded_test.SCHEMA_CONFORMANCE,
          u'schema_conformance', u"Check that xml conforms to schema")
@@ -46,7 +46,7 @@ def returnLevel(row, level):
 
 def _importTests(fh, filename, level=1, local=True):
     data = unicodecsv.DictReader(fh)
-    
+
     for row in data:
         with db.session.begin():
             test = models.Test.query.filter(

@@ -35,7 +35,7 @@ def internal_server_error(e):
 
 @app.route('/about/')
 def about():
-    return render_template("about.html", 
-                           loggedinuser=current_user, 
+    return render_template("about.html",
+                           loggedinuser=current_user,
                            admin=usermanagement.check_perms('admin'))
 

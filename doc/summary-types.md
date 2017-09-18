@@ -19,7 +19,7 @@ indicator: {
   longdescription <type 'unicode'>
   indicator_type <type 'unicode'>
   indicator_order <type 'int'>
-  indicator_category_name <type 'unicode'> 
+  indicator_category_name <type 'unicode'>
   indicator_ordinal <type 'bool'>
   id <type 'int'>
   name <type 'unicode'>

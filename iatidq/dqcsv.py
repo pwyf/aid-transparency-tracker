@@ -28,13 +28,13 @@ def extract_survey_data_with_guards(surveydata, indicator_id,
     return "", 0
 
 def get_publication_status(surveydata, indicator_id):
-    return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedStatus', 
+    return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedStatus',
                                            'name', 'publishedstatus_value')
 
 def get_publication_format(surveydata, indicator_id):
-    return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedFormat', 
+    return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedFormat',
                                            'name', 'format_value')
-    
+
 def get_frequency_multiplier(frequency):
     if (frequency == "less than quarterly"):
         return 0.5
@@ -51,16 +51,16 @@ def write_agg_csv_result(out, organisation, freq, result):
 
     i = result["indicator"]
     out.writerow({
-            "organisation_name": organisation.organisation_name, 
-            "organisation_code": organisation.organisation_code, 
+            "organisation_name": organisation.organisation_name,
+            "organisation_code": organisation.organisation_code,
             "indicator_category_name": i['indicator_category_name'],
             "indicator_subcategory_name": i['indicator_subcategory_name'],
-            "indicator_name": i['description'], 
-            "indicator_description": i['longdescription'], 
-            "percentage_passed": result['results_pct'], 
+            "indicator_name": i['description'],
+            "indicator_description": i['longdescription'],
+            "percentage_passed": result['results_pct'],
             "num_results": result['results_num'],
             "points": str(points)
-            })      
+            })
 
 def write_organisation_publications_csv(out, organisation):
     aggregate_results = dqorganisations._organisation_indicators(organisation)
@@ -72,7 +72,7 @@ def write_organisation_publications_csv(out, organisation):
 
 
 class CSVIndicatorInfo(object):
-    def __init__(self, description, name, _id, category_name, 
+    def __init__(self, description, name, _id, category_name,
                  subcategory_name, order, weight):
         self.description = description
         self.name = name
@@ -99,19 +99,19 @@ class CSVRow(object):
     def write_to(self, stream, workflow):
         self._write(stream, workflow, *self.field_data)
 
-    def _write(self, out, workflow_name, organisation, indicator_info, 
-    indicator_total_weighted_points, indicator_category_subcategory, 
-    iati_manual, publication_format, publication_format_points, 
-    total_points, iati_data_quality_passed, iati_data_quality_points, 
-    freq, frequency_multiplier, iati_data_quality_total_points, 
-    survey_publication_status, survey_publication_status_value, 
-    survey_ordinal_value, survey_publication_format, 
-    survey_publication_format_value, survey_total_points, 
+    def _write(self, out, workflow_name, organisation, indicator_info,
+    indicator_total_weighted_points, indicator_category_subcategory,
+    iati_manual, publication_format, publication_format_points,
+    total_points, iati_data_quality_passed, iati_data_quality_points,
+    freq, frequency_multiplier, iati_data_quality_total_points,
+    survey_publication_status, survey_publication_status_value,
+    survey_ordinal_value, survey_publication_format,
+    survey_publication_format_value, survey_total_points,
     survey_source=None, survey_comment=None, survey_agree=None):
         data = {
             "id": organisation.organisation_code + "-" + indicator_info.name,
-            "organisation_name": organisation.organisation_name, 
-            "organisation_code": organisation.organisation_code, 
+            "organisation_name": organisation.organisation_name,
+            "organisation_code": organisation.organisation_code,
             "indicator_total_weighted_points": indicator_total_weighted_points,
             "indicator_category_subcategory": indicator_category_subcategory,
             "iati_manual": iati_manual,
@@ -138,9 +138,9 @@ class CSVRow(object):
             data['survey_comment'] = survey_comment
             data['survey_agree'] = survey_agree
         out.writerow(data)
-    
-def write_agg_csv_result_index(out, organisation, freq, result, iati_manual, 
-    surveydata, surveydata_workflow, published_status, published_format, 
+
+def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
+    surveydata, surveydata_workflow, published_status, published_format,
     history=False, workflows=None):
 
     def calculate_ordinal_points(thevalue, theformat, thetype):
@@ -152,7 +152,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
             points = (float(thevalue)/3.0)*float(theformat)
             return points
 
-        
+
     i = result["indicator"]
 
     if iati_manual == 'iati':
@@ -161,7 +161,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
                                           i["indicator_subcategory_name"],
                                           i["indicator_order"],
                                           i["indicator_weight"])
-    
+
         if (indicator_info.category_name == 'activity'):
             frequency_multiplier = freq
         else:
@@ -216,8 +216,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
 
                 if indicator_ordinal:
                     survey_ordinal_value = surveydata[indicator_info.id].OrganisationSurveyData.ordinal_value
-                    survey_total_points = calculate_ordinal_points(surveydata[indicator_info.id].OrganisationSurveyData.ordinal_value, 
-                                    survey_publication_format_value, 
+                    survey_total_points = calculate_ordinal_points(surveydata[indicator_info.id].OrganisationSurveyData.ordinal_value,
+                                    survey_publication_format_value,
                                     survey_category)
                 else:
                     survey_ordinal_value = ""
@@ -247,8 +247,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
 
                     if indicator_ordinal:
                         survey_ordinal_value = surveydata[indicator_info.id].OrganisationSurveyData.ordinal_value
-                        survey_total_points = calculate_ordinal_points(surveydata[indicator_info.id].OrganisationSurveyData.ordinal_value, 
-                                        survey_publication_format_value, 
+                        survey_total_points = calculate_ordinal_points(surveydata[indicator_info.id].OrganisationSurveyData.ordinal_value,
+                                        survey_publication_format_value,
                                         survey_category)
                     else:
                         survey_ordinal_value = ""
@@ -275,14 +275,14 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
                     survey_agree = surveydata[indicator_info.id].OrganisationSurveyData.published_accepted
                     print "writing csv row for", workflow.Workflow.name
 
-                    csv_row = CSVRow(organisation, indicator_info, 
-                        indicator_total_weighted_points, indicator_category_subcategory, 
-                        iati_manual, publication_format, publication_format_points, 
-                        total_points, iati_data_quality_passed, iati_data_quality_points, 
-                        freq, frequency_multiplier, iati_data_quality_total_points, 
-                        survey_publication_status, survey_publication_status_value, 
-                        survey_ordinal_value, survey_publication_format, 
-                        survey_publication_format_value, survey_total_points, 
+                    csv_row = CSVRow(organisation, indicator_info,
+                        indicator_total_weighted_points, indicator_category_subcategory,
+                        iati_manual, publication_format, publication_format_points,
+                        total_points, iati_data_quality_passed, iati_data_quality_points,
+                        freq, frequency_multiplier, iati_data_quality_total_points,
+                        survey_publication_status, survey_publication_status_value,
+                        survey_ordinal_value, survey_publication_format,
+                        survey_publication_format_value, survey_total_points,
                         survey_source, survey_comment, survey_agree)
                     csv_row.write_to(out, workflow.Workflow.name)
         else:
@@ -320,7 +320,7 @@ def write_organisation_publications_csv_index(out, organisation, history=False):
     aggregate_results = dqorganisations._organisation_indicators_split(organisation)
 
     freq = get_frequency_multiplier(organisation.frequency)
-       
+
     organisation_survey = dqsurveys.getSurvey(organisation.organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)
 

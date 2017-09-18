@@ -85,9 +85,9 @@ def setupSurvey():
         {'name': 'finalised',
          'title': 'Survey finalised'}
     ]
-    for the_workflowType in the_workflowTypes:    
+    for the_workflowType in the_workflowTypes:
         addWorkflowType(the_workflowType)
-    
+
     # Workflows define what happens to the survey
     # at each step.
 

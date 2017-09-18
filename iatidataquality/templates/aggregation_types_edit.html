@@ -4,7 +4,7 @@
     Edit
   {% else %}
     New
-  {% endif %} 
+  {% endif %}
   Aggregation Types
 {% endblock %}
 {% block content %}
@@ -38,7 +38,7 @@
 	<td><select name="test_id" disabled><option value=""></option>
 	{% for test in tests %}
         <option value="{{test.id}}"
-          {% if test.id==aggregationtype.test_id %} 
+          {% if test.id==aggregationtype.test_id %}
             selected
           {% endif %}>{{test.id}}. {{test.description}}</option>
     {% endfor %}
@@ -47,7 +47,7 @@
     <tr>
     <td>Expected result:</td><td>
     <select name="test_result" disabled>
-        <option value="0" 
+        <option value="0"
 		{% if aggregationtype.test_result==0 %} selected{% endif %}
 				>0</option>
 

@@ -17,7 +17,7 @@ import pika
 # FIXME: host= should be in config
 def enqueue(queue, args):
     body = json.dumps(args)
-    
+
     connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
@@ -31,7 +31,7 @@ def enqueue(queue, args):
 def get_connection(host):
     count = 0.4
     while count < 60:
-        try:            
+        try:
             connection = pika.BlockingConnection(
                 pika.ConnectionParameters(host=host))
             return connection
@@ -50,7 +50,7 @@ def handle_queue(queue_name, callback_fn):
         channel.basic_consume(callback_fn, queue=queue_name)
         channel.start_consuming()
     except:
-        pass 
+        pass
     finally:
         connection.close()
 

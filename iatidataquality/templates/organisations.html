@@ -1,7 +1,7 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
 {% block title %}Organisations{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', 
+   <script src="{{url_for('static',
 				filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
@@ -23,7 +23,7 @@
 
 	<h1>Organisations</h1>
 
-    <p class="lead"> 
+    <p class="lead">
 
 	  The following organisations are included in
 	  the {{ ati_year }} Aid Transparency Index. Each organisation's page contains an
@@ -41,7 +41,7 @@
 	{% for organisation in organisations %}
     <tr>
 	<td>
-	  <a href="{{url_for('organisations', 
+	  <a href="{{url_for('organisations',
 			   organisation_code=organisation.organisation_code)}}">
 		{{ organisation.organisation_name }}
 	  </a>

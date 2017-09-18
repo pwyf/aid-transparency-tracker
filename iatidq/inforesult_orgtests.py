@@ -14,7 +14,7 @@ def fixVal(value):
         return float(value)
     except ValueError:
         pass
-    return float(value.replace('.0',''))    
+    return float(value.replace('.0',''))
 
 def date_later_than_now(date):
     try:
@@ -41,7 +41,7 @@ def budget_within_year_scope(budget_end, year):
         future = datetime.timedelta(days=180+(365*(year-1)))
         future_plus_oneyear = future+datetime.timedelta(days=365)
 
-        if ((date_budget_end > (now+future)) and 
+        if ((date_budget_end > (now+future)) and
             (date_budget_end < (now+future_plus_oneyear))):
             return True
     except Exception:
@@ -62,7 +62,7 @@ def total_future_budgets(doc):
     def get_budget_per_year(year, out, total_budget):
         budget_start = total_budget.find('period-start').get('iso-date')
         budget_end = total_budget.find('period-end').get('iso-date')
-       
+
         if budget_within_year_scope(budget_end, year):
             out[year] = {
                 'available': True,
@@ -77,11 +77,11 @@ def total_future_budgets(doc):
         return out
 
     [get_budgets(total_budgets, year, out) for year in years]
-    
+
     return out
 
 def total_country_budgets(doc, totalbudgets):
-    
+
     # Checks if country budgets are available for each
     # of the next three years and what % published
     # recipient country budgets are of the total
@@ -90,11 +90,11 @@ def total_country_budgets(doc, totalbudgets):
 
     rb_xpath = "//recipient-country-budget[period-end/@iso-date]"
     recipient_country_budgets = doc.xpath(rb_xpath)
-    budgetdata = { 
+    budgetdata = {
         'summary': {
-            'num_countries': 0, 
-            'total_amount': {0:0, 1:0, 2:0, 3:0}, 
-            'total_pct': {0:0.00, 1:0.00,2:0.00,3:0.00}, 
+            'num_countries': 0,
+            'total_amount': {0:0, 1:0, 2:0, 3:0},
+            'total_pct': {0:0.00, 1:0.00,2:0.00,3:0.00},
             'total_pct_all_years': 0.00
         },
         'countries': {}
@@ -106,7 +106,7 @@ def total_country_budgets(doc, totalbudgets):
         if country_el is not None:
             country = country_el.get('code')
             country_name = country_el.text
-        else: 
+        else:
             country = None
             country_name = None
         country_budget_end = budget.find('period-end').get('iso-date')
@@ -121,18 +121,18 @@ def total_country_budgets(doc, totalbudgets):
             budgetdata['summary']['total_amount'][year]+=fixVal(budget.find('value').text)
         return budgetdata
 
-    def make_country_budget(year, budgetdata, 
+    def make_country_budget(year, budgetdata,
             recipient_country_budgets):
-        return [get_country_data(budget, budgetdata, 
+        return [get_country_data(budget, budgetdata,
             year) for budget in recipient_country_budgets]
 
-    [make_country_budget(year, budgetdata, 
+    [make_country_budget(year, budgetdata,
         recipient_country_budgets) for year in years]
 
     def getCPAAdjustedPercentage(total_countries, total_year):
         cpa = 0.2136
         total_cpa_adjusted = float(total_year)*cpa
-        
+
         percentage = (float(total_countries)/float(total_cpa_adjusted))*100
         if percentage > 100:
             return 100.00
@@ -154,13 +154,13 @@ def total_country_budgets(doc, totalbudgets):
         except ZeroDivisionError:
             # Use current year's budget
             try:
-                budgetdata['summary']['total_pct'][year] = getCPAAdjustedPercentage(total_countries, 
+                budgetdata['summary']['total_pct'][year] = getCPAAdjustedPercentage(total_countries,
                                 get_a_total_budget_over_zero(totalbudgets))
             except ZeroDivisionError:
                 budgetdata['summary']['total_pct'][year] = 0.00
         budgetdata['summary']['num_countries'] = len(budgetdata['countries'])
         return budgetdata
-    
+
     data = [generate_total_years_data(budgetdata, year) for year in years]
 
     total_pcts = budgetdata['summary']['total_pct'].items()
@@ -179,7 +179,7 @@ def total_country_budgets_single_result(doc):
 def country_strategy_papers(doc):
     countries = all_countries(doc)
 
-    # Is there a country strategy paper for each 
+    # Is there a country strategy paper for each
     # country? (Based on the list of countries that
     # have an active country budget.)
 
@@ -193,7 +193,7 @@ def country_strategy_papers(doc):
 
     for code, name in countries.items():
         # Some donors have not provided the name of the country; the
-        # country code could theoretically be looked up to find the 
+        # country code could theoretically be looked up to find the
         # name of the country
         name = getCountryName(code, name, countrycodelist)
         for strategy_paper in strategy_papers:
@@ -245,7 +245,7 @@ def all_countries(doc):
     for recipient_country_budget in recipient_country_budgets:
         country_budget_date = recipient_country_budget.find('period-end').get('iso-date')
 
-        # Check if the country is still active: if there is 
+        # Check if the country is still active: if there is
         # an end date later than today, then include it
         if (date_later_than_now(country_budget_date) and budget_has_value(recipient_country_budget)):
             country_el = recipient_country_budget.find('recipient-country')
@@ -276,7 +276,7 @@ def total_budgets_available(doc):
 """print "Total budgets..."
 print total_budgets_available(doc)
 
-print "Total country budgets..."    
+print "Total country budgets..."
 print total_country_budgets_single_result(doc)
 
 print "Country strategy papers"

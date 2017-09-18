@@ -36,7 +36,7 @@ RESPONSE_TYPES = {
 }
 
 RESPONSE_IDS = dict(map(lambda x: (x[1]["id"], {
-                            "id": x[0], 
-                            "text": x[1]["text"], 
+                            "id": x[0],
+                            "text": x[1]["text"],
                             "description": x[1]["description"]
                             }), RESPONSE_TYPES.items()))

@@ -14,12 +14,12 @@
 </script>
 
 <form action="" method="post">
-  
+
   <div class="pull-right">
 
 	<p>
-      <input type="submit" name="refresh" class="btn btn-mini" 
-			 value="Refresh list from Registry"/> 
+      <input type="submit" name="refresh" class="btn btn-mini"
+			 value="Refresh list from Registry"/>
 	  <a class="btn btn-mini" href="{{url_for('registry_deleted')}}">
 		Check deleted packages
 	  </a>
@@ -35,7 +35,7 @@
   </div>
 
   <h1>Package management</h1>
-  
+
   <p>Choose active packages</p>
 
   <p>
@@ -43,7 +43,7 @@
 		   value="Activate selected packages" />
   </p>
   <p>
-	<a id="markall" class="btn pull-right btn-mini">Mark all active</a> 
+	<a id="markall" class="btn pull-right btn-mini">Mark all active</a>
 	<a id="unmarkall" class="btn pull-right btn-mini">Mark all inactive</a>
   </p>
 
@@ -78,8 +78,8 @@
 		</td>
 
 		<td>
-		  <input type="checkbox" {% if pk.active %}checked{% endif %} 
-				 name="active_{{pk.package_name}}"/> 
+		  <input type="checkbox" {% if pk.active %}checked{% endif %}
+				 name="active_{{pk.package_name}}"/>
 		  <span>{% if pk.active %}Active{% endif %}</span>
 		</td>
 
@@ -95,10 +95,10 @@
 
     </table>
 
-  <input class="btn btn-success" type="submit" 
+  <input class="btn btn-success" type="submit"
 		 value="Activate selected packages" />
-</form> 
-    
+</form>
+
 <script src="{{url_for('static', filename='js/managePackages.js')}}"></script>
 
 {% endblock %}

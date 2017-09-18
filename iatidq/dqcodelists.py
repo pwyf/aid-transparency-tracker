@@ -28,7 +28,7 @@ def generateCodelists():
     return dict(cl)
 
 def generateACodelist(codelist_name):
-    codelist = db.session.query(models.CodelistCode.name, 
+    codelist = db.session.query(models.CodelistCode.name,
                                 models.CodelistCode.code
             ).filter(models.Codelist.name==codelist_name
             ).join(models.Codelist).all()
@@ -55,7 +55,7 @@ def handle_row(codelist, codelist_url, crow):
 def add_manual_codelist(filename, codelist_name, codelist_description):
     f = open(filename)
     codelist_data = unicodecsv.DictReader(f)
-    
+
     with db.session.begin():
         codelist = models.Codelist.query.filter(
             models.Codelist.name==codelist_name).first()

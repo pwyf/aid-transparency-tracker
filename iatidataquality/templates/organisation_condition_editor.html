@@ -24,7 +24,7 @@
     <tbody>
     <tr>
         <td>Description</td>
-        <td><input type="text" value="{{pc.description}}" 
+        <td><input type="text" value="{{pc.description}}"
 				   name="description" /></td>
     </tr>
     <tr>
@@ -47,7 +47,7 @@
         {% for test in tests %}
         <option value="{{test.id}}"
 				{% if pc.test_id == test.id %} selected{% endif %}>
-      {{test.id}}. 
+      {{test.id}}.
 		  {{test.description}}
 		</option>
         {%endfor%}

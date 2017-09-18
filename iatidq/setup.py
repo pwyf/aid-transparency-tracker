@@ -64,7 +64,7 @@ def setup_common():
         default_indicator_filename)
     print "Importing indicator descriptions"
     dqindicators.importIndicatorDescriptionsFromFile(
-        app.config["INDICATOR_GROUP"], 
+        app.config["INDICATOR_GROUP"],
         "tests/indicators.csv")
     print "Importing tests"
     dqimporttests.importTestsFromFile(
@@ -86,7 +86,7 @@ def setup_packages_minimal():
     else:
         print "No packages are defined in quickstart"
 
-def setup_organisations_minimal():    
+def setup_organisations_minimal():
     for organisation in dqminimal.default_minimal_organisations:
         inserted_organisation = dqorganisations.addOrganisation(
             organisation)
@@ -100,9 +100,9 @@ def setup_organisations_minimal():
         if thepackage is None:
             print "Organisation lookup failure", organisation
             raise ValueError
-        
+
         organisationpackage_data = {
-            "organisation_id": inserted_organisation.id, 
+            "organisation_id": inserted_organisation.id,
             "package_id": thepackage.id,
             "condition": organisation["condition"]
             }
@@ -161,7 +161,7 @@ def setup(minimal):
     survey.setup.setupSurvey()
 
     setup_admin_user()
-    
+
     # print("Importing all users and creating permissions")
     # dqusers.importUserDataFromFile(default_userdata_filename)
     # print("Finished importing users")

@@ -2,7 +2,7 @@
 What I'd like to see for the interface for #425
 
 We have some modules in sample_work/ that know about what's in the sqlite
-database, e.g., db.py ; I want to be able just to call a function in one 
+database, e.g., db.py ; I want to be able just to call a function in one
 of them and get the results back, thus:
 
 

@@ -28,7 +28,7 @@ def integerise(data):
 def packages_manage():
     if request.method != 'POST':
         pkgs = Package.query.order_by(Package.package_name).all()
-        return render_template("packages_manage.html", 
+        return render_template("packages_manage.html",
              pkgs=pkgs,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
@@ -49,7 +49,7 @@ def packages_manage():
         flash("Updated packages", "success")
     return redirect(url_for('packages_manage'))
 
-                   
+
 @app.route("/packages/new/", methods=['POST', 'GET'])
 @app.route("/packages/<package_name>/edit/", methods=['POST', 'GET'])
 def packages_edit(package_name=None):
@@ -70,7 +70,7 @@ def packages_edit(package_name=None):
             package ={}
             package_org_id = ""
         organisations = Organisation.sort('organisation_name').all()
-        return render_template("package_edit.html", 
+        return render_template("package_edit.html",
              package=package,
              package_org_id = package_org_id,
              organisations=organisations,
@@ -114,7 +114,7 @@ def packages_edit(package_name=None):
             flash("There was an error, and the package could not be "+mode+".", "error")
             organisations = Organisation.sort('organisation_name').all()
             data['package_name'] = request.form.get('package_name')
-        return render_template("package_edit.html", 
+        return render_template("package_edit.html",
              package=data,
              package_org_id = package_org_id,
              organisations=organisations,
@@ -127,7 +127,7 @@ def packages(package_name=None):
     if package_name is None:
         packages = Package.query.filter_by(active=True).order_by(
             Package.package_name).all()
-        return render_template("packages.html", 
+        return render_template("packages.html",
              packages=packages,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
@@ -136,7 +136,7 @@ def packages(package_name=None):
     package = Package.query.filter_by(package_name = package_name
                                   ).first()
     organisations = dqpackages.packageOrganisations(package.id)
- 
+
     return render_template("package.html", package=package,
                            organisations=organisations,
                            admin=usermanagement.check_perms('admin'),

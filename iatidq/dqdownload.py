@@ -22,12 +22,12 @@ CKANurl = 'https://iatiregistry.org/api'
 def get_package(pkg, package, runtime_id):
     new_package = False
     update_package = False
-    # Check if package already exists; if it has not been updated more 
+    # Check if package already exists; if it has not been updated more
     # recently than the database, then download it again
     check_package = package
 
     if ((package.package_metadata_modified) != (pkg['metadata_modified'])):
-        # if the package has been updated, 
+        # if the package has been updated,
         # then download it and update the package data
         update_package = True
         print "Updating package", pkg['name']
@@ -46,7 +46,7 @@ def get_package(pkg, package, runtime_id):
 
 def download_packages(runtime):
     # Check registry for packages list
-    registry_packages = [ (pkg["name"], pkg["metadata_modified"]) 
+    registry_packages = [ (pkg["name"], pkg["metadata_modified"])
                           for pkg in packages_from_iati_registry() ]
 
     print "Found", len(registry_packages),"packages on the IATI Registry"
@@ -62,13 +62,13 @@ def download_packages(runtime):
         name = package.package_name
         print name
         print package.package_metadata_modified
-        
+
         # Handle automatically retrieved packages (from Registry)
         if package.man_auto == 'auto':
             try:
                 if package.package_metadata_modified != registry_packages[name]:
                     print "Need to update package", name
-                    # need to add status here, because otherwise the status could 
+                    # need to add status here, because otherwise the status could
                     # be written to DB after the package has finished testing
                     add_test_status(package.id, package_status.NEW)
                     testing_packages.append(package.id)
@@ -89,7 +89,7 @@ def download_packages(runtime):
         else:
             if ((package.package_metadata_modified == "") or (package.package_metadata_modified == None)):
                 print "Need to update manual package", name
-                # need to add status here, because otherwise the status could 
+                # need to add status here, because otherwise the status could
                 # be written to DB after the package has finished testing
                 add_test_status(package.id, package_status.NEW)
                 testing_packages.append(package.id)
@@ -104,7 +104,7 @@ def download_package(runtime, package_name):
         package_name=package_name).first()
     add_test_status(package.id, package_status.NEW)
 
-    registry = ckanclient.CkanClient(base_location=CKANurl)  
+    registry = ckanclient.CkanClient(base_location=CKANurl)
 
     pkg = registry.package_entity_get(package.package_name)
     try:

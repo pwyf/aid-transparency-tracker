@@ -49,8 +49,8 @@ def getOrCreateSurveyById(organisation_id):
 
 def addSurveyData(data):
     checkSD = models.OrganisationSurveyData.query.filter_by(
-        organisationsurvey_id=data["organisationsurvey_id"], 
-        workflow_id=data["workflow_id"], 
+        organisationsurvey_id=data["organisationsurvey_id"],
+        workflow_id=data["workflow_id"],
         indicator_id=data["indicator_id"]).first()
 
     with db.session.begin():
@@ -99,7 +99,7 @@ def deleteSurveyData(organisation_code):
             models.Organisation.organisation_code==organisation_code).first()
         if not survey:
             raise NoSuchSurvey
-        db.session.delete(survey) 
+        db.session.delete(survey)
 
 
 def publishedStatus():
@@ -160,7 +160,7 @@ def getSurveyData(organisation_code, workflow_name):
         ).outerjoin(models.PublishedFormat
         ).join(models.OrganisationSurvey
         ).join(models.Organisation
-        ).all()        
+        ).all()
     surveyDataByIndicator = dict(map(lambda x: (x.OrganisationSurveyData.indicator_id, x), surveyData))
     return surveyDataByIndicator
 
@@ -238,7 +238,7 @@ def workflowByName(workflow_name):
                               models.WorkflowType
                               ).filter_by(
         name=workflow_name
-        ).join(models.WorkflowType, 
+        ).join(models.WorkflowType,
                models.WorkflowType.id==models.Workflow.workflow_type
                ).first()
     if checkW:
@@ -249,7 +249,7 @@ def workflowsAll():
     checkW = db.session.query(models.Workflow,
                               models.WorkflowType
                               ).join(
-        models.WorkflowType, 
+        models.WorkflowType,
         models.WorkflowType.id==models.Workflow.workflow_type
         ).order_by(models.Workflow.id).all()
     if checkW:
@@ -286,7 +286,7 @@ def advanceSurvey(organisationsurvey):
             survey.currentworkflow_id = None
         db.session.add(survey)
     # FIXME
-    # return None instead of False - the test for this is potentially 
+    # return None instead of False - the test for this is potentially
     # misleading
 
 def getOrCreateWorkflow(data):
@@ -309,7 +309,7 @@ def repairSurveyData(organisation_code):
 
     allindicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     allindicators = map(lambda x: x.id, allindicators)
-  
+
     organisation = dqorganisations.organisations(organisation_code)
     org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"]
 
@@ -347,7 +347,7 @@ def checkSurveyData(organisation_code):
 
     allindicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     allindicators = map(lambda x: x.id, allindicators)
-  
+
     organisation = dqorganisations.organisations(organisation_code)
     org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"].keys()
 
@@ -360,7 +360,7 @@ def checkSurveyData(organisation_code):
         for indicator in org_indicators:
             if indicator not in survey_indicators:
                 return False
-    return True 
+    return True
 
 
 def get_survey_data_and_workflow(organisation_survey, surveydata):
@@ -376,7 +376,7 @@ def get_survey_data_and_workflow(organisation_survey, surveydata):
         "donorcomments": ("pwyffinal", 'donorcomments'),
         "finalised": ("pwyffinal", 'finalised')
         }
-           
+
     if organisation_survey:
         workflow_name = organisation_survey.Workflow.name
         if workflow_name in data:

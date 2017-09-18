@@ -31,8 +31,8 @@ def organisations_feedback(organisation_code=None):
                     flash('Successfully added condition.', 'success')
                 else:
                     flash("Couldn't add condition.", 'error')
-        
-        return render_template("organisation_feedback.html", 
+
+        return render_template("organisation_feedback.html",
              organisation=organisation,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)

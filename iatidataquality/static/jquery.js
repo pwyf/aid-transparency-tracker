@@ -6323,7 +6323,7 @@ jQuery.sub = function() {
 	var rootjQuerySub = jQuerySub(document);
 	return jQuerySub;
 };
-	
+
 })();
 var curCSS, iframe, iframeDoc,
 	ralpha = /alpha\([^)]*\)/i,

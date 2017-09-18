@@ -6,17 +6,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}{% endblock %} &raquo; Publish &raquo; Aid Transparency Tracker</title>
-    <link href="{{url_for('static', 
-				filename='css/bootstrap-responsive.min.css')}}" 
+    <link href="{{url_for('static',
+				filename='css/bootstrap-responsive.min.css')}}"
 		  media="all" rel="stylesheet" type="text/css" />
-    <link href="{{url_for('static', 
-				filename='css/bootstrap.min.css')}}" 
+    <link href="{{url_for('static',
+				filename='css/bootstrap.min.css')}}"
 		  media="all" rel="stylesheet" type="text/css" />
-    <script src="{{url_for('static', 
-				 filename='vendor/jquery/1.7.1/jquery.js')}}" 
+    <script src="{{url_for('static',
+				 filename='vendor/jquery/1.7.1/jquery.js')}}"
 			type="text/javascript"></script>
-    <script src="{{url_for('static', 
-				 filename='js/bootstrap.min.js')}}" 
+    <script src="{{url_for('static',
+				 filename='js/bootstrap.min.js')}}"
 			type="text/javascript"></script>
     <link href="{{url_for('static', filename='style.css')}}"
 		  media="all" rel="stylesheet" type="text/css" />
@@ -32,11 +32,11 @@
       _gaq.push(['_trackPageview']);
 
       (function() {
-        var ga = document.createElement('script'); 
-	    ga.type = 'text/javascript'; 
+        var ga = document.createElement('script');
+	    ga.type = 'text/javascript';
 	    ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; 
+        var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(ga, s);
       })();
 
@@ -54,7 +54,7 @@
     <div class="navbar navbar-static-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="btn btn-navbar" data-toggle="collapse" 
+          <a class="btn btn-navbar" data-toggle="collapse"
 			 data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -63,13 +63,13 @@
           <a class="brand" href="/">Aid Transparency Tracker</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li{% if active_page == "index" %} 
+              <li{% if active_page == "index" %}
 					class="active"
 			     {% endif %}>
 				<a href="{{url_for('home')}}">Home</a>
 			  </li>
 
-              <li{% if active_page == "organisations" %} 
+              <li{% if active_page == "organisations" %}
 					class="active"
 			     {% endif %}>
 				<a href="{{url_for('organisations')}}">Organisations</a>
@@ -81,7 +81,7 @@
 				<a href="{{url_for('indicatorgroups')}}">Indicators</a>
 			  </li>
 
-              <li{% if active_page == "about" %} 
+              <li{% if active_page == "about" %}
 					class="active"
 			     {% endif %}>
 				<a href="{{url_for('about')}}">About</a>
@@ -106,20 +106,20 @@
 				    </a>
 				  </li>
 
-                  <li{% if active_page == "import_tests" %} 
+                  <li{% if active_page == "import_tests" %}
 						class="active"
 						{% endif %}>
 					<a href="{{url_for('import_tests')}}">Import tests</a>
 				  </li>
 
-                  <li{% if active_page == "pc" %} 
+                  <li{% if active_page == "pc" %}
 						class="active"
 						{% endif %}>
 					<a href="{{url_for('organisation_conditions')}}">
 					  Organisation conditions</a>
 				  </li>
 
-                  <li{% if active_page == "import_conditions" %} 
+                  <li{% if active_page == "import_conditions" %}
 						class="active"
 						{% endif %}>
 					<a href="{{url_for('import_organisation_conditions')}}">
@@ -213,13 +213,13 @@
     <div class="pull-left">
         <p>
 		  <a href="http://publishwhatyoufund.org">
-			<img src="{{url_for('static', filename='img/pwyf_small.png')}}" 
+			<img src="{{url_for('static', filename='img/pwyf_small.png')}}"
 				 alt="A project of Publish What You Fund" />
 		  </a>
 		</p>
         <p>
 		  <a href="https://github.com/pwyf/IATI-Data-Quality">
-			Source code on Github</a>, released under the 
+			Source code on Github</a>, released under the
 		  <a href="http://www.gnu.org/licenses/agpl-3.0.html">
 			AGPL v3.0 License</a>.
 		</p>
@@ -229,7 +229,7 @@
 		  </a>
 		</p>
         <p>
-		  <a href="https://iatiregistry.org">IATI Registry</a> &ndash; 
+		  <a href="https://iatiregistry.org">IATI Registry</a> &ndash;
 		  <a href="http://iatistandard.org">IATI Standard</a>
 		</p>
         <p>
@@ -250,23 +250,23 @@
 			  <a href="http://tablesorter.com/docs/">JQuery TableSorter</a>
 			</li>
             <li>
-			  <a href="http://okfnlabs.org/recline/">Recline.js</a>, 
+			  <a href="http://okfnlabs.org/recline/">Recline.js</a>,
 			  by <a href="http://okfn.org">OKFN</a>
 			</li>
         </ul>
 
         <p>
-		  With thanks to 
-		  <a href="http://mk.ucant.org/">Martin Keegan</a>, 
+		  With thanks to
+		  <a href="http://mk.ucant.org/">Martin Keegan</a>,
 		  <a href="https://twitter.com/bjwebb67">Ben Webb</a>,
 		  <br />
-		  <a href="https://github.com/caprenter">David Carpenter</a>, 
+		  <a href="https://github.com/caprenter">David Carpenter</a>,
 		  and many more.
 		</p>
     </div>
     </div></footer>
 	{% if json_data %}
-	<script src="{{url_for('static', filename='js/mustache.js')}}" 
+	<script src="{{url_for('static', filename='js/mustache.js')}}"
 			type="text/javascript">
 	</script>
 	<script type="text/javascript">

@@ -1,6 +1,6 @@
-{% from "surveys/ind_commitment_review.html" 
+{% from "surveys/ind_commitment_review.html"
         import ind_commitment as ind_commitment %}
-{% from "surveys/ind_zero_review.html" 
+{% from "surveys/ind_zero_review.html"
         import ind_zero as ind_zero %}
 
 {% extends "surveys/survey_edit.html" %}
@@ -12,14 +12,14 @@
 {% endif %}
 
 {% block ask %}
-	Please check data for 
-	  {{org_indicators.zero|count+org_indicators.commitment|count}} 
+	Please check data for
+	  {{org_indicators.zero|count+org_indicators.commitment|count}}
 	  information items.
 {% endblock %}
 
 {% block guidance %}
-        <p class="lead">We have conducted an initial assessment of the aid 
-          transparency of {{organisation.organisation_name}}. Thank you for 
+        <p class="lead">We have conducted an initial assessment of the aid
+          transparency of {{organisation.organisation_name}}. Thank you for
           agreeing to review this assessment.</p>
         <h4>Guidelines</h4>
         <ol>
@@ -33,7 +33,7 @@
                 scored. The more open and comparable the format, the higher
                 the score (machine-readable scores highest, PDF lowest).</li>
             <li>If you disagree with the initial assessment or the evidence
-                provided, please select the appropriate option and let us know 
+                provided, please select the appropriate option and let us know
                 in the comments box.</li>
         </ol>
         <p><strong>All data and comments collected will be made public once the

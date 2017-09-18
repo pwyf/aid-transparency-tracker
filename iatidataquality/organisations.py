@@ -57,7 +57,7 @@ def get_coverage(organisation, info_results):
         'pct': coverage_pct
         }
 
-def get_summary_data(organisation, aggregation_type):    
+def get_summary_data(organisation, aggregation_type):
     #try:
     return _organisation_indicators_summary(organisation, aggregation_type)
     #except Exception, e:
@@ -83,7 +83,7 @@ def organisations_coverage():
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
-    
+
     aggregation_type=integerise(request.args.get('aggregation_type', 2))
 
     template_args = {}
@@ -171,9 +171,9 @@ def organisation_new():
         if organisation:
             flash('Successfully added organisation', 'success')
             return redirect(url_for(
-                    'organisation_edit', 
+                    'organisation_edit',
                     organisation_code=organisation.organisation_code))
-        
+
         flash("Couldn't add organisation", "error")
         organisation = data
 
@@ -199,8 +199,8 @@ def get_ordinal_values_years():
         (None, 'Unknown', '')
         ]
     struct = lambda yr: (yr[0], ({
-            "text": yr[1], 
-            "class": yr[2] 
+            "text": yr[1],
+            "class": yr[2]
             }))
     return map(struct, years)
 
@@ -225,10 +225,10 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                                 aggregate_results['zero'])
     aggregate_results['non_zero'] = util.resort_dict_indicator(
                                     aggregate_results['non_zero'])
-        
+
     organisation_survey = dqsurveys.getSurvey(organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-    
+
     surveydata, surveydata_workflow = dqsurveys.get_survey_data_and_workflow(
         organisation_survey, surveydata)
 
@@ -260,20 +260,20 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     links = {
         "organisation_page": url_for(
-            'organisations', 
+            'organisations',
             organisation_code=organisation.organisation_code),
         "organisation_detail": url_for(
-            'organisation_publication_detail', 
+            'organisation_publication_detail',
             organisation_code=organisation.organisation_code),
         "organisation_feedback": url_for(
-            'organisations_feedback', 
+            'organisations_feedback',
             organisation_code=organisation.organisation_code)
         }
     if surveydata:
         links.update({
                 "organisation_survey_edit": url_for(
-                    'organisation_survey_edit', 
-                    organisation_code=organisation.organisation_code, 
+                    'organisation_survey_edit',
+                    organisation_code=organisation.organisation_code,
                     workflow_name=surveydata_workflow)
                 })
 
@@ -284,7 +284,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     agg_type = [ agg_detail(agt) for agt in all_aggregation_types ]
 
-    frequencies = { 
+    frequencies = {
         "less than quarterly": (0.5,
                                 """It looks like you publish less often than
           quarterly, so the maximum you can score for IATI data is
@@ -292,8 +292,8 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
           adjusted accordingly"""),
         "quarterly": (0.9,
                       """It looks like you publish quarterly and not monthly,
-          so the maximum you can score for IATI data is 95 points. The total 
-          points for the relevant indicators have been adjusted 
+          so the maximum you can score for IATI data is 95 points. The total
+          points for the relevant indicators have been adjusted
           accordingly.""")
         }
 
@@ -333,15 +333,15 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                 return round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
 
             ind_id = res["indicator"]["id"]
-            
+
             if surveydata:
                 if (res["indicator"]["indicator_ordinal"] and surveydata[ind_id].PublishedFormat):
                     return round(
-                        (surveydata[ind_id].OrganisationSurveyData.ordinal_value/3.0) * 
+                        (surveydata[ind_id].OrganisationSurveyData.ordinal_value/3.0) *
                         surveydata[ind_id].PublishedFormat.format_value * 50, 2)
                 elif (surveydata[ind_id].PublishedStatus and surveydata[ind_id].PublishedFormat):
                     return (
-                        surveydata[ind_id].PublishedStatus.publishedstatus_value * 
+                        surveydata[ind_id].PublishedStatus.publishedstatus_value *
                         surveydata[ind_id].PublishedFormat.format_value * 50)
                 else:
                     return 0
@@ -361,14 +361,14 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
                 def status_class_and_text():
                     if tmp["indicator"]["indicator_ordinal"]:
-                        return (years[osd["ordinal_value"]]["class"], 
+                        return (years[osd["ordinal_value"]]["class"],
                                 years[osd["ordinal_value"]]["text"])
                     else:
-                        return (published_status_by_id[osd["published_status"]]["publishedstatus_class"], 
+                        return (published_status_by_id[osd["published_status"]]["publishedstatus_class"],
                                 published_status_by_id[osd["published_status"]]["title"])
                 def format_class_and_text():
                     if published_status_by_id[osd["published_status"]]["publishedstatus_class"] != 'important':
-                        return (publishedformats[osd["published_format"]]["format_class"], 
+                        return (publishedformats[osd["published_format"]]["format_class"],
                                 publishedformats[osd["published_format"]]["title"])
                     else:
                         return ("", "")
@@ -435,7 +435,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
     org_indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
 
     lastyearsdata = iatidq.survey.mapping.get_organisation_results(
-        organisation_code, 
+        organisation_code,
         [i.name for i in org_indicators]
         )
 
@@ -471,7 +471,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
         return tmp
 
     result = {
-        "commitment": map(annotate, 
+        "commitment": map(annotate,
                           util.resort_sqlalchemy_indicator(
                 aggregate_results['commitment']).values()),
         "publication_organisation": map(annotate,
@@ -500,16 +500,16 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
 
     payload = {
         "links": {
-            "login": url_for('login', next='/organisations/' 
-                             + organisation.organisation_code 
+            "login": url_for('login', next='/organisations/'
+                             + organisation.organisation_code
                              + '/publication'),
-            "orgpage": url_for('organisations', 
+            "orgpage": url_for('organisations',
 			   organisation_code=organisation.organisation_code)
             },
         "organisation": organisation.as_dict(),
         "result": result
         }
-    
+
     json_data = json.dumps(payload, indent=2)
 
     return render_template("organisation_index_publication.html",
@@ -532,7 +532,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
     check_perms = usermanagement.check_perms(
         'organisation', 'view', {'organisation_code': organisation_code}
         )
-    
+
     if check_perms:
         return organisation_publication_authorised(
             organisation_code,
@@ -542,7 +542,7 @@ def organisation_publication(organisation_code=None, aggregation_type=2):
         organisation_code,
         aggregation_type)
 
-def _organisation_publication_detail(organisation_code, aggregation_type, 
+def _organisation_publication_detail(organisation_code, aggregation_type,
                                      is_admin):
 
     organisation = Organisation.query.filter_by(
@@ -556,8 +556,8 @@ def _organisation_publication_detail(organisation_code, aggregation_type,
     aggregate_results = dqorganisations.make_publisher_summary(
         organisation, aggregation_type)
 
-    return render_template("organisation_detail.html", 
-                           organisation=organisation, packages=packages, 
+    return render_template("organisation_detail.html",
+                           organisation=organisation, packages=packages,
                            results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
@@ -573,7 +573,7 @@ def organisation_publication_detail(organisation_code=None):
 
 def _org_pub_csv(organisations, filename, index_data=False, history=False):
     string_io = make_csv(organisations, index_data, history)
-    return send_file(string_io, attachment_filename=filename, 
+    return send_file(string_io, attachment_filename=filename,
                      as_attachment=True)
 
 @app.route("/organisations/publication_index_history.csv")
@@ -614,10 +614,10 @@ def add_packages(organisation):
             'condition': condition
             }
         if dqorganisations.addOrganisationPackage(data):
-            flash('Successfully added package to your organisation.', 
+            flash('Successfully added package to your organisation.',
                   'success')
         else:
-            flash("Couldn't add package to your organisation.", 
+            flash("Couldn't add package to your organisation.",
                   'error')
 
     packages = request.form.getlist('package')
@@ -642,12 +642,12 @@ def add_packagegroup(organisation):
                 'group will be added to this organisation', 'error')
     if total:
         flash(
-            'Successfully added %d packages to your organisation.' % total, 
+            'Successfully added %d packages to your organisation.' % total,
             'success')
     else:
         flash(
             "No packages were added to your organisation. This "
-            "could be because you've already added all existing ones.", 
+            "could be because you've already added all existing ones.",
             'error')
 
 def update_organisation(organisation_code):
@@ -687,9 +687,9 @@ def organisation_edit(organisation_code=None):
         organisation.organisation_code)
 
     return render_template(
-        "organisation_edit.html", 
-        organisation=organisation, 
-        packages=packages, 
+        "organisation_edit.html",
+        organisation=organisation,
+        packages=packages,
         packagegroups=packagegroups,
         donorresponses=donorresponse.RESPONSE_TYPES,
         organisationpackages=organisationpackages,
@@ -698,7 +698,7 @@ def organisation_edit(organisation_code=None):
 
 @app.route("/organisations/<organisation_code>/<package_name>/<organisationpackage_id>/delete/")
 @usermanagement.perms_required()
-def organisationpackage_delete(organisation_code=None, 
+def organisationpackage_delete(organisation_code=None,
                                package_name=None, organisationpackage_id=None):
 
     def get_message(result):
@@ -712,14 +712,14 @@ def organisationpackage_delete(organisation_code=None,
     result = dqorganisations.deleteOrganisationPackage(
         organisation_code, package_name, organisationpackage_id)
 
-    msg_template, msg_type = get_message(result)    
+    msg_template, msg_type = get_message(result)
     flash(msg_template % (package_name, organisation_code), msg_type)
-        
-    return redirect(url_for('organisation_edit', 
+
+    return redirect(url_for('organisation_edit',
                             organisation_code=organisation_code))
 
 def _organisation_indicators_summary(organisation, aggregation_type=2):
-    summarydata = dqorganisations._organisation_indicators(organisation, 
+    summarydata = dqorganisations._organisation_indicators(organisation,
                                                             aggregation_type)
 
     # Create crude total score
@@ -738,4 +738,4 @@ def _organisation_indicators_summary(organisation, aggregation_type=2):
     totalscore = totalpct/totalindicators
 
     return totalscore, totalindicators
-    
+

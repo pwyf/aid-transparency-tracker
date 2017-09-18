@@ -1,9 +1,9 @@
 {% set active_page='tests'%}{% extends "layout.html" %}
 {% block title %}Tests{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/deletePrompt.js')}}"></script>
     <script >
 
@@ -33,8 +33,8 @@
     <td>{{ t.description }}</td>
     <td>
         <a href="{{url_for('tests_editor', id=t.id)}}">
-		  <i class="icon-pencil"></i></a> 
-        <a href="{{url_for('tests_delete', id=t.id)}}" 
+		  <i class="icon-pencil"></i></a>
+        <a href="{{url_for('tests_delete', id=t.id)}}"
 		   data-confirm="Are you sure you want to delete test {{t.name}}?">
 		  <i class="icon-trash"></i></a>
     </td>

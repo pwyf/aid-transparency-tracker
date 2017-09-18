@@ -18,7 +18,7 @@ def teardown_func():
 
 def check_summary(config):
     # FIXME
-    # Don't check summary for now while 
+    # Don't check summary for now while
     # we're changing it a lot...
     return True
     suffix, cls = config

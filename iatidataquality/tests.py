@@ -94,7 +94,7 @@ def import_tests():
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
             if (request.form.get('local')):
-                result = dqimporttests.importTestsFromFile(test_list_location, 
+                result = dqimporttests.importTestsFromFile(test_list_location,
                                                            test_level.ACTIVITY)
             else:
                 url = request.form['url']

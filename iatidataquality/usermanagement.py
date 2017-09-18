@@ -55,7 +55,7 @@ class EditOrganisationPermission(Permission):
         need = EditOrganisationNeed(unicode(organisation_code))
         super(EditOrganisationPermission, self).__init__(need)
 
-OrganisationFeedbackNeed = namedtuple('organisation_feedback', 
+OrganisationFeedbackNeed = namedtuple('organisation_feedback',
                                       ['method', 'value'])
 CreateOrganisationFeedbackNeed = partial(OrganisationFeedbackNeed, 'create')
 
@@ -112,8 +112,8 @@ def check_perms(name, method=None, kwargs=None):
     if name.startswith('survey'):
         if kwargs:
             value = kwargs['organisation_code']
-            return SurveyPermission(unicode(name), 
-                                    unicode(method), 
+            return SurveyPermission(unicode(name),
+                                    unicode(method),
                                     unicode(value)).can()
         else:
             value = ""

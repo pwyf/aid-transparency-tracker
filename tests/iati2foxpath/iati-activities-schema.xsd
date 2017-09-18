@@ -64,11 +64,11 @@
             to declare where this data is published would support
             discovery of it, and any additional information they may
             choose to publish as Linked Data alongside it.
- 
+
             This attribute is URI path upon which an activity
             identifier can be appended to get a dereferenceable URI
             for any activity contained within a file.
-           
+
             Where a publisher declares using one of these properties
             that authoritative linked data is accessible for an
             activity then consuming applications that are generating
@@ -440,7 +440,7 @@
       </xsd:simpleContent>
     </xsd:complexType>
   </xsd:element>
-  
+
   <xsd:element name="activity-status" type="codeType">
     <xsd:annotation>
       <xsd:documentation xml:lang="en">
@@ -691,7 +691,7 @@
               <xsd:documentation xml:lang="en">
                 Optional element to override the top-level
                 default-flow-type element.
-                
+
                 For the value of the @code attribute, see
                 http://iatistandard.org/codelists/flow_type
               </xsd:documentation>

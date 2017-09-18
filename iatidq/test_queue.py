@@ -70,7 +70,7 @@ def _test_elements(test_functions, codelists, add_result,
             return override_result
 
         data = reformat_test_data(xmldata, binary_test)
-        # FIXME: All tests should really be validated in some way before being 
+        # FIXME: All tests should really be validated in some way before being
         # entered into the database.
         try:
             result = test_functions[test_id](data)
@@ -106,18 +106,18 @@ def test_elements(xml_fragment, test_functions, codelists, add_result,
         (activity_tests, activity_data),
         (transaction_tests, transaction_data)
         ]
-    
+
     for tests, data in tests_and_sources:
         return _test_elements(test_functions, codelists, add_result,
                               tests, data, override_result)
 
-def test_activity(runtime_id, package_id, activity, 
+def test_activity(runtime_id, package_id, activity,
                   result_hierarchy, test_functions, codelists,
                   organisation_id):
     global missing_result_id
 
     override_result = None
-    
+
     try:
         result_identifier = get_result_identifier(activity)
     except MissingIdentifier:
@@ -145,7 +145,7 @@ def test_activity(runtime_id, package_id, activity,
                 newresult.organisation_id = organisation_id
                 db.session.add(newresult)
 
-    res = test_elements(data, test_functions, codelists, add_result, 
+    res = test_elements(data, test_functions, codelists, add_result,
                         override_result)
     add_results()
 
@@ -159,14 +159,14 @@ def test_organisation_data(xml_fragment, test_functions, codelists, add_result):
     tests_and_sources = [
         (organisation_tests, organisation_data)
         ]
-    
+
     for tests, data in tests_and_sources:
         return _test_elements(test_functions, codelists, add_result,
                               tests, data, override_result)
 
 def test_organisation(runtime_id, package_id, data, test_functions, codelists,
                   organisation_id):
-    
+
     results = []
 
     def add_result(test_id, the_result):
@@ -204,21 +204,21 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     def run_test_activity(organisation_id, activity):
         result_hierarchy = get_result_hierarchy(activity)
-        
+
         test_activity(runtime_id, package_id, activity,
                       result_hierarchy,
-                      test_functions, 
+                      test_functions,
                       codelists, organisation_id)
 
-    def run_test_organisation(organisation_id, 
+    def run_test_organisation(organisation_id,
                 org_organisation_data):
-        
-        run_info_results(package_id, runtime_id, org_organisation_data, 
+
+        run_info_results(package_id, runtime_id, org_organisation_data,
                 test_level.ORGANISATION, organisation_id)
         organisation_data = etree.tostring(org_organisation_data)
 
-        test_organisation(runtime_id, package_id, 
-                organisation_data, test_functions, 
+        test_organisation(runtime_id, package_id,
+                organisation_data, test_functions,
                 codelists, organisation_id)
 
     def get_activities(organisation):
@@ -232,17 +232,17 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
         org_activities = get_activities(organisation)
         org_id = organisation['organisation_id']
 
-        [ run_test_activity(org_id, activity) 
+        [ run_test_activity(org_id, activity)
           for activity in org_activities ]
 
         if len(org_activities)>0:
-            run_info_results(package_id, runtime_id, org_activities, 
+            run_info_results(package_id, runtime_id, org_activities,
                 test_level.ACTIVITY, org_id)
         org_organisations_data = data.xpath('//iati-organisation')
 
-        [ run_test_organisation(org_id, org_organisation_data) for 
+        [ run_test_organisation(org_id, org_organisation_data) for
             org_organisation_data in org_organisations_data]
-        
+
     organisations = dqpackages.get_organisations_for_testing(package_id)
     assert len(organisations) > 0
 
@@ -254,7 +254,7 @@ def check_data(runtime_id, package_id, test_functions, codelists, data):
 
     dqfunctions.add_test_status(package_id, package_status.TESTED)
 
-def unguarded_check_file(test_functions, codelists, file_name, 
+def unguarded_check_file(test_functions, codelists, file_name,
                 runtime_id, package_id):
     print "Filename to test: %s (%d)" % (file_name, package_id)
 
@@ -263,7 +263,7 @@ def unguarded_check_file(test_functions, codelists, file_name,
 
     xml_parsed, data = parse_xml(file_name)
 
-    dqprocessing.add_hardcoded_result(hardcoded_test.VALID_XML, 
+    dqprocessing.add_hardcoded_result(hardcoded_test.VALID_XML,
                                       runtime_id, package_id, xml_parsed)
 
     if not xml_parsed:
@@ -289,10 +289,10 @@ def record_testrun(package_id, runtime_id):
     finally:
         del(conn)
 
-def check_file(test_functions, codelists, file_name, 
+def check_file(test_functions, codelists, file_name,
                 runtime_id, package_id):
     try:
-        rv = unguarded_check_file(test_functions, codelists, file_name, 
+        rv = unguarded_check_file(test_functions, codelists, file_name,
                                     runtime_id, package_id)
     except Exception, e:
         traceback.print_exc()
@@ -324,7 +324,7 @@ def dequeue_download(body, test_functions, codelists, use_subprocess):
         package_id = args['package_id']
 
         if not use_subprocess:
-            check_file(test_functions, 
+            check_file(test_functions,
                        codelists,
                        filename,
                        runtime_id,
@@ -369,7 +369,7 @@ def test_queue_once():
     codelists = dqcodelists.generateCodelists()
 
     subprocess = False
-    callback_fn = lambda body: dequeue_download(body, test_functions, 
+    callback_fn = lambda body: dequeue_download(body, test_functions,
                                                 codelists, subprocess)
     queue.exhaust_queue(download_queue, callback_fn)
 
@@ -383,7 +383,7 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
                 models.InfoResult.info_id==info_id,
                 models.InfoResult.organisation_id==organisation_id
             ).delete()
-            
+
             ir = models.InfoResult()
             ir.runtime_id = runtime_id
             ir.package_id = package_id
@@ -391,9 +391,9 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
             ir.info_id = info_id
             ir.result_data = result_data
             db.session.add(ir)
-        
+
     def info_lam_by_name(name):
-        hack = { 
+        hack = {
             'coverage': lambda fn: inforesult.inforesult_total_disbursements_commitments(fn),
             'coverage_current': lambda fn: inforesult.inforesult_total_disbursements_commitments_current(fn),
             'total_budgets_available': lambda fn: inforesult_orgtests.total_budgets_available(fn),
@@ -415,4 +415,4 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
             add_info_result(it.id, result)
 
     finally:
-        pass 
+        pass

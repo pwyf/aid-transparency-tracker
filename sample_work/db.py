@@ -39,7 +39,7 @@ create_sql_offered = """
 
 create_sql3 = """
     create view sample_full as
-        select * from sample_work_item 
+        select * from sample_work_item
             left join sample_result using (uuid)
             left join sample_offer using (uuid);
 """
@@ -77,9 +77,9 @@ def make_db(filename, work_items, create):
     for wi in work_items:
         wi_info = tuple(map(lambda k: wi[k], keys))
 
-        c.execute("""insert into sample_work_item 
+        c.execute("""insert into sample_work_item
                         ("uuid", "organisation_id", "test_id", "activity_id",
-                         "package_id", "xml_data", 
+                         "package_id", "xml_data",
                          "xml_parent_data", "test_kind")
                         values (?,?,?,?,?,?,?,?);
                   """, wi_info)
@@ -92,10 +92,10 @@ def read_db(filename):
     c = database.cursor()
 
     c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
-                         "package_id", "xml_data", "xml_parent_data", 
+                         "package_id", "xml_data", "xml_parent_data",
                          "test_kind"
-                 from sample_full 
-                 where response is null 
+                 from sample_full
+                 where response is null
                    and (offered is null
                    or offered_time < datetime('now', '-10 minute')
                    )
@@ -128,12 +128,12 @@ def read_db_response(uuid=None):
 
     # this can all be replaced with a select against sample_full
     query = """select sample_work_item.uuid as uuid,
-                sample_work_item.organisation_id as organisation_id, 
+                sample_work_item.organisation_id as organisation_id,
                 sample_work_item.test_id as test_id,
                 sample_work_item.activity_id as activity_id,
-                sample_work_item.package_id as package_id, 
-                sample_work_item.xml_data as xml_data, 
-                sample_work_item.xml_parent_data as xml_parent_data, 
+                sample_work_item.package_id as package_id,
+                sample_work_item.xml_data as xml_data,
+                sample_work_item.xml_parent_data as xml_parent_data,
                 sample_work_item.test_kind as test_kind,
                 sample_result.response as response,
                 sample_result.unsure as unsure
@@ -181,7 +181,7 @@ def save_response(work_item_uuid, response, unsure=False):
     except sqlite3.IntegrityError:
         database.rollback()
         raise
-    
+
     database.commit()
     return "create"
 
@@ -207,25 +207,25 @@ def flush_offered_work():
         c.execute('''delete from sample_offer where uuid = ?;''', (uuid,))
 
     db.commit()
-    
+
 def get_total_results():
-    
+
     filename = default_filename()
     database = sqlite.connect(filename)
     c = database.cursor()
-    
+
     c.execute("""
-    select sample_work_item.organisation_id, 
+    select sample_work_item.organisation_id,
            sample_work_item.test_id,
            sample_result.response,
            count(sample_work_item.uuid) as count
     from sample_work_item
     join sample_result on sample_result.uuid=sample_work_item.uuid
-    group by organisation_id, 
+    group by organisation_id,
              test_id,
              sample_result.response;
     """)
-    
+
     out = []
     for wi in c.fetchall():
         data = dict([ (total_results_response[i], wi[i]) for i in range(0, 4) ])
@@ -238,16 +238,16 @@ def get_summary_org_test(results):
 
     for orgtest in orgtests:
         orgtest_results = filter(lambda x: (
-                x['organisation_id'] == orgtest[0] and 
+                x['organisation_id'] == orgtest[0] and
                 x['test_id'] == orgtest[1]
                 ), results)
 
         success = filter(lambda x: x['response'] == 1, orgtest_results)
         fail    = filter(lambda x: x['response'] != 1, orgtest_results)
-        
+
         totalsuccess = sum(map(lambda x: x['count'], success))
         totalfail    = sum(map(lambda x: x['count'], fail))
-        
+
         pct = float(totalsuccess) / (totalsuccess + totalfail) * 100
 
         passfail = pct >= 50.0
@@ -258,7 +258,7 @@ def get_summary_org_test(results):
         else:
             passfail_class='important'
             passfail_text='FAIL'
-        
+
         ot.append({ 'organisation_id': orgtest[0],
                     'organisation': models.Organisation.find_or_fail(orgtest[0]),
                     'test_id': orgtest[1],
@@ -280,7 +280,7 @@ def passes_failures(passes=True):
     ot = get_summary_org_test(results)
     pf = get_passed_failed(ot, passes)
     return map(lambda x: ({
-                'organisation_id': x['organisation_id'], 
+                'organisation_id': x['organisation_id'],
                 'test_id': x['test_id']
                 }), pf)
 
@@ -296,21 +296,21 @@ def get_uuid_by_org_test(org, test):
     filename = default_filename()
     database = sqlite.connect(filename)
     c = database.cursor()
-    
+
     c.execute("""
     select sample_work_item.uuid
     from sample_work_item
     where organisation_id=%s
     and test_id=%s
     """ % (org, test))
-    
+
     return c.fetchall()
 
 def update_db_for_passes():
     with open('passes.json', 'r') as readfile:
         data = json.load(readfile)
         for ot in data:
-            work_item_uuids = get_uuid_by_org_test(ot['organisation_id'], 
+            work_item_uuids = get_uuid_by_org_test(ot['organisation_id'],
                                                    ot['test_id'])
             for uuid in work_item_uuids:
                 save_response(uuid[0], 1)

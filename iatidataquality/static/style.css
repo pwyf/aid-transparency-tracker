@@ -5,7 +5,7 @@
 .pct:after
 {
 content:"%";
-} 
+}
 table .header{cursor:pointer;}table .header:after{content:"";float:right;margin-top:7px;border-width:0 4px 4px;border-style:solid;border-color:#000 transparent;visibility:hidden;}
 table .headerSortUp,table .headerSortDown{background-color:rgba(141, 192, 219, 0.25);text-shadow:0 1px 1px rgba(255, 255, 255, 0.75);}
 table .header:hover:after{visibility:visible;}
@@ -159,12 +159,12 @@ h1, .brand {
     border-bottom-color: #FFFFFF !important;
     border-top-color: #FFFFFF !important;
 }
-th.restrict_text, td.restrict_text { 
-    max-width:200px; 
+th.restrict_text, td.restrict_text {
+    max-width:200px;
     word-wrap:break-word;
 }
-th.restrict_text_commitment, td.restrict_text_commitment { 
-    max-width:220px; 
+th.restrict_text_commitment, td.restrict_text_commitment {
+    max-width:220px;
     word-wrap:break-word;
 }
 .align-right {

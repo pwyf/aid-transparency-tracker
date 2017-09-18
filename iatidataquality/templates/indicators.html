@@ -18,15 +18,15 @@
     </style>
     <div class="pull-right">
     <p>
-	  <a class="btn btn-success" 
+	  <a class="btn btn-success"
 		 href="{{edit_group}}">
 		<i class="icon-white icon-pencil"></i> <strong>Edit Group</strong></a>
 
-      <a class="btn btn-danger" 
-		 href="{{delete_group}}" 
-		 data-confirm="Are you sure you want to delete indicator group 
-					   {{indicatorgroup.name}}? This action will also 
-					   delete all indicators associated with this group, 
+      <a class="btn btn-danger"
+		 href="{{delete_group}}"
+		 data-confirm="Are you sure you want to delete indicator group
+					   {{indicatorgroup.name}}? This action will also
+					   delete all indicators associated with this group,
 					   and cannot be undone.">
 		<i class="icon-white icon-trash"></i> <strong>Delete Group</strong></a>
 	</p>
@@ -73,14 +73,14 @@
             <a href="{{links.edit}}">
 			  <i class="icon-pencil"></i>
 			</a>
-            <a href="{{links.delete}}" 
-			   data-confirm="Are you sure you want to delete 
+            <a href="{{links.delete}}"
+			   data-confirm="Are you sure you want to delete
 							 Indicator {{name}}?">
 			  <i class="icon-trash"></i>
 			</a>
         </td>
           {{/admin}}
-        <td><a href="#" class="showTests" 
+        <td><a href="#" class="showTests"
 			   id="showindicator-{{id}}">
 			<i class="icon-chevron-down align-right"></i></a>
 		</td>
@@ -104,7 +104,7 @@
 {% endblock %}
 
 {% block final_scripts %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/organisationPublication.js')}}"></script>
     <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
 {% endblock %}

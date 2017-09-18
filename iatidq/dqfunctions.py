@@ -24,14 +24,14 @@ def add_test_status(package_id, status_id):
 def clear_revisions():
     with db.session.begin():
         for pkg in models.Package.query.filter(
-            models.Package.package_revision_id!=None, 
+            models.Package.package_revision_id!=None,
             models.Package.active == True
             ).all():
 
             pkg.package_revision_id = None
-        
+
             db.session.add(pkg)
-            
+
 def get_package_organisations(iatiupdates_url):
     data = urllib2.urlopen(iatiupdates_url, timeout=60).read()
     print iatiupdates_url

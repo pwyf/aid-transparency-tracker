@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
@@ -14,13 +14,13 @@
 
     </script>
     <div class="pull-right">
-        <button type="button" class="btn" 
+        <button type="button" class="btn"
 				data-toggle="collapse" data-target="#packages_div">
         <i class="icon-file"></i> <strong>Packages</strong>
         </button>
     </div>
 	<h1>
-	  <a href="{{url_for('organisations', 
+	  <a href="{{url_for('organisations',
 			   organisation_code=organisation.organisation_code)}}">
 		{{organisation.organisation_name}}
 	  </a> &raquo; Detailed view
@@ -36,7 +36,7 @@
 	{% for pk in packages %}
     <tr>
 	  <td>
-		<a href="{{url_for('packages', 
+		<a href="{{url_for('packages',
 				 package_name=pk.Package.package_name)}}">
 		  {{ pk.Package.package_name }}
 	    </a>
@@ -53,7 +53,7 @@
 
     {% if results %}
     <div class="pull-right testruns">
-        <form action="" method="GET" 
+        <form action="" method="GET"
 			  id="aggregation_type_form" class="form-inline">
 
             <a id="showAllTests" class="btn" href="#">Show all tests</a>
@@ -63,7 +63,7 @@
                 {% for agt in all_aggregation_types %}
 
                 <option value="{{agt.AggregationType.id}}"
-						{% if agt.AggregationType.id==aggregation_type %} 
+						{% if agt.AggregationType.id==aggregation_type %}
 						selected
 						{% endif %}>{{agt.AggregationType.name}}</option>
 
@@ -75,7 +75,7 @@
     <h2>Results</h2>
 
 	<p class="lead">
-      The following detailed results are based on the IATI data found 
+      The following detailed results are based on the IATI data found
       for this organisation.
 	</p>
 
@@ -89,19 +89,19 @@
         <tbody>
         {% for test, result in values.items() %}
           {% if result and result.test %}
-          <tr id="tr{{result.test.id}}h{{h}}" 
+          <tr id="tr{{result.test.id}}h{{h}}"
 			  class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{% endif %}{% if result.condition %} condition-hidden alert{% endif %}">
 
-			<td><a href="#test{{result.test.id}}" role="button" 
+			<td><a href="#test{{result.test.id}}" role="button"
 				   data-toggle="modal">{{result.test.description}}</a>
 
-                <div id="test{{result.test.id}}" class="modal hide fade" 
+                <div id="test{{result.test.id}}" class="modal hide fade"
 					 tabindex="-1" role="dialog" aria-labelledby="testHeader"
 					 aria-hidden="true">
 
                     <div class="modal-header">
-                        <button type="button" class="close" 
-								data-dismiss="modal" 
+                        <button type="button" class="close"
+								data-dismiss="modal"
 								aria-hidden="true">×</button>
 
                         <h3 id="testHeader">
@@ -111,7 +111,7 @@
 
                     <div class="modal-body">
                         <p>Each indicator can comprise of
-						   several tests, which are automatically run on 
+						   several tests, which are automatically run on
 						  the data.</p>
 
                         {% if result.test.test_level == 3 %}
@@ -142,7 +142,7 @@
 								aria-hidden="true">Close</button>
                     </div>
                 </div>
-				{% if result.condition %} 
+				{% if result.condition %}
 				<i class="icon-info-sign" title="{{result.condition[1]}}"></i>
 				{% endif %}
 			</td>
@@ -164,7 +164,7 @@
   organisation_code = "{{organisation.organisation_code}}";
 </script>
 
-<script type="text/javascript" 
+<script type="text/javascript"
 		src="{{url_for('static', filename='js/orgDetail.js')}}">
 </script>
 {% endblock %}
