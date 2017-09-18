@@ -22,7 +22,7 @@ def importIndicatorDescriptions():
 
 def importIndicatorDescriptionsFromFile(indicatorgroup_name, filename):
     with file(filename) as fh:
-        return _importIndicatorDescriptions(indicatorgroup_name, 
+        return _importIndicatorDescriptions(indicatorgroup_name,
                                                    fh, True)
 
 def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
@@ -73,7 +73,7 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
         indicatorgroup = addIndicatorGroup({"name": indicatorgroup_name,
                                             "description": ""
                                             })
-        
+
     data = unicodecsv.DictReader(fh)
 
     for row in data:
@@ -81,11 +81,11 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
             infotype = models.InfoType.query.filter(models.InfoType.name==row['infotype_name']).first()
             if not infotype:
                 continue
-            
+
             indicator_name = row['indicator_name']
             if (indicator_name == ""):
                 continue
-            
+
             checkI = indicators(indicatorgroup_name, indicator_name)
             if checkI:
                 indicator = checkI
@@ -104,11 +104,11 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
 
             if not test:
                 continue
-            
+
             indicator_name = row['name']
             if (indicator_name == ""):
                 continue
-            
+
             checkI = indicators(indicatorgroup_name, indicator_name)
             if checkI:
                 indicator = checkI
@@ -124,7 +124,7 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
                                 "test_id" : test.id,
                                 "indicator_id" : indicator.id
                             })
-            
+
     print "Imported successfully"
     return True
 
@@ -240,7 +240,7 @@ def addIndicator(data):
 
 def updateIndicator(indicatorgroup, indicator, data):
     checkI = db.session.query(models.Indicator
-                ).filter(models.Indicator.name==indicator, 
+                ).filter(models.Indicator.name==indicator,
                          models.IndicatorGroup.name==indicatorgroup
                 ).join(models.IndicatorGroup
                 ).first()
@@ -269,7 +269,7 @@ def getIndicatorByName(indicator_name):
 
 def deleteIndicator(indicatorgroup, indicator):
     checkI = db.session.query(models.Indicator
-                ).filter(models.Indicator.name==indicator, 
+                ).filter(models.Indicator.name==indicator,
                          models.IndicatorGroup.name==indicatorgroup
                 ).join(models.IndicatorGroup
                 ).first()
