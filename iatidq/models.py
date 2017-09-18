@@ -142,7 +142,7 @@ class Result(BaseModel):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-db.Index('result_runpack', 
+db.Index('result_runpack',
          Result.runtime_id, Result.package_id, Result.result_identifier)
 db.Index('result_test',
          Result.test_id)
@@ -150,7 +150,7 @@ db.Index('result_test',
 # there should be a uniqueness constraint, roughly:
 #
 # alter table aggregateresult add unique  (
-#   package_id, test_id, result_hierarchy, aggregateresulttype_id, 
+#   package_id, test_id, result_hierarchy, aggregateresulttype_id,
 #   organisation_id
 # );
 #
@@ -168,9 +168,9 @@ class AggregateResult(BaseModel):
     results_data = db.Column(db.Float)
     results_num = db.Column(db.Integer)
     __table_args__ = (db.UniqueConstraint('package_id',
-                                       'test_id', 
-                                       'result_hierarchy', 
-                                       'aggregateresulttype_id', 
+                                       'test_id',
+                                       'result_hierarchy',
+                                       'aggregateresulttype_id',
                                        'organisation_id'),)
 
     def as_dict(self):
@@ -326,11 +326,11 @@ class Indicator(BaseModel):
     indicator_noformat = db.Column(db.Boolean)
     indicator_order = db.Column(db.Integer, nullable=False)
     indicator_weight = db.Column(db.Float(precision=4))
-    
+
     @property
     def indicator_category_name_text(self):
         return self.indicator_category_name.title()
-    
+
     @property
     def indicator_subcategory_name_text(self):
         return self.indicator_subcategory_name.title()
@@ -465,7 +465,7 @@ class Organisation(BaseModel):
                       db.UniqueConstraint('organisation_code'))
     # organisation_code is also used to communicate
     # with implementation schedules
-    
+
     def setup(self,
                  organisation_name,
                  organisation_code,
@@ -593,7 +593,7 @@ class User(BaseModel):
         self.organisation = organisation
         if id is not None:
             self.id = id
-    
+
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
 
@@ -644,7 +644,7 @@ class OrganisationSurvey(BaseModel):
     organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
                              nullable=False)
     __table_args__ = (db.UniqueConstraint('organisation_id',),)
-    
+
     workflow = db.relationship('Workflow')
 
     def setup(self,
@@ -710,7 +710,7 @@ class PublishedFormat(BaseModel):
     title = db.Column(db.UnicodeText)
     format_class = db.Column(db.UnicodeText)
     format_value = db.Column(db.Float)
-    
+
     def setup(self,
                  name,
                  title,
@@ -734,7 +734,7 @@ class PublishedStatus(BaseModel):
     title = db.Column(db.UnicodeText)
     publishedstatus_class = db.Column(db.UnicodeText)
     publishedstatus_value = db.Column(db.Float)
-    
+
     def setup(self,
                  name,
                  title,
@@ -794,7 +794,7 @@ class WorkflowType(BaseModel):
 
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.UnicodeText)
-    
+
     def setup(self,
                  name,
                  id=None):

@@ -59,7 +59,7 @@ def _importOrganisationPackages(fh, local):
              "organisation_largest_recipient": row["organisation_largest_recipient"],
              "organisation_largest_recipient_source": row["organisation_largest_recipient_source"]
              })
-    
+
     def get_packages(organisation_code):
         return models.Package.query.filter(
             models.PackageGroup.publisher_iati_id==organisation_code
@@ -91,7 +91,7 @@ def _importOrganisationPackages(fh, local):
                     "package_id" : package.id,
                     "condition": condition
                     })
-            
+
         def add_org_packagegroup(packagegroup):
             addOrganisationPackageGroup({
                     "organisation_id" : organisation.id,
@@ -121,7 +121,7 @@ def _importOrganisationPackages(fh, local):
             if packagegroup is not None:
                 add_org_package_from_pg(packagegroup)
                 add_org_packagegroup(packagegroup)
-                
+
     print "Imported successfully"
     return True
 
@@ -133,7 +133,7 @@ def _updateOrganisationFrequency(fh):
 
     def get_frequency():
         rows = unicodecsv.DictReader(fh)
-        
+
         for row in rows:
             freq = row["Frequency"]
 
@@ -247,7 +247,7 @@ def addOrganisationPackage(data):
 
     if checkPP is not None:
         return False
-    
+
     with db.session.begin():
         newPP = models.OrganisationPackage()
         newPP.setup(
@@ -260,7 +260,7 @@ def addOrganisationPackage(data):
 
 def addOrganisationPackageGroup(data):
     checkPG = models.OrganisationPackageGroup.query.filter_by(
-        organisation_id=data['organisation_id'], 
+        organisation_id=data['organisation_id'],
         packagegroup_id=data['packagegroup_id']
                 ).first()
 
@@ -299,7 +299,7 @@ def addOrganisationPackageFromPackageGroup(data):
     else:
         return False
 
-def deleteOrganisationPackage(organisation_code, package_name, 
+def deleteOrganisationPackage(organisation_code, package_name,
                               organisationpackage_id):
 
     checkPP = models.OrganisationPackage.query.filter_by(
@@ -356,7 +356,7 @@ def info_result_tuple(ir):
     'indicator_weight': ir.Indicator.indicator_weight
         }
 
-    return (ir.Indicator.id, 
+    return (ir.Indicator.id,
             {
             'results_num': 1,
             'results_pct': ir.InfoResult.result_data,
@@ -364,10 +364,10 @@ def info_result_tuple(ir):
             'tests': [
                 {'test': {
                         'id': 'infotype-' + str(ir.InfoType.id),
-                        'name': ir.InfoType.name, 
+                        'name': ir.InfoType.name,
                         'description': ir.InfoType.description
-                        }, 
-                 'results_pct': ir.InfoResult.result_data, 
+                        },
+                 'results_pct': ir.InfoResult.result_data,
                  'results_num': 1}
                 ]
             })
@@ -376,7 +376,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
     s = summary.PublisherIndicatorsSummaryCreator(organisation,
                                                   aggregation_type)
     data = s.summary.summary()  ## FIXME
-    
+
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)
     data.update([ info_result_tuple(ir) for ir in inforesults ])
@@ -432,8 +432,8 @@ def _organisation_indicators_inforesults(organisation):
 
 def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
-    
-    commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], 
+
+    commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"],
                                                      u"commitment")
     commitment_results = dict(map(lambda x: (x.id, {'indicator': x.as_dict() }), commitment_data))
 
@@ -449,7 +449,7 @@ def _organisation_indicators_complete_split(organisation, aggregation_type=2):
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     commitment_data = dqindicators.indicators_subset(
-                    app.config["INDICATOR_GROUP"], 
+                    app.config["INDICATOR_GROUP"],
                     u"commitment")
     commitment = dict(map(lambda x: (x.id, {'indicator': x.as_dict() }), commitment_data))
     if not results:
