@@ -17,10 +17,6 @@ from . import dqindicators, models, summary
 import dqpackages
 
 
-def update_model(src, dst, keys):
-    for key in keys:
-        setattr(dst, key, getattr(dst, key))
-
 def checkCondition(row):
     pg_cond = row.get('packagegroup_condition', '')
     if pg_cond != '':
