@@ -88,8 +88,9 @@ def update_frequency():
 @click.option('--filename', help='Set filename of data to test')
 def import_indicators(filename):
     """Import indicators. Will try to assign indicators to existing tests."""
+    indicator_group_name = app.config['INDICATOR_GROUP']
     if filename:
-        dqindicators.importIndicatorsFromFile('pwyf2013', filename)
+        dqindicators.importIndicatorsFromFile(indicator_group_name, filename)
     else:
         dqindicators.importIndicators()
 
