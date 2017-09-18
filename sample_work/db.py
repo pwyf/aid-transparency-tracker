@@ -7,7 +7,7 @@ from sqlite3 import dbapi2 as sqlite
 import sqlite3
 
 import config
-from iatidq import dqorganisations, dqtests
+from iatidq import dqtests, models
 
 
 create_sql = """
@@ -260,7 +260,7 @@ def get_summary_org_test(results):
             passfail_text='FAIL'
         
         ot.append({ 'organisation_id': orgtest[0],
-                    'organisation': dqorganisations.organisation_by_id(orgtest[0]),
+                    'organisation': models.Organisation.find_or_fail(orgtest[0]),
                     'test_id': orgtest[1],
                     'test': dqtests.tests(orgtest[1]),
                     'success': round(pct, 2),

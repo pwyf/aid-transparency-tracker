@@ -13,7 +13,7 @@ from flask import render_template, flash, request, url_for
 from flask_login import current_user
 
 from . import app, usermanagement
-from iatidq import dqorganisations, dqtests, dqindicators, dqcodelists
+from iatidq import dqorganisations, dqtests, dqindicators, dqcodelists, models
 from sample_work import sample_work, test_mapping
 from sample_work import db as sample_db
 
@@ -36,7 +36,7 @@ def get_test_indicator_info(test_id):
 
 @memodict
 def get_org_info(organisation_id):
-    return dqorganisations.organisation_by_id(organisation_id)
+    return models.Organisation.find_or_fail(organisation_id)
 
 def get_response(kind, response, unsure):
     def get_unsureness(unsure):
