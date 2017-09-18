@@ -93,7 +93,7 @@ Reinitialise
     flask drop_db
     flask init_db
     flask setup --minimal
-    python quickstart.py refresh --minimal
+    flask refresh --minimal
     bin/dqtool reload-packages --organisation-code=GB-1
     python download_once.py
     python tests_once.py
@@ -119,7 +119,7 @@ Reload a package
 Adding new tests
 ================
 
-    python quickstart.py enroll-tests --filename tests/some-new-file.csv
+    flask enroll-tests --filename tests/some-new-file.csv
 
 You will then need to associate each test with an indicator:
 
