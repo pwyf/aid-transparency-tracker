@@ -241,18 +241,12 @@ def workflowTypeByName(workflowtype_name):
         return checkWT
     return None
 
-def workflow_by_id(workflow_id):
-    checkW = db.session.query(models.Workflow
-            ).filter_by(id=workflow_id
-            ).first()
-    return checkW
-
 def advanceSurvey(organisationsurvey):
     # receives an OrganisationSurvey object
     # updates currentworkflow_id to next workflow
     survey = models.OrganisationSurvey.query.filter_by(id=organisationsurvey.id
             ).first()
-    current_workflow = workflow_by_id(organisationsurvey.currentworkflow_id)
+    current_workflow = models.Workflow.find(organisationsurvey.currentworkflow_id)
     if not (survey and current_workflow):
         return False
     with db.session.begin():
