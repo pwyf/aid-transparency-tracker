@@ -10,13 +10,20 @@
 from datetime import datetime
 
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy_mixins import AllFeaturesMixin
+from sqlalchemy_mixins import AllFeaturesMixin, ModelNotFoundError
 
 from iatidataquality import db
 
 
 class BaseModel(db.Model, AllFeaturesMixin):
     __abstract__ = True
+
+    def first_or_fail(self):
+        first = self.first()
+        if not first:
+            raise ModelNotFoundError
+        return first
+
 
 class PackageStatus(BaseModel):
     __tablename__ = 'packagestatus'
