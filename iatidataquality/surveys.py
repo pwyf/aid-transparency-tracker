@@ -29,7 +29,7 @@ def surveys_admin():
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
 
-    return render_template("surveys/surveys_admin.html", 
+    return render_template("surveys/surveys_admin.html",
                            **locals())
 
 @app.route("/surveys/create/", methods=["GET", "POST"])
@@ -56,7 +56,7 @@ def organisation_survey_repair(organisation_code):
     else:
         flash('Survey could not be repaired', 'error')
     return redirect(url_for('organisation_survey', organisation_code=organisation_code))
-    
+
 @app.route("/organisations/<organisation_code>/survey/")
 @usermanagement.perms_required('survey', 'view')
 def organisation_survey(organisation_code=None):
@@ -72,7 +72,7 @@ def organisation_survey(organisation_code=None):
     loggedinuser = current_user
     checksurveyOK = dqsurveys.checkSurveyData(organisation_code)
 
-    return render_template("surveys/survey.html", 
+    return render_template("surveys/survey.html",
         survey=survey,
         surveydata=surveydata,
         workflows=workflows,
@@ -95,7 +95,7 @@ def getTimeRemainingNotice(deadline):
     else:
         return "Today is the last day for making any changes to your survey."
 
-def __survey_process(organisation, workflow, request, 
+def __survey_process(organisation, workflow, request,
                      organisationsurvey, published_accepted):
 
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
@@ -121,7 +121,7 @@ def __survey_process(organisation, workflow, request,
             if indicator.indicator_noformat:
                 data['published_format'] = dqsurveys.publishedFormatByName('document').id
             else:
-                data['published_format'] = request.form.get(str(indicator.id) + "-publishedformat")      
+                data['published_format'] = request.form.get(str(indicator.id) + "-publishedformat")
 
             if indicator.indicator_ordinal:
                 data['ordinal_value'] = request.form.get(str(indicator.id) + "-ordinal_value")
@@ -131,9 +131,9 @@ def __survey_process(organisation, workflow, request,
         data['published_comment'] = request.form.get(str(indicator.id)+"-comments")
         data['published_source'] = request.form.get(str(indicator.id)+"-source")
         data['published_accepted'] = published_accepted(str(indicator.id))
-        
+
         surveydata = dqsurveys.addSurveyData(data)
-    
+
     if 'submit' in request.form:
         if workflow.Workflow.id == organisationsurvey.currentworkflow_id:
         # save data, advance currentworkflow_id to next workflow
@@ -151,26 +151,26 @@ def __survey_process(organisation, workflow, request,
 none = lambda i: None
 add_agree = lambda indicator: request.form.get(indicator + "-agree")
 
-def _survey_process_collect(organisation, workflow, 
+def _survey_process_collect(organisation, workflow,
                             request, organisationsurvey):
-    return __survey_process(organisation, workflow, 
+    return __survey_process(organisation, workflow,
                             request, organisationsurvey, none)
 
-def _survey_process_review(organisation, workflow, 
+def _survey_process_review(organisation, workflow,
                            request, organisationsurvey):
-    return __survey_process(organisation, workflow, 
+    return __survey_process(organisation, workflow,
                             request, organisationsurvey, none)
 
 def _survey_process_finalreview(organisation, workflow,
                                 request, organisationsurvey):
-    return __survey_process(organisation, workflow, request, 
-                            organisationsurvey, 
+    return __survey_process(organisation, workflow, request,
+                            organisationsurvey,
                             add_agree)
 
-def _survey_process_comment(organisation, workflow, 
+def _survey_process_comment(organisation, workflow,
                             request, organisationsurvey):
-    return __survey_process(organisation, workflow, 
-                            request, organisationsurvey, 
+    return __survey_process(organisation, workflow,
+                            request, organisationsurvey,
                             add_agree)
 
 def _survey_process_send(organisation, workflow, request, organisationsurvey):
@@ -194,8 +194,8 @@ def get_old_publication_status():
         ('not published', 'Not published', 'important'),
         ]
     struct = lambda ps: (ps[0], {
-            "text": ps[1], 
-            "class": ps[2] 
+            "text": ps[1],
+            "class": ps[2]
             })
     return dict(map(struct, pses))
 
@@ -208,15 +208,15 @@ def get_ordinal_values_years():
         (None, 'Unknown', '')
         ]
     struct = lambda yr: (yr[0], ({
-            "text": yr[1], 
-            "class": yr[2] 
+            "text": yr[1],
+            "class": yr[2]
             }))
     return map(struct, years)
 
 id_tuple = lambda p: (p.id, p)
 
-def organisation_survey_view(organisation_code, workflow, 
-                             workflow_name, organisationsurvey, 
+def organisation_survey_view(organisation_code, workflow,
+                             workflow_name, organisationsurvey,
                              allowed_to_edit):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
@@ -235,7 +235,7 @@ def organisation_survey_view(organisation_code, workflow,
         organisation, 2)
 
     twentytwelvedata = iatidq.survey.mapping.get_organisation_results(
-        organisation_code, 
+        organisation_code,
         [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
         )
 
@@ -262,7 +262,7 @@ def organisation_survey_view(organisation_code, workflow,
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
-    
+
     workflow = dqsurveys.workflowByName(workflow_name)
     if not workflow:
         flash('That workflow does not exist.', 'error')
@@ -295,13 +295,13 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         else:
             redir_to = url_for('home')
         return redirect(redir_to)
-    
+
     if not allowed_to_view:
         return no_permission()
 
     if request.method != 'POST':
         return organisation_survey_view(
-            organisation_code, workflow, 
+            organisation_code, workflow,
             workflow_name, organisationsurvey, allowed_to_edit)
 
     if not allowed_to_edit:
@@ -331,7 +331,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
             organisation, workflow, request, organisationsurvey)
     elif workflow_name == 'finalised':
         return "finalised"
-    return redirect(url_for("organisations", 
+    return redirect(url_for("organisations",
                             organisation_code=organisation_code))
 
 
