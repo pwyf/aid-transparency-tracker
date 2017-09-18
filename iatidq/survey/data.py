@@ -15,12 +15,6 @@ from iatidq import models, dqindicators, dqorganisations
 
 class NoSuchSurvey(Exception): pass
 
-def getIDorNone(sqlalchemy_object):
-    if sqlalchemy_object is not None:
-        return sqlalchemy_object.Workflow.id
-    else:
-        return None
-
 def getSurveyById(organisation_id):
     return models.OrganisationSurvey.query.filter_by(
         organisation_id=organisation_id).first()
