@@ -28,13 +28,11 @@ def clear_survey(options):
         sys.exit(1)
 
 def create_survey(options):
-    assert options.organisation_code
+    organisation_code = unicode(options.organisation_code)
 
-    organisation_code = options.organisation_code.decode('ascii')
+    organisation = models.Organisation.where(organisation_code=organisation_code).first_or_fail()
 
-    org_id = dqorganisations.organisationid_by_code(organisation_code)
-
-    _ = iatidq.survey.data.getOrCreateSurveyById(org_id)
+    _ = iatidq.survey.data.getOrCreateSurveyById(organisation.id)
 
 def get_package_names(organisation_code):
     for p in dqorganisations.organisationPackages(
@@ -122,7 +120,7 @@ def compare_summary(options):
 
     aggregation_type = 2
 
-    organisation = dqorganisations.organisation_by_code(organisation_code)
+    organisation = models.Organisation.where(organisation_code=organisation_code).first_or_fail()
 
     s = summary.PublisherSummaryCreator(organisation, aggregation_type)
     observed_summary_results = json.loads(json.dumps(s.summary.summary(), 
@@ -137,7 +135,7 @@ def compare_indicators_summary(options):
 
     aggregation_type = 2
 
-    organisation = dqorganisations.organisation_by_code(organisation_code)
+    organisation = models.Organisation.where(organisation_code=organisation_code).first_or_fail()
 
     s = summary.PublisherIndicatorsSummaryCreator(organisation,
                                                   aggregation_type)
@@ -149,7 +147,7 @@ def make_survey_data(options):
     assert options.organisation_code
 
     organisation_code = options.organisation_code.decode('ascii')
-    org_id = dqorganisations.organisationid_by_code(organisation_code)
+    org_id = models.Organisation.where(organisation_code=organisation_code).first_or_fail().id
     print "faking survey for %s" % organisation_code
 
     while True:
@@ -327,8 +325,7 @@ def update_sampling(options):
     def specific_failure():
         organisation_code = options.organisation_code.decode('ascii')
         test_id = options.test_id
-        organisation_id = dqorganisations.organisationid_by_code(
-            organisation_code)
+        organisation_id = models.Organisation.where(organisation_code=organisation_code).first_or_fail().id
 
         return [ (organisation_id, test_id) ]
 
