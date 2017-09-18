@@ -28,7 +28,7 @@ class BaseModel(db.Model, AllFeaturesMixin):
 class PackageStatus(BaseModel):
     __tablename__ = 'packagestatus'
     id = db.Column(db.Integer, primary_key=True)
-    package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
     status = db.Column(db.Integer, nullable=False)
     runtime_datetime = db.Column(db.DateTime)
 
@@ -106,7 +106,7 @@ class Package(BaseModel):
     package_license = db.Column(db.UnicodeText)
     package_metadata_created = db.Column(db.UnicodeText)
     package_metadata_modified = db.Column(db.UnicodeText)
-    package_group_id = db.Column(db.Integer, db.ForeignKey('packagegroup.id'))
+    package_group_id = db.Column(db.Integer, db.ForeignKey('packagegroup.id', ondelete='CASCADE'))
     package_activity_from = db.Column(db.UnicodeText)
     package_activity_to = db.Column(db.UnicodeText)
     package_activity_count = db.Column(db.UnicodeText)
@@ -138,10 +138,10 @@ class Package(BaseModel):
 class Result(BaseModel):
     __tablename__ = 'result'
     id = db.Column(db.Integer, primary_key=True)
-    runtime_id = db.Column(db.Integer, db.ForeignKey('runtime.id'), nullable=False)
-    package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
-    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'))
-    test_id = db.Column(db.Integer, db.ForeignKey('test.id'), nullable=False)
+    runtime_id = db.Column(db.Integer, db.ForeignKey('runtime.id', ondelete='CASCADE'), nullable=False)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'))
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'), nullable=False)
     result_data = db.Column(db.Integer, nullable=False)
     result_identifier = db.Column(db.UnicodeText)
     result_hierarchy = db.Column(db.Integer)
@@ -166,11 +166,11 @@ db.Index('result_test',
 class AggregateResult(BaseModel):
     __tablename__='aggregateresult'
     id = db.Column(db.Integer,primary_key=True)
-    package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
-    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'))
-    aggregateresulttype_id = db.Column(db.Integer, db.ForeignKey('aggregationtype.id'),
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'))
+    aggregateresulttype_id = db.Column(db.Integer, db.ForeignKey('aggregationtype.id', ondelete='CASCADE'),
                                     nullable=False)
-    test_id = db.Column(db.Integer, db.ForeignKey('test.id'), nullable=False)
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'), nullable=False)
     result_hierarchy = db.Column(db.Integer, nullable=False)
     results_data = db.Column(db.Float)
     results_num = db.Column(db.Integer)
@@ -190,7 +190,7 @@ class AggregationType(BaseModel):
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
     description = db.Column(db.UnicodeText)
-    test_id = db.Column(db.Integer, db.ForeignKey('test.id'))
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'))
     test_result = db.Column(db.Integer, nullable=False)
     active = db.Column(db.Integer)
 
@@ -275,7 +275,7 @@ class CodelistCode(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
     code = db.Column(db.UnicodeText, nullable=False)
-    codelist_id = db.Column(db.Integer, db.ForeignKey('codelist.id'), nullable=False)
+    codelist_id = db.Column(db.Integer, db.ForeignKey('codelist.id', ondelete='CASCADE'), nullable=False)
     source = db.Column(db.UnicodeText)
 
     def setup(self,
@@ -324,7 +324,7 @@ class Indicator(BaseModel):
     name = db.Column(db.UnicodeText, nullable=False)
     description = db.Column(db.UnicodeText)
     longdescription = db.Column(db.UnicodeText)
-    indicatorgroup_id = db.Column(db.Integer, db.ForeignKey('indicatorgroup.id'),
+    indicatorgroup_id = db.Column(db.Integer, db.ForeignKey('indicatorgroup.id', ondelete='CASCADE'),
                                nullable=False)
     indicator_type = db.Column(db.UnicodeText)
     indicator_category_name = db.Column(db.UnicodeText)
@@ -379,8 +379,8 @@ class Indicator(BaseModel):
 class IndicatorTest(BaseModel):
     __tablename__ = 'indicatortest'
     id = db.Column(db.Integer, primary_key=True)
-    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id'), nullable=False)
-    test_id = db.Column(db.Integer, db.ForeignKey('test.id'), nullable=False)
+    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id', ondelete='CASCADE'), nullable=False)
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'), nullable=False)
     __table_args__ = (db.UniqueConstraint('test_id'), )
 
     def setup(self,
@@ -398,8 +398,8 @@ class IndicatorTest(BaseModel):
 class IndicatorInfoType(BaseModel):
     __tablename__ = 'indicatorinfotype'
     id = db.Column(db.Integer, primary_key=True)
-    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id'), nullable=False)
-    infotype_id = db.Column(db.Integer, db.ForeignKey('info_type.id'), nullable=False)
+    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id', ondelete='CASCADE'), nullable=False)
+    infotype_id = db.Column(db.Integer, db.ForeignKey('info_type.id', ondelete='CASCADE'), nullable=False)
 
     def setup(self,
                  indicator_id,
@@ -416,9 +416,9 @@ class IndicatorInfoType(BaseModel):
 class OrganisationCondition(BaseModel):
     __tablename__ = 'organisationcondition'
     id = db.Column(db.Integer, primary_key=True)
-    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
-    test_id = db.Column(db.Integer, db.ForeignKey('test.id'), nullable=False)
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'), nullable=False)
     operation = db.Column(db.Integer) # show (1) or don't show (0) result
     condition = db.Column(db.UnicodeText) # activity level, hierarchy 2
     condition_value = db.Column(db.UnicodeText) # True, 2, etc.
@@ -434,7 +434,7 @@ class OrganisationConditionFeedback(BaseModel):
     __tablename__ ='organisationconditionfeedback'
     id = db.Column(db.Integer, primary_key=True)
     organisation_id = db.Column(db.Integer,
-                             db.ForeignKey('organisation.id'),
+                             db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
     uses = db.Column(db.UnicodeText)
     element = db.Column(db.UnicodeText)
@@ -500,9 +500,9 @@ class Organisation(BaseModel):
 class OrganisationPackage(BaseModel):
     __tablename__ = 'organisationpackage'
     id = db.Column(db.Integer, primary_key=True)
-    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
-    package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
     condition = db.Column(db.UnicodeText)
     __table_args__ = (db.UniqueConstraint('organisation_id', 'package_id', name='_organisation_package_uc'),
                      )
@@ -520,9 +520,9 @@ class OrganisationPackage(BaseModel):
 class OrganisationPackageGroup(BaseModel):
     __tablename__ = 'organisationpackagegroup'
     id = db.Column(db.Integer, primary_key=True)
-    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
-    packagegroup_id = db.Column(db.Integer, db.ForeignKey('packagegroup.id'),
+    packagegroup_id = db.Column(db.Integer, db.ForeignKey('packagegroup.id', ondelete='CASCADE'),
                              nullable=False)
     condition = db.Column(db.UnicodeText)
     __table_args__ = (db.UniqueConstraint('organisation_id', 'packagegroup_id'),)
@@ -546,10 +546,10 @@ class OrganisationPackageGroup(BaseModel):
 class InfoResult(BaseModel):
     __tablename__ = 'info_result'
     id = db.Column(db.Integer, primary_key=True)
-    runtime_id = db.Column(db.Integer, db.ForeignKey('runtime.id'), nullable=False)
-    package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
-    info_id = db.Column(db.Integer, db.ForeignKey('info_type.id'), nullable=False)
-    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'))
+    runtime_id = db.Column(db.Integer, db.ForeignKey('runtime.id', ondelete='CASCADE'), nullable=False)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
+    info_id = db.Column(db.Integer, db.ForeignKey('info_type.id', ondelete='CASCADE'), nullable=False)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'))
     result_data = db.Column(db.Float)
 
 class InfoType(BaseModel):
@@ -645,10 +645,10 @@ class UserPermission(BaseModel):
 class OrganisationSurvey(BaseModel):
     __tablename__ = 'organisationsurvey'
     id = db.Column(db.Integer,primary_key=True)
-    currentworkflow_id = db.Column(db.Integer, db.ForeignKey('workflow.id'),
+    currentworkflow_id = db.Column(db.Integer, db.ForeignKey('workflow.id', ondelete='CASCADE'),
                                 nullable=False)
     currentworkflow_deadline = db.Column(db.DateTime)
-    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
     __table_args__ = (db.UniqueConstraint('organisation_id',),)
 
@@ -669,14 +669,14 @@ class OrganisationSurveyData(BaseModel):
     __tablename__ = 'organisationsurveydata'
     id = db.Column(db.Integer,primary_key=True)
     organisationsurvey_id = db.Column(db.Integer,
-                                   db.ForeignKey('organisationsurvey.id'),
+                                   db.ForeignKey('organisationsurvey.id', ondelete='CASCADE'),
                                    nullable=False)
-    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id'), nullable=False)
-    workflow_id = db.Column(db.Integer, db.ForeignKey('workflow.id'), nullable=False)
-    published_status_id = db.Column(db.Integer, db.ForeignKey('publishedstatus.id'))
+    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id', ondelete='CASCADE'), nullable=False)
+    workflow_id = db.Column(db.Integer, db.ForeignKey('workflow.id', ondelete='CASCADE'), nullable=False)
+    published_status_id = db.Column(db.Integer, db.ForeignKey('publishedstatus.id', ondelete='CASCADE'))
     published_source = db.Column(db.UnicodeText)
     published_comment = db.Column(db.UnicodeText)
-    published_format_id = db.Column(db.Integer, db.ForeignKey('publishedformat.id'))
+    published_format_id = db.Column(db.Integer, db.ForeignKey('publishedformat.id', ondelete='CASCADE'))
     published_accepted = db.Column(db.Integer)
     ordinal_value = db.Column(db.Float(precision=2))
     __table_args__ = (db.UniqueConstraint('organisationsurvey_id',
@@ -764,7 +764,7 @@ class Workflow(BaseModel):
     name = db.Column(db.UnicodeText)
     title = db.Column(db.UnicodeText)
     order = db.Column(db.Integer)
-    workflow_type_id = db.Column(db.Integer, db.ForeignKey('workflowtype.id'))
+    workflow_type_id = db.Column(db.Integer, db.ForeignKey('workflowtype.id', ondelete='CASCADE'))
     duration = db.Column(db.Integer)
 
     workflow_type = db.relationship('WorkflowType')
@@ -815,7 +815,7 @@ class WorkflowType(BaseModel):
 class UserActivity(BaseModel):
     __tablename__='useractivity'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('dquser.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('dquser.id', ondelete='CASCADE'))
     activity_type = db.Column(db.Integer)
     activity_data = db.Column(db.UnicodeText)
     ip_address = db.Column(db.UnicodeText)
@@ -824,7 +824,7 @@ class UserActivity(BaseModel):
 
 class SamplingFailure(BaseModel):
     __tablename__ = 'sampling_failure'
-    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              primary_key=True)
-    test_id = db.Column(db.Integer, db.ForeignKey('test.id'),
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'),
                      primary_key=True)
