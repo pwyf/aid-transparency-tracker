@@ -2,8 +2,8 @@
 
 set -eu
 
-flask drop-db
-flask init-db
+flask drop_db
+flask init_db
 flask setup --minimal
 flask refresh --minimal
 bin/dqtool --mode=reload-packages --organisation=GB-1

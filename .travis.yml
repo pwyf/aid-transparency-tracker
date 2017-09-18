@@ -8,7 +8,7 @@ install:
 before_script:
   - cp config.py.tmpl config.py
   - sudo -u postgres createdb iatidq
-  - flask drop-db
-  - flask init-db
+  - flask drop_db
+  - flask init_db
   - flask refresh --minimal
 script: "nosetests --exclude tests unittests/test_runtests.py unittests/test_summaryfn.py unittests/test_dataflows.py unittests/test_pipeline.py"
