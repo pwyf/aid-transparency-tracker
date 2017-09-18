@@ -15,13 +15,9 @@ from iatidq import models, dqindicators, dqorganisations
 
 class NoSuchSurvey(Exception): pass
 
-def getSurveyById(organisation_id):
-    return models.OrganisationSurvey.query.filter_by(
-        organisation_id=organisation_id).first()
 
 def getOrCreateSurveyById(organisation_id):
-    existing_survey = getSurveyById(organisation_id)
-
+    existing_survey = models.OrganisationSurvey.find(organisation_id)
     if existing_survey:
         return existing_survey
     with db.session.begin():
