@@ -809,19 +809,6 @@ class WorkflowType(BaseModel):
         if id is not None:
             self.id = id
 
-class WorkflowNotification(BaseModel):
-    __tablename__='workflownotifications'
-    id = db.Column(db.Integer, primary_key=True)
-    workflow_from_id = db.Column(db.Integer, db.ForeignKey('workflow.id'))
-    workflow_to_id = db.Column(db.Integer, db.ForeignKey('workflow.id'))
-    workflow_notice = db.Column(db.UnicodeText)
-
-
-class PackageTested(BaseModel):
-    __tablename__ = 'package_tested'
-    package_id = db.Column(db.Integer, db.ForeignKey('package.id'), primary_key=True)
-    runtime_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
-
 
 class UserActivity(BaseModel):
     __tablename__='useractivity'
