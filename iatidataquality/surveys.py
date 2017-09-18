@@ -113,15 +113,15 @@ def __survey_process(organisation, workflow, request,
 
         if indicator.id not in form_indicators:
             # It's an IATI indicator...
-            data['published_status'] = dqsurveys.publishedStatusByName('always').id
-            data['published_format'] = dqsurveys.publishedFormatByName('iati').id
+            data['published_status_id'] = dqsurveys.publishedStatusByName('always').id
+            data['published_format_id'] = dqsurveys.publishedFormatByName('iati').id
         else:
-            data['published_status'] = request.form.get(str(indicator.id)+"-published")
+            data['published_status_id'] = request.form.get(str(indicator.id)+"-published")
 
             if indicator.indicator_noformat:
-                data['published_format'] = dqsurveys.publishedFormatByName('document').id
+                data['published_format_id'] = dqsurveys.publishedFormatByName('document').id
             else:
-                data['published_format'] = request.form.get(str(indicator.id) + "-publishedformat")
+                data['published_format_id'] = request.form.get(str(indicator.id) + "-publishedformat")
 
             if indicator.indicator_ordinal:
                 data['ordinal_value'] = request.form.get(str(indicator.id) + "-ordinal_value")

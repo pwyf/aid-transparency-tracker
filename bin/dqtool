@@ -165,10 +165,10 @@ def make_survey_data_for_current_workflow(organisation_code):
             'organisationsurvey_id': survey.id,
             'indicator_id': indicator.id,
             'workflow_id': workflow.id,
-            'published_status': 1,
+            'published_status_id': 1,
             'published_source': "hello",
             'published_comment': "hello",
-            'published_format': 2,
+            'published_format_id': 2,
             'published_accepted': 1.0,
             'ordinal_value': "50"
             }

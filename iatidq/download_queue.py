@@ -83,7 +83,7 @@ def metadata_to_db(pkg, package_name, success, runtime_id):
         packages_groups = {pkg['name']: packagegroup_name}
 
         copy_package_attributes(package, pkg)
-        package.package_group = packagegroup_id
+        package.package_group_id = packagegroup_id
         copy_package_fields(package, pkg)
 
         db.session.add(package)

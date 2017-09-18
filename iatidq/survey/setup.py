@@ -96,56 +96,56 @@ def setupSurvey():
             'id': 1,
             'name': 'researcher',
             'title': 'Researcher',
-            'workflow_type': workflowTypeByName('collect').id,
+            'workflow_type_id': workflowTypeByName('collect').id,
             'order': 1,
             'duration': 14
         }, {
             'id': 2,
             'name': 'send',
             'title': 'Send to donor',
-            'workflow_type': workflowTypeByName('send').id,
+            'workflow_type_id': workflowTypeByName('send').id,
             'order': 2,
             'duration': 2
         }, {
             'id': 3,
             'name': 'donorreview',
             'title': 'Donor review',
-            'workflow_type': workflowTypeByName('review').id,
+            'workflow_type_id': workflowTypeByName('review').id,
             'order': 3,
             'duration': 21
         }, {
             'id': 4,
             'name': 'pwyfreview',
             'title': 'PWYF review',
-            'workflow_type': workflowTypeByName('review').id,
+            'workflow_type_id': workflowTypeByName('review').id,
             'order': 4,
             'duration': 14
         }, {
             'id': 5,
             'name': 'cso',
             'title': 'Independent review',
-            'workflow_type': workflowTypeByName('comment').id,
+            'workflow_type_id': workflowTypeByName('comment').id,
             'order': 5,
             'duration': None
         }, {
             'id': 6,
             'name': 'pwyffinal',
             'title': 'PWYF final review',
-            'workflow_type': workflowTypeByName('finalreview').id,
+            'workflow_type_id': workflowTypeByName('finalreview').id,
             'order': 6,
             'duration': 14
         }, {
             'id': 7,
             'name': 'donorcomments',
             'title': 'Donor comments',
-            'workflow_type': workflowTypeByName('comment').id,
+            'workflow_type_id': workflowTypeByName('comment').id,
             'order': 7,
             'duration': 7
         }, {
             'id': 8,
             'name': 'finalised',
             'title': 'Survey finalised',
-            'workflow_type': workflowTypeByName('finalised').id,
+            'workflow_type_id': workflowTypeByName('finalised').id,
             'order': 8,
             'duration': None
         }

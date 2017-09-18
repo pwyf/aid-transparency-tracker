@@ -106,7 +106,7 @@ class Package(BaseModel):
     package_license = db.Column(db.UnicodeText)
     package_metadata_created = db.Column(db.UnicodeText)
     package_metadata_modified = db.Column(db.UnicodeText)
-    package_group = db.Column(db.Integer, db.ForeignKey('packagegroup.id'))
+    package_group_id = db.Column(db.Integer, db.ForeignKey('packagegroup.id'))
     package_activity_from = db.Column(db.UnicodeText)
     package_activity_to = db.Column(db.UnicodeText)
     package_activity_count = db.Column(db.UnicodeText)
@@ -673,10 +673,10 @@ class OrganisationSurveyData(BaseModel):
                                    nullable=False)
     indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id'), nullable=False)
     workflow_id = db.Column(db.Integer, db.ForeignKey('workflow.id'), nullable=False)
-    published_status = db.Column(db.Integer, db.ForeignKey('publishedstatus.id'))
+    published_status_id = db.Column(db.Integer, db.ForeignKey('publishedstatus.id'))
     published_source = db.Column(db.UnicodeText)
     published_comment = db.Column(db.UnicodeText)
-    published_format = db.Column(db.Integer, db.ForeignKey('publishedformat.id'))
+    published_format_id = db.Column(db.Integer, db.ForeignKey('publishedformat.id'))
     published_accepted = db.Column(db.Integer)
     ordinal_value = db.Column(db.Float(precision=2))
     __table_args__ = (db.UniqueConstraint('organisationsurvey_id',
@@ -687,20 +687,20 @@ class OrganisationSurveyData(BaseModel):
                  organisationsurvey_id,
                  indicator_id,
                  workflow_id=None,
-                 published_status=None,
+                 published_status_id=None,
                  published_source=None,
                  published_comment=None,
-                 published_format=None,
+                 published_format_id=None,
                  published_accepted=None,
                  ordinal_value=None,
                  id=None):
         self.organisationsurvey_id = organisationsurvey_id
         self.workflow_id = workflow_id
         self.indicator_id = indicator_id
-        self.published_status = published_status
+        self.published_status_id = published_status_id
         self.published_source = published_source
         self.published_comment = published_comment
-        self.published_format = published_format
+        self.published_format_id = published_format_id
         self.published_accepted = published_accepted
         self.ordinal_value = ordinal_value
 
@@ -764,7 +764,7 @@ class Workflow(BaseModel):
     name = db.Column(db.UnicodeText)
     title = db.Column(db.UnicodeText)
     order = db.Column(db.Integer)
-    workflow_type = db.Column(db.Integer, db.ForeignKey('workflowtype.id'))
+    workflow_type_id = db.Column(db.Integer, db.ForeignKey('workflowtype.id'))
     duration = db.Column(db.Integer)
 
     def get_next(self):
@@ -779,13 +779,13 @@ class Workflow(BaseModel):
                  name,
                  title,
                  order,
-                 workflow_type=None,
+                 workflow_type_id=None,
                  duration=None,
                  id=None):
         self.name = name
         self.title = title
         self.order = order
-        self.workflow_type = workflow_type
+        self.workflow_type_id = workflow_type_id
         self.duration = duration
         if id is not None:
             self.id = id
@@ -812,15 +812,15 @@ class WorkflowType(BaseModel):
 class WorkflowNotification(BaseModel):
     __tablename__='workflownotifications'
     id = db.Column(db.Integer, primary_key=True)
-    workflow_from = db.Column(db.Integer, db.ForeignKey('workflow.id'))
-    workflow_to = db.Column(db.Integer, db.ForeignKey('workflow.id'))
+    workflow_from_id = db.Column(db.Integer, db.ForeignKey('workflow.id'))
+    workflow_to_id = db.Column(db.Integer, db.ForeignKey('workflow.id'))
     workflow_notice = db.Column(db.UnicodeText)
 
 
 class PackageTested(BaseModel):
     __tablename__ = 'package_tested'
     package_id = db.Column(db.Integer, db.ForeignKey('package.id'), primary_key=True)
-    runtime = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
+    runtime_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
 
 
 class UserActivity(BaseModel):

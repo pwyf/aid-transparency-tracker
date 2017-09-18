@@ -364,12 +364,12 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                         return (years[osd["ordinal_value"]]["class"],
                                 years[osd["ordinal_value"]]["text"])
                     else:
-                        return (published_status_by_id[osd["published_status"]]["publishedstatus_class"],
-                                published_status_by_id[osd["published_status"]]["title"])
+                        return (published_status_by_id[osd["published_status_id"]]["publishedstatus_class"],
+                                published_status_by_id[osd["published_status_id"]]["title"])
                 def format_class_and_text():
-                    if published_status_by_id[osd["published_status"]]["publishedstatus_class"] != 'important':
-                        return (publishedformats[osd["published_format"]]["format_class"],
-                                publishedformats[osd["published_format"]]["title"])
+                    if published_status_by_id[osd["published_status_id"]]["publishedstatus_class"] != 'important':
+                        return (publishedformats[osd["published_format_id"]]["format_class"],
+                                publishedformats[osd["published_format_id"]]["title"])
                     else:
                         return ("", "")
                 tmp["status_class"], tmp["status_text"] = status_class_and_text()

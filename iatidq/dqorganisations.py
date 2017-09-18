@@ -262,7 +262,7 @@ def addOrganisationPackageGroup(data):
 
 def addOrganisationPackageFromPackageGroup(data):
     packages = models.Package.query.filter_by(
-        package_group=data['packagegroup_id']
+        package_group_id=data['packagegroup_id']
         ).all()
     count_packages = 0
 

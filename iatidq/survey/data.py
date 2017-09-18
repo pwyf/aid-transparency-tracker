@@ -60,11 +60,11 @@ def addSurveyData(data):
                 organisationsurvey_id = data["organisationsurvey_id"],
                 workflow_id = data["workflow_id"],
                 indicator_id = data["indicator_id"],
-                published_status = data["published_status"],
+                published_status_id = data["published_status_id"],
                 published_source = data["published_source"],
                 published_comment = data["published_comment"],
                 published_accepted = data["published_accepted"],
-                published_format = data.get("published_format"),
+                published_format_id = data.get("published_format_id"),
                 ordinal_value = data.get("ordinal_value")
                 )
             db.session.add(newSD)
@@ -73,11 +73,11 @@ def addSurveyData(data):
             checkSD.organisationsurvey_id = data["organisationsurvey_id"],
             checkSD.workflow_id = data["workflow_id"],
             checkSD.indicator_id = data["indicator_id"],
-            checkSD.published_status = data["published_status"],
+            checkSD.published_status_id = data["published_status_id"],
             checkSD.published_source = data["published_source"],
             checkSD.published_comment = data["published_comment"],
             checkSD.published_accepted = data["published_accepted"],
-            checkSD.published_format = data.get("published_format"),
+            checkSD.published_format_id = data.get("published_format_id"),
             checkSD.ordinal_value = data.get("ordinal_value")
             db.session.add(checkSD)
             return checkSD
@@ -239,7 +239,7 @@ def workflowByName(workflow_name):
                               ).filter_by(
         name=workflow_name
         ).join(models.WorkflowType,
-               models.WorkflowType.id==models.Workflow.workflow_type
+               models.WorkflowType.id==models.Workflow.workflow_type_id
                ).first()
     if checkW:
         return checkW
@@ -250,7 +250,7 @@ def workflowsAll():
                               models.WorkflowType
                               ).join(
         models.WorkflowType,
-        models.WorkflowType.id==models.Workflow.workflow_type
+        models.WorkflowType.id==models.Workflow.workflow_type_id
         ).order_by(models.Workflow.id).all()
     if checkW:
         return checkW
@@ -326,11 +326,11 @@ def repairSurveyData(organisation_code):
                     'organisationsurvey_id' : survey.id,
                     'workflow_id' : workflow.Workflow.id,
                     'indicator_id' : indicator,
-                    'published_status' : None,
+                    'published_status_id' : None,
                     'published_source' : None,
                     'published_comment' : None,
                     'published_accepted' : None,
-                    'published_format' : None,
+                    'published_format_id' : None,
                     'ordinal_value' : None
                 }
                 addSurveyData(data)
