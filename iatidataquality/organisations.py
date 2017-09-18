@@ -66,7 +66,7 @@ def get_summary_data(organisation, aggregation_type):
 @app.route("/organisations/coverage/")
 @usermanagement.perms_required()
 def organisations_coverage():
-    organisations = dqorganisations.organisations()
+    organisations = Organisation.sort('organisation_name').all()
     coverage_data = {}
 
     for organisation in organisations:
@@ -148,7 +148,7 @@ def organisations(organisation_code=None):
 
         return redirect(url_for(template, organisation_code=organisation_code))
 
-    organisations = dqorganisations.organisations()
+    organisations = Organisation.sort('organisation_name').all()
 
     template_args = {
         'organisations': organisations,

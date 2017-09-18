@@ -11,7 +11,7 @@ from flask import render_template, flash, request, redirect, url_for
 from flask_login import current_user
 
 from . import app, usermanagement
-from iatidq import dqusers, util, dqorganisations
+from iatidq import dqusers, models, util
 
 
 @app.route("/users/")
@@ -96,12 +96,13 @@ def users_edit(username=None):
             else:
                 flash('Could not add user', 'error')
 
-    return render_template("users_edit.html", 
+    organisations = models.Organisation.sort('organisation_name').all()
+    return render_template("users_edit.html",
                            user=user,
                            permissions=permissions,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user,
-             organisations=dqorganisations.organisations())
+             organisations=organisations)
 
 @app.route("/users/<username>/delete/")
 @usermanagement.perms_required()

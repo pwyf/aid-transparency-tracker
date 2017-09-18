@@ -160,8 +160,7 @@ def _updateOrganisationFrequency(fh):
 
 def organisations(organisation_code=None):
     if organisation_code is None:
-        return models.Organisation.query.order_by(models.Organisation.organisation_name
-            ).all()
+        return models.Organisation.sort('organisation_name').all()
     else:
         return models.Organisation.query.filter_by(
             organisation_code=organisation_code).first()

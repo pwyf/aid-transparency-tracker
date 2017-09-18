@@ -15,7 +15,7 @@ from flask_login import current_user
 import unicodecsv
 
 from . import app, usermanagement
-from iatidq import dqindicators, dqorganisations, util
+from iatidq import dqindicators, dqorganisations, models, util
 
 
 @app.route("/indicators/")
@@ -84,7 +84,7 @@ def indicatorgroups_new():
 def indicators_comparison(indicatorgroup, indicator):
 
     indicator = dqindicators.getIndicatorByName(indicator)
-    organisations = dqorganisations.organisations()
+    organisations = models.Organisation.sort('organisation_name').all()
 
     return render_template("indicator_comparison.html",
                            loggedinuser=current_user,

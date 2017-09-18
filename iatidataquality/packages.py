@@ -12,7 +12,7 @@ from flask_login import current_user
 
 from . import app, usermanagement
 from iatidq import dqregistry, dqorganisations, dqpackages
-from iatidq.models import Package
+from iatidq.models import Organisation, Package
 
 
 def integerise(data):
@@ -69,7 +69,7 @@ def packages_edit(package_name=None):
         else:
             package ={}
             package_org_id = ""
-        organisations=dqorganisations.organisations()
+        organisations = Organisation.sort('organisation_name').all()
         return render_template("package_edit.html", 
              package=package,
              package_org_id = package_org_id,
@@ -112,7 +112,7 @@ def packages_edit(package_name=None):
             return redirect(url_for('packages_edit', package_name=package.package_name))
         else:
             flash("There was an error, and the package could not be "+mode+".", "error")
-            organisations=dqorganisations.organisations()
+            organisations = Organisation.sort('organisation_name').all()
             data['package_name'] = request.form.get('package_name')
         return render_template("package_edit.html", 
              package=data,
