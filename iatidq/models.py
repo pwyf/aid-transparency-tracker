@@ -10,13 +10,15 @@
 from datetime import datetime
 
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy_mixins import AllFeaturesMixin
 
 from iatidataquality import db
 
 
-## TEST RUNTIME-SPECIFIC DATA
+class BaseModel(db.Model, AllFeaturesMixin):
+    __abstract__ = True
 
-class PackageStatus(db.Model):
+class PackageStatus(BaseModel):
     __tablename__ = 'packagestatus'
     id = db.Column(db.Integer, primary_key=True)
     package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
@@ -32,7 +34,7 @@ class PackageStatus(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class Runtime(db.Model):
+class Runtime(BaseModel):
     __tablename__ = 'runtime'
     id = db.Column(db.Integer, primary_key=True)
     runtime_datetime = db.Column(db.DateTime, nullable=False)
@@ -45,7 +47,7 @@ class Runtime(db.Model):
 
 ## IATI REGISTRY PACKAGEGROUPS AND PACKAGES
 
-class PackageGroup(db.Model):
+class PackageGroup(BaseModel):
     __tablename__ = 'packagegroup'
     id = db.Column(db.Integer, primary_key=True)
     man_auto = db.Column(db.UnicodeText)
@@ -85,7 +87,7 @@ class PackageGroup(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class Package(db.Model):
+class Package(BaseModel):
     __tablename__ = 'package'
     id = db.Column(db.Integer, primary_key=True)
     man_auto = db.Column(db.UnicodeText)
@@ -126,7 +128,7 @@ class Package(db.Model):
 
 ## RESULTS
 
-class Result(db.Model):
+class Result(BaseModel):
     __tablename__ = 'result'
     id = db.Column(db.Integer, primary_key=True)
     runtime_id = db.Column(db.Integer, db.ForeignKey('runtime.id'), nullable=False)
@@ -154,7 +156,7 @@ db.Index('result_test',
 #
 # but after normalisation the package/organisation thing should go away
 
-class AggregateResult(db.Model):
+class AggregateResult(BaseModel):
     __tablename__='aggregateresult'
     id = db.Column(db.Integer,primary_key=True)
     package_id = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
@@ -176,7 +178,7 @@ class AggregateResult(db.Model):
 
 # AggregationType allows for different aggregations
 # Particularly used for looking only at current data
-class AggregationType(db.Model):
+class AggregationType(BaseModel):
     __tablename__ = 'aggregationtype'
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
@@ -205,7 +207,7 @@ class AggregationType(db.Model):
 
 ## TESTS
 
-class Test(db.Model):
+class Test(BaseModel):
     __tablename__ = 'test'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
@@ -239,7 +241,7 @@ class Test(db.Model):
 
 ## CODELISTS
 
-class Codelist(db.Model):
+class Codelist(BaseModel):
     __tablename__ = 'codelist'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
@@ -261,7 +263,7 @@ class Codelist(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class CodelistCode(db.Model):
+class CodelistCode(BaseModel):
     __tablename__ = 'codelistcode'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
@@ -288,7 +290,7 @@ class CodelistCode(db.Model):
 
 ## INDICATORS
 
-class IndicatorGroup(db.Model):
+class IndicatorGroup(BaseModel):
     __tablename__ = 'indicatorgroup'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
@@ -309,7 +311,7 @@ class IndicatorGroup(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class Indicator(db.Model):
+class Indicator(BaseModel):
     __tablename__ = 'indicator'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
@@ -367,7 +369,7 @@ class Indicator(db.Model):
        d = {c.name: getattr(self, c.name) for c in self.__table__.columns}
        return d
 
-class IndicatorTest(db.Model):
+class IndicatorTest(BaseModel):
     __tablename__ = 'indicatortest'
     id = db.Column(db.Integer, primary_key=True)
     indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id'), nullable=False)
@@ -386,7 +388,7 @@ class IndicatorTest(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class IndicatorInfoType(db.Model):
+class IndicatorInfoType(BaseModel):
     __tablename__ = 'indicatorinfotype'
     id = db.Column(db.Integer, primary_key=True)
     indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id'), nullable=False)
@@ -404,7 +406,7 @@ class IndicatorInfoType(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class OrganisationCondition(db.Model):
+class OrganisationCondition(BaseModel):
     __tablename__ = 'organisationcondition'
     id = db.Column(db.Integer, primary_key=True)
     organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
@@ -421,7 +423,7 @@ class OrganisationCondition(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class OrganisationConditionFeedback(db.Model):
+class OrganisationConditionFeedback(BaseModel):
     __tablename__ ='organisationconditionfeedback'
     id = db.Column(db.Integer, primary_key=True)
     organisation_id = db.Column(db.Integer,
@@ -443,7 +445,7 @@ alter table organisationconditionfeedback add constraint ofbkorg FOREIGN KEY (or
 
 ## ORGANISATIONS; RELATIONS WITH PACKAGES
 
-class Organisation(db.Model):
+class Organisation(BaseModel):
     __tablename__ = 'organisation'
     id = db.Column(db.Integer, primary_key=True)
     organisation_name = db.Column(db.UnicodeText, nullable=False)
@@ -488,7 +490,7 @@ class Organisation(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class OrganisationPackage(db.Model):
+class OrganisationPackage(BaseModel):
     __tablename__ = 'organisationpackage'
     id = db.Column(db.Integer, primary_key=True)
     organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
@@ -508,7 +510,7 @@ class OrganisationPackage(db.Model):
         if id is not None:
             self.id = id
 
-class OrganisationPackageGroup(db.Model):
+class OrganisationPackageGroup(BaseModel):
     __tablename__ = 'organisationpackagegroup'
     id = db.Column(db.Integer, primary_key=True)
     organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
@@ -534,7 +536,7 @@ class OrganisationPackageGroup(db.Model):
 # ==> total amount of disbursements in this package
 # e.g. 1 = total disbursements
 
-class InfoResult(db.Model):
+class InfoResult(BaseModel):
     __tablename__ = 'info_result'
     id = db.Column(db.Integer, primary_key=True)
     runtime_id = db.Column(db.Integer, db.ForeignKey('runtime.id'), nullable=False)
@@ -542,8 +544,8 @@ class InfoResult(db.Model):
     info_id = db.Column(db.Integer, db.ForeignKey('info_type.id'), nullable=False)
     organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'))
     result_data = db.Column(db.Float)
-    
-class InfoType(db.Model):
+
+class InfoType(BaseModel):
     __tablename__ = 'info_type'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText, nullable=False)
@@ -563,7 +565,7 @@ class InfoType(db.Model):
 
 ## USERS
 
-class User(db.Model):
+class User(BaseModel):
     __tablename__ = 'dquser'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.UnicodeText, nullable=False)
@@ -607,7 +609,7 @@ class User(db.Model):
     def is_authenticated(self):
         return True
 
-class UserPermission(db.Model):
+class UserPermission(BaseModel):
     __tablename__ = 'userpermission'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('dquser.id', ondelete='CASCADE'))
@@ -633,7 +635,7 @@ class UserPermission(db.Model):
 
 ## ORGANISATION SURVEYS
 
-class OrganisationSurvey(db.Model):
+class OrganisationSurvey(BaseModel):
     __tablename__ = 'organisationsurvey'
     id = db.Column(db.Integer,primary_key=True)
     currentworkflow_id = db.Column(db.Integer, db.ForeignKey('workflow.id'),
@@ -656,7 +658,7 @@ class OrganisationSurvey(db.Model):
         if id is not None:
             self.id = id
 
-class OrganisationSurveyData(db.Model):
+class OrganisationSurveyData(BaseModel):
     __tablename__ = 'organisationsurveydata'
     id = db.Column(db.Integer,primary_key=True)
     organisationsurvey_id = db.Column(db.Integer,
@@ -701,7 +703,7 @@ class OrganisationSurveyData(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class PublishedFormat(db.Model):
+class PublishedFormat(BaseModel):
     __tablename__ = 'publishedformat'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText)
@@ -725,7 +727,7 @@ class PublishedFormat(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class PublishedStatus(db.Model):
+class PublishedStatus(BaseModel):
     __tablename__ = 'publishedstatus'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.UnicodeText)
@@ -748,8 +750,8 @@ class PublishedStatus(db.Model):
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-    
-class Workflow(db.Model):
+
+class Workflow(BaseModel):
     __tablename__='workflow'
     id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.UnicodeText)
@@ -787,7 +789,7 @@ class Workflow(db.Model):
 # WorkflowType: define what sort of workflow this should be.
 #   Will initially be hardcoded but this should make it easier
 #   to expand and define later.
-class WorkflowType(db.Model):
+class WorkflowType(BaseModel):
     __tablename__='workflowtype'
 
     id = db.Column(db.Integer,primary_key=True)
@@ -800,7 +802,7 @@ class WorkflowType(db.Model):
         if id is not None:
             self.id = id
 
-class WorkflowNotification(db.Model):
+class WorkflowNotification(BaseModel):
     __tablename__='workflownotifications'
     id = db.Column(db.Integer, primary_key=True)
     workflow_from = db.Column(db.Integer, db.ForeignKey('workflow.id'))
@@ -808,13 +810,13 @@ class WorkflowNotification(db.Model):
     workflow_notice = db.Column(db.UnicodeText)
 
 
-class PackageTested(db.Model):
+class PackageTested(BaseModel):
     __tablename__ = 'package_tested'
     package_id = db.Column(db.Integer, db.ForeignKey('package.id'), primary_key=True)
     runtime = db.Column(db.Integer, db.ForeignKey('package.id'), nullable=False)
 
 
-class UserActivity(db.Model):
+class UserActivity(BaseModel):
     __tablename__='useractivity'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('dquser.id'))
@@ -824,7 +826,7 @@ class UserActivity(db.Model):
     activity_date = db.Column(db.DateTime)
 
 
-class SamplingFailure(db.Model):
+class SamplingFailure(BaseModel):
     __tablename__ = 'sampling_failure'
     organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id'),
                              primary_key=True)
