@@ -78,11 +78,11 @@ From the web interface, log in and from the top-right drop-down menu, click `man
 
 Remember, you need the download and tests backends working for this, which you could do directly with `./download_backend.py` or through supervisor.
 
-Survey component 
+Survey component
 ================
 
 The survey component currently requires the existence of three files (could be abstracted in future). Move them from the tests directory to the DATA_STORAGE_DIR you specified in config.py. E.g., if you set the directory to be /home/me/data/:
-    
+
     cp tests/2012_2013_organisation_mapping.csv /home/me/data/
     cp tests/2012_indicators.csv /home/me/data/
     cp tests/2012_results.csv /home/me/data/
