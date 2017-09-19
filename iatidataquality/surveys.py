@@ -215,23 +215,21 @@ def get_ordinal_values_years():
 
 id_tuple = lambda p: (p.id, p)
 
-def organisation_survey_view(organisation_code, workflow,
+def organisation_survey_view(organisation, workflow,
                              organisationsurvey,
                              allowed_to_edit):
-    organisation = Organisation.query.filter_by(
-        organisation_code=organisation_code).first_or_404()
 
     # the next line may be being called for its side effects
-    dqsurveys.getSurveyData(organisation_code, workflow.name)
+    dqsurveys.getSurveyData(organisation.organisation_code, workflow.name)
 
-    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)
 
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     org_indicators = dqorganisations._organisation_indicators_split(
         organisation, 2)
 
     twentytwelvedata = iatidq.survey.mapping.get_organisation_results(
-        organisation_code,
+        organisation.organisation_code,
         [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
         )
 
@@ -260,7 +258,7 @@ def organisation_survey_view(organisation_code, workflow,
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
     workflow = Workflow.where(name=workflow_name).first_or_404()
 
-    organisation = Organisation.where(organisation_code=organisation_code).first()
+    organisation = Organisation.where(organisation_code=organisation_code).first_or_404()
     organisationsurvey = dqsurveys.getOrCreateSurveyById(organisation.id)
 
     def allowed(method):
@@ -293,7 +291,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
 
     if request.method == 'GET':
         return organisation_survey_view(
-            organisation_code, workflow,
+            organisation, workflow,
             organisationsurvey, allowed_to_edit)
 
     if not allowed_to_edit:
