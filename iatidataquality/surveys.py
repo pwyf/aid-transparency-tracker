@@ -60,7 +60,7 @@ def organisation_survey_repair(organisation_code):
 @app.route("/organisations/<organisation_code>/survey/")
 @usermanagement.perms_required('survey', 'view')
 def organisation_survey(organisation_code=None):
-    organisation = dqorganisations.organisations(organisation_code)
+    organisation = Organisation.where(organisation_code=organisation_code).first()
     # make sure survey exists
     survey = dqsurveys.getOrCreateSurveyById(organisation.id)
 
@@ -267,7 +267,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         flash('That workflow does not exist.', 'error')
         return abort(404)
 
-    organisation = dqorganisations.organisations(organisation_code)
+    organisation = Organisation.where(organisation_code=organisation_code).first()
     organisationsurvey = dqsurveys.getOrCreateSurveyById(organisation.id)
 
     def allowed(method):

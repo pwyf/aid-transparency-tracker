@@ -11,14 +11,14 @@ from flask import render_template, flash, request, redirect, url_for
 from flask_login import current_user
 
 from . import app, usermanagement
-from iatidq import dqorganisations
+from iatidq import dqorganisations, models
 
 
 @app.route("/organisations/<organisation_code>/feedback/", methods=['POST', 'GET'])
 @usermanagement.perms_required('organisation_feedback', 'create')
 def organisations_feedback(organisation_code=None):
     if (organisation_code is not None):
-        organisation = dqorganisations.organisations(organisation_code)
+        organisation = models.Organisation.where(organisation_code=organisation_code).first()
         if (request.method=="POST"):
             for condition in request.form.getlist('feedback'):
                 data = {

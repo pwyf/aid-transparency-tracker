@@ -89,7 +89,7 @@ def organisations_index(organisation_code=None):
     template_args = {}
     org_packages = dqorganisations.organisationPackages(organisation_code)
 
-    organisation = dqorganisations.organisations(organisation_code)
+    organisation = Organisation.where(organisation_code=organisation_code).first()
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
     irs = [ir for ir in get_info_results(org_packages, organisation)]
@@ -673,7 +673,7 @@ def update_organisation(organisation_code):
 def organisation_edit(organisation_code=None):
     packages = dqpackages.packages()
     packagegroups = dqpackages.packageGroups()
-    organisation = dqorganisations.organisations(organisation_code)
+    organisation = models.Organisation.where(organisation_code=organisation_code).first()
 
     if request.method == 'POST':
         if 'addpackages' in request.form:

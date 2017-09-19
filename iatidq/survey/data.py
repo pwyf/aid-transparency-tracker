@@ -271,7 +271,7 @@ def repairSurveyData(organisation_code):
     allindicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     allindicators = map(lambda x: x.id, allindicators)
 
-    organisation = dqorganisations.organisations(organisation_code)
+    organisation = models.Organisation.where(organisation_code=organisation_code).first()
     org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"]
 
     survey = getSurvey(organisation_code).OrganisationSurvey
@@ -309,7 +309,7 @@ def checkSurveyData(organisation_code):
     allindicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     allindicators = map(lambda x: x.id, allindicators)
 
-    organisation = dqorganisations.organisations(organisation_code)
+    organisation = models.Organisation.where(organisation_code=organisation_code).first()
     org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"].keys()
 
     survey = getSurvey(organisation_code).OrganisationSurvey

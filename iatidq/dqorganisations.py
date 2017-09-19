@@ -135,12 +135,6 @@ def _updateOrganisationFrequency(fh):
                 organisation.frequency_comment=comment
                 db.session.add(organisation)
 
-def organisations(organisation_code=None):
-    if organisation_code is None:
-        return models.Organisation.sort('organisation_name').all()
-    else:
-        return models.Organisation.where(organisation_code=organisation_code).first()
-
 def organisationPackages(organisation_code=None):
     if organisation_code is None:
         return False

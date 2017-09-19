@@ -91,8 +91,7 @@ def setup_organisations_minimal():
         inserted_organisation = dqorganisations.addOrganisation(
             organisation)
         if inserted_organisation is False:
-            inserted_organisation = dqorganisations.organisations(
-                organisation['organisation_code'])
+            inserted_organisation = models.Organisation.where(organisation_code=organisation['organisation_code']).first()
         thepackage = models.Package.query.filter_by(
             package_name=organisation['package_name']
                 ).first()
