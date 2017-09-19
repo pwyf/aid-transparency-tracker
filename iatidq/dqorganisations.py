@@ -35,10 +35,10 @@ def importOrganisationPackagesFromFile(filename):
 
 def _importOrganisationPackages(fh, local):
     def get_or_create_organisation(row):
-        try:
-            return models.Organisation.where(organisation_code=row['organisation_code']).first_or_fail()
-        except:
-            return addOrganisation(row)
+        organisation = models.Organisation.where(organisation_code=row['organisation_code']).first()
+        if not organisation:
+            organisation = addOrganisation(row)
+        return organisation
 
     def get_packages(organisation_code):
         return models.Package.query.filter(

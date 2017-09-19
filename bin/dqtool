@@ -30,7 +30,7 @@ def clear_survey(options):
 def create_survey(options):
     organisation_code = unicode(options.organisation_code)
 
-    organisation = models.Organisation.where(organisation_code=organisation_code).first_or_fail()
+    organisation = models.Organisation.where(organisation_code=organisation_code).first()
 
     _ = iatidq.survey.data.getOrCreateSurveyById(organisation.id)
 
@@ -120,7 +120,7 @@ def compare_summary(options):
 
     aggregation_type = 2
 
-    organisation = models.Organisation.where(organisation_code=organisation_code).first_or_fail()
+    organisation = models.Organisation.where(organisation_code=organisation_code).first()
 
     s = summary.PublisherSummaryCreator(organisation, aggregation_type)
     observed_summary_results = json.loads(json.dumps(s.summary.summary(),
@@ -135,7 +135,7 @@ def compare_indicators_summary(options):
 
     aggregation_type = 2
 
-    organisation = models.Organisation.where(organisation_code=organisation_code).first_or_fail()
+    organisation = models.Organisation.where(organisation_code=organisation_code).first()
 
     s = summary.PublisherIndicatorsSummaryCreator(organisation,
                                                   aggregation_type)
@@ -147,7 +147,7 @@ def make_survey_data(options):
     assert options.organisation_code
 
     organisation_code = options.organisation_code.decode('ascii')
-    org_id = models.Organisation.where(organisation_code=organisation_code).first_or_fail().id
+    org_id = models.Organisation.where(organisation_code=organisation_code).first().id
     print "faking survey for %s" % organisation_code
 
     while True:
@@ -325,7 +325,7 @@ def update_sampling(options):
     def specific_failure():
         organisation_code = options.organisation_code.decode('ascii')
         test_id = options.test_id
-        organisation_id = models.Organisation.where(organisation_code=organisation_code).first_or_fail().id
+        organisation_id = models.Organisation.where(organisation_code=organisation_code).first().id
 
         return [ (organisation_id, test_id) ]
 

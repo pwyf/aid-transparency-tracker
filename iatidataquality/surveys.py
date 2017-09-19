@@ -262,11 +262,7 @@ def organisation_survey_view(organisation_code, workflow,
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
-    try:
-        workflow = Workflow.where(name=workflow_name).first_or_fail()
-    except:
-        flash('That workflow does not exist.', 'error')
-        return abort(404)
+    workflow = Workflow.where(name=workflow_name).first_or_404()
 
     organisation = Organisation.where(organisation_code=organisation_code).first()
     organisationsurvey = dqsurveys.getOrCreateSurveyById(organisation.id)

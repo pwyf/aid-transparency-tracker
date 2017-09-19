@@ -18,12 +18,6 @@ from iatidataquality import db
 class BaseModel(db.Model, AllFeaturesMixin):
     __abstract__ = True
 
-    def first_or_fail(self):
-        first = self.first()
-        if not first:
-            raise ModelNotFoundError
-        return first
-
 
 class PackageStatus(BaseModel):
     __tablename__ = 'packagestatus'
