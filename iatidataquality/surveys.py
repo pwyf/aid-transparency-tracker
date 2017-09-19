@@ -225,10 +225,6 @@ def organisation_survey_view(organisation_code, workflow,
     dqsurveys.getSurveyData(organisation_code, workflow.name)
 
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
-    try:
-        print surveydata['cso']
-    except Exception:
-        pass
 
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     org_indicators = dqorganisations._organisation_indicators_split(
