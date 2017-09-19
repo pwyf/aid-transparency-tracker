@@ -216,10 +216,6 @@ def get_ordinal_values_years():
 id_tuple = lambda p: (p.id, p)
 
 def organisation_survey_view(organisation, workflow, organisationsurvey):
-
-    # the next line may be being called for its side effects
-    dqsurveys.getSurveyData(organisation.organisation_code, workflow.name)
-
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)
 
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
