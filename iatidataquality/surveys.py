@@ -270,32 +270,25 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     allowed_to_edit = allowed("edit")
     allowed_to_view = allowed("view")
 
-    def no_permission():
+    if not allowed_to_view or (request.method == 'POST' and not allowed_to_edit):
         # If not logged in, redirect to login page
-
         if not current_user.is_authenticated:
             flash('You must log in to access that page.', 'error')
             return redirect(url_for('login', next=request.path))
 
         # Otherwise, redirect to previous page and warn user
         # they don't have permissions to access the survey.
-        flash("Sorry, you do not have permission to view that survey", 'error')
+        flash('Sorry, you do not have permission to view that survey', 'error')
         if request.referrer is not None:
             redir_to = request.referrer
         else:
             redir_to = url_for('home')
         return redirect(redir_to)
 
-    if not allowed_to_view:
-        return no_permission()
-
     if request.method == 'GET':
         return organisation_survey_view(
             organisation, workflow,
             organisationsurvey, allowed_to_edit)
-
-    if not allowed_to_edit:
-        return no_permission()
 
     handlers = {
         "collect": _survey_process_collect,
