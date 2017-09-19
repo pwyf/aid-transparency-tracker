@@ -298,7 +298,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     if not allowed_to_view:
         return no_permission()
 
-    if request.method != 'POST':
+    if request.method == 'GET':
         return organisation_survey_view(
             organisation_code, workflow,
             workflow_name, organisationsurvey, allowed_to_edit)
