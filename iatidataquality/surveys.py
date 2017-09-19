@@ -216,13 +216,13 @@ def get_ordinal_values_years():
 id_tuple = lambda p: (p.id, p)
 
 def organisation_survey_view(organisation_code, workflow,
-                             workflow_name, organisationsurvey,
+                             organisationsurvey,
                              allowed_to_edit):
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
 
     # the next line may be being called for its side effects
-    dqsurveys.getSurveyData(organisation_code, workflow_name)
+    dqsurveys.getSurveyData(organisation_code, workflow.name)
 
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
     try:
@@ -301,7 +301,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     if request.method == 'GET':
         return organisation_survey_view(
             organisation_code, workflow,
-            workflow_name, organisationsurvey, allowed_to_edit)
+            organisationsurvey, allowed_to_edit)
 
     if not allowed_to_edit:
         return no_permission()
