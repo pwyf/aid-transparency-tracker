@@ -298,9 +298,9 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         "finalreview": _survey_process_finalreview
         }
 
-    workflow_name = workflow.workflow_type.name
+    workflow_type_name = workflow.workflow_type.name
 
-    if workflow_name == "send":
+    if workflow_type_name == "send":
         if workflow.id == organisationsurvey.currentworkflow_id:
             _survey_process_send(
                 organisation_code, workflow, request, organisationsurvey)
@@ -309,10 +309,10 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
                   "not at the current stage in the workflow. "
                   "Maybe you didn't submit the data, or maybe you "
                   "already sent it to the donor?", 'error')
-    elif workflow_name in handlers:
-        handlers[workflow_name](
+    elif workflow_type_name in handlers:
+        handlers[workflow_type_name](
             organisation, workflow, request, organisationsurvey)
-    elif workflow_name == 'finalised':
+    elif workflow_type_name == 'finalised':
         return "finalised"
     return redirect(url_for("organisations",
                             organisation_code=organisation_code))
