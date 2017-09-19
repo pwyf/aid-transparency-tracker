@@ -215,9 +215,7 @@ def get_ordinal_values_years():
 
 id_tuple = lambda p: (p.id, p)
 
-def organisation_survey_view(organisation, workflow,
-                             organisationsurvey,
-                             allowed_to_edit):
+def organisation_survey_view(organisation, workflow, organisationsurvey):
 
     # the next line may be being called for its side effects
     dqsurveys.getSurveyData(organisation.organisation_code, workflow.name)
@@ -286,9 +284,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         return redirect(redir_to)
 
     if request.method == 'GET':
-        return organisation_survey_view(
-            organisation, workflow,
-            organisationsurvey, allowed_to_edit)
+        return organisation_survey_view(organisation, workflow, organisationsurvey)
 
     handlers = {
         "collect": _survey_process_collect,
