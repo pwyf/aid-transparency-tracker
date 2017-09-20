@@ -222,7 +222,7 @@ def organisation_survey_view(organisation, workflow, organisationsurvey):
     org_indicators = dqorganisations._organisation_indicators_split(
         organisation, 2)
 
-    twentytwelvedata = iatidq.survey.mapping.get_organisation_results(
+    old_survey_data = iatidq.survey.mapping.get_organisation_results(
         organisation.organisation_code,
         [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
         )

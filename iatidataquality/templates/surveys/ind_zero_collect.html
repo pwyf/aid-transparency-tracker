@@ -3,7 +3,7 @@
 {% macro ind_zero(
   surveydata,
   rows,
-  twentytwelvedata,
+  old_survey_data,
   old_publication_status,
   publishedstatuses,
   publishedformats,
@@ -30,23 +30,23 @@
                 </div></td>
             <td><span class="muted">Previous data</span></td>
             <td>
-            {% if twentytwelvedata[indicator.indicator.name].result == '' %}
+            {% if old_survey_data[indicator.indicator.name].result == '' %}
                 <span class="badge">No previous data</span>
             {% else %}
                 {% if not indicator.indicator.indicator_ordinal %}
-                <span class="badge badge-{{old_publication_status[twentytwelvedata[indicator.indicator.name].publication_status].class}}" title="Researcher's initial assessment">{{ old_publication_status[twentytwelvedata[indicator.indicator.name].publication_status].text }}</span>
+                <span class="badge badge-{{old_publication_status[old_survey_data[indicator.indicator.name].publication_status].class}}" title="Researcher's initial assessment">{{ old_publication_status[old_survey_data[indicator.indicator.name].publication_status].text }}</span>
                 {% else %}
-                <span class="badge badge-{{year_data[twentytwelvedata[indicator.indicator.name].survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[twentytwelvedata[indicator.indicator.name].survey_ordinal_value|int].text }}</span>
+                <span class="badge badge-{{year_data[old_survey_data[indicator.indicator.name].survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[old_survey_data[indicator.indicator.name].survey_ordinal_value|int].text }}</span>
                 {% endif %}
             {% endif %}
             </td>
 
             <td class="restrict_text">
-            {{twentytwelvedata[indicator.indicator.name].survey_source}}
+            {{old_survey_data[indicator.indicator.name].survey_source}}
             </td>
 
             <td class="restrict_text">
-            {{twentytwelvedata[indicator.indicator.name].survey_comment}}
+            {{old_survey_data[indicator.indicator.name].survey_comment}}
             </td>
         </tr>
         <tr id="tr{{indicator.indicator.id}}">
