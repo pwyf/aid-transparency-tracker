@@ -244,9 +244,8 @@ def organisation_survey_view(organisation, workflow, organisationsurvey):
 
     ati_year = app.config['ATI_YEAR']
 
-    return render_template(
-        "surveys/_survey_%s.html" % workflow.workflow_type.name,
-        **locals())
+    tmpl_name = os.path.join('surveys', '_survey_{}.html'.format(workflow.workflow_type.name))
+    return render_template(tmpl_name, **locals())
 
 @app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
