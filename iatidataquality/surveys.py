@@ -199,20 +199,6 @@ def get_old_publication_status():
             })
     return dict(map(struct, pses))
 
-def get_ordinal_values_years():
-    years = [
-        (3, '3 years ahead', 'success'),
-        (2, '2 years ahead', 'warning'),
-        (1, '1 year ahead', 'important'),
-        (0, 'No forward data', 'inverse'),
-        (None, 'Unknown', '')
-        ]
-    struct = lambda yr: (yr[0], ({
-            "text": yr[1],
-            "class": yr[2]
-            }))
-    return map(struct, years)
-
 id_tuple = lambda p: (p.id, p)
 
 def organisation_survey_view(organisation, workflow, organisationsurvey):
@@ -229,9 +215,11 @@ def organisation_survey_view(organisation, workflow, organisationsurvey):
 
     publishedstatuses = dict(map(id_tuple, dqsurveys.publishedStatus()))
     publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormatAll()))
-    years = get_ordinal_values_years()
-    year_data = dict(years)
+    year_data = dqorganisations.get_ordinal_values_years()
+
+    years = sorted(year_data.items(), reverse=True)
     years.pop()
+
     donorresponses = donorresponse.RESPONSE_IDS
 
     old_publication_status = get_old_publication_status()

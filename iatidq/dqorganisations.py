@@ -419,3 +419,27 @@ def _organisation_indicators_split(organisation, aggregation_type=2):
     return { "zero": zero_results,
              "non_zero": non_zero_results,
              "commitment": commitment}
+
+def get_ordinal_values_years():
+    return {
+        3: {
+            'text': '3 years ahead',
+            'class': 'success',
+        },
+        2: {
+            'text': '2 years ahead',
+            'class': 'warning',
+        },
+        1: {
+            'text': '1 year ahead',
+            'class': 'important',
+        },
+        0: {
+            'text': 'No forward data',
+            'class': 'inverse',
+        },
+        None: {
+            'text': 'Unknown',
+            'class': '',
+        },
+    }

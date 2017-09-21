@@ -190,21 +190,6 @@ def integerise(data):
     except TypeError:
         return None
 
-def get_ordinal_values_years():
-    years = [
-        (3, '3 years ahead', 'success'),
-        (2, '2 years ahead', 'warning'),
-        (1, '1 year ahead', 'important'),
-        (0, 'No forward data', 'inverse'),
-        (None, 'Unknown', '')
-        ]
-    struct = lambda yr: (yr[0], ({
-            "text": yr[1],
-            "class": yr[2]
-            }))
-    return map(struct, years)
-
-
 # this lambda and the things which use it exists in surveys.py as well
 # ... merge?
 id_tuple = lambda x: (x.id, x.as_dict())
@@ -249,7 +234,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     latest_runtime=1
 
-    years = dict(get_ordinal_values_years())
+    years = dqorganisations.get_ordinal_values_years()
 
     test_level_description = {
         3: ("on", "organisation files", ""),
@@ -496,7 +481,7 @@ def organisation_publication_unauthorised(organisation_code, aggregation_type):
 
     latest_runtime=1
 
-    years = dict(get_ordinal_values_years())
+    years = dqorganisations.get_ordinal_values_years()
 
     payload = {
         "links": {
