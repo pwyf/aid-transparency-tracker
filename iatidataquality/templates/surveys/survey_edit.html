@@ -8,7 +8,7 @@
     </div>
 
     <form action="" method="post">
-    <h2>Commitment</h2>
+    <h2>Organisational planning and commitments</h2>
     <table class="table" id="indicators">
     <thead>
 	  <th>Information item</th>
@@ -24,24 +24,30 @@
     {% endfor %}
     </tbody>
     </table>
+
+    {% for subcategory, indicators in org_indicators["grouped_zero"].items() %}
+    {% if subcategory != 'Organisational planning and commitments' %}
     <hr />
-    <h2>Publication</h2>
+    <h2>{{ subcategory }}</h2>
+    {% endif %}
     <table class="table" id="indicators">
 
     <thead>
-	  <th>Information item</th>
-	  <th>Responder</th>
-	  <th>Published?</th>
-	  <th class="restrict_text">Evidence</th>
-	  <th class="restrict_text">Comments</th>
-	</thead>
+      <th>Information item</th>
+      <th>Responder</th>
+      <th>Published?</th>
+      <th class="restrict_text">Evidence</th>
+      <th class="restrict_text">Comments</th>
+    </thead>
 
     <tbody>
-    {% for indicator in org_indicators["zero"].values() %}
+    {% for indicator in indicators %}
       {{ ind_zero(surveydata, rows, old_survey_data, old_publication_status, publishedstatuses, publishedformats, workflow, indicator, years, year_data, organisation) }}
     {% endfor %}
     </tbody>
     </table>
+    {% endfor %}
+
     <!-- text below this line does not vary with workflow -->
     {% if workflow.name != 'finalised' %}
     {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.id %}

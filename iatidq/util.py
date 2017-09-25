@@ -65,6 +65,15 @@ def resort_dict_indicator(data):
                     cmp=resort_fn)
     return collections.OrderedDict(new)
 
+def group_by_subcategory(data):
+    grouped_data = collections.OrderedDict()
+    for x in data.values():
+        subcat = x['indicator']['indicator_subcategory_name']
+        if subcat not in grouped_data:
+            grouped_data[subcat] = []
+        grouped_data[subcat].append(x)
+    return grouped_data
+
 def resort_indicator_tests(data):
     resort_fn = lambda x, y: cmp(x[1]["indicator_order"],
                                         y[1]["indicator_order"])

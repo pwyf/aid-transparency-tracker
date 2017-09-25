@@ -229,6 +229,7 @@ def organisation_survey_view(organisation, workflow, organisationsurvey):
 
     org_indicators['commitment'] = util.resort_sqlalchemy_indicator(org_indicators['commitment'])
     org_indicators['zero'] = util.resort_dict_indicator(org_indicators['zero'])
+    org_indicators['grouped_zero'] = util.group_by_subcategory(org_indicators['zero'])
 
     ati_year = app.config['ATI_YEAR']
 
