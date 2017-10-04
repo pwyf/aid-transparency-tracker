@@ -2,7 +2,7 @@
 
 We have conducted an initial assessment of donor organisations, reviewing what information they publish on their activities. This information will be included in the 2016 Aid Transparency Index.
 
-Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of information items we are looking for can be found [here](http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf).
+Data has been collected using two tools - a Data Quality tool and a survey. If the organisation is an IATI publisher then some of its data has been collected and scored automatically using the Data Quality tool. Information provided in other formats (Excel, CSV, website, PDFs) has been collected manually via a survey. If the organisation is not an IATI publisher then all the information will be collected via the survey. The full list of indicators we are looking for can be found [here](http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf).
 
 To ensure that the survey data is as accurate as possible, we would be grateful if you could check the responses and correct or add information as appropriate.
 
@@ -29,7 +29,7 @@ the contrary is available.
 
 * **Publicly available**: The information is available on the organisation's website or portal.
 
-The survey is looking for specific information items. Each response
+The survey is looking for specific indicators. Each response
 has been scored based on whether the information is 'always'
 published, 'sometimes' published or 'not published'. The evidence for
 where the information was found and any explanatory text is provided
@@ -52,8 +52,8 @@ The evidence for where the information is found and any explanatory text is prov
 Given your familiarity with this donor organisation, we would like to receive your feedback on the survey.
 
 1. Go to the 'Publication' section of the survey.
-1. The information items we are looking for are listed. To see a definition for each information item, click on it.
-1. Scroll down to view our assessment of each information item and the organisation's response.
+1. The indicators we are looking for are listed. To see a definition for each indicator, click on it.
+1. Scroll down to view our assessment of each indicator and the organisation's response.
 1. Note whether you agree or disagree with Publish What You Fund's assessment. If you are unsure,please let us know using the comments box.
 1. In the comments box, please add any feedback or clarifications that you think will help us better understand your response. This is particularly helpful if you think the donor organisation's response is unclear or open to interpretation. Feel free to add any questions you have for us in the same box.
 

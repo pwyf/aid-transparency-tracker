@@ -44,7 +44,7 @@ the contrary is available.
 
 * **Publicly available**: The information is available on the organisation's website or portal.
 
-The survey is looking for specific information items. Each response
+The survey is looking for specific indicators. Each response
 has been scored based on whether the information is 'always'
 published, 'sometimes' published or 'not published'. The evidence for
 where the information was found and any explanatory text is provided
@@ -76,7 +76,7 @@ information is not being published for any of the projects assessed.
 ### Providing your feedback:
 
 - Go to the 'Publication' section of the survey.
-- The information items we are looking for are listed. To see a definition for each information item, click on it.
+- The indicators we are looking for are listed. To see a definition for each indicator, click on it.
 - Review each of the responses provided. If you agree with our assessment for that question, move on to the next question.
 - If you disagree with our assessment or would like to provide additional information for any of the questions:
  1. Select your own response for the question.

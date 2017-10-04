@@ -11,7 +11,7 @@ collected and scored automatically using  the Data Quality tool.
 Information provided in other formats (Excel, CSV, website, PDFs) will be
 collected manually via a survey. If the organisation is not an IATI
 publisher then all the information will be collected via the survey. The
-full list of information items we are looking for can be found
+full list of indicators we are looking for can be found
 [here](http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf).
 
 Surveys are to be completed using information relating to the country that
@@ -35,7 +35,7 @@ proving the contrary is available.
 
 * **Publicly available**: The information is available on the organisation's website or portal.
 
-The survey is looking for specific information items. Each response
+The survey is looking for specific indicators. Each response
 has been scored based on whether the information is 'always'
 published, 'sometimes' published or 'not published'. The evidence for
 where the information was found and any explanatory text is provided
@@ -51,8 +51,8 @@ For activity level questions, **you should select at random a minimum of five ac
 ### To answer each question:
 
 1. Go to the 'Publication' section of the survey.
-2. The information items we are looking for are listed. To see a definition for each information item, click on it.
-3.	The response to each information item that was used in the 2014 Index is available for reference. This may help identify where the information you are looking can be found (for example, links to project databases). Please note that this information may not be relevant for the 2016 Index if the country being assessed has changed. In addition, new information may be available or some of the links may be broken.
+2. The indicators we are looking for are listed. To see a definition for each indicator, click on it.
+3.	The response to each indicator that was used in the 2014 Index is available for reference. This may help identify where the information you are looking can be found (for example, links to project databases). Please note that this information may not be relevant for the 2016 Index if the country being assessed has changed. In addition, new information may be available or some of the links may be broken.
 3. Check if you can find the information we are looking for and select an answer from a choice of 'always published', 'sometimes published' or 'not published'.
 4. If the information is published, provide a URL as evidence. If the information is not published, please put N/A in the 'evidence' text box.
 5. For some questions, we would like to know the format that the information is provided in. For these questions, please select the format: machine readable (Excel or CSV files), website or PDF. If you are unsure of the format, please let us know using the comments box.
