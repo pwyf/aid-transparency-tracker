@@ -32,7 +32,7 @@ def create_survey(options):
 
     organisation = models.Organisation.where(organisation_code=organisation_code).first()
 
-    _ = iatidq.survey.data.getOrCreateSurveyById(organisation.id)
+    _ = iatidq.survey.data.getOrCreateSurveyByOrgId(organisation.id)
 
 def get_package_names(organisation_code):
     for p in dqorganisations.organisationPackages(

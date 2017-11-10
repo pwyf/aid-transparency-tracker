@@ -62,7 +62,7 @@ def organisation_survey_repair(organisation_code):
 def organisation_survey(organisation_code=None):
     organisation = Organisation.where(organisation_code=organisation_code).first()
     # make sure survey exists
-    survey = dqsurveys.getOrCreateSurveyById(organisation.id)
+    survey = dqsurveys.getOrCreateSurveyByOrgId(organisation.id)
 
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation_code)
     workflows = Workflow.all()
@@ -241,7 +241,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     workflow = Workflow.where(name=workflow_name).first_or_404()
 
     organisation = Organisation.where(organisation_code=organisation_code).first_or_404()
-    organisationsurvey = dqsurveys.getOrCreateSurveyById(organisation.id)
+    organisationsurvey = dqsurveys.getOrCreateSurveyByOrgId(organisation.id)
 
     def allowed(method):
         permission_name = "survey_" + workflow_name
