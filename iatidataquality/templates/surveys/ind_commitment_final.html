@@ -14,7 +14,7 @@
                         <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
                     </div>
                     <div class="modal-body">
-                        {{indicator.indicator.longdescription}}
+                        {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
                     </div>
                     <div class="modal-footer">
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
