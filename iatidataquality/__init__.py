@@ -17,6 +17,7 @@ app = Flask(__name__.split('.')[0])
 app.config.from_pyfile(os.path.join('..', 'config.py'))
 db = SQLAlchemy(app, session_options={"autocommit":True})
 
+from . import tmpl_filters
 from . import usermanagement
 from . import api
 from . import routes
