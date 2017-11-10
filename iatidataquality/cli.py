@@ -146,7 +146,7 @@ def create_aggregation_types():
 @app.cli.command()
 @click.option('--runtime-id', required=True, type=int, help='Runtime ID')
 @click.option('--package-id', required=True, type=int, help='Package ID')
-def aggregate_results():
+def aggregate_results(runtime_id, package_id):
     """Trigger result aggregation"""
     dqprocessing.aggregate_results(runtime_id, package_id)
 
