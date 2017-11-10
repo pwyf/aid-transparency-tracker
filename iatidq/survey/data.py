@@ -13,7 +13,8 @@ from iatidataquality import app, db
 from iatidq import models, dqindicators, dqorganisations
 
 
-class NoSuchSurvey(Exception): pass
+class NoSuchSurvey(Exception):
+    pass
 
 
 def getOrCreateSurveyByOrgId(organisation_id):
@@ -31,12 +32,13 @@ def getOrCreateSurveyByOrgId(organisation_id):
         currentworkflow_deadline = datetime.datetime.utcnow()+deadline_days
 
         new_survey.setup(
-            organisation_id = organisation_id,
-            currentworkflow_id = currentworkflow_id,
-            currentworkflow_deadline = currentworkflow_deadline
+            organisation_id=organisation_id,
+            currentworkflow_id=currentworkflow_id,
+            currentworkflow_deadline=currentworkflow_deadline
             )
         db.session.add(new_survey)
     return new_survey
+
 
 def addSurveyData(data):
     checkSD = models.OrganisationSurveyData.query.filter_by(
