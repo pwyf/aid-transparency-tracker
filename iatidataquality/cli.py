@@ -95,16 +95,14 @@ def import_indicators(filename):
         dqindicators.importIndicators()
 
 @app.cli.command()
-@click.option('--filename', help='Set filename of data to test')
+@click.option('--filename', required=True, help='Set filename of data to test')
 def import_organisations(filename):
     """
     Import organisations. Will try to create and assign
     organisations to existing packages.
     """
-    if filename:
-        dqorganisations.importOrganisationPackagesFromFile(filename)
-    else:
-        print('Error: please provide a filename')
+    dqorganisations.importOrganisationPackagesFromFile(filename)
+
 
 @app.cli.command()
 @click.option('--package-name', required=True, help='Set name of package to be tested')
