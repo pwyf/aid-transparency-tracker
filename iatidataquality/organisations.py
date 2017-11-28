@@ -658,7 +658,7 @@ def update_organisation(organisation_code):
 def organisation_edit(organisation_code=None):
     packages = dqpackages.packages()
     packagegroups = dqpackages.packageGroups()
-    organisation = models.Organisation.where(organisation_code=organisation_code).first()
+    organisation = Organisation.where(organisation_code=organisation_code).first()
 
     if request.method == 'POST':
         if 'addpackages' in request.form:
