@@ -141,7 +141,7 @@ def setup(minimal):
     else:
         setup_packages()
 
-    create_aggregation_types()
+    # create_aggregation_types()
     create_inforesult_types()
 
     # associate with inforesults
