@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "ConditionType", "complete": "1"}, "data": [{"code": "1", "name": "Policy"}, {"code": "2", "name": "Performance"}, {"code": "3", "name": "Fiduciary"}], "metadata": {"url": "", "name": "Condition Type", "description": "Condition type \u2013 e.g. policy, performance."}}

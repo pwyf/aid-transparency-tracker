@@ -1,6 +1,7 @@
 amqp==2.2.2
 amqplib==1.0.2
 anyjson==0.3.3
+git+https://github.com/pwyf/bdd-tester.git#egg=bdd-tester
 blinker==1.4
 certifi==2017.7.27.1
 chardet==3.0.4

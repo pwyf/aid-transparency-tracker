@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "GeographicLocationClass", "complete": "1"}, "data": [{"code": "1", "name": "Administrative Region"}, {"code": "2", "name": "Populated Place"}, {"code": "3", "name": "Structure"}, {"code": "4", "name": "Other Topographical Feature"}], "metadata": {"url": "", "name": "Geographic Location Class", "description": null}}

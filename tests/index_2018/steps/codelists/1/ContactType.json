@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "ContactType", "complete": "1"}, "data": [{"code": "1", "name": "General Enquiries"}, {"code": "2", "name": "Project Management"}, {"code": "3", "name": "Financial Management"}, {"code": "4", "name": "Communications"}], "metadata": {"url": "", "name": "Contact Type", "description": ""}}

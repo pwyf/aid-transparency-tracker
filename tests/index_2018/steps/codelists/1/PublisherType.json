@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "PublisherType", "complete": "1"}, "data": [{"code": "1", "name": "Aid Provider"}, {"code": "2", "name": "Aid Recipient"}, {"code": "3", "name": "Aggregator"}], "metadata": {"url": "", "name": "Publisher Type", "description": ""}}

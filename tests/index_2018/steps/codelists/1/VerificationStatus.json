@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "VerificationStatus", "complete": "1"}, "data": [{"code": "0", "name": "Not verified"}, {"code": "1", "name": "Verified"}], "metadata": {"url": "", "name": "Verification Status", "description": ""}}

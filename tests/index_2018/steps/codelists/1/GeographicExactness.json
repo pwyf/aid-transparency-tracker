@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "GeographicExactness", "complete": "1"}, "data": [{"code": "1", "name": "Exact"}, {"code": "2", "name": "Approximate"}], "metadata": {"url": "", "name": "Geographic Exactness", "description": null}}

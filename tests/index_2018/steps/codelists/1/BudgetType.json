@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "BudgetType", "complete": "1"}, "data": [{"code": "1", "name": "Original"}, {"code": "2", "name": "Revised"}], "metadata": {"url": "", "name": "Budget Type", "description": "DAC/CRS classification used to determine the character of resource flows (bilateral or multilateral)."}}

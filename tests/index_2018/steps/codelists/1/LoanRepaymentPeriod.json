@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "LoanRepaymentPeriod", "complete": null}, "data": [{"code": "1", "name": "Annual"}, {"code": "2", "name": "Semi-annual"}, {"code": "4", "name": "Quarterly"}, {"code": "12", "name": "Monthly"}], "metadata": {"url": "", "name": "Loan Repayment Period", "description": "CRS Loan Repayment No of Payments "}}

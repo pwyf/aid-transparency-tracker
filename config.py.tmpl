@@ -1,4 +1,4 @@
-import os.path
+from os.path import dirname, join, realpath
 
 
 BROKER_HOST = "localhost"
@@ -11,7 +11,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 #SQLALCHEMY_DATABASE_URI = 'mysql+oursql://user:passwd@127.0.0.1/iatidq'
 #SQLALCHEMY_DATABASE_URI = 'sqlite:///dataquality.sqlite'
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2:///iatidq'
-DATA_STORAGE_DIR = os.path.join(os.path.realpath(os.path.dirname(__file__)), 'relative', 'path', 'to', 'your', 'data')
+DATA_STORAGE_DIR = join(realpath(dirname(__file__)), 'relative', 'path', 'to', 'your', 'data')
+TESTS = join(realpath(dirname(__file__)), 'tests', 'index_2018')
 
 SECRET_KEY = "YOUR-REALLY-SECRET-KEY"
 

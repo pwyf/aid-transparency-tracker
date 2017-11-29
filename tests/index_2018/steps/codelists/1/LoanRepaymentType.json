@@ -1,0 +1,1 @@
+{"attributes": {"category-codelist": null, "name": "LoanRepaymentType", "complete": "1"}, "data": [{"code": "1", "name": "Equal Principal Payments (EPP)"}, {"code": "2", "name": "Annuity"}, {"code": "3", "name": "Lump sum"}, {"code": "5", "name": "Other"}], "metadata": {"url": "", "name": "Loan Repayment Type", "description": "used in additional CRS elements"}}
