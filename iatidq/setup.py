@@ -25,7 +25,7 @@ from . import survey
 from . import test_level
 
 
-default_tests_filename="tests/tests.csv"
+default_tests_filename="tests/tests.yaml"
 default_infotypes_filename="tests/infotypes.csv"
 default_indicator_group_name= app.config["INDICATOR_GROUP"]
 default_userdata_filename='tests/users.csv'

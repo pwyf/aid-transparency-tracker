@@ -14,7 +14,7 @@ from . import app, usermanagement
 from iatidq import dqimporttests, dqtests, test_level
 
 
-test_list_location = "tests/activity_tests.csv"
+test_list_location = "tests/tests.yaml"
 
 @app.route("/tests/")
 @app.route("/tests/<id>/")
