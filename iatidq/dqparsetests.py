@@ -13,6 +13,7 @@ import re
 import foxpath
 
 from . import models, test_level
+from iatidq import db
 
 
 comment = re.compile('#')
