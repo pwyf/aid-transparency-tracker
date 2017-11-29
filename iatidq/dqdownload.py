@@ -97,7 +97,7 @@ def download_packages(runtime):
             else:
                 print "Not testing manual package, because it has not been set to refresh"
 
-    print "Testing", len(testing_packages), "packages"
+    print "Testing {} packages".format(len(testing_packages))
 
 def download_package(runtime, package_name):
     package = models.Package.query.filter_by(
