@@ -1,7 +1,7 @@
 import click
 
 from . import app, db
-from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers
+from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, queue
 from iatidq import setup as dqsetup
 
 
@@ -183,3 +183,10 @@ def setup_organisations():
 def setup_users(filename):
     """Setup users and permissions."""
     dqusers.importUserDataFromFile(filename)
+
+
+@app.cli.command()
+def clear_queues():
+    queue_names = ['iati_download_queue', 'iati_tests_queue']
+    for queue_name in queue_names:
+        queue.delete_queue(queue_name)
