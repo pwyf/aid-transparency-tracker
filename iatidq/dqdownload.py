@@ -30,7 +30,7 @@ def get_package(pkg, package, runtime_id):
         # if the package has been updated,
         # then download it and update the package data
         update_package = True
-        print "Updating package", pkg['name']
+        print("Updating package: " + pkg['name'])
 
     if (update_package or new_package):
         resources = pkg.get('resources', [])
@@ -41,20 +41,21 @@ def get_package(pkg, package, runtime_id):
         resource = resources[0]
         enqueue_download(package, runtime_id)
     else:
-        print "Package", pkg["name"], "is already the latest version"
+        print("Package " + pkg["name"] + " is already the latest version")
         add_test_status(package.id, package_status.UP_TO_DATE)
+
 
 def download_packages(runtime):
     # Check registry for packages list
-    registry_packages = [ (pkg["name"], pkg["metadata_modified"])
-                          for pkg in packages_from_iati_registry() ]
+    registry_packages = [(pkg["name"], pkg["metadata_modified"])
+                         for pkg in packages_from_iati_registry()]
 
-    print "Found", len(registry_packages),"packages on the IATI Registry"
-    print "Checking for updates, calculating and queuing packages;"
-    print "this may take a moment..."
+    print("Found " + len(registry_packages) + "packages on the IATI Registry")
+    print("Checking for updates, calculating and queuing packages;")
+    print("this may take a moment...")
 
-    registry_packages=dict(registry_packages)
-    testing_packages=[]
+    registry_packages = dict(registry_packages)
+    testing_packages = []
     packages = models.Package.query.filter_by(active=True).all()
 
     print registry_packages
@@ -77,13 +78,13 @@ def download_packages(runtime):
                     print "Packages have the same ID"
                     print "Metadata modified is", package.package_metadata_modified
                     print "Registry package name is", registry_packages[name]
-            except KeyError, e:
+            except KeyError as e:
                 if name not in registry_packages:
                     print "name wasn't there"
                     # TODO: handle deleted packages; for now just pass
                     pass
                 else:
-                    raise Exception, e
+                    raise Exception(str(e))
 
         # Handle manually added packages
         else:
@@ -98,6 +99,7 @@ def download_packages(runtime):
                 print "Not testing manual package, because it has not been set to refresh"
 
     print "Testing {} packages".format(len(testing_packages))
+
 
 def download_package(runtime, package_name):
     package = models.Package.query.filter_by(
@@ -119,6 +121,7 @@ def download_package(runtime, package_name):
         print "Package resource has no package_metadata_modified"
         pass
 
+
 def run(package_name=None):
     runtime = testrun.start_new_testrun()
     # Get list of packages from DB
@@ -126,6 +129,7 @@ def run(package_name=None):
         download_packages(runtime)
     else:
         download_package(runtime, package_name)
+
 
 def enqueue_download(package, runtime_id):
     args = {
