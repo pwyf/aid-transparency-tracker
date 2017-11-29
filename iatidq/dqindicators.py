@@ -58,11 +58,11 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
 def importIndicators():
     filename = 'tests/tests.csv'
     indicatorgroup_name = app.config["INDICATOR_GROUP"]
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True, False)
 
 def importIndicatorsFromFile(indicatorgroup_name, filename, infotype=False):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True, infotype)
 
 def _importIndicators(indicatorgroup_name, fh, local, infotype):
@@ -125,7 +125,7 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
                                 "indicator_id" : indicator.id
                             })
 
-    print "Imported successfully"
+    print("Imported successfully")
     return True
 
 def indicatorGroups(indicatorgroup=None):
