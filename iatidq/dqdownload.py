@@ -50,7 +50,7 @@ def download_packages(runtime):
     registry_packages = [(pkg["name"], pkg["metadata_modified"])
                          for pkg in packages_from_iati_registry()]
 
-    print("Found " + len(registry_packages) + "packages on the IATI Registry")
+    print("Found {} packages on the IATI Registry".format(len(registry_packages)))
     print("Checking for updates, calculating and queuing packages;")
     print("this may take a moment...")
 

@@ -25,21 +25,23 @@ from . import survey
 from . import test_level
 
 
-default_tests_filename="tests/tests.yaml"
-default_infotypes_filename="tests/infotypes.csv"
-default_indicator_group_name= app.config["INDICATOR_GROUP"]
-default_userdata_filename='tests/users.csv'
-default_indicator_filename='tests/indicators.csv'
-default_basic_countries_filename='tests/countries_basic.csv'
+default_tests_filename = "tests/tests.yaml"
+default_infotypes_filename = "tests/infotypes.csv"
+default_indicator_group_name = app.config["INDICATOR_GROUP"]
+default_userdata_filename = 'tests/users.csv'
+default_indicator_filename = 'tests/indicators.csv'
+default_basic_countries_filename = 'tests/countries_basic.csv'
+
 
 def create_inforesult_types():
-    print "Adding info result types"
+    print("Adding info result types")
     inforesult.importInfoTypesFromFile(
         default_infotypes_filename,
         test_level.ACTIVITY)
 
+
 def create_aggregation_types():
-    print "Adding an aggregation type for all data"
+    print("Adding an aggregation type for all data")
     dqaggregationtypes.addAggregationType({'name':'All data',
                                            'description': '',
                                            'test_id': None,
