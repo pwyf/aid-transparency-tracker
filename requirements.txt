@@ -1,7 +1,6 @@
 amqp==2.2.2
 amqplib==1.0.2
 anyjson==0.3.3
-git+https://github.com/pwyf/bdd-tester.git#egg=bdd-tester
 blinker==1.4
 certifi==2017.7.27.1
 chardet==3.0.4
@@ -13,7 +12,7 @@ Flask==0.12.2
 Flask-Login==0.4.0
 Flask-Principal==0.4.0
 Flask-SQLAlchemy==2.2
-git+https://github.com/pwyf/foxpath.git#egg=foxpath
+foxpath==2.0.0
 idna==2.6
 itsdangerous==0.24
 jdcal==1.3
