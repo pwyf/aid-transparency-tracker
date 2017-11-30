@@ -34,6 +34,13 @@ code {
         <td></td>
         <td colspan="2">{{ i.longdescription|replace('\n', '<br>')|safe }}</td>
     </tr>
+        {% for test in i.test %}
+        <tr id="tr{{ test.test_id }}" class="group-{{ i.id }} hidden">
+            <td></td>
+            <td><i>{{ test.description }}</i></td>
+            <td><code>{{ test.name }}</code></td>
+        </tr>
+        {% endfor %}
     {% endfor %}
 </tbody>
 </table>
