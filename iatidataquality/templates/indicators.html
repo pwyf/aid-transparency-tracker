@@ -1,106 +1,42 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}Indicators{% endblock %}
 {% block content %}
+<style>
+code {
+    white-space: normal;
+}
+</style>
 
-<div id="template-target">
-</div>
+<h1>{{indicatorgroup.description}}</h1>
+<h3>Indicators</h3>
 
-{% raw %}
-<script type="text/template" id="template-source">
+<table class="table x-template" id="tests">
+<thead>
+<th width="10%">No</th>
+<th>Category</th>
+<th colspan="2" width="90%">
+  Description
+</th>
+</thead>
+<tbody>
+  {% for i in indicator %}
+    <tr id="indicator-{{ i.id }}">
+        <td>{{i.indicator_order}}</td>
+        <td>{{i.indicator_subcategory_name}}</td>
+        <td>{{i.description}}</td>
 
-    {{#admin}}
-	{{#links}}
-
-    <style>
-    code {
-        white-space: normal;
-    }
-    </style>
-    <div class="pull-right">
-    <p>
-	  <a class="btn btn-success"
-		 href="{{edit_group}}">
-		<i class="icon-white icon-pencil"></i> <strong>Edit Group</strong></a>
-
-      <a class="btn btn-danger"
-		 href="{{delete_group}}"
-		 data-confirm="Are you sure you want to delete indicator group
-					   {{indicatorgroup.name}}? This action will also
-					   delete all indicators associated with this group,
-					   and cannot be undone.">
-		<i class="icon-white icon-trash"></i> <strong>Delete Group</strong></a>
-	</p>
-
-    <p>
-	  <a class="btn btn-success" href="{{new_indicator}}">
-		<i class="icon-white icon-plus"></i> <strong>New Indicator</strong></a>
-	</p>
-
-    <p>
-	  <a class="btn btn-mini" href="{{csv_assoc_tests}}">
-		<i class="icon-download"></i> <strong>CSV of associated tests</strong></a>
-	</p>
-
-    <p>
-	  <a class="btn btn-mini" href="{{csv_unassoc_tests}}">
-		<i class="icon-download"></i> <strong>CSV of unassociated tests</strong></a>
-	</p>
-    </div>
-	{{/links}}
-    {{/admin}}
-	<h1>{{indicatorgroup.description}}</h1>
-	<h3>Indicators</h3>
-
-    <table class="table x-template" id="tests">
-    <thead>
-    <th width="10%">No</th>
-	<th>Category</th>
-    <th colspan="2" width="{{#admin}}80%{{/admin}}{{#admin}}90%{{/admin}}">
-	  Description
-	</th>
-    {{#admin}}
-    <th width="10%">Edit</th>
-    {{/admin}}
-    </thead>
-    <tbody>
-	  {{#indicator}}
-        <tr id="indicator-{{id}}">
-        <td>{{indicator_order}}</td>
-		<td>{{indicator_subcategory_name}}</td>
-	    <td>{{description}}</td>
-          {{#admin}}
-        <td>
-            <a href="{{links.edit}}">
-			  <i class="icon-pencil"></i>
-			</a>
-            <a href="{{links.delete}}"
-			   data-confirm="Are you sure you want to delete
-							 Indicator {{name}}?">
-			  <i class="icon-trash"></i>
-			</a>
-        </td>
-          {{/admin}}
         <td><a href="#" class="showTests"
-			   id="showindicator-{{id}}">
-			<i class="icon-chevron-down align-right"></i></a>
-		</td>
-        </tr>
-        <tr class="group-{{id}} hidden">
-            <td></td>
-            <td colspan="2">{{longdescription}}</td>
-        </tr>
-		    {{#test}}
-                <tr id="tr{{test_id}}" class="group-{{id}} hidden">
-                <td></td>
-                <td><i>{{ description}}</i></td>
-	            <td><code>{{ name }}</code></td>
-                </tr>
-		    {{/test}}
-        {{/indicator}}
-    </tbody>
-    </table>
-</script>
-{% endraw %}
+               id="showindicator-{{ i.id }}">
+            <i class="icon-chevron-down align-right"></i></a>
+        </td>
+    </tr>
+    <tr class="group-{{ i.id }} hidden">
+        <td></td>
+        <td colspan="2">{{ i.longdescription|replace('\n', '<br>')|safe }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
 {% endblock %}
 
 {% block final_scripts %}

@@ -137,17 +137,16 @@ def indicators(indicatorgroup=None):
 
     indicator_data = list(its.values())
 
-    json_data = json.dumps({
-            "indicator": indicator_data,
-            "indicatorgroup": indicatorgroup.as_dict(),
-            "admin": usermanagement.check_perms('admin'),
-            "links": links
-            }, indent=2)
+    json_data = {
+        "indicator": indicator_data,
+        "indicatorgroup": indicatorgroup.as_dict(),
+        "links": links
+    }
 
     return render_template("indicators.html",
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,
-                           json_data=json_data)
+                           **json_data)
 
 
 @app.route("/indicators/<indicatorgroup>_tests.csv")
