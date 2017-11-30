@@ -183,11 +183,6 @@ def make_csv_output(options):
     s = iatidq.dqcsv.make_csv(organisations, True, True)
     print s.read()
 
-def clear_queues(options):
-
-    [ queue.delete_queue(queue_name) for queue_name in
-                ['iati_download_queue', 'iati_tests_queue'] ]
-
 def test_package(options):
     package_name = options.package_name
     package_id = options.package_id
@@ -382,8 +377,6 @@ def main():
     subparser.add_argument('--organisation-code', dest='organisation_code', action='store', required=True)
 
     create_subparser(subparsers, make_csv_output, 'make-csv-output')
-
-    create_subparser(subparsers, clear_queues, 'clear-queues')
 
     subparser = create_subparser(subparsers, associate_test, 'associate-test')
     subparser.add_argument('--test-id', type=int, dest='test_id', action='store', required=True)
