@@ -20,12 +20,7 @@ from iatidq import dqindicators, dqorganisations, models, util
 
 @app.route("/indicators/")
 def indicatorgroups():
-    if not usermanagement.check_perms('admin'):
-        return redirect(url_for('indicators', indicatorgroup=app.config["INDICATOR_GROUP"]))
-    indicatorgroups = dqindicators.indicatorGroups()
-    return render_template("indicatorgroups.html", indicatorgroups=indicatorgroups,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+    return redirect(url_for('indicators', indicatorgroup=app.config["INDICATOR_GROUP"]))
 
 @app.route("/indicators/import/")
 @usermanagement.perms_required()
