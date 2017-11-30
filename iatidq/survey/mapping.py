@@ -6,14 +6,15 @@ from iatidataquality import app
 
 ORGANISATION_MAP_FILE = 'organisations_with_identifiers.csv'
 # Trying to avoid proliferation of files...
-OLD_YEAR = '2014'
-NEW_YEAR = '2015'
+OLD_YEAR = app.config.get('PREVIOUS_ATI_YEAR')
+NEW_YEAR = app.config.get('ATI_YEAR')
 OLD_ORG_FIELD_ID = OLD_YEAR + '_organisation_code'
 NEW_ORG_FIELD_ID = 'organisation_code'
+OLD_INDICATOR_NAME = OLD_YEAR + '_indicator_name'
+NEW_INDICATOR_NAME = NEW_YEAR + '_indicator_name'
+
 OLD_INDICATORS_FILE = OLD_YEAR + '_' + NEW_YEAR + '_indicators.csv'
 OLD_RESULTS_FILE = OLD_YEAR + '_results.csv'
-NEW_INDICATOR_NAME = NEW_YEAR + '_indicator_name'
-OLD_INDICATOR_NAME = OLD_YEAR + '_indicator_name'
 
 thisfile_dir = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(thisfile_dir, "../../", "tests/")
