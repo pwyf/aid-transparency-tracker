@@ -10,7 +10,7 @@
 import itertools
 import re
 
-from foxpath import Foxpath
+import foxpath
 
 from . import dqcodelists, models, test_level
 from iatidataquality import db
@@ -40,6 +40,5 @@ def test_functions():
             'expression': x.name,
         } for x in tests]
 
-        foxpath = Foxpath()
-        foxtests = foxpath.load_tests(tests, codelists)
+        foxtests = foxpath.load_tests(tests, codelists=codelists)
         return foxtests
