@@ -4,517 +4,505 @@
 {% endblock %}
 {% block content %}
 
-<div id="template-target">
+<h1><a href="{{ links.organisation_page }}">
+    {{ organisation.organisation_name }}</a>
+</h1>
+
+<h3>{{ ati_year }} Aid Transparency Index &raquo; Publication</h3>
+<div class="">
+  <div class="row">
+    <div class="span12">
+      <h2>An initial assessment of the information
+        you publish is below.
+      </h2>
+      <p class="lead">A graduated scoring methodology is used for
+      some of the publication indicators.
+      The scoring takes into account the format that the
+      information is provided in.</p>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="span6">
+      <h4>Information published to the IATI Registry</h4>
+
+      <div class="pull-right"><a class="btn btn-mini scrollto"
+      href="#iati"><strong>Jump to
+      indicators</strong> <i class="icon-chevron-down"></i></a>
+      </div>
+
+      <p>Maximum score: 100 points</p>
+      <h5>Guidelines</h5>
+      <ul>
+        <li>Where a test does not appear to be capturing
+        information that is published in your data, please let us
+        know.</li>
+        <li>The tests will help to identify problems and gaps in
+        the data, which you can address before the end of data collection.</li>
+      </ul>
+    </div>
+    <div class="span6">
+      <h4>Information published in other formats</h4>
+      <div class="pull-right">
+        <a class="btn btn-mini scrollto" href="#noniati">
+          <strong>Jump to indicators</strong>
+          <i class="icon-chevron-down"></i></a>
+      </div>
+      <p>Maximum score: 50 points</p>
+      <h5>Guidelines</h5>
+      <ul>
+        <li>Check our initial assessment of the information we
+        found on your website.</li>
+        <li>You only need to do this if you are not publishing
+          this information to the IATI Registry.</li>
+        <li>You can do this by clicking <a class="btn
+        btn-mini">Review manually collected data</a>.</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
-{% raw %}
-<script type="text/template" id="template-source">
-    <h1><a href="{{links.organisation_page}}">
-		{{organisation.organisation_name}}</a>
-	</h1>
+<a id="iati"></a>
 
-    <h3>{{ ati_year }} Aid Transparency Index &raquo; Publication</h3>
-    <div class="">
-      <div class="row">
-        <div class="span12">
-          <h2>An initial assessment of the information
-			you publish is below.
-		  </h2>
-          <p class="lead">A graduated scoring methodology is used for
-          some of the publication indicators.
-          The scoring takes into account the format that the
-          information is provided in.</p>
-        </div>
-      </div>
+<hr />
+<fieldset>
+  <div class="pull-right">
+    <form action="" method="GET" id="aggregation_type_form"
+          class="form-inline">
+      <a href="{{links.organisation_detail}}"
+         class="btn">Detail
+      </a>
+      <select name="aggregation_type" id="aggregation_type">
+        {% for agg in agg_type %}
+        <option value="{{agg.id}}"
+                {% if agg.selected %}
+                selected
+                {% endif %}>
+          {{agg.name}}
+        </option>
+        {% endfor %}
+      </select>
+    </form>
 
-      <hr />
+  </div>
 
-      <div class="row">
-        <div class="span6">
-          <h4>Information published to the IATI Registry</h4>
+  <h3>Published to the IATI Registry</h3>
 
-		  <div class="pull-right"><a class="btn btn-mini scrollto"
-		  href="#iati"><strong>Jump to
-		  indicators</strong> <i class="icon-chevron-down"></i></a>
-		  </div>
+  <p class="lead">Information published to the IATI Registry can
+    score up to 100 points based on the quality and frequency of
+    publication. This is determined by running a series of tests
+    on the data. You can see more details by clicking on
+    the <i class="icon icon-chevron-down"></i> icon.
+  </p>
 
-		  <p>Maximum score: 100 points</p>
-          <h5>Guidelines</h5>
-          <ul>
-            <li>Where a test does not appear to be capturing
-            information that is published in your data, please let us
-            know.</li>
-            <li>The tests will help to identify problems and gaps in
-            the data, which you can address before the end of data collection.</li>
-          </ul>
-        </div>
-        <div class="span6">
-          <h4>Information published in other formats</h4>
-          <div class="pull-right">
-			<a class="btn btn-mini scrollto" href="#noniati">
-			  <strong>Jump to indicators</strong>
-			  <i class="icon-chevron-down"></i></a>
-		  </div>
-          <p>Maximum score: 50 points</p>
-          <h5>Guidelines</h5>
-          <ul>
-            <li>Check our initial assessment of the information we
-            found on your website.</li>
-            <li>You only need to do this if you are not publishing
-              this information to the IATI Registry.</li>
-            <li>You can do this by clicking <a class="btn
-            btn-mini">Review manually collected data</a>.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  {% if freq_alert %}
+  <div class="alert alert-info">
+    <h3>Frequency of publication</h3>
+    <p class="lead">{{ freq_alert.text }}</p>
+  </div>
+  {% endif %}
+  <table class="table" id="results_iati">
+    <thead>
+      <th>Category</th>
+      <th>Indicator</th>
+      <th><span class="th_test hidden">Test</span></th>
+      <th>% Passed</th>
+      <th>Points</th>
+      <th><span class="th_test hidden">Total results</span></th>
+      <th>Detail</th>
+    </thead>
+    <tbody>
 
-    <a id="iati"></a>
-
-    <hr />
-    <fieldset>
-      <div class="pull-right">
-        <form action="" method="GET" id="aggregation_type_form"
-			  class="form-inline">
-		  <a href="{{links.organisation_detail}}"
-			 class="btn">Detail
-		  </a>
-          <select name="aggregation_type" id="aggregation_type">
-			{{#agg_type}}
-            <option value="{{id}}"
-					{{#selected}}
-					selected
-					{{/selected}}>
-			  {{name}}
-			</option>
-            {{/agg_type}}
-          </select>
-        </form>
-
-      </div>
-
-      <h3>Published to the IATI Registry</h3>
-
-      <p class="lead">Information published to the IATI Registry can
-        score up to 100 points based on the quality and frequency of
-        publication. This is determined by running a series of tests
-        on the data. You can see more details by clicking on
-        the <i class="icon icon-chevron-down"></i> icon.
-	  </p>
-
-	  {{#freq_alert}}
-      <div class="alert alert-info">
-        <h3>Frequency of publication</h3>
-        <p class="lead">{{ text }}</p>
-      </div>
-	  {{/freq_alert}}
-      <table class="table" id="results_iati">
-        <thead>
-          <th>Category</th>
-          <th>Indicator</th>
-          <th><span class="th_test hidden">Test</span></th>
-          <th>% Passed</th>
-          <th>Points</th>
-          <th><span class="th_test hidden">Total results</span></th>
-          <th>Detail</th>
-        </thead>
-        <tbody>
-
-		{{#result.non_zero}}
-
-            <tr id="indicator-{{indicator.id}}">
-              <td>{{indicator.indicator_subcategory_name}}</td>
-              <td><a href="#indicator{{indicator.id}}"
-					 role="button" data-toggle="modal">
-                  {{indicator.indicator_order}}.
-				  {{indicator.description}}
-				</a>
-                <div id="indicator{{indicator.id}}"
-					 class="modal hide fade" tabindex="-1" role="dialog"
-					 aria-labelledby="indicatorHeader" aria-hidden="true">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">×</button>
-                    <h3 id="indicatorHeader">
-					  Indicator: {{indicator.description}}
-					</h3>
-                  </div>
-                  <div class="modal-body">
-                    {{indicator.longdescription}}
-                  </div>
-                  <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"
-							aria-hidden="true">Close</button>
-                  </div>
-                </div>
-              </td>
-	          <td></td>
-              <td class="pct muted">{{results_pct_rounded}}</td>
-              <td><a href="#calculation{{indicator.id}}" role="button"
-					 data-toggle="modal">{{points}}</a>
-
-                <div id="calculation{{indicator.id}}"
-					 class="modal hide fade" tabindex="-1" role="dialog"
-					 aria-labelledby="indicatorHeader" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close"
-								data-dismiss="modal"
-								aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">
-						  Score calculation for {{indicator.description}}
-						</h3>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table">
-                        <thead>
-                            <th colspan="3">Data quality score calculation</th>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Data quality</td>
-							<td>{{results_pct_rounded}}%</td>
-							<td>% of activities that passed tests</td>
-                        </tr>
-                        <tr class="muted">
-                            <td>Convert percentage to points</td><td>÷ 2</td>
-							<td></td>
-                        </tr>
-                        <tr>
-                            <td>Points</td>
-							<td>{{results_pct_halved_rounded}}</td>
-							<td></td>
-                        </tr>
-                        {{#is_activity}}
-                        <tr class="muted">
-                            <td>Frequency</td>
-							<td>x {{freq}}</td>
-							<td>{{organisation.frequency}}:
-							  {{organisation.frequency_comment}}</td>
-                        </tr>
-                        {{/is_activity}}
-                        <tr>
-                            <td><strong>Total data quality points</strong></td>
-							<td>{{points_minus_50}}</td><td></td>
-                        </tr>
-                        </tbody>
-                        </table>
-                        <table class="table">
-                        <thead>
-                            <th colspan="3">Total score calculation</th>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Data quality points</td><td>{{points_minus_50}}</td>
-							<td></td>
-                        </tr>
-                        <tr>
-                            <td>Publication format points</td><td>50.0</td>
-							<td></td>
-                        </tr>
-                        <tr class="success">
-                            <td><strong>Total points for this indicator</strong></td>
-							<td>{{ points }}</td><td></td>
-                        </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"
-								aria-hidden="true">Close</button>
-                    </div>
-                </div>
-            </td>
-            <td></td>
-            <td><a href="#" class="showTests"
-				   id="showindicator-{{indicator.id}}">
-				<i class="icon-chevron-down align-right"></i></a>
-			</td>
-            </tr>
-
-			{{#tests}}
-            <tr id="tr{{id}}"
-				class="group-{{indicator.id}} hidden">
-            <td><span class="hidden">
-				{{indicator.indicator_category_name_text}}
-			</span></td>
-            <td><span class="hidden">
-				{{indicator.indicator_subcategory_name}}
-			</span></td>
-            <td><span class="hidden">
-				{{indicator.description}}.
-			</span></td>
-	        <td><a href="#test{{test.id}}" role="button"
-				   data-toggle="modal">{{test.description}}</a>
-                <div id="test{{test.id}}" class="modal hide fade"
-					 tabindex="-1" role="dialog" aria-labelledby="testHeader"
-					 aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"
-								aria-hidden="true">×</button>
-                        <h3 id="testHeader">
-						  Test: {{test.description}}
-						</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>One or more tests are automatically run on
-						  the data collected for each indicator.</p>
-
-						{{#test.test_level}}
-						<p>This test is run
-						  {{level_preposition}}
-						  <strong>{{level_description}}</strong>
-						  {{level_coda}}.</p>
-						{{/test.test_level}}
-                        <p>The specific test expression is:</p>
-                        <code>{{test.name}}</code>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"
-								aria-hidden="true">Close</button>
-                    </div>
-                </div>
-				{{#condition}}
-				<i class="icon-info-sign" title="{{condition}}"></i>
-				{{/condition}}
-			</td>
-            <td class="pct">{{results_pct_rounded}}</td>
-            <td></td>
-            <td>{{results_num_rounded}}</td>
-            <td></td>
-            </tr>
-		  {{/tests}}
-        {{/result.non_zero}}
-		{{^result.non_zero}}
-        <tr><td colspan="5"><strong>No IATI data found.</strong></td></tr>
-		{{/result.non_zero}}
-        </tbody>
-        </table>
-        <div class="row">
-            <div class="span6">
-            <h4>Scoring criteria</h4>
-            <ul>
-                <li>50 points are awarded for publication in an accessible format</li>
-
-                <li>50 points can additionally be awarded based on data quality and frequency of publication</li>
-            </ul>
-            <a href="http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf" class="btn">More details &raquo;</a>
+    {% for row in result.non_zero %}
+        <tr id="indicator-{{row.indicator.id}}">
+          <td>{{row.indicator.indicator_subcategory_name}}</td>
+          <td><a href="#indicator{{row.indicator.id}}"
+                 role="button" data-toggle="modal">
+              {{row.indicator.indicator_order}}.
+              {{row.indicator.description}}
+            </a>
+            <div id="indicator{{row.indicator.id}}"
+                 class="modal hide fade" tabindex="-1" role="dialog"
+                 aria-labelledby="indicatorHeader" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">×</button>
+                <h3 id="indicatorHeader">
+                  Indicator: {{row.indicator.description}}
+                </h3>
+              </div>
+              <div class="modal-body">
+                {{ row.indicator.longdescription|replace('\n', '<br>')|safe }}
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal"
+                        aria-hidden="true">Close</button>
+              </div>
             </div>
-            <div class="span6">
-                <h4>How do you structure your data?</h4>
-                <p>If you use multiple hierarchies in your IATI data, please tell us how the data is structured as this could make a difference to your score.</p>
-                <p><a href="{{links.organisation_feedback}}" class="btn">Provide structure &raquo;</a></p>
-            </div>
-        </div>
-        </fieldset>
-        <a id="noniati"></a>
-        <hr />
-        <fieldset>
-        {{#surveydata}}
-        <div class="pull-right">
-        <a href="{{links.organisation_survey_edit}}"
-		   class="btn btn-primary">Review manually collected data</a>
-        </div>
-        {{/surveydata}}
+          </td>
+          <td></td>
+          <td class="pct muted">{{row.results_pct_rounded}}</td>
+          <td><a href="#calculation{{row.indicator.id}}" role="button"
+                 data-toggle="modal">{{row.points}}</a>
 
-        <h3>Published in other formats</h3>
-        <p class="lead">Information published in other formats
-        (e.g. Excel, website, PDF) can score up to 50 points.</p>
-        <table class="table" id="results_noniati">
-        <thead>
-        <th>Category</th>
-        <th>Indicator</th>
-        <th><span class="th_test hidden">Test</span></th>
-        <th>IATI data</th>
-        <th>Published</th>
-        <th>Format</th>
-        <th>Points</th>
-        <th>Detail</th>
-        </thead>
-        <tbody>
-		{{#result.zero}}
-
-            <tr id="indicator-{{indicator.id}}">
-            <td>{{indicator.indicator_subcategory_name}}</td>
-            <td><a href="#indicator{{indicator.id}}"
-				   role="button" data-toggle="modal">
-                {{indicator.indicator_order}}.
-				{{indicator.description}}
-			  </a>
-                <div id="indicator{{indicator.id}}"
-					 class="modal hide fade" tabindex="-1" role="dialog"
-					 aria-labelledby="indicatorHeader" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close"
-								data-dismiss="modal"
-								aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">
-						  Indicator: {{indicator.description}}
-						</h3>
-                    </div>
-                    <div class="modal-body">
-                        {{indicator.longdescription}}
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"
-								aria-hidden="true">Close</button>
-                    </div>
-                </div>
-            </td>
-	        <td></td>
-            <td><span class="label label-inverse">NOT FOUND</span></td>
-
-            {{#surveydata}}
-            <td>
-              <span class="label label-{{status_class}}">
-			    {{status_text}}
-			  </span>
-			</td>
-            <td>
-			  <span class="label label-{{format_class}}">
-				{{format_text}}
-			  </span>
-			</td>
-            <td>{{points}}</td>
-            {{/surveydata}}
-			{{^surveydata}}
-            <td colspan="3">
-            No survey data yet.
-            </td>
-            {{/surveydata}}
-
-            <td><a href="#" class="showTests"
-				   id="showindicator-{{indicator.id}}">
-				<i class="icon-chevron-down align-right"></i></a></td>
-            </tr>
-
-            {{#tests}}
-            <tr id="tr{{id}}"
-				class="group-{{indicator.id}} hidden">
-            <td>
-			  <span class="hidden">
-				{{indicator.indicator_category_name_text}}
-			  </span>
-			</td>
-            <td>
-			  <span class="hidden">
-				{{indicator.indicator_subcategory_name}}
-			  </span>
-			</td>
-            <td>
-			  <span class="hidden">
-				{{indicator.description}}.
-			  </span>
-			</td>
-	        <td><a href="#test{{id}}"
-				   role="button" data-toggle="modal">
-				{{description}}
-			  </a>
-              <div id="test{{id}}"
-				   class="modal hide fade" tabindex="-1"
-				   role="dialog" aria-labelledby="testHeader"
-				   aria-hidden="true">
+            <div id="calculation{{row.indicator.id}}"
+                 class="modal hide fade" tabindex="-1" role="dialog"
+                 aria-labelledby="indicatorHeader" aria-hidden="true">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal"
-						  aria-hidden="true">×</button>
-                  <h3 id="testHeader">Test: {{description}}</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>Each indicator can be
-                        comprised of several tests, which are
-                        automatically run on the data.</p>
-
-						<p>This test is run
-						  {{level_preposition}}
-						  <strong>{{level_description}}</strong>
-						  {{level_coda}}.</p>
-
-                        <p>The specific test expression is:</p>
-                        <code>{{name}}</code>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal"
-								aria-hidden="true">Close</button>
-                    </div>
+                    <button type="button" class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">×</button>
+                    <h3 id="indicatorHeader">
+                      Score calculation for {{row.indicator.description}}
+                    </h3>
                 </div>
-
-				{{#condition}}
-			  <i class="icon-info-sign" title="{{condition}}"></i>
-				{{/condition}}
-			</td>
-            <td class="pct">{{results_pct_rounded}}</td>
-            <td>{{results_num_rounded}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>
-		    {{/tests}}
-			{{^tests}}
-            <tr class="group-{{indicator.id}} hidden">
-            <td><span class="hidden">
-				{{indicator.indicator_category_name_text}}
-			</span></td>
-            <td><span class="hidden">
-				{{indicator.indicator_subcategory_name}}
-			</span></td>
-            <td><span class="hidden">
-				{{indicator.description}}.
-			</span></td>
-            <td colspan="6"><strong>No data quality results available.</strong><br />
-            This may be because you have not yet published an
-            {{indicator.indicator_category_name_text}} file.
-            </td>
-            </tr>
-            {{/tests}}
-		{{/result.zero}}
-        </tbody>
-        </table>
-        <div class="row">
-            <div class="span6">
-                <h4>Scoring criteria</h4>
-                <p>For each indicator, points are received if information is
-				  <label class="label label-success">Always published</label>.
-				  Indicators graduated on the basis of format are scored as
-				  follows:</p>
-                <table class="table">
+                <div class="modal-body">
+                    <table class="table">
                     <thead>
-                        <th>Points</th>
-                        <th>Format</th>
+                        <th colspan="3">Data quality score calculation</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>16.67</td><td>PDF</td>
-                        </tr>
-                        <tr>
-                        <td>33.33</td><td>Website</td>
-                        </tr>
-                        <tr>
-                        <td>50.00</td><td>CSV, Excel, XML, other
-							machine-readable formats</td>
-                        </tr>
+                    <tr>
+                        <td>Data quality</td>
+                        <td>{{row.results_pct_rounded}}%</td>
+                        <td>% of activities that passed tests</td>
+                    </tr>
+                    <tr class="muted">
+                        <td>Convert percentage to points</td><td>÷ 2</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Points</td>
+                        <td>{{row.results_pct_halved_rounded}}</td>
+                        <td></td>
+                    </tr>
+                    {% if row.is_activity %}
+                    <tr class="muted">
+                        <td>Frequency</td>
+                        <td>x {{freq}}</td>
+                        <td>{{organisation.frequency}}:
+                          {{organisation.frequency_comment}}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                        <td><strong>Total data quality points</strong></td>
+                        <td>{{row.points_minus_50}}</td><td></td>
+                    </tr>
                     </tbody>
-                </table>
-            <a href="http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf"
-			   class="btn">More details &raquo;</a>
+                    </table>
+                    <table class="table">
+                    <thead>
+                        <th colspan="3">Total score calculation</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Data quality points</td><td>{{row.points_minus_50}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Publication format points</td><td>50.0</td>
+                        <td></td>
+                    </tr>
+                    <tr class="success">
+                        <td><strong>Total points for this indicator</strong></td>
+                        <td>{{ row.points }}</td><td></td>
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"
+                            aria-hidden="true">Close</button>
+                </div>
             </div>
-            <div class="span6">
-                <h4>Why is IATI data scored more highly?</h4>
-                <p>IATI is the only international standard for
-                publishing comprehensive, comparable, timely and
-                accessible data, which are critical components of aid
-                transparency.</p>
-                <p><a class="btn" href="http://www.publishwhatyoufund.org/resources/international-aid-transparency-initiative-iati/"
-					  target="_blank">Learn more &raquo;</a></p>
-                <hr />
-                <h4>How you scored last year</h4>
-                <p>For full details on how organisations performed last year,
-				  visit the <a target="_blank"
-							   href="http://ati.publishwhatyoufund.org/">
-					2014 Index site</a>.</p>
+        </td>
+        <td></td>
+        <td><a href="#" class="showTests"
+               id="showindicator-{{row.indicator.id}}">
+            <i class="icon-chevron-down align-right"></i></a>
+        </td>
+        </tr>
+
+        {% for test in row.tests %}
+        <tr id="tr{{test.id}}"
+            class="group-{{row.indicator.id}} hidden">
+        <td><span class="hidden">
+            {{row.indicator.indicator_category_name_text}}
+        </span></td>
+        <td><span class="hidden">
+            {{row.indicator.indicator_subcategory_name}}
+        </span></td>
+        <td><span class="hidden">
+            {{row.indicator.description}}.
+        </span></td>
+        <td><a href="#test{{test.test.id}}" role="button"
+               data-toggle="modal">{{test.test.description}}</a>
+            <div id="test{{test.test.id}}" class="modal hide fade"
+                 tabindex="-1" role="dialog" aria-labelledby="testHeader"
+                 aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×</button>
+                    <h3 id="testHeader">
+                      Test: {{test.test.description}}
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <p>One or more tests are automatically run on
+                      the data collected for each indicator.</p>
+
+                    {% if test.test.test_level %}
+                    <p>This test is run
+                      {{ test.level_preposition }}
+                      <strong>{{ test.level_description }}</strong>
+                      {{ test.level_coda }}.</p>
+                    {% endif %}
+                    <p>The specific test expression is:</p>
+                    <code>{{test.test.name}}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"
+                            aria-hidden="true">Close</button>
+                </div>
             </div>
+            {% if test.condition %}
+            <i class="icon-info-sign" title="{{ test.condition }}"></i>
+            {% endif %}
+        </td>
+        <td class="pct">{{row.results_pct_rounded}}</td>
+        <td></td>
+        <td>{{row.results_num_rounded}}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+    <tr><td colspan="5"><strong>No IATI data found.</strong></td></tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    <div class="row">
+        <div class="span6">
+        <h4>Scoring criteria</h4>
+        <ul>
+            <li>50 points are awarded for publication in an accessible format</li>
+
+            <li>50 points can additionally be awarded based on data quality and frequency of publication</li>
+        </ul>
+        <a href="http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf" class="btn">More details &raquo;</a>
         </div>
-        </fieldset>
-</script>
-{% endraw %}
+        <div class="span6">
+            <h4>How do you structure your data?</h4>
+            <p>If you use multiple hierarchies in your IATI data, please tell us how the data is structured as this could make a difference to your score.</p>
+            <p><a href="{{links.organisation_feedback}}" class="btn">Provide structure &raquo;</a></p>
+        </div>
+    </div>
+    </fieldset>
+    <a id="noniati"></a>
+    <hr />
+    <fieldset>
+    {% if surveydata %}
+    <div class="pull-right">
+    <a href="{{links.organisation_survey_edit}}"
+       class="btn btn-primary">Review manually collected data</a>
+    </div>
+    {% endif %}
+
+    <h3>Published in other formats</h3>
+    <p class="lead">Information published in other formats
+    (e.g. Excel, website, PDF) can score up to 50 points.</p>
+    <table class="table" id="results_noniati">
+    <thead>
+    <th>Category</th>
+    <th>Indicator</th>
+    <th><span class="th_test hidden">Test</span></th>
+    <th>IATI data</th>
+    <th>Published</th>
+    <th>Format</th>
+    <th>Points</th>
+    <th>Detail</th>
+    </thead>
+    <tbody>
+    {% for row in result.zero %}
+
+        <tr id="indicator-{{row.indicator.id}}">
+        <td>{{row.indicator.indicator_subcategory_name}}</td>
+        <td><a href="#indicator{{row.indicator.id}}"
+               role="button" data-toggle="modal">
+            {{row.indicator.indicator_order}}.
+            {{row.indicator.description}}
+          </a>
+            <div id="indicator{{row.indicator.id}}"
+                 class="modal hide fade" tabindex="-1" role="dialog"
+                 aria-labelledby="indicatorHeader" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">×</button>
+                    <h3 id="indicatorHeader">
+                      Indicator: {{row.indicator.description}}
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    {{ row.indicator.longdescription|replace('\n', '<br>')|safe }}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"
+                            aria-hidden="true">Close</button>
+                </div>
+            </div>
+        </td>
+        <td></td>
+        <td><span class="label label-inverse">NOT FOUND</span></td>
+
+        {% if surveydata %}
+        <td>
+          <span class="label label-{{surveydata.status_class}}">
+            {{surveydata.status_text}}
+          </span>
+        </td>
+        <td>
+          <span class="label label-{{surveydata.format_class}}">
+            {{surveydata.format_text}}
+          </span>
+        </td>
+        <td>{{surveydata.points}}</td>
+        {% else %}
+        <td colspan="3">
+        No survey data yet.
+        </td>
+        {% endif %}
+
+
+        <td><a href="#" class="showTests"
+               id="showindicator-{{row.indicator.id}}">
+            <i class="icon-chevron-down align-right"></i></a></td>
+        </tr>
+
+        {% for test in row.tests %}
+        <tr id="tr{{ test.test.id }}"
+            class="group-{{ row.indicator.id }} hidden">
+        <td>
+          <span class="hidden">
+            {{ row.indicator.indicator_category_name_text }}
+          </span>
+        </td>
+        <td>
+          <span class="hidden">
+            {{ row.indicator.indicator_subcategory_name }}
+          </span>
+        </td>
+        <td>
+          <span class="hidden">
+            {{ row.indicator.description }}.
+          </span>
+        </td>
+        <td><a href="#test{{ test.test.id }}"
+               role="button" data-toggle="modal">
+            {{ test.test.description }}
+          </a>
+          <div id="test{{ test.test.id }}"
+               class="modal hide fade" tabindex="-1"
+               role="dialog" aria-labelledby="testHeader"
+               aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"
+                      aria-hidden="true">×</button>
+              <h3 id="testHeader">Test: {{ test.test.description }}</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Each indicator can be
+                    comprised of several tests, which are
+                    automatically run on the data.</p>
+
+                    <p>This test is run
+                      {{ test.level_preposition }}
+                      <strong>{{ test.level_description }}</strong>
+                      {{ test.level_coda }}.</p>
+
+                    <p>The specific test expression is:</p>
+                    <code>{{ test.test.name }}</code>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"
+                            aria-hidden="true">Close</button>
+                </div>
+            </div>
+
+            {% if row.condition %}
+          <i class="icon-info-sign" title="{{ row.condition }}"></i>
+            {% endif %}
+        </td>
+        <td class="pct">{{ row.results_pct_rounded }}</td>
+        <td>{{ row.results_num_rounded }}</td>
+        <td></td>
+        <td></td>
+        </tr>
+        {% else %}
+        <tr class="group-{{ row.indicator.id }} hidden">
+        <td><span class="hidden">
+            {{ row.indicator.indicator_category_name_text }}
+        </span></td>
+        <td><span class="hidden">
+            {{ row.indicator.indicator_subcategory_name }}
+        </span></td>
+        <td><span class="hidden">
+            {{ row.indicator.description }}.
+        </span></td>
+        <td colspan="6"><strong>No data quality results available.</strong><br />
+        This may be because you have not yet published an
+        {{ row.indicator.indicator_category_name_text }} file.
+        </td>
+        </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+    </table>
+    <div class="row">
+        <div class="span6">
+            <h4>Scoring criteria</h4>
+            <p>For each indicator, points are received if information is
+              <label class="label label-success">Always published</label>.
+              Indicators graduated on the basis of format are scored as
+              follows:</p>
+            <table class="table">
+                <thead>
+                    <th>Points</th>
+                    <th>Format</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>16.67</td><td>PDF</td>
+                    </tr>
+                    <tr>
+                    <td>33.33</td><td>Website</td>
+                    </tr>
+                    <tr>
+                    <td>50.00</td><td>CSV, Excel, XML, other
+                        machine-readable formats</td>
+                    </tr>
+                </tbody>
+            </table>
+        <a href="http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf"
+           class="btn">More details &raquo;</a>
+        </div>
+        <div class="span6">
+            <h4>Why is IATI data scored more highly?</h4>
+            <p>IATI is the only international standard for
+            publishing comprehensive, comparable, timely and
+            accessible data, which are critical components of aid
+            transparency.</p>
+            <p><a class="btn" href="http://www.publishwhatyoufund.org/resources/international-aid-transparency-initiative-iati/"
+                  target="_blank">Learn more &raquo;</a></p>
+            <hr />
+            <h4>How you scored last year</h4>
+            <p>For full details on how organisations performed last year,
+              visit the <a target="_blank"
+                           href="http://ati.publishwhatyoufund.org/">
+                2016 Index site</a>.</p>
+        </div>
+    </div>
+</fieldset>
 {% endblock %}
 
 {% block final_scripts %}

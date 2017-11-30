@@ -284,7 +284,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
 
     freq_score = frequencies.get(organisation.frequency, (1.0, ))
     if organisation.frequency in frequencies:
-        freq_alert = { "text": frequencies.get(organisation.frequency)[1] }
+        freq_alert = {"text": frequencies.get(organisation.frequency)[1]}
     else:
         freq_alert = None
 
@@ -384,25 +384,23 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                              surveydata.items()))
 
     payload = {
-        "organisation": organisation.as_dict(),
         "links": links,
         "agg_type": agg_type,
         "freq": freq_score,
         "freq_alert": freq_alert,
         "result": {
             "non_zero": map(annotate_nonzero, aggregate_results["non_zero"].values()),
-            "zero":map(annotate_zero, aggregate_results["zero"].values())
+            "zero": map(annotate_zero, aggregate_results["zero"].values())
             },
         "surveydata": jsonsurvey(surveydata)
-        }
-    json_data = json.dumps(payload, indent=2)
+    }
 
     return render_template("organisation_indicators.html",
-                           ati_year = app.config['ATI_YEAR'],
+                           ati_year=app.config['ATI_YEAR'],
                            organisation=organisation,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,
-                           json_data=json_data)
+                           **payload)
 
 # this function is unacceptably long; it really wants to be a class
 def organisation_publication_unauthorised(organisation_code, aggregation_type):
