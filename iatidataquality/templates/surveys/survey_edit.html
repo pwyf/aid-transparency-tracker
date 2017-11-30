@@ -50,16 +50,16 @@
 
     <!-- text below this line does not vary with workflow -->
     {% if workflow.name != 'finalised' %}
+    <div class="control-group">
+        <input id="save" type="submit" class="btn btn-success" value="Save" name="save" />
+        <span class="muted">Save changes</span>
+    </div>
     {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.id %}
     <div class="control-group">
-        <input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" />
+        <input id="submit" type="submit" class="btn" value="Submit response" name="submit" />
         <span class="muted">Submit data (you cannot edit this survey once it's been submitted)</span>
     </div>
     {%endif%}
-    <div class="control-group">
-        <input id="save" type="submit" class="btn" value="Save" name="save" />
-        <span class="muted">Save changes</span>
-    </div>
     {% endif %}
     </form>
     <script type="text/javascript" src="{{url_for('static', filename='js/validateNumeric.js')}}"></script>
