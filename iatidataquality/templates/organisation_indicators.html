@@ -111,7 +111,6 @@
       <table class="table" id="results_iati">
         <thead>
           <th>Category</th>
-          <th>Subgroup</th>
           <th>Indicator</th>
           <th><span class="th_test hidden">Test</span></th>
           <th>% Passed</th>
@@ -124,8 +123,7 @@
 		{{#result.non_zero}}
 
             <tr id="indicator-{{indicator.id}}">
-              <td>{{indicator.indicator_category_name_text}}</td>
-              <td>{{indicator.indicator_subcategory_name_text}}</td>
+              <td>{{indicator.indicator_subcategory_name}}</td>
               <td><a href="#indicator{{indicator.id}}"
 					 role="button" data-toggle="modal">
                   {{indicator.indicator_order}}.
@@ -240,7 +238,7 @@
 				{{indicator.indicator_category_name_text}}
 			</span></td>
             <td><span class="hidden">
-				{{indicator.indicator_subcategory_name_text}}
+				{{indicator.indicator_subcategory_name}}
 			</span></td>
             <td><span class="hidden">
 				{{indicator.description}}.
@@ -324,7 +322,6 @@
         <table class="table" id="results_noniati">
         <thead>
         <th>Category</th>
-        <th>Subgroup</th>
         <th>Indicator</th>
         <th><span class="th_test hidden">Test</span></th>
         <th>IATI data</th>
@@ -337,8 +334,7 @@
 		{{#result.zero}}
 
             <tr id="indicator-{{indicator.id}}">
-            <td>{{indicator.indicator_category_name_text}}</td>
-            <td>{{indicator.indicator_subcategory_name_text}}</td>
+            <td>{{indicator.indicator_subcategory_name}}</td>
             <td><a href="#indicator{{indicator.id}}"
 				   role="button" data-toggle="modal">
                 {{indicator.indicator_order}}.
@@ -401,7 +397,7 @@
 			</td>
             <td>
 			  <span class="hidden">
-				{{indicator.indicator_subcategory_name_text}}
+				{{indicator.indicator_subcategory_name}}
 			  </span>
 			</td>
             <td>
@@ -458,7 +454,7 @@
 				{{indicator.indicator_category_name_text}}
 			</span></td>
             <td><span class="hidden">
-				{{indicator.indicator_subcategory_name_text}}
+				{{indicator.indicator_subcategory_name}}
 			</span></td>
             <td><span class="hidden">
 				{{indicator.description}}.
