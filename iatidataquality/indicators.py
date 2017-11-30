@@ -145,9 +145,10 @@ def indicators(indicatorgroup=None):
             }, indent=2)
 
     return render_template("indicators.html",
-                        admin=usermanagement.check_perms('admin'),
-                        loggedinuser=current_user,
-                        json_data=json_data)
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user,
+                           json_data=json_data)
+
 
 @app.route("/indicators/<indicatorgroup>_tests.csv")
 @app.route("/indicators/<indicatorgroup>_<option>tests.csv")
