@@ -135,7 +135,7 @@ def indicators(indicatorgroup=None):
                                      option="no")
         }
 
-    indicator_data = [ v for k,v in its.items() ]
+    indicator_data = list(its.values())
 
     json_data = json.dumps({
             "indicator": indicator_data,
