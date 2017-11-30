@@ -161,8 +161,8 @@ def setup(minimal):
 
     setup_admin_user()
 
-    # print("Importing all users and creating permissions")
-    # dqusers.importUserDataFromFile(default_userdata_filename)
-    # print("Finished importing users")
+    print("Importing all users and creating permissions")
+    dqusers.importUserDataFromFile(default_userdata_filename)
+    print("Finished importing users")
 
     print "Setup complete."
