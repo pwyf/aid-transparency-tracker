@@ -10,7 +10,7 @@
 import json
 import StringIO
 
-from flask import render_template, flash, request, redirect, url_for, send_file
+from flask import abort, render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
 import unicodecsv
 
@@ -89,11 +89,13 @@ def indicators_comparison(indicatorgroup, indicator):
 
 @app.route("/indicators/<indicatorgroup>/")
 def indicators(indicatorgroup=None):
-    its = {}
     indicators = dqindicators.indicatorsTests(indicatorgroup)
+    if not indicators:
+        return abort(404)
 
     indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
 
+    its = {}
     for indicator in indicators:
         ind_id = indicator.Indicator.id
         if ind_id not in its:
