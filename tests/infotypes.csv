@@ -1,6 +1,6 @@
 indicator_name,indicator_description,infotype_name,infotype_description,infotype_level
-total-budget,Total budget,total_budgets_available,Number of years of forward budgets,3
+total-organisation-budget,Total organisation budget,total_budgets_available,Number of years of forward budgets,3
 disaggregated-budgets,Disaggregated budget,total_country_budgets,Number of years of forward budgets at country level as a proportion of total budget,3
-country-strategy-or-mou,Country strategy,country_strategy_papers,Number of currently funded countries for which there is a country strategy paper,3
+country-strategy-or-mou,Country strategy or MoU,country_strategy_papers,Number of currently funded countries for which there is a country strategy paper,3
 ,,coverage,Total of disbursements and expenditure,1
 ,,coverage_current,Total of disbursements and expenditure in the last year,1

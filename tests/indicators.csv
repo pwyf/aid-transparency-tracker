@@ -49,7 +49,7 @@ Audits up to date with regular audit cycles are accepted, i.e. if the organisati
 The IATI reference for this indicator is: Institutional audit report (document code = B06).
 
 A formally approved audit of annual accounts is required to score on this indicator. Audits conducted by official government agencies such as State Audit Offices or Controller General Reports are accepted for this indicator.",8,0,1.88,1,,
-total-budget,Total organisation budget,publication,,Finance and budgets,"The total organisation budget is the total amount that the organisation will be allocated by the government or its funders per year for the next three years. This is money going to the organisation and can be indicative. Aggregate budgets of between 2–3 years are scored the same as 1-year forward budgets.
+total-organisation-budget,Total organisation budget,publication,,Finance and budgets,"The total organisation budget is the total amount that the organisation will be allocated by the government or its funders per year for the next three years. This is money going to the organisation and can be indicative. Aggregate budgets of between 2–3 years are scored the same as 1-year forward budgets.
 
 The IATI reference for this indicator is: Annual forward planning budget (total-budget)
 
@@ -67,7 +67,7 @@ Both country budgets and thematic budgets are accepted for organisations that pr
 For information collected via the manual survey, the start and end date for forward budgets are calculated based on each organisation’s fiscal year. Organisations at the end of their fixed budget cycles who do not have a published budget for the next three years do not receive points for this indicator.
 
 Forward Spending Survey data reported to the OECD DAC is taken into account only if it is available for the specific organisation under assessment.",10,1,4.17,,,
-budget-docs,Project budget documents,publication,,Finance and budgets,"This is a specific budget detailing what the intended spending is for the different lines of the individual activity. It is often a document published on the organisation’s website.
+project-budget-document,Project budget document,publication,,Finance and budgets,"This is a specific budget detailing what the intended spending is for the different lines of the individual activity. It is often a document published on the organisation’s website.
 
 Budget documents cannot simply be at the country level. If an activity budget is included in a larger country-level document, it is only accepted if the budget for the activity is broken down line by line.
 
@@ -86,7 +86,7 @@ Note: The difference between indicators 11 and 12 is that indicator 11 requires 
 commitments,Commitments,publication,,Finance and budgets,"This refers to the financial commitment for the activity as a whole for the lifetime of the activity. This is generally a high level commitment rather than a detailed breakdown of the activity budget.
 
 The IATI reference for this indicator is: Transaction (transaction type = commitment).",13,0,3.33,,,
-disbursements-and-expenditure,Disbursements and expenditure,publication,,Finance and budgets,"Individual actual financial disbursements must be related to individual activities and must be on a per-transaction basis. Each activity is likely to have several transactions.
+disbursements-and-expenditures,Disbursements and expenditures,publication,,Finance and budgets,"Individual actual financial disbursements must be related to individual activities and must be on a per-transaction basis. Each activity is likely to have several transactions.
 
 The IATI reference for this indicator is: Transaction (transaction type = disbursement and expenditure).
 
@@ -218,7 +218,7 @@ IFIs and DFIs tend only to publish impact appraisals if regulations require them
 For loans or private sector investment, risk assessments and the fiscal objectives detailed in the loan document are accepted. These need to be sufficiently detailed and include any criteria used to assess eligibility for receiving the loan.
 
 Humanitarian Implementation Plans (HIPs) and project plans are accepted for humanitarian agencies.",33,0,5,1,,
-evaluations,Reviews and evaluations,publication,,Performance,"Evaluation documents consider what the activity achieved, whether the intended objectives were met, what the major factors influencing the achievement or nonachievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation’s website.
+reviews-and-evaluations,Reviews and evaluations,publication,,Performance,"Evaluation documents consider what the activity achieved, whether the intended objectives were met, what the major factors influencing the achievement or nonachievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation’s website.
 
 If the activity under assessment is not completed but evaluation or review documents are available for other completed activities, these will be accepted.
 
