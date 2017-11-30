@@ -10,25 +10,36 @@
 import itertools
 import re
 
-import foxpath
+from foxpath import Foxpath
 
-from . import models, test_level
-from iatidq import db
+from . import dqcodelists, models, test_level
+from iatidataquality import db
 
 
 comment = re.compile('#')
 blank = re.compile('^$')
 
+
 def ignore_line(line):
     return bool(comment.match(line) or blank.match(line))
+
 
 def get_active_tests():
     for test in models.Test.query.filter(models.Test.active == True).all():
         yield test
 
+
 def test_functions():
     with db.session.begin():
+        codelists = dqcodelists.generateCodelists()
         tests = get_active_tests()
         tests = itertools.ifilter(lambda test: test.test_level != test_level.FILE, tests)
         tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
-        return foxpath.generate_test_functions(tests)
+        tests = [{
+            'name': x.id,
+            'expression': x.name,
+        } for x in tests]
+
+        foxpath = Foxpath()
+        foxtests = foxpath.load_tests(tests, codelists)
+        return foxtests
