@@ -150,25 +150,25 @@ The IATI reference for this indicator is: Location.
 For activities that are relevant at a country or regional level, information on the location where the funds are sent to or where the recipient is located are all accepted for this indicator.
 
 For example, capital city for a country, or location information of the implementing organisation. This includes private sector investment, loans or debt relief payments, where the location of the relevant bank or organisation is accepted.",23,0,3.5,,,
-flow-type,Flow type,publication,,Joining up development data,"The flow type shows whether the organisation states that this activity counts as ODA, OOF, climate finance or any other type of flow. This has to be explicitly stated per activity OR once in a country strategy paper OR in a single place on the organisation’s website if there is only one flow type for all activities, e.g. “all aid is ODA”, or “we only provide private grants”.",26,0,3.33,,,
-aid-type,Aid type,publication,,Joining up development data,"The type of aid shows whether the activity is classed as budget support, a project, technical assistance, debt relief, administrative costs, and so on. This needs to be explicitly stated per activity OR once in a country strategy paper OR on a clear place on the organisation’s website if there is only one aid type for the whole organisation, e.g. “all aid is project-type interventions”.
+flow-type,Flow type,publication,,Joining-up development data,"The flow type shows whether the organisation states that this activity counts as ODA, OOF, climate finance or any other type of flow. This has to be explicitly stated per activity OR once in a country strategy paper OR in a single place on the organisation’s website if there is only one flow type for all activities, e.g. “all aid is ODA”, or “we only provide private grants”.",26,0,3.33,,,
+aid-type,Aid type,publication,,Joining-up development data,"The type of aid shows whether the activity is classed as budget support, a project, technical assistance, debt relief, administrative costs, and so on. This needs to be explicitly stated per activity OR once in a country strategy paper OR on a clear place on the organisation’s website if there is only one aid type for the whole organisation, e.g. “all aid is project-type interventions”.
 
 The advisory services business line/type of intervention (investment climate, publicprivate partnership, etc.), can be seen as broadly equivalent.
 
 Statements clarifying business line/intervention type published anywhere on the organisation’s website count towards publishing aid type in the web format.",27,0,3.33,,,
-finance-type,Finance type,publication,,Joining up development data,"The type of finance shows whether the activity is a grant, loan, export credit or debt relief. This needs to be explicitly stated per activity OR once in a country strategy paper OR clearly on the organisation’s website if there is only one finance type for the whole organisation, e.g. “all aid is grants”.
+finance-type,Finance type,publication,,Joining-up development data,"The type of finance shows whether the activity is a grant, loan, export credit or debt relief. This needs to be explicitly stated per activity OR once in a country strategy paper OR clearly on the organisation’s website if there is only one finance type for the whole organisation, e.g. “all aid is grants”.
 
 Investment type (loan, equity, etc.) can be interpreted as equivalent.
 
 Statements clarifying investment type published anywhere on the website count towards publishing finance type in the web format.",28,0,3.33,,,
-tied-aid-status,Tied aid status,publication,,Joining up development data,"The tied aid status shows whether the organisation states that this activity counts as “tied” (procurement is restricted to the donor organisation country) or “untied” (open procurement).
+tied-aid-status,Tied aid status,publication,,Joining-up development data,"The tied aid status shows whether the organisation states that this activity counts as “tied” (procurement is restricted to the donor organisation country) or “untied” (open procurement).
 
 Specifying location requirements in activity documents such as procurement policies or tenders is accepted as publishing tied aid status.
 
 The IATI reference for this indicator is: Default tied status.
 
 For organisations’ lending directly to national investment agencies, an explicit statement demonstrating their aid is not tied is required. For IFIs and DFIs, investment codes clarifying their position are accepted. For private foundations, grant-making policies are accepted. If these are not available, the organisation’s procurement policy must clearly state if there are any eligibility requirements for contracts based on country of origin.",29,0,3.33,,,
-conditions,Conditions,publication,,Joining up development data,"The terms and conditions of the activity may also be referred to as benchmarks, priors, or involve words such as “subject to...”. They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released.
+conditions,Conditions,publication,,Joining-up development data,"The terms and conditions of the activity may also be referred to as benchmarks, priors, or involve words such as “subject to...”. They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released.
 
 The conditions should include loan repayment terms if the activity is financed by a loan.
 
@@ -179,7 +179,7 @@ For IFIs and DFIs, this includes loan repayment conditions or special terms and 
 For private foundations and humanitarian agencies, statements setting out what the grant can be spent on are accepted.
 
 Templates for general terms and conditions are not accepted for scoring this indicator. If there are no policy, performance or fiduciary conditions associated with an activity, this must be explicitly stated.",30,0,3.33,1,,
-project-procurement,Project procurement,publication,,Joining up development data,"The individual contract(s) signed with a company, organisation or individual that provides goods and services for the activity. This could be on a procurement section of the organisation’s website, on a separate website or on a central government procurement website.
+project-procurement,Project procurement,publication,,Joining-up development data,"The individual contract(s) signed with a company, organisation or individual that provides goods and services for the activity. This could be on a procurement section of the organisation’s website, on a separate website or on a central government procurement website.
 
 Contract documents cannot simply be at the country level. If an activity contract is included in a larger country-level document, it is only accepted if the contract mentions the activity specifically and in detail.
 
