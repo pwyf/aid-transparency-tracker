@@ -32,7 +32,11 @@
     {% endif %}
 	</div>
     <div class="row">
+            {% if loggedinuser.username %}
+            <div class="span6 offset3">
+            {% else %}
             <div class="span6">
+            {% endif %}
                 <h1>Organisations</h1>
                 <p class="lead">See data for individual organisations</p>
                 <p>
@@ -40,6 +44,7 @@
 				   href="{{url_for('organisations')}}">Organisations »</a>
                 </p>
             </div>
+            {% if not loggedinuser.username %}
             <div class="span6">
                 <h1>Data verification</h1>
                 <p class="lead">Donors and independent reviewers can
@@ -53,6 +58,7 @@
                 <button type="submit" class="btn">Sign in</button>
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
 
