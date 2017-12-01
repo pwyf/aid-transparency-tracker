@@ -200,9 +200,8 @@ def _refresh_packages():
 
     for package in packages_from_iati_registry():
         package_name = package["name"]
-        if len(setup_orgs) and ('-' in package_name):
-            org, country = package_name.split('-', 1)
-            if org not in setup_orgs:
+        if len(setup_orgs):
+            if [x for x in setup_orgs if package_name.startswith('{}-'.format(x))] == []:
                 continue
         registry = ckanclient.CkanClient(base_location=CKANurl)
         package = registry.package_entity_get(package_name)
