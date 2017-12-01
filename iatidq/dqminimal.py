@@ -31,7 +31,7 @@ default_minimal_organisations = [
             },
             {
             'organisation_name': 'UK, DFID',
-            'organisation_code': 'GB-1',
+            'organisation_code': 'GB-GOV-1',
             'packagegroup_name': 'dfid',
             'condition': None,
             'package_name': 'dfid-ml',
@@ -45,7 +45,7 @@ default_minimal_organisations = [
             },
             {
             'organisation_name': 'UK, DFID',
-            'organisation_code': 'GB-1',
+            'organisation_code': 'GB-GOV-1',
             'packagegroup_name': 'dfid',
             'condition': None,
             'package_name': 'dfid-589',
@@ -59,7 +59,7 @@ default_minimal_organisations = [
             },
             {
             'organisation_name': 'UK, DFID',
-            'organisation_code': 'GB-1',
+            'organisation_code': 'GB-GOV-1',
             'packagegroup_name': 'dfid',
             'condition': None,
             'package_name': 'dfid-ph',
