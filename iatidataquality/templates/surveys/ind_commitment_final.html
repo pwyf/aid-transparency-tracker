@@ -1,4 +1,4 @@
-{% macro ind_commitment(surveydata, rows, workflow, indicator, organisation) %}
+{% macro ind_commitment(surveydata, rows, old_survey_data, workflow, indicator, organisation) %}
         {% if surveydata.donorcomments %}
         {% set data = surveydata.donorcomments %}
         {% if data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 1 %}

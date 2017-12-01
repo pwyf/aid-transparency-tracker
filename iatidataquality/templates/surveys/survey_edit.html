@@ -20,7 +20,7 @@
 
     <tbody>
     {% for indicator in org_indicators["commitment"].values() %}
-      {{ ind_commitment(surveydata, rows, workflow, indicator, organisation) }}
+      {{ ind_commitment(surveydata, rows, old_survey_data, workflow, indicator, organisation) }}
     {% endfor %}
     </tbody>
     </table>

@@ -1,6 +1,6 @@
-{% macro ind_commitment(surveydata, rows, workflow, indicator, organisation) %}
-        <tr id="tr{{indicator.indicator.id}}" class="commitment-indicator">
-            <td><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
+{% macro ind_commitment(surveydata, rows, old_survey_data, workflow, indicator, organisation) %}
+        <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
+            <td rowspan="2"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -13,6 +13,19 @@
                         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                     </div>
                 </div></td>
+                <td><span class="muted">Previous data</span></td>
+                <td>
+                {{old_survey_data[indicator.indicator.name].survey_ordinal_value}}
+                </td>
+                <td class="restrict_text">
+                {{old_survey_data[indicator.indicator.name].survey_source|hyperlink}}
+                </td>
+
+                <td class="restrict_text">
+                {{old_survey_data[indicator.indicator.name].survey_comment}}
+                </td>
+        </tr>
+        <tr id="tr{{indicator.indicator.id}}">
         <td>Researcher<input type="hidden" name="indicator" value="{{indicator.indicator.id}}" /></td>
         <td>
         <div class="control-group">
