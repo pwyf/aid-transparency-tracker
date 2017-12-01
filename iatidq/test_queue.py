@@ -78,8 +78,7 @@ def _test_elements(test_functions, add_result,
 
     def execute_and_record(xmldata, test):
         the_result = execute_test(xmldata, test.id)
-        # if the_result != test_result.SKIP:
-        if True:
+        if the_result != test_result.SKIP:
             add_result(test.id, the_result)
 
     [execute_and_record(data, test) for test in tests]
