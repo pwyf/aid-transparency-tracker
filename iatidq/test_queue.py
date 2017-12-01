@@ -82,8 +82,7 @@ def _test_elements(test_functions, add_result,
         if True:
             add_result(test.id, the_result)
 
-    for test in tests:
-        execute_and_record(data, test)
+    [execute_and_record(data, test) for test in tests]
 
 
 def test_elements(xml_fragment, test_functions, add_result,
@@ -240,8 +239,8 @@ def check_data(runtime_id, package_id, test_functions, data):
                              test_level.ACTIVITY, org_id)
         org_organisations_data = data.xpath('//iati-organisation')
 
-        for org_organisation_data in org_organisations_data:
-            run_test_organisation(org_id, org_organisation_data)
+        [run_test_organisation(org_id, org_organisation_data) for
+            org_organisation_data in org_organisations_data]
 
     organisations = dqpackages.get_organisations_for_testing(package_id)
     assert len(organisations) > 0
