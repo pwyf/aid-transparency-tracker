@@ -229,9 +229,6 @@
         <tr id="tr{{test.id}}"
             class="group-{{row.indicator.id}} hidden">
         <td><span class="hidden">
-            {{row.indicator.indicator_category_name_text}}
-        </span></td>
-        <td><span class="hidden">
             {{row.indicator.indicator_subcategory_name}}
         </span></td>
         <td><span class="hidden">
@@ -271,9 +268,10 @@
             <i class="icon-info-sign" title="{{ test.condition }}"></i>
             {% endif %}
         </td>
-        <td class="pct">{{row.results_pct_rounded}}</td>
+        <td class="pct">{{test.results_pct_rounded}}</td>
         <td></td>
-        <td>{{row.results_num_rounded}}</td>
+        <td>{{test.results_num_rounded|int}}</td>
+        <td></td>
         </tr>
         {% endfor %}
     {% else %}
@@ -384,11 +382,6 @@
             class="group-{{ row.indicator.id }} hidden">
         <td>
           <span class="hidden">
-            {{ row.indicator.indicator_category_name_text }}
-          </span>
-        </td>
-        <td>
-          <span class="hidden">
             {{ row.indicator.indicator_subcategory_name }}
           </span>
         </td>
@@ -433,9 +426,8 @@
           <i class="icon-info-sign" title="{{ row.condition }}"></i>
             {% endif %}
         </td>
-        <td class="pct">{{ row.results_pct_rounded }}</td>
-        <td>{{ row.results_num_rounded }}</td>
-        <td></td>
+        <td class="pct">{{ test.results_pct_rounded }}</td>
+        <td>{{ test.results_num_rounded|int }}</td>
         <td></td>
         </tr>
         {% else %}
