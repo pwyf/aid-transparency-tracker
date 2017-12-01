@@ -58,7 +58,7 @@
             <input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
             {% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}
         {% else %}
-            <input name="{{indicator.indicator.id}}-ordinal_value" class="commitment-indicator-value" value="{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}" type="number" min="0" max="100" />
+            <input name="{{indicator.indicator.id}}-ordinal_value" class="commitment-indicator-value" value="{% if surveydata %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}" type="number" step="any" min="0" max="100" />
         {% endif %}
             </div>
         </div>

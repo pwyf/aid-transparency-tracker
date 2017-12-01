@@ -125,7 +125,7 @@
         <td>
             <div class="control-group">
                 <div class="controls">
-                    <input name="{{indicator.indicator.id}}-ordinal_value" class="commitment-indicator-value" value="{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}" type="number" min="0" max="100" />
+                    <input name="{{indicator.indicator.id}}-ordinal_value" class="commitment-indicator-value" value="{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}{%endif%}" type="number" step="any" min="0" max="100" />
 
                     <input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
                 </div>
