@@ -120,5 +120,5 @@ def _importInfoTypesFromFile(fh, filename, level=1, local=True):
     return True
 
 def importInfoTypesFromFile(filename, level):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importInfoTypesFromFile(fh, filename, level=level, local=True)

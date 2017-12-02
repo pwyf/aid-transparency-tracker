@@ -80,7 +80,7 @@ def compare_aggregation(options):
     filename = options.filename
     assert filename
 
-    expected_data = json.load(file(filename))
+    expected_data = json.load(open(filename))
 
     org_id = dqorganisations.organisationid_by_code(organisation_code)
 

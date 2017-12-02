@@ -21,7 +21,7 @@ class NoIATIActivityFound(Exception):
 
 def save_url(url, filename):
     resp = requests.get(url)
-    with file(filename, 'w') as f:
+    with open(filename, 'w') as f:
         f.write(resp.content)
 
 def query(*args, **kwargs):

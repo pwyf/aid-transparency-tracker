@@ -15,7 +15,7 @@ from . import models
 
 
 def importUserDataFromFile(filename):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importUserData(fh)
 
 def _importUserData(fh):

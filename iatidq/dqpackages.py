@@ -14,7 +14,7 @@ from . import dqorganisations, models
 
 
 def importManualPackages(organisation_code, filename, prefix_url):
-    with file(filename) as fh:
+    with open(filename) as fh:
         packages = unicodecsv.DictReader(fh)
         organisation = models.Organisation.where(organisation_code=organisation_code).first()
         for package in packages:

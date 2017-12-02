@@ -38,7 +38,7 @@ def _importPCs(fh, local=True):
     return _parsePCresults(results)
 
 def importPCsFromFile(filename='tests/organisation_structures.txt', local=True):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importPCs(fh, local=True)
 
 def importPCsFromUrl(url):

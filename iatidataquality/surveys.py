@@ -300,7 +300,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
 
 def render_markdown(filename, **kwargs):
     path = os.path.join(os.path.dirname(__file__), 'docs', filename)
-    with file(path) as f:
+    with open(path) as f:
         plaintext = f.read()
         def _wrapped():
             content = Markup(markdown.markdown(plaintext))

@@ -30,7 +30,7 @@ def checkNum(value):
         return None
 
 def importOrganisationPackagesFromFile(filename):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importOrganisationPackages(fh, True)
 
 def _importOrganisationPackages(fh, local):
