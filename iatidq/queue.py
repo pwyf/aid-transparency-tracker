@@ -19,7 +19,7 @@ def enqueue(queue, args):
     body = json.dumps(args)
 
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost'))
+        pika.ConnectionParameters(host='127.0.0.1'))
     channel = connection.channel()
     channel.queue_declare(queue=queue, durable=True)
     channel.basic_publish(exchange='',
@@ -43,7 +43,7 @@ def get_connection(host):
 # FIXME: hostname should be in config
 def handle_queue(queue_name, callback_fn):
     try:
-        connection = get_connection('localhost')
+        connection = get_connection('127.0.0.1')
         channel = connection.channel()
         channel.queue_declare(queue=queue_name, durable=True)
         channel.basic_qos(prefetch_count=1)
@@ -56,7 +56,7 @@ def handle_queue(queue_name, callback_fn):
 
 def handle_queue_generator(queue_name):
     try:
-        connection = get_connection('localhost')
+        connection = get_connection('127.0.0.1')
         channel = connection.channel()
         channel.queue_declare(queue=queue_name, durable=True)
         channel.basic_qos(prefetch_count=1)
@@ -71,9 +71,10 @@ def handle_queue_generator(queue_name):
         channel.close()
         connection.close()
 
+
 def delete_queue(queue_name):
     try:
-        connection = get_connection('localhost')
+        connection = get_connection('127.0.0.1')
         channel = connection.channel()
         channel.queue_delete(queue=queue_name)
     except:
@@ -82,10 +83,11 @@ def delete_queue(queue_name):
         channel.close()
         connection.close()
 
+
 def exhaust_queue(queue, callback_fn):
     try:
         connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
+            pika.ConnectionParameters(host='127.0.0.1'))
         channel = connection.channel()
         while True:
             method_frame, header_frame, body = channel.basic_get(queue)
