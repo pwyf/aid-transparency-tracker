@@ -91,7 +91,6 @@ Reinitialise
 ============
 
     flask drop_db
-    flask init_db
     flask setup --minimal
     flask refresh --minimal
     bin/dqtool reload-packages --organisation-code=GB-1
