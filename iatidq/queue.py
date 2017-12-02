@@ -42,17 +42,13 @@ def get_connection(host):
 
 # FIXME: hostname should be in config
 def handle_queue(queue_name, callback_fn):
-    try:
-        connection = get_connection('127.0.0.1')
-        channel = connection.channel()
-        channel.queue_declare(queue=queue_name, durable=True)
-        channel.basic_qos(prefetch_count=1)
-        channel.basic_consume(callback_fn, queue=queue_name)
-        channel.start_consuming()
-    except:
-        pass
-    finally:
-        connection.close()
+    connection = get_connection('127.0.0.1')
+    channel = connection.channel()
+    channel.queue_declare(queue=queue_name, durable=True)
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(callback_fn, queue=queue_name)
+    channel.start_consuming()
+    connection.close()
 
 def handle_queue_generator(queue_name):
     try:
