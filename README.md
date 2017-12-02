@@ -119,7 +119,7 @@ Reload a package
 Adding new tests
 ================
 
-    flask enroll-tests --filename tests/some-new-file.csv
+    flask enroll_tests --filename tests/some-new-file.csv
 
 You will then need to associate each test with an indicator:
 
