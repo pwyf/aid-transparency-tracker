@@ -10,37 +10,36 @@
 import itertools
 import json
 import re
-import urllib2
 
-import ckanclient
+from ckanapi import RemoteCKAN
 
 from iatidataquality import app, db
 from . import models, util
 
 
-REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=1000'
+CKANurl = 'https://iatiregistry.org'
+UA = 'PWYF/Aid Transparency Tracker'
 
-CKANurl = 'https://iatiregistry.org/api'
 
-
-class PackageMissing(Exception): pass
+class PackageMissing(Exception):
+    pass
 
 
 def packages_from_iati_registry():
-    offset = 0
+    page = 1
+    page_size = 1000
+    registry = RemoteCKAN(CKANurl, user_agent=UA)
     while True:
-        registry_url = REGISTRY_TMPL.format(offset)
-        data = urllib2.urlopen(registry_url, timeout=60).read()
-        print(registry_url)
-        data = json.loads(data)['result']
-
+        print('Fetching packages from {}. Page {} ...'.format(CKANurl, page))
+        offset = (page - 1) * page_size
+        data = registry.action.package_search(start=offset, rows=page_size)
         if len(data['results']) == 0:
             break
 
         for pkg in data['results']:
             yield pkg
 
-        offset += 1000
+        page += 1
 
 def _set_deleted_package(package, set_deleted=False):
     if package.deleted != set_deleted:
@@ -115,6 +114,7 @@ def copy_pg_fields(pg, ckangroup):
         except Exception, e:
             pass
 
+
 def create_package_group(group, handle_country=True):
     with db.session.begin():
         pg = models.PackageGroup()
@@ -122,8 +122,8 @@ def create_package_group(group, handle_country=True):
         pg.man_auto = u"auto"
 
         # Query CKAN
-        registry = ckanclient.CkanClient(base_location=CKANurl)
-        ckangroup = registry.group_entity_get(group)
+        registry = RemoteCKAN(CKANurl, user_agent=UA)
+        ckangroup = registry.action.group_show(id=group)
 
         copy_pg_attributes(pg, ckangroup)
         copy_pg_misc_attributes(pg, ckangroup, handle_country)
@@ -131,6 +131,7 @@ def create_package_group(group, handle_country=True):
 
         db.session.add(pg)
     return pg
+
 
 # package: a sqla model; pkg: a ckan object
 def setup_package_group(group):
@@ -183,16 +184,12 @@ def refresh_package(package):
         pkg.man_auto = u'auto'
         db.session.add(pkg)
 
+
 def refresh_package_by_name(package_name):
-    registry = ckanclient.CkanClient(base_location=CKANurl)
-    try:
-        package = registry.package_entity_get(package_name)
-        refresh_package(package)
-    except ckanclient.CkanApiNotAuthorizedError:
-        print "Error 403 (Not authorised) when retrieving '%s'" % package_name
-    except ckanclient.CkanApiNotFoundError:
-        print "Error 404 (Not found) when retrieving '%s'" % package_name
-        raise
+    registry = RemoteCKAN(CKANurl, user_agent=UA)
+    package = registry.action.package_show(id=package_name)
+    refresh_package(package)
+
 
 def _refresh_packages():
     setup_orgs = app.config.get("SETUP_ORGS", [])
@@ -203,8 +200,8 @@ def _refresh_packages():
         if len(setup_orgs):
             if [x for x in setup_orgs if package_name.startswith('{}-'.format(x))] == []:
                 continue
-        registry = ckanclient.CkanClient(base_location=CKANurl)
-        package = registry.package_entity_get(package_name)
+        registry = RemoteCKAN(CKANurl, user_agent=UA)
+        package = registry.action.package_show(id=package_name)
 
         refresh_package(package)
         if counter is not None:
