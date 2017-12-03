@@ -99,14 +99,14 @@ h1, .navbar-brand {
     font-size:75px;
 }
 .masthead {
-    background: #365e93;
-    background: -moz-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
-    background: -webkit-gradient(linear,left bottom,right top,color-stop(0%,#365e93),color-stop(100%,#7c9ac4));
-    background: -webkit-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
-    background: -o-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
-    background: -ms-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
-    background: linear-gradient(45deg, #365e93 0%, #7c9ac4 100%) repeat scroll 0 0 transparent;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#365e93',endColorstr='#7c9ac4',GradientType=1);
+    background: #3e9336;
+    background: -moz-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
+    background: -webkit-gradient(linear,left bottom,right top,color-stop(0%,#3e9336),color-stop(100%,#7c9ac4));
+    background: -webkit-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
+    background: -o-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
+    background: -ms-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
+    background: linear-gradient(45deg, #3e9336 0%, #7c9ac4 100%) repeat scroll 0 0 transparent;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3e9336',endColorstr='#7c9ac4',GradientType=1);
     -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
     -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
     box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
@@ -123,41 +123,8 @@ h1, .navbar-brand {
     color:#ffffff;
 }
 
-/* Main marketing message and sign up button */
-.pwyf-jumbotron-index {
-    margin: 40px 0 60px;
-    text-align: center;
-}
-.pwyf-jumbotron-index h1 {
-    font-size: 80px;
-    line-height: 1;
-}
-
-.publish-branding {
-    background: #365e93;
-    background: -moz-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
-    background: -webkit-gradient(linear,left bottom,right top,color-stop(0%,#365e93),color-stop(100%,#7c9ac4));
-    background: -webkit-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
-    background: -o-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
-    background: -ms-linear-gradient(45deg,#365e93 0%,#7c9ac4 100%);
-    background: linear-gradient(45deg, #365e93 0%, #7c9ac4 100%) repeat scroll 0 0 transparent;
-    margin-top:none;
-    top:0;
-    color:#ffffff;
-}
-.publish-branding a.dropdown-toggle {
-    color:#ffffff !important;
-    text-shadow: 0 1px 0 #777777 !important;
-}
-.publish-branding.open a.dropdown-toggle {
-    background: #365e93 !important;
-}
 .navbar {
     margin-bottom:19px;
-}
-.publish-branding .dropdown-toggle .caret {
-    border-bottom-color: #FFFFFF !important;
-    border-top-color: #FFFFFF !important;
 }
 th.restrict_text, td.restrict_text {
     max-width:200px;
@@ -169,4 +136,7 @@ th.restrict_text_commitment, td.restrict_text_commitment {
 }
 .align-right {
     float:right;
+}
+.flashmessage {
+    display:none;
 }
