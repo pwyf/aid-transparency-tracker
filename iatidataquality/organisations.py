@@ -10,7 +10,7 @@
 import json
 import operator
 
-from flask import render_template, flash, request, redirect, url_for, send_file
+from flask import abort, render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
 
 from . import app, db, surveys, usermanagement
@@ -83,13 +83,15 @@ def organisations_coverage():
 @app.route("/organisations/<organisation_code>/index/")
 @usermanagement.perms_required('organisation', 'view')
 def organisations_index(organisation_code=None):
+    organisation = Organisation.where(organisation_code=organisation_code).first()
+    if not organisation:
+        return abort(404)
 
-    aggregation_type=integerise(request.args.get('aggregation_type', 2))
+    aggregation_type = integerise(request.args.get('aggregation_type', 2))
 
     template_args = {}
     org_packages = dqorganisations.organisationPackages(organisation_code)
 
-    organisation = Organisation.where(organisation_code=organisation_code).first()
     packagegroups = dqorganisations.organisationPackageGroups(organisation_code)
 
     irs = [ir for ir in get_info_results(org_packages, organisation)]

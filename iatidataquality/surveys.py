@@ -10,7 +10,7 @@
 from datetime import datetime
 import os
 
-from flask import render_template, flash, request, Markup, redirect, url_for, abort
+from flask import abort, render_template, flash, request, Markup, redirect, url_for
 from flask_login import current_user
 import markdown
 
@@ -62,6 +62,9 @@ def organisation_survey_repair(organisation_code):
 @usermanagement.perms_required('survey', 'view')
 def organisation_survey(organisation_code=None):
     organisation = Organisation.where(organisation_code=organisation_code).first()
+    if not organisation:
+        return abort(404)
+
     # make sure survey exists
     survey = dqsurveys.getOrCreateSurveyByOrgId(organisation.id)
 
