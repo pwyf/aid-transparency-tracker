@@ -11,7 +11,7 @@
 <script type="text/template" id="template-source">
     <div class="pull-right">
         <a class="btn btn-success" href="{{ links.login }}">
-		  <i class="icon-lock icon-white"></i>
+		  <i class="glyphicon glyphicon-lock"></i>
 		  <strong>Login &raquo; {{ organisation.organisation_name }}</strong>
 		</a>
     </div>
@@ -24,7 +24,7 @@
     <h3>{{ ati_year }} Aid Transparency Index data </h3>
     <div class="">
         <div class="row">
-            <div class="span12">
+            <div class="col-md-12">
                 <h2>Tracking aid transparency improvements over time.</h2>
                 <p class="lead">This page shows the information
                 collected for {{organisation.organisation_name}} for
@@ -59,6 +59,8 @@
                 <div id="indicator{{indicator.id}}"
 					 class="modal hide fade" tabindex="-1" role="dialog"
 					 aria-labelledby="indicatorHeader" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
 
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"
@@ -71,17 +73,18 @@
                     {{indicator.longdescription}}
                   </div>
                   <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"
+                    <button class="btn btn-default" data-dismiss="modal"
 							aria-hidden="true">Close</button>
                   </div>
                 </div>
+                </div></div>
               </td>
 
               <td>
 				{{lastyearsdata.survey_ordinal_value}}%
 				<a href="#" class="showTests"
 				   id="showindicator-{{indicator.id}}">
-				  <i class="icon-chevron-down align-right"></i></a>
+				  <i class="glyphicon glyphicon-chevron-down align-right"></i></a>
 			  </td>
 
               <td>
@@ -132,7 +135,8 @@
               <div id="indicator{{indicator.id}}"
 				   class="modal hide fade" tabindex="-1" role="dialog"
 				   aria-labelledby="indicatorHeader" aria-hidden="true">
-
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal"
 						  aria-hidden="true">×</button>
@@ -146,9 +150,10 @@
                 </div>
 
                 <div class="modal-footer">
-                  <button class="btn" data-dismiss="modal"
+                  <button class="btn btn-default" data-dismiss="modal"
 						  aria-hidden="true">Close</button>
                 </div>
+              </div></div>
               </div>
             </td>
 
@@ -157,7 +162,7 @@
                     {{^lastyearsdata_iati}}
                     <a href="#" class="showTests"
 					   id="showindicator-{{indicator.id}}"><!-- FIXME: this line could be wrong -->
-					  <i class="icon-chevron-down align-right"></i>
+					  <i class="glyphicon glyphicon-chevron-down align-right"></i>
 					</a>
                     {{/lastyearsdata_iati}}
             </td>
@@ -220,7 +225,8 @@
 			  <div id="indicator{{indicator.id}}"
 				   class="modal hide fade" tabindex="-1" role="dialog"
 				   aria-labelledby="indicatorHeader" aria-hidden="true">
-
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close"
 								data-dismiss="modal"
@@ -233,9 +239,11 @@
                       {{indicator.longdescription}}
                     </div>
                     <div class="modal-footer">
-                      <button class="btn" data-dismiss="modal"
+                      <button class="btn btn-default" data-dismiss="modal"
 							  aria-hidden="true">Close</button>
                     </div>
+                  </div>
+                </div>
               </div>
             </td>
 
@@ -244,7 +252,7 @@
 			    {{^lastyearsdata_iati}}
                 <a href="#" class="showTests"
 				   id="showindicator-{{indicator.id}}"><!-- FIXME: this line could be wrong -->
-				  <i class="icon-chevron-down align-right"></i>
+				  <i class="glyphicon glyphicon-chevron-down align-right"></i>
 				</a>
 				{{/lastyearsdata_iati}}
             </td>
@@ -287,6 +295,6 @@
 {% endblock %}
 
 {% block final_scripts %}
-    <script src="{{url_for('static', filename='js/organisationPublication.js')}}"></script>
+    <script src="{{url_for('static', filename='js/organisationPublication.js')}}?v=2"></script>
 
 {% endblock %}

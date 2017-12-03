@@ -7,14 +7,14 @@
     <form action="" method="post">
 
     {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.id %}
-    <div class="control-group">
+    <div class="form-group">
       <input id="submit" type="submit" class="btn btn-success" value="Send" name="submit" />
-      <span class="muted">Send to donor</span>
+      <span class="text-muted">Send to donor</span>
     </div>
     {% else %}
-    <div class="control-group">
+    <div class="form-group">
       <input id="submit" type="submit" class="btn btn-success" value="Send" name="submit" disabled />
-      <span class="muted">Already sent to donor</span>
+      <span class="text-muted">Already sent to donor</span>
     </div>
     {% endif%}
 

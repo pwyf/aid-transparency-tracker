@@ -11,7 +11,7 @@
 <h3>{{ ati_year }} Aid Transparency Index &raquo; Publication</h3>
 <div class="">
   <div class="row">
-    <div class="span12">
+    <div class="col-md-12">
       <h2>An initial assessment of the information
         you publish is below.
       </h2>
@@ -25,12 +25,12 @@
   <hr />
 
   <div class="row">
-    <div class="span6">
+    <div class="col-md-6">
       <h4>Information published to the IATI Registry</h4>
 
-      <div class="pull-right"><a class="btn btn-mini scrollto"
+      <div class="pull-right"><a class="btn btn-default btn-xs scrollto"
       href="#iati"><strong>Jump to
-      indicators</strong> <i class="icon-chevron-down"></i></a>
+      indicators</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
       </div>
 
       <p>Maximum score: 100 points</p>
@@ -43,12 +43,12 @@
         the data, which you can address before the end of data collection.</li>
       </ul>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
       <h4>Information published in other formats</h4>
       <div class="pull-right">
-        <a class="btn btn-mini scrollto" href="#noniati">
+        <a class="btn btn-default btn-xs scrollto" href="#noniati">
           <strong>Jump to indicators</strong>
-          <i class="icon-chevron-down"></i></a>
+          <i class="glyphicon glyphicon-chevron-down"></i></a>
       </div>
       <p>Maximum score: 50 points</p>
       <h5>Guidelines</h5>
@@ -57,8 +57,8 @@
         found on your website.</li>
         <li>You only need to do this if you are not publishing
           this information to the IATI Registry.</li>
-        <li>You can do this by clicking <a class="btn
-        btn-mini">Review manually collected data</a>.</li>
+        <li>You can do this by clicking <a class="btn btn-default
+        btn-xs">Review manually collected data</a>.</li>
       </ul>
     </div>
   </div>
@@ -72,9 +72,9 @@
     <form action="" method="GET" id="aggregation_type_form"
           class="form-inline">
       <a href="{{links.organisation_detail}}"
-         class="btn">Detail
+         class="btn btn-default">Detail
       </a>
-      <select name="aggregation_type" id="aggregation_type">
+      <select class="form-control" name="aggregation_type" id="aggregation_type">
         {% for agg in agg_type %}
         <option value="{{agg.id}}"
                 {% if agg.selected %}
@@ -94,7 +94,7 @@
     score up to 100 points based on the quality and frequency of
     publication. This is determined by running a series of tests
     on the data. You can see more details by clicking on
-    the <i class="icon icon-chevron-down"></i> icon.
+    the <i class="glyphicon glyphicon-chevron-down"></i> icon.
   </p>
 
   {% if freq_alert %}
@@ -126,102 +126,110 @@
             <div id="indicator{{row.indicator.id}}"
                  class="modal hide fade" tabindex="-1" role="dialog"
                  aria-labelledby="indicatorHeader" aria-hidden="true">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">×</button>
-                <h3 id="indicatorHeader">
-                  Indicator: {{row.indicator.description}}
-                </h3>
-              </div>
-              <div class="modal-body">
-                {{ row.indicator.longdescription|replace('\n', '<br>')|safe }}
-              </div>
-              <div class="modal-footer">
-                <button class="btn" data-dismiss="modal"
-                        aria-hidden="true">Close</button>
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×</button>
+                    <h3 id="indicatorHeader">
+                      Indicator: {{row.indicator.description}}
+                    </h3>
+                  </div>
+                  <div class="modal-body">
+                    {{ row.indicator.longdescription|replace('\n', '<br>')|safe }}
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal"
+                            aria-hidden="true">Close</button>
+                  </div>
+                </div>
               </div>
             </div>
           </td>
           <td></td>
-          <td class="pct muted">{{row.results_pct_rounded}}</td>
+          <td class="pct text-muted">{{row.results_pct_rounded}}</td>
           <td><a href="#calculation{{row.indicator.id}}" role="button"
                  data-toggle="modal">{{row.points}}</a>
 
             <div id="calculation{{row.indicator.id}}"
                  class="modal hide fade" tabindex="-1" role="dialog"
                  aria-labelledby="indicatorHeader" aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal"
-                            aria-hidden="true">×</button>
-                    <h3 id="indicatorHeader">
-                      Score calculation for {{row.indicator.description}}
-                    </h3>
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close"
+                              data-dismiss="modal"
+                              aria-hidden="true">×</button>
+                      <h3 id="indicatorHeader">
+                        Score calculation for {{row.indicator.description}}
+                      </h3>
+                  </div>
+                  <div class="modal-body">
+                      <table class="table">
+                      <thead>
+                          <th colspan="3">Data quality score calculation</th>
+                      </thead>
+                      <tbody>
+                      <tr>
+                          <td>Data quality</td>
+                          <td>{{row.results_pct_rounded}}%</td>
+                          <td>% of activities that passed tests</td>
+                      </tr>
+                      <tr class="text-muted">
+                          <td>Convert percentage to points</td><td>÷ 2</td>
+                          <td></td>
+                      </tr>
+                      <tr>
+                          <td>Points</td>
+                          <td>{{row.results_pct_halved_rounded}}</td>
+                          <td></td>
+                      </tr>
+                      {% if row.is_activity %}
+                      <tr class="text-muted">
+                          <td>Frequency</td>
+                          <td>x {{freq}}</td>
+                          <td>{{organisation.frequency}}:
+                            {{organisation.frequency_comment}}</td>
+                      </tr>
+                      {% endif %}
+                      <tr>
+                          <td><strong>Total data quality points</strong></td>
+                          <td>{{row.points_minus_50}}</td><td></td>
+                      </tr>
+                      </tbody>
+                      </table>
+                      <table class="table">
+                      <thead>
+                          <th colspan="3">Total score calculation</th>
+                      </thead>
+                      <tbody>
+                      <tr>
+                          <td>Data quality points</td><td>{{row.points_minus_50}}</td>
+                          <td></td>
+                      </tr>
+                      <tr>
+                          <td>Publication format points</td><td>50.0</td>
+                          <td></td>
+                      </tr>
+                      <tr class="success">
+                          <td><strong>Total points for this indicator</strong></td>
+                          <td>{{ row.points }}</td><td></td>
+                      </tr>
+                      </tbody>
+                      </table>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-default" data-dismiss="modal"
+                              aria-hidden="true">Close</button>
+                  </div>
                 </div>
-                <div class="modal-body">
-                    <table class="table">
-                    <thead>
-                        <th colspan="3">Data quality score calculation</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Data quality</td>
-                        <td>{{row.results_pct_rounded}}%</td>
-                        <td>% of activities that passed tests</td>
-                    </tr>
-                    <tr class="muted">
-                        <td>Convert percentage to points</td><td>÷ 2</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Points</td>
-                        <td>{{row.results_pct_halved_rounded}}</td>
-                        <td></td>
-                    </tr>
-                    {% if row.is_activity %}
-                    <tr class="muted">
-                        <td>Frequency</td>
-                        <td>x {{freq}}</td>
-                        <td>{{organisation.frequency}}:
-                          {{organisation.frequency_comment}}</td>
-                    </tr>
-                    {% endif %}
-                    <tr>
-                        <td><strong>Total data quality points</strong></td>
-                        <td>{{row.points_minus_50}}</td><td></td>
-                    </tr>
-                    </tbody>
-                    </table>
-                    <table class="table">
-                    <thead>
-                        <th colspan="3">Total score calculation</th>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Data quality points</td><td>{{row.points_minus_50}}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Publication format points</td><td>50.0</td>
-                        <td></td>
-                    </tr>
-                    <tr class="success">
-                        <td><strong>Total points for this indicator</strong></td>
-                        <td>{{ row.points }}</td><td></td>
-                    </tr>
-                    </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"
-                            aria-hidden="true">Close</button>
-                </div>
+              </div>
             </div>
         </td>
         <td></td>
         <td><a href="#" class="showTests"
                id="showindicator-{{row.indicator.id}}">
-            <i class="icon-chevron-down align-right"></i></a>
+            <i class="glyphicon glyphicon-chevron-down align-right"></i></a>
         </td>
         </tr>
 
@@ -239,33 +247,37 @@
             <div id="test{{test.test.id}}" class="modal hide fade"
                  tabindex="-1" role="dialog" aria-labelledby="testHeader"
                  aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">×</button>
-                    <h3 id="testHeader">
-                      Test: {{test.test.description}}
-                    </h3>
-                </div>
-                <div class="modal-body">
-                    <p>One or more tests are automatically run on
-                      the data collected for each indicator.</p>
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal"
+                              aria-hidden="true">×</button>
+                      <h3 id="testHeader">
+                        Test: {{test.test.description}}
+                      </h3>
+                  </div>
+                  <div class="modal-body">
+                      <p>One or more tests are automatically run on
+                        the data collected for each indicator.</p>
 
-                    {% if test.test.test_level %}
-                    <p>This test is run
-                      {{ test.level_preposition }}
-                      <strong>{{ test.level_description }}</strong>
-                      {{ test.level_coda }}.</p>
-                    {% endif %}
-                    <p>The specific test expression is:</p>
-                    <code>{{test.test.name}}</code>
+                      {% if test.test.test_level %}
+                      <p>This test is run
+                        {{ test.level_preposition }}
+                        <strong>{{ test.level_description }}</strong>
+                        {{ test.level_coda }}.</p>
+                      {% endif %}
+                      <p>The specific test expression is:</p>
+                      <code>{{test.test.name}}</code>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-default" data-dismiss="modal"
+                              aria-hidden="true">Close</button>
+                  </div>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"
-                            aria-hidden="true">Close</button>
-                </div>
+              </div>
             </div>
             {% if test.condition %}
-            <i class="icon-info-sign" title="{{ test.condition }}"></i>
+            <i class="glyphicon glyphicon-info-sign" title="{{ test.condition }}"></i>
             {% endif %}
         </td>
         <td class="pct">{{test.results_pct_rounded}}</td>
@@ -280,19 +292,19 @@
     </tbody>
     </table>
     <div class="row">
-        <div class="span6">
+        <div class="col-md-6">
         <h4>Scoring criteria</h4>
         <ul>
             <li>50 points are awarded for publication in an accessible format</li>
 
             <li>50 points can additionally be awarded based on data quality and frequency of publication</li>
         </ul>
-        <a href="http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf" class="btn">More details &raquo;</a>
+        <a href="http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf" class="btn btn-default">More details &raquo;</a>
         </div>
-        <div class="span6">
+        <div class="col-md-6">
             <h4>How do you structure your data?</h4>
             <p>If you use multiple hierarchies in your IATI data, please tell us how the data is structured as this could make a difference to your score.</p>
-            <p><a href="{{links.organisation_feedback}}" class="btn">Provide structure &raquo;</a></p>
+            <p><a href="{{links.organisation_feedback}}" class="btn btn-default">Provide structure &raquo;</a></p>
         </div>
     </div>
     </fieldset>
@@ -333,25 +345,29 @@
             <div id="indicator{{row.indicator.id}}"
                  class="modal hide fade" tabindex="-1" role="dialog"
                  aria-labelledby="indicatorHeader" aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal"
-                            aria-hidden="true">×</button>
-                    <h3 id="indicatorHeader">
-                      Indicator: {{row.indicator.description}}
-                    </h3>
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close"
+                              data-dismiss="modal"
+                              aria-hidden="true">×</button>
+                      <h3 id="indicatorHeader">
+                        Indicator: {{row.indicator.description}}
+                      </h3>
+                  </div>
+                  <div class="modal-body">
+                      {{ row.indicator.longdescription|replace('\n', '<br>')|safe }}
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-default" data-dismiss="modal"
+                              aria-hidden="true">Close</button>
+                  </div>
                 </div>
-                <div class="modal-body">
-                    {{ row.indicator.longdescription|replace('\n', '<br>')|safe }}
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"
-                            aria-hidden="true">Close</button>
-                </div>
+              </div>
             </div>
         </td>
         <td></td>
-        <td><span class="label label-inverse">NOT FOUND</span></td>
+        <td><span class="label label-default">NOT FOUND</span></td>
 
         {% if surveydata %}
         <td>
@@ -374,7 +390,7 @@
 
         <td><a href="#" class="showTests"
                id="showindicator-{{row.indicator.id}}">
-            <i class="icon-chevron-down align-right"></i></a></td>
+            <i class="glyphicon glyphicon-chevron-down align-right"></i></a></td>
         </tr>
 
         {% for test in row.tests %}
@@ -398,32 +414,36 @@
                class="modal hide fade" tabindex="-1"
                role="dialog" aria-labelledby="testHeader"
                aria-hidden="true">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"
-                      aria-hidden="true">×</button>
-              <h3 id="testHeader">Test: {{ test.test.description }}</h3>
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal"
+                          aria-hidden="true">×</button>
+                  <h3 id="testHeader">Test: {{ test.test.description }}</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Each indicator can be
-                    comprised of several tests, which are
-                    automatically run on the data.</p>
+                  <p>Each indicator can be
+                  comprised of several tests, which are
+                  automatically run on the data.</p>
 
-                    <p>This test is run
-                      {{ test.level_preposition }}
-                      <strong>{{ test.level_description }}</strong>
-                      {{ test.level_coda }}.</p>
+                  <p>This test is run
+                    {{ test.level_preposition }}
+                    <strong>{{ test.level_description }}</strong>
+                    {{ test.level_coda }}.</p>
 
-                    <p>The specific test expression is:</p>
-                    <code>{{ test.test.name }}</code>
+                  <p>The specific test expression is:</p>
+                  <code>{{ test.test.name }}</code>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"
+                    <button class="btn btn-default" data-dismiss="modal"
                             aria-hidden="true">Close</button>
                 </div>
+              </div>
             </div>
+          </div>
 
             {% if row.condition %}
-          <i class="icon-info-sign" title="{{ row.condition }}"></i>
+          <i class="glyphicon glyphicon-info-sign" title="{{ row.condition }}"></i>
             {% endif %}
         </td>
         <td class="pct">{{ test.results_pct_rounded }}</td>
@@ -451,7 +471,7 @@
     </tbody>
     </table>
     <div class="row">
-        <div class="span6">
+        <div class="col-md-6">
             <h4>Scoring criteria</h4>
             <p>For each indicator, points are received if information is
               <label class="label label-success">Always published</label>.
@@ -476,15 +496,15 @@
                 </tbody>
             </table>
         <a href="http://www.publishwhatyoufund.org/wp-content/uploads/2017/08/2018-Aid-Transparency-Index-technical-paper_updated-170815.pdf"
-           class="btn">More details &raquo;</a>
+           class="btn btn-default">More details &raquo;</a>
         </div>
-        <div class="span6">
+        <div class="col-md-6">
             <h4>Why is IATI data scored more highly?</h4>
             <p>IATI is the only international standard for
             publishing comprehensive, comparable, timely and
             accessible data, which are critical components of aid
             transparency.</p>
-            <p><a class="btn" href="http://www.publishwhatyoufund.org/resources/international-aid-transparency-initiative-iati/"
+            <p><a class="btn btn-default" href="http://www.publishwhatyoufund.org/resources/international-aid-transparency-initiative-iati/"
                   target="_blank">Learn more &raquo;</a></p>
             <hr />
             <h4>How you scored last year</h4>
@@ -499,6 +519,6 @@
 
 {% block final_scripts %}
     <script src="{{url_for('static',
-				 filename='js/organisationPublication.js')}}"></script>
+				 filename='js/organisationPublication.js')}}?v=2"></script>
 
 {% endblock %}

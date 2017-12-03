@@ -4,7 +4,7 @@
     <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
     <script src="{{url_for('static',
-				 filename='js/deletePrompt.js')}}"></script>
+				 filename='js/deletePrompt.js')}}?v=2"></script>
     <script >
     $(function() {
     $("table#tests").tablesorter({ sortList: [[0,0]] });
@@ -14,12 +14,12 @@
     <div class="pull-right">
 
       <a class="btn btn-success" href="{{url_for('indicators_import')}}">
-		<i class="icon-white icon-plus"></i>
+		<i class="glyphicon glyphicon-plus"></i>
 		<strong>Import</strong>
 	  </a>
 
 	  <a class="btn btn-success" href="{{url_for('indicatorgroups_new')}}">
-		<i class="icon-white icon-plus"></i>
+		<i class="glyphicon glyphicon-plus"></i>
 		<strong>New</strong>
 	  </a>
 
@@ -41,7 +41,7 @@
     <td>
         <a href="{{url_for('indicatorgroups_edit',
 				 indicatorgroup=indicatorgroup.name)}}">
-		  <i class="icon-pencil"></i>
+		  <i class="glyphicon glyphicon-pencil"></i>
 		</a>
         <a href="{{url_for('indicatorgroups_delete',
 				 indicatorgroup=indicatorgroup.name)}}"
@@ -49,7 +49,7 @@
 						 {{indicatorgroup.name}}? This action will also
 						 delete all indicators associated with this group,
 						 and cannot be undone.">
-		  <i class="icon-trash"></i></a>
+		  <i class="glyphicon glyphicon-trash"></i></a>
     </td>
     </tr>
 	{% endfor %}

@@ -1,7 +1,7 @@
 {% set active_page='index'%}{% extends "layout.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div class="jumbotron masthead">
+    <div class="pwyf-jumbotron masthead">
         <div class="container">
         <h1><span class="black">Aid Transparency Tracker</span></h1>
         <p class="lead">Organisations have begun publishing more data
@@ -33,9 +33,9 @@
 	</div>
     <div class="row">
             {% if loggedinuser.username %}
-            <div class="span6 offset3">
+            <div class="col-md-6 col-md-offset-3">
             {% else %}
-            <div class="span6">
+            <div class="col-md-6">
             {% endif %}
                 <h1>Organisations</h1>
                 <p class="lead">See data for individual organisations</p>
@@ -45,17 +45,17 @@
                 </p>
             </div>
             {% if not loggedinuser.username %}
-            <div class="span6">
+            <div class="col-md-6">
                 <h1>Data verification</h1>
                 <p class="lead">Donors and independent reviewers can
                 log in to check the data</p>
                 <form class="form-inline"
 					  action="{{url_for('login')}}" method="post">
                 <input name="username" type="text"
-					   class="input-small" placeholder="Username">
+					   class="form-control" placeholder="Username">
                 <input name="password" type="password"
-					   class="input-small" placeholder="Password">
-                <button type="submit" class="btn">Sign in</button>
+					   class="form-control" placeholder="Password">
+                <button type="submit" class="btn btn-default">Sign in</button>
                 </form>
             </div>
             {% endif %}

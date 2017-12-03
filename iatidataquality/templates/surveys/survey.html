@@ -9,9 +9,9 @@
     </script>
     {% if not checksurveyOK %}
         <div class="pull-right alert alert-warning">
-            <h5><i class="icon-info-sign"></i> This survey is broken.</h5>
+            <h5><i class="glyphicon glyphicon-info-sign"></i> This survey is broken.</h5>
             <a href="{{url_for('organisation_survey_repair', organisation_code=organisation.organisation_code)}}" class="btn btn-warning">
-                <i class="icon-wrench icon-white"></i>
+                <i class="glyphicon glyphicon-wrench"></i>
                 <strong>Repair survey</strong>
             </a>
         </div>
@@ -20,11 +20,11 @@
     {% if survey %}
     <p class="lead">Survey currently in {{survey.workflow.title}} mode; {{pct_complete|int}}% complete.</p>
     <div class="progress">
-        <div class="bar" style="width: {{pct_complete}}%"></div>
+        <div class="progress-bar" style="width: {{pct_complete}}%"></div>
     </div>
     {% else %}
     <p class="lead">No survey has been created for this organisation yet.</p>
-    <p><a class="btn btn-success" href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name='create')}}"><i class="icon-plus icon-white"></i> <strong>Create survey &raquo;</strong></a></p>
+    <p><a class="btn btn-success" href="{{url_for('organisation_survey_edit', organisation_code=organisation.organisation_code, workflow_name='create')}}"><i class="glyphicon glyphicon-plus"></i> <strong>Create survey &raquo;</strong></a></p>
 
     {%endif%}
     <h3>Expected activities</h3>

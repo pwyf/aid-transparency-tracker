@@ -41,7 +41,7 @@
     <tr>
     <td>{{survey.Organisation.organisation_name}}</td><td>{{survey.Workflow.name}}</td>
     <td>
-    <select name="workflows-{{survey.OrganisationSurvey.id}}">
+    <select class="form-control" name="workflows-{{survey.OrganisationSurvey.id}}">
     {% for workflow in workflows %}
     <option value="{{workflow.id}}"{% if workflow.id==survey.OrganisationSurvey.currentworkflow_id %} selected{%endif%}>{{workflow.name}}</option>
     {% endfor %}

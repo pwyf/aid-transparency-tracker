@@ -17,26 +17,30 @@
         <tr class="indicator{{indicator.indicator.id}}">
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                        </div>
+                        <div class="modal-body">
+                            {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    </div>
+                  </div>
                 </div></td>
-            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
             {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
+                <span class="label label-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
                 {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
             {% else %}
-                <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+                <span class="label label-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
             {% endif %}<br />
-            <span class="badge badge-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
+            <span class="label label-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
             {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
@@ -49,15 +53,15 @@
         {% if surveydata.donorreview %}
         {% set data = surveydata['donorreview'] %}
         <tr>
-            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
             {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+                <span class="label label-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
                 {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
             {% else %}
-                <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+                <span class="label label-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
             {% endif %}<br />
-            <span class="badge badge-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
+            <span class="label label-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
             {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
@@ -71,15 +75,15 @@
         {% if surveydata.pwyfreview %}
         {% set data = surveydata['pwyfreview'] %}
         <tr>
-            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
             {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+                <span class="label label-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
                 {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
             {% else %}
-                <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+                <span class="label label-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
             {% endif %}<br />
-            <span class="badge badge-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF response">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
+            <span class="label label-{{data[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF response">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
             {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
@@ -104,9 +108,9 @@
         {% set accepted_class = '' %}
         {% endif %}
         <tr>
-            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
-            <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+            <span class="label label-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
             </td>
             <td class="restrict_text"></td>
             <td class="restrict_text">
@@ -129,9 +133,9 @@
         {% set accepted_class = '' %}
         {% endif %}
         <tr>
-            <td><span class="muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
+            <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
-            <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+            <span class="label label-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
             </td>
             <td class="restrict_text"></td>
             <td class="restrict_text">
@@ -153,11 +157,11 @@
         <label for="{{indicator.indicator.id}}-agree-1" class="radio">
         <input type="radio" name="{{indicator.indicator.id}}-agree" value="1" id="{{indicator.indicator.id}}-agree-1"{% if not (data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0) %} checked{%endif%}> Agree</input>
         <br />
-        <span class="muted">Agree</span></label>
+        <span class="text-muted">Agree</span></label>
         <label for="{{indicator.indicator.id}}-agree-0" class="radio">
         <input type="radio" name="{{indicator.indicator.id}}-agree" value="0" id="{{indicator.indicator.id}}-agree-0"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_accepted == 0 %} checked{%endif%}> Disagree</input>
         <br />
-        <span class="muted">Disagree</span></label>
+        <span class="text-muted">Disagree</span></label>
         </td>
         <td colspan="2"></td>
         </tr>
@@ -170,8 +174,8 @@
           {% endif %}
         </td>
 
-        <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
+        <td><textarea class="form-control" name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
 
-        <td><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td><textarea class="form-control" name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
         </tr>
 {% endmacro %}

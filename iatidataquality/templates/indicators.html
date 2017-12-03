@@ -27,7 +27,7 @@ code {
 
         <td><a href="#" class="showTests"
                id="showindicator-{{ i.id }}">
-            <i class="icon-chevron-down align-right"></i></a>
+            <i class="glyphicon glyphicon-chevron-down align-right"></i></a>
         </td>
     </tr>
     <tr class="group-{{ i.id }} hidden">
@@ -48,6 +48,6 @@ code {
 
 {% block final_scripts %}
     <script src="{{url_for('static',
-				 filename='js/organisationPublication.js')}}"></script>
-    <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
+				 filename='js/organisationPublication.js')}}?v=2"></script>
+    <script src="{{url_for('static', filename='js/deletePrompt.js')}}?v=2"></script>
 {% endblock %}

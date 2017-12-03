@@ -52,16 +52,16 @@
     <h1>Sampling: {{ indicator_name }} </h1>
     <h3>{{ test_description }}</h3>
 
-    <div class="accordion" id="accordion">
-        <div class="accordion-group">
-            <div class="accordion-heading">
+    <div class="pannel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse"
 				   data-parent="#accordion2" href="#collapseDefinition">
                 Definition
                 </a>
             </div>
-            <div id="collapseDefinition" class="accordion-body collapse">
-                <div class="accordion-inner">
+            <div id="collapseDefinition" class="panel-collapse collapse">
+                <div class="panel-body">
                 <p>
                     {{ indicator_description }}
 	            </p>
@@ -80,11 +80,11 @@
 
 <script id="buttons-template" type="x-tmpl-mustache">
     <div class="row">
-        <div class="span12">
+        <div class="col-md-12">
             {{# buttons }}
             <button class="btn btn-{{ class }} advance" name="decision"
 					value="{{ value }}">
-                <span class="icon icon-white icon-{{ icon }}"></span>
+                <span class="glyphicon glyphicon-{{ icon }}"></span>
                 <strong>{{ button }}</strong>
             </button>
             {{/ buttons }}
@@ -106,14 +106,14 @@
     <hr />
     <div class="row" id="data-content">
 	{{# results }}
-        <div class="span12">
-            <h4><span class="muted">Result</span> {{ title }}</h4>
-            <p><span class="muted">Description</span> {{ description }}
+        <div class="col-md-12">
+            <h4><span class="text-muted">Result</span> {{ title }}</h4>
+            <p><span class="text-muted">Description</span> {{ description }}
         </div>
-        <div class="span11 offset1">
+        <div class="col-md-11 col-md-offset-1">
         	{{# indicators }}
-            <h5><span class="muted">Indicator</span> {{ title }}</h5>
-            <p><span class="muted">Description</span> {{ description }}
+            <h5><span class="text-muted">Indicator</span> {{ title }}</h5>
+            <p><span class="text-muted">Description</span> {{ description }}
 
         	{{# periods }}
             <ul>
@@ -145,13 +145,13 @@
     <hr />
     <div class="row" id="data-content">
 	{{# conditions }}
-        <div class="span12">
-            <h4><span class="muted">Attached</span> {{ attached }}</h4>
+        <div class="col-md-12">
+            <h4><span class="text-muted">Attached</span> {{ attached }}</h4>
         </div>
-        <div class="span11 offset1">
+        <div class="col-md-11 col-md-offset-1">
         	{{# conditions }}
-            <h5><span class="muted">Text</span> {{ text }}</h5>
-            <p><span class="muted">Type</span> {{ type }}
+            <h5><span class="text-muted">Text</span> {{ text }}</h5>
+            <p><span class="text-muted">Type</span> {{ type }}
         	{{/ conditions }}
         </div>
 	{{/ conditions }}
@@ -174,7 +174,7 @@
     <hr />
     <div class="row" id="data-content">
 	{{# documents }}
-        <div class="span12">
+        <div class="col-md-12">
             <h4>{{ name }}</h4>
             <p><a href="{{ url}}" target="_blank">{{ url }}</a></p>
             {{# categories }}
@@ -210,7 +210,7 @@
     </div>
     <hr />
     <div class="row" id="data-content">
-        <div class="span12">
+        <div class="col-md-12">
             <ul>
 	        {{# locations }}
             <li>{{ name }} {{ description }}</li>
@@ -221,7 +221,7 @@
 
     <div class="row">
 	{{# documents }}
-        <div class="span12">
+        <div class="col-md-12">
             <h4>{{ name }}</h4>
             <p><a href="{{ url}}" target="_blank">{{ url }}</a></p>
             {{# categories }}
@@ -242,16 +242,16 @@
 </script>
 <script id="xml-template" type="x-tmpl-mustache">
 
-    <div class="accordion" id="accordion-xml">
-        <div class="accordion-group">
-            <div class="accordion-heading">
+    <div class="panel-group" id="accordion-xml">
+        <div class="panel panel-default">
+            <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse"
 				   data-parent="#accordion-location" href="#collapseXML">
                 XML
                 </a>
             </div>
-            <div id="collapseXML" class="accordion-body collapse">
-                <div class="accordion-inner">
+            <div id="collapseXML" class="panel-collapse collapse">
+                <div class="panel-body">
                 <?prettify?>
                 <pre class="prettyprint">{{ xml }}</pre>
                 </div>

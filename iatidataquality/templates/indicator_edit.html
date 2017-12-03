@@ -17,18 +17,18 @@
     <tbody>
     <tr>
 	<td>Name:</td>
-	<td><input type="text" name="name" value="{{ indicator.name }}"/></td>
+	<td><input class="form-control" type="text" name="name" value="{{ indicator.name }}"/></td>
     </tr>
     <tr>
     <td>Description:</td>
 	<td>
-	  <input type="text" name="description"
+	  <input class="form-control" type="text" name="description"
 			 value="{{indicator.description}}"/>
 	</td>
     </tr>
     <tr>
     <td>Parent indicator group:</td>
-        <td><select name="indicatorgroup_id">
+        <td><select class="form-control" name="indicatorgroup_id">
             {% for indicatorgroup in indicatorgroups %}
             <option value="{{indicatorgroup.id}}"
 					{% if indicator.indicatorgroupid==indicatorgroup.id %}
@@ -43,32 +43,32 @@
     <tr>
         <td>Long description:</td>
 		<td>
-		  <textarea name="longdescription">
+		  <textarea class="form-control" name="longdescription">
 			{{indicator.longdescription}}
 		  </textarea>
 		</td>
     </tr>
     <tr>
         <td>Indicator type:</td>
-		<td><input type="text" name="indicator_type"
+		<td><input class="form-control" type="text" name="indicator_type"
 				   value="{{indicator.indicator_type}}" />
 		</td>
     </tr>
     <tr>
         <td>Indicator category:</td>
-		<td><input type="text" name="indicator_category_name"
+		<td><input class="form-control" type="text" name="indicator_category_name"
 				   value="{{indicator.indicator_category_name}}" />
 		</td>
     </tr>
     <tr>
         <td>Indicator subcategory:</td>
-		<td><input type="text" name="indicator_subcategory_name"
+		<td><input class="form-control" type="text" name="indicator_subcategory_name"
 				   value="{{indicator.indicator_subcategory_name}}" />
 		</td>
     </tr>
     <tr>
         <td>Ordinal:</td>
-		<td><input type="checkbox" name="indicator_ordinal" value="1"
+		<td><input class="form-control" type="checkbox" name="indicator_ordinal" value="1"
 				   {% if indicator.indicator_ordinal %}checked{% endif %} />
 		</td>
     </tr>
@@ -80,18 +80,18 @@
     </tr>
     <tr>
         <td>Order:</td>
-		<td><input type="text" name="indicator_order"
+		<td><input class="form-control" type="text" name="indicator_order"
 				   value="{{indicator.indicator_order}}" />
 		</td>
     </tr>
     <tr>
         <td>Weight:</td>
-		<td><input type="text" name="indicator_weight"
+		<td><input class="form-control" type="text" name="indicator_weight"
 				   value="{{indicator.indicator_weight}}" />
 		</td>
     </tr>
     <tr>
-    <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
+    <td colspan="2"><input type="submit" value="Update" class="btn btn-default"/></td>
     </tr>
     </tbody>
     </table>

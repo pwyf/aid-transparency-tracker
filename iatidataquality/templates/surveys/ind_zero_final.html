@@ -23,26 +23,30 @@
         <tr class="indicator{{indicator.indicator.id}}">
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                        </div>
+                        <div class="modal-body">
+                            {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    </div>
+                  </div>
                 </div></td>
             <td><span>Researcher</span></td>
             <td>
               {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
+                <span class="label label-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
                 {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
               {% else %}
-                 <span class="badge badge-{{surveydata.researcher[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedStatus.title}}</span>
+                 <span class="label label-{{surveydata.researcher[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedStatus.title}}</span>
               {% endif %}<br />
-            <span class="badge badge-{{surveydata.researcher[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedFormat.title}}</span>
+            <span class="label label-{{surveydata.researcher[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
             {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}
@@ -60,12 +64,12 @@
             {% else %}
                 <td>
                   {% if indicator.indicator.indicator_ordinal %}
-                    <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+                    <span class="label label-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
                     {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
                   {% else %}
-                    <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.title}}</span>
+                    <span class="label label-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.title}}</span>
                   {% endif %}<br />
-                <span class="badge badge-{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.title}}</span>
+                <span class="label label-{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.title}}</span>
                 </td>
                 <td class="restrict_text">
                 {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
@@ -82,12 +86,12 @@
             <td><span>PWYF review</span></td>
             <td>
               {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Review">
+                <span class="label label-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Review">
                 {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
               {% else %}
-                <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.title}}</span>
+                <span class="label label-{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedStatus.title}}</span>
               {% endif %}<br />
-            <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.title}}</span>
+            <span class="label label-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF Review">{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
             {{surveydata.pwyfreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
@@ -115,7 +119,7 @@
                 <td><span>Independent reviewer</span></td>
                 {% if not organisation.no_independent_reviewer %}
                     <td>
-                    <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                    <span class="label label-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
                     </td>
                     <td class="restrict_text"></td>
                     <td class="restrict_text">
@@ -133,12 +137,12 @@
                 <td><strong>PWYF Final Assessment</strong></td>
                 <td>
                   {% if indicator.indicator.indicator_ordinal %}
-                    <span class="badge badge-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Final Assessment">
+                    <span class="label label-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="PWYF Final Assessment">
                     {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
                   {% else %}
-                    <span class="badge badge-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Final Assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
+                    <span class="label label-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF Final Assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
                   {% endif %}<br />
-                <span class="badge badge-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF Final Assessment">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
+                <span class="label label-{{surveydata.pwyfreview[indicator.indicator.id].PublishedFormat.format_class}}" title="PWYF Final Assessment">{{data[indicator.indicator.id].PublishedFormat.title}}</span>
                 </td>
                 <td class="restrict_text">
                 {{data[indicator.indicator.id].OrganisationSurveyData.published_source}}
@@ -160,7 +164,7 @@
                 <td colspan="3">No response</td>
             {% else %}
                 <td>
-                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                <span class="label label-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
                 </td>
                 <td class="restrict_text"></td>
                 <td class="restrict_text">

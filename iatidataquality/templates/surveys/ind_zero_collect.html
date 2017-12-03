@@ -17,26 +17,30 @@
         <tr id="tr{{indicator.indicator.id}}" class="group-unknown">
             <td rowspan="2"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                          <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                      </div>
+                      <div class="modal-body">
+                          {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                      </div>
                     </div>
-                    <div class="modal-body">
-                        {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    </div>
+                  </div>
                 </div></td>
-            <td><span class="muted">Previous data</span></td>
+            <td><span class="text-muted">Previous data</span></td>
             <td>
             {% if old_survey_data[indicator.indicator.name].result == '' %}
-                <span class="badge">No previous data</span>
+                <span class="label label-default">No previous data</span>
             {% else %}
                 {% if not indicator.indicator.indicator_ordinal %}
-                <span class="badge badge-{{old_publication_status[old_survey_data[indicator.indicator.name].publication_status].class}}" title="Researcher's initial assessment">{{ old_publication_status[old_survey_data[indicator.indicator.name].publication_status].text }}</span>
+                <span class="label label-{{old_publication_status[old_survey_data[indicator.indicator.name].publication_status].class}}" title="Researcher's initial assessment">{{ old_publication_status[old_survey_data[indicator.indicator.name].publication_status].text }}</span>
                 {% else %}
-                <span class="badge badge-{{year_data[old_survey_data[indicator.indicator.name].survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[old_survey_data[indicator.indicator.name].survey_ordinal_value|int].text }}</span>
+                <span class="label label-{{year_data[old_survey_data[indicator.indicator.name].survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[old_survey_data[indicator.indicator.name].survey_ordinal_value|int].text }}</span>
                 {% endif %}
             {% endif %}
             </td>
@@ -59,8 +63,8 @@
           {% endif %}
         </td>
 
-        <td><textarea name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
+        <td><textarea class="form-control" name="{{indicator.indicator.id}}-source">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_source}}{%endif%}</textarea></td>
 
-        <td><textarea name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
+        <td><textarea class="form-control" name="{{indicator.indicator.id}}-comments">{% if data %}{{data[indicator.indicator.id].OrganisationSurveyData.published_comment}}{%endif%}</textarea></td>
         </tr>
 {% endmacro %}

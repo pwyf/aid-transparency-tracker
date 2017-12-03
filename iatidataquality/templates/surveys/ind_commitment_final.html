@@ -9,16 +9,20 @@
         <tr>
             <td rowspan="{{rows}}"><a href="#indicator{{indicator.indicator.id}}" role="button" data-toggle="modal">{{indicator.indicator.description}}</a>
                 <div id="indicator{{indicator.indicator.id}}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="indicatorHeader" aria-hidden="true">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h3 id="indicatorHeader">Indicator: {{indicator.indicator.description}}</h3>
+                        </div>
+                        <div class="modal-body">
+                            {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        {{indicator.indicator.longdescription|replace('\n', '<br>')|safe}}
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    </div>
+                  </div>
                 </div></td>
             <td><span>Researcher</span></td>
             <td>{{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}
@@ -83,7 +87,7 @@
                 <td colspan="3">No independent reviewer</td>
             {% else %}
                 <td>
-                <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                <span class="label label-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
                 </td>
                 <td class="restrict_text_commitment"></td>
                 <td class="restrict_text_commitment">
@@ -125,7 +129,7 @@
                     <td colspan="3">No response</td>
                 {% else %}
                     <td>
-                    <span class="badge badge-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
+                    <span class="label label-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
                     </td>
                     <td class="restrict_text_commitment"></td>
                     <td class="restrict_text_commitment">

@@ -56,7 +56,7 @@ $(".showResult").click(function(e){
         result_id = r[1]
         hierarchy_id=r[2]
 
-        $(this).removeClass("visible").html('<i class="icon-chevron-down"></i>');
+        $(this).removeClass("visible").html('<i class="glyphicon glyphicon-chevron-down"></i>');
         $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
         $("#tr"+result_id+"h"+hierarchy_id).next().slideUp('slow').delay(5000).remove();
     } else {
@@ -89,6 +89,6 @@ $(".showResult").click(function(e){
             $("#tr-result-"+result_id).slideDown("slow");
             $('.loading_data').hide();
         });
-        $(this).addClass("visible").html('<i class="icon-chevron-up"></i>');
+        $(this).addClass("visible").html('<i class="glyphicon glyphicon-chevron-up"></i>');
 }
 });

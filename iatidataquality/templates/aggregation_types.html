@@ -12,7 +12,7 @@
     <div class="pull-right">
     <a class="btn btn-success"
 	   href="{{url_for('aggregationtypes_edit')}}">
-	  <i class="icon-white icon-plus"></i> <strong>New</strong></a>
+	  <i class="glyphicon glyphicon-plus"></i> <strong>New</strong></a>
     </div>
     <table class="table" id="at">
     <thead>
@@ -33,7 +33,7 @@
     <td>
 	  <a href="{{url_for('aggregationtypes_edit',
 			   aggregationtype_id=aggregationtype.AggregationType.id)}}">
-		<i class="icon-pencil"></i></a>
+		<i class="glyphicon glyphicon-pencil"></i></a>
 	</td>
     </tr>
 	{% endfor %}

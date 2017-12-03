@@ -8,44 +8,44 @@
     <div class="container">
         <div class="pull-right">
             {% if admin %}
-            <a class="btn"
+            <a class="btn btn-default"
 			   href="{{url_for('organisation_edit',
 					 organisation_code=organisation.organisation_code)}}">
-			  <i class="icon-wrench"></i> Manage organisation</a>
+			  <i class="glyphicon glyphicon-wrench"></i> Manage organisation</a>
             {% endif %}
 
             {% if allowed_to_view_survey %}
-            <a class="btn"
+            <a class="btn btn-default"
 			   href="{{url_for('organisation_survey',
 					 organisation_code=organisation.organisation_code)}}">
-			  <i class="icon-info-sign"></i> View survey</a>
+			  <i class="glyphicon glyphicon-info-sign"></i> View survey</a>
             {% endif %}
 
             {% if show_researcher_button %}
-            <a class="btn" href="{{url_for('organisation_survey_edit',
+            <a class="btn btn-default" href="{{url_for('organisation_survey_edit',
                                             organisation_code=organisation.organisation_code,
                                             workflow_name='researcher')}}">
-			  <i class="icon-star"></i> Start survey</a>
+			  <i class="glyphicon glyphicon-star"></i> Start survey</a>
             {% endif %}
         </div>
     </div>
     {% endif %}
 
-    <div class="jumbotron jumbotron-index">
+    <div class="pwyf-jumbotron jumbotron-index">
     <h1>{{organisation.organisation_name}}</h1>
     <p class="lead">An initial assessment of your organisation's aid
     transparency is available below.</p>
     </div>
 
     <div class="row">
-        <div class="span12 publication">
+        <div class="col-md-12 publication">
             <h1>Publication</h1>
 			{% include "publication_box.html" %}
         </div>
     </div>
     <hr />
     <div class="row">
-        <div class="span8">
+        <div class="col-md-8">
         <h3>Timeline</h3>
         <table class="table">
         <tbody>
@@ -77,7 +77,7 @@
         </table>
         </div>
 
-        <div class="span4">
+        <div class="col-md-4">
             <h3>Scoring approach</h3>
             <p>Information published in more accessible formats is
             scored more highly. IATI is the only international
