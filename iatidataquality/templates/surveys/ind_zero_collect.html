@@ -34,23 +34,23 @@
                 </div></td>
             <td><span class="text-muted">Previous data</span></td>
             <td>
-            {% if old_survey_data[indicator.indicator.name].result == '' %}
+            {% if old_survey_data.get(indicator.indicator.name).result == '' %}
                 <span class="label label-default">No previous data</span>
             {% else %}
                 {% if not indicator.indicator.indicator_ordinal %}
-                <span class="label label-{{old_publication_status[old_survey_data[indicator.indicator.name].publication_status].class}}" title="Researcher's initial assessment">{{ old_publication_status[old_survey_data[indicator.indicator.name].publication_status].text }}</span>
+                <span class="label label-{{old_publication_status.get(old_survey_data.get(indicator.indicator.name).publication_status).class}}" title="Researcher's initial assessment">{{ old_publication_status.get(old_survey_data.get(indicator.indicator.name).publication_status).text }}</span>
                 {% else %}
-                <span class="label label-{{year_data[old_survey_data[indicator.indicator.name].survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[old_survey_data[indicator.indicator.name].survey_ordinal_value|int].text }}</span>
+                <span class="label label-{{year_data[old_survey_data.get(indicator.indicator.name).survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[old_survey_data.get(indicator.indicator.name).survey_ordinal_value|int].text }}</span>
                 {% endif %}
             {% endif %}
             </td>
 
             <td class="restrict_text">
-            {{old_survey_data[indicator.indicator.name].survey_source|hyperlink}}
+            {{old_survey_data.get(indicator.indicator.name).survey_source|hyperlink}}
             </td>
 
             <td class="restrict_text">
-            {{old_survey_data[indicator.indicator.name].survey_comment}}
+            {{old_survey_data.get(indicator.indicator.name).survey_comment}}
             </td>
         </tr>
         <tr id="tr{{indicator.indicator.id}}">
