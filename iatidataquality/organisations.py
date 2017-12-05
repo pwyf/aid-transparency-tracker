@@ -354,7 +354,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                         return (published_status_by_id[osd["published_status_id"]]["publishedstatus_class"],
                                 published_status_by_id[osd["published_status_id"]]["title"])
                 def format_class_and_text():
-                    if published_status_by_id[osd["published_status_id"]]["publishedstatus_class"] != 'important':
+                    if published_status_by_id[osd["published_status_id"]]["publishedstatus_class"] != 'danger':
                         return (publishedformats[osd["published_format_id"]]["format_class"],
                                 publishedformats[osd["published_format_id"]]["title"])
                     else:

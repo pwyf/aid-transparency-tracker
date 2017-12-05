@@ -98,7 +98,7 @@
             {% set accepted_class = 'success' %}
             {% else %}
             {% set accepted = 'Disagree' %}
-            {% set accepted_class = 'important' %}
+            {% set accepted_class = 'danger' %}
             {% endif %}
             <tr>
                 <td><span class="text-muted">Independent reviewer</span></td>
@@ -145,7 +145,7 @@
         {% set accepted_class = 'success' %}
         {% else %}
         {% set accepted = 'Disagree' %}
-        {% set accepted_class = 'important' %}
+        {% set accepted_class = 'danger' %}
         {% endif %}
         <tr>
             <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>

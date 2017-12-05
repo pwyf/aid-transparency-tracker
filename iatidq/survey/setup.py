@@ -16,7 +16,7 @@ def setupSurvey():
         }, {
             'name': 'not published',
             'title': 'Not published',
-            'publishedstatus_class': 'important',
+            'publishedstatus_class': 'danger',
             'publishedstatus_value': 0
         }
     ]
@@ -38,7 +38,7 @@ def setupSurvey():
         }, {
             'name': 'pdf',
             'title': 'PDF',
-            'format_class': 'important',
+            'format_class': 'danger',
             'format_value': 0.3333
         }, {
             'name': 'document',

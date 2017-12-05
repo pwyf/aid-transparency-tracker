@@ -256,7 +256,7 @@ def get_summary_org_test(results):
             passfail_class='success'
             passfail_text='PASS'
         else:
-            passfail_class='important'
+            passfail_class='danger'
             passfail_text='FAIL'
 
         ot.append({ 'organisation_id': orgtest[0],

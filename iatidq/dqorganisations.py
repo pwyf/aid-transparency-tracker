@@ -437,7 +437,7 @@ def get_ordinal_values_years():
         },
         1: {
             'text': '1 year ahead',
-            'class': 'important',
+            'class': 'danger',
         },
         0: {
             'text': 'No forward data',

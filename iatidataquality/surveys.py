@@ -189,13 +189,13 @@ def get_old_publication_status():
     pses = [
         ('4', 'Always published', 'success'),
         ('3', 'Sometimes published', 'warning'),
-        ('2', 'Collected', 'important'),
+        ('2', 'Collected', 'danger'),
         ('1', 'Not collected', 'inverse'),
         ('',  'Unknown', ''),
         ('iati', 'Published to IATI', 'success'),
         ('always', 'Always published', 'success'),
         ('sometimes', 'Sometimes published', 'warning'),
-        ('not published', 'Not published', 'important'),
+        ('not published', 'Not published', 'danger'),
         ]
     struct = lambda ps: (ps[0], {
             "text": ps[1],
