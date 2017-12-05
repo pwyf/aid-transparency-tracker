@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import render_template, flash, request, redirect, url_for
+from flask import abort, render_template, flash, request, redirect, url_for
 from flask_login import current_user
 
 from . import app, usermanagement
@@ -135,6 +135,8 @@ def packages(package_name=None):
     # Get package data
     package = Package.query.filter_by(package_name = package_name
                                   ).first()
+    if not package:
+        return abort(404)
     organisations = dqpackages.packageOrganisations(package.id)
 
     return render_template("package.html", package=package,
