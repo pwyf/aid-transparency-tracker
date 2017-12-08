@@ -11,7 +11,7 @@ import json
 import os
 import sys
 
-from ckanapi import RemoteCKAN
+import ckanclient
 
 from iatidataquality import app, db
 from . import hardcoded_test, models, dqruntests, queue
@@ -22,9 +22,7 @@ from .util import report_error, download_file
 
 # FIXME: this should be in config
 download_queue = 'iati_download_queue'
-CKANurl = 'https://iatiregistry.org'
-UA = 'PWYF/Aid Transparency Tracker'
-
+CKANurl = 'https://iatiregistry.org/api'
 
 def fixURL(url):
     # helper function to replace spaces with %20
@@ -146,10 +144,9 @@ def actually_save_manual_file(package_name):
 def save_file(package_id, package_name, runtime_id, man_auto):
     if man_auto == 'auto':
         print "Trying to get auto package"
-
-        registry = RemoteCKAN(CKANurl, user_agent=UA)
+        registry = ckanclient.CkanClient(base_location=CKANurl)
         try:
-            pkg = registry.action.package_show(id=package_name)
+            pkg = registry.package_entity_get(package_name)
             resources = pkg.get('resources', [])
         except Exception, e:
             print "Couldn't get URL from CKAN for package", package_name, e

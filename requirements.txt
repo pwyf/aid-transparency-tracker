@@ -4,7 +4,8 @@ anyjson==0.3.3
 blinker==1.4
 certifi==2017.7.27.1
 chardet==3.0.4
-ckanapi==4.1
+ckan==2.7.0
+ckanclient==0.10
 click==6.7
 et-xmlfile==1.0.1
 Flask==0.12.2
