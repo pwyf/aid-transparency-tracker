@@ -1,7 +1,9 @@
+from os.path import join
+
 import click
 
 from . import app, db
-from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, queue
+from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, queue, test_queue
 from iatidq import setup as dqsetup
 
 
@@ -190,3 +192,22 @@ def clear_queues():
     queue_names = ['iati_download_queue', 'iati_tests_queue']
     for queue_name in queue_names:
         queue.delete_queue(queue_name)
+
+
+@app.cli.command()
+@click.option('--organisation-code', required=True, help='Code of organisation to test')
+def test_packages(organisation_code):
+    """Test packages for a given organisation"""
+    sql = '''
+        select package_name from organisation
+            left join organisationpackage on organisation.id = organisation_id
+            left join package on package_id = package.id
+            where organisation_code = %s and active = 't';
+    '''
+    results = db.engine.execute(sql, (organisation_code,))
+    package_names = [row[0] for row in results.fetchall()]
+
+    for package_name in package_names:
+        dirname = app.config.get('DATA_STORAGE_DIR')
+        filename = join(dirname, '{}.xml'.format(package_name))
+        test_queue.test_one_package(filename, package_name)
