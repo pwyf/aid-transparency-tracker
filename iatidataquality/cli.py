@@ -3,7 +3,7 @@ from os.path import join
 import click
 
 from . import app, db
-from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, queue, test_queue
+from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, queue
 from iatidq import setup as dqsetup
 
 
@@ -210,4 +210,5 @@ def test_packages(organisation_code):
     for package_name in package_names:
         dirname = app.config.get('DATA_STORAGE_DIR')
         filename = join(dirname, '{}.xml'.format(package_name))
+        from iatidq import test_queue
         test_queue.test_one_package(filename, package_name)
