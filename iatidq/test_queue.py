@@ -19,7 +19,6 @@ from iatidataquality import db, app
 from . import dqfunctions, dqpackages, dqparsetests, dqprocessing, hardcoded_test, models, package_status, queue, testrun, test_level, test_result
 
 
-# FIXME: this should be in config
 rm_results = app.config["REMOVE_RESULTS"]
 download_queue = 'iati_tests_queue'
 
