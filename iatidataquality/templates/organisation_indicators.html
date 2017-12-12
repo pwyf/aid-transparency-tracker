@@ -187,9 +187,8 @@
                       {% if row.is_activity %}
                       <tr class="text-muted">
                           <td>Frequency</td>
-                          <td>x {{freq}}</td>
-                          <td>{{organisation.frequency}}:
-                            {{organisation.frequency_comment}}</td>
+                          <td>x {{freq[0]}} ({{ freq[1] }})</td>
+                          <td>{{organisation.frequency_comment}}</td>
                       </tr>
                       {% endif %}
                       <tr>
