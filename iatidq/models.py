@@ -321,11 +321,11 @@ class Indicator(BaseModel):
 
     @property
     def indicator_category_name_text(self):
-        return self.indicator_category_name.title()
+        return self.indicator_category_name
 
     @property
     def indicator_subcategory_name_text(self):
-        return self.indicator_subcategory_name.title()
+        return self.indicator_subcategory_name
 
     def setup(self,
                  name,
