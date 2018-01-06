@@ -49,17 +49,14 @@ class WorkItems(object):
                        WHERE test_id = ANY(%s)
                        AND result_data > 0''', (test_ids,), write=True)
 
-    def test_string_of_test_id(self, test_id):
-        results = query('''select name from test where id = %s;''', (test_id,));
+    def test_desc_of_test_id(self, test_id):
+        results = query('''select description from test where id = %s;''', (test_id,));
         assert len(results) == 1
         return results[0][0]
 
     def kind_of_test(self, test_id):
-        test_string = self.test_string_of_test_id(test_id)
-        return self.kind_of_test_string(test_string)
-
-    def kind_of_test_string(self, test_string):
-        return test_mapping.test_to_kind[test_string]
+        test_desc = self.test_desc_of_test_id(test_id)
+        return test_mapping.test_to_kind[test_desc]
 
     def __iter__(self):
         for org_id in self.org_ids:
@@ -403,7 +400,7 @@ class TestInfo(object):
         self.test_id = self.id_of_string()
 
     def id_of_string(self):
-        sql = '''select id from test where name = %s;'''
+        sql = '''select id from test where description = %s;'''
         q = sql % adapt(self.test_string).getquoted()
 
         results = query(q)
