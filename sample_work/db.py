@@ -7,7 +7,6 @@ from sqlite3 import dbapi2 as sqlite
 import sqlite3
 
 import config
-from iatidq import dqtests, models
 
 
 create_sql = """
@@ -233,6 +232,8 @@ def get_total_results():
     return out
 
 def get_summary_org_test(results):
+    from iatidq import dqorganisations, dqtests
+
     orgtests = set(map(lambda x: (x['organisation_id'], x['test_id']), results))
     ot = []
 

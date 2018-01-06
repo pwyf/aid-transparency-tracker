@@ -12,6 +12,7 @@ import lxml.etree
 
 import config
 import test_mapping
+import db
 
 
 IATI_DIR = config.DATA_STORAGE_DIR
