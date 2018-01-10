@@ -138,23 +138,23 @@ def read_db_response(uuid=None):
                 sample_result.unsure as unsure
                 from sample_work_item
                 left join sample_result on
-                sample_work_item.uuid=sample_result.uuid %s;"""
+                sample_work_item.uuid=sample_result.uuid {where_clause}"""
 
     if uuid:
         # Ensure uuid var is really a uuid
         UUID(uuid)
-        whereclause = """
-                where sample_work_item.uuid="%s" """ % uuid
+        whereclause = 'where sample_work_item.uuid="{}"'.format(uuid)
     else:
         whereclause = ""
 
-    stmt = query % (whereclause,)
+    stmt = query.format(
+        where_clause=whereclause,
+    )
 
     c.execute(stmt)
 
-    for wi in c.fetchall():
-        data = dict([ (keys_response[i], wi[i]) for i in range(0, 10) ])
-        yield data
+    return [dict(zip(keys_response, wi)) for wi in c.fetchall()]
+
 
 def work_item_generator(f):
     filename = default_filename()

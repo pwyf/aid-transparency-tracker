@@ -230,7 +230,7 @@ def api_sampling(uuid=None):
         #        }
     else:
         def make_wi(uuid):
-            return sample_db.read_db_response(uuid).next()
+            return sample_db.read_db_response(uuid=uuid)[0]
         results = make_sample_json(make_wi(uuid))
     return json.dumps(results, indent=2)
 
