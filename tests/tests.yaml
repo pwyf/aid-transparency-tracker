@@ -56,7 +56,6 @@ indicators:
        Given file is an organisation file
        then `document-link/category[@code="B02"]` should be present
 
-indicators:
  - name: Annual report
    tests:
     - name: Annual report

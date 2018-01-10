@@ -9,7 +9,7 @@ Data sources can be the organisations’ own aid portals, publicly accessible da
 If a portal allows bulk export through its API but not through its web-user interface, this is accepted as allowing free, bulk export of data.
 
 Note that raw IATI files are not accepted for this indicator as the underlying principle behind it is to assess what organisations are doing to promote access and use of their aid information. Information published to the IATI Registry is taken into account for the publication indicators.",2,1,1.88,,,
-strategy,Organisation strategy,publication,,Organisational planning and commitments,"An overarching strategy document explains the general approach and policies of the organisation towards international development. This should be forward looking. The IATI reference for this indicator is: Institutional strategy paper (document code = B02).
+organisation-strategy,Organisation strategy,publication,,Organisational planning and commitments,"An overarching strategy document explains the general approach and policies of the organisation towards international development. This should be forward looking. The IATI reference for this indicator is: Institutional strategy paper (document code = B02).
 
 For organisations whose primary mandate is not development, a document clarifying its overarching development strategy is accepted. This information needs to be forward looking.",3,0,1.88,1,,
 annual-report,Annual report,publication,,Organisational planning and commitments,"Annual reports outline basic (normally aggregate) information about how aid was spent in the previous year, broken down by sector and/or country. This should be backward looking.
