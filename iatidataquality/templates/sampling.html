@@ -42,10 +42,9 @@
 <script id="header-template" type="x-tmpl-mustache">
     <ul class="breadcrumb">
     <li><a href="{% endraw %}{{url_for('sampling')}}{% raw %}">Sampling</a>
-	  <span class="divider">/</span></li>
+	  </li>
     <li>
 	  <a href="{% endraw %}{{url_for('organisations')}}{% raw %}{{organisation_code}}/">{{ organisation_name }}</a>
-        <span class="divider">/</span>
     </li>
     <li class="active">{{ indicator_name }}</li>
     </ul>
