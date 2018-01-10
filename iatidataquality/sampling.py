@@ -7,9 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import json
-
-from flask import render_template, flash, request, url_for
+from flask import jsonify, render_template, flash, request, url_for
 from flask_login import current_user
 
 from . import app, usermanagement
@@ -232,7 +230,7 @@ def api_sampling(uuid=None):
         def make_wi(uuid):
             return sample_db.read_db_response(uuid=uuid)[0]
         results = make_sample_json(make_wi(uuid))
-    return json.dumps(results, indent=2)
+    return jsonify(results)
 
 
 @app.route("/sampling/")
