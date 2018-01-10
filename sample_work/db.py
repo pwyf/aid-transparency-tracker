@@ -247,7 +247,7 @@ def get_total_results():
     return out
 
 def get_summary_org_test(results):
-    from iatidq import dqorganisations, dqtests
+    from iatidq import models, dqtests
 
     orgtests = set(map(lambda x: (x['organisation_id'], x['test_id']), results))
     ot = []
