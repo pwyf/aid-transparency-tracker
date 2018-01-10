@@ -234,7 +234,7 @@ def get_total_results():
            sample_result.response,
            count(sample_work_item.uuid) as count
     from sample_work_item
-    join sample_result on sample_result.uuid=sample_work_item.uuid
+    left join sample_result on sample_result.uuid=sample_work_item.uuid
     group by organisation_id,
              test_id,
              sample_result.response;
@@ -259,31 +259,28 @@ def get_summary_org_test(results):
                 ), results)
 
         success = filter(lambda x: x['response'] == 1, orgtest_results)
-        fail    = filter(lambda x: x['response'] != 1, orgtest_results)
+        fail = filter(lambda x: x['response'] != 1 and x['response'] is not None, orgtest_results)
 
+        total = sum(map(lambda x: x['count'], orgtest_results))
         totalsuccess = sum(map(lambda x: x['count'], success))
-        totalfail    = sum(map(lambda x: x['count'], fail))
+        totalfail = sum(map(lambda x: x['count'], fail))
 
-        pct = float(totalsuccess) / (totalsuccess + totalfail) * 100
-
-        passfail = pct >= 50.0
-
-        if passfail:
-            passfail_class='success'
-            passfail_text='PASS'
+        if totalsuccess >= 10:
+            pass_status = 'passing'
+        elif totalfail > 10:
+            pass_status = 'failing'
         else:
-            passfail_class='danger'
-            passfail_text='FAIL'
+            pass_status = 'undecided'
 
-        ot.append({ 'organisation_id': orgtest[0],
-                    'organisation': models.Organisation.find_or_fail(orgtest[0]),
-                    'test_id': orgtest[1],
-                    'test': dqtests.tests(orgtest[1]),
-                    'success': round(pct, 2),
-                    'total': totalsuccess+totalfail,
-                    'results': orgtest_results,
-                    'pass': passfail,
-                    'passfail_text': passfail_text,
-                    'passfail_class': passfail_class,
-                    })
+        ot.append({
+            'organisation_id': orgtest[0],
+            'organisation': models.Organisation.find_or_fail(orgtest[0]),
+            'test_id': orgtest[1],
+            'test': dqtests.tests(orgtest[1]),
+            'results': orgtest_results,
+            'total': total,
+            'total_pass': totalsuccess,
+            'total_fail': totalfail,
+            'pass_status': pass_status,
+        })
     return ot
