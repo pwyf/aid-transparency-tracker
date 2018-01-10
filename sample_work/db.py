@@ -119,7 +119,19 @@ def read_db(filename):
         database.rollback()
         raise
 
-def read_db_response(uuid=None):
+
+def count_all_samples():
+    filename = default_filename()
+
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    query = """select count(*) from sample_work_item"""
+    c.execute(query)
+    return c.fetchone()[0]
+
+
+def read_db_response(uuid=None, offset=0, limit=-1):
     filename = default_filename()
 
     database = sqlite.connect(filename)
@@ -138,7 +150,8 @@ def read_db_response(uuid=None):
                 sample_result.unsure as unsure
                 from sample_work_item
                 left join sample_result on
-                sample_work_item.uuid=sample_result.uuid {where_clause}"""
+                sample_work_item.uuid=sample_result.uuid {where_clause}
+                limit {limit} offset {offset}"""
 
     if uuid:
         # Ensure uuid var is really a uuid
@@ -149,6 +162,8 @@ def read_db_response(uuid=None):
 
     stmt = query.format(
         where_clause=whereclause,
+        limit=limit,
+        offset=offset,
     )
 
     c.execute(stmt)

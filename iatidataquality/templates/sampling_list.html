@@ -1,46 +1,45 @@
 {% set active_page='sampling_list'%}{% extends "layout.html" %}
 {% block title %}Sampling{% endblock %}
 {% block content %}
-    <script src="{{url_for('static',
-				 filename='jquery.tablesorter.min.js')}}"></script>
-    <script >
+    <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
+    <script>
     $(function() {
-    $("table#samples").tablesorter({ sortList: [[0,0]] });
+      $("table#samples").tablesorter({
+        sortList: [[0,0]]
+      });
     });
     </script>
+
     <h1>Samples</h1>
+
+    {% include '_includes/_pagination.html' %}
+
     <table class="table" id="samples">
-    <thead>
-    <th>Organisation</th><th>Test</th><th>Response</th>
-    </thead>
-    <tbody>
-	{% for s in samples %}
-    <tr>
-      <td>
-		<a href="{{url_for('organisations',
-				 organisation_code=s.headers.organisation_code)}}">
-		  {{ s.headers.organisation_name }}</a>
-	  </td>
-	  <td>
-		<a href="{{url_for('tests', id=s.sample.test_id)}}">
-		  {{ s.headers.test_description }}</a>
-	  </td>
-      <td>
-        <span class="label label-{{ s.response.class }}">
-          <i class="glyphicon glyphicon-{{ s.response.icon }}"></i>
-          {{ s.response.button }}
-        </span>
-      </td>
-      <td>
-        {{ s.response.unsure|safe }}
-      </td>
-      <td>
-        <a href="{{url_for('sampling', uuid=s.sample.sampling_id) }}">
-          <i class="glyphicon glyphicon-circle-arrow-right"></i>
-        </a>
-      </td>
-	</tr>
-	{% endfor %}
-    </tbody>
+      <thead>
+        <th>Organisation</th><th>Test</th><th>Response</th>
+      </thead>
+      <tbody>
+      {% for s in samples %}
+        <tr>
+          <td>
+          {{ s.headers.organisation_name }}
+        </td>
+        <td>
+          <a href="{{url_for('sampling', uuid=s.sample.sampling_id) }}">{{ s.headers.test_description }}</a>
+        </td>
+          <td>
+            <span class="label label-{{ s.response.class }}">
+              <i class="glyphicon glyphicon-{{ s.response.icon }}"></i>
+              {{ s.response.button }}
+            </span>
+          </td>
+          <td>
+            {{ s.response.unsure|safe }}
+          </td>
+      </tr>
+      {% endfor %}
+      </tbody>
     </table>
+
+    {% include '_includes/_pagination.html' %}
 {% endblock %}

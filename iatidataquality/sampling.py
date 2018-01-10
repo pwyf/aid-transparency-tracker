@@ -254,13 +254,24 @@ def sampling(uuid=None):
 @app.route("/sampling/list/")
 @usermanagement.perms_required()
 def sampling_list():
+    page_size = 20
+
+    current_page = int(request.args.get('page', 1))
+    offset = (current_page - 1) * page_size
+    limit = page_size
+
+    total_samples = sample_db.count_all_samples()
+    total_pages = total_samples / page_size + 1
     samples = []
-    for wi in sample_db.read_db_response():
+    for wi in sample_db.read_db_response(offset=offset, limit=limit):
         samples.append(make_simple_sample_json(wi))
-    return render_template("sampling_list.html",
-         admin=usermanagement.check_perms('admin'),
-         loggedinuser=current_user,
-         samples=samples)
+    return render_template(
+        "sampling_list.html",
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user,
+        samples=samples,
+        total_pages=total_pages,
+        current_page=current_page)
 
 @app.route("/sampling/orglist/")
 @usermanagement.perms_required()

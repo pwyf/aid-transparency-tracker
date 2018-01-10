@@ -1,0 +1,27 @@
+<nav aria-label="Page navigation" class="text-center">
+  <ul class="pagination">
+    {% if current_page > 1 %}
+    <li>
+      <a href="{{ url_for('sampling_list', page=(current_page-1)) }}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+
+    {% for p in range(1, total_pages + 1) %}
+    <li {% if p == current_page %}class="active"{% endif %}><a href="{{ url_for('sampling_list', page=p) }}">{{ p }}</a></li>
+    {% endfor %}
+
+    {% if current_page < total_pages %}
+    <li {% if current_page == total_pages %}class="disabled"{% endif %}>
+      <a href="{{ url_for('sampling_list', page=(current_page+1)) }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</nav>
