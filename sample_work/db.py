@@ -9,40 +9,6 @@ import sqlite3
 import config
 
 
-create_sql = """
-    create table sample_work_item (
-        uuid char(36) unique not null,
-        organisation_id int not null,
-        test_id int not null,
-        activity_id varchar(100) not null,
-        package_id varchar(100) not null,
-        xml_data text not null,
-        xml_parent_data text,
-        test_kind varchar(20) not null
-    );
-"""
-create_sql2 = """
-    create table sample_result (
-        uuid char(36) unique not null,
-        response int not null,
-        unsure int not null
-    );
-"""
-create_sql_offered = """
-    create table sample_offer (
-        uuid char(36) unique not null,
-        offered_time DATETIME not null,
-        offered bool not null
-    );
-"""
-
-create_sql3 = """
-    create view sample_full as
-        select * from sample_work_item
-            left join sample_result using (uuid)
-            left join sample_offer using (uuid);
-"""
-
 class NoMoreSamplingWork(Exception): pass
 
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
@@ -58,9 +24,46 @@ def default_filename():
     return config.DB_FILENAME
 
 def create_db(c):
-    stmts = [create_sql, create_sql2, create_sql_offered, create_sql3]
+    stmt = """
+        create table sample_work_item (
+            uuid char(36) unique not null,
+            organisation_id int not null,
+            test_id int not null,
+            activity_id varchar(100) not null,
+            package_id varchar(100) not null,
+            xml_data text not null,
+            xml_parent_data text,
+            test_kind varchar(20) not null
+        );
+    """
+    c.execute(stmt)
 
-    [ c.execute(stmt) for stmt in stmts ]
+    stmt = """
+        create table sample_result (
+            uuid char(36) unique not null,
+            response int not null,
+            unsure int not null
+        );
+    """
+    c.execute(stmt)
+
+    stmt = """
+        create table sample_offer (
+            uuid char(36) unique not null,
+            offered_time DATETIME not null,
+            offered bool not null
+        );
+    """
+    c.execute(stmt)
+
+    stmt = """
+        create view sample_full as
+            select * from sample_work_item
+                left join sample_result using (uuid)
+                left join sample_offer using (uuid);
+    """
+    c.execute(stmt)
+
 
 def make_db(filename, work_items, create):
     if create:
