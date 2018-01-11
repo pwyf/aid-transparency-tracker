@@ -171,11 +171,10 @@ def read_db_response(uuid=None, offset=0, limit=-1):
     return [dict(zip(keys_response, wi)) for wi in c.fetchall()]
 
 
-def work_item_generator(f):
+def work_item_generator():
     filename = default_filename()
+    return read_db(filename)
 
-    wi = read_db(filename)
-    return f(wi)
 
 def save_response(work_item_uuid, response, unsure=False):
     filename = default_filename()

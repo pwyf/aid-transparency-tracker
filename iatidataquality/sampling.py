@@ -210,7 +210,8 @@ def api_sampling_process(response):
 def api_sampling(uuid=None):
     if not uuid:
         try:
-            results = sample_db.work_item_generator(make_sample_json)
+            work_items = sample_db.work_item_generator()
+            results = make_sample_json(work_items)
         except sample_db.NoMoreSamplingWork:
             results = {
                 "error": "Finished"
