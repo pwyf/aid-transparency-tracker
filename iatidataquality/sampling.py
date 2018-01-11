@@ -227,7 +227,6 @@ def api_sampling(uuid=None):
     return jsonify(results)
 
 
-@app.route("/sampling/")
 @app.route("/sampling/<uuid>/")
 @usermanagement.perms_required()
 def sampling(uuid=None):
@@ -245,7 +244,7 @@ def sampling(uuid=None):
          api_process_url=url_for('api_sampling_process'),
          api_sampling_url=api_sampling_url)
 
-@app.route("/sampling/list/")
+@app.route("/sampling/")
 @usermanagement.perms_required()
 def sampling_list():
     page_size = 50
@@ -269,7 +268,7 @@ def sampling_list():
         total_pages=total_pages,
         current_page=current_page)
 
-@app.route("/sampling/orglist/")
+@app.route("/sampling/summary/")
 @usermanagement.perms_required()
 def sampling_orglist():
     orgtests = sample_db.get_total_results()
