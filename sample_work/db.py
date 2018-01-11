@@ -86,40 +86,6 @@ def make_db(filename, work_items, create):
     database.commit()
 
 
-def read_db(filename):
-    database = sqlite.connect(filename)
-    c = database.cursor()
-
-    c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
-                         "package_id", "xml_data", "xml_parent_data",
-                         "test_kind"
-                 from sample_full
-                 where response is null
-                   and (offered is null
-                   or offered_time < datetime('now', '-10 minute')
-                   )
-                 limit 1;""")
-
-    wis = c.fetchall()
-    if 0 == len(wis):
-        raise NoMoreSamplingWork
-
-    # ignore the case where limit 1 nevertheless returns >1 result
-
-    wi = wis[0]
-    data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
-
-    work_item_uuid = wi[0] # hack
-    try:
-        save_offer(database, work_item_uuid)
-        database.commit()
-        return data
-    except:
-        logging.error("error saving UUID: %s" % work_item_uuid)
-        database.rollback()
-        raise
-
-
 def count_all_samples():
     filename = default_filename()
 
@@ -173,7 +139,38 @@ def read_db_response(uuid=None, offset=0, limit=-1):
 
 def work_item_generator():
     filename = default_filename()
-    return read_db(filename)
+
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
+                         "package_id", "xml_data", "xml_parent_data",
+                         "test_kind"
+                 from sample_full
+                 where response is null
+                   and (offered is null
+                   or offered_time < datetime('now', '-10 minute')
+                   )
+                 limit 1;""")
+
+    wis = c.fetchall()
+    if 0 == len(wis):
+        raise NoMoreSamplingWork
+
+    # ignore the case where limit 1 nevertheless returns >1 result
+
+    wi = wis[0]
+    data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
+
+    work_item_uuid = wi[0]  # hack
+    try:
+        save_offer(database, work_item_uuid)
+        database.commit()
+        return data
+    except:
+        logging.error("error saving UUID: %s" % work_item_uuid)
+        database.rollback()
+        raise
 
 
 def save_response(work_item_uuid, response, unsure=False):
