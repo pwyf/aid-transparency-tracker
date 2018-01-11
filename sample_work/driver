@@ -2,17 +2,14 @@
 
 from optparse import OptionParser
 
-from sample_work import db, TestInfo, NoMatchingTest, organisation_ids, test_mapping
+from sample_work import db, TestInfo, organisation_ids, test_mapping
 
 
 def all_test_ids():
     test_ids = []
     for k in test_mapping.test_to_kind.keys():
-        try:
-            t = TestInfo(k)
-            test_ids.append(t.test_id)
-        except NoMatchingTest:
-            continue
+        t = TestInfo(k)
+        test_ids.append(t.test_id)
     return test_ids
 
 
