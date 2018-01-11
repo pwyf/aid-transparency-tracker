@@ -191,6 +191,21 @@
 
 </script>
 
+<script id="text-template" type="x-tmpl-mustache">
+
+    <h3>Title: {{ activity_title }} <code>{{ iati-identifier }}</code></h3>
+    <div>
+      Description: {{ activity_description }}</span>
+    </div>
+
+    <hr />
+
+    {{> xml-template}}
+
+    <input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
+
+</script>
+
 <script id="location-template" type="x-tmpl-mustache">
 
     <h3>Activity {{ activity_title }} <code>{{ iati-identifier }}</code></h3>

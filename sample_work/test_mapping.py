@@ -15,6 +15,8 @@ test_to_kind = {
     "Project performance and evaluation document": "document",
     "Results document": "document",
     "Results data": "result",
+    "Title": "text",
+    "Description": "text",
     "Location (sub-national)": "location",
     "Location (sub-national) coordinates or point": "location",
 }
@@ -23,6 +25,32 @@ test_to_kind = {
 ## sample_work_item table.
 
 kind_to_status = {
+    "text": {
+        1:
+            {
+              "text:": "pass",
+              "button": "pass",
+              "icon": "ok",
+              "class": "success",
+              "value": "1",
+            },
+        2:
+            {
+              "text:": "specific to the activity",
+              "button": "not specific to the activity",
+              "icon": "remove",
+              "class": "danger",
+              "value": "2",
+            },
+        3:
+            {
+              "text:": "satisfies the definition",
+              "button": "doesn't satisfy the definition",
+              "icon": "remove",
+              "class": "danger",
+              "value": "3",
+            },
+    },
     "document": {
         1:
             {
