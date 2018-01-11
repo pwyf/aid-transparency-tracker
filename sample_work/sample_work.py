@@ -54,11 +54,11 @@ class WorkItems(object):
             query('''CREATE TABLE sampling_current_result_tmp AS
                        SELECT * FROM result
                        WHERE test_id = ANY(%s)
-                       AND result_data > 0''', (test_ids,), write=True)
+                       AND result_data > 0;''', (test_ids,), write=True)
 
             query('''CREATE TABLE sampling_current_result AS
                        SELECT sampling_current_result_tmp.* FROM sampling_current_result_tmp, current_data_result
-                       WHERE sampling_current_result_tmp.result_identifier = current_data_result.result_identifier''', write=True)
+                       WHERE sampling_current_result_tmp.result_identifier = current_data_result.result_identifier;''', write=True)
 
     def test_desc_of_test_id(self, test_id):
         results = query('''select description from test where id = %s;''', (test_id,));
@@ -70,9 +70,9 @@ class WorkItems(object):
         return test_mapping.test_to_kind[test_desc]
 
     def cleanup(self):
-        query('''DROP TABLE IF EXISTS current_data_result''', write=True)
-        query('''DROP TABLE IF EXISTS sampling_current_result_tmp''', write=True)
-        query('''DROP TABLE IF EXISTS sampling_current_result''', write=True)
+        query('''DROP TABLE IF EXISTS current_data_result;''', write=True)
+        query('''DROP TABLE IF EXISTS sampling_current_result_tmp;''', write=True)
+        query('''DROP TABLE IF EXISTS sampling_current_result;''', write=True)
 
     def __iter__(self):
         for org_id in self.org_ids:
