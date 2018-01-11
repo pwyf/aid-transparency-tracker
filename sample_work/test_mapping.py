@@ -1,10 +1,4 @@
 test_to_kind = {
-    # "Organisation strategy": "org-document",
-    # "Annual report": "org-document",
-    # "Allocation policy": "org-document",
-    # "Procurement policy": "org-document",
-    # "Audit": "org-document",
-
     "Project budget document": "document",
     "Contract document": "document",
     "Tenders document": "document",
