@@ -65,7 +65,7 @@ class WorkItems(object):
             for test_id in self.test_ids:
                 print("Test: {}".format(test_id))
                 sot = SampleOrgTest(org_id, test_id)
-                sample_ids = sot.sample_activity_ids(10)
+                sample_ids = sot.sample_activity_ids(20)
 
                 test_kind = self.kind_of_test(test_id)
 
