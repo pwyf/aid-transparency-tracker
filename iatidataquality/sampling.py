@@ -248,7 +248,7 @@ def sampling(uuid=None):
 @app.route("/sampling/list/")
 @usermanagement.perms_required()
 def sampling_list():
-    page_size = 20
+    page_size = 50
 
     current_page = int(request.args.get('page', 1))
     offset = (current_page - 1) * page_size
