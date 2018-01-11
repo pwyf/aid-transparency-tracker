@@ -40,6 +40,6 @@ if __name__ == '__main__':
         org_ids = map(int, options.org_ids.split(","))
     if options.test_ids:
         test_ids = map(int, options.test_ids.split(","))
-    create = options.update != True
+    create = not options.update
 
     run(options.filename, org_ids, test_ids, create)
