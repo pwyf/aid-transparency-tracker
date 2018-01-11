@@ -160,7 +160,7 @@ def work_item_generator():
     # ignore the case where limit 1 nevertheless returns >1 result
 
     wi = wis[0]
-    data = dict([ (keys[i], wi[i]) for i in range(0, 8) ])
+    data = dict(zip(keys, wi))
 
     work_item_uuid = wi[0]  # hack
     try:
@@ -238,7 +238,7 @@ def get_total_results():
 
     out = []
     for wi in c.fetchall():
-        data = dict([ (total_results_response[i], wi[i]) for i in range(0, 4) ])
+        data = dict(zip(total_results_response, wi))
         out.append(data)
     return out
 
