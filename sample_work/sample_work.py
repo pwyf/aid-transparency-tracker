@@ -44,8 +44,8 @@ class WorkItems(object):
         self.org_ids = org_ids
         self.test_ids = test_ids
         if create:
-            query('''DROP TABLE IF EXISTS current_result''', write=True)
-            query('''CREATE TABLE current_result AS
+            query('''DROP TABLE IF EXISTS sampling_current_result''', write=True)
+            query('''CREATE TABLE sampling_current_result AS
                        SELECT * FROM result
                        WHERE test_id = ANY(%s)
                        AND result_data > 0''', (test_ids,), write=True)
@@ -103,7 +103,7 @@ class SampleOrgTest(object):
             self.activities = []
 
     def qualifies(self):
-        rows = query('''select result_data from current_result
+        rows = query('''select result_data from sampling_current_result
                           where organisation_id = %s
                             and test_id = %s
                             and result_data != 0''',
@@ -111,8 +111,8 @@ class SampleOrgTest(object):
         return len(rows) >= 1
 
     def activity_ids(self):
-        rows = query('''select result_identifier, package_name from current_result
-                          left join package on current_result.package_id = package.id
+        rows = query('''select result_identifier, package_name from sampling_current_result
+                          left join package on sampling_current_result.package_id = package.id
                           where organisation_id = %s
                             and test_id = %s
                             and result_data = 1''',
