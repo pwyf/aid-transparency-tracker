@@ -65,6 +65,7 @@ def create_db(c):
 def make_db(filename, work_items, create):
     if create:
         if os.path.exists(filename):
+            print('Deleting old sampling db ...')
             os.unlink(filename)
 
     database = sqlite.connect(filename)
