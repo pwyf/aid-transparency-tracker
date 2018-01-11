@@ -36,18 +36,11 @@ def get_test_indicator_info(test_id):
 def get_org_info(organisation_id):
     return models.Organisation.find_or_fail(organisation_id)
 
-def get_response(kind, response, unsure):
-    def get_unsureness(unsure):
-        if (unsure == 1):
-            return '<a class="btn btn-danger btn-mini"><i class="icon icon-white icon-info-sign"></i> <b>Unsure</b></a>'
-        return ""
-
-
+def get_response(kind, response):
     kind_data = test_mapping.kind_to_status[kind]
     response_data = kind_data.get(response)
 
     if response_data is not None:
-        response_data['unsure'] = get_unsureness(unsure)
         return response_data
     return {
               "text:": "not yet sampled",
@@ -158,12 +151,12 @@ def make_sample_json(work_item):
                 "organisation_code": work_item_org.organisation_code,
             },
             "buttons": kind_to_list(work_item["test_kind"]),
+            "unsure": work_item.get("unsure"),
             "response": {}
         }
     if 'response' in work_item:
         data['response'] = get_response(work_item["test_kind"],
-                    work_item['response'],
-                    work_item['unsure'])
+                    work_item['response'])
 
     return data
 
@@ -182,12 +175,12 @@ def make_simple_sample_json(work_item):
                 "organisation_name": work_item_org.organisation_name,
                 "organisation_code": work_item_org.organisation_code,
             },
+            "unsure": work_item["unsure"],
             "response": {}
         }
     if 'response' in work_item:
         data['response'] = get_response(work_item["test_kind"],
-                    work_item['response'],
-                    work_item['unsure'])
+                    work_item['response'])
 
     return data
 
@@ -262,9 +255,11 @@ def sampling_list():
 
     total_samples = sample_db.count_all_samples()
     total_pages = total_samples / page_size + 1
+
     samples = []
     for wi in sample_db.read_db_response(offset=offset, limit=limit):
         samples.append(make_simple_sample_json(wi))
+
     return render_template(
         "sampling_list.html",
         admin=usermanagement.check_perms('admin'),
