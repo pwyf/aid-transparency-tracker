@@ -136,6 +136,14 @@ kind_to_status = {
               "class": "danger",
               "value": "3",
             },
+        4:
+            {
+              "text:": "document is current",
+              "button": "document is out of date",
+              "icon": "remove",
+              "class": "danger",
+              "value": "4",
+            },
     },
     "location": {
         1:
