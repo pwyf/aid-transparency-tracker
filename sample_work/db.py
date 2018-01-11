@@ -94,6 +94,7 @@ def make_db(filename, org_ids, test_ids, create):
                   """, wi_info)
 
     database.commit()
+    work_items.cleanup()
 
 
 def count_all_samples():

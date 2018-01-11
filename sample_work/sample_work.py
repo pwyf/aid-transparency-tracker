@@ -59,6 +59,9 @@ class WorkItems(object):
         test_desc = self.test_desc_of_test_id(test_id)
         return test_mapping.test_to_kind[test_desc]
 
+    def cleanup(self):
+        query('''DROP TABLE IF EXISTS sampling_current_result''', write=True)
+
     def __iter__(self):
         for org_id in self.org_ids:
             print("Org: {}".format(org_id))
