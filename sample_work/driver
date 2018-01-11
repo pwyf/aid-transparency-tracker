@@ -6,25 +6,25 @@ from sample_work import db, WorkItems, TestInfo, NoMatchingTest, organisation_id
 
 
 def all_test_ids():
+    test_ids = []
     for k in test_mapping.test_to_kind.keys():
         try:
             t = TestInfo(k)
-            yield t.test_id
+            test_ids.append(t.test_id)
         except NoMatchingTest:
             continue
+    return test_ids
 
-def all_org_ids():
-    for o in organisation_ids():
-        yield o[0]
 
 def run(filename, org_ids, test_ids, create):
-    print "test ids:", test_ids
+    print("test ids: {}".format(test_ids))
     db.make_db(filename, WorkItems(org_ids, test_ids, create), create)
+
 
 if __name__ == '__main__':
     default_filename = db.default_filename()
-    org_ids = [ i for i in all_org_ids() ]
-    test_ids = [ i for i in all_test_ids() ]
+    org_ids = organisation_ids()
+    test_ids = all_test_ids()
 
     parser = OptionParser()
     parser.add_option("--filename", dest="filename", action="store",
