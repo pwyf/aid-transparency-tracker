@@ -67,7 +67,9 @@ def create_db(c):
     c.execute(stmt)
 
 
-def make_db(filename, work_items, create):
+def make_db(filename, org_ids, test_ids, create):
+    from sample_work import WorkItems
+
     if create:
         if os.path.exists(filename):
             print('Deleting old sampling db ...')
@@ -79,6 +81,8 @@ def make_db(filename, work_items, create):
     if create:
         create_db(c)
 
+    # populate db
+    work_items = WorkItems(org_ids, test_ids, create)
     for wi in work_items:
         wi_info = tuple(map(lambda k: wi[k], keys))
 

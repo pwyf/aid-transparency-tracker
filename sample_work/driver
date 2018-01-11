@@ -2,7 +2,7 @@
 
 from optparse import OptionParser
 
-from sample_work import db, WorkItems, TestInfo, NoMatchingTest, organisation_ids, test_mapping
+from sample_work import db, TestInfo, NoMatchingTest, organisation_ids, test_mapping
 
 
 def all_test_ids():
@@ -18,7 +18,7 @@ def all_test_ids():
 
 def run(filename, org_ids, test_ids, create):
     print("test ids: {}".format(test_ids))
-    db.make_db(filename, WorkItems(org_ids, test_ids, create), create)
+    db.make_db(filename, org_ids, test_ids, create)
 
 
 if __name__ == '__main__':
