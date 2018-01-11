@@ -159,14 +159,8 @@
 			  </li>
 
                 <li{% if active_page == "sampling" %}
-					class="active"
-					{% endif %}>
-				<a href="{{url_for('sampling')}}">Sampling</a>
-			  </li>
-
-                <li{% if active_page == "sampling_list" %}
 					class="active"{% endif %}>
-				<a href="{{url_for('sampling_list')}}">List samples</a>
+				<a href="{{url_for('sampling_list')}}">Sampling tool</a>
 			  </li>
                 {% endif %}
 
