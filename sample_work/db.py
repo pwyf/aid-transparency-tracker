@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 from uuid import UUID
@@ -11,6 +10,7 @@ import config
 
 class NoMoreSamplingWork(Exception): pass
 
+
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "xml_parent_data", "test_kind"]
 
@@ -20,8 +20,10 @@ keys_response = ["uuid", "organisation_id", "test_id", "activity_id",
 
 total_results_response = ["organisation_id", "test_id", "response", "count"]
 
+
 def default_filename():
     return config.DB_FILENAME
+
 
 def create_db(c):
     stmt = """
