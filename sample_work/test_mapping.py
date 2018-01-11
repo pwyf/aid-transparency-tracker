@@ -1,22 +1,22 @@
 test_to_kind = {
-    "Organisation strategy": "org-document",
-    "Annual report": "org-document",
-    "Allocation policy": "org-document",
-    "Procurement policy": "org-document",
-    "Audit": "org-document",
-    "Location (sub-national)": "location",
-    "Location (sub-national) coordinates or point": "location",
+    # "Organisation strategy": "org-document",
+    # "Annual report": "org-document",
+    # "Allocation policy": "org-document",
+    # "Procurement policy": "org-document",
+    # "Audit": "org-document",
+
     "Project budget document": "document",
-    "Project budget document": "document",
-    "Conditions document": "document",
     "Contract document": "document",
     "Tenders document": "document",
+    "Conditions data": "conditions",
+    "Conditions document": "document",
     "Objectives of activity document": "document",
     "Pre- and post-project impact appraisal documents": "document",
     "Project performance and evaluation document": "document",
     "Results document": "document",
     "Results data": "result",
-    "Conditions data": "conditions",
+    "Location (sub-national)": "location",
+    "Location (sub-national) coordinates or point": "location",
 }
 
 ## Integers 2, 3, 4, etc. Are the response integer that goes into
