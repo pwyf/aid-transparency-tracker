@@ -29,7 +29,8 @@ aid-type,,aid-type
 finance-type,,finance-type
 tied-aid-status,,tied-aid-status
 conditions,,conditions
-contracts,tenders,project-procurement
+contracts,,project-procurement-contracts
+tenders,,project-procurement-tenders
 objectives,,objectives
 impact-appraisals,,impact-appraisals
 evaluations,,reviews-and-evaluations
