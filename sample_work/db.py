@@ -94,7 +94,7 @@ def count_all_samples():
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    query = """select count(*) from sample_work_item"""
+    query = """select count(*) from sample_full"""
     c.execute(query)
     return c.fetchone()[0]
 
@@ -105,26 +105,14 @@ def read_db_response(uuid=None, offset=0, limit=-1):
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    # this can all be replaced with a select against sample_full
-    query = """select sample_work_item.uuid as uuid,
-                sample_work_item.organisation_id as organisation_id,
-                sample_work_item.test_id as test_id,
-                sample_work_item.activity_id as activity_id,
-                sample_work_item.package_id as package_id,
-                sample_work_item.xml_data as xml_data,
-                sample_work_item.xml_parent_data as xml_parent_data,
-                sample_work_item.test_kind as test_kind,
-                sample_result.response as response,
-                sample_result.unsure as unsure
-                from sample_work_item
-                left join sample_result on
-                sample_work_item.uuid=sample_result.uuid {where_clause}
+    query = """select * from sample_full
+                {where_clause}
                 limit {limit} offset {offset}"""
 
     if uuid:
         # Ensure uuid var is really a uuid
         UUID(uuid)
-        whereclause = 'where sample_work_item.uuid="{}"'.format(uuid)
+        whereclause = 'where uuid="{}"'.format(uuid)
     else:
         whereclause = ""
 
@@ -201,15 +189,14 @@ def get_total_results():
     c = database.cursor()
 
     c.execute("""
-    select sample_work_item.organisation_id,
-           sample_work_item.test_id,
-           sample_result.response,
-           count(sample_work_item.uuid) as count
-    from sample_work_item
-    left join sample_result on sample_result.uuid=sample_work_item.uuid
+    select organisation_id,
+           test_id,
+           response,
+           count(uuid) as count
+    from sample_full
     group by organisation_id,
              test_id,
-             sample_result.response;
+             response;
     """)
 
     out = []
