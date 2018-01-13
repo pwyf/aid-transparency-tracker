@@ -8,7 +8,8 @@ import sqlite3
 import config
 
 
-class NoMoreSamplingWork(Exception): pass
+class NoMoreSamplingWork(Exception):
+    pass
 
 
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
@@ -192,6 +193,7 @@ def save_response(work_item_uuid, response, unsure=False):
     database.commit()
     return "create"
 
+
 def get_total_results():
 
     filename = default_filename()
@@ -215,6 +217,7 @@ def get_total_results():
         data = dict(zip(total_results_response, wi))
         out.append(data)
     return out
+
 
 def get_summary_org_test(results):
     from iatidq import models, dqtests
