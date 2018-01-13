@@ -225,6 +225,7 @@ def setup_sampling(filename, org_ids, test_ids, update):
     if not filename:
         filename = app.config['SAMPLING_DB_FILENAME']
 
+    create = not update
     if org_ids:
         org_ids = map(int, org_ids.split(","))
     else:
@@ -234,9 +235,7 @@ def setup_sampling(filename, org_ids, test_ids, update):
         test_ids = map(int, test_ids.split(","))
     else:
         all_tests = sample_work.all_tests()
-        test_ids = [x.test_id for x in all_tests]
-
-    create = not update
+        test_ids = [x.id for x in all_tests]
 
     print("test ids: {}".format(test_ids))
     sample_work_db.make_db(filename, org_ids, test_ids, create)

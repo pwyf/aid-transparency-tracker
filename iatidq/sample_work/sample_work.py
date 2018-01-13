@@ -413,19 +413,21 @@ class ActivityInfo(object):
             elt = elt.find("narrative")
         return getattr(elt, "text", "MISSING")
 
+
 class NoMatchingTest(Exception):
     pass
 
-class TestInfo(object):
-    def __init__(self, test_string):
-        self.test_string = test_string
-        self.test_id = self.id_of_string()
 
-    def id_of_string(self):
+class TestInfo(object):
+    def __init__(self, description):
+        self.description = description
+        self.id = self.id_of_description()
+
+    def id_of_description(self):
         sql = '''select id from test where description = %s;'''
-        q = sql % adapt(self.test_string).getquoted()
+        q = sql % adapt(self.description).getquoted()
 
         results = query(q)
         if len(results) < 1:
-            raise NoMatchingTest(self.test_string)
+            raise NoMatchingTest(self.description)
         return results[0][0]
