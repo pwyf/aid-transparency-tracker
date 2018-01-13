@@ -417,8 +417,8 @@ class NoMatchingTest(Exception):
     pass
 
 class TestInfo(object):
-    def __init__(self, test_foxpath):
-        self.test_string = test_foxpath
+    def __init__(self, test_string):
+        self.test_string = test_string
         self.test_id = self.id_of_string()
 
     def id_of_string(self):
