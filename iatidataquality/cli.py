@@ -5,6 +5,8 @@ import click
 from . import app, db
 from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, queue
 from iatidq import setup as dqsetup
+from iatidq.models import Organisation
+from iatidq.sample_work import sample_work, db as sample_work_db
 
 
 @app.cli.command()
@@ -212,3 +214,28 @@ def test_packages(organisation_code):
         filename = join(dirname, '{}.xml'.format(package_name))
         from iatidq import test_queue
         test_queue.test_one_package(filename, package_name)
+
+
+@app.cli.command()
+@click.option("--filename")
+@click.option("--org-ids")
+@click.option("--test-ids")
+@click.option("--update", is_flag=True)
+def setup_sampling(filename, org_ids, test_ids, update):
+    if not filename:
+        filename = app.config['SAMPLING_DB_FILENAME']
+
+    if org_ids:
+        org_ids = map(int, org_ids.split(","))
+    else:
+        org_ids = [org.id for org in Organisation.all()]
+
+    if test_ids:
+        test_ids = map(int, test_ids.split(","))
+    else:
+        test_ids = sample_work.all_test_ids()
+
+    create = not update
+
+    print("test ids: {}".format(test_ids))
+    sample_work_db.make_db(filename, org_ids, test_ids, create)

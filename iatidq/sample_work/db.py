@@ -2,10 +2,9 @@ import logging
 import os
 from uuid import UUID
 
-from sqlite3 import dbapi2 as sqlite
-import sqlite3
+from sqlite3 import IntegrityError, dbapi2 as sqlite
 
-import config
+from iatidataquality import app
 
 
 class NoMoreSamplingWork(Exception):
@@ -20,10 +19,6 @@ keys_response = ["uuid", "organisation_id", "test_id", "activity_id",
     "unsure"]
 
 total_results_response = ["organisation_id", "test_id", "response", "count"]
-
-
-def default_filename():
-    return config.DB_FILENAME
 
 
 def create_db(c):
@@ -89,7 +84,7 @@ def make_db(filename, org_ids, test_ids, create):
 
 
 def count_all_samples():
-    filename = default_filename()
+    filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
     c = database.cursor()
@@ -100,7 +95,7 @@ def count_all_samples():
 
 
 def read_db_response(uuid=None, offset=0, limit=-1):
-    filename = default_filename()
+    filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
     c = database.cursor()
@@ -128,7 +123,7 @@ def read_db_response(uuid=None, offset=0, limit=-1):
 
 
 def work_item_generator():
-    filename = default_filename()
+    filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
     c = database.cursor()
@@ -160,7 +155,7 @@ def work_item_generator():
 
 
 def save_response(work_item_uuid, response, unsure=False):
-    filename = default_filename()
+    filename = app.config['SAMPLING_DB_FILENAME']
     database = sqlite.connect(filename)
     c = database.cursor()
 
@@ -174,7 +169,7 @@ def save_response(work_item_uuid, response, unsure=False):
     try:
         c.execute('''insert into sample_result ("uuid", "response", "unsure")
                        values (?, ?, ?);''', (work_item_uuid, response, unsure))
-    except sqlite3.IntegrityError:
+    except IntegrityError:
         database.rollback()
         raise
 
@@ -184,7 +179,7 @@ def save_response(work_item_uuid, response, unsure=False):
 
 def get_total_results():
 
-    filename = default_filename()
+    filename = app.config['SAMPLING_DB_FILENAME']
     database = sqlite.connect(filename)
     c = database.cursor()
 

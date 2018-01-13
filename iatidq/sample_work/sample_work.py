@@ -10,15 +10,22 @@ from psycopg2.extensions import adapt
 import requests
 import lxml.etree
 
-import config
+from iatidataquality import app
 import test_mapping
 import db
 
 
-IATI_DIR = config.DATA_STORAGE_DIR
-
 class NoIATIActivityFound(Exception):
     pass
+
+
+def all_test_ids():
+    test_ids = []
+    for k in test_mapping.test_to_kind.keys():
+        t = TestInfo(k)
+        test_ids.append(t.test_id)
+    return test_ids
+
 
 def save_url(url, filename):
     resp = requests.get(url)
@@ -26,7 +33,7 @@ def save_url(url, filename):
         f.write(resp.content)
 
 def query(*args, **kwargs):
-    db_config = config.db_config
+    db_config = app.config['DATABASE_INFO']
     db = psycopg2.connect(**db_config)
     c = db.cursor()
     c.execute(*args)
@@ -142,7 +149,7 @@ class SampleOrgTest(object):
 
     def xml_of_package(self, package_name):
         filename = package_name + '.xml'
-        path = os.path.join(IATI_DIR, filename)
+        path = os.path.join(app.config['DATA_STORAGE_DIR'], filename)
         return lxml.etree.parse(path)
 
     def xml_of_activity(self, activity):

@@ -12,8 +12,8 @@ from flask_login import current_user
 
 from . import app, usermanagement
 from iatidq import dqorganisations, dqtests, dqindicators, dqcodelists, models
-from sample_work import sample_work, test_mapping
-from sample_work import db as sample_db
+from iatidq.sample_work import sample_work, test_mapping
+from iatidq.sample_work import db as sample_db
 
 
 def memodict(f):

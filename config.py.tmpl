@@ -11,7 +11,11 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 #SQLALCHEMY_DATABASE_URI = 'mysql+oursql://user:passwd@127.0.0.1/iatidq'
 #SQLALCHEMY_DATABASE_URI = 'sqlite:///dataquality.sqlite'
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2:///iatidq'
+DATABASE_INFO = {
+    'database': 'iatidq'
+}
 DATA_STORAGE_DIR = join(realpath(dirname(__file__)), 'relative', 'path', 'to', 'your', 'data')
+SAMPLING_DB_FILENAME = join(realpath(dirname(__file__)), 'sample_work.db')
 
 SECRET_KEY = "YOUR-REALLY-SECRET-KEY"
 
