@@ -316,7 +316,7 @@ class Indicator(object):
 
     def elt_text_or_BLANK(self, key):
         elt = self.elt.find(key)
-        if elt and elt.find("narrative") is not None:
+        if elt is not None and elt.find("narrative") is not None:
             elt = elt.find("narrative")
         return getattr(elt, "text", "")
 
@@ -343,7 +343,7 @@ class Result(object):
 
     def elt_text_or_BLANK(self, key):
         elt = self.elt.find(key)
-        if elt and elt.find("narrative") is not None:
+        if elt is not None and elt.find("narrative") is not None:
             elt = elt.find("narrative")
         return getattr(elt, "text", "")
 
@@ -403,7 +403,7 @@ class ActivityInfo(object):
 
     def elt_text_or_MISSING(self, key):
         elt = self.root.find(key)
-        if elt and elt.find("narrative") is not None:
+        if elt is not None and elt.find("narrative") is not None:
             elt = elt.find("narrative")
         return getattr(elt, "text", "MISSING")
 
