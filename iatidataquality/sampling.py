@@ -254,7 +254,7 @@ def sampling_list():
 
 @app.route("/sampling/summary/")
 @usermanagement.perms_required()
-def sampling_orglist():
+def sampling_summary():
     orgtests = sample_db.get_total_results()
     data = sample_db.get_summary_org_test(orgtests)
     return render_template(
