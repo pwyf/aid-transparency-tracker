@@ -19,12 +19,11 @@ class NoIATIActivityFound(Exception):
     pass
 
 
-def all_test_ids():
-    test_ids = []
+def all_tests():
+    tests = []
     for k in test_mapping.test_to_kind.keys():
-        t = TestInfo(k)
-        test_ids.append(t.test_id)
-    return test_ids
+        tests.append(TestInfo(k))
+    return tests
 
 
 def save_url(url, filename):

@@ -233,7 +233,8 @@ def setup_sampling(filename, org_ids, test_ids, update):
     if test_ids:
         test_ids = map(int, test_ids.split(","))
     else:
-        test_ids = sample_work.all_test_ids()
+        all_tests = sample_work.all_tests()
+        test_ids = [x.test_id for x in all_tests]
 
     create = not update
 
