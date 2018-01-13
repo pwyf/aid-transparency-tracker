@@ -227,23 +227,6 @@ def api_sampling(uuid=None):
     return jsonify(results)
 
 
-@app.route("/sampling/<uuid>/")
-@usermanagement.perms_required()
-def sampling(uuid=None):
-    if uuid:
-        next_url = url_for('sampling_list')
-        api_sampling_url = url_for('api_sampling', uuid=uuid)
-    else:
-        next_url = ""
-        api_sampling_url = url_for('api_sampling')
-
-    return render_template("sampling.html",
-         admin=usermanagement.check_perms('admin'),
-         loggedinuser=current_user,
-         next_url=next_url,
-         api_process_url=url_for('api_sampling_process'),
-         api_sampling_url=api_sampling_url)
-
 @app.route("/sampling/")
 @usermanagement.perms_required()
 def sampling_list():
@@ -268,12 +251,33 @@ def sampling_list():
         total_pages=total_pages,
         current_page=current_page)
 
+
 @app.route("/sampling/summary/")
 @usermanagement.perms_required()
 def sampling_orglist():
     orgtests = sample_db.get_total_results()
     data = sample_db.get_summary_org_test(orgtests)
-    return render_template("sampling_org_tests.html",
-         admin=usermanagement.check_perms('admin'),
-         loggedinuser=current_user,
-         orgtests=data)
+    return render_template(
+        "sampling_org_tests.html",
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user,
+        orgtests=data)
+
+
+@app.route("/sampling/<uuid>/")
+@usermanagement.perms_required()
+def sampling(uuid=None):
+    if uuid:
+        next_url = url_for('sampling_list')
+        api_sampling_url = url_for('api_sampling', uuid=uuid)
+    else:
+        next_url = ""
+        api_sampling_url = url_for('api_sampling')
+
+    return render_template(
+        "sampling.html",
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user,
+        next_url=next_url,
+        api_process_url=url_for('api_sampling_process'),
+        api_sampling_url=api_sampling_url)
