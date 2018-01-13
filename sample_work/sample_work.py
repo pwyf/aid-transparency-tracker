@@ -287,7 +287,7 @@ class Period(object):
 
     def to_dict(self):
         def format_pct(value):
-            return '<div class="progress"><div class="bar" style="width: ' + str(round(value,2)) + '%;"></div></div>'
+            return '<div class="progress"><div class="progress-bar" style="width: ' + str(round(value,2)) + '%;"></div></div>'
 
         def calc_pct(target, actual):
             if (target and actual):
