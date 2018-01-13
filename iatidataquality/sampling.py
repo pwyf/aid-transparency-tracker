@@ -266,13 +266,9 @@ def sampling_summary():
 
 @app.route("/sampling/<uuid>/")
 @usermanagement.perms_required()
-def sampling(uuid=None):
-    if uuid:
-        next_url = url_for('sampling_list')
-        api_sampling_url = url_for('api_sampling', uuid=uuid)
-    else:
-        next_url = ""
-        api_sampling_url = url_for('api_sampling')
+def sampling(uuid):
+    next_url = url_for('sampling_list')
+    api_sampling_url = url_for('api_sampling', uuid=uuid)
 
     return render_template(
         "sampling.html",
