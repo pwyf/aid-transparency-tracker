@@ -50,19 +50,9 @@ def create_db(c):
     c.execute(stmt)
 
     stmt = """
-        create table sample_offer (
-            uuid char(36) unique not null,
-            offered_time DATETIME not null,
-            offered bool not null
-        );
-    """
-    c.execute(stmt)
-
-    stmt = """
         create view sample_full as
             select * from sample_work_item
-                left join sample_result using (uuid)
-                left join sample_offer using (uuid);
+                left join sample_result using (uuid);
     """
     c.execute(stmt)
 
@@ -159,9 +149,6 @@ def work_item_generator():
                          "test_kind"
                  from sample_full
                  where response is null
-                   and (offered is null
-                   or offered_time < datetime('now', '-10 minute')
-                   )
                  limit 1;""")
 
     wis = c.fetchall()
@@ -175,7 +162,6 @@ def work_item_generator():
 
     work_item_uuid = wi[0]  # hack
     try:
-        save_offer(database, work_item_uuid)
         database.commit()
         return data
     except:
@@ -205,29 +191,6 @@ def save_response(work_item_uuid, response, unsure=False):
 
     database.commit()
     return "create"
-
-def save_offer(database, work_item_uuid):
-    c = database.cursor()
-
-    c.execute('''insert or ignore into sample_offer ("uuid", "offered_time", "offered")
-                   values (?, CURRENT_TIMESTAMP, ?);''', (work_item_uuid, True))
-
-    c.execute('''update sample_offer set "offered_time" = CURRENT_TIMESTAMP WHERE "uuid" = ?;''', (work_item_uuid,))
-
-def flush_offered_work():
-    filename = default_filename()
-    database = sqlite.connect(filename)
-    c = database.cursor()
-
-    c.execute('''select uuid from sample_full
-                   where offered = 1 and response is null;''')
-
-    uuids = [ row[0] for row in c.fetchall() ]
-
-    for uuid in uuids:
-        c.execute('''delete from sample_offer where uuid = ?;''', (uuid,))
-
-    db.commit()
 
 def get_total_results():
 
