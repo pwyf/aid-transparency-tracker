@@ -40,6 +40,8 @@ def create_db(c):
         create table sample_result (
             uuid char(36) unique not null,
             response int not null,
+            comment text not null,
+            user_id int not null,
             unsure int not null
         );
     """
@@ -172,13 +174,15 @@ def work_item_generator():
         raise
 
 
-def save_response(work_item_uuid, response, unsure=False):
+def save_response(work_item_uuid, response, comment, user_id, unsure=False):
     filename = app.config['SAMPLING_DB_FILENAME']
     database = sqlite.connect(filename)
     c = database.cursor()
 
     result = c.execute('''update sample_result set response=?, unsure=?
-                       where uuid=?;''', (response, unsure, work_item_uuid))
+                          comment=?, user_id=?
+                          where uuid=?;''',
+                       (response, unsure, comment, user_id, work_item_uuid))
 
     if result.rowcount > 0:
         database.commit()

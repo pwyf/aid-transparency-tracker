@@ -197,8 +197,10 @@ def api_sampling_process(response):
         assert 'sampling_id' in data
         work_item_uuid = data["sampling_id"]
         response = int(response)
+        comment = data["comment"]
+        user_id = current_user.id
 
-        create_or_update = sample_db.save_response(work_item_uuid, response, unsure)
+        create_or_update = sample_db.save_response(work_item_uuid, response, comment, user_id, unsure)
         if create_or_update == "create":
             flash('Created response for that sample', 'success')
         else:
