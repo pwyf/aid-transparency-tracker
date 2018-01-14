@@ -233,29 +233,25 @@ def api_sampling(uuid=None):
 @app.route("/samples/")
 @usermanagement.perms_required()
 def sampling_list():
+    do_redirect = False
     all_orgs = models.Organisation.all()
     all_tests = sample_work.all_tests()
 
     try:
         org_id = int(request.args.get('org'))
+        models.Organisation.find_or_fail(org_id)
     except (ValueError, TypeError):
-        org_id = None
+        org_id = all_orgs[0].id
+        do_redirect = True
 
     try:
         test_id = int(request.args.get('test'))
+        models.Test.find_or_fail(test_id)
     except (ValueError, TypeError):
-        test_id = None
-
-    if org_id:
-        org = models.Organisation.where(id=org_id).first()
-    if not org_id or not org:
-        org_id = all_orgs[0].id
-        return redirect(url_for('sampling_list', org=org_id))
-
-    if test_id:
-        test = models.Test.where(id=test_id).first()
-    if not test_id or not test:
         test_id = all_tests[0].id
+        do_redirect = True
+
+    if do_redirect:
         return redirect(url_for('sampling_list', org=org_id, test=test_id))
 
     total_samples = sample_db.count_samples(org_id=org_id, test_id=test_id)
