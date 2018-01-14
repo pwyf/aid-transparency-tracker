@@ -254,7 +254,7 @@ def sampling_list():
     if do_redirect:
         return redirect(url_for('sampling_list', org=org_id, test=test_id))
 
-    total_samples = sample_db.count_samples(org_id=org_id, test_id=test_id)
+    # total_samples = sample_db.count_samples(org_id=org_id, test_id=test_id)
 
     samples = []
     for wi in sample_db.read_db_response(org_id=org_id, test_id=test_id):
