@@ -11,6 +11,7 @@ import requests
 import lxml.etree
 
 from iatidataquality import app
+from iatidq import models
 from test_mapping import test_to_kind
 import db
 
@@ -20,10 +21,11 @@ class NoIATIActivityFound(Exception):
 
 
 def all_tests():
-    tests = []
+    sampling_tests = []
+    all_tests = {test.description: test for test in models.Test.all()}
     for k in test_to_kind.keys():
-        tests.append(TestInfo(k))
-    return tests
+        sampling_tests.append(all_tests[k])
+    return sampling_tests
 
 
 def save_url(url, filename):
@@ -425,22 +427,3 @@ class ActivityInfo(object):
         if elt is not None and elt.find("narrative") is not None:
             elt = elt.find("narrative")
         return getattr(elt, "text", "MISSING")
-
-
-class NoMatchingTest(Exception):
-    pass
-
-
-class TestInfo(object):
-    def __init__(self, description):
-        self.description = description
-        self.id = self.id_of_description()
-
-    def id_of_description(self):
-        sql = '''select id from test where description = %s;'''
-        q = sql % adapt(self.description).getquoted()
-
-        results = query(q)
-        if len(results) < 1:
-            raise NoMatchingTest(self.description)
-        return results[0][0]
