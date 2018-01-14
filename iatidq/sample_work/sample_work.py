@@ -25,7 +25,14 @@ def all_tests():
     all_tests = {test.description: test for test in models.Test.all()}
     for k in test_to_kind.keys():
         sampling_tests.append(all_tests[k])
-    return sampling_tests
+    return sorted(sampling_tests, key=lambda x: x.description)
+
+
+def all_orgs():
+    all_orgs = models.Organisation.all()
+    sample_org_ids = [x[0] for x in db.all_sample_orgs()]
+    sample_orgs = filter(lambda x: x.id in sample_org_ids, all_orgs)
+    return sorted(sample_orgs, key=lambda x: x.organisation_name)
 
 
 def save_url(url, filename):

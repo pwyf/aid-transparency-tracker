@@ -85,6 +85,17 @@ def make_db(filename, org_ids, test_ids, create):
     work_items.cleanup()
 
 
+def all_sample_orgs():
+    filename = app.config['SAMPLING_DB_FILENAME']
+
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    query = 'select distinct organisation_id from sample_full'
+    c.execute(query)
+    return c.fetchall()
+
+
 def count_samples(org_id=None, test_id=None):
     filename = app.config['SAMPLING_DB_FILENAME']
 

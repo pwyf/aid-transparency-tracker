@@ -253,7 +253,7 @@ def api_sampling(uuid=None):
 @usermanagement.perms_required()
 def sampling_list():
     do_redirect = False
-    all_orgs = models.Organisation.all()
+    all_orgs = sample_work.all_orgs()
     all_tests = sample_work.all_tests()
 
     try:
