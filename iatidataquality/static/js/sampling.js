@@ -96,7 +96,10 @@ var setupNewSurveyForm = function(survey_data) {
 	var rendered_header = Mustache.render(header_template, header_data);
 	$('#header-insert').html(rendered_header);
 
-	buttons_data = {'buttons': survey_data['buttons']};
+	buttons_data = {'buttons': survey_data['buttons'], 'unsure': ''};
+	if (survey_data.unsure) {
+		buttons_data.unsure = 'checked="checked" ';
+	}
 	var buttons_template = $("#buttons-template").html();
 	var rendered_buttons = Mustache.render(buttons_template, buttons_data);
 	$('#buttons-insert').html(rendered_buttons);
