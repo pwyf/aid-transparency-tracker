@@ -229,7 +229,7 @@ def api_sampling(uuid=None):
     return jsonify(results)
 
 
-@app.route("/sampling/")
+@app.route("/samples/")
 @usermanagement.perms_required()
 def sampling_list():
     all_orgs = models.Organisation.all()
@@ -275,7 +275,7 @@ def sampling_list():
     )
 
 
-@app.route("/sampling/summary/")
+@app.route("/samples/summary/")
 @usermanagement.perms_required()
 def sampling_summary():
     orgtests = sample_db.get_total_results()
@@ -287,7 +287,7 @@ def sampling_summary():
         orgtests=data)
 
 
-@app.route("/sampling/<uuid>/")
+@app.route("/sample/<uuid>/")
 @usermanagement.perms_required()
 def sampling(uuid):
     next_url = url_for('sampling_list')
