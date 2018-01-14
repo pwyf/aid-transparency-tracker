@@ -183,7 +183,7 @@ def setup_organisations():
 
 
 @app.cli.command()
-@click.option('--filename', required=True, help='Set filename of data to test')
+@click.option('--filename', required=True, help='Set filename of users to import')
 def setup_users(filename):
     """Setup users and permissions."""
     dqusers.importUserDataFromFile(filename)
