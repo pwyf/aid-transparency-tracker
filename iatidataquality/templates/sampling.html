@@ -59,6 +59,10 @@
     </ul>
     <h1>{{ test_description }} – {{ organisation_name }}</h1>
 
+    <input type="hidden" name="organisation_id" value="{{ organisation_id }}"></input>
+    <input type="hidden" name="test_id" value="{{ test_id }}"></input>
+    <input type="hidden" name="response" value=""></input>
+
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -285,7 +289,6 @@
 <script type="text/javascript">
 var api_sampling_url = "{{ api_sampling_url }}";
 var api_sampling_process_url = "{{ api_process_url }}";
-var next_url = "{{ next_url }}";
 </script>
 
 <script src="{{url_for('static', filename='js/mustache.js')}}"

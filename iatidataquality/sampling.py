@@ -143,10 +143,12 @@ def make_sample_json(work_item):
                 "xml": xml,
             },
             "headers": {
+                "test_id": work_item_test.id,
                 "test_name": work_item_test.name,
                 "test_description": work_item_test.description,
                 "indicator_name": work_item_indicator.description,
                 "indicator_description": work_item_indicator.longdescription,
+                "organisation_id": work_item_org.id,
                 "organisation_name": work_item_org.organisation_name,
                 "organisation_code": work_item_org.organisation_code,
             },
@@ -188,26 +190,40 @@ def make_simple_sample_json(work_item):
 
 
 @app.route("/api/sample/process/", methods=['POST'])
-@app.route("/api/sample/process/<response>", methods=['POST'])
 @usermanagement.perms_required()
-def api_sampling_process(response):
+def api_sampling_process():
     data = request.form
     try:
-        unsure = 'unsure' in data
         assert 'sampling_id' in data
-        work_item_uuid = data["sampling_id"]
-        response = int(response)
-        comment = data["comment"]
-        user_id = current_user.id
+        assert 'response' in data
 
-        create_or_update = sample_db.save_response(work_item_uuid, response, comment, user_id, unsure)
+        params = {}
+        if 'organisation_id' in data:
+            params['org'] = data['organisation_id']
+        if 'test_id' in data:
+            params['test'] = data['test_id']
+
+        create_or_update = sample_db.save_response(
+            work_item_uuid=data["sampling_id"],
+            response=int(data["response"]),
+            comment=data["comment"],
+            user_id=current_user.id,
+            unsure=('unsure' in data),
+        )
         if create_or_update == "create":
             flash('Created response for that sample', 'success')
         else:
             flash('Updated response for that sample', 'success')
-        return 'OK'
+        payload = {
+            'success': True,
+            'next_url': url_for('sampling_list', **params),
+        }
     except Exception as e:
-        return 'ERROR'
+        payload = {
+            'success': False,
+        }
+    return jsonify(payload)
+
 
 @app.route("/api/sample/")
 @app.route("/api/sample/<uuid>/")
@@ -289,13 +305,11 @@ def sampling_summary():
 @app.route("/sample/<uuid>/")
 @usermanagement.perms_required()
 def sampling(uuid):
-    next_url = url_for('sampling_list')
     api_sampling_url = url_for('api_sampling', uuid=uuid)
 
     return render_template(
         "sampling.html",
         admin=usermanagement.check_perms('admin'),
         loggedinuser=current_user,
-        next_url=next_url,
         api_process_url=url_for('api_sampling_process'),
         api_sampling_url=api_sampling_url)

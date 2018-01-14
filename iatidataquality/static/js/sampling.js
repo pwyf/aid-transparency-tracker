@@ -119,17 +119,15 @@ $(document).ready(function(){
 $(document).on("click", ".advance", function(e) {
     e.preventDefault();
 
-    var url = api_sampling_process_url + $(this).attr('value');
+    var url = api_sampling_process_url;
+    $('input[name="response"]').val($(this).val());
+
     $.post(url, $("form").serialize(),
         function(returndata){
-            if (returndata == 'OK' && next_url){
-              window.location.assign(next_url);
-            }
-            if (returndata == 'ERROR'){
+            if (returndata.success){
+              window.location.assign(returndata.next_url);
+            } else {
                 alert("There was an error submitting that sample response.");
-            }
-            if (!next_url) {
-              getNewData();
             }
         }
     );
