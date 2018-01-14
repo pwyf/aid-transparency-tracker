@@ -46,10 +46,9 @@
     <li>
 	  {{ organisation_name }}
     </li>
-    <li>{{ indicator_name }}</li>
+    <li>{{ test_description }}</li>
     </ul>
-    <h1>Sampling: {{ indicator_name }} </h1>
-    <h3>{{ test_description }}</h3>
+    <h1>{{ test_description }} – {{ organisation_name }}</h1>
 
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
@@ -89,7 +88,7 @@
             {{/ buttons }}
             <div class="pull-right">
                 <label class="checkbox">
-                    <input type="checkbox" name="unsure"> I’m not sure about this
+                    <input type="checkbox" name="unsure"> I’m unsure about this
                 </label>
             </div>
         </div>
