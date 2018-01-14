@@ -15,8 +15,8 @@ keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
         "xml_data", "xml_parent_data", "test_kind"]
 
 keys_response = ["uuid", "organisation_id", "test_id", "activity_id",
-    "package_id", "xml_data", "xml_parent_data", "test_kind", "response",
-    "unsure"]
+                 "package_id", "xml_data", "xml_parent_data", "test_kind",
+                 "response", "comment", "user_id", "unsure"]
 
 total_results_response = ["organisation_id", "test_id", "response", "count"]
 
