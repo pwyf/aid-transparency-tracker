@@ -217,9 +217,9 @@ def api_sampling_process():
             unsure=('unsure' in data),
         )
         if create_or_update == "create":
-            flash('Created response for that sample', 'success')
+            flash('Created response for sample.', 'success')
         else:
-            flash('Updated response for that sample', 'success')
+            flash('Updated response for sample.', 'success')
         payload = {
             'success': True,
             'next_url': next_url,
