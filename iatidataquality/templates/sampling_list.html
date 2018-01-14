@@ -2,18 +2,29 @@
 {% block title %}Sampling{% endblock %}
 {% block content %}
     <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
-    <script>
-    $(function() {
-      $("table#samples").tablesorter({
-        sortList: [[0,0]]
-      });
-    });
-    </script>
 
     <h1>Samples</h1>
 
-    {% include '_includes/_pagination.html' %}
+    <div class="row" style="margin-bottom: 20px">
+      <form method="GET">
+        <div class="col-lg-6">
+          <select class="form-control sampling-filter" id="org-filter" name="org">
+            {% for org in all_orgs %}
+              <option {% if org.id == org_id %}selected="selected"{% endif %} value="{{ org.id }}">{{ org.organisation_name }}</option>
+            {% endfor %}
+          </select>
+        </div><!-- /.col-lg-6 -->
+        <div class="col-lg-6">
+          <select class="form-control sampling-filter" id="test-filter" name="test">
+            {% for test in all_tests %}
+              <option {% if test.id == test_id %}selected="selected"{% endif %} value="{{ test.id }}">{{ test.description }}</option>
+            {% endfor %}
+          </select>
+        </div><!-- /.col-lg-6 -->
+      </form>
+    </div>
 
+    {% if samples %}
     <table class="table" id="samples">
       <thead>
         <th>Organisation</th><th>Test</th><th>Response</th>
@@ -38,6 +49,19 @@
       {% endfor %}
       </tbody>
     </table>
+    {% else %}
+    <p>No samples found.</p>
+    {% endif %}
 
-    {% include '_includes/_pagination.html' %}
+    <script>
+      $(function() {
+        $('.sampling-filter').on('change', function() {
+          $(this).closest('form').submit();
+        });
+
+        $("table#samples").tablesorter({
+          sortList: [[0,0]]
+        });
+      });
+    </script>
 {% endblock %}

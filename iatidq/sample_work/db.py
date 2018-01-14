@@ -83,18 +83,27 @@ def make_db(filename, org_ids, test_ids, create):
     work_items.cleanup()
 
 
-def count_all_samples():
+def count_samples(org_id=None, test_id=None):
     filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    query = """select count(*) from sample_full"""
+    query = 'select count(*) from sample_full'
+
+    where_arr = []
+    if org_id:
+        where_arr.append('organisation_id = "{}"'.format(org_id))
+    if test_id:
+        where_arr.append('test_id = "{}"'.format(test_id))
+    if org_id or test_id:
+        query += ' where '
+        query += ' and '.join(where_arr)
     c.execute(query)
     return c.fetchone()[0]
 
 
-def read_db_response(uuid=None, offset=0, limit=-1):
+def read_db_response(uuid=None, org_id=None, test_id=None, offset=0, limit=-1):
     filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
@@ -104,10 +113,19 @@ def read_db_response(uuid=None, offset=0, limit=-1):
                 {where_clause}
                 limit {limit} offset {offset}"""
 
-    if uuid:
-        # Ensure uuid var is really a uuid
-        UUID(uuid)
-        whereclause = 'where uuid="{}"'.format(uuid)
+    whereclause = ''
+    if uuid or org_id or test_id:
+        whereclause = ' where '
+        where_arr = []
+        if uuid:
+            # Ensure uuid var is really a uuid
+            UUID(uuid)
+            where_arr.append('uuid="{}"'.format(uuid))
+        if org_id:
+            where_arr.append('organisation_id="{}"'.format(org_id))
+        if org_id:
+            where_arr.append('test_id="{}"'.format(test_id))
+        whereclause += ' and '.join(where_arr)
     else:
         whereclause = ""
 

@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import jsonify, render_template, flash, request, url_for
+from flask import jsonify, render_template, flash, redirect, request, url_for
 from flask_login import current_user
 
 from . import app, usermanagement
@@ -230,26 +230,47 @@ def api_sampling(uuid=None):
 @app.route("/sampling/")
 @usermanagement.perms_required()
 def sampling_list():
-    page_size = 50
+    all_orgs = models.Organisation.all()
+    all_tests = sample_work.all_tests()
 
-    current_page = int(request.args.get('page', 1))
-    offset = (current_page - 1) * page_size
-    limit = page_size
+    try:
+        org_id = int(request.args.get('org'))
+    except (ValueError, TypeError):
+        org_id = None
 
-    total_samples = sample_db.count_all_samples()
-    total_pages = total_samples / page_size + 1
+    try:
+        test_id = int(request.args.get('test'))
+    except (ValueError, TypeError):
+        test_id = None
+
+    if org_id:
+        org = models.Organisation.where(id=org_id).first()
+    if not org_id or not org:
+        org_id = all_orgs[0].id
+        return redirect(url_for('sampling_list', org=org_id))
+
+    if test_id:
+        test = models.Test.where(id=test_id).first()
+    if not test_id or not test:
+        test_id = all_tests[0].id
+        return redirect(url_for('sampling_list', org=org_id, test=test_id))
+
+    total_samples = sample_db.count_samples(org_id=org_id, test_id=test_id)
 
     samples = []
-    for wi in sample_db.read_db_response(offset=offset, limit=limit):
+    for wi in sample_db.read_db_response(org_id=org_id, test_id=test_id):
         samples.append(make_simple_sample_json(wi))
 
     return render_template(
         "sampling_list.html",
         admin=usermanagement.check_perms('admin'),
+        all_orgs=all_orgs,
+        all_tests=all_tests,
         loggedinuser=current_user,
         samples=samples,
-        total_pages=total_pages,
-        current_page=current_page)
+        org_id=org_id,
+        test_id=test_id,
+    )
 
 
 @app.route("/sampling/summary/")
