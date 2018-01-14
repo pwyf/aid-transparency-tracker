@@ -28,18 +28,18 @@ var setupLocation = function(survey_data) {
 	};
 
 
-	var locations = survey_data['sample']['locations'];
+	var locations = survey_data.sample.locations;
 
 	markers = new L.MarkerClusterGroup();
 	for (var i in locations) {
 		var feature = locations[i];
 		var marker = new L.Marker(
 			new L.LatLng(
-				feature['latitude'],
-				feature['longitude']
-			    )
+				feature.latitude,
+				feature.longitude
+	    )
 		);
-		var popupContent = '<dl>Location: '+feature['name']+'</dl>';
+		var popupContent = '<dl>Location: ' + feature.name + '</dl>';
 		marker.bindPopup(popupContent);
 		markers.addLayer(marker);
 	}
@@ -52,7 +52,7 @@ var setupLocation = function(survey_data) {
 	    'https://d.tiles.mapbox.com/v3/americanredcross.map-ms6tihx6/{z}/{x}/{y}.png',{
 			maxZoom: 18, attribution: 'Map data <a href="http://mapbox.com">MapBox Streets</a>'
 	    }
-	)
+	);
 
     map = new L.Map('projectMap', {
         zoom: 5,
@@ -67,8 +67,8 @@ var setupLocation = function(survey_data) {
 
 var setupNewSurveyForm = function(survey_data) {
 
-	if(survey_data["error"]) {
-		if(survey_data["error"] == "Finished") {
+	if(survey_data.error) {
+		if(survey_data.error == "Finished") {
 			alert("Finished");
 		} else {
 			alert("Unknown error");
@@ -76,27 +76,27 @@ var setupNewSurveyForm = function(survey_data) {
 		return;
 	}
 
-	var kind = survey_data['sample']['test_kind'];
+	var kind = survey_data.sample.test_kind;
 	var template = $('#' + kind + '-template').html();
 	Mustache.parse(template);   // optional, speeds up future uses
 
 	var xmltmpl = $('#xml-template').html(),
 	partials = {"xml-template": xmltmpl};
 
-	var rendered = Mustache.render(template, survey_data['sample'], partials);
+	var rendered = Mustache.render(template, survey_data.sample, partials);
 	$('#sample-insert').html(rendered);
 
 	// pretty print xml
 	var $pp = $('.prettyprint');
 	$pp.text(vkbeautify.xml($pp.text()));
 
-	header_data = survey_data['headers'];
+	header_data = survey_data.headers;
 
 	var header_template = $("#header-template").html();
 	var rendered_header = Mustache.render(header_template, header_data);
 	$('#header-insert').html(rendered_header);
 
-	buttons_data = {'buttons': survey_data['buttons'], 'unsure': ''};
+	buttons_data = {'buttons': survey_data.buttons, 'unsure': ''};
 	if (survey_data.unsure) {
 		buttons_data.unsure = 'checked="checked" ';
 	}
