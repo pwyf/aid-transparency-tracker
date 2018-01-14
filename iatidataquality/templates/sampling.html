@@ -44,9 +44,9 @@
     <li><a href="{% endraw %}{{url_for('sampling_list')}}{% raw %}">Sampling</a>
 	  </li>
     <li>
-	  <a href="{% endraw %}{{url_for('organisations')}}{% raw %}{{organisation_code}}/">{{ organisation_name }}</a>
+	  {{ organisation_name }}
     </li>
-    <li class="active">{{ indicator_name }}</li>
+    <li>{{ indicator_name }}</li>
     </ul>
     <h1>Sampling: {{ indicator_name }} </h1>
     <h3>{{ test_description }}</h3>
