@@ -202,6 +202,7 @@ def api_sampling_process():
             params['org'] = data['organisation_id']
         if 'test_id' in data:
             params['test'] = data['test_id']
+        next_url = url_for('sampling_list', **params)
 
         create_or_update = sample_db.save_response(
             work_item_uuid=data["sampling_id"],
@@ -216,7 +217,7 @@ def api_sampling_process():
             flash('Updated response for that sample', 'success')
         payload = {
             'success': True,
-            'next_url': url_for('sampling_list', **params),
+            'next_url': next_url,
         }
     except Exception as e:
         payload = {
