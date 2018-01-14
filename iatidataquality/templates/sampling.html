@@ -24,16 +24,6 @@
 
     <form>
         <div id="header-insert"></div>
-        <hr />
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label for="comment">Comments:</label>
-                    <textarea class="form-control" name="comment"></textarea>
-                </div>
-            </div>
-        </div>
 
         <div id="buttons-insert"></div>
 
@@ -86,6 +76,17 @@
             </div>
         </div>
     </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="comment">Comments:</label>
+                <textarea class="form-control" name="comment">{{ sample_comment }}</textarea>
+            </div>
+        </div>
+    </div>
+
 </script>
 
 <script id="buttons-template" type="x-tmpl-mustache">

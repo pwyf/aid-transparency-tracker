@@ -151,6 +151,7 @@ def make_sample_json(work_item):
                 "organisation_id": work_item_org.id,
                 "organisation_name": work_item_org.organisation_name,
                 "organisation_code": work_item_org.organisation_code,
+                "sample_comment": work_item.get("comment"),
             },
             "buttons": kind_to_list(work_item["test_kind"]),
             "unsure": work_item.get("unsure"),
