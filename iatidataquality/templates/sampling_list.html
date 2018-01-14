@@ -27,24 +27,25 @@
     {% if samples %}
     <table class="table" id="samples">
       <thead>
-        <th>Organisation</th><th>Test</th><th>Response</th>
+        <th>IATI ID</th><th>Title</th><th>Response</th><th>Unsure</th>
       </thead>
       <tbody>
       {% for s in samples %}
         <tr>
           <td>
-          {{ s.headers.organisation_name }}
+          <a href="{{url_for('sampling', uuid=s.sample.sampling_id) }}">{{ s.sample.iati_identifier }}</a>
         </td>
         <td>
-          <a href="{{url_for('sampling', uuid=s.sample.sampling_id) }}">{{ s.headers.test_description }}</a>
+          <a href="{{url_for('sampling', uuid=s.sample.sampling_id) }}">{{ s.sample.activity_title }}</a>
         </td>
-          <td>
-            <span class="label label-{{ s.response.class }}"><i class="glyphicon glyphicon-{{ s.response.icon }}"></i> {{ s.response.button }}</span>
-
-            {% if s.unsure %}
-            <span class="label label-danger"><i class="glyphicon glyphicon-white glyphicon-info-sign"></i> Unsure</span>
-            {% endif %}
-          </td>
+        <td>
+          <span class="label label-{{ s.response.class }}"><i class="glyphicon glyphicon-{{ s.response.icon }}"></i> {{ s.response.button }}</span>
+        </td>
+        <td>
+          {% if s.unsure %}
+          <span class="label label-danger"><i class="glyphicon glyphicon-white glyphicon-info-sign"></i> Unsure</span>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
       </tbody>

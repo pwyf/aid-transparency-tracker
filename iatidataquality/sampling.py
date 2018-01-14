@@ -162,24 +162,29 @@ def make_sample_json(work_item):
 
     return data
 
+
 # quick fix to make the sample list load faster
 # (since that page is used a lot)
 def make_simple_sample_json(work_item):
     work_item_org = get_org_info(work_item["organisation_id"])
     work_item_test = get_test_info(work_item["test_id"])
+    activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
-    data = { "sample": {
-                "sampling_id": work_item["uuid"],
-                "test_id": work_item["test_id"],
-            },
-            "headers": {
-                "test_description": work_item_test.description,
-                "organisation_name": work_item_org.organisation_name,
-                "organisation_code": work_item_org.organisation_code,
-            },
-            "unsure": work_item["unsure"],
-            "response": {}
-        }
+    data = {
+        "sample": {
+            "iati_identifier": work_item["activity_id"],
+            "sampling_id": work_item["uuid"],
+            "test_id": work_item["test_id"],
+            "activity_title": activity_info.title,
+        },
+        "headers": {
+            "test_description": work_item_test.description,
+            "organisation_name": work_item_org.organisation_name,
+            "organisation_code": work_item_org.organisation_code,
+        },
+        "unsure": work_item["unsure"],
+        "response": {}
+    }
     if 'response' in work_item:
         data['response'] = get_response(
             work_item["test_kind"],
