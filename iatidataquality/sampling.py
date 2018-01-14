@@ -187,8 +187,8 @@ def make_simple_sample_json(work_item):
     return data
 
 
-@app.route("/api/sampling/process/", methods=['POST'])
-@app.route("/api/sampling/process/<response>", methods=['POST'])
+@app.route("/api/sample/process/", methods=['POST'])
+@app.route("/api/sample/process/<response>", methods=['POST'])
 @usermanagement.perms_required()
 def api_sampling_process(response):
     data = request.form
@@ -207,8 +207,8 @@ def api_sampling_process(response):
     except Exception as e:
         return 'ERROR'
 
-@app.route("/api/sampling/")
-@app.route("/api/sampling/<uuid>/")
+@app.route("/api/sample/")
+@app.route("/api/sample/<uuid>/")
 @usermanagement.perms_required()
 def api_sampling(uuid=None):
     if not uuid:
