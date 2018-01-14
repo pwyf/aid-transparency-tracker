@@ -187,6 +187,7 @@ def make_simple_sample_json(work_item):
     return data
 
 
+@app.route("/api/sampling/process/", methods=['POST'])
 @app.route("/api/sampling/process/<response>", methods=['POST'])
 @usermanagement.perms_required()
 def api_sampling_process(response):
