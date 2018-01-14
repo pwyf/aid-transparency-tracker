@@ -11,7 +11,7 @@ import requests
 import lxml.etree
 
 from iatidataquality import app
-import test_mapping
+from test_mapping import test_to_kind
 import db
 
 
@@ -21,7 +21,7 @@ class NoIATIActivityFound(Exception):
 
 def all_tests():
     tests = []
-    for k in test_mapping.test_to_kind.keys():
+    for k in test_to_kind.keys():
         tests.append(TestInfo(k))
     return tests
 
@@ -76,7 +76,7 @@ class WorkItems(object):
 
     def kind_of_test(self, test_id):
         test_desc = self.test_desc_of_test_id(test_id)
-        return test_mapping.test_to_kind[test_desc]
+        return test_to_kind[test_desc]
 
     def cleanup(self):
         query('''DROP TABLE IF EXISTS current_data_result;''', write=True)
