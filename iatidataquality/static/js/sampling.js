@@ -84,7 +84,7 @@ var setupNewSurveyForm = function(survey_data) {
 	partials = {"xml-template": xmltmpl};
 
 	var rendered = Mustache.render(template, survey_data['sample'], partials);
-	$('#insert-here').html(rendered);
+	$('#sample-insert').html(rendered);
 
 	// pretty print xml
 	var $pp = $('.prettyprint');
