@@ -31,6 +31,7 @@ def save_url(url, filename):
     with open(filename, 'w') as f:
         f.write(resp.content)
 
+
 def query(*args, **kwargs):
     db_config = app.config['DATABASE_INFO']
     db = psycopg2.connect(**db_config)
@@ -41,9 +42,11 @@ def query(*args, **kwargs):
     else:
         return c.fetchall()
 
+
 def organisation_ids():
     ids = query('select id from organisation;')
     return [res[0] for res in ids]
+
 
 class WorkItems(object):
     def __init__(self, org_ids, test_ids, create):
@@ -223,6 +226,7 @@ class DocumentLink(object):
             }
         return data
 
+
 class DocumentLinks(object):
     def __init__(self, xml_string, codelists):
         root = lxml.etree.fromstring(xml_string)
@@ -243,6 +247,7 @@ class DocumentLinks(object):
             title = self.get_elt_text(i, 'title')
             codelists = self.codelists
             yield DocumentLink(url, title, i, codelists)
+
 
 class Location(object):
     def __init__(self, elt):
@@ -278,6 +283,7 @@ class Location(object):
             }
         return data
 
+
 class Locations(object):
     def __init__(self,xml_string):
         root = lxml.etree.fromstring(xml_string)
@@ -286,6 +292,7 @@ class Locations(object):
     def get_locations(self):
         for i in self.root.iterfind('location'):
             yield Location(i)
+
 
 class Period(object):
     def __init__(self, elt):
@@ -316,6 +323,7 @@ class Period(object):
         }
         return data
 
+
 class Indicator(object):
     def __init__(self,elt):
         self.elt = elt
@@ -339,6 +347,7 @@ class Indicator(object):
             "periods": get_periods(self.elt.xpath('period')),
         }
         return data
+
 
 class Result(object):
     def __init__(self, elt):
@@ -368,6 +377,7 @@ class Result(object):
             }
         return data
 
+
 class Results(object):
     def __init__(self, xml_string):
         root = lxml.etree.fromstring(xml_string)
@@ -376,6 +386,7 @@ class Results(object):
     def get_results(self):
         for i in self.root.iterfind('result'):
             yield Result(i)
+
 
 class Condition(object):
     def __init__(self, elt):
@@ -391,6 +402,7 @@ class Condition(object):
             }
         return data
 
+
 class Conditions(object):
     def __init__(self, xml_string):
         root = lxml.etree.fromstring(xml_string)
@@ -400,6 +412,7 @@ class Conditions(object):
         return { 'attached': self.root.xpath("conditions/@attached"),
                  'conditions': [ Condition(condition).to_dict()
                         for condition in self.root.xpath('conditions/condition') ] }
+
 
 class ActivityInfo(object):
     def __init__(self, xml_string):
