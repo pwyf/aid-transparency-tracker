@@ -105,6 +105,11 @@ def _importUserData(fh):
             user=getCreateUser(row)
 
             organisation_id = row['organisation_id']
+            v = models.Organisation.where(
+                organisation_code=organisation_id).first()
+            if not v:
+                raise Exception('No organisation with ID: {}'.format(
+                    organisation_id))
             role = row['role']
             active = row['active']
             primary = row['primary']
