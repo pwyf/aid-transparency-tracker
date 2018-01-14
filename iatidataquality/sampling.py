@@ -179,10 +179,13 @@ def make_simple_sample_json(work_item):
             "response": {}
         }
     if 'response' in work_item:
-        data['response'] = get_response(work_item["test_kind"],
-                    work_item['response'])
+        data['response'] = get_response(
+            work_item["test_kind"],
+            work_item['response']
+        )
 
     return data
+
 
 @app.route("/api/sampling/process/", methods=['POST'])
 @app.route("/api/sampling/process/<response>", methods=['POST'])
