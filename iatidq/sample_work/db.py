@@ -179,8 +179,8 @@ def save_response(work_item_uuid, response, comment, user_id, unsure=False):
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    result = c.execute('''update sample_result set response=?, unsure=?
-                          comment=?, user_id=?
+    result = c.execute('''update sample_result
+                          set response=?, unsure=?, comment=?, user_id=?
                           where uuid=?;''',
                        (response, unsure, comment, user_id, work_item_uuid))
 
@@ -189,8 +189,10 @@ def save_response(work_item_uuid, response, comment, user_id, unsure=False):
         return "update"
 
     try:
-        c.execute('''insert into sample_result ("uuid", "response", "unsure")
-                       values (?, ?, ?);''', (work_item_uuid, response, unsure))
+        c.execute('''insert into sample_result
+                     ("uuid", "response", "unsure", "comment", "user_id")
+                     values (?, ?, ?, ?, ?);''',
+                  (work_item_uuid, response, unsure, comment, user_id))
     except IntegrityError:
         database.rollback()
         raise
