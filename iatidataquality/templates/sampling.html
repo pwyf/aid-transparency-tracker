@@ -88,17 +88,18 @@
 <script id="buttons-template" type="x-tmpl-mustache">
     <div class="row">
         <div class="col-md-12">
-            {{# buttons }}
-            <button class="btn btn-{{ class }} advance" name="decision"
-					value="{{ value }}">
-                <span class="glyphicon glyphicon-{{ icon }}"></span>
-                <strong>{{ button }}</strong>
-            </button>
-            {{/ buttons }}
-            <div class="pull-right">
-                <label class="checkbox">
-                    <input type="checkbox" name="unsure"> I’m unsure about this
-                </label>
+            <div class="form-group">
+                {{# buttons }}
+                <button class="btn btn-{{ class }} advance" name="decision" value="{{ value }}">
+                    <span class="glyphicon glyphicon-{{ icon }}"></span>
+                    <strong>{{ button }}</strong>
+                </button>
+                {{/ buttons }}
+                <div class="pull-right">
+                    <label class="checkbox">
+                        <input type="checkbox" name="unsure"> I’m unsure about this
+                    </label>
+                </div>
             </div>
         </div>
     </div>
