@@ -29,7 +29,7 @@
         {% for ot in orgtests %}
             <tr>
                 <td>{{ ot.organisation.organisation_name }}</td>
-                <td>{{ ot.test.description }}</td>
+                <td><a href="{{ url_for('sampling_list', org=ot.organisation_id, test=ot.test_id) }}">{{ ot.test.description }}</a></td>
                 <td>{{ ot.total }}</td>
                 <td>{{ ot.total_pass }}</td>
                 <td>{{ ot.total_fail }}</td>
