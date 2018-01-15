@@ -421,11 +421,14 @@ class Conditions(object):
 class ActivityInfo(object):
     def __init__(self, xml_string):
         self.root = lxml.etree.fromstring(xml_string)
-        self.title = self.elt_text_or_MISSING("title")
-        self.description = self.elt_text_or_MISSING("description")
+        self.titles = self.elt_text_or_MISSING("title")
+        self.descriptions = self.elt_text_or_MISSING("description")
 
     def elt_text_or_MISSING(self, key):
-        elt = self.root.find(key)
-        if elt is not None and elt.find("narrative") is not None:
-            elt = elt.find("narrative")
-        return getattr(elt, "text", "MISSING")
+        elt = self.root.xpath('{}/narrative/text()'.format(key))
+        if len(elt) > 0:
+            return [{'text': x} for x in elt]
+        elt = self.root.xpath('{}/text()'.format(key))
+        if len(elt) > 0:
+            return [{'text': x} for x in elt]
+        return [{'text': 'MISSING'}]

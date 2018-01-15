@@ -112,9 +112,21 @@
 <script id="result-template" type="x-tmpl-mustache">
 
     <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
-	<div>
-	  Description: {{ activity_description }}
-	</div>
+
+    {{#other_titles?}}
+    <div>
+      Other titles:
+      {{#other_titles}}
+        <div>{{ text }}</div>
+      {{/other_titles}}
+    <div>
+    {{/other_titles?}}
+      Description(s):
+      {{#activity_descriptions}}
+        <div>{{ text }}</div>
+      {{/activity_descriptions}}
+    </div>
+
     <hr />
     <div class="row" id="data-content">
 	{{# results }}
@@ -151,9 +163,21 @@
 <script id="conditions-template" type="x-tmpl-mustache">
 
     <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
-	<div>
-	  Description: {{ activity_description }}
-	</div>
+
+    {{#other_titles?}}
+    <div>
+      Other titles:
+      {{#other_titles}}
+        <div>{{ text }}</div>
+      {{/other_titles}}
+    <div>
+    {{/other_titles?}}
+      Description(s):
+      {{#activity_descriptions}}
+        <div>{{ text }}</div>
+      {{/activity_descriptions}}
+    </div>
+
     <hr />
     <div class="row" id="data-content">
 	{{# conditions }}
@@ -180,9 +204,21 @@
 <script id="document-template" type="x-tmpl-mustache">
 
     <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
-	<div>
-	  Description: {{ activity_description }}
-	</div>
+
+    {{#other_titles?}}
+    <div>
+      Other title(s):
+      {{#other_titles}}
+        <p>{{ text }}</p>
+      {{/other_titles}}
+    <div>
+    {{/other_titles?}}
+      Description(s):
+      {{#activity_descriptions}}
+        <p>{{ text }}</p>
+      {{/activity_descriptions}}
+    </div>
+
     <hr />
     <div class="row" id="data-content">
 	{{# documents }}
@@ -207,8 +243,19 @@
 <script id="text-template" type="x-tmpl-mustache">
 
     <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+
+    {{#other_titles?}}
     <div>
-      Description: {{ activity_description }}
+      Other titles:
+      {{#other_titles}}
+        <div>{{ text }}</div>
+      {{/other_titles}}
+    <div>
+    {{/other_titles?}}
+      Description(s):
+      {{#activity_descriptions}}
+        <div>{{ text }}</div>
+      {{/activity_descriptions}}
     </div>
 
     <hr />
@@ -222,9 +269,21 @@
 <script id="location-template" type="x-tmpl-mustache">
 
     <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
-	<div>
-	  Description: {{ activity_description }}
-	</div>
+
+    {{#other_titles?}}
+    <div>
+      Other titles:
+      {{#other_titles}}
+        <div>{{ text }}</div>
+      {{/other_titles}}
+    <div>
+    {{/other_titles?}}
+      Description(s):
+      {{#activity_descriptions}}
+        <div>{{ text }}</div>
+      {{/activity_descriptions}}
+    </div>
+
     <hr />
     <div class="row" id="location-content">
 
