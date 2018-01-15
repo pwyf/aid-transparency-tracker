@@ -42,10 +42,11 @@ def parsePC(organisation_structures):
             models.Test.name,
             models.Test.description
             ).all()
-        # bit of a hack: we look for tests that include the condition
-        # before their first bracket.
-        like = re.compile(r'[^\(]*?{}'.format(groups[1]))
-        tests = filter(lambda test: like.match(test[1]) is not None, tests)
+        # we look for tests that include the condition
+        # after the 'then'
+        print(groups[1])
+        like = re.compile(r'\sthen .*?{}'.format(groups[1]))
+        tests = filter(lambda test: like.search(test[1]) is not None, tests)
         return organisation, tests
 
     @add_partial('(\S*) does not use (\S*) at activity level')
