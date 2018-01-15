@@ -32,9 +32,12 @@ def importPCsFromText(text):
 def _importPCs(fh, local=True):
     results = {}
     for n, line in enumerate(fh):
-        if line != "\n":
-            text = line.strip('\n')
-            results[n]=text
+        if line == "\n":
+            continue
+        if line.startswith('#'):
+            continue
+        text = line.strip('\n')
+        results[n] = text
     return _parsePCresults(results)
 
 def importPCsFromFile(filename='tests/organisation_structures.txt', local=True):
