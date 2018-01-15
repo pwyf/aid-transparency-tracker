@@ -300,28 +300,3 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
         return "finalised"
     return redirect(url_for("organisations",
                             organisation_code=organisation_code))
-
-
-def render_markdown(filename, **kwargs):
-    path = os.path.join(os.path.dirname(__file__), 'docs', filename)
-    with open(path) as f:
-        plaintext = f.read()
-        def _wrapped():
-            content = Markup(markdown.markdown(plaintext))
-            loggedinuser = current_user
-            kwargs.update(locals())
-            return render_template("about_generic.html", **kwargs)
-        return _wrapped()
-
-@app.route('/info/datacol')
-def about_data_collection():
-    return render_markdown('data_collection_guide.md')
-
-@app.route('/info/independent')
-def about_independent():
-    return render_markdown('independent_guide.md')
-
-@app.route('/info/donor')
-def about_donor():
-    return render_markdown('donor_guide.md')
-
