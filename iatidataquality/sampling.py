@@ -139,6 +139,7 @@ def make_sample_json(work_item):
                 "organisation_id": work_item["organisation_id"],
                 "activity_title": activity_info.titles[0]['text'],
                 "activity_other_titles": activity_info.titles[1:],
+                "activity_other_titles?": len(activity_info.titles) > 1,
                 "activity_descriptions": activity_info.descriptions,
                 "test_kind": work_item["test_kind"],
                 "xml": xml,
