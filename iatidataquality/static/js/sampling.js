@@ -89,6 +89,7 @@ var setupNewSurveyForm = function(survey_data) {
 	// pretty print xml
 	var $pp = $('.prettyprint');
 	$pp.text(vkbeautify.xml($pp.text()));
+	PR.prettyPrint();
 
 	header_data = survey_data.headers;
 
