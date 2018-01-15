@@ -3,6 +3,11 @@
 {% block content %}
     <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
 
+    <ul class="breadcrumb">
+      <li><a href="{{ url_for('sampling_summary') }}">Summary</a></li>
+      <li>Samples</li>
+    </ul>
+
     <h1>Samples</h1>
 
     <div class="row" style="margin-bottom: 20px">
