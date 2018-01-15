@@ -247,7 +247,7 @@ class DocumentLinks(object):
 
     def get_links(self):
         for i in self.root.iterfind('document-link'):
-            url = i.attrib["url"]
+            url = i.attrib.get("url")
             title = self.get_elt_text(i, 'title')
             codelists = self.codelists
             yield DocumentLink(url, title, i, codelists)
