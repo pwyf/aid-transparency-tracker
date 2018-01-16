@@ -307,11 +307,17 @@ def sampling_list():
 def sampling_summary():
     orgtests = sample_db.get_total_results()
     data = sample_db.get_summary_org_test(orgtests)
+
+    total_samples = sum([x['total'] for x in data])
+    total_done = sum([x['total_pass'] + x['total_fail'] for x in data])
+    pct_complete = 100. * total_done / total_samples
+
     return render_template(
         "sampling_summary.html",
         admin=usermanagement.check_perms('admin'),
         loggedinuser=current_user,
-        orgtests=data)
+        orgtests=data,
+        pct_complete=pct_complete)
 
 
 @app.route("/sample/<uuid>/")
