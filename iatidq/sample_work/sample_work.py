@@ -216,8 +216,8 @@ class DocumentLink(object):
 
     def to_dict(self):
         def getCategory(category, codelists):
-            return {"category": codelists[category],
-                    "category_code": category }
+            return {"category": codelists.get(category, 'ERROR'),
+                    "category_code": category}
 
         def getCategories(categories, codelists):
             return [ getCategory(category, codelists) for category in categories ]
