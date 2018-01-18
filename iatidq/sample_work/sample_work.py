@@ -56,22 +56,20 @@ class WorkItems(object):
     def __init__(self, org_ids, test_ids, create):
         self.org_ids = org_ids
         self.test_ids = test_ids
-        if create:
-            self.cleanup()
 
-            query('''CREATE TABLE current_data_result AS
-                     SELECT * FROM result
-                     WHERE test_id = 46
-                     AND result_data > 0;''', write=True)
+        query('''CREATE TABLE current_data_result AS
+                 SELECT * FROM result
+                 WHERE test_id = 46
+                 AND result_data > 0;''', write=True)
 
-            query('''CREATE TABLE sampling_current_result_tmp AS
-                       SELECT * FROM result
-                       WHERE test_id = ANY(%s)
-                       AND result_data > 0;''', (test_ids,), write=True)
+        query('''CREATE TABLE sampling_current_result_tmp AS
+                   SELECT * FROM result
+                   WHERE test_id = ANY(%s)
+                   AND result_data > 0;''', (test_ids,), write=True)
 
-            query('''CREATE TABLE sampling_current_result AS
-                       SELECT sampling_current_result_tmp.* FROM sampling_current_result_tmp, current_data_result
-                       WHERE sampling_current_result_tmp.result_identifier = current_data_result.result_identifier;''', write=True)
+        query('''CREATE TABLE sampling_current_result AS
+                   SELECT sampling_current_result_tmp.* FROM sampling_current_result_tmp, current_data_result
+                   WHERE sampling_current_result_tmp.result_identifier = current_data_result.result_identifier;''', write=True)
 
     def test_desc_of_test_id(self, test_id):
         results = query('''select description from test where id = %s;''', (test_id,));
