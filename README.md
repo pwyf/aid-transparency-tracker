@@ -1,5 +1,5 @@
-IATI-Data-Quality
-=================
+Aid Transparency Tracker
+========================
 
 IATI Data Quality measurement tool
 
