@@ -38,7 +38,7 @@ code {
         <tr id="tr{{ test.test_id }}" class="group-{{ i.id }} hidden">
             <td></td>
             <td><i>{{ test.description }}</i></td>
-            <td><code>{{ test.name }}</code></td>
+            <td><pre>{{ test.name }}</pre></td>
         </tr>
         {% endfor %}
     {% endfor %}
