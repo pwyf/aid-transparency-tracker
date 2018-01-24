@@ -102,7 +102,7 @@ def _importTests(fh, filename, level=1, local=True):
     row = data['filter']
     with db.session.begin():
         test = models.Test.query.filter(
-            models.Test.name == row['expression']).first()
+            models.Test.description == row['name']).first()
 
         if not test:
             test = models.Test()
