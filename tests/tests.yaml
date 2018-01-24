@@ -54,7 +54,7 @@ indicators:
       test_level: 3
       expression: |
        Given file is an organisation file
-       then `document-link/category[@code="B02"]` should be present
+       Then `document-link/category[@code="B02"]` should be present
 
  - name: Annual report
    tests:
@@ -62,7 +62,7 @@ indicators:
       test_level: 3
       expression: |
        Given file is an organisation file
-       then `document-link/category[@code="B01"]` should be present
+       Then `document-link/category[@code="B01"]` should be present
 
  - name: Allocation policy
    tests:
@@ -70,7 +70,7 @@ indicators:
       test_level: 3
       expression: |
        Given file is an organisation file
-       then `document-link/category[@code="B04"]` should be present
+       Then `document-link/category[@code="B04"]` should be present
 
  - name: Audit
    tests:
@@ -78,7 +78,7 @@ indicators:
       test_level: 3
       expression: |
        Given file is an organisation file
-       then `document-link/category[@code="B06"]` should be present
+       Then `document-link/category[@code="B06"]` should be present
 
  - name: Procurement policy
    tests:
@@ -86,307 +86,334 @@ indicators:
       test_level: 3
       expression: |
        Given file is an organisation file
-       then `document-link/category[@code="B05"]` should be present
+       Then `document-link/category[@code="B05"]` should be present
+
+ - name: Total organisation budget
+   tests:
+    - name: Organisation budget available one year forward
+      expression:
+        Given file is an organisation file
+         Then `total-budget` should be available 1 year forward
+
+    - name: Organisation budget available two years forward
+      expression:
+        Given file is an organisation file
+         Then `total-budget` should be available 2 years forward
+
+    - name: Organisation budget available three years forward
+      expression:
+        Given file is an organisation file
+         Then `total-budget` should be available 3 years forward
 
  - name: Project budget
    tests:
     - name: Budget available forward annually
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       and `default-aid-type/@code` is not G01
-       and `activity-date[@type="3"]/@iso-date | activity-date[@type="end-planned"]/@iso-date | activity-date[@type="4"]/@iso-date | activity-date[@type="end-actual"]/@iso-date` is at least 6 months ahead
-       then `budget | planned-disbursement` should be available forward annually
+        And `activity-status/@code` is one of 2, 3 or 4
+        And `default-aid-type/@code` is not G01
+        And `activity-date[@type="3"]/@iso-date | activity-date[@type="4"]/@iso-date | activity-date[@type="end-planned"]/@iso-date | activity-date[@type="end-actual"]/@iso-date` is at least 6 months ahead
+        Then `budget | planned-disbursement` should be available forward annually
 
     - name: Budget available forward quarterly
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       and `default-aid-type/@code` is not G01
-       and `activity-date[@type="3"]/@iso-date | activity-date[@type="end-planned"]/@iso-date | activity-date[@type="4"]/@iso-date | activity-date[@type="end-actual"]/@iso-date` is at least 6 months ahead
-       then `budget | planned-disbursement` should be available forward quarterly
+        And `activity-status/@code` is one of 2, 3 or 4
+        And `default-aid-type/@code` is not G01
+        And `activity-date[@type="3"]/@iso-date | activity-date[@type="4"]/@iso-date | activity-date[@type="end-planned"]/@iso-date | activity-date[@type="end-actual"]/@iso-date` is at least 6 months ahead
+        Then `budget | planned-disbursement` should be available forward quarterly
 
  - name: Project budget document
    tests:
     - name: Project budget document
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       and `default-aid-type/@code` is not any of A01, A02 or G01
-       and `transaction/aid-type/@code` is not any of A01 or A02
-       then `document-link/category[@code="A05"]` should be present
+        And `activity-status/@code` is one of 2, 3 or 4
+        And `default-aid-type/@code` is not any of A01, A02 or G01
+        And `transaction/aid-type/@code` is not any of A01 or A02
+        Then `document-link/category[@code="A05"]` should be present
 
  - name: Commitments
    tests:
     - name: Commitments
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `transaction/transaction-type[@code="2"] | transaction/transaction-type[@code="C"]` should be present
+        And `activity-status/@code` is one of 2, 3 or 4
+        Then `transaction/transaction-type[@code="2"] | transaction/transaction-type[@code="C"]` should be present
 
  - name: Disbursements and expenditures
    tests:
     - name: Disbursements and expenditures
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `transaction/transaction-type[@code="D"] | transaction/transaction-type[@code="3"] | transaction/transaction-type[@code="E"] | transaction/transaction-type[@code="4"]` should be present
+        And `activity-status/@code` is one of 2, 3 or 4
+        Then `transaction/transaction-type[@code="3"] | transaction/transaction-type[@code="D"] | transaction/transaction-type[@code="4"] | transaction/transaction-type[@code="E"]` should be present
 
  - name: Capital spend
    tests:
     - name: Capital spend
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       and `default-aid-type/@code` is not any of A01, A02 or G01
-       and `transaction/aid-type/@code` is not any of A01 or A02
-       then `capital-spend` should be present
+        And `activity-status/@code` is one of 2, 3 or 4
+        And `default-aid-type/@code` is not any of A01, A02 or G01
+        And `transaction/aid-type/@code` is not any of A01 or A02
+        Then `capital-spend` should be present
 
  - name: Title
    tests:
     - name: Title
       expression: |
        Given the activity is current
-       then `title/text() | title/narrative/text()` should be present
+       Then `title/text() | title/narrative/text()` should be present
 
     - name: Title has at least 10 characters
       expression: |
        Given the activity is current
-       then `title/text() | title/narrative/text()` should have at least 10 characters
+       Then `title/text() | title/narrative/text()` should have at least 10 characters
 
  - name: Description
    tests:
     - name: Description
       expression: |
        Given the activity is current
-       then `description/text() | description/narrative/text()` should be present
+       Then `description/text() | description/narrative/text()` should be present
 
     - name: Description has at least 80 characters
       expression: |
        Given the activity is current
-       then `description/text() | description/narrative/text()` should have at least 80 characters
+       Then `description/text() | description/narrative/text()` should have at least 80 characters
 
  - name: Planned dates
    tests:
     - name: Planned start date
       expression: |
        Given the activity is current
-       then `activity-date[@type="start-planned"] | activity-date[@type="1"]` should be present
+       Then `activity-date[@type="start-planned"] | activity-date[@type="1"]` should be present
 
     - name: Planned end date
       expression: |
        Given the activity is current
-       then `activity-date[@type="end-planned"] | activity-date[@type="3"]` should be present
+       Then `activity-date[@type="end-planned"] | activity-date[@type="3"]` should be present
 
  - name: Actual dates
    tests:
     - name: Actual start date
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `activity-date[@type="start-actual"] | activity-date[@type="2"]` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then `activity-date[@type="start-actual"] | activity-date[@type="2"]` should be present
 
     - name: Actual end date
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 3 or 4
-       then `activity-date[@type="end-actual"] | activity-date[@type="4"]` should be present
+       And `activity-status/@code` is one of 3 or 4
+       Then `activity-date[@type="end-actual"] | activity-date[@type="4"]` should be present
 
  - name: Current status
    tests:
     - name: Activity status
       expression: |
        Given the activity is current
-       then `activity-status` should be present
+       Then `activity-status` should be present
 
     - name: Activity status uses standard codelist
       expression: |
        Given the activity is current
-       then at least one `activity-status/@code` should be on the ActivityStatus codelist
+       Then every `activity-status/@code` should be on the ActivityStatus codelist
 
  - name: Contact details
    tests:
     - name: Contact information
       expression: |
        Given the activity is current
-       then `contact-info` should be present
+       Then `contact-info` should be present
 
  - name: Sector
    tests:
     - name: Sector
       expression: |
        Given the activity is current
-       then `sector | transaction/sector` should be present
+       Then `sector | transaction/sector` should be present
 
     - name: Sector uses standard codelist
       expression: |
        Given the activity is current
-       then at least one `sector[@vocabulary="DAC"]/@code | sector[not(@vocabulary)]/@code | sector[@vocabulary="1"]/@code | transaction/sector[@vocabulary="1"]/@code | transaction/sector[not(@vocabulary)]/@code` should be on the Sector codelist
+       Then every `sector[@vocabulary="DAC"]/@code | sector[not(@vocabulary)]/@code | sector[@vocabulary="1"]/@code | transaction/sector[@vocabulary="1"]/@code | transaction/sector[not(@vocabulary)]/@code` should be on the Sector codelist
 
  - name: Sub-national location
    tests:
     - name: Location (sub-national)
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       and `recipient-region/@code` is not 998
-       then `location` should be present
+        And `activity-status/@code` is one of 2, 3 or 4
+        And `recipient-region/@code` is not 998
+        And `sector/@code` is not 91010
+        Then `location` should be present
 
     - name: Location (sub-national) coordinates or point
       expression: |
-       Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       and `recipient-region/@code` is not 998
-       then `location/coordinates | location/point` should be present
+        Given the activity is current
+         And `activity-status/@code` is one of 2, 3 or 4
+         And `recipient-region/@code` is not 998
+         And `sector/@code` is not 91010
+         Then `location/coordinates | location/point` should be present
 
  - name: Implementer
    tests:
     - name: Implementing organisation
       expression: |
-       Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `participating-org[@role="Implementing"] | participating-org[@role="4"]` should be present
+        Given the activity is current
+         And `activity-status/@code` is one of 2, 3 or 4
+         Then `participating-org[@role="Implementing"] | participating-org[@role="4"]` should be present
 
  - name: Unique ID
    tests:
     - name: Unique IATI Identifier
       expression: |
        Given the activity is current
-       then `iati-identifier` should be present
+       Then `iati-identifier` should be present
 
     - name: IATI Identifier starts with reporting org ref
       expression: |
        Given the activity is current
-       then `iati-identifier/text()` should start with either `reporting-org/@ref` or `other-identifier[@type="B1"]/@ref`
+       Then `iati-identifier/text()` should start with either `reporting-org/@ref` or `other-identifier[@type="B1"]/@ref`
 
  - name: Flow type
    tests:
     - name: Flow type
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `default-flow-type | transaction/flow-type` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then `default-flow-type | transaction/flow-type` should be present
 
     - name: Flow type uses standard codelist
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then at least one `default-flow-type/@code | transaction/flow-type/@code` should be on the FlowType codelist
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then at least one `default-flow-type/@code | transaction/flow-type/@code` should be on the FlowType codelist
 
  - name: Aid type
    tests:
     - name: Default aid type
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `default-aid-type | transaction/aid-type` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then `default-aid-type | transaction/aid-type` should be present
 
     - name: Aid type uses standard codelist
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then at least one `default-aid-type/@code | transaction/aid-type/@code` should be on the AidType codelist
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then at least one `default-aid-type/@code | transaction/aid-type/@code` should be on the AidType codelist
 
  - name: Finance type
    tests:
     - name: Default finance type
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `default-finance-type | transaction/finance-type` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then `default-finance-type | transaction/finance-type` should be present
 
     - name: Finance type uses standard codelist
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then at least one `default-finance-type/@code | transaction/finance-type/@code` should be on the FinanceType codelist
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then at least one `default-finance-type/@code | transaction/finance-type/@code` should be on the FinanceType codelist
 
  - name: Tied aid status
    tests:
     - name: Tied aid status
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `default-tied-status | transaction/tied-status` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then `default-tied-status | transaction/tied-status` should be present
 
     - name: Tied aid status uses standard codelist
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then at least one `default-tied-status/@code | transaction/tied-status/@code` should be on the TiedStatus codelist
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then at least one `default-tied-status/@code | transaction/tied-status/@code` should be on the TiedStatus codelist
 
  - name: Conditions
    tests:
     - name: Conditions data
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `conditions` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       Then `conditions` should be present
 
     - name: Conditions document
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `document-link/category[@code="A04"]` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `conditions/@attached` is not 0
+       Then `document-link/category[@code="A04"]` should be present
 
- - name: Project procurement
+ - name: "Project procurement - Tenders"
+   tests:
+    - name: Tenders document
+      expression: |
+        Given the activity is current
+         And `activity-status/@code` is one of 2, 3 or 4
+         And `default-aid-type/@code` is not any of A01, A02 or G01
+         And `transaction/aid-type/@code` is not any of A01 or A02
+         Then `document-link/category[@code="A10"]` should be present
+
+ - name: "Project procurement - Contracts"
    tests:
     - name: Contract document
       expression: |
-       Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       and `default-aid-type/@code` is not A01
-       and `transaction/aid-type/@code` is not A01
-       then `document-link/category[@code="A06"] | document-link/category[@code="A11"]` should be present
-
-    - name: Tenders document
-      expression: |
-       Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       and `default-aid-type/@code` is not A01
-       and `transaction/aid-type/@code` is not A01
-       then `document-link/category[@code="A10"]` should be present
+        Given the activity is current
+         And `activity-status/@code` is one of 2, 3 or 4
+         And `default-aid-type/@code` is not any of A01, A02 or G01
+         And `transaction/aid-type/@code` is not any of A01 or A02
+         Then `document-link/category[@code="A06"] | document-link/category[@code="A11"]` should be present
 
  - name: Objectives
    tests:
     - name: Objectives of activity document
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `document-link/category[@code="A02"] | description[@type="2"]` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `default-aid-type/@code` is not G01
+       Then `document-link/category[@code="A02"] | description[@type="2"]` should be present
 
  - name: Impact appraisals
    tests:
-    - name: Pre- and post-project impact appraisal documents
+    - name: Pre-project impact appraisal documents
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `document-link/category[@code="A01"]` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `default-aid-type/@code` is not any of B02 or G01
+       Then `document-link/category[@code="A01"]` should be present
 
  - name: Reviews and evaluations
    tests:
     - name: Project performance and evaluation document
       expression: |
-       Given the activity is current
-       and `activity-status/@code` is one of 3 or 4
-       then `document-link/category[@code="A07"]` should be present
+        Given the activity is current
+         And `default-aid-type/@code` is not G01
+         And either `document-link/category[@code="A07"]` is present, or `activity-status/@code` is one of 3 or 4
+         Then `document-link/category[@code="A07"]` should be present
 
  - name: Results
    tests:
     - name: Results data
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `result` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `default-aid-type/@code` is not G01
+       Then `result` should be present
 
     - name: Results document
       expression: |
        Given the activity is current
-       and `activity-status/@code` is one of 2, 3 or 4
-       then `document-link/category[@code="A08"]` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `default-aid-type/@code` is not G01
+       Then `document-link/category[@code="A08"]` should be present
 
 filter:
   name: Current activities
   expression: |
    Given an activity
-   then it should be current
+   Then it should be current

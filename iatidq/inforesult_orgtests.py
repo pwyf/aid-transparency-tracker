@@ -261,21 +261,6 @@ def all_countries(doc):
             countries[code] = name
     return countries
 
-def total_budgets_available(doc):
-    future_years = total_future_budgets(doc)
-    # Only look for future years >=1, i.e. exclude
-    # current year.
-    future_years = dict(filter(lambda x: x[0]>=1, future_years.items()))
-
-    available = 0
-    for year, data in future_years.items():
-        if data['available'] == True:
-            available+=1
-    return (float(available)/3.0)*100
-
-"""print "Total budgets..."
-print total_budgets_available(doc)
-
 print "Total country budgets..."
 print total_country_budgets_single_result(doc)
 

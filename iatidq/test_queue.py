@@ -399,7 +399,6 @@ def run_info_results(package_id, runtime_id, xmldata, level, organisation_id):
         hack = {
             'coverage': lambda fn: inforesult.inforesult_total_disbursements_commitments(fn),
             'coverage_current': lambda fn: inforesult.inforesult_total_disbursements_commitments_current(fn),
-            'total_budgets_available': lambda fn: inforesult_orgtests.total_budgets_available(fn),
             'total_country_budgets': lambda fn: inforesult_orgtests.total_country_budgets_single_result(fn),
             'country_strategy_papers': lambda fn: inforesult_orgtests.country_strategy_papers(fn)
             }
