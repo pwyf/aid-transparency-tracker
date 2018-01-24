@@ -417,7 +417,9 @@ def then_is_available_x_years_forward(xml, xpath_expression,
             if budget_end <= future_plus_oneyear:
                 return True
 
-    msg = 'Failed'
+    msg = '{} isn\'t between {} and {}'.format(
+        budget_end, future_date, future_plus_oneyear
+        )
     raise StepException(msg)
 
 
