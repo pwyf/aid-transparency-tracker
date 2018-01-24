@@ -260,9 +260,3 @@ def all_countries(doc):
                 name = None
             countries[code] = name
     return countries
-
-print "Total country budgets..."
-print total_country_budgets_single_result(doc)
-
-print "Country strategy papers"
-print country_strategy_papers(doc)"""
