@@ -329,15 +329,18 @@ def given_is_not_const(xml, xpath_expression, const, **kwargs):
 @given(r'`([^`]+)` is ([^ ]+)')
 def given_is_const(xml, xpath_expression, const, **kwargs):
     vals = xml.xpath(xpath_expression)
-    for val in vals:
-        if val == const:
-            assert(True)
-            return
-    msg = '`{}` is not {} (it\'s {})'.format(
-        xpath_expression,
-        const,
-        val,
-    )
+    if len(vals) == 0:
+        msg = '{} was not found'.format(xpath_expression)
+    else:
+        for val in vals:
+            if val == const:
+                assert(True)
+                return
+        msg = '`{}` is not {} (it\'s {})'.format(
+            xpath_expression,
+            const,
+            val,
+        )
     raise StepException(msg)
 
 
