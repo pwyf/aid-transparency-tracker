@@ -8,9 +8,10 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 import itertools
+from os.path import join
 import re
 
-import foxpath
+from foxpath import Foxpath
 
 from . import dqcodelists, models, test_level
 from iatidataquality import db
@@ -35,10 +36,14 @@ def test_functions():
         tests = get_active_tests()
         tests = itertools.ifilter(lambda test: test.test_level != test_level.FILE, tests)
         tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
-        tests = [{
-            'name': x.id,
-            'expression': x.name,
-        } for x in tests]
+        tests = [
+            (x.id, 'Feature: {name}\nScenario: {name}\n{expression}'.format(
+                name=x.id, expression=x.name))
+            for x in tests]
 
-        foxtests = foxpath.load_tests(tests, codelists=codelists)
+        step_definitions_file = join('tests', 'step_definitions.py')
+        foxpath = Foxpath(step_definitions_file)
+        foxtests = {
+            test[0]: foxpath.load_feature(test[1], codelists=codelists)[1][0][1]
+            for test in tests}
         return foxtests
