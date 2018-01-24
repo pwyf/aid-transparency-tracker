@@ -201,7 +201,7 @@ def clear_queues():
 def test_packages(organisation_code=None):
     """Test packages for a given organisation"""
     sql = '''
-        select package_name from organisation
+        select distinct package_name from organisation
             left join organisationpackage on organisation.id = organisation_id
             left join package on package_id = package.id
             where active = 't'
@@ -209,6 +209,7 @@ def test_packages(organisation_code=None):
     '''
     if organisation_code:
         sql += 'and organisation_code = "%s"'.format(organisation_code)
+    sql += ' order by package_name'
     results = db.engine.execute(sql)
     package_names = [row[0] for row in results.fetchall()]
 
