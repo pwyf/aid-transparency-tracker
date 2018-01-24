@@ -198,17 +198,19 @@ def clear_queues():
 
 @app.cli.command()
 @click.option('--organisation-code', help='Code of organisation to test')
-def test_packages(organisation_code=None):
+@click.option('--package-name', help='Name of package to test')
+def test_packages(organisation_code=None, package_name=None):
     """Test packages for a given organisation"""
     sql = '''
         select distinct package_name from organisation
             left join organisationpackage on organisation.id = organisation_id
             left join package on package_id = package.id
             where active = 't'
-
     '''
     if organisation_code:
-        sql += 'and organisation_code = "{}"'.format(organisation_code)
+        sql += " and organisation_code = '{}'".format(organisation_code)
+    if package_name:
+        sql += " and package_name = '{}'".format(package_name)
     sql += ' order by package_name'
     results = db.engine.execute(sql)
     package_names = [row[0] for row in results.fetchall()]
