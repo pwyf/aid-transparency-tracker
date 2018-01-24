@@ -91,16 +91,19 @@ indicators:
  - name: Total organisation budget
    tests:
     - name: Organisation budget available one year forward
+      test_level: 3
       expression: |
        Given file is an organisation file
         Then `total-budget` should be available 1 year forward
 
     - name: Organisation budget available two years forward
+      test_level: 3
       expression: |
        Given file is an organisation file
         Then `total-budget` should be available 2 years forward
 
     - name: Organisation budget available three years forward
+      test_level: 3
       expression: |
        Given file is an organisation file
         Then `total-budget` should be available 3 years forward
