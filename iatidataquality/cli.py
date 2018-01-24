@@ -208,7 +208,7 @@ def test_packages(organisation_code=None):
 
     '''
     if organisation_code:
-        sql += 'and organisation_code = "%s"'.format(organisation_code)
+        sql += 'and organisation_code = "{}"'.format(organisation_code)
     sql += ' order by package_name'
     results = db.engine.execute(sql)
     package_names = [row[0] for row in results.fetchall()]
