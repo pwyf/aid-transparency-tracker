@@ -6,7 +6,7 @@ from foxpath import given, then, StepException
 
 @given(r'file is an organisation file')
 def given_org_file(xml, **kwargs):
-    if xml.tag != 'iati-organisation':
+    if len(xml.xpath('//iati-organisation')) == 0:
         raise StepException('Not an organisation file')
 
 
