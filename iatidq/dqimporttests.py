@@ -55,11 +55,12 @@ def _importTests(fh, filename, level=1, local=True):
     line_num = 0
     for indicator in data['indicators']:
         indicator_name = indicator['name'].lower().replace(' ', '-')
+        indicator_name = indicator_name.replace('---', '-')
         for row in indicator['tests']:
             line_num += 1
             with db.session.begin():
                 test = models.Test.query.filter(
-                    models.Test.name == row['expression']).first()
+                    models.Test.description == row['name']).first()
 
                 if not test:
                     test = models.Test()
@@ -77,7 +78,7 @@ def _importTests(fh, filename, level=1, local=True):
 
             with db.session.begin():
                 test = models.Test.query.filter(
-                    models.Test.name == row['expression']).first()
+                    models.Test.description == row['name']).first()
 
                 if indicator_name:
                     ind = models.Indicator.query.filter(
@@ -87,7 +88,10 @@ def _importTests(fh, filename, level=1, local=True):
                     assert test
                     assert test.id
 
-                    newIT = models.IndicatorTest()
+                    newIT = models.IndicatorTest.query.filter(
+                        models.IndicatorTest.test_id == test.id).first()
+                    if not newIT:
+                        newIT = models.IndicatorTest()
                     newIT.setup(
                         indicator_id=ind.id,
                         test_id=test.id
