@@ -77,6 +77,8 @@ class WorkItems(object):
                    SELECT sampling_current_result_tmp.* FROM sampling_current_result_tmp, current_data_result
                    WHERE sampling_current_result_tmp.result_identifier = current_data_result.result_identifier;''', write=True)
 
+        self.update = not create
+
     def test_desc_of_test_id(self, test_id):
         results = query('''select description from test where id = %s;''', (test_id,));
         assert len(results) == 1
@@ -86,18 +88,20 @@ class WorkItems(object):
         test_desc = self.test_desc_of_test_id(test_id)
         return test_to_kind[test_desc]
 
-    def cleanup(self):
-        query('''DROP TABLE IF EXISTS current_data_result;''', write=True)
-        query('''DROP TABLE IF EXISTS sampling_current_result_tmp;''', write=True)
-        query('''DROP TABLE IF EXISTS sampling_current_result;''', write=True)
-
     def __iter__(self):
+        total_samples = 20
         for org_id in self.org_ids:
             print("Org: {}".format(org_id))
             for test_id in self.test_ids:
+                if self.update:
+                    total_samples_done = db.count_samples(
+                        org_id=org_id, test_id=test_id)
+                    total_samples_todo = total_samples - total_samples_done
+                else:
+                    total_samples_todo = total_samples
                 print("Test: {}".format(test_id))
                 sot = SampleOrgTest(org_id, test_id)
-                sample_ids = sot.sample_activity_ids(20)
+                sample_ids = sot.sample_activity_ids(total_samples_todo)
 
                 test_kind = self.kind_of_test(test_id)
 
