@@ -116,15 +116,8 @@ def count_samples(org_id=None, test_id=None):
         query += ' where '
         query += ' and '.join(where_arr)
 
-    success = False
-    while not success:
-        try:
-            c.execute(query)
-            result = c.fetchone()[0]
-            success = True
-        except OperationalError:
-            print('db locked. Retrying...')
-    return result
+    c.execute(query)
+    return c.fetchone()[0]
 
 
 def read_db_response(uuid=None, org_id=None, test_id=None, offset=0, limit=-1):
