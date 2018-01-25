@@ -84,7 +84,7 @@ def make_db(filename, org_ids, test_ids, create):
                         values (?,?,?,?,?,?,?,?);
                   """, wi_info)
 
-    database.commit()
+        database.commit()
     sample_work.cleanup()
 
 
