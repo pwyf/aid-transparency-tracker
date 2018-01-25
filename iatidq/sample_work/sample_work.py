@@ -100,6 +100,7 @@ class WorkItems(object):
                 else:
                     total_samples_todo = total_samples
                 print("Test: {}".format(test_id))
+                print('{} samples to add'.format(total_samples_todo))
                 sot = SampleOrgTest(org_id, test_id)
                 sample_ids = sot.sample_activity_ids(total_samples_todo)
 
