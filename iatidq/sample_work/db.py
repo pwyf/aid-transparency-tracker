@@ -2,7 +2,7 @@ import logging
 import os
 from uuid import UUID
 
-from sqlite3 import IntegrityError, dbapi2 as sqlite
+from sqlite3 import IntegrityError, OperationalError, dbapi2 as sqlite
 
 from iatidataquality import app
 
@@ -115,7 +115,14 @@ def count_samples(org_id=None, test_id=None):
     if org_id or test_id:
         query += ' where '
         query += ' and '.join(where_arr)
-    c.execute(query)
+
+    success = False
+    while not success:
+        try:
+            c.execute(query)
+            success = True
+        except OperationalError:
+            print('db locked. Retrying...')
     return c.fetchone()[0]
 
 
