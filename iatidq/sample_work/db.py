@@ -84,7 +84,6 @@ def make_db(filename, org_ids, test_ids, create):
                   """, wi_info)
 
         database.commit()
-    sample_work.cleanup()
 
 
 def all_sample_orgs():
