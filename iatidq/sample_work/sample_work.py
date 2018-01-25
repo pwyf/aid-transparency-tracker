@@ -52,6 +52,12 @@ def query(*args, **kwargs):
         return c.fetchall()
 
 
+def cleanup():
+    query('''DROP TABLE IF EXISTS current_data_result;''', write=True)
+    query('''DROP TABLE IF EXISTS sampling_current_result_tmp;''', write=True)
+    query('''DROP TABLE IF EXISTS sampling_current_result;''', write=True)
+
+
 class WorkItems(object):
     def __init__(self, org_ids, test_ids, create):
         self.org_ids = org_ids

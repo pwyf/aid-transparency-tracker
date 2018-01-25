@@ -57,6 +57,9 @@ def create_db(c):
 
 def make_db(filename, org_ids, test_ids, create):
     from sample_work import WorkItems
+    import sample_work
+
+    sample_work.cleanup()
 
     if create:
         if os.path.exists(filename):
@@ -82,7 +85,7 @@ def make_db(filename, org_ids, test_ids, create):
                   """, wi_info)
 
     database.commit()
-    work_items.cleanup()
+    sample_work.cleanup()
 
 
 def all_sample_orgs():
