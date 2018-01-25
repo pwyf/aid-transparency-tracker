@@ -5,7 +5,7 @@ test_to_kind = {
     "Conditions data": "conditions",
     "Conditions document": "document",
     "Objectives of activity document": "document",
-    "Pre- and post-project impact appraisal documents": "document",
+    "Pre-project impact appraisal documents": "document",
     "Project performance and evaluation document": "document",
     "Results document": "document",
     "Results data": "result",
