@@ -120,10 +120,11 @@ def count_samples(org_id=None, test_id=None):
     while not success:
         try:
             c.execute(query)
+            result = c.fetchone()[0]
             success = True
         except OperationalError:
             print('db locked. Retrying...')
-    return c.fetchone()[0]
+    return result
 
 
 def read_db_response(uuid=None, org_id=None, test_id=None, offset=0, limit=-1):
