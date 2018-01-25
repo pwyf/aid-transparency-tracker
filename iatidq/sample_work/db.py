@@ -59,8 +59,6 @@ def make_db(filename, org_ids, test_ids, create):
     from sample_work import WorkItems
     import sample_work
 
-    sample_work.cleanup()
-
     if create:
         if os.path.exists(filename):
             print('Deleting old sampling db ...')
@@ -70,6 +68,7 @@ def make_db(filename, org_ids, test_ids, create):
     c = database.cursor()
 
     if create:
+        sample_work.cleanup()
         create_db(c)
 
     # populate db
