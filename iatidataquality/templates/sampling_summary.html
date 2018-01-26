@@ -29,6 +29,7 @@
             <th>Total</th>
             <th>Passes</th>
             <th>Fails</th>
+            <th>Remaining</th>
             <th>Result</th>
         </thead>
         <tbody>
@@ -39,6 +40,7 @@
                 <td>{{ ot.total }}</td>
                 <td>{{ ot.total_pass }}</td>
                 <td>{{ ot.total_fail }}</td>
+                <td>{{ ot.total - ot.total_fail - ot.total_pass }}</td>
                 <td>
                     <span class="label
                     {% if ot.pass_status == 'passing' %}
