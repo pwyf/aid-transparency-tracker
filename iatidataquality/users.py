@@ -80,7 +80,7 @@ def users_edit(username=None):
                 flash('Successfully updated user.', 'success')
             else:
                 user = {}
-                flash('Could not update user.', 'error')
+                flash('Could not update user.', 'danger')
     else:
         if request.method == 'POST':
             user = dqusers.addUser({
@@ -94,7 +94,7 @@ def users_edit(username=None):
                 flash('Successfully added new user', 'success')
                 return redirect(url_for('users_edit', username=user.username))
             else:
-                flash('Could not add user', 'error')
+                flash('Could not add user', 'danger')
 
     organisations = models.Organisation.sort('organisation_name').all()
     return render_template("users_edit.html",
@@ -111,5 +111,5 @@ def users_delete(username=None):
         user = dqusers.deleteUser(username)
         flash('Successfully deleted user.', 'success')
     else:
-        flash('No username provided.', 'error')
+        flash('No username provided.', 'danger')
     return redirect(url_for('users'))

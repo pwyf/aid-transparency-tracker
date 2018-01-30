@@ -55,7 +55,7 @@ def organisation_survey_repair(organisation_code):
         indicators = ", ".join(status['changed_indicators'])
         flash('Survey successfully repaired indicators '+indicators, 'success')
     else:
-        flash('Survey could not be repaired', 'error')
+        flash('Survey could not be repaired', 'danger')
     return redirect(url_for('organisation_survey', organisation_code=organisation_code))
 
 @app.route("/organisations/<organisation_code>/survey/")
@@ -259,12 +259,12 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
     if not allowed_to_view or (request.method == 'POST' and not allowed_to_edit):
         # If not logged in, redirect to login page
         if not current_user.is_authenticated:
-            flash('You must log in to access that page.', 'error')
+            flash('You must log in to access that page.', 'danger')
             return redirect(url_for('login', next=request.path))
 
         # Otherwise, redirect to previous page and warn user
         # they don't have permissions to access the survey.
-        flash('Sorry, you do not have permission to view that survey', 'error')
+        flash('Sorry, you do not have permission to view that survey', 'danger')
         if request.referrer is not None:
             redir_to = request.referrer
         else:
@@ -292,7 +292,7 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
             flash("Not possible to send survey to donor because it's "
                   "not at the current stage in the workflow. "
                   "Maybe you didn't submit the data, or maybe you "
-                  "already sent it to the donor?", 'error')
+                  "already sent it to the donor?", 'danger')
     elif workflow_type_name in handlers:
         handlers[workflow_type_name](
             organisation, workflow, request, organisationsurvey)

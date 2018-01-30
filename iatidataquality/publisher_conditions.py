@@ -74,7 +74,7 @@ def import_feedback():
             admin=usermanagement.check_perms('admin'),
             loggedinuser=current_user)
     else:
-        flash('There was an error importing your conditions', "error")
+        flash('There was an error importing your conditions', "danger")
         return redirect(url_for('import_organisation_conditions'))
 
 def update_organisation_condition(pc_id):
@@ -148,7 +148,7 @@ def ipc_step2():
             admin=usermanagement.check_perms('admin'),
             loggedinuser=current_user)
     else:
-        flash('There was an error importing your conditions', "error")
+        flash('There was an error importing your conditions', "danger")
         return redirect(url_for('import_organisation_conditions'))
 
 def import_pc_row(row):

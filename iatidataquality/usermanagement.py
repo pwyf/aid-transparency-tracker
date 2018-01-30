@@ -126,7 +126,7 @@ def perms_required(name=None, method=None, value=None):
         @wraps(f)
         def wrapped_f(*args, **kwargs):
             if not check_perms(name, method, kwargs):
-                flash('You must log in to access that page.', 'error')
+                flash('You must log in to access that page.', 'danger')
                 return redirect(url_for('login', next=request.path))
             return f(*args, **kwargs)
         return wrapped_f
@@ -182,9 +182,9 @@ def login():
                     redir_url = url_for("home")
                 return redirect(redir_url)
             else:
-                flash("Sorry, but you could not log in.", "error")
+                flash("Sorry, but you could not log in.", "danger")
         else:
-            flash(u"Invalid username or password.", "error")
+            flash(u"Invalid username or password.", "danger")
     return render_template("login.html",
              admin=check_perms('admin'),
              loggedinuser=current_user)

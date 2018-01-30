@@ -28,7 +28,7 @@ def indicators_import():
     if dqindicators.importIndicators():
         flash('Successfully imported your indicators', 'success')
     else:
-        flash('Could not import your indicators', 'error')
+        flash('Could not import your indicators', 'danger')
     return redirect(url_for('indicatorgroups'))
 
 @app.route("/indicators/<indicatorgroup>/edit/", methods=['GET', 'POST'])
@@ -66,7 +66,7 @@ def indicatorgroups_new():
         if indicatorgroup:
             flash('Successfully added IndicatorGroup.', 'success')
         else:
-            flash("Couldn't add IndicatorGroup. Maybe one already exists with the same name?", 'error')
+            flash("Couldn't add IndicatorGroup. Maybe one already exists with the same name?", 'danger')
     else:
         indicatorgroup = None
     return render_template("indicatorgroups_edit.html",
@@ -206,7 +206,7 @@ def indicators_new(indicatorgroup=None):
         if indicator:
             flash('Successfully added Indicator.', 'success')
         else:
-            flash("Couldn't add Indicator. Maybe one already exists with the same name?", 'error')
+            flash("Couldn't add Indicator. Maybe one already exists with the same name?", 'danger')
     else:
         indicator = None
     return render_template("indicator_edit.html",
@@ -264,7 +264,7 @@ def indicatortests(indicatorgroup=None, indicator=None):
             if dqindicators.addIndicatorTest(data):
                 flash('Successfully added test to your indicator.', 'success')
             else:
-                flash("Couldn't add test to your indicator.", 'error')
+                flash("Couldn't add test to your indicator.", 'danger')
     indicatortests = dqindicators.indicatorTests(indicatorgroup.name, indicator.name)
     return render_template("indicatortests.html",
                          indicatorgroup=indicatorgroup,
@@ -280,5 +280,5 @@ def indicatortests_delete(indicatorgroup=None, indicator=None, indicatortest=Non
     if dqindicators.deleteIndicatorTest(indicatortest):
         flash('Successfully removed test from indicator ' + indicator + '.', 'success')
     else:
-        flash('Could not remove test from indicator ' + indicator + '.', 'error')
+        flash('Could not remove test from indicator ' + indicator + '.', 'danger')
     return redirect(url_for('indicatortests', indicatorgroup=indicatorgroup, indicator=indicator))

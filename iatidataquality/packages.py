@@ -64,7 +64,7 @@ def packages_edit(package_name=None):
             except IndexError:
                 package_org_id=None
             if package.man_auto=='auto':
-                flash("That package is not a manual package, so it can't be edited.", 'error')
+                flash("That package is not a manual package, so it can't be edited.", 'danger')
                 return redirect(url_for('packages'))
         else:
             package ={}
@@ -111,7 +111,7 @@ def packages_edit(package_name=None):
             flash("Successfully "+mode+" package.", 'success')
             return redirect(url_for('packages_edit', package_name=package.package_name))
         else:
-            flash("There was an error, and the package could not be "+mode+".", "error")
+            flash("There was an error, and the package could not be "+mode+".", "danger")
             organisations = Organisation.sort('organisation_name').all()
             data['package_name'] = request.form.get('package_name')
         return render_template("package_edit.html",

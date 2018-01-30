@@ -57,7 +57,7 @@ def aggregationtypes_edit(aggregationtype_id=None):
             flash('Successfully added your aggregation type.', 'success')
         else:
             aggregationtype = {}
-            flash('Could not add your aggregation type.', 'error')
+            flash('Could not add your aggregation type.', 'danger')
 
     tests = dqtests.tests()
     return render_template("aggregation_types_edit.html",

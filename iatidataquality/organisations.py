@@ -176,7 +176,7 @@ def organisation_new():
                     'organisation_edit',
                     organisation_code=organisation.organisation_code))
 
-        flash("Couldn't add organisation", "error")
+        flash("Couldn't add organisation", "danger")
         organisation = data
 
     return render_template("organisation_edit.html", organisation=organisation,
@@ -603,7 +603,7 @@ def add_packages(organisation):
                   'success')
         else:
             flash("Couldn't add package to your organisation.",
-                  'error')
+                  'danger')
 
     packages = request.form.getlist('package')
     [ add_org_pkg(package) for package in packages ]
@@ -624,7 +624,7 @@ def add_packagegroup(organisation):
         else:
             flash(
                 'Could not ensure that all packages in this package '
-                'group will be added to this organisation', 'error')
+                'group will be added to this organisation', 'danger')
     if total:
         flash(
             'Successfully added %d packages to your organisation.' % total,
@@ -633,7 +633,7 @@ def add_packagegroup(organisation):
         flash(
             "No packages were added to your organisation. This "
             "could be because you've already added all existing ones.",
-            'error')
+            'danger')
 
 def update_organisation(organisation_code):
     if 'no_independent_reviewer' in request.form:
@@ -692,7 +692,7 @@ def organisationpackage_delete(organisation_code=None,
                     'success')
         else:
             return ('Could not remove package %s from organisation %s.',
-                    'error')
+                    'danger')
 
     result = dqorganisations.deleteOrganisationPackage(
         organisation_code, package_name, organisationpackage_id)

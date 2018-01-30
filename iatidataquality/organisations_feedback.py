@@ -30,13 +30,13 @@ def organisations_feedback(organisation_code=None):
                 if dqorganisations.addFeedback(data):
                     flash('Successfully added condition.', 'success')
                 else:
-                    flash("Couldn't add condition.", 'error')
+                    flash("Couldn't add condition.", 'danger')
 
         return render_template("organisation_feedback.html",
              organisation=organisation,
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
     else:
-        flash('No organisation supplied', 'error')
+        flash('No organisation supplied', 'danger')
         return redirect(url_for('organisations'))
 

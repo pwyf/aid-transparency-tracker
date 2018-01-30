@@ -45,7 +45,7 @@ def tests_editor(id=None):
         if dqtests.updateTest(data):
             flash('Updated', "success")
         else:
-            flash("Couldn't update", "error")
+            flash("Couldn't update", "danger")
     else:
         test = dqtests.tests(id)
     return render_template("test_editor.html", test=test,
@@ -59,10 +59,10 @@ def tests_delete(id=None):
         if dqtests.deleteTest(id):
             flash('Successfully deleted test.', 'success')
         else:
-            flash("Couldn't delete test. Maybe results already exist connected with that test?", 'error')
+            flash("Couldn't delete test. Maybe results already exist connected with that test?", 'danger')
         return redirect(url_for('tests', id=id))
     else:
-        flash('No test ID provided', 'error')
+        flash('No test ID provided', 'danger')
         return redirect(url_for('tests'))
 
 @app.route("/tests/new/", methods=['GET', 'POST'])
@@ -81,7 +81,7 @@ def tests_new():
             flash('Created', "success")
         except dqtests.TestNotFound:
             test = data
-            flash('Unable to create. Maybe you already have a test using the same expression?', "error")
+            flash('Unable to create. Maybe you already have a test using the same expression?', "danger")
     else:
         test = {}
     return render_template("test_editor.html", test=test,
@@ -103,9 +103,9 @@ def import_tests():
             if (result==True):
                 flash('Imported tests', "success")
             else:
-                flash('There was an error importing your tests', "error")
+                flash('There was an error importing your tests', "danger")
         else:
-            flash('Wrong password', "error")
+            flash('Wrong password', "danger")
     return render_template("import_tests.html",
              admin=usermanagement.check_perms('admin'),
              loggedinuser=current_user)
