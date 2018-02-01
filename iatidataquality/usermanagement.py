@@ -73,14 +73,12 @@ def check_perms(name, method=None, kwargs=None):
     if role_permission('admin').can():
         return True
 
-    restricted_methods = ['edit', 'delete', 'create']
-    edit_methods =       ['edit', 'delete']
-
-    if role_permission('super').can() and method not in restricted_methods:
+    # TODO: this gives the super role superpowers. That
+    # is incorrect.
+    if role_permission('super').can():
         return True
 
-    if (role_permission('super').can() and name=='survey_researcher'):
-        return True
+    edit_methods = ['edit', 'delete']
 
     if not name:
         return False
