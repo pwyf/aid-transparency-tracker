@@ -189,7 +189,7 @@ def parse_xml(file_name):
     try:
         data = etree.parse(file_name)
         return True, data
-    except etree.XMLSyntaxError:
+    except:
         return False, None
 
 
