@@ -370,16 +370,16 @@
 
         {% if surveydata %}
         <td>
-          <span class="label label-{{surveydata.status_class}}">
-            {{surveydata.status_text}}
+          <span class="label label-{{row.status_class}}">
+            {{row.status_text}}
           </span>
         </td>
         <td>
-          <span class="label label-{{surveydata.format_class}}">
-            {{surveydata.format_text}}
+          <span class="label label-{{row.format_class}}">
+            {{row.format_text}}
           </span>
         </td>
-        <td>{{surveydata.points}}</td>
+        <td>{{row.points}}</td>
         {% else %}
         <td colspan="3">
         No survey data yet.
