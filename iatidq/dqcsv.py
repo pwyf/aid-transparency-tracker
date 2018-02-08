@@ -44,12 +44,16 @@ def get_frequency_multiplier(frequency):
         return 1.0
 
 def write_agg_csv_result(out, organisation, freq, result):
+    i = result["indicator"]
+
     if result['results_pct'] == 0:
         points = 0
     else:
-        points = float(result['results_pct']) * freq / 2.0 + 50
+        if i['indicator_category_name'] == 'activity':
+            points = float(result['results_pct']) * freq / 2.0 + 50
+        else:
+            points = float(result['results_pct']) / 2.0 + 50
 
-    i = result["indicator"]
     out.writerow({
             "organisation_name": organisation.organisation_name,
             "organisation_code": organisation.organisation_code,
