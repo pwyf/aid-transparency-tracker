@@ -322,7 +322,7 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
             ind_id = res["indicator"]["id"]
 
             if surveydata:
-                if (res["indicator"]["indicator_ordinal"] and surveydata[ind_id].PublishedFormat):
+                if (res["indicator"]["indicator_ordinal"] and surveydata[ind_id].PublishedFormat) and surveydata[ind_id].OrganisationSurveyData.ordinal_value:
                     return round(
                         (surveydata[ind_id].OrganisationSurveyData.ordinal_value/3.0) *
                         surveydata[ind_id].PublishedFormat.format_value * 50, 2)
