@@ -344,5 +344,5 @@ def get_survey_data_and_workflow(organisation_survey, surveydata):
         workflow_name = organisation_survey.Workflow.name
         if workflow_name in data:
             key, phase = data[workflow_name]
-            return (surveydata[key], phase)
+            return (surveydata.get(key), phase)
     return (None, None)
