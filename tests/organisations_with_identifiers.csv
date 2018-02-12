@@ -20,7 +20,7 @@ Germany,BMZ/GIZ,"Germany, BMZ-GIZ",4906,,DE-1,DE-1,DE-1,DE-1,bmz,"participating-
 Germany,BMZ/KFW,"Germany, BMZ-KFW",4617,,DE-2,DE-2,DE-2,DE-2,bmz,participating-org[@role='Implementing']/text()='Kreditanstalt f\xfcr Wiederaufbau (KfW)',,,,India,
 IADB,,IADB,11064,,XI-IATI-IADB,46012,46012,46012,iadb,,,,,Mexico,
 Ireland,IrishAid,"Ireland, IrishAid",419,,XM-DAC-21-1,IE-1,IE-1,IE-1,irishaid,,,,,Mozambique,
-Italy,MAE,"Italy, MAE",385,,IT-4,IT-4,IT-4,IT-4,aics,,,,,Afghanistan,
+Italy,AICS,"Italy, AICS",385,,IT-4,IT-4,IT-4,IT-4,aics,,,,,Afghanistan,
 Japan,JICA,"Japan, JICA",8600,,XM-DAC-701-8,JP-8,JP-8,JP-8,jica,,,,,Myanmar,
 Japan,MOFA,"Japan, MOFA",2917,,JP-2,JP-2,JP-2,JP-2,,,,,,Myanmar,
 Korea,KOICA,"Korea, KOICA",563,,KR-4,KR-4,KR-4,KR-4,odakorea,,,,,Vietnam,
