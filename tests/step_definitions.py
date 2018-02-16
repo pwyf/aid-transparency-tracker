@@ -447,7 +447,7 @@ def then_should_start_with_either(xml, xpath_expression1, xpath_expression2,
         raise StepException(msg)
 
     for prefix in prefixes:
-        if target.startswith('{}-'.format(prefix)):
+        if target.startswith(prefix):
             assert(True)
             return
 
