@@ -113,7 +113,6 @@ indicators:
     - name: Budget available forward annually
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not G01
         And `activity-date[@type="3" or @type="4" or @type="end-planned" or @type="end-actual"]/@iso-date` is at least 6 months ahead
@@ -122,7 +121,6 @@ indicators:
     - name: Budget available forward quarterly
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not G01
         And `activity-date[@type="3" or @type="4" or @type="end-planned" or @type="end-actual"]/@iso-date` is at least 6 months ahead
@@ -133,7 +131,6 @@ indicators:
     - name: Project budget document
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not any of A01, A02 or G01
         And `transaction/aid-type/@code` is not any of A01 or A02
@@ -144,7 +141,6 @@ indicators:
     - name: Commitments
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `transaction[transaction-type/@code="2" or transaction-type/@code="C"]` should be present and of non-zero value
 
@@ -153,7 +149,6 @@ indicators:
     - name: Disbursements and expenditures
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `transaction[transaction-type/@code="3" or transaction-type/@code="D" or transaction-type/@code="4" or transaction-type/@code="E"]` should be present and of non-zero value
 
@@ -162,7 +157,6 @@ indicators:
     - name: Capital spend
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not any of A01, A02 or G01
         And `transaction/aid-type/@code` is not any of A01 or A02
@@ -173,13 +167,11 @@ indicators:
     - name: Title
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `title[text() or narrative/text()]` should be present
 
     - name: Title has at least 10 characters
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `title/text() | title/narrative/text()` should have at least 10 characters
 
  - name: Description
@@ -187,13 +179,11 @@ indicators:
     - name: Description
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `description[text() or narrative/text()]` should be present
 
     - name: Description has at least 80 characters
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `description/text() | description/narrative/text()` should have at least 80 characters
 
  - name: Planned dates
@@ -201,13 +191,11 @@ indicators:
     - name: Planned start date
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `activity-date[@type="1" or @type="start-planned"]` should be present
 
     - name: Planned end date
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `activity-date[@type="3" or @type="end-planned"]` should be present
 
  - name: Actual dates
@@ -215,14 +203,12 @@ indicators:
     - name: Actual start date
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `activity-date[@type="2" or @type="start-actual"]` should be present
 
     - name: Actual end date
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 3 or 4
         Then `activity-date[@type="4" or @type="end-actual"]` should be present
 
@@ -231,13 +217,11 @@ indicators:
     - name: Activity status
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `activity-status` should be present
 
     - name: Activity status uses standard codelist
       expression: |
        Given an IATI activity
-        And the activity is current
         Then every `activity-status/@code` should be on the ActivityStatus codelist
 
  - name: Contact details
@@ -245,7 +229,6 @@ indicators:
     - name: Contact information
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `contact-info` should be present
 
  - name: Sector
@@ -253,13 +236,11 @@ indicators:
     - name: Sector
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `sector | transaction/sector` should be present
 
     - name: Sector uses standard codelist
       expression: |
        Given an IATI activity
-        And the activity is current
         Then every `sector[@vocabulary="DAC" or not(@vocabulary) or @vocabulary="1"]/@code | transaction/sector[@vocabulary="1" or not(@vocabulary)]/@code` should be on the Sector codelist
 
  - name: Sub-national location
@@ -267,7 +248,6 @@ indicators:
     - name: Location (sub-national)
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `recipient-region/@code` is not 998
         And `default-aid-type/@code` is not G01
@@ -276,7 +256,6 @@ indicators:
     - name: Location (sub-national) coordinates or point
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `recipient-region/@code` is not 998
         And `default-aid-type/@code` is not G01
@@ -287,7 +266,6 @@ indicators:
     - name: Implementing organisation
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `participating-org[@role="Implementing" or @role="4"]` should be present
 
@@ -296,13 +274,11 @@ indicators:
     - name: Unique IATI Identifier
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `iati-identifier` should be present
 
     - name: IATI Identifier starts with reporting org ref
       expression: |
        Given an IATI activity
-        And the activity is current
         Then `iati-identifier/text()` should start with either `reporting-org/@ref` or `other-identifier[@type="B1"]/@ref`
 
  - name: Flow type
@@ -310,14 +286,12 @@ indicators:
     - name: Flow type
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `default-flow-type | transaction/flow-type` should be present
 
     - name: Flow type uses standard codelist
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then every `default-flow-type/@code | transaction/flow-type/@code` should be on the FlowType codelist
 
@@ -326,14 +300,12 @@ indicators:
     - name: Default aid type
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `default-aid-type | transaction/aid-type` should be present
 
     - name: Aid type uses standard codelist
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then every `default-aid-type/@code | transaction/aid-type/@code` should be on the AidType codelist
 
@@ -342,14 +314,12 @@ indicators:
     - name: Default finance type
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `default-finance-type | transaction/finance-type` should be present
 
     - name: Finance type uses standard codelist
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
          Then every `default-finance-type/@code | transaction/finance-type/@code` should be on the FinanceType codelist
 
@@ -358,14 +328,12 @@ indicators:
     - name: Tied aid status
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `default-tied-status | transaction/tied-status` should be present
 
     - name: Tied aid status uses standard codelist
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then every `default-tied-status/@code | transaction/tied-status/@code` should be on the TiedStatus codelist
 
@@ -374,14 +342,12 @@ indicators:
     - name: Conditions data
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         Then `conditions` should be present
 
     - name: Conditions document
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `conditions/@attached` is not 0
         Then `document-link/category[@code="A04"]` should be present
@@ -391,7 +357,6 @@ indicators:
     - name: Tenders document
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not any of A01, A02, B02 or G01
         And `transaction/aid-type/@code` is not any of A01, A02 or B02
@@ -402,7 +367,6 @@ indicators:
     - name: Contract document
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not any of A01, A02, B02 or G01
         And `transaction/aid-type/@code` is not any of A01, A02 or B02
@@ -413,7 +377,6 @@ indicators:
     - name: Objectives of activity document
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not G01
         Then `document-link/category[@code="A02"] | description[@type="2"]` should be present
@@ -423,7 +386,6 @@ indicators:
     - name: Pre-project impact appraisal documents
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not any of B02 or G01
         Then `document-link/category[@code="A01"]` should be present
@@ -433,7 +395,6 @@ indicators:
     - name: Project performance and evaluation document
       expression: |
        Given an IATI activity
-        And the activity is current
         And `default-aid-type/@code` is not G01
         And either `document-link/category[@code="A07"]` is present, or `activity-status/@code` is one of 3 or 4
         Then `document-link/category[@code="A07"]` should be present
@@ -443,7 +404,6 @@ indicators:
     - name: Results data
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not G01
         Then `result` should be present
@@ -451,7 +411,6 @@ indicators:
     - name: Results document
       expression: |
        Given an IATI activity
-        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not G01
         Then `document-link/category[@code="A08"]` should be present
