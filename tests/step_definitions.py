@@ -1,23 +1,27 @@
 from datetime import datetime, timedelta
 import re
 
-from foxpath import given, then, StepException
+from bdd_tester import given, then, StepException
 
 
 @given(r'file is an organisation file')
 def given_org_file(xml, **kwargs):
     if xml.tag != 'iati-organisation':
-        raise StepException('Not an organisation file')
+        msg = 'Not an organisation file'
+        raise StepException(xml, msg)
 
 
 @given(r'this test involves both organisation and activity files')
 def given_mixed_content(xml, **kwargs):
-    raise StepException('Not possible to test')
+    msg = 'Not possible to test'
+    raise StepException(xml, msg)
 
 
-@given(r'an activity')
-def an_activity(xml, **kwargs):
-    pass
+@given(r'an IATI activity')
+def an_iati_activity(xml, **kwargs):
+    if xml.tag != 'iati-activity':
+        msg = 'Not an IATI activity'
+        raise StepException(xml, msg)
 
 
 @then(r'skip it')
@@ -31,7 +35,30 @@ def then_is_present(xml, xpath_expression, **kwargs):
     vals = xml.xpath(xpath_expression)
     if len(vals) == 0:
         msg = '`{}` not found'.format(xpath_expression)
-        raise StepException(msg)
+        raise StepException(xml, msg)
+
+
+@then(r'`([^`]+)` should be present and of non-zero value')
+def then_is_present_and_nonzero(xml, xpath_expression, **kwargs):
+    els = xml.xpath(xpath_expression)
+    if len(els) == 0:
+        msg = '`{}` not found'.format(xpath_expression)
+        raise StepException(xml, msg)
+    for el in els:
+        try:
+            val = el.find('value').text
+        except AttributeError:
+            continue
+        try:
+            floatval = float(val)
+        except ValueError:
+            continue
+        except TypeError:
+            continue
+        if floatval != 0.:
+            return
+    msg = '`{}` should have non-zero value'.format(xpath_expression)
+    raise StepException(xml, msg)
 
 
 @then(r'every `([^`]+)` should be on the ([^ ]+) codelist')
@@ -40,7 +67,7 @@ def then_every_on_codelist(xml, xpath_expression, codelist, **kwargs):
 
     if len(vals) == 0:
         msg = '`{}` not found'.format(xpath_expression)
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     codes = kwargs.get('codelists', {}).get(codelist, [])
 
@@ -59,7 +86,7 @@ def then_every_on_codelist(xml, xpath_expression, codelist, **kwargs):
             isare='is' if len(invalid_vals) == 1 else 'are',
             codelist=codelist,
         )
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     assert(True)
 
@@ -70,7 +97,7 @@ def then_at_least_one_on_codelist(xml, xpath_expression, codelist, **kwargs):
 
     if len(vals) == 0:
         msg = '`{}` not found'.format(xpath_expression)
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     codes = kwargs.get('codelists', {}).get(codelist, [])
 
@@ -84,22 +111,11 @@ def then_at_least_one_on_codelist(xml, xpath_expression, codelist, **kwargs):
         isare='is' if len(vals) == 1 else 'are',
         codelist=codelist,
     )
-    raise StepException(msg)
+    raise StepException(xml, msg)
 
 
 @given(r'the activity is current')
-def given_activity_is_pretend_current(xml, **kwargs):
-    # This is a sneaky hack, just to speed things up.
-    # We actually apply the "then it should be current"
-    # test separately, and filter all activities on
-    # that.
-    #
-    # It's just faster that way.
-    pass
-
-
-@then(r'it should be current')
-def then_activity_is_really_current(xml, **kwargs):
+def given_activity_is_current(xml, **kwargs):
     try:
         given_is_const(xml, 'activity-status/@code', '2')
         return
@@ -141,7 +157,7 @@ def then_activity_is_really_current(xml, **kwargs):
             pass
 
     msg = 'Activity is not current'
-    raise StepException(msg)
+    raise StepException(xml, msg)
 
 
 @then(r'`([^`]+)` should have at least (\d+) characters')
@@ -150,9 +166,9 @@ def then_at_least_x_chars(xml, xpath_expression, reqd_chars, **kwargs):
     vals = xml.xpath(xpath_expression)
     if len(vals) == 0:
         msg = '`{}` not found'.format(xpath_expression)
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
-    most_chars, most_str = max([(len(val), val) for val in vals])
+    most_chars, most_str = max([(len(val.strip()), val) for val in vals])
     result = most_chars >= reqd_chars
 
     if not result:
@@ -161,7 +177,7 @@ def then_at_least_x_chars(xml, xpath_expression, reqd_chars, **kwargs):
             reqd_chars,
             most_chars,
         )
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
 
 @given(r'`([^`]+)` is one of ((?:\w+, )*\w+ or \w+)')
@@ -184,7 +200,7 @@ def given_is_one_of_consts(xml, xpath_expression, consts, **kwargs):
         consts,
         val,
     )
-    raise StepException(msg)
+    raise StepException(xml, msg)
 
 
 @given(r'`([^`]+)` is not any of ((?:\w+, )*\w+ or \w+)')
@@ -201,7 +217,7 @@ def given_is_not_one_of_consts(xml, xpath_expression, consts, **kwargs):
                 consts,
                 val,
             )
-            raise StepException(msg)
+            raise StepException(xml, msg)
     assert(True)
     return
 
@@ -226,7 +242,7 @@ def given_at_least_x_months_ahead(xml, xpath_expression,
                   xpath_expression,
                   months_ahead,
               )
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     valid_dates = list(filter(
         lambda x: x, [mkdate(date_str) for date_str in dates]))
@@ -240,7 +256,7 @@ def given_at_least_x_months_ahead(xml, xpath_expression,
                   dates[0],
                   months_ahead,
               )
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     max_date = max(valid_dates)
     prefix = ''
@@ -260,7 +276,7 @@ def given_at_least_x_months_ahead(xml, xpath_expression,
             xpath_expression,
             months_ahead,
         )
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
 
 @given(r'`([^`]+)` is less than (\d+) months ago')
@@ -273,7 +289,7 @@ def given_is_less_than_x_months_ago(xml, xpath_expression,
               'not less than {months_ago} months ago'
         msg = msg.format(xpath_expression=xpath_expression,
                          months_ago=months_ago)
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     valid_dates = list(filter(
         lambda x: x, [mkdate(date_str) for date_str in dates]))
@@ -283,7 +299,7 @@ def given_is_less_than_x_months_ago(xml, xpath_expression,
               'months ago'
         msg = msg.format(xpath_expression=xpath_expression,
                          date=dates[0], months_ago=months_ago)
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     max_date = max(valid_dates)
     prefix = ''
@@ -310,7 +326,7 @@ def given_is_less_than_x_months_ago(xml, xpath_expression,
           '{months_ago} months ago'
     msg = msg.format(prefix=prefix, xpath_expression=xpath_expression,
                      max_date=max_date, months_ago=months_ago)
-    raise StepException(msg)
+    raise StepException(xml, msg)
 
 
 @given(r'`([^`]+)` is not ([^ ]+)')
@@ -322,7 +338,7 @@ def given_is_not_const(xml, xpath_expression, const, **kwargs):
                 xpath_expression,
                 const,
             )
-            raise StepException(msg)
+            raise StepException(xml, msg)
     assert(True)
 
 
@@ -341,7 +357,7 @@ def given_is_const(xml, xpath_expression, const, **kwargs):
             const,
             val,
         )
-    raise StepException(msg)
+    raise StepException(xml, msg)
 
 
 @then(r'`([^`]+)` should be available forward (annually|quarterly)')
@@ -395,7 +411,7 @@ def then_is_available_forward(xml, xpath_expression, period, **kwargs):
             return
 
     msg = 'Failed'
-    raise StepException(msg)
+    raise StepException(xml, msg)
 
 
 @then(r'`([^`]+)` should be available (\d+) years? forward')
@@ -421,7 +437,7 @@ def then_is_available_x_years_forward(xml, xpath_expression,
                 return True
 
     msg = 'Failed'
-    raise StepException(msg)
+    raise StepException(xml, msg)
 
 
 @then(r'`([^`]+)` should start with either `([^`]+)` or `([^`]+)`')
@@ -431,7 +447,7 @@ def then_should_start_with_either(xml, xpath_expression1, xpath_expression2,
 
     if len(vals) == 0:
         msg = '`{}` not found'.format(xpath_expression1)
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     target = vals[0]
 
@@ -444,7 +460,7 @@ def then_should_start_with_either(xml, xpath_expression1, xpath_expression2,
     if prefixes == []:
         msg = '`{}` or `{}` not found'.format(
             xpath_expression2, xpath_expression3)
-        raise StepException(msg)
+        raise StepException(xml, msg)
 
     for prefix in prefixes:
         if target.startswith(prefix):
@@ -453,7 +469,7 @@ def then_should_start_with_either(xml, xpath_expression1, xpath_expression2,
 
     msg = '{} doesn\'t start with either `{}` or `{}`'.format(
         target, xpath_expression2, xpath_expression3)
-    raise StepException(msg)
+    raise StepException(xml, msg)
 
 
 @given(r'either `([^`]+)` is present, or `([^`]+)` is one of ' +
