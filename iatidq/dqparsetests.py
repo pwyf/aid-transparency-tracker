@@ -43,6 +43,6 @@ def test_functions():
         step_definitions_file = join('tests', 'step_definitions.py')
         tester = bdd_tester(step_definitions_file)
         foxtests = {
-            test[0]: tester.load_feature(test[1])
+            test[0]: tester.load_feature(test[1]).tests[0]
             for test in tests}
         return foxtests
