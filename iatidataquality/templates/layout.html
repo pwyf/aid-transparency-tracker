@@ -177,6 +177,10 @@
 
   {% if active_page != "index" %}
   <div class="container">
+              <div class="alert alert-danger flashmessage">
+                <strong>IATI data is currently being updated. Don’t panic!</strong> Indicator results will appear here shortly.
+              </div>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
