@@ -215,7 +215,9 @@ def test_packages(organisation_code=None, package_name=None):
     results = db.engine.execute(sql)
     package_names = [row[0] for row in results.fetchall()]
 
-    for package_name in package_names:
+    total_packages = len(package_names)
+    for idx, package_name in enumerate(package_names):
+        print('{} of {}'.format(idx+1, total_packages))
         dirname = app.config.get('DATA_STORAGE_DIR')
         filename = join(dirname, '{}.xml'.format(package_name))
         from iatidq import test_queue
