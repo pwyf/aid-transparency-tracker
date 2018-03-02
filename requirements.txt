@@ -12,7 +12,7 @@ Flask==0.12.2
 Flask-Login==0.4.0
 Flask-Principal==0.4.0
 Flask-SQLAlchemy==2.2
-foxpath==2.0.9
+git+https://github.com/pwyf/bdd-tester.git#egg=bdd-tester
 idna==2.6
 itsdangerous==0.24
 jdcal==1.3

@@ -16,13 +16,14 @@ import traceback
 from lxml import etree
 
 from iatidataquality import db, app
-from . import dqfunctions, dqpackages, dqparsetests, dqprocessing, hardcoded_test, models, package_status, queue, testrun, test_level, test_result
+from . import dqcodelists, dqfunctions, dqpackages, dqparsetests, dqprocessing, hardcoded_test, models, package_status, queue, testrun, test_level, test_result
 
 
 rm_results = app.config["REMOVE_RESULTS"]
 download_queue = 'iati_tests_queue'
 
 missing_result_id = 0
+codelists = dqcodelists.generateCodelists()
 
 
 class InvalidXPath(Exception):
@@ -65,7 +66,7 @@ def _test_elements(test_functions, add_result,
         # FIXME: All tests should really be validated in some way before being
         # entered into the database.
         try:
-            result = test_functions[test_id](xmldata)[0]
+            result = test_functions[test_id](xmldata, codelists=codelists)
             if result is True:
                 return test_result.PASS
             elif result is None:

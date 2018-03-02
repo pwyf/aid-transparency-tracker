@@ -11,9 +11,9 @@ import itertools
 from os.path import join
 import re
 
-from foxpath import Foxpath
+from bdd_tester import bdd_tester
 
-from . import dqcodelists, models, test_level
+from . import models, test_level
 from iatidataquality import db
 
 
@@ -32,7 +32,6 @@ def get_active_tests():
 
 def test_functions():
     with db.session.begin():
-        codelists = dqcodelists.generateCodelists()
         tests = get_active_tests()
         tests = itertools.ifilter(lambda test: test.test_level != test_level.FILE, tests)
         tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
@@ -42,8 +41,8 @@ def test_functions():
             for x in tests]
 
         step_definitions_file = join('tests', 'step_definitions.py')
-        foxpath = Foxpath(step_definitions_file)
+        tester = bdd_tester(step_definitions_file)
         foxtests = {
-            test[0]: foxpath.load_feature(test[1], codelists=codelists)[1][0][1]
+            test[0]: tester.load_feature(test[1])
             for test in tests}
         return foxtests
