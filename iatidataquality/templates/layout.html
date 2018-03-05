@@ -177,10 +177,6 @@
 
   {% if active_page != "index" %}
   <div class="container">
-              <div class="alert alert-danger flashmessage">
-                <strong>Indicator scores are currently being updated. Don’t panic!</strong> Up-to-date figures will appear here soon.
-              </div>
-
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
