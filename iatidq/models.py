@@ -536,6 +536,7 @@ class InfoResult(BaseModel):
     info_id = db.Column(db.Integer, db.ForeignKey('info_type.id', ondelete='CASCADE'), nullable=False)
     organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'))
     result_data = db.Column(db.Float)
+    result_num = db.Column(db.Integer)
 
 class InfoType(BaseModel):
     __tablename__ = 'info_type'

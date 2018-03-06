@@ -309,7 +309,7 @@ def info_result_tuple(ir):
 
     return (ir.Indicator.id,
             {
-            'results_num': 1,
+            'results_num': ir.InfoResult.result_num,
             'results_pct': ir.InfoResult.result_data,
             'indicator': ind,
             'tests': [
@@ -319,7 +319,7 @@ def info_result_tuple(ir):
                         'description': ir.InfoType.description
                         },
                  'results_pct': ir.InfoResult.result_data,
-                 'results_num': 1}
+                 'results_num': ir.InfoResult.result_num}
                 ]
             })
 
