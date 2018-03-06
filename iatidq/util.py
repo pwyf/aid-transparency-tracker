@@ -13,6 +13,7 @@ import json
 import os
 import traceback
 import urllib2
+import ssl
 
 from flask import request, current_app
 
@@ -34,9 +35,13 @@ def ensure_download_dir(directory):
             os.makedirs(directory)
 
 def download_file(url, path):
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
     with open(path, 'w') as localFile:
         req = urllib2.Request(url, headers={'User-Agent': 'PWYF/Aid Transparency Tracker'})
-        webFile = urllib2.urlopen(req)
+        webFile = urllib2.urlopen(req, context=ctx)
         localFile.write(webFile.read())
         webFile.close()
 
