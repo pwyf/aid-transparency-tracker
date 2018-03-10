@@ -204,7 +204,12 @@ def _refresh_packages():
             if [x for x in setup_orgs if package_name.startswith('{}-'.format(x))] == []:
                 continue
         registry = ckanclient.CkanClient(base_location=CKANurl)
-        package = registry.package_entity_get(package_name)
+        while True:
+            try:
+                package = registry.package_entity_get(package_name)
+                break
+            except ckanclient.CkanApiError:
+                pass
 
         refresh_package(package)
         if counter is not None:
