@@ -12,51 +12,48 @@ import StringIO
 from flask import render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
 
-from . import app, db, usermanagement
+from . import db, usermanagement
 from iatidq import dqimportpublisherconditions, dqpublishercondition
 from iatidq.models import Organisation, OrganisationCondition, Test
 
 
-@app.route("/organisation_conditions/clear/")
-@usermanagement.perms_required()
 def organisationfeedback_clear():
     feedback = dqpublishercondition.get_publisher_feedback()
     dqpublishercondition.delete_publisher_feedback(feedback)
     flash('All remaining publisher feedback was successfully cleared', 'warning')
     return redirect(url_for('organisation_conditions'))
 
-@app.route("/organisation_conditions/")
-@app.route("/organisation_conditions/<id>/")
-@usermanagement.perms_required()
+
 def organisation_conditions(id=None):
     if id is not None:
         pc = dqpublishercondition.get_publisher_condition(id)
-        return render_template("organisation_condition.html", pc=pc,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+        return render_template(
+            "organisation_condition.html", pc=pc,
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user)
     else:
         pcs = dqpublishercondition.get_publisher_conditions()
         feedbackconditions = dqpublishercondition.get_publisher_feedback()
         text = ""
         for i, condition in enumerate(feedbackconditions):
-            if i>0: text += "\n"
+            if i > 0:
+                text += "\n"
             text += condition.Organisation.organisation_code + " does not use "
             text += condition.OrganisationConditionFeedback.element + " at "
             text += condition.OrganisationConditionFeedback.where
-        return render_template("organisation_conditions.html", pcs=pcs,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user,
-             feedbackconditions=text)
+        return render_template(
+            "organisation_conditions.html", pcs=pcs,
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user,
+            feedbackconditions=text)
 
-@app.route("/organisation_conditions/<int:id>/delete/")
-@usermanagement.perms_required()
+
 def organisation_condition_delete(id=None):
-    pc = dqpublishercondition.delete_publisher_condition(id)
+    dqpublishercondition.delete_publisher_condition(id)
     flash('Deleted that condition', "success")
     return redirect(url_for('organisation_conditions'))
 
-@app.route("/organisation_conditions/import_feedback/", methods=['POST'])
-@usermanagement.perms_required()
+
 def import_feedback():
     def get_results():
         if request.form.get('feedbacktext'):
@@ -77,12 +74,12 @@ def import_feedback():
         flash('There was an error importing your conditions', "danger")
         return redirect(url_for('import_organisation_conditions'))
 
+
 def update_organisation_condition(pc_id):
     pc = OrganisationCondition.query.filter_by(id=pc_id).first_or_404()
     dqpublishercondition.configure_organisation_condition(pc, request)
 
-@app.route("/organisation_conditions/<id>/edit/", methods=['GET', 'POST'])
-@usermanagement.perms_required()
+
 def organisation_conditions_editor(id=None):
     organisations = Organisation.query.order_by(
         Organisation.organisation_name).all()
@@ -90,7 +87,7 @@ def organisation_conditions_editor(id=None):
     if request.method == 'POST':
         update_organisation_condition(id)
         flash('Updated', "success")
-        return redirect(url_for('organisation_conditions_editor', id=pc.id))
+        return redirect(url_for('organisation_conditions_editor', id=id))
     else:
         pc = OrganisationCondition.query.filter_by(id=id).first_or_404()
         return render_template("organisation_condition_editor.html",
@@ -100,8 +97,7 @@ def organisation_conditions_editor(id=None):
                                admin=usermanagement.check_perms('admin'),
                                loggedinuser=current_user)
 
-@app.route("/organisation_conditions/new/", methods=['GET', 'POST'])
-@usermanagement.perms_required()
+
 def organisation_conditions_new(id=None):
     organisations = Organisation.query.order_by(
         Organisation.organisation_name).all()
@@ -124,6 +120,7 @@ def organisation_conditions_new(id=None):
         return render_template("organisation_condition_editor.html",
                                **template_args)
 
+
 def ipc_step2():
     step = '2'
     if request.method != 'POST':
@@ -138,7 +135,7 @@ def ipc_step2():
 
     results = get_results()
 
-    ## FIXME: duplicate code?
+    # FIXME: duplicate code?
     if results:
         flash('Parsed conditions', "success")
         return render_template(
@@ -150,6 +147,7 @@ def ipc_step2():
     else:
         flash('There was an error importing your conditions', "danger")
         return redirect(url_for('import_organisation_conditions'))
+
 
 def import_pc_row(row):
     def pc_form_value(key):
@@ -171,35 +169,35 @@ def import_pc_row(row):
         if (pc is None):
             pc = OrganisationCondition()
 
-        pc.organisation_id=organisation_id
-        pc.test_id=test_id
+        pc.organisation_id = organisation_id
+        pc.test_id = test_id
         pc.operation = operation
         pc.condition = condition
         pc.condition_value = condition_value
         pc.description = pc_form_value('description')
         db.session.add(pc)
 
+
 def ipc_step3():
-    [ import_pc_row(row) for row in request.form.getlist('include') ]
+    [import_pc_row(row) for row in request.form.getlist('include')]
     flash('Successfully updated organisation conditions', 'success')
     return redirect(url_for('organisation_conditions'))
 
-@app.route("/organisation_conditions/import/step<step>", methods=['GET', 'POST'])
-@app.route("/organisation_conditions/import/", methods=['GET', 'POST'])
-@usermanagement.perms_required()
+
 def import_organisation_conditions(step=None):
     # Step=1: form; submit to step2
     #
-    if (step == '2'):
+    if step == '2':
         return ipc_step2()
-    elif (step=='3'):
+    elif step == '3':
         return ipc_step3()
     else:
-        return render_template("import_organisation_conditions.html",
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+        return render_template(
+            "import_organisation_conditions.html",
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user)
 
-@app.route("/organisation_conditions/export/")
+
 def export_organisation_conditions():
     conditions = db.session.query(
         OrganisationCondition.description).distinct().all()

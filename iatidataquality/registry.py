@@ -9,27 +9,22 @@
 
 from flask import flash, redirect, url_for
 
-from . import app, usermanagement
 from iatidq import dqdownload, dqregistry
 
 
-@app.route("/registry/refresh/")
-@usermanagement.perms_required()
 def registry_refresh():
     dqregistry.refresh_packages()
     return "Refreshed"
 
-@app.route("/registry/download/")
-@usermanagement.perms_required()
+
 def registry_download():
     dqdownload.run()
     return "Downloading"
 
-@app.route("/registry/deleted/")
-@usermanagement.perms_required()
+
 def registry_deleted():
     num_deleted = dqregistry.check_deleted_packages()
-    if num_deleted >0:
+    if num_deleted > 0:
         msg = '%s packages were set to deleted' % num_deleted
     else:
         msg = "No packages were set to deleted"

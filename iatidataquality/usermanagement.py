@@ -158,7 +158,7 @@ def on_identity_loaded(sender, identity):
     for permission in permissions:
         set_permissions(permission)
 
-@app.route("/login/", methods=["GET", "POST"])
+
 def login():
     if request.method == "POST" and "username" in request.form:
         user = models.User.where(username=request.form["username"]).first()
@@ -187,7 +187,7 @@ def login():
              admin=check_perms('admin'),
              loggedinuser=current_user)
 
-@app.route('/logout/')
+
 @login_required
 def logout():
     dqusers.logUserActivity({

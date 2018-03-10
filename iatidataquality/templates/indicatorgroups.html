@@ -32,7 +32,7 @@
 	{% for indicatorgroup in indicatorgroups %}
     <tr>
 	<td>
-        <a href="{{url_for('indicators',
+        <a href="{{url_for('get_indicators',
 				 indicatorgroup=indicatorgroup.name)}}">
 		  {{ indicatorgroup.name }}
 		</a>

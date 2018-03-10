@@ -10,23 +10,21 @@
 from flask import render_template, flash, request
 from flask_login import current_user
 
-from . import app, db, usermanagement
-from iatidq import dqtests, dqaggregationtypes, dqusers
+from . import usermanagement
+from iatidq import dqtests, dqaggregationtypes
 
 
-@app.route("/aggregationtypes/")
-@app.route("/aggregationtypes/<aggregationtype_id>/")
-@usermanagement.perms_required()
 def aggregationtypes(aggregationtype_id=None):
-    ats=dqaggregationtypes.aggregationTypes()
+    ats = dqaggregationtypes.aggregationTypes()
     return render_template("aggregation_types.html", aggregationtypes=ats,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
+
 
 def get_aggregation_type(aggregationtype_id):
     def get_data():
         fields = ['name', 'description', 'test_id', 'test_result']
-        return dict([ (f, request.form.get(f)) for f in fields ])
+        return dict([(f, request.form.get(f)) for f in fields])
 
     if not request.method == 'POST':
         if aggregationtype_id:
@@ -36,7 +34,7 @@ def get_aggregation_type(aggregationtype_id):
             return {}
     else:
         data = get_data()
-        if data['test_id']=="":
+        if data['test_id'] == "":
             data['test_id'] = None
 
         if aggregationtype_id:
@@ -46,9 +44,7 @@ def get_aggregation_type(aggregationtype_id):
         else:
             return dqaggregationtypes.addAggregationType(data)
 
-@app.route("/aggregationtypes/new/", methods=['POST', 'GET'])
-@app.route("/aggregationtypes/<aggregationtype_id>/edit/", methods=['POST', 'GET'])
-@usermanagement.perms_required()
+
 def aggregationtypes_edit(aggregationtype_id=None):
     aggregationtype = get_aggregation_type(aggregationtype_id)
 
@@ -62,5 +58,5 @@ def aggregationtypes_edit(aggregationtype_id=None):
     tests = dqtests.tests()
     return render_template("aggregation_types_edit.html",
                            aggregationtype=aggregationtype, tests=tests,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)

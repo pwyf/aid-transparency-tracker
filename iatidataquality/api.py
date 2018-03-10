@@ -32,6 +32,7 @@ def jsonify(*args, **kwargs):
             indent=None if request.is_xhr else 2, cls=JSONEncoder),
         mimetype='application/json')
 
+
 def support_jsonp(func):
     """Wraps JSONified output for JSONP requests."""
     @wraps(func)
@@ -46,12 +47,14 @@ def support_jsonp(func):
             return func(*args, **kwargs)
     return decorated_function
 
+
 def nocache(f):
     def new_func(*args, **kwargs):
         resp = make_response(f(*args, **kwargs))
         resp.cache_control.no_cache = True
         return resp
     return update_wrapper(new_func, f)
+
 
 class AggregatedTestResults:
     def make_division(self,i):
@@ -71,6 +74,7 @@ class AggregatedTestResults:
     def create_report(self):
         return {"data" : self.aggregate_data(), "x_axis": self.x_axis()}
 
+
 def test_percentages(data):
     packages = set(map(lambda x: x[2], data))
     d = dict(map(lambda x: ((x[2],x[1]),x[0]), data))
@@ -82,6 +86,7 @@ def test_percentages(data):
         except: success = 0
         out[p] =  (float(success)/(fail+success)) * 100
     return out
+
 
 def test_tuples(data):
     packages = set(map(lambda x: x[2], data))
@@ -95,8 +100,10 @@ def test_tuples(data):
         out[p] = (success, fail+success)
     return out
 
+
 def aggregated_test_results(data):
     return AggregatedTestResults(10, test_percentages(data)).create_report()
+
 
 def results_by_org(data, packages):
     tests = test_tuples(data)
@@ -110,11 +117,14 @@ def results_by_org(data, packages):
             package['total'] = 0
     return package_dict
 
-@app.route("/api/")
-def api_index():
-    return jsonify({"packages": url_for("api_packages"), "tests":url_for("tests")})
 
-@app.route("/api/tests/")
+def api_index():
+    return jsonify({
+        "packages": url_for("api_packages"),
+        "tests": url_for("get_tests")
+    })
+
+
 def api_tests():
     session = db.session
     data = session.query(db.func.count(Result.id),
@@ -134,7 +144,7 @@ def api_tests():
             test["percentage_passed"] = ""
     return jsonify({"tests": tests})
 
-@app.route("/api/tests/<test_id>")
+
 def api_test(test_id):
     test = db.session.query(Test).filter(Test.id == test_id).first()
     if test == None:
@@ -142,14 +152,14 @@ def api_test(test_id):
     else:
         return jsonify(test.as_dict())
 
-@app.route("/api/packages/active/")
+
 def api_packages_active():
     data = []
     for package in Package.query.filter_by(active=True).all():
         data.append((package.package_name, package.active))
     return jsonify(data)
 
-@app.route("/api/packages/")
+
 @support_jsonp
 def api_packages():
     packages = db.session.query(Package).all()
@@ -164,7 +174,7 @@ def api_packages():
     return jsonify(
                    aggregated_test_results= aggregated_test_results(data), results_by_org=results_by_org(data, packages))
 
-@app.route("/api/packages/run/<package_id>/")
+
 def api_package_run(package_id):
     try:
         dqdownload.run(package_id)
@@ -173,7 +183,7 @@ def api_package_run(package_id):
         status = "failed"
     return jsonify({"status": status})
 
-@app.route("/api/packages/status/<package_id>/")
+
 @nocache
 def api_package_status(package_id):
     try:
@@ -182,7 +192,7 @@ def api_package_status(package_id):
     except Exception:
         return jsonify({"status":"failed"})
 
-@app.route('/api/packages/<package_name>')
+
 @support_jsonp
 def api_package(package_name):
     package = db.session.query(Package).filter(Package.package_name == package_name).first()
@@ -191,7 +201,7 @@ def api_package(package_name):
     else:
         return jsonify(package.as_dict())
 
-@app.route('/api/publishers/<publisher_id>')
+
 @support_jsonp
 def api_publisher_data(publisher_id):
     url = "http://staging.publishwhatyoufund.org/api/publishers/" + publisher_id
@@ -206,8 +216,7 @@ def api_publisher_data(publisher_id):
     except urllib2.HTTPError, e:
         return jsonify(e)
 
-@app.route('/api/packages/<package_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
-@app.route('/api/packages/<package_name>/tests/<test_id>/activities')
+
 @support_jsonp
 def api_package_activities(package_name, test_id, hierarchy_id=None):
     package = db.session.query(Package).filter(Package.package_name == package_name).first()
@@ -240,8 +249,7 @@ def api_package_activities(package_name, test_id, hierarchy_id=None):
     else:
         return jsonify(test_results)
 
-@app.route('/api/publishers/<packagegroup_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
-@app.route('/api/publishers/<packagegroup_name>/tests/<test_id>/activities')
+
 @support_jsonp
 def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
     if (("offset" in request.args) and (int(request.args['offset'])>=0)):
@@ -302,8 +310,7 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
     else:
         return jsonify({"count": test_count, "results": test_results})
 
-@app.route('/api/organisations/<organisation_code>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
-@app.route('/api/organisations/<organisation_code>/tests/<test_id>/activities')
+
 @support_jsonp
 def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
     if (("offset" in request.args) and (int(request.args['offset'])>=0)):

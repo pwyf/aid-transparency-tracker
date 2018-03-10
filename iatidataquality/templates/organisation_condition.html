@@ -14,14 +14,14 @@
     </tr>
     <tr>
 	<td>Organisation</td>
-	<td><a href="{{url_for('organisations',
+	<td><a href="{{url_for('get_organisations',
 				 organisation_code=pc.organisation_code)}}">
 		{{pc.organisation_name}}</a>
 	</td>
     </tr>
     <tr>
 	<td>Test</td>
-	<td><a href="{{url_for('tests', id=pc.test_id)}}">{{pc.test_name}}</a></td>
+	<td><a href="{{url_for('get_tests', id=pc.test_id)}}">{{pc.test_name}}</a></td>
     </tr>
     <tr>
 	<td>Operation</td>

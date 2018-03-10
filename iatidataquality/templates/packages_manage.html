@@ -62,7 +62,7 @@
       <tr{% if pk.deleted %} class="text-muted"{% endif %}>
 		<td>
 		  <input type="hidden" name="package" value="{{pk.package_name}}" />
-		  <a href="{{url_for('packages', id=pk.package_name)}}">
+		  <a href="{{url_for('get_packages', id=pk.package_name)}}">
 			{{ pk.package_name }}
 		  </a>
 		</td>

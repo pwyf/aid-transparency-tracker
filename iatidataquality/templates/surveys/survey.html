@@ -16,7 +16,7 @@
             </a>
         </div>
     {%endif%}
-    <h1>Survey for <a href="{{url_for('organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
+    <h1>Survey for <a href="{{url_for('get_organisations', organisation_code=organisation.organisation_code)}}">{{organisation.organisation_name}}</a></h1>
     {% if survey %}
     <p class="lead">Survey currently in {{survey.workflow.title}} mode; {{pct_complete|int}}% complete.</p>
     <div class="progress">

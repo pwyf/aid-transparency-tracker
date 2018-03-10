@@ -16,22 +16,22 @@ from iatidq import dqimporttests, dqtests, test_level
 
 test_list_location = "tests/tests.yaml"
 
-@app.route("/tests/")
-@app.route("/tests/<id>/")
-def tests(id=None):
+
+def get_tests(id=None):
     if (id is not None):
         test = dqtests.tests(id)
-        return render_template("test.html", test=test,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+        return render_template(
+            "test.html", test=test,
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user)
     else:
         tests = dqtests.tests()
-        return render_template("tests.html", tests=tests,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+        return render_template(
+            "tests.html", tests=tests,
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user)
 
-@app.route("/tests/<id>/edit/", methods=['GET', 'POST'])
-@usermanagement.perms_required('tests', 'edit', '<id>')
+
 def tests_editor(id=None):
     if (request.method == 'POST'):
         test = dqtests.tests(id)
@@ -48,25 +48,24 @@ def tests_editor(id=None):
             flash("Couldn't update", "danger")
     else:
         test = dqtests.tests(id)
-    return render_template("test_editor.html", test=test,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+    return render_template(
+        "test_editor.html", test=test,
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user)
 
-@app.route("/tests/<id>/delete/")
-@usermanagement.perms_required('tests', 'delete', '<id>')
+
 def tests_delete(id=None):
     if id is not None:
         if dqtests.deleteTest(id):
             flash('Successfully deleted test.', 'success')
         else:
             flash("Couldn't delete test. Maybe results already exist connected with that test?", 'danger')
-        return redirect(url_for('tests', id=id))
+        return redirect(url_for('get_tests', id=id))
     else:
         flash('No test ID provided', 'danger')
-        return redirect(url_for('tests'))
+        return redirect(url_for('get_tests'))
 
-@app.route("/tests/new/", methods=['GET', 'POST'])
-@usermanagement.perms_required('tests', 'new')
+
 @login_required
 def tests_new():
     if (request.method == 'POST'):
@@ -84,12 +83,12 @@ def tests_new():
             flash('Unable to create. Maybe you already have a test using the same expression?', "danger")
     else:
         test = {}
-    return render_template("test_editor.html", test=test,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+    return render_template(
+        "test_editor.html", test=test,
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user)
 
 
-@app.route("/tests/import/", methods=['GET', 'POST'])
 def import_tests():
     if (request.method == 'POST'):
         if (request.form['password'] == app.config["SECRET_PASSWORD"]):
@@ -100,12 +99,13 @@ def import_tests():
                 url = request.form['url']
                 level = int(request.form['level'])
                 result = dqimporttests.importTestsFromUrl(url, level=level)
-            if (result==True):
+            if result is True:
                 flash('Imported tests', "success")
             else:
                 flash('There was an error importing your tests', "danger")
         else:
             flash('Wrong password', "danger")
-    return render_template("import_tests.html",
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+    return render_template(
+        "import_tests.html",
+        admin=usermanagement.check_perms('admin'),
+        loggedinuser=current_user)

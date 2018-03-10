@@ -10,9 +10,8 @@
 from datetime import datetime
 import os
 
-from flask import abort, render_template, flash, request, Markup, redirect, url_for
+from flask import abort, render_template, flash, request, redirect, url_for
 from flask_login import current_user
-import markdown
 
 from . import app, usermanagement
 from iatidq import dqindicators, dqorganisations, dqusers, donorresponse, util
@@ -21,22 +20,20 @@ import iatidq.survey.mapping
 from iatidq.models import Organisation, Workflow
 
 
-@app.route("/surveys/admin/")
-@usermanagement.perms_required()
 def surveys_admin():
     surveys = dqsurveys.surveys()
     workflows = Workflow.all()
-    publishedstatuses=dqsurveys.publishedStatus()
+    publishedstatuses = dqsurveys.publishedStatus()
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
 
     return render_template("surveys/surveys_admin.html",
                            **locals())
 
-@app.route("/surveys/create/", methods=["GET", "POST"])
-@app.route("/surveys/<organisation_code>/create/", methods=["GET", "POST"])
+
 def create_survey(organisation_code=None):
     return "You're trying to create a survey"
+
 
 def completion_percentage(survey):
     stages = ['researcher', 'send', 'donorreview', 'pwyfreview',
@@ -47,21 +44,22 @@ def completion_percentage(survey):
 
     return 100. * idx / (len(stages) - 1)
 
-@app.route("/organisations/<organisation_code>/survey/repair/")
-@usermanagement.perms_required('survey', 'view')
+
 def organisation_survey_repair(organisation_code):
     status = dqsurveys.repairSurveyData(organisation_code)
-    if status['changes'] == True:
+    if status['changes'] is True:
         indicators = ", ".join(status['changed_indicators'])
         flash('Survey successfully repaired indicators '+indicators, 'success')
     else:
         flash('Survey could not be repaired', 'danger')
-    return redirect(url_for('organisation_survey', organisation_code=organisation_code))
+    return redirect(url_for(
+        'organisation_survey',
+        organisation_code=organisation_code))
 
-@app.route("/organisations/<organisation_code>/survey/")
-@usermanagement.perms_required('survey', 'view')
+
 def organisation_survey(organisation_code=None):
-    organisation = Organisation.where(organisation_code=organisation_code).first()
+    organisation = Organisation.where(
+        organisation_code=organisation_code).first()
     if not organisation:
         return abort(404)
 
@@ -76,7 +74,8 @@ def organisation_survey(organisation_code=None):
     loggedinuser = current_user
     checksurveyOK = dqsurveys.checkSurveyData(organisation_code)
 
-    return render_template("surveys/survey.html",
+    return render_template(
+        "surveys/survey.html",
         survey=survey,
         surveydata=surveydata,
         workflows=workflows,
@@ -89,6 +88,7 @@ def organisation_survey(organisation_code=None):
         admin=admin,
     )
 
+
 def getTimeRemainingNotice(deadline):
     # Skip this for now
     return ""
@@ -99,6 +99,7 @@ def getTimeRemainingNotice(deadline):
     else:
         return "Today is the last day for making any changes to your survey."
 
+
 def __survey_process(organisation, workflow, request,
                      organisationsurvey, published_accepted):
 
@@ -106,7 +107,6 @@ def __survey_process(organisation, workflow, request,
     form_indicators = map(int, request.form.getlist('indicator'))
 
     workflow_id = workflow.id
-    currentworkflow_deadline = organisationsurvey.currentworkflow_deadline
 
     for indicator in indicators:
         data = {
@@ -120,7 +120,7 @@ def __survey_process(organisation, workflow, request,
             data['published_status_id'] = dqsurveys.publishedStatusByName('always').id
             data['published_format_id'] = dqsurveys.publishedFormatByName('iati').id
         else:
-            data['published_status_id'] = request.form.get(str(indicator.id)+"-published")
+            data['published_status_id'] = request.form.get(str(indicator.id) + "-published")
 
             if indicator.indicator_noformat:
                 data['published_format_id'] = dqsurveys.publishedFormatByName('document').id
@@ -140,7 +140,7 @@ def __survey_process(organisation, workflow, request,
 
     if 'submit' in request.form:
         if workflow.id == organisationsurvey.currentworkflow_id:
-        # save data, advance currentworkflow_id to next workflow
+            # save data, advance currentworkflow_id to next workflow
             dqsurveys.advanceSurvey(organisationsurvey)
             flash('Successfully submitted survey data', 'success')
         else:
@@ -152,18 +152,22 @@ def __survey_process(organisation, workflow, request,
         flash('Note: your survey has not yet been submitted. '
               + time_remaining_notice, 'warning')
 
+
 none = lambda i: None
 add_agree = lambda indicator: request.form.get(indicator + "-agree")
+
 
 def _survey_process_collect(organisation, workflow,
                             request, organisationsurvey):
     return __survey_process(organisation, workflow,
                             request, organisationsurvey, none)
 
+
 def _survey_process_review(organisation, workflow,
                            request, organisationsurvey):
     return __survey_process(organisation, workflow,
                             request, organisationsurvey, none)
+
 
 def _survey_process_finalreview(organisation, workflow,
                                 request, organisationsurvey):
@@ -171,19 +175,20 @@ def _survey_process_finalreview(organisation, workflow,
                             organisationsurvey,
                             add_agree)
 
+
 def _survey_process_comment(organisation, workflow,
                             request, organisationsurvey):
     return __survey_process(organisation, workflow,
                             request, organisationsurvey,
                             add_agree)
 
-def _survey_process_send(organisation, workflow, request, organisationsurvey):
-    indicators = request.form.getlist('indicator')
 
-    #FIXME: need to actually send
+def _survey_process_send(organisation, workflow, request, organisationsurvey):
+    # FIXME: need to actually send
 
     dqsurveys.advanceSurvey(organisationsurvey)
     flash('Successfully sent survey to donor.', 'success')
+
 
 def get_old_publication_status():
     pses = [
@@ -203,10 +208,13 @@ def get_old_publication_status():
             })
     return dict(map(struct, pses))
 
+
 id_tuple = lambda p: (p.id, p)
 
+
 def organisation_survey_view(organisation, workflow, organisationsurvey):
-    surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)
+    surveydata = dqsurveys.getSurveyDataAllWorkflows(
+        organisation.organisation_code)
 
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
     org_indicators = dqorganisations._organisation_indicators_split(
@@ -218,7 +226,7 @@ def organisation_survey_view(organisation, workflow, organisationsurvey):
         )
 
     publishedstatuses = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats  = dict(map(id_tuple, dqsurveys.publishedFormatAll()))
+    publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatAll()))
     year_data = dqorganisations.get_ordinal_values_years()
 
     years = sorted(year_data.items(), reverse=True)
@@ -231,20 +239,25 @@ def organisation_survey_view(organisation, workflow, organisationsurvey):
     admin = usermanagement.check_perms('admin')
     loggedinuser = current_user
 
-    org_indicators['commitment'] = util.resort_sqlalchemy_indicator(org_indicators['commitment'])
-    org_indicators['zero'] = util.resort_dict_indicator(org_indicators['zero'])
-    org_indicators['grouped_zero'] = util.group_by_subcategory(org_indicators['zero'])
+    org_indicators['commitment'] = util.resort_sqlalchemy_indicator(
+        org_indicators['commitment'])
+    org_indicators['zero'] = util.resort_dict_indicator(
+        org_indicators['zero'])
+    org_indicators['grouped_zero'] = util.group_by_subcategory(
+        org_indicators['zero'])
 
     ati_year = app.config['ATI_YEAR']
 
-    tmpl_name = os.path.join('surveys', '_survey_{}.html'.format(workflow.workflow_type.name))
+    tmpl_name = os.path.join('surveys', '_survey_{}.html'.format(
+        workflow.workflow_type.name))
     return render_template(tmpl_name, **locals())
 
-@app.route("/organisations/<organisation_code>/survey/<workflow_name>/", methods=["GET", "POST"])
+
 def organisation_survey_edit(organisation_code=None, workflow_name=None):
     workflow = Workflow.where(name=workflow_name).first_or_404()
 
-    organisation = Organisation.where(organisation_code=organisation_code).first_or_404()
+    organisation = Organisation.where(
+        organisation_code=organisation_code).first_or_404()
     organisationsurvey = dqsurveys.getOrCreateSurveyByOrgId(organisation.id)
 
     def allowed(method):
@@ -298,5 +311,5 @@ def organisation_survey_edit(organisation_code=None, workflow_name=None):
             organisation, workflow, request, organisationsurvey)
     elif workflow_type_name == 'finalised':
         return "finalised"
-    return redirect(url_for("organisations",
+    return redirect(url_for('get_organisations',
                             organisation_code=organisation_code))

@@ -35,14 +35,14 @@
             <td><input type="hidden"
 					   name="pc[{{num}}{{loop.index}}][organisation_id]"
 					   value="{{result.organisation.id}}"/>
-			  <a href="{{url_for('organisations',
+			  <a href="{{url_for('get_organisations',
 					   organisation_code=result.organisation.organisation_code)}}">
 				{{result.organisation.organisation_name}}</a>
 			</td>
 
             <td><input type="hidden" name="pc[{{num}}{{loop.index}}][test_id]"
 					   value="{{test.id}}"/>
-			  <a href="{{url_for('tests', id=test.id)}}">{{test.name}}</a>
+			  <a href="{{url_for('get_tests', id=test.id)}}">{{test.name}}</a>
 			</td>
 
             <td><input type="hidden"

@@ -28,7 +28,7 @@
     <tbody>
 	{% for t in tests %}
     <tr>
-	<td><a href="{{url_for('tests', id=t.id)}}">{{ t.id }}</a></td>
+	<td><a href="{{url_for('get_tests', id=t.id)}}">{{ t.id }}</a></td>
     <td>{{ t.name }}</td>
     <td>{{ t.description }}</td>
     <td>

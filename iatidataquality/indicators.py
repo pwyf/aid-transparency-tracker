@@ -7,7 +7,6 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import json
 import StringIO
 
 from flask import abort, render_template, flash, request, redirect, url_for, send_file
@@ -18,12 +17,10 @@ from . import app, usermanagement
 from iatidq import dqindicators, dqorganisations, models, util
 
 
-@app.route("/indicators/")
 def indicatorgroups():
-    return redirect(url_for('indicators', indicatorgroup=app.config["INDICATOR_GROUP"]))
+    return redirect(url_for('get_indicators', indicatorgroup=app.config["INDICATOR_GROUP"]))
 
-@app.route("/indicators/import/")
-@usermanagement.perms_required()
+
 def indicators_import():
     if dqindicators.importIndicators():
         flash('Successfully imported your indicators', 'success')
@@ -31,8 +28,7 @@ def indicators_import():
         flash('Could not import your indicators', 'danger')
     return redirect(url_for('indicatorgroups'))
 
-@app.route("/indicators/<indicatorgroup>/edit/", methods=['GET', 'POST'])
-@usermanagement.perms_required()
+
 def indicatorgroups_edit(indicatorgroup=None):
     if (request.method == 'POST'):
         data = {
@@ -43,19 +39,18 @@ def indicatorgroups_edit(indicatorgroup=None):
         flash('Successfully updated IndicatorGroup', 'success')
     else:
         indicatorgroup = dqindicators.indicatorGroups(indicatorgroup)
-    return render_template("indicatorgroups_edit.html", indicatorgroup=indicatorgroup,
-                 admin=usermanagement.check_perms('admin'),
-                 loggedinuser=current_user)
+    return render_template("indicatorgroups_edit.html",
+                           indicatorgroup=indicatorgroup,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
-@app.route("/indicators/<indicatorgroup>/delete/")
-@usermanagement.perms_required()
+
 def indicatorgroups_delete(indicatorgroup=None):
     indicatorgroup = dqindicators.deleteIndicatorGroup(indicatorgroup)
     flash('Successfully deleted IndicatorGroup', 'success')
     return redirect(url_for('indicatorgroups'))
 
-@app.route("/indicators/new/", methods=['GET', 'POST'])
-@usermanagement.perms_required()
+
 def indicatorgroups_new():
     if (request.method == 'POST'):
         data = {
@@ -70,14 +65,12 @@ def indicatorgroups_new():
     else:
         indicatorgroup = None
     return render_template("indicatorgroups_edit.html",
-                         indicatorgroup=indicatorgroup,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+                           indicatorgroup=indicatorgroup,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
 
-@app.route("/indicators/<indicatorgroup>/comparison/<indicator>")
 def indicators_comparison(indicatorgroup, indicator):
-
     indicator = dqindicators.getIndicatorByName(indicator)
     organisations = models.Organisation.sort('organisation_name').all()
 
@@ -87,8 +80,7 @@ def indicators_comparison(indicatorgroup, indicator):
                            organisations=organisations)
 
 
-@app.route("/indicators/<indicatorgroup>/")
-def indicators(indicatorgroup=None):
+def get_indicators(indicatorgroup=None):
     indicators = dqindicators.indicatorsTests(indicatorgroup)
     if not indicators:
         return abort(404)
@@ -151,8 +143,6 @@ def indicators(indicatorgroup=None):
                            **json_data)
 
 
-@app.route("/indicators/<indicatorgroup>_tests.csv")
-@app.route("/indicators/<indicatorgroup>_<option>tests.csv")
 def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
     strIO = StringIO.StringIO()
     if (option != "no"):
@@ -184,8 +174,7 @@ def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
                      attachment_filename=indicatorgroup + "_" + option + "tests.csv",
                      as_attachment=True)
 
-@app.route("/indicators/<indicatorgroup>/new/", methods=['GET', 'POST'])
-@usermanagement.perms_required()
+
 def indicators_new(indicatorgroup=None):
     indicatorgroups = dqindicators.indicatorGroups()
     if (request.method == 'POST'):
@@ -210,13 +199,12 @@ def indicators_new(indicatorgroup=None):
     else:
         indicator = None
     return render_template("indicator_edit.html",
-                         indicatorgroups=indicatorgroups,
-                         indicator=indicator,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+                           indicatorgroups=indicatorgroups,
+                           indicator=indicator,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
-@app.route("/indicators/<indicatorgroup>/<indicator>/edit/", methods=['GET', 'POST'])
-@usermanagement.perms_required()
+
 def indicators_edit(indicatorgroup=None, indicator=None):
     indicatorgroups = dqindicators.indicatorGroups()
     if (request.method == 'POST'):
@@ -238,19 +226,18 @@ def indicators_edit(indicatorgroup=None, indicator=None):
     else:
         indicator = dqindicators.indicators(indicatorgroup, indicator)
     return render_template("indicator_edit.html",
-                         indicatorgroups=indicatorgroups,
-                         indicator=indicator,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+                           indicatorgroups=indicatorgroups,
+                           indicator=indicator,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
-@app.route("/indicators/<indicatorgroup>/<indicator>/delete/")
-@usermanagement.perms_required()
+
 def indicators_delete(indicatorgroup=None, indicator=None):
     indicator = dqindicators.deleteIndicator(indicatorgroup, indicator)
     flash('Successfully deleted Indicator', 'success')
-    return redirect(url_for('indicators', indicatorgroup=indicatorgroup))
+    return redirect(url_for('get_indicators', indicatorgroup=indicatorgroup))
 
-@app.route("/indicators/<indicatorgroup>/<indicator>/", methods=['GET', 'POST'])
+
 def indicatortests(indicatorgroup=None, indicator=None):
     alltests = dqindicators.allTests()
     indicator = dqindicators.indicators(indicatorgroup, indicator)
@@ -267,15 +254,14 @@ def indicatortests(indicatorgroup=None, indicator=None):
                 flash("Couldn't add test to your indicator.", 'danger')
     indicatortests = dqindicators.indicatorTests(indicatorgroup.name, indicator.name)
     return render_template("indicatortests.html",
-                         indicatorgroup=indicatorgroup,
-                         indicator=indicator,
-                         indicatortests=indicatortests,
-                         alltests=alltests,
-                         admin=usermanagement.check_perms('admin'),
-                         loggedinuser=current_user)
+                           indicatorgroup=indicatorgroup,
+                           indicator=indicator,
+                           indicatortests=indicatortests,
+                           alltests=alltests,
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user)
 
-@app.route("/indicators/<indicatorgroup>/<indicator>/<indicatortest>/delete/")
-@usermanagement.perms_required()
+
 def indicatortests_delete(indicatorgroup=None, indicator=None, indicatortest=None):
     if dqindicators.deleteIndicatorTest(indicatortest):
         flash('Successfully removed test from indicator ' + indicator + '.', 'success')

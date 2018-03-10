@@ -13,8 +13,6 @@ import unicodecsv
 
 from iatidataquality import app, db
 from . import dqindicators, models, summary
-# FIXME: relative import to work around circular dependency
-import dqpackages
 
 
 def checkCondition(row):
@@ -107,6 +105,8 @@ def downloadOrganisationFrequency():
     return _updateOrganisationFrequency(fh)
 
 def _updateOrganisationFrequency(fh):
+    # FIXME: relative import to work around circular dependency
+    from . import dqpackages
 
     def get_frequency():
         rows = unicodecsv.DictReader(fh)

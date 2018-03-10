@@ -22,10 +22,10 @@
 
     <ul class="breadcrumb">
       <li>
-		<a href="{{url_for('organisations')}}">Organisations</a>
+		<a href="{{url_for('get_organisations')}}">Organisations</a>
 		<span class="divider"></span></li>
       <li>
-		<a href="{{url_for('organisations',
+		<a href="{{url_for('get_organisations',
 				   organisation_code=organisation.organisation_code)}}">
 		  {{organisation.organisation_name}}</a>
 		<span class="divider"></span>
@@ -210,7 +210,7 @@
     {% for pp in organisationpackages %}
     <tr{% if pp.Package.deleted %} class="text-muted"{% endif %}>
     <td>
-	  <a href="{{url_for('packages',
+	  <a href="{{url_for('get_packages',
 			   package_name=pp.Package.package_name)}}">
 		{{pp.Package.package_name}}</a>
 	</td>

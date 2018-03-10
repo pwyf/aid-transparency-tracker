@@ -20,17 +20,5 @@ db = SQLAlchemy(app, session_options={"autocommit": True})
 
 from . import tmpl_filters
 from . import usermanagement
-from . import api
 from . import routes
-from . import publisher_conditions
-from . import tests
-from . import organisations
-from . import organisations_feedback
-from . import registry
-from . import packages
-from . import indicators
-from . import aggregationtypes
-from . import surveys
-from . import users
-from . import sampling
 from . import cli

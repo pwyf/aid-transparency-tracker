@@ -38,10 +38,10 @@
       {% for s in samples %}
         <tr>
           <td>
-          <a href="{{url_for('sampling', uuid=s.sample.sampling_id) }}">{{ s.sample.iati_identifier }}</a>
+          <a href="{{url_for('sampling_sample', uuid=s.sample.sampling_id) }}">{{ s.sample.iati_identifier }}</a>
         </td>
         <td>
-          <a href="{{url_for('sampling', uuid=s.sample.sampling_id) }}">{{ s.sample.activity_title }}</a>
+          <a href="{{url_for('sampling_sample', uuid=s.sample.sampling_id) }}">{{ s.sample.activity_title }}</a>
         </td>
         <td>
           <span class="label label-{{ s.response.class }}"><i class="glyphicon glyphicon-{{ s.response.icon }}"></i> {{ s.response.button }}</span>

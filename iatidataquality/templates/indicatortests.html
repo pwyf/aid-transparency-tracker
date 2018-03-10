@@ -13,7 +13,7 @@
 
 	<h1>Indicator {{indicator.description}}
 	  <code>
-		<a href="{{url_for('indicators', indicatorgroup=indicatorgroup.name)}}">
+		<a href="{{url_for('get_indicators', indicatorgroup=indicatorgroup.name)}}">
 		  {{indicatorgroup.name}}
 		</a>/{{indicator.name}}</code>
 	</h1>

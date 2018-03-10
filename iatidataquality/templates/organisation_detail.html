@@ -20,7 +20,7 @@
         </button>
     </div>
 	<h1>
-	  <a href="{{url_for('organisations',
+	  <a href="{{url_for('get_organisations',
 			   organisation_code=organisation.organisation_code)}}">
 		{{organisation.organisation_name}}
 	  </a> &raquo; Detailed view
@@ -36,7 +36,7 @@
 	{% for pk in packages %}
     <tr>
 	  <td>
-		<a href="{{url_for('packages',
+		<a href="{{url_for('get_packages',
 				 package_name=pk.Package.package_name)}}">
 		  {{ pk.Package.package_name }}
 	    </a>

@@ -25,7 +25,7 @@
     <tr><td>Organisations</td>
         <td>
         {% for organisation in organisations %}
-        <a href="{{url_for('organisations',
+        <a href="{{url_for('get_organisations',
 			 organisation_code=organisation.Organisation.organisation_code)}}">
 		  {{organisation.Organisation.organisation_name}}</a>
         {% endfor %}

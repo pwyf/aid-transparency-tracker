@@ -200,8 +200,6 @@ def make_simple_sample_json(work_item):
     return data
 
 
-@app.route("/api/sample/process/", methods=['POST'])
-@usermanagement.perms_required()
 def api_sampling_process():
     data = request.form
     try:
@@ -237,9 +235,6 @@ def api_sampling_process():
     return jsonify(payload)
 
 
-@app.route("/api/sample/")
-@app.route("/api/sample/<uuid>/")
-@usermanagement.perms_required()
 def api_sampling(uuid=None):
     if not uuid:
         try:
@@ -260,8 +255,6 @@ def api_sampling(uuid=None):
     return jsonify(results)
 
 
-@app.route("/samples/")
-@usermanagement.perms_required()
 def sampling_list():
     do_redirect = False
     all_orgs = sample_work.all_orgs()
@@ -302,8 +295,6 @@ def sampling_list():
     )
 
 
-@app.route("/samples/summary/")
-@usermanagement.perms_required()
 def sampling_summary():
     orgtests = sample_db.get_total_results()
     data = sample_db.get_summary_org_test(orgtests)
@@ -320,8 +311,6 @@ def sampling_summary():
         pct_complete=pct_complete)
 
 
-@app.route("/sample/<uuid>/")
-@usermanagement.perms_required()
 def sampling(uuid):
     api_sampling_url = url_for('api_sampling', uuid=uuid)
 

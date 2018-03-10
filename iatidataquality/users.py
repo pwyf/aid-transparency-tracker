@@ -10,29 +10,27 @@
 from flask import render_template, flash, request, redirect, url_for
 from flask_login import current_user
 
-from . import app, usermanagement
+from . import usermanagement
 from iatidq import dqusers, models, util
 
 
-@app.route("/users/")
-@app.route("/user/<username>/")
-@usermanagement.perms_required()
-def users(username=None):
+def get_users(username=None):
     if username:
         return redirect(url_for('users_edit', username=username))
     else:
         users = models.User.all()
-        return render_template("users.html", users=users,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+        return render_template(
+            "users.html", users=users,
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user)
+
 
 def returnOrNone(value):
-    if (value ==''):
+    if (value == ''):
         return None
     return value
 
-@app.route("/users/<username>/edit/addpermission/", methods=['POST'])
-@usermanagement.perms_required()
+
 def users_edit_addpermission(username):
     user = models.User.where(username=username).first()
     data = {
@@ -47,8 +45,7 @@ def users_edit_addpermission(username):
     else:
         return util.jsonify({"error": "Could not add permission"})
 
-@app.route("/users/<username>/edit/deletepermission/", methods=['POST'])
-@usermanagement.perms_required()
+
 def users_edit_deletepermission(username):
     permission_id = request.form['permisison_id']
     permission = dqusers.deleteUserPermission(permission_id)
@@ -57,9 +54,7 @@ def users_edit_deletepermission(username):
     else:
         return util.jsonify({"error": "Could not delete permission"})
 
-@app.route("/users/new/", methods=['POST', 'GET'])
-@app.route("/users/<username>/edit/", methods=['POST', 'GET'])
-@usermanagement.perms_required()
+
 def users_edit(username=None):
     user = {}
     permissions = {}
@@ -100,16 +95,15 @@ def users_edit(username=None):
     return render_template("users_edit.html",
                            user=user,
                            permissions=permissions,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user,
-             organisations=organisations)
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user,
+                           organisations=organisations)
 
-@app.route("/users/<username>/delete/")
-@usermanagement.perms_required()
+
 def users_delete(username=None):
     if username:
-        user = dqusers.deleteUser(username)
+        dqusers.deleteUser(username)
         flash('Successfully deleted user.', 'success')
     else:
         flash('No username provided.', 'danger')
-    return redirect(url_for('users'))
+    return redirect(url_for('get_users'))

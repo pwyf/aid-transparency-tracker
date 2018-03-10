@@ -6,7 +6,7 @@
 {% block content %}
 
 	<h1>Organisation:
-	  <a href="{{url_for('organisations',
+	  <a href="{{url_for('get_organisations',
 			   organisation_code=organisation.organisation_code)}}">
 		{{organisation.organisation_name}}</a>
 	  <code>{{organisation.organisation_code}}</code>

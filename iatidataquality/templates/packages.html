@@ -26,7 +26,7 @@
 			<td>
 			  <input type="hidden" name="package"
 					 value="{{package.package_name}}" />
-			  <a href="{{url_for('packages',
+			  <a href="{{url_for('get_packages',
 					   package_name=package.package_name)}}">
 				{{ package.package_name }}</a>
 			</td>
