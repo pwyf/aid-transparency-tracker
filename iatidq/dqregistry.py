@@ -221,8 +221,7 @@ def matching_packages(regexp):
         yield package["name"]
 
 def refresh_packages():
-    with util.report_error(None, "Couldn't open Registry"):
-        return _refresh_packages()
+    return _refresh_packages()
 
 def activate_packages(data, clear_revision_id=None):
     with db.session.begin():
