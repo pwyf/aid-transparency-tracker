@@ -64,7 +64,7 @@ def make_sample_json(work_item):
             document_category_codes = dqcodelists.reformatCodelist(
                 'DocumentCategory')
             document_links = sample_work.DocumentLinks(
-                work_item["xml_data"],
+                xml,
                 document_category_codes)
             docs = [dl.to_dict() for dl in document_links.get_links()]
             return docs
