@@ -78,6 +78,8 @@ def check_perms(name, method=None, kwargs=None):
     if role_permission('super').can():
         return True
 
+    return False
+
     edit_methods = ['edit', 'delete']
 
     if not name:
@@ -124,7 +126,7 @@ def perms_required(name=None, method=None, value=None):
         @wraps(f)
         def wrapped_f(*args, **kwargs):
             if not check_perms(name, method, kwargs):
-                flash('You must log in to access that page.', 'danger')
+                flash('We\'re currently making updates.', 'danger')
                 return redirect(url_for('login', next=request.path))
             return f(*args, **kwargs)
         return wrapped_f
