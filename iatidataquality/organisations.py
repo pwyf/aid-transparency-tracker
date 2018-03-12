@@ -196,7 +196,7 @@ id_tuple = lambda x: (x.id, x.as_dict())
 name_tuple = lambda x: (x.name, x.as_dict())
 
 
-def organisation_publication_authorised(organisation_code, aggregation_type):
+def organisation_publication(organisation_code, aggregation_type):
     aggregation_type = integerise(request.args.get('aggregation_type', 2))
     all_aggregation_types = dqaggregationtypes.allAggregationTypes()
 
@@ -404,129 +404,6 @@ def organisation_publication_authorised(organisation_code, aggregation_type):
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,
                            **payload)
-
-
-# this function is unacceptably long; it really wants to be a class
-def organisation_publication_unauthorised(organisation_code, aggregation_type):
-    aggregation_type = integerise(request.args.get('aggregation_type', 2))
-    all_aggregation_types = dqaggregationtypes.aggregationTypes()
-
-    organisation = Organisation.query.filter_by(
-        organisation_code=organisation_code).first_or_404()
-
-    aggregate_results = dqorganisations._organisation_indicators_complete_split(
-        organisation, aggregation_type)
-
-    packages = dqorganisations.organisationPackages(organisation_code)
-
-    org_indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
-
-    lastyearsdata = iatidq.survey.mapping.get_organisation_results(
-        organisation_code,
-        [i.name for i in org_indicators]
-        )
-
-    publishedformats = dict(map(name_tuple, dqsurveys.publishedFormatsAll()))
-
-    def annotate(res):
-        tmp = dict(res)
-        name = res["indicator"]["name"]
-        lyd = lastyearsdata[name]
-        tmp["lastyearsdata"] = lyd
-        tmp["lastyearsdata_iati"] = lyd["iati_manual"] == "iati"
-        tmp["lastyearsdata_manual"] = lyd["iati_manual"] == "manual"
-
-        def format_and_title():
-            if float(lyd["total_points"]) > 0:
-                if tmp["lastyearsdata_iati"]:
-                    return ("success", "IATI")
-                else:
-                    pub_format = publishedformats[lyd["publication_format"]]
-                    return (pub_format["format_class"],
-                            pub_format["title"])
-            elif lyd["publication_status"] == "sometimes":
-                return ("default", "Sometimes published")
-            else:
-                return ("inverse", "Not published")
-
-        ly_format, ly_title = format_and_title()
-        tmp["lastyearsdata_format"] = ly_format
-        tmp["lastyearsdata_title"] = ly_title
-
-        tmp["uses_iati"] = res.get("results_pct", 0) > 0
-
-        return tmp
-
-    result = {
-        "commitment": map(annotate,
-                          util.resort_sqlalchemy_indicator(
-                aggregate_results['commitment']).values()),
-        "publication_organisation": map(annotate,
-                                        util.resort_dict_indicator(
-                aggregate_results['publication_organisation']).values()),
-        "publication_activity": map(annotate,
-                                    util.resort_dict_indicator(
-                aggregate_results['publication_activity']).values())
-        }
-
-    published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
-
-    published_status_by_id[None] = {
-        'name': 'Unknown',
-        'publishedstatus_class': 'label-inverse'
-        }
-
-    publishedformats[None] = {
-        'name': 'Unknown',
-        'format_class': 'label-inverse'
-        }
-
-    latest_runtime=1
-
-    years = dqorganisations.get_ordinal_values_years()
-
-    payload = {
-        "links": {
-            "login": url_for('login', next='/organisations/'
-                             + organisation.organisation_code
-                             + '/publication'),
-            "orgpage": url_for('get_organisations', organisation_code=organisation.organisation_code)
-            },
-        "organisation": organisation.as_dict(),
-        "result": result
-        }
-
-    json_data = json.dumps(payload, indent=2)
-
-    return render_template("organisation_index_publication.html",
-                           organisation=organisation,
-                           results=aggregate_results,
-                           all_aggregation_types=all_aggregation_types,
-                           aggregation_type=aggregation_type,
-                           packages=packages,
-                           admin=usermanagement.check_perms('admin'),
-                           loggedinuser=current_user,
-                           lastyearsdata=lastyearsdata,
-                           publishedformats=publishedformats,
-                           ati_year=app.config['ATI_YEAR'],
-                           years=years,
-                           json_data=json_data,
-                           old_publication_status=surveys.get_old_publication_status())
-
-
-def organisation_publication(organisation_code=None, aggregation_type=2):
-    check_perms = usermanagement.check_perms(
-        'organisation', 'view', {'organisation_code': organisation_code}
-        )
-
-    if check_perms:
-        return organisation_publication_authorised(
-            organisation_code,
-            aggregation_type)
-    else:
-        return organisation_publication_unauthorised(
-            organisation_code,
-            aggregation_type)
 
 
 def _organisation_publication_detail(organisation_code, aggregation_type,

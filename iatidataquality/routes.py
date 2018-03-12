@@ -338,6 +338,7 @@ def organisation_new():
 
 
 @app.route("/organisations/<organisation_code>/publication/")
+@usermanagement.perms_required('organisation', 'view')
 def organisation_publication(organisation_code=None, aggregation_type=2):
     return organisations.organisation_publication(organisation_code, aggregation_type)
 
