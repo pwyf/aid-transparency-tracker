@@ -133,6 +133,7 @@ def make_sample_json(work_item):
 
     data = { "sample": {
                 "iati-identifier": work_item["activity_id"],
+                "package_id": work_item["package_id"],
                 "documents": docs,
                 "locations": locs,
                 "results": res,
