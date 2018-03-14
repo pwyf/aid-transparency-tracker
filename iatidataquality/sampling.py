@@ -190,6 +190,7 @@ def make_simple_sample_json(work_item):
             "organisation_code": work_item_org.organisation_code,
         },
         "unsure": work_item["unsure"],
+        "comment": work_item["comment"],
         "response": {}
     }
     if 'response' in work_item:

@@ -33,9 +33,10 @@
     <table class="table" id="samples">
       <thead>
         <th width="10%">IATI ID</th>
-        <th width="65%">Title</th>
+        <th width="55%">Title</th>
         <th width="15%">Response</th>
         <th width="10%">Unsure</th>
+        <th width="10%">Comments</th>
       </thead>
       <tbody>
       {% for s in samples %}
@@ -52,6 +53,11 @@
         <td>
           {% if s.unsure %}
           <span class="label label-danger"><i class="glyphicon glyphicon-white glyphicon-info-sign"></i> Unsure</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if s.comment %}
+          <i class="glyphicon glyphicon-white glyphicon-comment"></i>
           {% endif %}
         </td>
       </tr>
