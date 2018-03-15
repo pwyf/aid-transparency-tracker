@@ -31,7 +31,7 @@ kind_to_status = {
         2:
             {
               "text:": "specific to the activity",
-              "button": "not specific to the activity",
+              "button": "not specific to activity",
               "icon": "remove",
               "class": "danger",
               "value": "2",
@@ -39,7 +39,7 @@ kind_to_status = {
         3:
             {
               "text:": "satisfies the definition",
-              "button": "doesn't satisfy the definition",
+              "button": "doesn't satisfy definition",
               "icon": "remove",
               "class": "danger",
               "value": "3",
@@ -65,7 +65,7 @@ kind_to_status = {
         3:
             {
               "text:": "specific to the activity",
-              "button": "not specific to the activity",
+              "button": "not specific to activity",
               "icon": "remove",
               "class": "danger",
               "value": "3",
@@ -73,7 +73,7 @@ kind_to_status = {
         4:
             {
               "text:": "satisfies the definition",
-              "button": "doesn't satisfy the definition",
+              "button": "doesn't satisfy definition",
               "icon": "remove",
               "class": "danger",
               "value": "4",
@@ -81,7 +81,7 @@ kind_to_status = {
         5:
             {
               "text:": "current",
-              "button": "document is out of date",
+              "button": "document out of date",
               "icon": "remove",
               "class": "danger",
               "value": "5",
@@ -99,7 +99,7 @@ kind_to_status = {
         2:
             {
               "text:": "contains results information",
-              "button": "doesn't contain results information",
+              "button": "no results information",
               "icon": "remove",
               "class": "danger",
               "value": "2",
@@ -107,7 +107,7 @@ kind_to_status = {
         3:
             {
               "text:": "satisfies the definition",
-              "button": "doesn't satisfy the definition",
+              "button": "doesn't satisfy definition",
               "icon": "remove",
               "class": "danger",
               "value": "3",
@@ -125,7 +125,7 @@ kind_to_status = {
         2:
             {
               "text:": "contains conditions information",
-              "button": "doesn't contain conditions information",
+              "button": "no conditions information",
               "icon": "remove",
               "class": "danger",
               "value": "2",
@@ -133,7 +133,7 @@ kind_to_status = {
         3:
             {
               "text:": "satisfies the definition",
-              "button": "doesn't satisfy the definition",
+              "button": "doesn't satisfy definition",
               "icon": "remove",
               "class": "danger",
               "value": "3",
@@ -141,7 +141,7 @@ kind_to_status = {
         4:
             {
               "text:": "document is current",
-              "button": "document is out of date",
+              "button": "document out of date",
               "icon": "remove",
               "class": "danger",
               "value": "4",
@@ -159,7 +159,7 @@ kind_to_status = {
         2:
             {
               "text:": "contains location information",
-              "button": "doesn't contain location information",
+              "button": "no contain location information",
               "icon": "remove",
               "class": "danger",
               "value": "2",
