@@ -409,9 +409,12 @@ class Condition(object):
         return '''<Condition: %s>''' % self.elt
 
     def to_dict(self):
+        texts = [{'text': x} for x in self.elt.xpath('narrative/text()')]
+        if len(texts) == 0:
+            texts = [{'text': self.elt.text}]
         data = {
             "type": self.elt.xpath("@type"),
-            "text": self.elt.text,
+            "texts": texts,
             }
         return data
 
@@ -422,9 +425,9 @@ class Conditions(object):
         self.root = root
 
     def get_conditions(self):
-        return { 'attached': self.root.xpath("conditions/@attached"),
-                 'conditions': [ Condition(condition).to_dict()
-                        for condition in self.root.xpath('conditions/condition') ] }
+        return {
+            'attached': self.root.xpath("conditions/@attached"),
+            'conditions': [Condition(condition).to_dict() for condition in self.root.xpath('conditions/condition')]}
 
 
 class ActivityInfo(object):

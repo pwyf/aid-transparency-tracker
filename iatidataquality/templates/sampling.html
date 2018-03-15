@@ -188,7 +188,10 @@
         </div>
         <div class="col-md-11 col-md-offset-1">
         	{{# conditions }}
-            <h5><span class="text-muted">Text</span> {{ text }}</h5>
+            <h5><span class="text-muted">Text</span></h5>
+                {{# texts }}
+                <p>{{ text }}</p>
+                {{/ texts }}
             <p><span class="text-muted">Type</span> {{ type }}
         	{{/ conditions }}
         </div>
