@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import render_template
+from flask import render_template, send_from_directory
 from flask_login import current_user
 
 from . import app, api, aggregationtypes, indicators, \
@@ -490,3 +490,8 @@ def tests_new():
 @app.route("/tests/import/", methods=['GET', 'POST'])
 def import_tests():
     return tests.import_tests()
+
+
+@app.route("/rawdata/<filename>")
+def rawdata(filename):
+    return send_from_directory(app.config.get('DATA_STORAGE_DIR'), filename)
