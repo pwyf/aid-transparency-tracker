@@ -228,12 +228,11 @@ def test_packages(organisation_code=None, package_name=None):
 @click.option("--filename")
 @click.option("--org-ids")
 @click.option("--test-ids")
-@click.option("--update", is_flag=True)
-def setup_sampling(filename, org_ids, test_ids, update):
+@click.option("--create", is_flag=True)
+def setup_sampling(filename, org_ids, test_ids, create):
     if not filename:
         filename = app.config['SAMPLING_DB_FILENAME']
 
-    create = not update
     if org_ids:
         org_ids = map(int, org_ids.split(","))
     else:
