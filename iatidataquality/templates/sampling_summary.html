@@ -56,7 +56,13 @@
                 </td>
                 <td>
                     {% if ot.failed %}
-                    <span class="label label-danger">Failed</span>
+                    <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, status='pass')}}">
+                        <span class="label label-danger">Failed</span>
+                    </a>
+                    {% else %}
+                    <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, status='fail')}}">
+                        <span class="label label-success">Passed</span>
+                    </a>
                     {% endif %}
                 </td>
             </tr>

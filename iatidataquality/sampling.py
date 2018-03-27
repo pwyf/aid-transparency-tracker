@@ -10,7 +10,7 @@
 from flask import jsonify, render_template, flash, redirect, request, url_for
 from flask_login import current_user
 
-from . import app, usermanagement
+from . import app, db, usermanagement
 from iatidq import dqorganisations, dqtests, dqindicators, dqcodelists, models
 from iatidq.sample_work import sample_work, test_mapping
 from iatidq.sample_work import db as sample_db
@@ -334,3 +334,25 @@ def sampling(uuid):
         loggedinuser=current_user,
         api_process_url=url_for('api_sampling_process'),
         api_sampling_url=api_sampling_url)
+
+
+def change_status(organisation_id, test_id, status):
+    if status == 'pass':
+        existing = models.SamplingFailure.where(
+            organisation_id=organisation_id, test_id=test_id).first()
+        if existing:
+            with db.session.begin():
+                db.session.delete(existing)
+            flash('Marked as passing', 'success')
+    elif status == 'fail':
+        existing = models.SamplingFailure.where(
+            organisation_id=organisation_id, test_id=test_id).first()
+        if not existing:
+            failure = models.SamplingFailure(
+                organisation_id=organisation_id,
+                test_id=test_id,
+            )
+            with db.session.begin():
+                db.session.add(failure)
+            flash('Marked as failing', 'success')
+    return redirect(url_for('sampling_summary'))
