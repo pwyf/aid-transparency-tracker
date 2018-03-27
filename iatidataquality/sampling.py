@@ -300,6 +300,18 @@ def sampling_list():
 def sampling_summary():
     orgtests = sample_db.get_total_results()
     data = sample_db.get_summary_org_test(orgtests)
+    failures = models.SamplingFailure.all()
+    failures_dict = {}
+    for x in failures:
+        if x.organisation_id not in failures_dict:
+            failures_dict[x.organisation_id] = {}
+        if x.test_id not in failures_dict[x.organisation_id]:
+            failures_dict[x.organisation_id][x.test_id] = True
+    data = [
+        dict(
+            x.items() + [
+                ('failed', failures_dict.get(x['organisation_id'], {}).get(x['test_id'], False))])
+        for x in data]
 
     total_samples = sum([x['total'] for x in data])
     total_done = sum([x['total_pass'] + x['total_fail'] for x in data])
