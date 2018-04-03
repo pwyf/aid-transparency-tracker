@@ -137,9 +137,15 @@ def _updateOrganisationFrequency(fh):
             continue
         for organisation in organisations:
             with db.session.begin():
-                organisation.frequency = frequency
-                organisation.frequency_comment = comment
-                db.session.add(organisation)
+                if organisation.frequency_comment != comment:
+                    print('{}: {} (previously: {})'.format(
+                        organisation.organisation_name,
+                        comment,
+                        organisation.frequency_comment
+                    ))
+                    organisation.frequency = frequency
+                    organisation.frequency_comment = comment
+                    db.session.add(organisation)
 
 
 def organisationPackages(organisation_code=None):
