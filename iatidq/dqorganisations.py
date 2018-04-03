@@ -21,19 +21,23 @@ def checkCondition(row):
         return pg_cond
     return None
 
+
 def checkNum(value):
     try:
         return float(value)
     except Exception:
         return None
 
+
 def importOrganisationPackagesFromFile(filename):
     with open(filename) as fh:
         return _importOrganisationPackages(fh, True)
 
+
 def _importOrganisationPackages(fh, local):
     def get_or_create_organisation(row):
-        organisation = models.Organisation.where(organisation_code=row['organisation_code']).first()
+        organisation = models.Organisation.where(
+            organisation_code=row['organisation_code']).first()
         if not organisation:
             organisation = addOrganisation(row)
         return organisation
@@ -62,15 +66,15 @@ def _importOrganisationPackages(fh, local):
 
         def add_org_package(package):
             addOrganisationPackage({
-                    "organisation_id" : organisation.id,
-                    "package_id" : package.id,
+                    "organisation_id": organisation.id,
+                    "package_id": package.id,
                     "condition": condition
                     })
 
         def add_org_packagegroup(packagegroup):
             addOrganisationPackageGroup({
-                    "organisation_id" : organisation.id,
-                    "packagegroup_id" : packagegroup.id,
+                    "organisation_id": organisation.id,
+                    "packagegroup_id": packagegroup.id,
                     "condition": condition
                     })
 
@@ -82,7 +86,7 @@ def _importOrganisationPackages(fh, local):
                 }
             addOrganisationPackageFromPackageGroup(data)
 
-        print organisation_code
+        print(organisation_code)
 
         for package in get_packages(organisation_code):
             add_org_package(package)
@@ -97,12 +101,14 @@ def _importOrganisationPackages(fh, local):
                 add_org_package_from_pg(packagegroup)
                 add_org_packagegroup(packagegroup)
 
-    print "Imported successfully"
+    print("Imported successfully")
     return True
+
 
 def downloadOrganisationFrequency():
     fh = urllib2.urlopen(app.config["ORG_FREQUENCY_API_URL"])
     return _updateOrganisationFrequency(fh)
+
 
 def _updateOrganisationFrequency(fh):
     # FIXME: relative import to work around circular dependency
@@ -131,9 +137,10 @@ def _updateOrganisationFrequency(fh):
             continue
         for organisation in organisations:
             with db.session.begin():
-                organisation.frequency=frequency
-                organisation.frequency_comment=comment
+                organisation.frequency = frequency
+                organisation.frequency_comment = comment
                 db.session.add(organisation)
+
 
 def organisationPackages(organisation_code=None):
     if organisation_code is None:
@@ -141,22 +148,29 @@ def organisationPackages(organisation_code=None):
 
     return db.session.query(models.Package,
                             models.OrganisationPackage
-                        ).filter(
-                        models.Organisation.organisation_code==organisation_code
-                        ).join(models.OrganisationPackage
-                        ).join(models.Organisation
-                        ).all()
+                            ).filter(
+                                models.Organisation.organisation_code==organisation_code
+                            ).join(
+                                models.OrganisationPackage
+                            ).join(
+                                models.Organisation
+                            ).all()
+
 
 def organisationPackageGroups(organisation_code=None):
     if organisation_code is None:
         return False
 
-    return db.session.query(models.PackageGroup,
-                            models.OrganisationPackageGroup
-            ).filter(models.Organisation.organisation_code==organisation_code
-            ).join(models.OrganisationPackageGroup
-            ).join(models.Organisation
-            ).all()
+    return db.session.query(
+        models.PackageGroup, models.OrganisationPackageGroup
+    ).filter(
+        models.Organisation.organisation_code==organisation_code
+    ).join(
+        models.OrganisationPackageGroup
+    ).join(
+        models.Organisation
+    ).all()
+
 
 def addOrganisation(data):
     organisation_code = data["organisation_code"]
@@ -169,13 +183,14 @@ def addOrganisation(data):
     with db.session.begin():
         newP = models.Organisation()
         newP.setup(
-            organisation_name = data["organisation_name"],
-            organisation_code = data["organisation_code"],
-            organisation_total_spend = 0,
-            organisation_currency_conversion = 1,
-            )
+            organisation_name=data["organisation_name"],
+            organisation_code=data["organisation_code"],
+            organisation_total_spend=0,
+            organisation_currency_conversion=1,
+        )
         db.session.add(newP)
     return newP
+
 
 def updateOrganisation(organisation_code, data):
     checkP = models.Organisation.query.filter_by(
@@ -191,8 +206,9 @@ def updateOrganisation(organisation_code, data):
         db.session.add(checkP)
     return checkP
 
+
 def addOrganisationPackage(data):
-    checkPP=models.OrganisationPackage.query.filter_by(
+    checkPP = models.OrganisationPackage.query.filter_by(
         organisation_id=data['organisation_id'], package_id=data['package_id']
                 ).first()
 
@@ -202,12 +218,13 @@ def addOrganisationPackage(data):
     with db.session.begin():
         newPP = models.OrganisationPackage()
         newPP.setup(
-            organisation_id = data["organisation_id"],
-            package_id = data["package_id"],
-            condition = data["condition"]
+            organisation_id=data["organisation_id"],
+            package_id=data["package_id"],
+            condition=data["condition"]
             )
         db.session.add(newPP)
     return newPP
+
 
 def addOrganisationPackageGroup(data):
     checkPG = models.OrganisationPackageGroup.query.filter_by(
@@ -220,15 +237,17 @@ def addOrganisationPackageGroup(data):
         return checkPG
 
     with db.session.begin():
-        print "trying to add packagegroup!", data
+        print("trying to add packagegroup!")
+        print(data)
         newPG = models.OrganisationPackageGroup()
         newPG.setup(
-            organisation_id = data["organisation_id"],
-            packagegroup_id = data["packagegroup_id"],
-            condition = data["condition"]
-            )
+            organisation_id=data["organisation_id"],
+            packagegroup_id=data["packagegroup_id"],
+            condition=data["condition"]
+        )
         db.session.add(newPG)
     return newPG
+
 
 def addOrganisationPackageFromPackageGroup(data):
     packages = models.Package.query.filter_by(
@@ -243,12 +262,13 @@ def addOrganisationPackageFromPackageGroup(data):
             'condition': data["condition"]
         }
         if addOrganisationPackage(packagedata):
-            count_packages+=1
+            count_packages += 1
 
-    if count_packages >0:
+    if count_packages > 0:
         return count_packages
     else:
         return False
+
 
 def deleteOrganisationPackage(organisation_code, package_name,
                               organisationpackage_id):
@@ -264,8 +284,9 @@ def deleteOrganisationPackage(organisation_code, package_name,
 
     return checkPP
 
+
 def addFeedback(data):
-    checkF=models.OrganisationConditionFeedback.query.filter_by(
+    checkF = models.OrganisationConditionFeedback.query.filter_by(
         uses=data["uses"], element=data["element"], where=data["where"]
         ).first()
 
@@ -274,10 +295,10 @@ def addFeedback(data):
 
     with db.session.begin():
         feedback = models.OrganisationConditionFeedback()
-        feedback.organisation_id=data["organisation_id"]
-        feedback.uses=data["uses"]
-        feedback.element=data["element"]
-        feedback.where=data["where"]
+        feedback.organisation_id = data["organisation_id"]
+        feedback.uses = data["uses"]
+        feedback.element = data["element"]
+        feedback.where = data["where"]
         db.session.add(feedback)
 
     return feedback
@@ -285,52 +306,51 @@ def addFeedback(data):
 
 def make_publisher_summary(organisation, aggregation_type):
     s = summary.PublisherSummaryCreator(organisation, aggregation_type)
-    return s.summary.summary() ## FIXME
+    return s.summary.summary()  # FIXME
+
 
 def info_result_tuple(ir):
     ind = {
-    'description': ir.Indicator.description,
-    'name': ir.Indicator.name,
-    'id': ir.Indicator.id,
-    'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
-    'indicator_type': ir.Indicator.indicator_type,
-    'indicator_category_name': ir.Indicator.indicator_category_name,
-    'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name_text,
-    'indicator_category_name_text':
-                 ir.Indicator.indicator_category_name_text,
-    'indicator_subcategory_name_text':
-                 ir.Indicator.indicator_subcategory_name_text,
-    'longdescription': ir.Indicator.longdescription,
-    'indicator_noformat': ir.Indicator.indicator_noformat,
-    'indicator_ordinal': ir.Indicator.indicator_ordinal,
-    'indicator_order': ir.Indicator.indicator_order,
-    'indicator_weight': ir.Indicator.indicator_weight
-        }
+        'description': ir.Indicator.description,
+        'name': ir.Indicator.name,
+        'id': ir.Indicator.id,
+        'indicatorgroup_id': ir.Indicator.indicatorgroup_id,
+        'indicator_type': ir.Indicator.indicator_type,
+        'indicator_category_name': ir.Indicator.indicator_category_name,
+        'indicator_subcategory_name': ir.Indicator.indicator_subcategory_name_text,
+        'indicator_category_name_text': ir.Indicator.indicator_category_name_text,
+        'indicator_subcategory_name_text': ir.Indicator.indicator_subcategory_name_text,
+        'longdescription': ir.Indicator.longdescription,
+        'indicator_noformat': ir.Indicator.indicator_noformat,
+        'indicator_ordinal': ir.Indicator.indicator_ordinal,
+        'indicator_order': ir.Indicator.indicator_order,
+        'indicator_weight': ir.Indicator.indicator_weight
+    }
 
-    return (ir.Indicator.id,
-            {
-            'results_num': ir.InfoResult.result_num,
-            'results_pct': ir.InfoResult.result_data,
-            'indicator': ind,
-            'tests': [
-                {'test': {
-                        'id': 'infotype-' + str(ir.InfoType.id),
-                        'name': ir.InfoType.name,
-                        'description': ir.InfoType.description
-                        },
-                 'results_pct': ir.InfoResult.result_data,
-                 'results_num': ir.InfoResult.result_num}
+    return (ir.Indicator.id, {
+                'results_num': ir.InfoResult.result_num,
+                'results_pct': ir.InfoResult.result_data,
+                'indicator': ind,
+                'tests': [
+                    {'test': {
+                            'id': 'infotype-' + str(ir.InfoType.id),
+                            'name': ir.InfoType.name,
+                            'description': ir.InfoType.description
+                            },
+                     'results_pct': ir.InfoResult.result_data,
+                     'results_num': ir.InfoResult.result_num}
                 ]
             })
+
 
 def _organisation_indicators(organisation, aggregation_type=2):
     s = summary.PublisherIndicatorsSummaryCreator(organisation,
                                                   aggregation_type)
-    data = s.summary.summary()  ## FIXME
+    data = s.summary.summary()  # FIXME
 
     # Sorry, this is really crude
     inforesults = _organisation_indicators_inforesults(organisation)
-    data.update([ info_result_tuple(ir) for ir in inforesults ])
+    data.update([info_result_tuple(ir) for ir in inforesults])
 
     # make sure indicators are complete
     indicators = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], u"publication")
@@ -338,48 +358,55 @@ def _organisation_indicators(organisation, aggregation_type=2):
         if indc.id in data:
             continue
         data[indc.id] = {
-        'results_num': 0,
-        'results_pct': 0,
-        'indicator': {
-            'description': indc.description,
-            'name': indc.name,
-            'id': indc.id,
-            'indicatorgroup_id': indc.indicatorgroup_id,
-            'indicator_type': indc.indicator_type,
-            'indicator_category_name': indc.indicator_category_name,
-            'indicator_subcategory_name': indc.indicator_subcategory_name,
-            'indicator_category_name_text': indc.indicator_category_name_text,
-            'indicator_subcategory_name_text': indc.indicator_subcategory_name_text,
-            'longdescription': indc.longdescription,
-            'indicator_noformat': indc.indicator_noformat,
-            'indicator_ordinal': indc.indicator_ordinal,
-            'indicator_order': indc.indicator_order,
-            'indicator_weight': indc.indicator_weight
-            },
-        'tests': {}
-            }
+            'results_num': 0,
+            'results_pct': 0,
+            'indicator': {
+                'description': indc.description,
+                'name': indc.name,
+                'id': indc.id,
+                'indicatorgroup_id': indc.indicatorgroup_id,
+                'indicator_type': indc.indicator_type,
+                'indicator_category_name': indc.indicator_category_name,
+                'indicator_subcategory_name': indc.indicator_subcategory_name,
+                'indicator_category_name_text': indc.indicator_category_name_text,
+                'indicator_subcategory_name_text': indc.indicator_subcategory_name_text,
+                'longdescription': indc.longdescription,
+                'indicator_noformat': indc.indicator_noformat,
+                'indicator_ordinal': indc.indicator_ordinal,
+                'indicator_order': indc.indicator_order,
+                'indicator_weight': indc.indicator_weight
+                },
+            'tests': {}
+        }
     return data
+
 
 def _organisation_indicators_inforesults(organisation):
     # Get InfoResults that can be joined to an Indicator
     #  -- if they can't be joined to an indicator then
     #     the results just contain coverage data.
 
-    inforesult_data = db.session.query(models.InfoResult,
-                                     models.Indicator,
-                                     models.InfoType
-        ).filter(models.InfoResult.organisation_id==organisation.id
-        ).filter(models.OrganisationPackage.organisation_id==organisation.id
-        ).join(models.InfoType
-        ).join(models.IndicatorInfoType
-        ).join(models.Indicator
-        ).join(models.Package
-        ).join(models.OrganisationPackage
-        ).group_by(models.InfoResult,
-                   models.Indicator,
-                   models.InfoType
-        ).all()
+    inforesult_data = db.session.query(
+        models.InfoResult, models.Indicator, models.InfoType
+    ).filter(
+        models.InfoResult.organisation_id==organisation.id
+    ).filter(
+        models.OrganisationPackage.organisation_id==organisation.id
+    ).join(
+        models.InfoType
+    ).join(
+        models.IndicatorInfoType
+    ).join(
+        models.Indicator
+    ).join(
+        models.Package
+    ).join(
+        models.OrganisationPackage
+    ).group_by(
+        models.InfoResult, models.Indicator, models.InfoType
+    ).all()
     return inforesult_data
+
 
 def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
@@ -393,9 +420,10 @@ def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     publication_organisation_results = dict(filter(publication_organisation, results.iteritems()))
     publication_activity_results = dict(filter(publication_activity, results.iteritems()))
 
-    return { "publication_activity": publication_activity_results,
-             "publication_organisation": publication_organisation_results,
-             "commitment": commitment_results}
+    return {"publication_activity": publication_activity_results,
+            "publication_organisation": publication_organisation_results,
+            "commitment": commitment_results}
+
 
 def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
@@ -415,15 +443,17 @@ def _organisation_indicators_split(organisation, aggregation_type=2):
                 "non_zero": {},
                 "commitment": commitment}
 
-    zero = lambda kv: not kv[1]["results_pct"]
-    non_zero = lambda kv: kv[1]["results_pct"]
+    zero_results = dict(filter(
+        lambda kv: not kv[1]["results_pct"],
+        results.iteritems()))
+    non_zero_results = dict(filter(
+        lambda kv: kv[1]["results_pct"],
+        results.iteritems()))
 
-    zero_results = dict(filter(zero, results.iteritems()))
-    non_zero_results = dict(filter(non_zero, results.iteritems()))
+    return {"zero": zero_results,
+            "non_zero": non_zero_results,
+            "commitment": commitment}
 
-    return { "zero": zero_results,
-             "non_zero": non_zero_results,
-             "commitment": commitment}
 
 def get_ordinal_values_years():
     return {
