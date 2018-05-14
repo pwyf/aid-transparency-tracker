@@ -94,7 +94,7 @@ def download_packages(minimal, matching):
 
 @app.cli.command()
 def update_frequency():
-    """Update frequency"""
+    """Update frequency of publication from IATI dashboard"""
     dqorganisations.downloadOrganisationFrequency()
 
 
