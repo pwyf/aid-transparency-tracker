@@ -57,7 +57,7 @@
         </td>
         <td>
           {% if s.comment %}
-          <i class="glyphicon glyphicon-white glyphicon-comment"></i>
+          <a href="#" data-toggle="tooltip" title="{{ s.comment }}"><i class="glyphicon glyphicon-white glyphicon-comment"></i></a>
           {% endif %}
         </td>
       </tr>
@@ -77,6 +77,7 @@
         $("table#samples").tablesorter({
           sortList: [[0,0]]
         });
+        $('[data-toggle="tooltip"]').tooltip();
       });
     </script>
 {% endblock %}
