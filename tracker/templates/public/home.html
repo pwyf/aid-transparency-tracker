@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% set active_page = "home" -%}
+
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+
+      <h1 class="display-3">Aid Transparency Tracker</h1>
+
+      <p>Assessing the quality of international aid data.</p>
+    </div>
+</div><!-- /.jumbotron -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <h2><i class="fa fa-edit"></i> Survey</h2>
+      <p>Manually collected data.</p>
+      <p><a class="btn btn-outline-secondary" href="{{ url_for('survey.main') }}">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-lg-4">
+      <h2><i class="fa fa-flask"></i> Sampling</h2>
+      <p>Eyeballing publishers’ IATI data.</p>
+      <p><a href="#" class="btn btn-outline-secondary">Learn more &raquo;</a></p>
+   </div>
+    <div class="col-lg-4">
+      <h2><i class="fa fa-code"></i> Automated tests</h2>
+      <p>Automated assessment of publishers’ IATI data.</p>
+      <p><a href="#" class="btn btn-outline-secondary">Learn more &raquo;</a></p>
+    </div>
+  </div><!-- /.row -->
+</div>
+{% endblock %}
+

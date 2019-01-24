@@ -1,0 +1,323 @@
+{% extends "layout.html" %}
+
+{% set active_page = "survey" -%}
+
+{% block content %}
+<div id="masthead">
+  <h1>Survey for Gringotts Development Bank (GDB)</h1>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3" role="complementary" id="sidebar">
+      <nav class="sidebar-nav hidden-print hidden-sm hidden-xs" data-spy="affix" data-offset-top="200" data-offset-bottom="200">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#organisational-planning-and-commitments">Organisational planning and commitments</a>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#quality-of-foi-legislation">Quality of FOI legislation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#accessibility">Accessibility</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#organisation-strategy">Organisation strategy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#annual-report">Annual report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#allocation-policy">Allocation policy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#procurement-policy">Procurement policy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#strategy-country-sector-or-memorandum-of-understanding">Strategy (country/sector) or Memorandum of Understanding</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#audit">Audit</a>
+                </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#finance-and-budgets">Finance and budgets</a>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#total-organisation-budget">Total organisation budget</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#disaggregated-budgets">Disaggregated budgets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#project-budget">Project budget</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#project-budget-document">Project budget document</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#commitments">Commitments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#disbursements-and-expenditures">Disbursements and expenditures</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#capital-spend">Capital spend</a>
+                </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#project-attributes">Project attributes</a>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#title">Title</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#description">Description</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#planned-dates">Planned dates</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#actual-dates">Actual dates</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#current-status">Current status</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact-details">Contact details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#sectors">Sectors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#sub-national-location">Sub-national location</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#implementer">Implementer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#unique-id">Unique ID</a>
+                </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#joining-up-development-data">Joining-up development data</a>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#flow-type">Flow type</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#aid-type">Aid type</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#finance-type">Finance type</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#tied-aid-status">Tied aid status</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#conditions">Conditions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#project-procurement-tenders">Project procurement - Tenders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#project-procurement-contracts">Project procurement - Contracts</a>
+                </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#performance">Performance</a>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#objectives">Objectives</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#pre-project-impact-appraisals">Pre-project impact appraisals</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#reviews-and-evaluations">Reviews and evaluations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#results">Results</a>
+                </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-md-9" role="main">
+      <form>
+        <h2 class="component-name" id="organisational-planning-and-commitments">Organisational planning and commitments</h2>
+        <p>This component looks at the overall aims and strategy of an organisation. We check for any public commitments to aid transparency. We also make sure audits are in place and if planning documents have been published, including by parent organisations (including national governments) where applicable. We make note of any Freedom of Information laws and critically, we make sure that organisations have tried to make their information easy to access and understand. You should not have to be an expert in open data to be able to find and use this information.</p>
+
+        <h3 id="quality-of-foi-legislation">Quality of FOI legislation</h3>
+
+        <p>The definition used in the Global RTI Rating is that it has to be a law in the strict sense. It must include the right of access to information, this right has to be enforceable and there must be compliant, court and high court appeal possibilities. Decrees are included if they meet the same standards. In addition, the FOIA must be in use for at least the executive part of the government; therefore, FOIAs which are only adopted, approved or still in draft form are not counted.</p>
+
+        <p>For multilateral donors, international finance institutions (IFIs) and private foundations, a disclosure or transparency policy is accepted as equivalent to a FOIA. Publish What You Fund completes an assessment of the quality of these disclosure policies based on the overarching approach taken in the Global RTI Rating.</p>
+
+        <div class="indicator">
+          <div class="research-findings">
+            <p>Publish What You Fund research findings:</p>
+            <p class="comments">Global RTI rating score for Gringotts is 77. Score conversion from total score on Global RTI rating to Index points done using the following scale: 1 - 60: 33 61- 90: 66 91 - 150: 100.</p>
+            <p>Evidence:</p>
+            <ul class="evidence">
+              <li><a href="http://harrypotter.wikia.com/wiki/Gringotts_Wizarding_Bank">http://harrypotter.wikia.com/wiki/Gringotts_Wizarding_Bank</a></li>
+            </ul>
+          </div>
+
+          <div class="publisher-response">
+            <h5>Your response:</h5>
+
+            <div class="form-group">
+              <!-- <label>omgomg</label> -->
+              <div class="radio">
+                <label>
+                  <input type="radio" name="quality-of-foi-legislation-agree-disagree" id="quality-of-foi-legislation-agree" value="agree"> Agree
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="quality-of-foi-legislation-agree-disagree" id="quality-of-foi-legislation-disagree" value="disagree"> Disagree
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="quality-of-foi-legislation-comments">Comments</label>
+              <textarea placeholder="Explain why you agree / disagree" class="form-control" id="quality-of-foi-legislation-comments" rows="3"></textarea>
+            </div>
+
+            <div class="evidence-inputs" id="quality-of-foi-legislation-evidence" data-counter="1">
+              <label for="quality-of-foi-legislation-evidence-1">Evidence</label>
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="url" class="form-control" id="quality-of-foi-legislation-evidence-1" placeholder="http://...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary add-evidence" type="button">+</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="accessibility">Accessibility</h3>
+
+        <p>The overall accessibility of aid information through the organisations’ portals, project databases or searchable data sources. These are scored using three criteria: 1) the portal allows free, bulk export of data; 2) it contains detailed disaggregated data; 3) the data is published under an open licence.</p>
+
+        <p>Data sources can be the organisations’ own aid portals, publicly accessible databases or websites – accessed in that order. The portal or database must include information on current activities for the countries or sectors the organisation is working in rather than just one individual country/sector or a selected group. It should contain information on at least five of the activity-level indicators, at least one of which should cover financial information. The same data source is used for all three checks. For example, if the aid portal does not state that the data is published under an open licence, this is not checked elsewhere on the organisation’s project database or website. If the organisation’s website is the data source then it cannot score on the “free bulk export” criterion.</p>
+
+        <p>If a portal allows bulk export through its API but not through its web-user interface, this is accepted as allowing free, bulk export of data.</p>
+
+        <p>Note that raw IATI files are not accepted for this indicator as the underlying principle behind it is to assess what organisations are doing to promote access and use of their aid information. Information published to the IATI Registry is taken into account for the publication indicators.</p>
+
+        <div class="indicator">
+          <div class="research-findings">
+            <p>Publish What You Fund research findings:</p>
+            <p class="comments">Portals with data on current activities are scored using three criteria: 1) the portal allows free, bulk export of data; 2) it contains detailed disaggregated data; 3) the data is published under an open licence. Each of these carry 1/3rd of the total points of 100. No database could be found.</p>
+          </div>
+
+          <div class="publisher-response">
+            <h5>Your response:</h5>
+
+            <div class="form-group">
+              <!-- <label>omgomg</label> -->
+              <div class="radio">
+                <label>
+                  <input type="radio" name="quality-of-foi-legislation-agree-disagree" id="quality-of-foi-legislation-agree" value="agree"> Agree
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="quality-of-foi-legislation-agree-disagree" id="quality-of-foi-legislation-disagree" value="disagree"> Disagree
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="quality-of-foi-legislation-comments">Comments</label>
+              <textarea placeholder="Explain why you agree / disagree" class="form-control" id="quality-of-foi-legislation-comments" rows="3"></textarea>
+            </div>
+
+            <div class="evidence-inputs" id="quality-of-foi-legislation-evidence" data-counter="1">
+              <label for="quality-of-foi-legislation-evidence-1">Evidence</label>
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="url" class="form-control" id="quality-of-foi-legislation-evidence-1" placeholder="http://...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary add-evidence" type="button">+</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="organisation-strategy">Organisation strategy</h3>
+
+        <p>An overarching strategy document explains the general approach and policies of the organisation towards international development. This should be forward looking. The IATI reference for this indicator is: Institutional strategy paper (document code = B02).</p>
+
+        <p>For organisations whose primary mandate is not development, a document clarifying its overarching development strategy is accepted. This information needs to be forward looking.</p>
+
+        <h3 id="annual-report">Annual report</h3>
+
+        <p>Annual reports outline basic (normally aggregate) information about how aid was spent in the previous year, broken down by sector and/or country. This should be backward looking.</p>
+
+        <p>Annual reports that are up to date within their regular cycle, i.e. the organisation publishes an annual report a year behind, the most recent document within this time frame are accepted.</p>
+
+        <p>The IATI reference for this indicator is: Annual report (document code = B01).</p>
+
+        <p>To score for this indicator, the annual report needs to include details of where the organisation is spending its resources and the information needs to cover current activity period.</p>
+
+        <h3 id="allocation-policy">Allocation policy</h3>
+        <h3 id="procurement-policy">Procurement policy</h3>
+        <h3 id="strategy-country-sector-or-memorandum-of-understanding">Strategy (country/sector) or Memorandum of Understanding</h3>
+        <h3 id="audit">Audit</h3>
+        <h2 class="component-name" id="finance-and-budgets">Finance and budgets</h2>
+        <p>This component is critical to allow you and anyone else to follow the money. We expect to find the total budget of the organisation being assessed, right down to individual transactions for each development activity. In particular, forward-looking budgets from donors are important for partner country governments to be able to plan their own future finances.</p>
+
+        <h3 id="total-organisation-budget">Total organisation budget</h3>
+        <h3 id="disaggregated-budgets">Disaggregated budgets</h3>
+        <h3 id="project-budget">Project budget</h3>
+        <h3 id="project-budget-document">Project budget document</h3>
+        <h3 id="commitments">Commitments</h3>
+        <h3 id="disbursements-and-expenditures">Disbursements and expenditures</h3>
+        <h3 id="capital-spend">Capital spend</h3>
+        <h2 class="component-name" id="project-attributes">Project attributes</h2>
+        <p>This component refers to descriptive, non-financial data, including basics like the title and description of a project. Information like this is important as it is often the entry point for data users to quickly understand what a project is about. We also look for other information that helps to put a project in context, such as its sub-national location (rather than simply being pin pointed to a capital city or the centre of a country) or the sector that the project deals with, for example, education or agriculture.</p>
+
+        <h3 id="title">Title</h3>
+        <h3 id="description">Description</h3>
+        <h3 id="planned-dates">Planned dates</h3>
+        <h3 id="actual-dates">Actual dates</h3>
+        <h3 id="current-status">Current status</h3>
+        <h3 id="contact-details">Contact details</h3>
+        <h3 id="sectors">Sectors</h3>
+        <h3 id="sub-national-location">Sub-national location</h3>
+        <h3 id="implementer">Implementer</h3>
+        <h3 id="unique-id">Unique ID</h3>
+        <h2 class="component-name" id="joining-up-development-data">Joining-up development data</h2>
+        <p>This component looks at how well a donor’s data is able to be linked and connected with other bits of information. There is a diverse nature of flows, activities and actors within the development sector. Aid and development finance data needs to be effectively linked and connected with the rest to provide a full picture for the user. This can be particularly important for partner country governments, who need to integrate information on aid with their own budgets and systems.</p>
+
+        <h3 id="flow-type">Flow type</h3>
+        <h3 id="aid-type">Aid type</h3>
+        <h3 id="finance-type">Finance type</h3>
+        <h3 id="tied-aid-status">Tied aid status</h3>
+        <h3 id="conditions">Conditions</h3>
+        <h3 id="project-procurement-tenders">Project procurement - Tenders</h3>
+        <h3 id="project-procurement-contracts">Project procurement - Contracts</h3>
+        <h2 class="component-name" id="performance">Performance</h2>
+        <p>This component refers to the essential data and documents that assess whether a project is on track or has been achieved. This includes things like baseline surveys, progress against targets, mid-term reviews and end of project evaluations. This information is important to hold donors to account and also to share knowledge with others on what worked and what did not during a project.</p>
+
+        <h3 id="objectives">Objectives</h3>
+        <h3 id="pre-project-impact-appraisals">Pre-project impact appraisals</h3>
+        <h3 id="reviews-and-evaluations">Reviews and evaluations</h3>
+        <h3 id="results">Results</h3>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
