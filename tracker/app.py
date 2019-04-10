@@ -1,8 +1,8 @@
 """The app module, containing the app factory function."""
 from flask import Flask, render_template
 
-from tracker import commands, public, survey, user
-from tracker.extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate, webpack
+from . import commands, public, survey, user
+from .extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate, webpack
 
 
 def create_app(config_object='tracker.settings'):
