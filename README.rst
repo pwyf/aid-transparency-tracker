@@ -4,8 +4,8 @@ Aid Transparency Tracker
 A data quality measurement tool for international aid data.
 
 
-Quickstart
-----------
+Setup
+-----
 
 Run the following commands to bootstrap your environment ::
 
@@ -14,18 +14,23 @@ Run the following commands to bootstrap your environment ::
     pip install -r requirements/dev.txt
     cp .env.example .env
     npm install
-    npm start  # run the webpack dev server and flask server using concurrently
-
-You will see a pretty welcome screen.
 
 Once you have installed your DBMS, run the following to create your app's
 database tables and perform the initial migration ::
 
-    flask db init
-    flask db migrate
     flask db upgrade
-    npm start
 
+Next you need to import some data. Organisations can be imported to the database from CSV ::
+
+    flask import-orgs [organisations_example.csv]
+
+IATI data can then be downloaded for these organisations ::
+
+    flask download-iati-data
+
+To run the webpack dev server and flask server concurrently, run ::
+
+    npm start
 
 Deployment
 ----------
