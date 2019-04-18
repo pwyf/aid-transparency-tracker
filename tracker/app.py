@@ -30,15 +30,14 @@ def register_extensions(app):
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
     webpack.init_app(app)
-    return None
 
 
 def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(survey.views.blueprint)
+    app.register_blueprint(core.views.blueprint)
     # app.register_blueprint(user.views.blueprint)
-    return None
 
 
 def register_errorhandlers(app):
