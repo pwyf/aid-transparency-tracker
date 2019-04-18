@@ -13,6 +13,7 @@ from . import models
 @click.argument('input', type=click.File('r'))
 @with_appcontext
 def import_orgs(input):
+    '''Import a CSV of organisation data.'''
     reader = csv.DictReader(input)
     data = [x for x in reader]
     for row in data:
