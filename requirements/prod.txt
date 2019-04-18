@@ -42,3 +42,4 @@ environs==4.1.0
 
 # IATI specific
 iatikit
+bdd-tester
