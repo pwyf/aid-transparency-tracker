@@ -39,3 +39,6 @@ flask-debugtoolbar==0.10.1
 
 # Environment variable parsing
 environs==4.1.0
+
+# IATI specific
+iatikit
