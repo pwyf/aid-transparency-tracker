@@ -1,8 +1,9 @@
 """The app module, containing the app factory function."""
 from flask import Flask, render_template
 
-from . import commands, public, survey, user
-from .extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate, webpack
+from . import commands, survey, core
+from .extensions import cache, db, debug_toolbar, migrate, webpack
+from .database import BaseModel
 
 
 def create_app(config_object='tracker.settings'):
@@ -22,21 +23,18 @@ def create_app(config_object='tracker.settings'):
 
 def register_extensions(app):
     """Register Flask extensions."""
-    bcrypt.init_app(app)
     cache.init_app(app)
     db.init_app(app)
-    csrf_protect.init_app(app)
-    login_manager.init_app(app)
-    debug_toolbar.init_app(app)
     migrate.init_app(app, db)
+    BaseModel.set_session(db.session)
     webpack.init_app(app)
+    debug_toolbar.init_app(app)
 
 
 def register_blueprints(app):
     """Register Flask blueprints."""
-    app.register_blueprint(public.views.blueprint)
+    # app.register_blueprint(public.views.blueprint)
     app.register_blueprint(survey.views.blueprint)
-    app.register_blueprint(core.views.blueprint)
     # app.register_blueprint(user.views.blueprint)
 
 
