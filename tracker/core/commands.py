@@ -12,7 +12,12 @@ from . import models
 def import_orgs(input):
     '''Import a CSV of organisation data.'''
     reader = csv.DictReader(input)
-    data = [x for x in reader]
+    data = [{
+        'name': row['name'],
+        'slug': row['slug'],
+        'registry_slug': row['registry_slug'] if row['registry_slug'] else None,
+        'test_condition': row['test_condition'] if row['test_condition'] else None,
+    } for row in reader]
     for row in data:
         org = models.Organisation.where(slug=row['slug']).first()
         if org:
