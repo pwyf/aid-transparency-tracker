@@ -1,2 +1,2 @@
 """The security module."""
-from . import models  # noqa
+from . import commands, models  # noqa

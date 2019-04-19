@@ -71,3 +71,4 @@ def register_commands(app):
     app.cli.add_command(commands.clean)
     app.cli.add_command(core.commands.setup_cli)
     app.cli.add_command(iati.commands.iati_cli)
+    app.cli.add_command(security.commands.createsuperuser)
