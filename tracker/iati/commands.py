@@ -31,5 +31,3 @@ def download_iati_data():
         # Copy files into place
         shutil.copytree(join(input_path, organisation.registry_slug),
                         join(output_path, organisation.slug))
-    # Delete the snapshot
-    shutil.rmtree('__iatikitcache__')
