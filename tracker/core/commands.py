@@ -28,14 +28,14 @@ def import_orgs(input):
 @with_appcontext
 def download_iati_data():
     '''Fetch a snapshot of all IATI data from the registry.'''
-    # iatikit.download.data()
+    iatikit.download.data()
     updated_on = iatikit.data()._last_updated.date()
 
     input_path = join('__iatikitcache__', 'registry', 'data')
     output_path = join('tracker', 'static', 'xml', str(updated_on))
 
     for organisation in models.Organisation.query:
-        # TODO: Move files into place
+        # Move files into place
         shutil.move(join(input_path, organisation.registry_handle),
                     join(output_path, organisation.registry_handle))
     shutil.rmtree('__iatikitcache__')
