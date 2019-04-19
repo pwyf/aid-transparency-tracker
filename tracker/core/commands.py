@@ -30,5 +30,5 @@ def import_orgs(input):
             click.echo(f'Updating {org.name} ({org.slug}) ...')
             org.update(**row)
         else:
-            click.echo(f'Creating {org.name} ({org.slug}) ...')
+            click.echo(f'Creating {row["name"]} ({row["slug"]}) ...')
             models.Organisation.create(**row)
