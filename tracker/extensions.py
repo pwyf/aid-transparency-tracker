@@ -8,11 +8,7 @@ from flask_wtf.csrf import CSRFProtect
 
 
 csrf_protect = CSRFProtect()
-db = SQLAlchemy(session_options={
-    "autocommit": True,
-    "autoflush": False,
-    "expire_on_commit": False,
-})
+db = SQLAlchemy()
 migrate = Migrate()
 cache = Cache()
 debug_toolbar = DebugToolbarExtension()

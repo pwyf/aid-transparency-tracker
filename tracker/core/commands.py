@@ -31,4 +31,5 @@ def import_orgs(input):
             org.update(**row)
         else:
             click.echo(f'Creating {row["name"]} ({row["slug"]}) ...')
-            models.Organisation.create(**row)
+            org = models.Organisation.create(**row)
+        org.session.commit()
