@@ -1,0 +1,13 @@
+name,slug,registry_slug,test_condition
+DFID,dfid,dfid,
+Foreign office,dfid,fco,
+BEIS,beis,beis,
+DEFRA,defra,defra_transparency,
+DWP,dwp,dwp,
+DHSC,dhsc,dhsc,
+Home Office,homeoffice,hooda,
+MOD,mod,ukmod,
+DCMS,dcms,,
+DfE,education,,
+CSSF,cssf,,
+Prosperity,prosperity,,
