@@ -1,2 +1,2 @@
-"""The user module."""
+"""The security module."""
 from . import models  # noqa

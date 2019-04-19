@@ -2,7 +2,8 @@
 from flask import Flask, render_template
 from flask_security import SQLAlchemyUserDatastore
 
-from . import commands, core, survey, iati, user
+from . import commands, core, survey, iati
+from .security.models import User, Role
 from .extensions import cache, db, debug_toolbar, migrate, webpack, security
 from .database import BaseModel
 
@@ -30,8 +31,7 @@ def register_extensions(app):
     BaseModel.set_session(db.session)
     webpack.init_app(app)
     debug_toolbar.init_app(app)
-    user_datastore = SQLAlchemyUserDatastore(db, user.models.User,
-                                             user.models.Role)
+    user_datastore = SQLAlchemyUserDatastore(db, User, Role)
     security.init_app(app, user_datastore)
 
 
