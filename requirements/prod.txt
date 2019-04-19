@@ -41,5 +41,5 @@ flask-debugtoolbar==0.10.1
 environs==4.1.0
 
 # IATI specific
-iatikit
-bdd-tester
+iatikit==2.0.6
+bdd-tester==0.0.6
