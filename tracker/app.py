@@ -31,8 +31,8 @@ def register_extensions(app):
     BaseModel.set_session(db.session)
     webpack.init_app(app)
     debug_toolbar.init_app(app)
-    user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-    security.init_app(app, user_datastore)
+    datastore = SQLAlchemyUserDatastore(db, User, Role)
+    security.init_app(app, datastore)
 
 
 def register_blueprints(app):
