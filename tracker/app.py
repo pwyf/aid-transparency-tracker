@@ -1,7 +1,7 @@
 """The app module, containing the app factory function."""
 from flask import Flask, render_template
 
-from . import commands, survey, core
+from . import commands, survey, core, iati
 from .extensions import cache, db, debug_toolbar, migrate, webpack
 from .database import BaseModel
 
@@ -67,4 +67,4 @@ def register_commands(app):
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
     app.cli.add_command(core.commands.import_orgs)
-    app.cli.add_command(core.commands.download_iati_data)
+    app.cli.add_command(iati.commands.download_iati_data)

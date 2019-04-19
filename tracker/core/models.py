@@ -6,5 +6,6 @@ class Organisation(BaseModel):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    org_id = db.Column(db.String(255), unique=True, nullable=True)
-    registry_handle = db.Column(db.String(255), nullable=True)
+    slug = db.Column(db.String(255), unique=True, nullable=True)
+    registry_slug = db.Column(db.String(255), nullable=True)
+    test_condition = db.Column(db.String(255), nullable=False)
