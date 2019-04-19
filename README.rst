@@ -10,23 +10,23 @@ Setup
 Run the following commands to bootstrap your environment ::
 
     git clone https://github.com/pwyf/aid-transparency-tracker
-    cd tracker
-    pip install -r requirements/dev.txt
+    cd aid-transparency-tracker
+    pipenv install
     cp .env.example .env
     npm install
 
 Once you have installed your DBMS, run the following to create your app's
 database tables and perform the initial migration ::
 
-    flask db upgrade
+    pipenv run flask db upgrade
 
 Next you need to import some data. Organisations can be imported to the database from CSV ::
 
-    flask import-orgs [organisations_example.csv]
+    pipenv run flask import-orgs [organisations_example.csv]
 
 IATI data can then be downloaded for these organisations ::
 
-    flask download-iati-data
+    pipenv run flask download-iati-data
 
 To run the webpack dev server and flask server concurrently, run ::
 
@@ -41,7 +41,7 @@ To deploy::
     export FLASK_DEBUG=0
     export DATABASE_URL="<YOUR DATABASE URL>"
     npm run build   # build assets with webpack
-    flask run       # start the flask server
+    pipenv run flask run       # start the flask server
 
 In your production environment, make sure the ``FLASK_DEBUG`` environment
 variable is unset or is set to ``0``.
@@ -52,7 +52,7 @@ Shell
 
 To open the interactive shell, run ::
 
-    flask shell
+    pipenv run flask shell
 
 By default, you will have access to the flask ``app``.
 
@@ -62,7 +62,7 @@ Running Tests
 
 To run all tests, run ::
 
-    flask test
+    pipenv run flask test
 
 
 Migrations
@@ -70,11 +70,11 @@ Migrations
 
 Whenever a database migration needs to be made. Run the following commands ::
 
-    flask db migrate
+    pipenv run flask db migrate
 
 This will generate a new migration script. Then run ::
 
-    flask db upgrade
+    pipenv run flask db upgrade
 
 To apply the migration.
 

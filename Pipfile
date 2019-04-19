@@ -1,0 +1,59 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+# Testing
+pytest = "*"
+WebTest = "*"
+factory-boy = "*"
+
+# Lint and code style
+flake8 = "*"
+flake8-blind-except = "*"
+flake8-debugger = "*"
+flake8-docstrings = "*"
+flake8-quotes = "*"
+isort = "*"
+pep8-naming = "*"
+
+
+[packages]
+flask = "*"
+
+# Database
+psycopg2-binary = "*"
+sqlalchemy = "*"
+sqlalchemy-mixins = "*"
+
+# Migrations
+flask-migrate = "*"
+
+# Forms
+flask-wtf = "*"
+
+# Deployment
+gunicorn = "*"
+
+# Webpack
+flask-webpack = "*"
+
+# Auth
+flask-security = "*"
+
+# Caching
+flask-caching = "*"
+
+# Debug toolbar
+flask-debugtoolbar = "*"
+
+# Environment variable parsing
+environs = "*"
+
+# IATI specific
+iatikit = "*"
+bdd-tester = "*"
+
+[requires]
+python_version = "3.7"
