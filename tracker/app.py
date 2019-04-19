@@ -2,9 +2,8 @@
 from flask import Flask, render_template
 from flask_security import SQLAlchemyUserDatastore
 
-from . import commands, core, survey, iati
+from . import extensions, commands, core, survey, iati, security
 from .security.models import User, Role
-from .extensions import cache, db, debug_toolbar, migrate, webpack, security
 from .database import BaseModel
 
 
@@ -25,14 +24,14 @@ def create_app(config_object='tracker.settings'):
 
 def register_extensions(app):
     """Register Flask extensions."""
-    cache.init_app(app)
-    db.init_app(app)
-    migrate.init_app(app, db)
-    BaseModel.set_session(db.session)
-    webpack.init_app(app)
-    debug_toolbar.init_app(app)
-    datastore = SQLAlchemyUserDatastore(db, User, Role)
-    security.init_app(app, datastore)
+    extensions.cache.init_app(app)
+    extensions.db.init_app(app)
+    extensions.migrate.init_app(app, extensions.db)
+    BaseModel.set_session(extensions.db.session)
+    extensions.webpack.init_app(app)
+    extensions.debug_toolbar.init_app(app)
+    datastore = SQLAlchemyUserDatastore(extensions.db, User, Role)
+    extensions.security.init_app(app, datastore)
 
 
 def register_blueprints(app):
@@ -58,7 +57,7 @@ def register_shellcontext(app):
     def shell_context():
         """Shell context objects."""
         return {
-            'db': db,
+            'db': extensions.db,
             'Organisation': core.models.Organisation,
         }
 
