@@ -1,7 +1,7 @@
-"""empty message
+"""Add Organisation model.
 
 Revision ID: 8c2deb3dfa76
-Revises: 
+Revises:
 Create Date: 2019-04-19 22:12:05.636471
 
 """

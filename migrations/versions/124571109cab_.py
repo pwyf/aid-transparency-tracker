@@ -1,4 +1,4 @@
-"""empty message
+"""Add security-related models.
 
 Revision ID: 124571109cab
 Revises: 8c2deb3dfa76

@@ -1,4 +1,4 @@
-"""empty message
+"""Add user tracking fields (last login etc).
 
 Revision ID: d406c28e9227
 Revises: 124571109cab
