@@ -8,10 +8,16 @@ import iatikit
 from ..core import models
 
 
-@click.command()
+@click.group('iati')
+def iati_cli():
+    """Automated test commands."""
+    pass
+
+
+@iati_cli.command('download')
 @with_appcontext
 def download_iati_data():
-    '''Fetch the relevant IATI data from the registry.'''
+    '''Fetch the relevant data from the IATI registry.'''
 
     # Fetch a snapshot of *all* IATI data from the registry
     iatikit.download.data()

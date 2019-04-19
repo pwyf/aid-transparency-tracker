@@ -26,7 +26,7 @@ Next you need to import some data. Organisations can be imported to the database
 
 IATI data can then be downloaded for these organisations ::
 
-    pipenv run flask download-iati-data
+    pipenv run flask iati download
 
 To run the webpack dev server and flask server concurrently, run ::
 
