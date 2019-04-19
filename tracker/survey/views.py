@@ -6,6 +6,6 @@ blueprint = Blueprint('survey', __name__, url_prefix='/survey', static_folder='.
 
 
 @blueprint.route('/')
-def main():
+def home():
     """Main page."""
     return render_template('survey/index.html')
