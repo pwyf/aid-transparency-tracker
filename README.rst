@@ -22,7 +22,7 @@ database tables and perform the initial migration ::
 
 Next you need to import some data. Organisations can be imported to the database from CSV ::
 
-    pipenv run flask import-orgs [organisations_example.csv]
+    pipenv run flask setup orgs [organisations_example.csv]
 
 IATI data can then be downloaded for these organisations ::
 

@@ -6,7 +6,13 @@ import click
 from . import models
 
 
-@click.command()
+@click.group('setup')
+def setup_cli():
+    """Various setup commands."""
+    pass
+
+
+@setup_cli.command('orgs')
 @click.argument('input', type=click.File('r'))
 @with_appcontext
 def import_orgs(input):
@@ -21,6 +27,8 @@ def import_orgs(input):
     for row in data:
         org = models.Organisation.where(slug=row['slug']).first()
         if org:
+            click.echo(f'Updating {org.name} ({org.slug}) ...')
             org.update(**row)
         else:
+            click.echo(f'Creating {org.name} ({org.slug}) ...')
             models.Organisation.create(**row)
