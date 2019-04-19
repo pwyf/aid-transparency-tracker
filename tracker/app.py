@@ -1,8 +1,9 @@
 """The app module, containing the app factory function."""
 from flask import Flask, render_template
+from flask_security import SQLAlchemyUserDatastore
 
-from . import commands, survey, core, iati
-from .extensions import cache, db, debug_toolbar, migrate, webpack
+from . import commands, core, survey, iati, user
+from .extensions import cache, db, debug_toolbar, migrate, webpack, security
 from .database import BaseModel
 
 
@@ -29,6 +30,9 @@ def register_extensions(app):
     BaseModel.set_session(db.session)
     webpack.init_app(app)
     debug_toolbar.init_app(app)
+    user_datastore = SQLAlchemyUserDatastore(db, user.models.User,
+                                             user.models.Role)
+    security.init_app(app, user_datastore)
 
 
 def register_blueprints(app):

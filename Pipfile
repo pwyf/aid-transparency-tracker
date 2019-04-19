@@ -41,6 +41,7 @@ flask-webpack = "*"
 
 # Auth
 flask-security = "*"
+bcrypt = "*"
 
 # Caching
 flask-caching = "*"

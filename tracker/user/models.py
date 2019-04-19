@@ -1,55 +1,35 @@
-"""User models."""
-import datetime as dt
+'''This comes straight from the example here:
 
-from flask_login import UserMixin
+https://pythonhosted.org/Flask-Security/quickstart.html#id1
+'''
+from flask_security import UserMixin, RoleMixin
 
-from tracker.database import db, BaseModel
+from ..database import db, BaseModel
 
 
-class Role(BaseModel):
+roles_users = db.Table(
+    'roles_users',
+    db.Column('user_id', db.Integer(), db.ForeignKey('tracker_user.id')),
+    db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
+
+class Role(BaseModel, RoleMixin):
     """A role for a user."""
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
-    user_id = db.Column(db.ForeignKey('User.id'), nullable=True)
-    user = db.relationship('User', backref='roles')
-
-    def __init__(self, name, **kwargs):
-        """Create instance."""
-        db.Model.__init__(self, name=name, **kwargs)
-
-    def __repr__(self):
-        """Represent instance as a unique string."""
-        return '<Role({name})>'.format(name=self.name)
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+    description = db.Column(db.String(255))
 
 
-class User(UserMixin, BaseModel):
+class User(BaseModel, UserMixin):
     """A user of the app."""
 
+    __tablename__ = 'tracker_user'
+
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(80), unique=True, nullable=False)
-    #: The hashed password
-    password = db.Column(db.Binary(128), nullable=True)
-    created_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
-    first_name = db.Column(db.String(30), nullable=True)
-    last_name = db.Column(db.String(30), nullable=True)
-    active = db.Column(db.Boolean(), default=False)
-    is_admin = db.Column(db.Boolean(), default=False)
-
-    def __init__(self, username, email, password=None, **kwargs):
-        """Create instance."""
-        db.Model.__init__(self, username=username, email=email, **kwargs)
-        if password:
-            self.set_password(password)
-        else:
-            self.password = None
-
-    @property
-    def full_name(self):
-        """Full user name."""
-        return '{0} {1}'.format(self.first_name, self.last_name)
-
-    def __repr__(self):
-        """Represent instance as a unique string."""
-        return '<User({username!r})>'.format(username=self.username)
+    email = db.Column(db.String(255), unique=True)
+    password = db.Column(db.String(255))
+    active = db.Column(db.Boolean())
+    confirmed_at = db.Column(db.DateTime())
+    roles = db.relationship('Role', secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
