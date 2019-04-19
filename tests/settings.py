@@ -11,3 +11,4 @@ WEBPACK_MANIFEST_PATH = 'webpack/manifest.json'
 WTF_CSRF_ENABLED = False  # Allows form testing
 
 SECURITY_PASSWORD_SALT = SECRET_KEY
+SECURITY_USER_IDENTITY_ATTRIBUTES = 'username'

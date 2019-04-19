@@ -27,7 +27,8 @@ class User(BaseModel, UserMixin):
     __tablename__ = 'tracker_user'
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(255), unique=True)
+    username = db.Column(db.String(255), unique=True, index=True)
+    email = db.Column(db.String(255))
     password = db.Column(db.String(255))
     active = db.Column(db.Boolean())
     last_login_at = db.Column(db.DateTime())
