@@ -1,4 +1,4 @@
-from os.path import join
+from os.path import exists, join
 import shutil
 
 from flask.cli import with_appcontext
@@ -19,6 +19,10 @@ def download_iati_data():
 
     input_path = join('__iatikitcache__', 'registry', 'data')
     output_path = join('tracker', 'static', 'xml', str(updated_on))
+
+    if exists(output_path):
+        click.echo('Output path exists – aborting.')
+        raise click.Abort()
 
     for organisation in models.Organisation.query:
         if not organisation.registry_slug:
