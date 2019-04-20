@@ -1,6 +1,9 @@
 # iatikit
 __iatikitcache__/
 
+# downloaded XML
+/org_xml/
+
 # node stuff
 /node_modules
 

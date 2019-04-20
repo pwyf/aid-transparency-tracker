@@ -30,7 +30,7 @@ def download_iati_data():
 
     base_path = join(dirname(current_app.root_path))
     input_path = join(base_path, '__iatikitcache__', 'registry', 'data')
-    output_path = join(current_app.root_path, 'static', 'xml', str(updated_on))
+    output_path = join(base_path, 'org_xml', str(updated_on))
 
     if exists(output_path):
         click.echo('Output path exists – aborting.')

@@ -37,6 +37,7 @@ def register_extensions(app):
 def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(survey.views.blueprint)
+    app.register_blueprint(iati.views.blueprint)
     app.register_blueprint(core.views.blueprint)
 
 

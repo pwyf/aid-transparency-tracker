@@ -1,1 +1,1 @@
-from . import commands  # noqa
+from . import commands, views  # noqa
