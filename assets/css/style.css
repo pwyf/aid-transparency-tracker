@@ -14,65 +14,65 @@ footer {
 }
 
 /* Affix styling */
-#survey-page .affix {
+#survey-home-page .affix {
   position: fixed;
   top: 0;
   width: 213px;
 }
-#survey-page .affix-bottom {
+#survey-home-page .affix-bottom {
   position: absolute;
   top: -200px;
   width: 213px;
 }
-#survey-page .sidebar-nav {
+#survey-home-page .sidebar-nav {
   margin-top: 20px;
 }
-#survey-page .sidebar-nav .nav .nav {
+#survey-home-page .sidebar-nav .nav .nav {
   display: none;
   padding-bottom: 10px;
 }
-#survey-page .sidebar-nav .nav > li > .active + ul {
+#survey-home-page .sidebar-nav .nav > li > .active + ul {
   display: block;
 }
-#survey-page .sidebar-nav .nav > li > a {
+#survey-home-page .sidebar-nav .nav > li > a {
   padding: 4px 20px;
 }
-#survey-page .sidebar-nav .nav .nav > li > a {
+#survey-home-page .sidebar-nav .nav .nav > li > a {
   padding: 1px 0 0 30px;
 }
-#survey-page .sidebar-nav .nav li > a.active {
+#survey-home-page .sidebar-nav .nav li > a.active {
   color: rgb(195, 75, 114);
   font-weight: bold;
 }
-#survey-page h2.component-name {
+#survey-home-page h2.component-name {
   border-bottom: 1px solid #eee;
 }
-#survey-page .indicator {
+#survey-home-page .indicator {
   margin: 20px 0;
   border: 1px solid #eee;
   border-radius: 3px;
 }
-#survey-page .research-findings, .publisher-response {
+#survey-home-page .research-findings, .publisher-response {
   padding: 20px;
   border-left: 5px solid #eee;
 }
-#survey-page .research-findings {
+#survey-home-page .research-findings {
   border-left-color: #62a9c1;
 }
-#survey-page .research-findings .evidence {
+#survey-home-page .research-findings .evidence {
   /* Prevent URLs from flooding */
   word-break: break-all;
 }
-#survey-page .publisher-response {
+#survey-home-page .publisher-response {
   background-color: #fcf8e3;
   border-left-color: rgb(195, 75, 114);
 }
-#survey-page .research-findings .comments {
+#survey-home-page .research-findings .comments {
   border-left: 2px solid #aaa;
   padding-left: 20px;
 }
 
-#home-page .jumbotron {
+#core-home-page .jumbotron {
     background: #3e9336;
     background: -moz-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
     background: -webkit-gradient(linear,left bottom,right top,color-stop(0%,#3e9336),color-stop(100%,#7c9ac4));

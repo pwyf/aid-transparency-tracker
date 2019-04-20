@@ -9,14 +9,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>{% block page_title %}{% endblock %} | Aid Transparency Tracker</title>
+    <title>{{ page_title }} | Aid Transparency Tracker</title>
     <link rel="icon" type="image/png" href="{{ asset_url_for('img/favicon.ico') }}">
     <meta name="description" content="{% block meta_description %}{% endblock %}">
     <meta name="author" content="{% block meta_author %}{% endblock %}">
 
     {{ stylesheet_tag('main_css') | safe }}
   </head>
-  <body data-spy="scroll" data-target="#sidebar" data-offset="0"{% if active_page %} id="{{ active_page }}-page"{% endif %}>
+  <body data-spy="scroll" data-target="#sidebar" data-offset="0" id="{{ request.url_rule.endpoint.replace('.', '-') }}-page">
     {% block body %}
 
     <header>
@@ -26,6 +26,12 @@
     </header>
 
     <main role="main">
+      {% block masthead %}
+      <div id="masthead">
+        <h1>{{ page_title }}</h1>
+      </div>
+      {% endblock %}
+
       {% block content %}{% endblock %}
     </main>
 
