@@ -5,10 +5,13 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item"><a class="nav-link" href="#">Summary{% if active_page == 'survey' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
-      <li class="nav-item {% if active_page == 'survey' %}active{% endif %}"><a class="nav-link" href="{{ url_for('survey.home') }}">Survey{% if active_page == 'survey' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Sampling{% if active_page == 'survey' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Automated tests{% if active_page == 'survey' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+      <li class="nav-item {% if request.url_rule.endpoint.split('.')[0] == 'summary' %}active{% endif %}"><a class="nav-link" href="#">Summary{% if request.url_rule.endpoint.split('.')[0] == 'summary' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+
+      <li class="nav-item {% if request.url_rule.endpoint.split('.')[0] == 'survey' %}active{% endif %}"><a class="nav-link" href="{{ url_for('survey.home') }}">Survey{% if request.url_rule.endpoint.split('.')[0] == 'survey' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+
+      <li class="nav-item {% if request.url_rule.endpoint.split('.')[0] == 'sampling' %}active{% endif %}"><a class="nav-link" href="#">Sampling{% if request.url_rule.endpoint.split('.')[0] == 'sampling' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+
+      <li class="nav-item {% if request.url_rule.endpoint.split('.')[0] == 'iati' %}active{% endif %}"><a class="nav-link" href="#">Automated tests{% if request.url_rule.endpoint.split('.')[0] == 'iati' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
     </ul>
 
     <ul class="navbar-nav">
