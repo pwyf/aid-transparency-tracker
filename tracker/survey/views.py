@@ -1,6 +1,6 @@
 """Survey section."""
 from flask import Blueprint, render_template
-from flask_login import login_required
+from flask_security.decorators import login_required
 
 
 blueprint = Blueprint('survey', __name__, url_prefix='/survey', static_folder='../static')
