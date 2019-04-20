@@ -38,7 +38,6 @@ def download_iati_data():
         click.echo('Output path exists – aborting.')
         raise click.Abort()
 
-    click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
     for organisation in models.Organisation.query:
         if not organisation.registry_slug:
             # if the org isn’t an IATI publisher, skip
