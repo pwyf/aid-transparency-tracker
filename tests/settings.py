@@ -1,6 +1,3 @@
-from os.path import abspath, dirname, join
-
-
 """Settings module for test app."""
 ENV = 'development'
 TESTING = True
@@ -12,9 +9,3 @@ CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 WEBPACK_MANIFEST_PATH = 'webpack/manifest.json'
 WTF_CSRF_ENABLED = False  # Allows form testing
-
-SECURITY_PASSWORD_SALT = SECRET_KEY
-SECURITY_USER_IDENTITY_ATTRIBUTES = 'username'
-
-basedir = dirname(abspath(__file__))
-IATI_DATA_PATH = join(dirname(basedir), 'org_xml')
