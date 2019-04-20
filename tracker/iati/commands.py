@@ -1,4 +1,4 @@
-from os.path import dirname, exists, join
+from os.path import exists, join
 import shutil
 
 from flask import current_app
