@@ -119,3 +119,11 @@ footer {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+/* Rather than figure out how to change the classes returned by
+   flask-security, this just overrides the styles. */
+.alert-info {
+  color: #856404 !important;
+  background-color: #fff3cd !important;
+  border-color: #ffeeba !important;
+}
