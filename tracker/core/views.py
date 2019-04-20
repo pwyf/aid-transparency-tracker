@@ -1,4 +1,4 @@
-"""User views."""
+"""Core views."""
 from flask import Blueprint, render_template
 
 
