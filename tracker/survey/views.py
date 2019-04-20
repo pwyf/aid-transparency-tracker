@@ -1,11 +1,13 @@
-"""Survey section, including homepage and signup."""
+"""Survey section."""
 from flask import Blueprint, render_template
+from flask_login import login_required
 
 
 blueprint = Blueprint('survey', __name__, url_prefix='/survey', static_folder='../static')
 
 
 @blueprint.route('/')
+@login_required
 def home():
-    """Main page."""
+    """Main survey page."""
     return render_template('survey/index.html')
