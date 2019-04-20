@@ -1,3 +1,4 @@
+from os import makedirs
 from os.path import exists, join
 import shutil
 
@@ -30,7 +31,7 @@ def download_iati_data():
     iatikit.download.data()
     updated_on = iatikit.data().last_updated.date()
 
-    input_path = join(iatikit.data().path, 'data')
+    input_path = iatikit.data().path
     output_path = join(current_app.config.get('IATI_DATA_PATH'), str(updated_on))
 
     click.echo('Copying files into place ...')
@@ -39,11 +40,18 @@ def download_iati_data():
     if exists(output_path):
         click.echo('Error: Output path exists.')
         raise click.Abort()
+    makedirs(output_path)
+
+    shutil.copy(join(input_path, 'metadata.json'),
+                join(output_path, 'metadata.json'))
 
     for organisation in models.Organisation.query:
         if not organisation.registry_slug:
             # if the org isn’t an IATI publisher, skip
             continue
-        # Copy files into place
-        shutil.copytree(join(input_path, organisation.registry_slug),
-                        join(output_path, organisation.slug))
+        # Copy data files into place
+        shutil.copytree(join(input_path, 'data', organisation.registry_slug),
+                        join(output_path, 'data', organisation.slug))
+        # Copy metadata files into place
+        shutil.copytree(join(input_path, 'metadata', organisation.registry_slug),
+                        join(output_path, 'metadata', organisation.slug))
