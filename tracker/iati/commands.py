@@ -19,7 +19,11 @@ def iati_cli():
 def download_iati_data():
     '''Fetch the relevant data from the IATI registry.'''
 
-    # Fetch a snapshot of *all* IATI data from the registry
+    if models.Organisation.query.count() == 0:
+        click.echo('No organisations to fetch data for.')
+        raise click.Abort()
+
+    click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
     iatikit.download.data()
     updated_on = iatikit.data()._last_updated.date()
 
@@ -30,6 +34,7 @@ def download_iati_data():
         click.echo('Output path exists – aborting.')
         raise click.Abort()
 
+    click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
     for organisation in models.Organisation.query:
         if not organisation.registry_slug:
             # if the org isn’t an IATI publisher, skip
