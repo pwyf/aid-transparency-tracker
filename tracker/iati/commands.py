@@ -21,7 +21,9 @@ def download_iati_data():
     '''Fetch the relevant data from the IATI registry.'''
 
     if models.Organisation.query.count() == 0:
-        click.echo('No organisations to fetch data for.')
+        click.echo('Error: No organisations to fetch data for.')
+        click.echo('Perhaps you need to import some, using:')
+        click.echo('\n    $ flask setup orgs\n')
         raise click.Abort()
 
     click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
