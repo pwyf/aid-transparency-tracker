@@ -23,7 +23,7 @@ def download_iati_data():
     '''Fetch the relevant data from the IATI registry.'''
 
     if models.Organisation.query.count() == 0:
-        click.echo('Error: No organisations to fetch data for.')
+        click.secho('Error: No organisations to fetch data for.', fg='red')
         click.echo('Perhaps you need to import some, using:')
         click.echo('\n    $ flask setup orgs\n')
         raise click.Abort()
@@ -39,7 +39,7 @@ def download_iati_data():
     click.echo(f'Output path: {output_path}')
 
     if exists(output_path):
-        click.echo('Error: Output path exists.')
+        click.secho('Error: Output path exists.', fg='red')
         raise click.Abort()
     makedirs(output_path)
 
@@ -83,12 +83,12 @@ def run_iati_tests(date):
                 raise ValueError
             snapshot_date = date
     except FileNotFoundError:
-        click.echo('Error: No IATI data to test.')
+        click.secho('Error: No IATI data to test.', fg='red')
         click.echo('Perhaps you need to download some, using:')
         click.echo('\n    $ flask iati download\n')
         raise click.Abort()
     except ValueError:
-        click.echo(f'Error: No IATI data found for given date ({date}).')
+        click.secho(f'Error: No IATI data found for given date ({date}).', fg='red')
         raise click.Abort()
 
     click.echo(f'Testing IATI data snapshot ({snapshot_date}) ...')
