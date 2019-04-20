@@ -1,5 +1,6 @@
 # iatikit
 __iatikitcache__/
+iatikit.ini
 
 # downloaded XML
 /org_xml/
