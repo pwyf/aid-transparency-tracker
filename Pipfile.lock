@@ -56,11 +56,11 @@
         },
         "bdd-tester": {
             "hashes": [
-                "sha256:5e8874d2cd34a3b51783726f0718e84eca573bc269d97f720f8bacf66125c8fa",
-                "sha256:fde7061c3ed4fd8a5c09d51aabea2c1f672f834637371b441575e54b3fd17f91"
+                "sha256:1e0c1c06096d52f8d0e49195ad281c5b0bcd48591894b1a570e00a3bd532abb9",
+                "sha256:34ebb4d4dfae2fedd1fea89317b405b962221a6681f9b37b43949f8cd376dc82"
             ],
             "index": "pypi",
-            "version": "==0.0.6"
+            "version": "==0.0.7"
         },
         "blinker": {
             "hashes": [
