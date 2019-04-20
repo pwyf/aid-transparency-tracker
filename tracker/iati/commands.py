@@ -28,14 +28,16 @@ def download_iati_data():
 
     click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
     iatikit.download.data()
-    updated_on = iatikit.data()._last_updated.date()
+    updated_on = iatikit.data().last_updated.date()
 
-    base_path = join(dirname(current_app.root_path))
-    input_path = join(base_path, '__iatikitcache__', 'registry', 'data')
-    output_path = join(base_path, 'org_xml', str(updated_on))
+    input_path = join(iatikit.data().path, 'data')
+    output_path = join(current_app.config.get('IATI_DATA_PATH'), str(updated_on))
+
+    click.echo('Copying files into place ...')
+    click.echo(f'Output path: {output_path}')
 
     if exists(output_path):
-        click.echo('Output path exists – aborting.')
+        click.echo('Error: Output path exists.')
         raise click.Abort()
 
     for organisation in models.Organisation.query:

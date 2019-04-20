@@ -10,7 +10,7 @@ from os.path import abspath, dirname, join
 from environs import Env
 
 
-basedir = abspath(dirname(__file__))
+basedir = dirname(abspath(__file__))
 
 env = Env()
 env.read_env()
@@ -30,3 +30,5 @@ WEBPACK_MANIFEST_PATH = 'webpack/manifest.json'
 SECURITY_PASSWORD_SALT = SECRET_KEY
 SECURITY_TRACKABLE = True
 SECURITY_USER_IDENTITY_ATTRIBUTES = 'username'
+
+IATI_DATA_PATH = join(dirname(basedir), 'org_xml')
