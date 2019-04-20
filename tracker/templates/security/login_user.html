@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+{% set page_title = "Please sign in" %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+      {{ login_user_form.hidden_tag() }}
+
+      <label for="email" class="sr-only">Username</label>
+      <input type="text" id="email" name="email" class="form-control{% if login_user_form.email.errors %} is-invalid{% endif %}" placeholder="Username" required autofocus>
+
+      {% if login_user_form.email.errors %}
+        <div class="invalid-feedback">
+        {% for error in login_user_form.email.errors %}
+          {{ error }}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" id="password" name="password" class="form-control{% if login_user_form.password.errors %} is-invalid{% endif %}" placeholder="Password" required>
+
+      {% if login_user_form.password.errors %}
+        <div class="invalid-feedback">
+        {% for error in login_user_form.password.errors %}
+          {{ error }}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+  </div>
+</div>
+{% include "security/_menu.html" %}
+{% endblock %}
