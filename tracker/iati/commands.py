@@ -1,6 +1,7 @@
-from os.path import exists, join
+from os.path import dirname, exists, join
 import shutil
 
+from flask import current_app
 from flask.cli import with_appcontext
 import click
 import iatikit
@@ -27,8 +28,9 @@ def download_iati_data():
     iatikit.download.data()
     updated_on = iatikit.data()._last_updated.date()
 
-    input_path = join('__iatikitcache__', 'registry', 'data')
-    output_path = join('tracker', 'static', 'xml', str(updated_on))
+    base_path = join(dirname(current_app.root_path))
+    input_path = join(base_path, '__iatikitcache__', 'registry', 'data')
+    output_path = join(current_app.root_path, 'static', 'xml', str(updated_on))
 
     if exists(output_path):
         click.echo('Output path exists – aborting.')
