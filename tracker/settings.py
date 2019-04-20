@@ -31,4 +31,7 @@ SECURITY_PASSWORD_SALT = SECRET_KEY
 SECURITY_TRACKABLE = True
 SECURITY_USER_IDENTITY_ATTRIBUTES = 'username'
 
-IATI_DATA_PATH = join(dirname(basedir), 'org_xml')
+IATI_DATA_PATH = env.str('IATI_DATA_PATH',
+                         default=join(dirname(basedir), 'org_xml'))
+IATI_RESULT_PATH = env.str('IATI_RESULT_PATH',
+                           default=join(dirname(basedir), 'test_results'))

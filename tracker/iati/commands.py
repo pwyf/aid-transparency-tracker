@@ -1,4 +1,4 @@
-from os import makedirs
+from os import listdir, makedirs
 from os.path import exists, join
 import shutil
 
@@ -8,6 +8,7 @@ import click
 import iatikit
 
 from ..core import models
+from . import utils
 
 
 @click.group('iati')
@@ -55,3 +56,52 @@ def download_iati_data():
         # Copy metadata files into place
         shutil.copytree(join(input_path, 'metadata', organisation.registry_slug),
                         join(output_path, 'metadata', organisation.slug))
+
+
+@iati_cli.command('test')
+@click.option('--date', default='latest', help='Date of the data to test, in ' +
+                                               'YYYY-MM-DD. Defaults to ' +
+                                               'most recent.')
+@with_appcontext
+def run_iati_tests(date):
+    '''Test a set of downloaded IATI data.'''
+
+    click.echo('Loading tests ...')
+    all_tests = utils.load_tests()
+
+    iati_data_path = current_app.config.get('IATI_DATA_PATH')
+    iati_result_path = current_app.config.get('IATI_RESULT_PATH')
+    try:
+        snapshot_dates = listdir(join(iati_data_path))
+        if snapshot_dates == []:
+            raise FileNotFoundError
+
+        if date == 'latest':
+            snapshot_date = max(snapshot_dates)
+        else:
+            if not exists(join(iati_data_path, date)):
+                raise ValueError
+            snapshot_date = date
+    except FileNotFoundError:
+        click.echo('Error: No IATI data to test.')
+        click.echo('Perhaps you need to download some, using:')
+        click.echo('\n    $ flask iati download\n')
+        raise click.Abort()
+    except ValueError:
+        click.echo(f'Error: No IATI data found for given date ({date}).')
+        raise click.Abort()
+
+    click.echo(f'Testing IATI data snapshot ({snapshot_date}) ...')
+    data_path = join(iati_data_path, snapshot_date)
+    output_path = join(iati_result_path, snapshot_date)
+
+    publishers = iatikit.data(path=data_path).publishers
+    for publisher in publishers:
+        org = models.Organisation.where(slug=publisher.name).first()
+        click.echo(f'Testing organisation: {org.name} ({org.slug}) ...')
+        path = join(output_path, org.slug)
+        makedirs(path, exist_ok=True)
+        for test in all_tests:
+            fname = join(path, utils.slugify(test.name) + '.csv')
+            click.echo(f'{test} ...')
+            utils.run_test(test, publisher, fname)
