@@ -4,6 +4,8 @@ from ..database import db, BaseModel
 class Organisation(BaseModel):
     """An index organisation."""
 
+    __repr_attrs__ = ['slug']
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     slug = db.Column(db.String(255), unique=True, nullable=False)
