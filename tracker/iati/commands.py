@@ -103,5 +103,6 @@ def run_iati_tests(date):
         makedirs(path, exist_ok=True)
         for test in all_tests:
             fname = join(path, utils.slugify(test.name) + '.csv')
-            click.echo(f'{test} ...')
-            utils.run_test(test, publisher, fname)
+            click.echo(f'  {test} ...')
+            summary = utils.run_test(test, publisher, fname)
+            click.echo(f'  {summary}')

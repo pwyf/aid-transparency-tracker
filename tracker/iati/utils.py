@@ -1,3 +1,4 @@
+from collections import defaultdict
 from csv import DictWriter
 from glob import glob
 from os.path import dirname, join
@@ -31,11 +32,12 @@ def slugify(some_text):
 
 def run_test(test, publisher, output_path):
     '''Run test for a given publisher, and output results to a CSV.'''
+    summary = defaultdict(int)
     fieldnames = ['dataset', 'identifier', 'index', 'result']
     tags = test.tags + test.feature.tags
     if 'iati-activity' not in tags and 'iati-organisation' not in tags:
         # Skipping test (it’s not tagged as activity or organisation level)
-        return
+        return None
 
     with open(output_path, 'w') as handler:
         writer = DictWriter(handler, fieldnames=fieldnames)
@@ -44,19 +46,24 @@ def run_test(test, publisher, output_path):
             for dataset in publisher.datasets.where(filetype='activity'):
                 dataset_name = dataset.name
                 for idx, activity in enumerate(dataset.activities):
+                    result = str(test(activity.etree))
+                    summary[result] += 1
                     writer.writerow({
                         'dataset': dataset_name,
                         'identifier': activity.id,
                         'index': idx,
-                        'result': str(test(activity.etree)),
+                        'result': result,
                     })
         elif 'iati-organisation' in tags:
             for dataset in publisher.datasets.where(filetype='organisation'):
                 dataset_name = dataset.name
                 for idx, organisation in enumerate(dataset.organisations):
+                    result = str(test(organisation.etree))
+                    summary[result] += 1
                     writer.writerow({
                         'dataset': dataset_name,
                         'identifier': organisation.id,
                         'index': idx,
-                        'result': str(test(organisation.etree)),
+                        'result': result,
                     })
+    return dict(summary)
