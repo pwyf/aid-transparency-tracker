@@ -3,7 +3,7 @@
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js h-100" lang="en"> <!--<![endif]-->
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +16,7 @@
 
     {{ stylesheet_tag('main_css') | safe }}
   </head>
-  <body data-spy="scroll" data-target="#sidebar" data-offset="0" id="{{ request.url_rule.endpoint.replace('.', '-') }}-page">
+  <body data-spy="scroll" class="d-flex flex-column h-100" data-target="#sidebar" data-offset="0" id="{{ request.url_rule.endpoint.replace('.', '-') }}-page">
     {% block body %}
 
     <header>
@@ -25,7 +25,7 @@
     {% endwith %}
     </header>
 
-    <main role="main">
+    <main role="main" class="flex-shrink-0">
       {% block masthead %}
       <div id="masthead">
         <h1>{{ page_title }}</h1>
