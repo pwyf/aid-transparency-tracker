@@ -29,7 +29,7 @@ def slugify(some_text):
     return ''.join(safe_char(char) for char in some_text).strip('_')
 
 
-def run_test(test, publisher, output_path, **kwargs):
+def run_test(test, publisher, output_path, test_condition, **kwargs):
     """Run test for a given publisher, and output results to a CSV."""
     summary = {True: 0, False: 0, None: 0}
     fieldnames = ['dataset', 'identifier', 'index', 'result', 'hierarchy']
@@ -42,24 +42,23 @@ def run_test(test, publisher, output_path, **kwargs):
         writer = DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
         if 'iati-activity' in tags:
-            datasets = publisher.datasets.where(filetype='activity')
-            attr = 'activities'
+            if test_condition:
+                items = publisher.activities.where(xpath=test_condition)
+            else:
+                items = publisher.activities
         elif 'iati-organisation' in tags:
-            datasets = publisher.datasets.where(filetype='organisation')
-            attr = 'organisations'
-        for dataset in datasets:
-            dataset_name = dataset.name
-            for idx, item in enumerate(getattr(dataset, attr), start=1):
-                result = test(item.etree, **kwargs)
-                hierarchy = item.etree.get('hierarchy')
-                if not hierarchy:
-                    hierarchy = '1'
-                summary[result] += 1
-                writer.writerow({
-                    'dataset': dataset_name,
-                    'identifier': item.id,
-                    'index': idx,
-                    'result': str(result),
-                    'hierarchy': hierarchy,
-                })
+            items = publisher.organisations
+        for item in items:
+            result = test(item.etree, **kwargs)
+            hierarchy = item.etree.get('hierarchy')
+            if not hierarchy:
+                hierarchy = '1'
+            summary[result] += 1
+            writer.writerow({
+                'dataset': item.dataset.name,
+                'identifier': item.id,
+                'index': item.etree.getparent().index(item.etree) + 1,
+                'result': str(result),
+                'hierarchy': hierarchy,
+            })
     return dict(summary)
