@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% set page_title = "Home" %}
+{% set page_title = "Summary" %}
 
 {% block content %}
 <div class="container">
@@ -8,7 +8,7 @@
     {% if current_user.has_role('admin') %}
     <ul>
       {% for organisation in organisations %}
-      <li><a href="{{ url_for('core.summary', org_id=organisation.id) }}">{{ organisation.name }}</a></li>
+      <li><a href="#">{{ organisation.name }}</a></li>
       {% endfor %}
     </ul>
     {% endif %}
