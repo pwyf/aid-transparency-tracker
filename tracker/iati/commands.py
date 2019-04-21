@@ -69,8 +69,10 @@ def import_iati_data():
 @click.option('--date', default='latest',
               help='Date of the data to test, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
+@click.option('--refresh/--no-refresh', default=True,
+              help='Refresh schema and codelists.')
 @with_appcontext
-def run_iati_tests(date):
+def run_iati_tests(date, refresh):
     """Test a set of downloaded IATI data."""
 
     iati_data_path = current_app.config.get('IATI_DATA_PATH')
@@ -96,8 +98,9 @@ def run_iati_tests(date):
                     fg='red', err=True)
         raise click.Abort()
 
-    click.echo('Downloading latest schemas and codelists ...')
-    iatikit.download.standard()
+    if refresh:
+        click.echo('Downloading latest schemas and codelists ...')
+        iatikit.download.standard()
     codelists = iatikit.codelists()
 
     click.echo('Loading tests ...')
