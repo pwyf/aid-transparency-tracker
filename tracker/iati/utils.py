@@ -30,7 +30,7 @@ def slugify(some_text):
     return ''.join(safe_char(char) for char in some_text).strip('_')
 
 
-def run_test(test, publisher, output_path):
+def run_test(test, publisher, output_path, **kwargs):
     '''Run test for a given publisher, and output results to a CSV.'''
     summary = defaultdict(int)
     fieldnames = ['dataset', 'identifier', 'index', 'result']
@@ -46,7 +46,7 @@ def run_test(test, publisher, output_path):
             for dataset in publisher.datasets.where(filetype='activity'):
                 dataset_name = dataset.name
                 for idx, activity in enumerate(dataset.activities):
-                    result = str(test(activity.etree))
+                    result = str(test(activity.etree, **kwargs))
                     summary[result] += 1
                     writer.writerow({
                         'dataset': dataset_name,
@@ -58,7 +58,7 @@ def run_test(test, publisher, output_path):
             for dataset in publisher.datasets.where(filetype='organisation'):
                 dataset_name = dataset.name
                 for idx, organisation in enumerate(dataset.organisations):
-                    result = str(test(organisation.etree))
+                    result = str(test(organisation.etree, **kwargs))
                     summary[result] += 1
                     writer.writerow({
                         'dataset': dataset_name,

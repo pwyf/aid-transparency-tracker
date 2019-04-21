@@ -104,5 +104,6 @@ def run_iati_tests(date):
         for test in all_tests:
             fname = join(path, utils.slugify(test.name) + '.csv')
             click.echo(f'  {test} ...')
-            summary = utils.run_test(test, publisher, fname)
+            summary = utils.run_test(test, publisher, fname,
+                                     today=snapshot_date)
             click.echo(f'  {summary}')
