@@ -93,18 +93,18 @@ def run_iati_tests(date):
         raise click.Abort()
 
     click.echo(f'Testing IATI data snapshot ({snapshot_date}) ...')
-    data_path = join(iati_data_path, snapshot_date)
-    output_path = join(iati_result_path, snapshot_date)
+    snapshot_xml_path = join(iati_data_path, snapshot_date)
+    root_output_path = join(iati_result_path, snapshot_date)
 
-    publishers = iatikit.data(path=data_path).publishers
+    publishers = iatikit.data(path=snapshot_xml_path).publishers
     for publisher in publishers:
         org = models.Organisation.where(slug=publisher.name).first()
         click.echo(f'Testing organisation: {org.name} ({org.slug}) ...')
-        path = join(output_path, org.slug)
-        makedirs(path, exist_ok=True)
+        output_path = join(root_output_path, org.slug)
+        makedirs(output_path, exist_ok=True)
         for test in all_tests:
-            fname = join(path, utils.slugify(test.name) + '.csv')
+            output_filepath = join(output_path, utils.slugify(test.name) + '.csv')
             click.echo(f'  {test} ...')
-            summary = utils.run_test(test, publisher, fname,
+            summary = utils.run_test(test, publisher, output_filepath,
                                      today=snapshot_date)
             click.echo(f'    {summary}')
