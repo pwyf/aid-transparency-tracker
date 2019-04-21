@@ -46,16 +46,17 @@ def download_iati_data():
     shutil.copy(join(input_path, 'metadata.json'),
                 join(output_path, 'metadata.json'))
 
-    for organisation in models.Organisation.query:
-        if not organisation.registry_slug:
-            # if the org isn’t an IATI publisher, skip
-            continue
-        # Copy data files into place
-        shutil.copytree(join(input_path, 'data', organisation.registry_slug),
-                        join(output_path, 'data', organisation.slug))
-        # Copy metadata files into place
-        shutil.copytree(join(input_path, 'metadata', organisation.registry_slug),
-                        join(output_path, 'metadata', organisation.slug))
+    with click.progressbar(models.Organisation.all()) as all_organisations:
+        for organisation in all_organisations:
+            if not organisation.registry_slug:
+                # if the org isn’t an IATI publisher, skip
+                continue
+            # Copy data files into place
+            shutil.copytree(join(input_path, 'data', organisation.registry_slug),
+                            join(output_path, 'data', organisation.slug))
+            # Copy metadata files into place
+            shutil.copytree(join(input_path, 'metadata', organisation.registry_slug),
+                            join(output_path, 'metadata', organisation.slug))
 
 
 @iati_cli.command('test')
