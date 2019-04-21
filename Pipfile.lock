@@ -245,11 +245,11 @@
         },
         "iatikit": {
             "hashes": [
-                "sha256:4bf134e8efc6cb959415a9bed82ad569947226799537c1443f7334d42abfeee8",
-                "sha256:f0fe5503e9f9c1f72e084578defbdd5af2a688f682ee4f9cc54f357c9a4a3f17"
+                "sha256:50dee317b64a721a100268e5a966cfc4ebfa03f3a47de1cf4c8d5d4be2902f72",
+                "sha256:aec8685178aaa6995f772eb7594a0b39f4e0efe731470e428bf00382fb8671fd"
             ],
             "index": "pypi",
-            "version": "==2.0.8"
+            "version": "==2.1.0"
         },
         "idna": {
             "hashes": [
