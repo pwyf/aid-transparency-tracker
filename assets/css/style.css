@@ -72,25 +72,6 @@ footer {
   padding-left: 20px;
 }
 
-#core-home-page .jumbotron {
-    background: #3e9336;
-    background: -moz-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
-    background: -webkit-gradient(linear,left bottom,right top,color-stop(0%,#3e9336),color-stop(100%,#7c9ac4));
-    background: -webkit-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
-    background: -o-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
-    background: -ms-linear-gradient(45deg,#3e9336 0%,#7c9ac4 100%);
-    background: linear-gradient(45deg, #3e9336 0%, #7c9ac4 100%) repeat scroll 0 0 transparent;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3e9336',endColorstr='#7c9ac4',GradientType=1);
-    -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
-    -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
-    box-shadow: inset 0 3px 7px rgba(0,0,0,.2),inset 0 -3px 7px rgba(0,0,0,.2);
-    border-radius: 0;
-    padding:60px 0 30px;
-    margin-top:none;
-    top:0;
-    color:#ffffff;
-}
-
 #security-login-page form {
   width: 100%;
   max-width: 330px;
