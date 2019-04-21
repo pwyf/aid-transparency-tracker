@@ -1,2 +1,2 @@
-"""The survey module, including the homepage and user auth."""
+"""The manual survey module."""
 from . import views  # noqa
