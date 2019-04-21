@@ -26,10 +26,16 @@ def home():
 
 
 @blueprint.route('/summary/<org_id>')
+@login_required
 def summary(org_id):
     """Summary page."""
     try:
         organisation = models.Organisation.find_or_fail(org_id)
     except:
         return abort(404)
+
+    if not (current_user.has_role('admin') or
+            current_user.has_role(organisation_id=organisation.id)):
+        return abort(403)
+
     return render_template('core/summary.html', organisation=organisation)
