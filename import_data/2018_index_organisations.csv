@@ -1,4 +1,4 @@
-name,slug,registry_slug,test_condition
+name,id,registry_slug,test_condition
 AfDB,46002,afdb,
 AsDB,46004,asdb,
 "Australia, DFAT",AU-5,ausgov,

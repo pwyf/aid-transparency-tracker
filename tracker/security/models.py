@@ -19,9 +19,10 @@ class Role(BaseModel, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
-    organisation = db.Column(db.String(255),
-                             db.ForeignKey('organisation.slug', ondelete='CASCADE'),
-                             nullable=True)
+    organisation = db.Column(
+        db.String(255),
+        db.ForeignKey('organisation.id', ondelete='CASCADE'),
+        nullable=True)
 
 
 class User(BaseModel, UserMixin):

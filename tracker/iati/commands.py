@@ -58,10 +58,10 @@ def import_iati_data():
                 continue
             # Copy data files into place
             shutil.copytree(join(input_path, 'data', organisation.registry_slug),
-                            join(output_path, 'data', organisation.slug))
+                            join(output_path, 'data', organisation.id))
             # Copy metadata files into place
             shutil.copytree(join(input_path, 'metadata', organisation.registry_slug),
-                            join(output_path, 'metadata', organisation.slug))
+                            join(output_path, 'metadata', organisation.id))
 
 
 @iati_cli.command('test')
@@ -103,9 +103,9 @@ def run_iati_tests(date):
 
     publishers = iatikit.data(path=snapshot_xml_path).publishers
     for publisher in publishers:
-        org = models.Organisation.where(slug=publisher.name).first()
-        click.echo(f'Testing organisation: {org.name} ({org.slug}) ...')
-        output_path = join(root_output_path, org.slug)
+        org = models.Organisation.find(publisher.name)
+        click.echo(f'Testing organisation: {org.name} ({org.id}) ...')
+        output_path = join(root_output_path, org.id)
         makedirs(output_path, exist_ok=True)
         for test in all_tests:
             output_filepath = join(output_path, utils.slugify(test.name) + '.csv')

@@ -20,16 +20,16 @@ def import_orgs(input):
     reader = csv.DictReader(input)
     data = [{
         'name': row['name'],
-        'slug': row['slug'],
+        'id': row['id'],
         'registry_slug': row['registry_slug'] if row['registry_slug'] else None,
         'test_condition': row['test_condition'] if row['test_condition'] else None,
     } for row in reader]
     for row in data:
-        org = models.Organisation.where(slug=row['slug']).first()
+        org = models.Organisation.find(row['id'])
         if org:
-            click.echo(f'Updating {org.name} ({org.slug}) ...')
+            click.echo(f'Updating {org.name} ({org.id}) ...')
             org.update(**row)
         else:
-            click.echo(f'Creating {row["name"]} ({row["slug"]}) ...')
+            click.echo(f'Creating {row["name"]} ({row["id"]}) ...')
             org = models.Organisation.create(**row)
         org.session.commit()

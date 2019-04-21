@@ -1,4 +1,4 @@
-name,slug,registry_slug,test_condition
+name,id,registry_slug,test_condition
 DFID,dfid,dfid,
 Foreign office,dfid,fco,
 BEIS,beis,beis,
