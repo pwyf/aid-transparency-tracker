@@ -31,7 +31,8 @@ def import_iati_data():
     """Import the relevant data from iatikit."""
 
     if models.Organisation.query.count() == 0:
-        click.secho('Error: No organisations to fetch data for.', fg='red', err=True)
+        click.secho('Error: No organisations to fetch data for.',
+                    fg='red', err=True)
         click.echo('Perhaps you need to import some, using:', err=True)
         click.echo('\n    $ flask setup orgs\n', err=True)
         raise click.Abort()
@@ -65,9 +66,9 @@ def import_iati_data():
 
 
 @iati_cli.command('test')
-@click.option('--date', default='latest', help='Date of the data to test, in ' +
-                                               'YYYY-MM-DD. Defaults to ' +
-                                               'most recent.')
+@click.option('--date', default='latest',
+              help='Date of the data to test, in YYYY-MM-DD. ' +
+                   'Defaults to most recent.')
 @with_appcontext
 def run_iati_tests(date):
     """Test a set of downloaded IATI data."""
@@ -91,7 +92,8 @@ def run_iati_tests(date):
         click.echo('\n    $ flask iati download\n', err=True)
         raise click.Abort()
     except ValueError:
-        click.secho(f'Error: No IATI data found for given date ({date}).', fg='red', err=True)
+        click.secho(f'Error: No IATI data found for given date ({date}).',
+                    fg='red', err=True)
         raise click.Abort()
 
     click.echo('Downloading latest schemas and codelists ...')
@@ -112,7 +114,8 @@ def run_iati_tests(date):
         output_path = join(root_output_path, org.id)
         makedirs(output_path, exist_ok=True)
         for test in all_tests:
-            output_filepath = join(output_path, utils.slugify(test.name) + '.csv')
+            output_filepath = join(output_path,
+                                   utils.slugify(test.name) + '.csv')
             click.echo(f'  {test} ...')
             summary = utils.run_test(test, publisher, output_filepath,
                                      org.test_condition, codelists=codelists,
