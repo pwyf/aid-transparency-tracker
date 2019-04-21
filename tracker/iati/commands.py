@@ -20,7 +20,7 @@ def iati_cli():
 @iati_cli.command('download')
 @with_appcontext
 def download_iati_data():
-    '''Fetch the relevant data from the IATI registry.'''
+    """Fetch the relevant data from the IATI registry."""
 
     if models.Organisation.query.count() == 0:
         click.secho('Error: No organisations to fetch data for.', fg='red', err=True)
@@ -65,7 +65,7 @@ def download_iati_data():
                                                'most recent.')
 @with_appcontext
 def run_iati_tests(date):
-    '''Test a set of downloaded IATI data.'''
+    """Test a set of downloaded IATI data."""
 
     click.echo('Loading tests ...')
     all_tests = utils.load_tests()

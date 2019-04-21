@@ -31,7 +31,7 @@ def slugify(some_text):
 
 
 def run_test(test, publisher, output_path, **kwargs):
-    '''Run test for a given publisher, and output results to a CSV.'''
+    """Run test for a given publisher, and output results to a CSV."""
     summary = defaultdict(int)
     fieldnames = ['dataset', 'identifier', 'index', 'result']
     tags = test.tags + test.feature.tags

@@ -8,7 +8,7 @@ from ..extensions import security
 @click.command()
 @with_appcontext
 def createsuperuser():
-    '''Create a new superuser.'''
+    """Create a new superuser."""
     username = click.prompt('Username')
     email = click.prompt('Email address', default='')
     password = click.prompt('Password', hide_input=True)

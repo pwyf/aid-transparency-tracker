@@ -1,7 +1,7 @@
-'''This comes straight from the example here:
+"""This comes straight from the example here:
 
 https://pythonhosted.org/Flask-Security/quickstart.html#id1
-'''
+"""
 from flask_security import UserMixin, RoleMixin
 
 from ..database import db, BaseModel

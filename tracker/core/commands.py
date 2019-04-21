@@ -16,7 +16,7 @@ def setup_cli():
 @click.argument('input', type=click.File('r'))
 @with_appcontext
 def import_orgs(input):
-    '''Import a CSV of organisation data.'''
+    """Import a CSV of organisation data."""
     reader = csv.DictReader(input)
     data = [{
         'name': row['name'],
