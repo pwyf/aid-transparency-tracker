@@ -7,7 +7,7 @@ from . import models
 from .utils import publisher_required
 
 
-blueprint = Blueprint('core', __name__, url_prefix='/', static_folder='../static')
+blueprint = Blueprint('core', __name__)
 
 
 @blueprint.route('/')

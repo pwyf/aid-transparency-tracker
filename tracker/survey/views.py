@@ -6,7 +6,7 @@ from ..core import models
 from ..core.utils import publisher_required
 
 
-blueprint = Blueprint('survey', __name__, url_prefix='/survey', static_folder='../static')
+blueprint = Blueprint('survey', __name__, url_prefix='/survey')
 
 
 @blueprint.route('/<org_id>')
