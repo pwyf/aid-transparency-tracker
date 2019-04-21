@@ -4,6 +4,7 @@ from flask_security.decorators import login_required
 from flask_security.core import current_user
 
 from . import models
+from .utils import publisher_required
 
 
 blueprint = Blueprint('core', __name__, url_prefix='/', static_folder='../static')
@@ -27,15 +28,12 @@ def home():
 
 @blueprint.route('/summary/<org_id>')
 @login_required
+@publisher_required
 def summary(org_id):
     """Summary page."""
     try:
         organisation = models.Organisation.find_or_fail(org_id)
     except:
         return abort(404)
-
-    if not (current_user.has_role('admin') or
-            current_user.has_role(organisation_id=organisation.id)):
-        return abort(403)
 
     return render_template('core/summary.html', organisation=organisation)
