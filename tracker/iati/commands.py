@@ -72,9 +72,6 @@ def import_iati_data():
 def run_iati_tests(date):
     """Test a set of downloaded IATI data."""
 
-    click.echo('Loading tests ...')
-    all_tests = utils.load_tests()
-
     iati_data_path = current_app.config.get('IATI_DATA_PATH')
     iati_result_path = current_app.config.get('IATI_RESULT_PATH')
     try:
@@ -97,6 +94,13 @@ def run_iati_tests(date):
         click.secho(f'Error: No IATI data found for given date ({date}).', fg='red', err=True)
         raise click.Abort()
 
+    click.echo('Downloading latest schemas and codelists ...')
+    iatikit.download.standard()
+    codelists = iatikit.codelists()
+
+    click.echo('Loading tests ...')
+    all_tests = utils.load_tests()
+
     click.echo(f'Testing IATI data snapshot ({snapshot_date}) ...')
     snapshot_xml_path = join(iati_data_path, snapshot_date)
     root_output_path = join(iati_result_path, snapshot_date)
@@ -111,5 +115,6 @@ def run_iati_tests(date):
             output_filepath = join(output_path, utils.slugify(test.name) + '.csv')
             click.echo(f'  {test} ...')
             summary = utils.run_test(test, publisher, output_filepath,
-                                     org.test_condition, today=snapshot_date)
+                                     org.test_condition, codelists=codelists,
+                                     today=snapshot_date)
             click.echo(f'    {summary}')
