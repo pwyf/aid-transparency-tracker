@@ -23,9 +23,8 @@ def createsuperuser():
             password=password)
         role = security.datastore.find_or_create_role('super')
         security.datastore.add_role_to_user(user, role)
-        role = security.datastore.find_or_create_role('admin')
-        security.datastore.add_role_to_user(user, role)
         security.datastore.commit()
         click.echo('Superuser created.')
     except IntegrityError as e:
-        click.secho(f'Error: There was a problem creating the superuser.', fg='red', err=True)
+        click.secho(f'Error: There was a problem creating the superuser.',
+                    fg='red', err=True)
