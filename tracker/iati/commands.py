@@ -117,6 +117,12 @@ def run_iati_tests(date, refresh):
     publishers = iatikit.data(path=snapshot_xml_path).publishers
     for publisher in publishers:
         org = models.Organisation.find(publisher.name)
+        if not org:
+            click.secho(f'Error: Publisher "{publisher.name}" not ' +
+                        f'found in database. Database and XML ' +
+                        f'may be out of sync.',
+                        fg='red', err=True)
+            raise click.Abort()
         click.echo(f'Testing organisation: {org.name} ({org.id}) ...')
         output_path = join(root_output_path, org.id)
         makedirs(output_path, exist_ok=True)
