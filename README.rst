@@ -20,13 +20,19 @@ database tables and perform the initial migration ::
 
     pipenv run flask db upgrade
 
-Next you need to import some data. Organisations can be imported to the database from CSV ::
+Create a new superuser with ::
+
+    pipenv run flask createsuperuser
+
+Next you need to seed the database. Organisations can be imported to the database from CSV ::
 
     pipenv run flask setup orgs [organisations_example.csv]
 
-IATI data can then be downloaded for these organisations ::
+IATI data can then be downloaded, imported and tested for all organisations ::
 
     pipenv run flask iati download
+    pipenv run flask iati import
+    pipenv run flask iati test
 
 To run the webpack dev server and flask server concurrently, run ::
 
