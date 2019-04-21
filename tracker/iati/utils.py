@@ -1,4 +1,3 @@
-from collections import defaultdict
 from csv import DictWriter
 from glob import glob
 from os.path import dirname, join
@@ -32,7 +31,7 @@ def slugify(some_text):
 
 def run_test(test, publisher, output_path, **kwargs):
     """Run test for a given publisher, and output results to a CSV."""
-    summary = defaultdict(int)
+    summary = {True: 0, False: 0, None: 0}
     fieldnames = ['dataset', 'identifier', 'index', 'result', 'hierarchy']
     tags = test.tags + test.feature.tags
     if 'iati-activity' not in tags and 'iati-organisation' not in tags:
