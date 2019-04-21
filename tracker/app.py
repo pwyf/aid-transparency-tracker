@@ -8,7 +8,9 @@ from .database import BaseModel
 
 
 def create_app(config_object='tracker.settings'):
-    """An application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
+    """An application factory, as explained here:
+
+    http://flask.pocoo.org/docs/patterns/appfactories/.
 
     :param config_object: The configuration object to use.
     """

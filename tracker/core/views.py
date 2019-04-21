@@ -19,7 +19,8 @@ def home():
         organisations = [o for o in models.Organisation.query
                          if current_user.has_role(organisation_id=o.id)]
         if len(organisations) == 1:
-            return redirect(url_for('core.summary', org_id=organisations[0].id))
+            return redirect(url_for('core.summary',
+                                    org_id=organisations[0].id))
 
     return render_template('core/home.html', organisations=organisations)
 
