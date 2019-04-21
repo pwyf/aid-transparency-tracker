@@ -30,6 +30,8 @@ WEBPACK_MANIFEST_PATH = 'webpack/manifest.json'
 SECURITY_PASSWORD_SALT = SECRET_KEY
 SECURITY_TRACKABLE = True
 SECURITY_USER_IDENTITY_ATTRIBUTES = 'username'
+SECURITY_CLI_USERS_NAME = False
+SECURITY_CLI_ROLES_NAME = False
 
 IATI_DATA_PATH = env.str('IATI_DATA_PATH',
                          default=join(dirname(dirname(basedir)), 'org_xml'))
