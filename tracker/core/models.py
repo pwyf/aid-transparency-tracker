@@ -10,3 +10,7 @@ class Organisation(BaseModel):
     name = db.Column(db.String(255), nullable=False)
     registry_slug = db.Column(db.String(255))
     test_condition = db.Column(db.String(255))
+
+
+# class Indicator(BaseModel):
+#     pass
