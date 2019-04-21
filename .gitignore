@@ -2,9 +2,6 @@
 __iatikitcache__/
 iatikit.ini
 
-# downloaded XML
-/org_xml/
-
 # node stuff
 /node_modules
 
