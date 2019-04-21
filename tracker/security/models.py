@@ -21,8 +21,7 @@ class Role(BaseModel, RoleMixin):
     description = db.Column(db.String(255))
     organisation_id = db.Column(
         db.String(255),
-        db.ForeignKey('organisation.id', ondelete='CASCADE'),
-        nullable=True)
+        db.ForeignKey('organisation.id', ondelete='CASCADE'))
 
 
 class User(BaseModel, UserMixin):
