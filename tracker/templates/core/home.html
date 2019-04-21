@@ -17,21 +17,13 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-lg-4">
-      <h2><i class="fa fa-edit"></i> Survey</h2>
-      <p>Manually collected data.</p>
-      <p><a class="btn btn-outline-secondary" href="{{ url_for('survey.home') }}">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-lg-4">
-      <h2><i class="fa fa-code"></i> Automated tests</h2>
-      <p>Automated assessment of publishers’ IATI data.</p>
-      <p><a href="#" class="btn btn-outline-secondary">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-lg-4">
-      <h2><i class="fa fa-flask"></i> Sampling</h2>
-      <p>Eyeballing publishers’ IATI data.</p>
-      <p><a href="#" class="btn btn-outline-secondary">Learn more &raquo;</a></p>
-   </div>
+    {% if current_user.has_role('admin') %}
+    <ul>
+      {% for organisation in organisations %}
+      <li><a href="#">{{ organisation.name }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
   </div><!-- /.row -->
 </div>
 {% endblock %}
