@@ -28,7 +28,7 @@ def download_iati_data():
 @iati_cli.command('import')
 @with_appcontext
 def import_iati_data():
-    """Import the relevant data from iatikit."""
+    """Import the relevant data from the downloaded IATI snapshot."""
 
     if models.Organisation.query.count() == 0:
         click.secho('Error: No organisations to fetch data for.',
@@ -73,7 +73,7 @@ def import_iati_data():
               help='Refresh schema and codelists.')
 @with_appcontext
 def run_iati_tests(date, refresh):
-    """Test a set of downloaded IATI data."""
+    """Test a set of imported IATI data."""
 
     iati_data_path = current_app.config.get('IATI_DATA_PATH')
     iati_result_path = current_app.config.get('IATI_RESULT_PATH')
