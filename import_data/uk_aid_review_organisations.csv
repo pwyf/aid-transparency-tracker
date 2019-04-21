@@ -1,6 +1,6 @@
 name,id,registry_slug,test_condition
 DFID,dfid,dfid,
-Foreign office,dfid,fco,
+Foreign office,fco,fco,
 BEIS,beis,beis,
 DEFRA,defra,defra_transparency,
 DWP,dwp,dwp,
