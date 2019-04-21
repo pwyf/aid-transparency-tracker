@@ -14,7 +14,7 @@ def createsuperuser():
     password = click.prompt('Password', hide_input=True)
     confirm_password = click.prompt('Password again', hide_input=True)
     if password != confirm_password:
-        click.secho('Error: Passwords did not match.', fg='red')
+        click.secho('Error: Passwords did not match.', fg='red', err=True)
         raise click.Abort()
     try:
         user = security.datastore.create_user(
@@ -26,4 +26,4 @@ def createsuperuser():
         security.datastore.commit()
         click.echo('Superuser created.')
     except IntegrityError as e:
-        click.secho(f'Error: There was a problem creating the superuser.', fg='red')
+        click.secho(f'Error: There was a problem creating the superuser.', fg='red', err=True)
