@@ -107,4 +107,4 @@ def run_iati_tests(date):
             click.echo(f'  {test} ...')
             summary = utils.run_test(test, publisher, fname,
                                      today=snapshot_date)
-            click.echo(f'  {summary}')
+            click.echo(f'    {summary}')

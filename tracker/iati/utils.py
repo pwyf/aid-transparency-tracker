@@ -43,27 +43,20 @@ def run_test(test, publisher, output_path, **kwargs):
         writer = DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
         if 'iati-activity' in tags:
-            for dataset in publisher.datasets.where(filetype='activity'):
-                dataset_name = dataset.name
-                for idx, activity in enumerate(dataset.activities):
-                    result = str(test(activity.etree, **kwargs))
-                    summary[result] += 1
-                    writer.writerow({
-                        'dataset': dataset_name,
-                        'identifier': activity.id,
-                        'index': idx,
-                        'result': result,
-                    })
+            datasets = publisher.datasets.where(filetype='activity')
+            attr = 'activities'
         elif 'iati-organisation' in tags:
-            for dataset in publisher.datasets.where(filetype='organisation'):
-                dataset_name = dataset.name
-                for idx, organisation in enumerate(dataset.organisations):
-                    result = str(test(organisation.etree, **kwargs))
-                    summary[result] += 1
-                    writer.writerow({
-                        'dataset': dataset_name,
-                        'identifier': organisation.id,
-                        'index': idx,
-                        'result': result,
-                    })
+            datasets = publisher.datasets.where(filetype='organisation')
+            attr = 'organisations'
+        for dataset in datasets:
+            dataset_name = dataset.name
+            for idx, item in enumerate(getattr(dataset, attr), start=1):
+                result = test(item.etree, **kwargs)
+                summary[result] += 1
+                writer.writerow({
+                    'dataset': dataset_name,
+                    'identifier': item.id,
+                    'index': idx,
+                    'result': str(result),
+                })
     return dict(summary)
