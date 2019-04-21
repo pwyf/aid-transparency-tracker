@@ -33,7 +33,7 @@ def slugify(some_text):
 def run_test(test, publisher, output_path, **kwargs):
     """Run test for a given publisher, and output results to a CSV."""
     summary = defaultdict(int)
-    fieldnames = ['dataset', 'identifier', 'index', 'result']
+    fieldnames = ['dataset', 'identifier', 'index', 'result', 'hierarchy']
     tags = test.tags + test.feature.tags
     if 'iati-activity' not in tags and 'iati-organisation' not in tags:
         # Skipping test (it’s not tagged as activity or organisation level)
@@ -52,11 +52,15 @@ def run_test(test, publisher, output_path, **kwargs):
             dataset_name = dataset.name
             for idx, item in enumerate(getattr(dataset, attr), start=1):
                 result = test(item.etree, **kwargs)
+                hierarchy = item.etree.get('hierarchy')
+                if not hierarchy:
+                    hierarchy = '1'
                 summary[result] += 1
                 writer.writerow({
                     'dataset': dataset_name,
                     'identifier': item.id,
                     'index': idx,
                     'result': str(result),
+                    'hierarchy': hierarchy,
                 })
     return dict(summary)
