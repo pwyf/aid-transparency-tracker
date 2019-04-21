@@ -5,14 +5,11 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    {% if current_user.has_role('admin') %}
     <ul>
       {% for organisation in organisations %}
       <li><a href="{{ url_for('core.summary', org_id=organisation.id) }}">{{ organisation.name }}</a></li>
       {% endfor %}
     </ul>
-    {% endif %}
   </div><!-- /.row -->
 </div>
 {% endblock %}
-
