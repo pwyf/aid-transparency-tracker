@@ -5,13 +5,15 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item {% if request.url_rule.endpoint.split('.')[0] == 'summary' %}active{% endif %}"><a class="nav-link" href="#">Summary{% if request.url_rule.endpoint.split('.')[0] == 'summary' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+      {% if organisation %}
+      <li class="nav-item {% if 'summary' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="{{ url_for('core.summary', org_id=organisation.id) }}">Summary{% if 'summary' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
 
-      <li class="nav-item {% if request.url_rule.endpoint.split('.')[0] == 'survey' %}active{% endif %}"><a class="nav-link" href="{{ url_for('survey.home') }}">Survey{% if request.url_rule.endpoint.split('.')[0] == 'survey' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+      <li class="nav-item {% if 'survey' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="{{ url_for('survey.home', org_id=organisation.id) }}">Survey{% if 'survey' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
 
-      <li class="nav-item {% if request.url_rule.endpoint.split('.')[0] == 'sampling' %}active{% endif %}"><a class="nav-link" href="#">Sampling{% if request.url_rule.endpoint.split('.')[0] == 'sampling' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+      <li class="nav-item {% if 'sampling' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="#">Sampling{% if 'sampling' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
 
-      <li class="nav-item {% if request.url_rule.endpoint.split('.')[0] == 'iati' %}active{% endif %}"><a class="nav-link" href="#">Automated tests{% if request.url_rule.endpoint.split('.')[0] == 'iati' %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+      <li class="nav-item {% if 'iati' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="#">Automated tests{% if 'iati' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+      {% endif %}
     </ul>
 
     <ul class="navbar-nav">
