@@ -20,7 +20,15 @@ def iati_cli():
 @iati_cli.command('download')
 @with_appcontext
 def download_iati_data():
-    """Fetch the relevant data from the IATI registry."""
+    """Download a snapshot of all IATI data."""
+    click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
+    iatikit.download.data()
+
+
+@iati_cli.command('import')
+@with_appcontext
+def import_iati_data():
+    """Import the relevant data from iatikit."""
 
     if models.Organisation.query.count() == 0:
         click.secho('Error: No organisations to fetch data for.', fg='red', err=True)
@@ -28,10 +36,7 @@ def download_iati_data():
         click.echo('\n    $ flask setup orgs\n', err=True)
         raise click.Abort()
 
-    click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
-    iatikit.download.data()
     updated_on = iatikit.data().last_updated.date()
-
     input_path = iatikit.data().path
     output_path = join(current_app.config.get('IATI_DATA_PATH'), str(updated_on))
 
