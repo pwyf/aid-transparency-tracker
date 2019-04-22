@@ -6,7 +6,7 @@
 <div class="container">
     <div class="list-group py-3">
       {% for organisation in organisations %}
-      <a class="list-group-item list-group-item-action" href="{{ url_for('core.summary', org_id=organisation.id) }}">{{ organisation.name }}</a>
+      <a class="list-group-item list-group-item-action" href="{{ url_for('core.summary', organisation=organisation) }}">{{ organisation.name }}</a>
       {% endfor %}
     </div>
 </div>

@@ -6,9 +6,9 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="navbar-nav mr-auto">
       {% if organisation %}
-      <li class="nav-item {% if 'summary' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="{{ url_for('core.summary', org_id=organisation.id) }}">Summary{% if 'summary' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+      <li class="nav-item {% if 'summary' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="{{ url_for('core.summary', organisation=organisation) }}">Summary{% if 'summary' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
 
-      <li class="nav-item {% if 'survey' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="{{ url_for('survey.home', org_id=organisation.id) }}">Survey{% if 'survey' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+      <li class="nav-item {% if 'survey' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="{{ url_for('survey.home', organisation=organisation) }}">Survey{% if 'survey' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
 
       <li class="nav-item {% if 'sampling' in request.url_rule.endpoint %}active{% endif %}"><a class="nav-link" href="#">Sampling{% if 'sampling' in request.url_rule.endpoint %} <span class="sr-only">(current)</span>{% endif %}</a></li>
 

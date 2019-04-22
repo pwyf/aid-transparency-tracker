@@ -5,7 +5,7 @@ from flask_security import SQLAlchemyUserDatastore
 from . import extensions, commands, core, survey, iati, security
 from .security.models import User, Role
 from .database import BaseModel
-from .core.utils import OrganisationConverter
+from .core.utils import register_converters
 
 
 def create_app(config_object='tracker.settings'):
@@ -18,9 +18,9 @@ def create_app(config_object='tracker.settings'):
     app = Flask(__name__.split('.')[0])
     app.config.from_object(config_object)
     register_extensions(app)
+    register_converters(app)
     register_blueprints(app)
     register_errorhandlers(app)
-    register_converters(app)
     register_shellcontext(app)
     register_commands(app)
     return app
@@ -55,10 +55,6 @@ def register_errorhandlers(app):
     for errcode in [401, 404, 500]:
         app.errorhandler(errcode)(render_error)
     return None
-
-
-def register_converters(app):
-    app.url_map.converters['org'] = OrganisationConverter
 
 
 def register_shellcontext(app):

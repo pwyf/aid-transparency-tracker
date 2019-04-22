@@ -21,19 +21,16 @@ def home():
                          if current_user.has_role(organisation_id=o.id)]
         if len(organisations) == 1:
             return redirect(url_for('core.summary',
-                                    org_id=organisations[0].id))
+                                    organisation=organisations[0]))
 
     return render_template('core/home.html', organisations=organisations)
 
 
-@blueprint.route('/summary/<org_id>')
+@blueprint.route('/summary/<org:organisation>')
 @login_required
 @publisher_required
-def summary(org_id):
+def summary(organisation):
     """Summary page."""
-    try:
-        organisation = models.Organisation.find_or_fail(org_id)
-    except:
+    if not organisation:
         return abort(404)
-
     return render_template('core/summary.html', organisation=organisation)
