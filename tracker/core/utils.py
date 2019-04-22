@@ -11,7 +11,10 @@ def register_converters(app):
     class OrganisationConverter(BaseConverter):
         def to_python(self, value):
             with app.app_context():
-                return models.Organisation.find(value)
+                organisation = models.Organisation.find(value)
+                if not organisation:
+                    return abort(404)
+                return organisation
 
         def to_url(self, organisation):
             return organisation.id
