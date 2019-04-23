@@ -21,8 +21,12 @@ def import_orgs(orgs_file):
     data = [{
         'name': row['name'],
         'id': row['id'],
-        'registry_slug': row['registry_slug'] if row['registry_slug'] else None,
-        'test_condition': row['test_condition'] if row['test_condition'] else None,
+        'registry_slug': (row['registry_slug']
+                          if row['registry_slug']
+                          else None),
+        'test_condition': (row['test_condition']
+                           if row['test_condition']
+                           else None),
     } for row in reader]
     for row in data:
         org = models.Organisation.find(row['id'])
