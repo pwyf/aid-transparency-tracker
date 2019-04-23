@@ -32,7 +32,8 @@ def slugify(some_text):
 def run_test(test, publisher, output_path, test_condition, **kwargs):
     """Run test for a given publisher, and output results to a CSV."""
     summary = {True: 0, False: 0, None: 0}
-    fieldnames = ['dataset', 'identifier', 'index', 'result', 'hierarchy']
+    fieldnames = ['dataset', 'identifier', 'index', 'result',
+                  'hierarchy', 'explanation']
     tags = test.tags + test.feature.tags
     if 'iati-activity' not in tags and 'iati-organisation' not in tags:
         # Skipping test (it’s not tagged as activity or organisation level)
@@ -49,7 +50,7 @@ def run_test(test, publisher, output_path, test_condition, **kwargs):
         elif 'iati-organisation' in tags:
             items = publisher.organisations
         for item in items:
-            result = test(item.etree, **kwargs)
+            result, explanation = test(item.etree, bdd_verbose=True, **kwargs)
             hierarchy = item.etree.get('hierarchy')
             if not hierarchy:
                 hierarchy = '1'
@@ -60,5 +61,6 @@ def run_test(test, publisher, output_path, test_condition, **kwargs):
                 'index': item.etree.getparent().index(item.etree) + 1,
                 'result': str(result),
                 'hierarchy': hierarchy,
+                'explanation': str(explanation) if not result else '',
             })
     return dict(summary)
