@@ -1,4 +1,4 @@
-"""Initial migration
+"""Create organisation, tracker_user, role and roles_users tables.
 
 Revision ID: 996d08b98210
 Revises:

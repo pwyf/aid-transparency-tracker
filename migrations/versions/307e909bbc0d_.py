@@ -1,4 +1,4 @@
-"""Rename organisation column, for consistency
+"""Rename organisation column, for consistency.
 
 Revision ID: 307e909bbc0d
 Revises: 996d08b98210
