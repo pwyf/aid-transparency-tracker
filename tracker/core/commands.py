@@ -2,6 +2,7 @@ import csv
 
 from flask.cli import with_appcontext
 import click
+import markdown
 
 from . import models
 
@@ -44,8 +45,10 @@ def import_orgs(orgs_file):
 @with_appcontext
 def import_components(component_file):
     """Import a CSV of component data."""
+    md = markdown.Markdown(extensions=['meta'])
     reader = csv.DictReader(component_file)
     for row in reader:
+        row['description'] = md.convert(row['description'])
         component = models.Component.find(row['id'])
         if component:
             click.echo(f'Updating {component.name} ({component.id}) ...')
@@ -61,13 +64,14 @@ def import_components(component_file):
 @with_appcontext
 def import_indicators(indicator_file):
     """Import a CSV of indicator data."""
+    md = markdown.Markdown(extensions=['meta'])
     reader = csv.DictReader(indicator_file)
     data = [{
         'id': row['id'],
         'name': row['name'],
         'indicator_type': row['indicator_type'],
         'component_id': row['component_id'],
-        'description': row['description'],
+        'description': md.convert(row['description']),
         'order': int(row['order']),
         'ordinal': False if row['ordinal'] == '0' else True,
         'weight': row['weight'],

@@ -28,12 +28,12 @@
         {% for component in components %}
           <h2 class="component-name" id="{{ component.id }}">{{ component.name }}</h2>
 
-          <p>{{ component.description }}</p>
+          <p>{{ component.description | safe }}</p>
 
           {% for indicator in component.indicators %}
             <h3 id="{{ indicator.id }}">{{ indicator.name }}</h3>
 
-            {{ indicator.description }}
+            {{ indicator.description | safe }}
 
             <div class="indicator">
               <div class="research-findings">

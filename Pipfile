@@ -56,5 +56,8 @@ environs = "*"
 iatikit = "*"
 bdd-tester = "*"
 
+# Rendering
+markdown = "*"
+
 [requires]
 python_version = "3.7"
