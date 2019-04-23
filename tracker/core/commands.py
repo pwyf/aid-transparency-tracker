@@ -12,8 +12,8 @@ def setup_cli():
     pass
 
 
-@setup_cli.command('orgs_file')
-@click.argument('input', type=click.File('r'))
+@setup_cli.command('orgs')
+@click.argument('orgs_file', type=click.File('r'))
 @with_appcontext
 def import_orgs(orgs_file):
     """Import a CSV of organisation data."""
