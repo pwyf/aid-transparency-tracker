@@ -17,7 +17,7 @@ def home(organisation):
     if not organisation:
         return abort(404)
 
-    components = Component.all()
+    components = Component.with_joined('indicators').all()
 
     return render_template('survey/index.html',
                            components=components,
