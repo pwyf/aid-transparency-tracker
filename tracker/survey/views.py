@@ -1,5 +1,5 @@
 """Survey section."""
-from flask import abort, Blueprint, render_template
+from flask import Blueprint, render_template
 from flask_security.decorators import login_required
 
 from ..core.utils import publisher_required
@@ -14,8 +14,6 @@ blueprint = Blueprint('survey', __name__, url_prefix='/survey')
 @publisher_required
 def home(organisation):
     """Main survey page."""
-    if not organisation:
-        return abort(404)
 
     components = Component.with_joined('indicators').all()
 

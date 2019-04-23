@@ -1,5 +1,5 @@
 """Core views."""
-from flask import Blueprint, render_template, abort, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for
 from flask_security.decorators import login_required
 from flask_security.core import current_user
 
@@ -31,6 +31,4 @@ def home():
 @publisher_required
 def summary(organisation):
     """Summary page."""
-    if not organisation:
-        return abort(404)
     return render_template('core/summary.html', organisation=organisation)
