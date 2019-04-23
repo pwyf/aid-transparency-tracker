@@ -39,6 +39,23 @@ def import_orgs(orgs_file):
         org.session.commit()
 
 
+@setup_cli.command('components')
+@click.argument('component_file', type=click.File('r'))
+@with_appcontext
+def import_components(component_file):
+    """Import a CSV of component data."""
+    reader = csv.DictReader(component_file)
+    for row in reader:
+        component = models.Component.find(row['id'])
+        if component:
+            click.echo(f'Updating {component.name} ({component.id}) ...')
+            component.update(**row)
+        else:
+            click.echo(f'Creating {row["name"]} ({row["id"]}) ...')
+            component = models.Component.create(**row)
+        component.session.commit()
+
+
 @setup_cli.command('indicators')
 @click.argument('indicator_file', type=click.File('r'))
 @with_appcontext
