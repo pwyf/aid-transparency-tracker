@@ -1,7 +1,7 @@
 """Create component and indicator tables.
 
 Revision ID: 17b8f45cc23d
-Revises: 307e909bbc0d
+Revises: 996d08b98210
 Create Date: 2019-04-23 10:26:12.570556
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '17b8f45cc23d'
-down_revision = '307e909bbc0d'
+down_revision = '996d08b98210'
 branch_labels = None
 depends_on = None
 

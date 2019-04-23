@@ -43,8 +43,8 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=80), nullable=True),
     sa.Column('description', sa.String(length=255), nullable=True),
-    sa.Column('organisation', sa.String(length=255), nullable=True),
-    sa.ForeignKeyConstraint(['organisation'], ['organisation.id'], ondelete='CASCADE'),
+    sa.Column('organisation_id', sa.String(length=255), nullable=True),
+    sa.ForeignKeyConstraint(['organisation_id'], ['organisation.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('name')
     )
