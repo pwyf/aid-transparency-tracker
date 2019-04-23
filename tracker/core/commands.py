@@ -37,3 +37,31 @@ def import_orgs(orgs_file):
             click.echo(f'Creating {row["name"]} ({row["id"]}) ...')
             org = models.Organisation.create(**row)
         org.session.commit()
+
+
+@setup_cli.command('indicators')
+@click.argument('indicator_file', type=click.File('r'))
+@with_appcontext
+def import_indicators(indicator_file):
+    """Import a CSV of indicator data."""
+    reader = csv.DictReader(indicator_file)
+    data = [{
+        'id': row['id'],
+        'name': row['name'],
+        'indicator_type': row['indicator_type'],
+        'component_id': row['component_id'],
+        'description': row['description'],
+        'order': int(row['order']),
+        'ordinal': False if row['ordinal'] == '0' else True,
+        'weight': row['weight'],
+        'has_format': False if row['has_format'] == '0' else True,
+    } for row in reader]
+    for row in data:
+        indicator = models.Indicator.find(row['id'])
+        if indicator:
+            click.echo(f'Updating {indicator.name} ({indicator.id}) ...')
+            indicator.update(**row)
+        else:
+            click.echo(f'Creating {row["name"]} ({row["id"]}) ...')
+            indicator = models.Indicator.create(**row)
+        indicator.session.commit()
