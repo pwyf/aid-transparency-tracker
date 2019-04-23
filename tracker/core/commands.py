@@ -12,12 +12,12 @@ def setup_cli():
     pass
 
 
-@setup_cli.command('orgs')
+@setup_cli.command('orgs_file')
 @click.argument('input', type=click.File('r'))
 @with_appcontext
-def import_orgs(input):
+def import_orgs(orgs_file):
     """Import a CSV of organisation data."""
-    reader = csv.DictReader(input)
+    reader = csv.DictReader(orgs_file)
     data = [{
         'name': row['name'],
         'id': row['id'],
