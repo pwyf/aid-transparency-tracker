@@ -3,6 +3,7 @@ from flask import abort, Blueprint, render_template
 from flask_security.decorators import login_required
 
 from ..core.utils import publisher_required
+from ..core.models import Component
 
 
 blueprint = Blueprint('survey', __name__, url_prefix='/survey')
@@ -16,4 +17,8 @@ def home(organisation):
     if not organisation:
         return abort(404)
 
-    return render_template('survey/index.html', organisation=organisation)
+    components = Component.all()
+
+    return render_template('survey/index.html',
+                           components=components,
+                           organisation=organisation)
