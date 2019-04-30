@@ -10,10 +10,13 @@ Setup
 Run the following commands to bootstrap your environment ::
 
     git clone https://github.com/pwyf/aid-transparency-tracker
+    git submodule init
+    git submodule update
     cd aid-transparency-tracker
     pipenv install
     cp .env.example .env
     npm install
+    npm run-script build
 
 Once you have installed your DBMS, run the following to create your app's
 database tables and perform the initial migration ::
@@ -26,7 +29,7 @@ Create a new superuser with ::
 
 Next you need to seed the database. Organisations can be imported to the database from CSV ::
 
-    pipenv run flask setup orgs [organisations_example.csv]
+    pipenv run flask setup orgs [import_data/example_organisations.csv]
 
 IATI data can then be downloaded, imported and tested for all organisations ::
 
