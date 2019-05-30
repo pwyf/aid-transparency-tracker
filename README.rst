@@ -31,6 +31,9 @@ Next you need to seed the database. Organisations can be imported to the databas
 
     pipenv run flask setup orgs [import_data/example_organisations.csv]
 
+    pipenv run flask setup components import_data/2018_components.csv
+    pipenv run flask setup indicators import_data/2018_indicators.csv
+
 IATI data can then be downloaded, imported and tested for all organisations ::
 
     pipenv run flask iati download
