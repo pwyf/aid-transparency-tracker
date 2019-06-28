@@ -18,7 +18,7 @@ from iatidataquality import app, db
 from . import models, util
 
 
-REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=100'
+REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=1000'
 
 CKANurl = 'https://iatiregistry.org'
 
@@ -40,7 +40,7 @@ def packages_from_iati_registry():
         for pkg in data['results']:
             yield pkg
 
-        offset += 100
+        offset += 1000
 
 def _set_deleted_package(package, set_deleted=False):
     if package.deleted != set_deleted:
