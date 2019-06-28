@@ -11,7 +11,7 @@ import itertools
 from os.path import join
 import re
 
-from bdd_tester import bdd_tester
+from bdd_tester import BDDTester
 
 from . import models, test_level
 from iatidataquality import db
@@ -41,7 +41,7 @@ def test_functions():
             for x in tests]
 
         step_definitions_file = join('tests', 'step_definitions.py')
-        tester = bdd_tester(step_definitions_file)
+        tester = BDDTester(step_definitions_file)
         foxtests = {
             test[0]: tester.load_feature(test[1]).tests[0]
             for test in tests}
