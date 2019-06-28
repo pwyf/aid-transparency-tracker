@@ -45,7 +45,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
         data['indicator_subcategory_name']=row['indicator_subcategory_name']
         data['indicator_order']=row['order']
         data['indicator_ordinal']=row['ordinal'].startswith('1')
-        data['indicator_weight']=row['weight']
+        data['indicator_weight'] = eval(row['weight'])
         data['indicator_noformat']=row['noformat'].startswith('1')
         data['indicatorgroup_id']=indicatorgroup.id
 
