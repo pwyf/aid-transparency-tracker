@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import ckanclient
+import ckanapi
 
 from . import models, package_status, queue, testrun
 from .dqfunctions import add_test_status
@@ -17,7 +17,7 @@ from .dqregistry import packages_from_iati_registry
 download_queue = 'iati_download_queue'
 
 IATIUPDATES_URL = "http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
-CKANurl = 'https://iatiregistry.org/api'
+CKANurl = 'https://iatiregistry.org'
 
 def get_package(pkg, package, runtime_id):
     new_package = False
@@ -106,9 +106,9 @@ def download_package(runtime, package_name):
         package_name=package_name).first()
     add_test_status(package.id, package_status.NEW)
 
-    registry = ckanclient.CkanClient(base_location=CKANurl)
+    registry = ckanapi.RemoteCKAN(CKANurl)
 
-    pkg = registry.package_entity_get(package.package_name)
+    pkg = registry.action.package_show(id=package.package_name)
     try:
         if pkg['metadata_modified'] == package.package_metadata_modified:
             add_test_status(package.id, package_status.UP_TO_DATE)

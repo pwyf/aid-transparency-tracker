@@ -12,7 +12,7 @@ import json
 import re
 import urllib2
 
-import ckanclient
+import ckanapi
 
 from iatidataquality import app, db
 from . import models, util
@@ -20,7 +20,7 @@ from . import models, util
 
 REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=100'
 
-CKANurl = 'https://iatiregistry.org/api'
+CKANurl = 'https://iatiregistry.org'
 
 
 class PackageMissing(Exception): pass
@@ -122,8 +122,8 @@ def create_package_group(group, handle_country=True):
         pg.man_auto = u"auto"
 
         # Query CKAN
-        registry = ckanclient.CkanClient(base_location=CKANurl)
-        ckangroup = registry.group_entity_get(group)
+        registry = ckanapi.RemoteCKAN(CKANurl)
+        ckangroup = registry.action.group_show(id=group)
 
         copy_pg_attributes(pg, ckangroup)
         copy_pg_misc_attributes(pg, ckangroup, handle_country)
@@ -184,13 +184,13 @@ def refresh_package(package):
         db.session.add(pkg)
 
 def refresh_package_by_name(package_name):
-    registry = ckanclient.CkanClient(base_location=CKANurl)
+    registry = ckanapi.RemoteCKAN(CKANurl)
     try:
-        package = registry.package_entity_get(package_name)
+        package = registry.action.package_show(id=package_name)
         refresh_package(package)
-    except ckanclient.CkanApiNotAuthorizedError:
+    except ckanapi.NotAuthorized:
         print "Error 403 (Not authorised) when retrieving '%s'" % package_name
-    except ckanclient.CkanApiNotFoundError:
+    except ckanapi.NotFound:
         print "Error 404 (Not found) when retrieving '%s'" % package_name
         raise
 
@@ -203,12 +203,12 @@ def _refresh_packages():
         if len(setup_orgs):
             if [x for x in setup_orgs if package_name.startswith('{}-'.format(x))] == []:
                 continue
-        registry = ckanclient.CkanClient(base_location=CKANurl)
+        registry = ckanapi.RemoteCKAN(CKANurl)
         while True:
             try:
-                package = registry.package_entity_get(package_name)
+                package = registry.action.package_show(id=package_name)
                 break
-            except ckanclient.CkanApiError:
+            except ckanapi.CKANAPIError:
                 pass
 
         refresh_package(package)
