@@ -47,10 +47,11 @@ def load_current_data_results(org, snapshot_result_path):
     with open(current_data_filepath) as handler:
         data = csv.DictReader(handler)
         for row in data:
+            idx = int(row['index'])
             dataset = row['dataset']
             if dataset not in current_data_results:
                 current_data_results[dataset] = {}
-            current_data_results[dataset][row['index']] = row['result'] == 'pass'
+            current_data_results[dataset][idx] = row['result'] == 'pass'
     return current_data_results
 
 
@@ -128,8 +129,9 @@ def summarize_results(org, snapshot_result_path, all_tests, current_data_results
                 result = row['result']
                 if result == 'not relevant':
                     continue
+                idx = int(row['index'])
                 if current_data_results and \
-                    current_data_results.get(dataset, {}).get(row['index'], 'not relevant') == 'fail':
+                    current_data_results.get(dataset, {}).get(idx, 'not relevant') == 'fail':
                     continue
                 dataset_test_results[hierarchy][result] += 1
             if dataset is not None:
