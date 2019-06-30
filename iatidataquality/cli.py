@@ -23,7 +23,7 @@ def init_db():
 @app.cli.command()
 def drop_db():
     """Drop all tables."""
-    click.echo('\nWarning! This will drop all database tables!')
+    click.secho('\nWarning! This will drop all database tables!', fg='red')
     click.confirm('Are you really really sure?', abort=True)
     db.drop_all()
     click.echo('DB dropped.')
@@ -35,6 +35,8 @@ def setup():
     Quick setup. Will init db, add tests, add codelists,
     add indicators, refresh package data from Registry
     """
+    click.secho('\nWarning! This is a potentially destructive operation!', fg='red')
+    click.confirm('Are you really really sure?', abort=True)
     dqsetup.setup()
 
 
@@ -251,6 +253,11 @@ def aggregate_results(date):
                    '--date {}\n'.format(date), err=True)
         raise click.Abort()
 
+    click.secho('\nWarning! This is a destructive operation!', fg='red')
+    click.echo('\nExisting aggregate data will be deleted from the database.')
+    click.echo('(If you still have the raw results, you can regenerate ' +
+               'old aggregate data by specifying a date.)')
+    click.confirm('\nAre you really really sure?', abort=True)
     with db.session.begin():
         db.session.execute('''truncate aggregateresult''')
 
