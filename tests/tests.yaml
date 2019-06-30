@@ -11,7 +11,7 @@ components:
  - name: Finance and budgets
    indicators:
     - Total organisation budget
-    - Disaggregated budget
+    - Disaggregated budgets
     - Project budget
     - Project budget document
     - Commitments
