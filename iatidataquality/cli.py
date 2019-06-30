@@ -37,6 +37,7 @@ def setup():
     """
     click.secho('\nWarning! This is a potentially destructive operation!', fg='red')
     click.confirm('Are you really really sure?', abort=True)
+    db.drop_all()
     dqsetup.setup()
 
 
