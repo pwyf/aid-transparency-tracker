@@ -50,7 +50,7 @@ components:
 indicators:
  - name: Organisation strategy
    tests:
-    - name: Organisation strategy
+    - name: Organisation strategy is present
       test_level: 3
       expression: |
        Given file is an organisation file
@@ -58,7 +58,7 @@ indicators:
 
  - name: Annual report
    tests:
-    - name: Annual report
+    - name: Annual report is present
       test_level: 3
       expression: |
        Given file is an organisation file
@@ -66,7 +66,7 @@ indicators:
 
  - name: Allocation policy
    tests:
-    - name: Allocation policy
+    - name: Allocation policy is present
       test_level: 3
       expression: |
        Given file is an organisation file
@@ -74,7 +74,7 @@ indicators:
 
  - name: Audit
    tests:
-    - name: Audit
+    - name: Audit is present
       test_level: 3
       expression: |
        Given file is an organisation file
@@ -82,7 +82,7 @@ indicators:
 
  - name: Procurement policy
    tests:
-    - name: Procurement policy
+    - name: Procurement policy is present
       test_level: 3
       expression: |
        Given file is an organisation file
@@ -128,7 +128,7 @@ indicators:
 
  - name: Project budget document
    tests:
-    - name: Project budget document
+    - name: Budget document is present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
@@ -138,7 +138,7 @@ indicators:
 
  - name: Commitments
    tests:
-    - name: Commitments
+    - name: Commitment is present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
@@ -146,7 +146,7 @@ indicators:
 
  - name: Disbursements and expenditures
    tests:
-    - name: Disbursements and expenditures
+    - name: Disbursements or expenditures are present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
@@ -154,7 +154,7 @@ indicators:
 
  - name: Capital spend
    tests:
-    - name: Capital spend
+    - name: Capital spend is present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
@@ -164,7 +164,7 @@ indicators:
 
  - name: Title
    tests:
-    - name: Title
+    - name: Title is present
       expression: |
        Given an IATI activity
         Then `title[text() or narrative/text()]` should be present
@@ -176,7 +176,7 @@ indicators:
 
  - name: Description
    tests:
-    - name: Description
+    - name: Description is present
       expression: |
        Given an IATI activity
         Then `description[text() or narrative/text()]` should be present
@@ -188,25 +188,25 @@ indicators:
 
  - name: Planned dates
    tests:
-    - name: Planned start date
+    - name: Planned start date is present
       expression: |
        Given an IATI activity
         Then `activity-date[@type="1" or @type="start-planned"]` should be present
 
-    - name: Planned end date
+    - name: Planned end date is present
       expression: |
        Given an IATI activity
         Then `activity-date[@type="3" or @type="end-planned"]` should be present
 
  - name: Actual dates
    tests:
-    - name: Actual start date
+    - name: Actual start date is present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
         Then `activity-date[@type="2" or @type="start-actual"]` should be present
 
-    - name: Actual end date
+    - name: Actual end date is present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 3 or 4
@@ -214,31 +214,31 @@ indicators:
 
  - name: Current status
    tests:
-    - name: Activity status
+    - name: Current status is present
       expression: |
        Given an IATI activity
         Then `activity-status` should be present
 
-    - name: Activity status uses standard codelist
+    - name: Current status is valid
       expression: |
        Given an IATI activity
         Then every `activity-status/@code` should be on the ActivityStatus codelist
 
  - name: Contact details
    tests:
-    - name: Contact information
+    - name: Contact info is present
       expression: |
        Given an IATI activity
         Then `contact-info` should be present
 
  - name: Sector
    tests:
-    - name: Sector
+    - name: Sector is present
       expression: |
        Given an IATI activity
         Then `sector | transaction/sector` should be present
 
-    - name: Sector uses standard codelist
+    - name: Sector uses DAC CRS 5 digit purpose codes
       expression: |
        Given an IATI activity
         Then every `sector[@vocabulary="DAC" or not(@vocabulary) or @vocabulary="1"]/@code | transaction/sector[@vocabulary="1" or not(@vocabulary)]/@code` should be on the Sector codelist
@@ -271,7 +271,7 @@ indicators:
 
  - name: Unique ID
    tests:
-    - name: Unique IATI Identifier
+    - name: IATI Identifier is present
       expression: |
        Given an IATI activity
         Then `iati-identifier` should be present
@@ -297,13 +297,13 @@ indicators:
 
  - name: Aid type
    tests:
-    - name: Default aid type
+    - name: Aid type is present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
         Then `default-aid-type | transaction/aid-type` should be present
 
-    - name: Aid type uses standard codelist
+    - name: Aid type is valid
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
@@ -354,7 +354,7 @@ indicators:
 
  - name: "Project procurement - Tenders"
    tests:
-    - name: Tenders document
+    - name: Tender is present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
@@ -364,7 +364,7 @@ indicators:
 
  - name: "Project procurement - Contracts"
    tests:
-    - name: Contract document
+    - name: Contract is present
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
@@ -383,7 +383,7 @@ indicators:
 
  - name: Impact appraisals
    tests:
-    - name: Pre-project impact appraisal documents
+    - name: Pre- and/or post-project impact appraisal documents
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
@@ -416,7 +416,7 @@ indicators:
         Then `document-link/category[@code="A08"]` should be present
 
 filter:
-  name: Current activities
+  name: Current data
   expression: |
    Given an IATI activity
    Then the activity is current

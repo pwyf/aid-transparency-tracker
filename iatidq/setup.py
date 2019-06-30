@@ -47,7 +47,7 @@ def create_aggregation_types():
                                            'test_id': None,
                                            'test_result':'1'})
     print("Adding an aggregation type for current data")
-    currentdata_test = models.Test.where(description='Current activities').first()
+    currentdata_test = models.Test.where(description='Current data').first()
     dqaggregationtypes.addAggregationType({'name':'Current data',
                                            'description': '',
                                            'test_id':currentdata_test.id,
