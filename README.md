@@ -1,30 +1,13 @@
-Aid Transparency Tracker
-========================
+# Aid Transparency Tracker
 
 IATI Data Quality measurement tool
 
-License: AGPL v3.0
-==================
+## Installation
 
-Copyright (C) 2012
+Clone the relevant branch of this repo:
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-Installation
-============
-
-You need RabbitMQ running for the tests processing to work. It's probably sensible to configure that before starting.
+    git clone --recursive --branch original-version https://github.com/pwyf/aid-transparency-tracker.git
+    cd aid-transparency-tracker
 
 Set up a virtualenv:
 
@@ -54,16 +37,15 @@ Run the setup script to populate the database:
 
     flask setup
 
-This will also create a default username and password; please create a new user and then delete the default one!
+This will prompt you to create a new admin user.
 
-Run the server:
+## Running
+
+You can run a development server with:
 
     flask run
 
-
-
-Survey component
-================
+## Survey component
 
 The survey component currently requires the existence of three files (could be abstracted in future). Move them from the tests directory to the DATA_STORAGE_DIR you specified in config.py. E.g., if you set the directory to be /home/me/data/:
 
@@ -71,13 +53,15 @@ The survey component currently requires the existence of three files (could be a
     cp tests/2012_indicators.csv /home/me/data/
     cp tests/2012_results.csv /home/me/data/
 
-Reinitialise
-============
+## Reinitialise
+
+You can drop all tables with:
 
     flask drop_db
 
-Updating sampling poisoning
-===========================
+Then follow the installation instructions to get reinitialise.
+
+## Updating sampling poisoning
 
     bin/dqtool update-sampling
 
