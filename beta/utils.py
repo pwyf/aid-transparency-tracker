@@ -139,7 +139,9 @@ def summarize_results(org, snapshot_result_path, all_tests, current_data_results
 def save_summary(dataset, dataset_test_results, test_id, org, aggregateresulttype):
     for hierarchy, scores in dataset_test_results.items():
         total = sum(scores.values())
-        results_data = 100. * scores['pass'] / total if total > 0 else 0
+        if total == 0:
+            continue
+        results_data = 100. * scores['pass'] / total
 
         ar = AggregateResult()
         ar.package_name = unicode(dataset)
