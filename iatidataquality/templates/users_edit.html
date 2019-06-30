@@ -4,7 +4,7 @@
     Edit
   {% else %}
     New
-  {% endif %} 
+  {% endif %}
   Users
 {% endblock %}
 {% block content %}
@@ -12,8 +12,8 @@
     <ul class="breadcrumb">
 
     <li>
-	  <a href="{{url_for('users')}}">Users</a> 
-	  <span class="divider">/</span>
+	  <a href="{{url_for('get_users')}}">Users</a>
+	  <span class="divider"></span>
 	</li>
     <li class="active">{{user.username}}</li>
     </ul>
@@ -28,28 +28,28 @@
     </thead>
     <tbody>
     <tr>
-	  <td>Username:</td><td><input type="text" name="username" 
+	  <td>Username:</td><td><input class="form-control" type="text" name="username"
 								   value="{{ user.username }}"/></td>
     </tr>
     <tr>
-	  <td>Name:</td><td><input type="text" name="name" 
+	  <td>Name:</td><td><input class="form-control" type="text" name="name"
 							   value="{{ user.name }}"/></td>
     </tr>
     <tr>
-      <td>Email address:</td><td><input type="text" name="email_address" 
+      <td>Email address:</td><td><input class="form-control" type="text" name="email_address"
 										value="{{user.email_address}}" /></td>
     </tr>
     <tr>
-      <td>Organisation:</td><td><input type="text" name="organisation" 
+      <td>Organisation:</td><td><input class="form-control" type="text" name="organisation"
 									   value="{{user.organisation}}" /></td>
     </tr>
     {% if not user %}
     <tr>
-      <td>Password:</td><td><input type="text" name="password" /></td>
+      <td>Password:</td><td><input class="form-control" type="text" name="password" /></td>
     </tr>
     {% endif %}
     <tr>
-      <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
+      <td colspan="2"><input type="submit" value="Update" class="btn btn-default"/></td>
     </tr>
     </tbody>
     </table>
@@ -57,16 +57,16 @@
     </form>
 
     {% if user %}
-	<a class="btn btn-success" href="#addPermission" role="button" 
+	<a class="btn btn-success" href="#addPermission" role="button"
 	   data-toggle="modal">
-	  <i class="icon-white icon-plus"></i> 
-	  <b>Add permissions</b>
+	  <i class="glyphicon glyphicon-plus"></i>
+	  <strong>Add permissions</strong>
 	</a>
 
-    <a class="btn btn-success" href="#addPermissionsSet" role="button" 
+    <a class="btn btn-success" href="#addPermissionsSet" role="button"
 	   data-toggle="modal">
-	  <i class="icon-white icon-th-large"></i> 
-	  <b>Add set of permissions</b>
+	  <i class="glyphicon glyphicon-th-large"></i>
+	  <strong>Add set of permissions</strong>
 	</a>
 
     <h2>Permissions</h2>
@@ -85,10 +85,10 @@
 	  <td>{{permission.permission_method}}</td>
 	  <td>{{permission.permission_value}}</td>
 	  <td>
-		<a href="" 
-		   data-confirm="Are you sure you want to delete this permission?" 
+		<a href=""
+		   data-confirm="Are you sure you want to delete this permission?"
 		   data-permission-id="{{permission.id}}">
-		  <i class="icon-trash"></i>
+		  <i class="glyphicon glyphicon-trash"></i>
 	  </td>
 	</tr>
     {% endfor %}
@@ -96,16 +96,18 @@
     </table>
 
     {% endif %}
-    <div id="addPermission" class="modal hide fade" tabindex="-1" 
-		 role="dialog" aria-labelledby="addFeedbackModalLabel" 
-		 aria-hidden="true"> 
+    <div id="addPermission" class="modal fade" tabindex="-1"
+		 role="dialog" aria-labelledby="addFeedbackModalLabel"
+		 aria-hidden="true">
 
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        <form method="post" action="">
         <div class="modal-header">
 
-            <button type="button" class="close" data-dismiss="modal" 
+            <button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
-
-            <form method="post" action="">
 
               <h3 id="addFeedbackModalLabel">
 				Add permissions for {{user.username}}
@@ -118,19 +120,19 @@
             <tbody>
             <tr>
             <td>Name</td>
-            <td><select id="name">
+            <td><select class="form-control" id="name">
                 <option value="admin">Admin</option>
-                <option value="super">Super 
+                <option value="super">Super
 				  (can see everything; can't edit, delete, create)</option>
                 <option value="organisation">Organisation</option>
-                <option value="organisation_feedback">Organisation 
+                <option value="organisation_feedback">Organisation
 				  Feedback</option>
                 <option value="survey">Survey</option>
                 <option value="survey_researcher">Survey Researcher</option>
                 <option value="survey_send">Survey Send</option>
                 <option value="survey_donorreview">Survey Donor review</option>
                 <option value="survey_pwyfreview">Survey PWYF Review</option>
-                <option value="survey_donorcomments">Survey Donor 
+                <option value="survey_donorcomments">Survey Donor
 				  comments</option>
                 <option value="survey_pwyffinal">Survey PWYF Final</option>
                 <option value="survey_finalised">Survey Finalised</option>
@@ -140,7 +142,7 @@
             </tr>
             <tr>
             <td>Method</td>
-            <td><select id="method">
+            <td><select class="form-control" id="method">
                 <option value="view">View</option>
                 <option value="edit">Edit</option>
                 <option value="role">Role</option>
@@ -149,7 +151,7 @@
             </tr>
             <tr>
             <td>Value</td>
-            <td> <input id="value" type="text" />
+            <td> <input class="form-control" id="value" type="text" />
             </td>
             </tr>
             </tbody>
@@ -157,20 +159,22 @@
         </div>
 
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" 
+            <button class="btn btn-default" data-dismiss="modal"
 					aria-hidden="true">Close</button>
-            <a id="addpermissionbtn" class="btn btn-success" 
+            <a id="addpermissionbtn" class="btn btn-success"
 			   href="">Add permission</a>
         </div>
-    </form>
+        </form>
+    </div>
+    </div>
     </div>
 
-    <div id="addPermissionsSet" class="modal hide fade" 
-		 tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel" 
-		 aria-hidden="true"> 
+    <div id="addPermissionsSet" class="modal fade"
+		 tabindex="-1" role="dialog" aria-labelledby="addFeedbackModalLabel"
+		 aria-hidden="true">
 
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" 
+            <button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
             <form method="post" action="">
               <h3 id="addFeedbackModalLabel">
@@ -183,18 +187,18 @@
             <tbody>
             <tr>
             <td>Name</td>
-            <td><select id="setname">
-                <option value="csoresearcher">CSO Researcher, 
+            <td><select class="form-control" id="setname">
+                <option value="csoresearcher">CSO Researcher,
 				  can view organisation and edit survey</option>
-                <option value="donor">Donor, can view organisation 
+                <option value="donor">Donor, can view organisation
 				  and edit survey</option>
-                <option value="csocomments">CSO commenter, 
+                <option value="csocomments">CSO commenter,
 				  can view organisation and provide comments on survey</option>
             </select></td>
             </tr>
             <tr>
             <td>Organisation</td>
-            <td> <select id="setvalue">
+            <td> <select class="form-control" id="setvalue">
                  <option value="" selected></option>
                  {% for organisation in organisations %}
                  <option value="{{organisation.organisation_code}}">
@@ -208,13 +212,13 @@
             </table>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" 
+            <button class="btn btn-default" data-dismiss="modal"
 					aria-hidden="true">Close</button>
-            <a id="addpermissionSetbtn" class="btn btn-success" 
+            <a id="addpermissionSetbtn" class="btn btn-success"
 			   href="">Add permission</a>
         </div>
     </form>
     </div>
-   <script src="{{url_for('static', 
+   <script src="{{url_for('static',
 				filename='js/userPermissions.js')}}"></script>
 {% endblock %}

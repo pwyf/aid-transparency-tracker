@@ -7,12 +7,13 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, app
+import pprint
 
-import models
-import csv
-import util
 import unicodecsv
+
+from iatidataquality import db, app
+from . import models
+
 
 def importIndicatorDescriptions():
     indicatorgroup_name = app.config["INDICATOR_GROUP"]
@@ -21,7 +22,7 @@ def importIndicatorDescriptions():
 
 def importIndicatorDescriptionsFromFile(indicatorgroup_name, filename):
     with file(filename) as fh:
-        return _importIndicatorDescriptions(indicatorgroup_name, 
+        return _importIndicatorDescriptions(indicatorgroup_name,
                                                    fh, True)
 
 def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
@@ -44,7 +45,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
         data['indicator_subcategory_name']=row['indicator_subcategory_name']
         data['indicator_order']=row['order']
         data['indicator_ordinal']=row['ordinal'].startswith('1')
-        data['indicator_weight']=row['weight']
+        data['indicator_weight'] = eval(row['weight'])
         data['indicator_noformat']=row['noformat'].startswith('1')
         data['indicatorgroup_id']=indicatorgroup.id
 
@@ -56,12 +57,12 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
 
 def importIndicators():
     filename = 'tests/tests.csv'
-    indicatorgroup_id = app.config["INDICATOR_GROUP"]
-    with file(filename) as fh:
+    indicatorgroup_name = app.config["INDICATOR_GROUP"]
+    with open(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True, False)
 
 def importIndicatorsFromFile(indicatorgroup_name, filename, infotype=False):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importIndicators(indicatorgroup_name, fh, True, infotype)
 
 def _importIndicators(indicatorgroup_name, fh, local, infotype):
@@ -72,7 +73,7 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
         indicatorgroup = addIndicatorGroup({"name": indicatorgroup_name,
                                             "description": ""
                                             })
-        
+
     data = unicodecsv.DictReader(fh)
 
     for row in data:
@@ -80,11 +81,11 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
             infotype = models.InfoType.query.filter(models.InfoType.name==row['infotype_name']).first()
             if not infotype:
                 continue
-            
+
             indicator_name = row['indicator_name']
             if (indicator_name == ""):
                 continue
-            
+
             checkI = indicators(indicatorgroup_name, indicator_name)
             if checkI:
                 indicator = checkI
@@ -103,16 +104,15 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
 
             if not test:
                 continue
-            
+
             indicator_name = row['name']
             if (indicator_name == ""):
                 continue
-            
+
             checkI = indicators(indicatorgroup_name, indicator_name)
             if checkI:
                 indicator = checkI
             else:
-                import pprint
                 pprint.pprint(row)
                 indicator = addIndicator({
                                 "name" : indicator_name,
@@ -124,8 +124,8 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
                                 "test_id" : test.id,
                                 "indicator_id" : indicator.id
                             })
-            
-    print "Imported successfully"
+
+    print("Imported successfully")
     return True
 
 def indicatorGroups(indicatorgroup=None):
@@ -240,7 +240,7 @@ def addIndicator(data):
 
 def updateIndicator(indicatorgroup, indicator, data):
     checkI = db.session.query(models.Indicator
-                ).filter(models.Indicator.name==indicator, 
+                ).filter(models.Indicator.name==indicator,
                          models.IndicatorGroup.name==indicatorgroup
                 ).join(models.IndicatorGroup
                 ).first()
@@ -269,7 +269,7 @@ def getIndicatorByName(indicator_name):
 
 def deleteIndicator(indicatorgroup, indicator):
     checkI = db.session.query(models.Indicator
-                ).filter(models.Indicator.name==indicator, 
+                ).filter(models.Indicator.name==indicator,
                          models.IndicatorGroup.name==indicatorgroup
                 ).join(models.IndicatorGroup
                 ).first()

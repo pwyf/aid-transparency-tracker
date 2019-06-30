@@ -7,14 +7,15 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-
-import models
-import unicodecsv
 import datetime
+import unicodecsv
+
+from iatidataquality import db
+from . import models
+
 
 def importUserDataFromFile(filename):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importUserData(fh)
 
 def _importUserData(fh):
@@ -44,7 +45,7 @@ def _importUserData(fh):
             "permission_value": organisation_id
             }
 
-    def getCSOPermissions(organisation_id, 
+    def getCSOPermissions(organisation_id,
                 role, active, primary, user):
         perms = []
         if active == 'active':
@@ -69,7 +70,7 @@ def _importUserData(fh):
 
         return [ perm(user, organisation_id, i) for i in perms ]
 
-    def getDonorPermissions(organisation_id, 
+    def getDonorPermissions(organisation_id,
                 role, active, primary, user):
         perms = []
         permissions = [{
@@ -104,15 +105,20 @@ def _importUserData(fh):
             user=getCreateUser(row)
 
             organisation_id = row['organisation_id']
+            v = models.Organisation.where(
+                organisation_code=organisation_id).first()
+            if not v:
+                raise Exception('No organisation with ID: {}'.format(
+                    organisation_id))
             role = row['role']
             active = row['active']
             primary = row['primary']
 
             if role == 'donor':
-                permissions += getDonorPermissions(organisation_id, 
+                permissions += getDonorPermissions(organisation_id,
                         role, active, primary, user)
             elif role == 'cso':
-                permissions += getCSOPermissions(organisation_id, 
+                permissions += getCSOPermissions(organisation_id,
                         role, active, primary, user)
             elif role == 'admin':
                 permissions.append({
@@ -130,28 +136,11 @@ def _importUserData(fh):
                 })
             else:
                 print "Warning: no role provided, so could not add user for row %s" % row
-            
+
         for permission in permissions:
             addUserPermission(permission)
 
     generate_permissions()
-
-def user(user_id=None):
-    if user_id:
-        user = models.User.query.filter_by(id=user_id
-                    ).first()
-        return user
-    else:
-        users = models.User.query.all()
-        return users
-
-def user_by_username(username=None):
-    if username:
-        user = models.User.query.filter_by(username=username
-                    ).first()
-        return user
-    return None
-
 
 def updateUser(data):
     with db.session.begin():

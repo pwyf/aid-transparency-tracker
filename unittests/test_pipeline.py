@@ -10,45 +10,25 @@
 
 import os
 import sys
-import csv
-
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
-import iatidq
-import iatidq.dqparsetests
-import iatidq.dqregistry
-import iatidq.dqimporttests
-import iatidq.dqindicators
-import iatidq.test_queue
-import iatidq.dqcodelists
-import iatidq.dqorganisations
-import iatidq.test_level as test_level
-import iatidq.dqaggregationtypes
-import iatidq.dqtests
-import iatidq.setup
-
-from iatidq import db
-import lxml.etree
 
 import nose
-import nose.tools
-import sys
 
-from iatidq.models import *
+import iatidq
+from iatidq import models, test_level
+from iatidataquality import db
+
 
 def log(s):
     return
     print >>sys.stderr, s
 
 def setup_func():
-    iatidq.db.drop_all()
-    iatidq.db.create_all()
+    db.drop_all()
+    db.create_all()
 
 def __setup_organisations(pkg_id):
-    org_data = [ 
-        ('UK, DFID', 'GB-1', 
+    org_data = [
+        ('UK, DFID', 'GB-1',
          '''participating-org[@role="Extending"][@ref="GB-1"]'''),
         ('World Bank', '44002',
          '''participating-org[@role="Extending"][@ref="44002"]'''),
@@ -66,12 +46,12 @@ def teardown_func():
     pass
 
 def get_packagegroups_by_name(name):
-    return iatidq.models.PackageGroup.query.filter(
-        PackageGroup.name==name).all()
+    return models.PackageGroup.query.filter(
+        models.PackageGroup.name==name).all()
 
 def get_packages_by_name(name):
-    return iatidq.models.Package.query.filter(
-        Package.package_name==name).all()
+    return models.Package.query.filter(
+        models.Package.package_name==name).all()
 
 @nose.with_setup(setup_func, teardown_func)
 def test_refresh():
@@ -143,7 +123,7 @@ def _test_example_tests(publisher, country):
         "test_pwyf2013",
         "tests/sample_tests.csv")
 
-    iatidq.dqindicators.importIndicatorDescriptionsFromFile("2014index", 
+    iatidq.dqindicators.importIndicatorDescriptionsFromFile("2018index",
                                                             "tests/indicators.csv")
     log("Importing codelists")
     #iatidq.dqcodelists.importCodelists()
@@ -152,25 +132,22 @@ def _test_example_tests(publisher, country):
 
 
     log("about to start testing")
- 
-    from iatidq.dqparsetests import test_functions as tf
-    test_functions = tf()
-    from iatidq import dqcodelists
-    codelists = dqcodelists.generateCodelists()
+
+    test_functions = iatidq.dqparsetests.test_functions()
+    codelists = iatidq.dqcodelists.generateCodelists()
 
     # FIXME: THIS IS A TOTAL HACK
     with db.session.begin():
-        iatidq.models.Result.query.delete()
-        iatidq.models.AggregateResult.query.delete()
-        iatidq.models.AggregationType.query.delete()
+        models.Result.query.delete()
+        models.AggregateResult.query.delete()
+        models.AggregationType.query.delete()
 
     all_ag = create_aggregation_types({})
 
 
-    from iatidq.testrun import start_new_testrun
-    runtime = start_new_testrun()
+    runtime = iatidq.testrun.start_new_testrun()
 
-    results = iatidq.models.Result.query.all()
+    results = models.Result.query.all()
     assert len(results) == 0
 
     pkg = get_packages_by_name(package_name)[0]
@@ -183,23 +160,23 @@ def _test_example_tests(publisher, country):
     #    setup_organisations(package_id)
     iatidq.setup.setup_organisations_minimal()
 
-    assert iatidq.test_queue.check_file(test_functions, 
+    assert iatidq.test_queue.check_file(test_functions,
                codelists,
                xml_filename,
                runtime.id,
                pkg.id)
 
-    results = iatidq.models.Result.query.all()
+    results = models.Result.query.all()
     assert len(results) > 0
     print >>sys.stderr, len(results)
 
-    aggtest_results = iatidq.models.AggregateResult.query.filter(
-        AggregateResult.aggregateresulttype_id == all_ag.id
+    aggtest_results = models.AggregateResult.query.filter(
+        models.AggregateResult.aggregateresulttype_id == all_ag.id
         ).all()
     for result in aggtest_results:
         assert result.runtime_id == runtime.id
         assert result.package_id == pkg.id
-    
+
     resultful_tests = [
         'valid_xml',
         'description/text() exists?',
@@ -210,9 +187,9 @@ def _test_example_tests(publisher, country):
         """activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"""
         ]
 
-    expected_test_ids = [ i.id for i in iatidq.models.Test.query.filter(
-        Test.name.in_(resultful_tests)).all() ]
-    
+    expected_test_ids = [ i.id for i in models.Test.query.filter(
+        models.Test.name.in_(resultful_tests)).all() ]
+
     observed_test_ids = [ i.test_id for i in aggtest_results ]
 
     print "expected test ids: ", expected_test_ids
@@ -225,7 +202,7 @@ def _test_example_tests(publisher, country):
 @nose.with_setup(setup_func, teardown_func)
 def test_samples():
     data = [ ('worldbank', '789'),
-             ('dfid', 'ph') 
+             ('dfid', 'ph')
              ]
 
     #data = [ data[1] ]

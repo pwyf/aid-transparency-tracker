@@ -1,17 +1,17 @@
 {% macro published_ordinal(data, publishedstatuses, publishedformats, indicator, years) %}
         {% for i, year in years %}
-            <label for="{{indicator.indicator.id}}-ordinal_value-{{i}}">
-            <input type="radio" name="{{indicator.indicator.id}}-ordinal_value" value="{{i}}" id="{{indicator.indicator.id}}-ordinal_value-{{i}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.ordinal_value|int == i %} checked{%endif%}> {{year.text}}</input></label>
+            <label for="{{indicator.indicator.id}}-ordinal_value-{{i}}" class="radio">
+            <input type="radio" name="{{indicator.indicator.id}}-ordinal_value" value="{{i}}" id="{{indicator.indicator.id}}-ordinal_value-{{i}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.ordinal_value is not none and data[indicator.indicator.id].OrganisationSurveyData.ordinal_value|int == i %} checked{%endif%}> {{year.text}}</input></label>
         {% endfor %}
 
         {% if not indicator.indicator.indicator_noformat %}
-        <b>Format:</b>
+        <strong>Format:</strong>
         {% for i, publishedformat in publishedformats.items() %}
-        <label for="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}">
-        <input type="radio" name="{{indicator.indicator.id}}-publishedformat" value="{{publishedformat.id}}" id="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_format == publishedformat.id %} checked{%endif%}> {{publishedformat.title}}</input></label>
+        <label for="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}" class="radio">
+        <input type="radio" name="{{indicator.indicator.id}}-publishedformat" value="{{publishedformat.id}}" id="{{indicator.indicator.id}}-publishedformat-{{publishedformat.id}}"{% if data and data[indicator.indicator.id].OrganisationSurveyData.published_format_id == publishedformat.id %} checked{%endif%}> {{publishedformat.title}}</input></label>
         {% endfor %}
         {% else %}
-        <p><input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />Format does not apply to this indicator, as it is a document.</p>
+        <input type="hidden" name="{{indicator.indicator.id}}-noformat" value="1" />
         {% endif %}
 {% endmacro %}
 

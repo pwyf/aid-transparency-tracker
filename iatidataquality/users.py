@@ -7,40 +7,32 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, render_template, flash, request, Markup, \
-    session, redirect, url_for, escape, Response, abort, send_file
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import login_required, current_user
+from flask import render_template, flash, request, redirect, url_for
+from flask_login import current_user
 
-from iatidataquality import app
-from iatidataquality import db
-import usermanagement
+from . import usermanagement
+from iatidq import dqusers, models, util
 
-from iatidq import dqusers, util, dqorganisations
 
-import unicodecsv
-
-@app.route("/users/")
-@app.route("/user/<username>/")
-@usermanagement.perms_required()
-def users(username=None):
+def get_users(username=None):
     if username:
         return redirect(url_for('users_edit', username=username))
     else:
-        users=dqusers.user()
-        return render_template("users.html", users=users,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user)
+        users = models.User.all()
+        return render_template(
+            "users.html", users=users,
+            admin=usermanagement.check_perms('admin'),
+            loggedinuser=current_user)
+
 
 def returnOrNone(value):
-    if (value ==''):
+    if (value == ''):
         return None
     return value
 
-@app.route("/users/<username>/edit/addpermission/", methods=['POST'])
-@usermanagement.perms_required()
+
 def users_edit_addpermission(username):
-    user = dqusers.user_by_username(username)
+    user = models.User.where(username=username).first()
     data = {
         'user_id': user.id,
         'permission_name': request.form['permission_name'],
@@ -53,8 +45,7 @@ def users_edit_addpermission(username):
     else:
         return util.jsonify({"error": "Could not add permission"})
 
-@app.route("/users/<username>/edit/deletepermission/", methods=['POST'])
-@usermanagement.perms_required()
+
 def users_edit_deletepermission(username):
     permission_id = request.form['permisison_id']
     permission = dqusers.deleteUserPermission(permission_id)
@@ -63,15 +54,13 @@ def users_edit_deletepermission(username):
     else:
         return util.jsonify({"error": "Could not delete permission"})
 
-@app.route("/users/new/", methods=['POST', 'GET'])
-@app.route("/users/<username>/edit/", methods=['POST', 'GET'])
-@usermanagement.perms_required()
+
 def users_edit(username=None):
     user = {}
     permissions = {}
 
     if username:
-        user = dqusers.user_by_username(username)
+        user = models.User.where(username=username).first()
         permissions = dqusers.userPermissions(user.id)
         if request.method == 'POST':
             if user:
@@ -86,7 +75,7 @@ def users_edit(username=None):
                 flash('Successfully updated user.', 'success')
             else:
                 user = {}
-                flash('Could not update user.', 'error')
+                flash('Could not update user.', 'danger')
     else:
         if request.method == 'POST':
             user = dqusers.addUser({
@@ -100,21 +89,21 @@ def users_edit(username=None):
                 flash('Successfully added new user', 'success')
                 return redirect(url_for('users_edit', username=user.username))
             else:
-                flash('Could not add user', 'error')
+                flash('Could not add user', 'danger')
 
-    return render_template("users_edit.html", 
+    organisations = models.Organisation.sort('organisation_name').all()
+    return render_template("users_edit.html",
                            user=user,
                            permissions=permissions,
-             admin=usermanagement.check_perms('admin'),
-             loggedinuser=current_user,
-             organisations=dqorganisations.organisations())
+                           admin=usermanagement.check_perms('admin'),
+                           loggedinuser=current_user,
+                           organisations=organisations)
 
-@app.route("/users/<username>/delete/")
-@usermanagement.perms_required()
+
 def users_delete(username=None):
     if username:
-        user = dqusers.deleteUser(username)
+        dqusers.deleteUser(username)
         flash('Successfully deleted user.', 'success')
     else:
-        flash('No username provided.', 'error')
-    return redirect(url_for('users'))
+        flash('No username provided.', 'danger')
+    return redirect(url_for('get_users'))

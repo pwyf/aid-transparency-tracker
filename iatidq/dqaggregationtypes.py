@@ -7,12 +7,9 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
+from iatidataquality import db
+from . import models
 
-import models
-import csv
-import util
-import unicodecsv
 
 def aggregationTypes(aggregationtype_id=None):
     if aggregationtype_id is None:
@@ -23,7 +20,7 @@ def aggregationTypes(aggregationtype_id=None):
     else:
         checkATs = models.AggregationType.query.filter_by(id=aggregationtype_id).first()
     return checkATs
-    
+
 def aggregationtype_by_name(name):
     checkAT = db.session.query(models.AggregationType
                     ).filter_by(name=name).first()

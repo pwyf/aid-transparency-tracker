@@ -1,9 +1,9 @@
 {% set active_page='index'%}{% extends "layout.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    <div class="jumbotron masthead">
+    <div class="pwyf-jumbotron masthead">
         <div class="container">
-        <h1><span class="black">Publish</span></h1>
+        <h1><span class="black">Aid Transparency Tracker</span></h1>
         <p class="lead">Organisations have begun publishing more data
         about their aid activities. </p>
         <p class="lead">Learn more about the quality of their publication.</p>
@@ -14,49 +14,51 @@
           {% if messages %}
             {% for category, message in messages %}
                   <div class="alert alert-{{category}} flashmessage">
-                    <p>{{message}}</p>
-                    </div>
+                    {{ message }}
+                  </div>
             {% endfor %}
           {% endif %}
         {% endwith %}
     <div class="row">
     <p class="lead">
-      The Aid Transparency Tracker has been developed by Publish What You 
-      Fund to monitor progress made by organisations in making their aid 
+      The Aid Transparency Tracker has been developed by Publish What You
+      Fund to monitor progress made by organisations in making their aid
       information more transparent. It provides the data for the annual Aid
       Transparency Index.
     </p>
-	  <p class="lead">Data collection for the 
-      <a href="http://www.publishwhatyoufund.org/index/2016-aid-transparency-index/">
-        2016 Aid Transparency Index</a> has
-      now started. We will release more detailed information in April 2016 
-      when the Aid Transparency Index will be launched. Results and analysis
-      for previous years is available in the 
-      <a href="http://ati.publishwhatyoufund.org/" target="_blank">
-        2014 Index</a>.</p>
+
+    {% if intro_html %}
+      <p class="lead">{{ intro_html|safe }}</p>
+    {% endif %}
 	</div>
     <div class="row">
-            <div class="span6">
+            {% if loggedinuser.username %}
+            <div class="col-md-6 col-md-offset-3">
+            {% else %}
+            <div class="col-md-6">
+            {% endif %}
                 <h1>Organisations</h1>
                 <p class="lead">See data for individual organisations</p>
                 <p>
-                <a class="btn btn-primary" 
-				   href="{{url_for('organisations')}}">Organisations »</a>
+                <a class="btn btn-primary"
+				   href="{{url_for('get_organisations')}}">Organisations »</a>
                 </p>
             </div>
-            <div class="span6">
+            {% if not loggedinuser.username %}
+            <div class="col-md-6">
                 <h1>Data verification</h1>
                 <p class="lead">Donors and independent reviewers can
                 log in to check the data</p>
-                <form class="form-inline" 
+                <form class="form-inline"
 					  action="{{url_for('login')}}" method="post">
-                <input name="username" type="text" 
-					   class="input-small" placeholder="Username">
-                <input name="password" type="password" 
-					   class="input-small" placeholder="Password">
-                <button type="submit" class="btn">Sign in</button>
+                <input name="username" type="text"
+					   class="form-control" placeholder="Username">
+                <input name="password" type="password"
+					   class="form-control" placeholder="Password">
+                <button type="submit" class="btn btn-default">Sign in</button>
                 </form>
             </div>
+            {% endif %}
         </div>
     </div>
 

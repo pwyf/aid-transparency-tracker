@@ -1,9 +1,9 @@
 {% set active_page='pc'%}{% extends "layout.html" %}
 {% block title %}Organisation Conditions{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/deletePrompt.js')}}"></script>
 
     <script >
@@ -19,22 +19,22 @@
 
     <form action="{{url_for('import_feedback')}}" method="post">
 
-    <textarea rows="5" class="input-xxlarge" 
+    <textarea rows="5" class="form-control"
 			  name="feedbacktext">{{feedbackconditions}}</textarea>
 
     <br />
 	<button type="submit" class="btn btn-success">
-	  <i class="icon icon-share-alt icon-white"></i> 
-	  <b>Import feedback</b>
+	  <i class="glyphicon glyphicon-share-alt"></i>
+	  <strong>Import feedback</strong>
 	</button>
 
-    <a class="btn btn-danger" 
+    <a class="btn btn-danger"
 	   data-confirm="Are you sure you want to clear all remaining
 	   publisher feedback? This will not remove any feedback that has
 	   already been imported. This action cannot be undone."
 	   href="{{url_for('organisationfeedback_clear')}}">
-	  <i class="icon icon-trash icon-white"></i> 
-	  <b>Clear feedback</b>
+	  <i class="glyphicon glyphicon-trash"></i>
+	  <strong>Clear feedback</strong>
 	</a>
     </form>
     {% endif %}
@@ -42,12 +42,12 @@
     <h1>Select a condition</h1>
 
     <div class="pull-right">
-      <a href="{{url_for('organisation_conditions_new')}}" 
-		 class="btn btn-success"><i class="icon-plus icon-white"></i> New</a>
-      <a href="{{url_for('import_organisation_conditions')}}" 
-		 class="btn">Import data</a>
-      <a href="{{url_for('export_organisation_conditions')}}" 
-		 class="btn">Export data</a>
+      <a href="{{url_for('organisation_conditions_new')}}"
+		 class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> New</a>
+      <a href="{{url_for('import_organisation_conditions')}}"
+		 class="btn btn-default">Import data</a>
+      <a href="{{url_for('export_organisation_conditions')}}"
+		 class="btn btn-default">Export data</a>
     </div>
 
     <table class="table" id="pcs">
@@ -69,20 +69,20 @@
 	  </td>
 	  <td>{{pc.description}}</td>
 	  <td>
-		<a href="{{url_for('organisations', 
+		<a href="{{url_for('get_organisations',
 				 organisation_code=pc.organisation_code)}}">
 		  {{pc.organisation_name}}</a>
 	  </td>
 	  <td>
-		<a href="{{url_for('tests', id=pc.test_id)}}">
+		<a href="{{url_for('get_tests', id=pc.test_id)}}">
 		  {{pc.test_description}}
 	    </a>
 	  </td>
       <td>
-		<a data-confirm="Are you sure you want to delete this organisation 
-						 condition? This action cannot be undone." 
+		<a data-confirm="Are you sure you want to delete this organisation
+						 condition? This action cannot be undone."
 		   href="{{url_for('organisation_condition_delete', id=pc.id)}}">
-		  <i class="icon icon-trash"></i>
+		  <i class="glyphicon glyphicon-trash"></i>
 		</a>
       </td>
     </tr>

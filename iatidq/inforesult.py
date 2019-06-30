@@ -7,13 +7,13 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
 import datetime
-from lxml import etree
 
-import models
-import itertools
 import unicodecsv
+
+from iatidataquality import db
+from . import models
+
 
 def inforesult_total_disbursements_commitments(data):
     def values():
@@ -35,7 +35,7 @@ def inforesult_total_disbursements_commitments(data):
 
 def inforesult_total_disbursements_commitments_current(data):
     oneyear_ago = (datetime.datetime.utcnow()-datetime.timedelta(days=365))
-    
+
     def values():
         # Data will be a list of iati-activities, generated
         # by an xpath expression
@@ -120,5 +120,5 @@ def _importInfoTypesFromFile(fh, filename, level=1, local=True):
     return True
 
 def importInfoTypesFromFile(filename, level):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importInfoTypesFromFile(fh, filename, level=level, local=True)

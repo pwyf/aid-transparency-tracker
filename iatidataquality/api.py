@@ -7,35 +7,31 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask, abort, url_for, redirect, request, current_app, make_response
+import datetime
 from functools import wraps, update_wrapper
 import json
-from sqlalchemy import func
 import math
+import urllib2
 
-from iatidataquality import app, db
+from flask import abort, url_for, request, current_app, make_response
 
-import os
-import sys
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
+from . import app, db
+from iatidq import dqpackages
+from iatidq.models import Organisation, Package, PackageGroup, Result, Runtime, Test
 
-from iatidq import dqdownload, dqpackages
 
-from iatidq.models import *
-
-import datetime
 class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.datetime):
             return obj.isoformat()
         return json.JSONEncoder.default(self, obj)
 
+
 def jsonify(*args, **kwargs):
     return current_app.response_class(json.dumps(dict(*args, **kwargs),
             indent=None if request.is_xhr else 2, cls=JSONEncoder),
         mimetype='application/json')
+
 
 def support_jsonp(func):
     """Wraps JSONified output for JSONP requests."""
@@ -51,12 +47,14 @@ def support_jsonp(func):
             return func(*args, **kwargs)
     return decorated_function
 
+
 def nocache(f):
     def new_func(*args, **kwargs):
         resp = make_response(f(*args, **kwargs))
         resp.cache_control.no_cache = True
         return resp
     return update_wrapper(new_func, f)
+
 
 class AggregatedTestResults:
     def make_division(self,i):
@@ -76,6 +74,7 @@ class AggregatedTestResults:
     def create_report(self):
         return {"data" : self.aggregate_data(), "x_axis": self.x_axis()}
 
+
 def test_percentages(data):
     packages = set(map(lambda x: x[2], data))
     d = dict(map(lambda x: ((x[2],x[1]),x[0]), data))
@@ -88,6 +87,7 @@ def test_percentages(data):
         out[p] =  (float(success)/(fail+success)) * 100
     return out
 
+
 def test_tuples(data):
     packages = set(map(lambda x: x[2], data))
     d = dict(map(lambda x: ((x[2],x[1]),x[0]), data))
@@ -97,11 +97,13 @@ def test_tuples(data):
         except: fail = 0
         try: success = d[(p,1)]
         except: success = 0
-        out[p] = (success, fail+success) 
+        out[p] = (success, fail+success)
     return out
+
 
 def aggregated_test_results(data):
     return AggregatedTestResults(10, test_percentages(data)).create_report()
+
 
 def results_by_org(data, packages):
     tests = test_tuples(data)
@@ -113,16 +115,19 @@ def results_by_org(data, packages):
         except KeyError:
             package['passed'] = 0
             package['total'] = 0
-    return package_dict 
+    return package_dict
 
-@app.route("/api/")
+
 def api_index():
-    return jsonify({"packages": url_for("api_packages"), "tests":url_for("tests")})
+    return jsonify({
+        "packages": url_for("api_packages"),
+        "tests": url_for("get_tests")
+    })
 
-@app.route("/api/tests/")
+
 def api_tests():
     session = db.session
-    data = session.query(func.count(Result.id),
+    data = session.query(db.func.count(Result.id),
                 Result.result_data,
                 Result.test_id
             ).group_by(Result.test_id
@@ -134,12 +139,12 @@ def api_tests():
             )
     for test in tests:
         try:
-            test["percentage_passed"] = percentage_passed[test['id']] 
+            test["percentage_passed"] = percentage_passed[test['id']]
         except KeyError:
             test["percentage_passed"] = ""
     return jsonify({"tests": tests})
 
-@app.route("/api/tests/<test_id>")
+
 def api_test(test_id):
     test = db.session.query(Test).filter(Test.id == test_id).first()
     if test == None:
@@ -147,20 +152,20 @@ def api_test(test_id):
     else:
         return jsonify(test.as_dict())
 
-@app.route("/api/packages/active/")
+
 def api_packages_active():
     data = []
     for package in Package.query.filter_by(active=True).all():
         data.append((package.package_name, package.active))
     return jsonify(data)
 
-@app.route("/api/packages/")
+
 @support_jsonp
 def api_packages():
     packages = db.session.query(Package).all()
 
     session = db.session
-    data = session.query(func.count(Result.id),
+    data = session.query(db.func.count(Result.id),
                 Result.result_data,
                 Result.package_id
             ).group_by(Result.package_id
@@ -169,16 +174,7 @@ def api_packages():
     return jsonify(
                    aggregated_test_results= aggregated_test_results(data), results_by_org=results_by_org(data, packages))
 
-@app.route("/api/packages/run/<package_id>/")
-def api_package_run(package_id):
-    try:
-        dqdownload.run(package_id)
-        status = "ok"
-    except Exception, e:
-        status = "failed"
-    return jsonify({"status": status})
 
-@app.route("/api/packages/status/<package_id>/")
 @nocache
 def api_package_status(package_id):
     try:
@@ -187,7 +183,7 @@ def api_package_status(package_id):
     except Exception:
         return jsonify({"status":"failed"})
 
-@app.route('/api/packages/<package_name>')
+
 @support_jsonp
 def api_package(package_name):
     package = db.session.query(Package).filter(Package.package_name == package_name).first()
@@ -196,11 +192,9 @@ def api_package(package_name):
     else:
         return jsonify(package.as_dict())
 
-@app.route('/api/publishers/<publisher_id>')
+
 @support_jsonp
 def api_publisher_data(publisher_id):
-
-    import urllib2
     url = "http://staging.publishwhatyoufund.org/api/publishers/" + publisher_id
 
     req = urllib2.Request(url)
@@ -213,8 +207,7 @@ def api_publisher_data(publisher_id):
     except urllib2.HTTPError, e:
         return jsonify(e)
 
-@app.route('/api/packages/<package_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
-@app.route('/api/packages/<package_name>/tests/<test_id>/activities')
+
 @support_jsonp
 def api_package_activities(package_name, test_id, hierarchy_id=None):
     package = db.session.query(Package).filter(Package.package_name == package_name).first()
@@ -226,19 +219,19 @@ def api_package_activities(package_name, test_id, hierarchy_id=None):
 
     if (hierarchy_id):
         if (hierarchy_id=="None"): hierarchy_id=None
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data
-            ).filter(Package.package_name == package_name, 
-                     Result.runtime_id==latest_runtime.id, 
+            ).filter(Package.package_name == package_name,
+                     Result.runtime_id==latest_runtime.id,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).join(Package
             ).all()
     else:
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data
-            ).filter(Package.package_name == package_name, 
-                     Result.runtime_id==latest_runtime.id, 
+            ).filter(Package.package_name == package_name,
+                     Result.runtime_id==latest_runtime.id,
                      Result.test_id==test_id
             ).join(Package
             ).all()
@@ -247,8 +240,7 @@ def api_package_activities(package_name, test_id, hierarchy_id=None):
     else:
         return jsonify(test_results)
 
-@app.route('/api/publishers/<packagegroup_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
-@app.route('/api/publishers/<packagegroup_name>/tests/<test_id>/activities')
+
 @support_jsonp
 def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
     if (("offset" in request.args) and (int(request.args['offset'])>=0)):
@@ -261,17 +253,17 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
         if (hierarchy_id=="None"): hierarchy_id=None
         # This is crude because it assumes there is only one result for this
         # test per activity-identifier. But that should be the case anyway.
-        test_count = db.session.query(func.count(Result.result_identifier)
-            ).filter(PackageGroup.name == packagegroup_name, 
+        test_count = db.session.query(db.func.count(Result.result_identifier)
+            ).filter(PackageGroup.name == packagegroup_name,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).join(Package
             ).join(PackageGroup
             ).all()
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data,
-                                        func.max(Result.runtime_id)
-            ).filter(PackageGroup.name == packagegroup_name, 
+                                        db.func.max(Result.runtime_id)
+            ).filter(PackageGroup.name == packagegroup_name,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).group_by(Result.result_identifier
@@ -284,16 +276,16 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
     else:
         # This is crude because it assumes there is only one result for this
         # test per activity-identifier. But that should be the case anyway.
-        test_count = db.session.query(func.count(Result.result_identifier)
-            ).filter(PackageGroup.name == packagegroup_name, 
+        test_count = db.session.query(db.func.count(Result.result_identifier)
+            ).filter(PackageGroup.name == packagegroup_name,
                      Result.test_id==test_id
             ).join(Package
             ).join(PackageGroup
             ).all()
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data,
-                                        func.count(Result.runtime_id)
-            ).filter(PackageGroup.name == packagegroup_name, 
+                                        db.func.count(Result.runtime_id)
+            ).filter(PackageGroup.name == packagegroup_name,
                      Result.test_id==test_id
             ).group_by(Result.result_identifier
             ).join(Package
@@ -301,7 +293,7 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
             ).limit(50
             ).offset(offset
             ).all()
-    
+
     test_results = dict(map(lambda x: (x[0],x[1]), test_results))
 
     if ((packagegroup == None) or (test_results==None)):
@@ -309,8 +301,7 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
     else:
         return jsonify({"count": test_count, "results": test_results})
 
-@app.route('/api/organisations/<organisation_code>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
-@app.route('/api/organisations/<organisation_code>/tests/<test_id>/activities')
+
 @support_jsonp
 def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
     if (("offset" in request.args) and (int(request.args['offset'])>=0)):
@@ -322,18 +313,18 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
 
     if (hierarchy_id):
         if (hierarchy_id=="None"): hierarchy_id=None
-        """test_count = db.session.query(func.count(Result.result_identifier)
-            ).filter(Organisation.organisation_code == organisation_code, 
+        """test_count = db.session.query(db.func.count(Result.result_identifier)
+            ).filter(Organisation.organisation_code == organisation_code,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).join(Package
             ).join(OrganisationPackage
             ).join(Organisation
             ).all()"""
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data,
-                                        func.max(Result.runtime_id)
-            ).filter(Organisation.organisation_code == organisation_code, 
+                                        db.func.max(Result.runtime_id)
+            ).filter(Organisation.organisation_code == organisation_code,
                      Result.test_id==test_id,
                      Result.result_hierarchy==hierarchy_id
             ).group_by(Result.result_identifier
@@ -345,17 +336,17 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
             ).offset(offset
             ).all()
     else:
-        """test_count = db.session.query(func.count(Result.result_identifier)
-            ).filter(Organisation.organisation_code == organisation_code, 
+        """test_count = db.session.query(db.func.count(Result.result_identifier)
+            ).filter(Organisation.organisation_code == organisation_code,
                      Result.test_id==test_id
             ).join(Package
             ).join(OrganisationPackage
             ).join(Organisation
             ).all()"""
-        test_results = db.session.query(Result.result_identifier, 
+        test_results = db.session.query(Result.result_identifier,
                                         Result.result_data,
-                                        func.max(Result.runtime_id)
-            ).filter(Organisation.organisation_code == organisation_code, 
+                                        db.func.max(Result.runtime_id)
+            ).filter(Organisation.organisation_code == organisation_code,
                      Result.test_id==test_id
             ).group_by(Result.result_identifier
             ).join(Package
@@ -364,7 +355,7 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
             ).limit(50
             ).offset(offset
             ).all()
-    
+
     test_results = dict(map(lambda x: (x[0],x[1]), test_results))
 
     if ((organisation_code == None) or (test_results==None)):

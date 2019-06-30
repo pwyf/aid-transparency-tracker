@@ -6,12 +6,12 @@
 	  {% block guidance %}
 	  {% endblock %}
     </div>
-    
+
     <form action="" method="post">
-    <h2>Commitment</h2>
+    <h2>Organisational planning and commitments</h2>
     <table class="table" id="indicators">
     <thead>
-	  <th>Information item</th>
+	  <th>Indicator</th>
 	  <th>Responder</th>
 	  <th>Score</th>
 	  <th class="restrict_text_commitment">Evidence</th>
@@ -19,35 +19,47 @@
 	</thead>
 
     <tbody>
-    {% for i, indicator in org_indicators["commitment"].items() %}
-      {{ ind_commitment(surveydata, rows, workflow, indicator, organisation) }}
+    {% for indicator in org_indicators["commitment"].values() %}
+      {{ ind_commitment(surveydata, rows, old_survey_data, workflow, indicator, organisation) }}
     {% endfor %}
     </tbody>
     </table>
+
+    {% for subcategory, indicators in org_indicators["grouped_zero"].items() %}
+    {% if subcategory != 'Organisational planning and commitments' %}
     <hr />
-    <h2>Publication</h2>
+    <h2>{{ subcategory }}</h2>
+    {% endif %}
     <table class="table" id="indicators">
 
     <thead>
-	  <th>Information item</th>
-	  <th>Responder</th>
-	  <th>Published?</th>
-	  <th class="restrict_text">Evidence</th>
-	  <th class="restrict_text">Comments</th>
-	</thead>
+      <th>Indicator</th>
+      <th>Responder</th>
+      <th>Published?</th>
+      <th class="restrict_text">Evidence</th>
+      <th class="restrict_text">Comments</th>
+    </thead>
 
     <tbody>
-    {% for i, indicator in org_indicators["zero"].items() %}
-      {{ ind_zero(surveydata, rows, twentytwelvedata, old_publication_status, publishedstatuses, publishedformats, workflow, indicator, years, year_data, organisation) }}
+    {% for indicator in indicators %}
+      {{ ind_zero(surveydata, rows, old_survey_data, old_publication_status, publishedstatuses, publishedformats, workflow, indicator, years, year_data, organisation) }}
     {% endfor %}
     </tbody>
     </table>
+    {% endfor %}
+
     <!-- text below this line does not vary with workflow -->
-    {% if workflow.Workflow.name != 'finalised' %}
-    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.Workflow.id %}
-    <label for="submit" class="muted"><input id="submit" type="submit" class="btn btn-success" value="Submit response" name="submit" /> Submit data (you cannot edit this survey once it's been submitted)</label>
+    {% if workflow.name != 'finalised' %}
+    <div class="form-group">
+        <input id="save" type="submit" class="btn btn-success" value="Save" name="save" />
+        <span class="text-muted">Save changes</span>
+    </div>
+    {% if organisationsurvey.currentworkflow_id==none or organisationsurvey.currentworkflow_id==workflow.id %}
+    <div class="form-group">
+        <input id="submit" type="submit" class="btn btn-default" value="Submit response" name="submit" />
+        <span class="text-muted">Submit data (you cannot edit this survey once it's been submitted)</span>
+    </div>
     {%endif%}
-    <label for="save" class="muted"><input id="save" type="submit" class="btn" value="Save" name="save" /> Save changes</label>
     {% endif %}
     </form>
     <script type="text/javascript" src="{{url_for('static', filename='js/validateNumeric.js')}}"></script>

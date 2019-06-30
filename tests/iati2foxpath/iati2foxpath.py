@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Uses the IATI Standard schema to create a list of 
+# Uses the IATI Standard schema to create a list of
 # tests for IATI Data Quality.
 
 from lxml import etree
@@ -52,14 +52,14 @@ def getElementAttributes(data, element_name):
             except Exception:
                 attribute_name = attribute.get('ref')
                 attribute_type = attributes[attribute.get('ref')]
-            
+
             try:
                 attribute_codelist = codes[(element_name, attribute_name)]
                 zattributes[attribute_name] = {'type': attribute_type,
                                                'codelist': attribute_codelist }
             except Exception:
                 zattributes[attribute_name] = {'type': attribute_type}
-                
+
     except Exception:
         pass
     return zattributes
@@ -83,7 +83,7 @@ def getSubElements(data):
 def getElements(data):
     zelements = {}
     elements=data.findall(NS+"element")
-    
+
     for element in elements:
         try:
             element_name= element.get('name')

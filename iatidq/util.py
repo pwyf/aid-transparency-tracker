@@ -7,17 +7,18 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import contextlib
-import os
-import urllib2
-import json
-from flask import request, current_app
-import traceback
 import collections
+from contextlib import contextmanager
+import json
+import os
+import traceback
+import urllib2
+import ssl
 
-download_headers = {'User-Agent': "PWYF/Aid Transparency Tracker"}
+from flask import request, current_app
 
-@contextlib.contextmanager
+
+@contextmanager
 def report_error(success, failure):
     try:
         yield
@@ -27,8 +28,6 @@ def report_error(success, failure):
         if failure is not None:
             print failure, e
             #print traceback.print_exc()
-    finally:
-        pass
 
 def ensure_download_dir(directory):
     if not os.path.exists(directory):
@@ -36,8 +35,8 @@ def ensure_download_dir(directory):
             os.makedirs(directory)
 
 def download_file(url, path):
-    with file(path, 'w') as localFile:
-        req = urllib2.Request(url, headers=download_headers)
+    with open(path, 'w') as localFile:
+        req = urllib2.Request(url, headers={'User-Agent': 'PWYF/Aid Transparency Tracker'})
         webFile = urllib2.urlopen(req)
         localFile.write(webFile.read())
         webFile.close()
@@ -66,6 +65,15 @@ def resort_dict_indicator(data):
     new = sorted(data.items(),
                     cmp=resort_fn)
     return collections.OrderedDict(new)
+
+def group_by_subcategory(data):
+    grouped_data = collections.OrderedDict()
+    for x in data.values():
+        subcat = x['indicator']['indicator_subcategory_name']
+        if subcat not in grouped_data:
+            grouped_data[subcat] = []
+        grouped_data[subcat].append(x)
+    return grouped_data
 
 def resort_indicator_tests(data):
     resort_fn = lambda x, y: cmp(x[1]["indicator_order"],

@@ -1,9 +1,9 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}Indicators{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/deletePrompt.js')}}"></script>
     <script >
     $(function() {
@@ -11,9 +11,9 @@
     });
     </script>
 
-	<h1>Indicator {{indicator.description}} 
+	<h1>Indicator {{indicator.description}}
 	  <code>
-		<a href="{{url_for('indicators', indicatorgroup=indicatorgroup.name)}}">
+		<a href="{{url_for('get_indicators', indicatorgroup=indicatorgroup.name)}}">
 		  {{indicatorgroup.name}}
 		</a>/{{indicator.name}}</code>
 	</h1>
@@ -21,30 +21,30 @@
     <div class="pull-right">
 
     <p>
-	  <a class="btn btn-success" 
-		 href="{{url_for('indicators_edit', 
-			   indicatorgroup=indicatorgroup.name, 
+	  <a class="btn btn-success"
+		 href="{{url_for('indicators_edit',
+			   indicatorgroup=indicatorgroup.name,
 			   indicator=indicator.name)}}">
-		<i class="icon-white icon-pencil"></i> 
-		<b>Edit Indicator</b>
+		<i class="glyphicon glyphicon-pencil"></i>
+		<strong>Edit Indicator</strong>
 	  </a>
 
-      <a class="btn btn-danger" 
-		 href="{{url_for('indicators_delete', 
-			   indicatorgroup=indicatorgroup.name, 
-			   indicator=indicator.name)}}" 
-		 data-confirm="Are you sure you want to delete indicator 
+      <a class="btn btn-danger"
+		 href="{{url_for('indicators_delete',
+			   indicatorgroup=indicatorgroup.name,
+			   indicator=indicator.name)}}"
+		 data-confirm="Are you sure you want to delete indicator
 					   {{indicator.name}}? This action cannot be undone.">
-		<i class="icon-white icon-trash"></i> 
-		<b>Delete Indicator</b>
+		<i class="glyphicon glyphicon-trash"></i>
+		<strong>Delete Indicator</strong>
 	  </a>
 	</p>
 
     <p>
 	  <a class="btn btn-success" href="#addTests" role="button"
 		 data-toggle="modal">
-		<i class="icon-white icon-plus"></i> 
-		<b>Add Test to Indicator</b>
+		<i class="glyphicon glyphicon-plus"></i>
+		<strong>Add Test to Indicator</strong>
 	  </a>
 	</p>
     </div>
@@ -61,14 +61,14 @@
 	    <td>{{ it.Test.name }}</td>
         <td>{{ it.Test.description}}</td>
         <td>
-            <a href="{{url_for('indicatortests_delete', 
-					 indicatorgroup=indicatorgroup.name, 
-					 indicator=indicator.name, 
-					 indicatortest=it.IndicatorTest.id)}}" 
-			   data-confirm="Are you sure you want to remove 
-							 Test {{it.Test.name}} from {{indicator.name}}? 
+            <a href="{{url_for('indicatortests_delete',
+					 indicatorgroup=indicatorgroup.name,
+					 indicator=indicator.name,
+					 indicatortest=it.IndicatorTest.id)}}"
+			   data-confirm="Are you sure you want to remove
+							 Test {{it.Test.name}} from {{indicator.name}}?
 							 This action will not delete the test itself.">
-			  <i class="icon-trash"></i>
+			  <i class="glyphicon glyphicon-trash"></i>
 			</a>
         </td>
         </tr>
@@ -77,29 +77,33 @@
     </tbody>
     </table>
 
-<div id="addTests" class="modal hide fade" tabindex="-1" role="dialog" 
-	 aria-labelledby="addTestsModalLabel" aria-hidden="true"> 
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" 
-				aria-hidden="true">×</button>
-        <form method="post" action="">
-        <h3 id="addTestsModalLabel">Add Tests</h3>
-    </div>
+<div id="addTests" class="modal fade" tabindex="-1" role="dialog"
+	 aria-labelledby="addTestsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"
+  				aria-hidden="true">×</button>
+          <h3 id="addTestsModalLabel">Add Tests</h3>
+      </div>
 
-    <div class="modal-body">
-    {% for test in alltests %}
-        <label for="test_{{test.id}}">
-		  <input type="checkbox" value="{{test.id}}" id="test_{{test.id}}" 
-				 name="test" /> {{test.name}}
-		</label>
-    {% endfor %}
-    </div>
+      <form method="post" action="">
+      <div class="modal-body">
+      {% for test in alltests %}
+          <label for="test_{{test.id}}">
+  		  <input type="checkbox" value="{{test.id}}" id="test_{{test.id}}"
+  				 name="test" /> {{test.name}}
+  		</label>
+      {% endfor %}
+      </div>
 
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <input type="submit" value="Add tests to this indicator" 
-			   class="btn btn-success" />
+      <div class="modal-footer">
+          <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+          <input type="submit" value="Add tests to this indicator"
+  			   class="btn btn-success" />
+      </div>
+      </form>
     </div>
-</form>
+  </div>
 </div>
 {% endblock %}

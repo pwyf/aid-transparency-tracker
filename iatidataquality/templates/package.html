@@ -1,7 +1,7 @@
 {% set active_page='packages'%}{% extends "layout.html" %}
 {% block title %}{{package.package_title}} &raquo; Packages{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
@@ -25,9 +25,9 @@
     <tr><td>Organisations</td>
         <td>
         {% for organisation in organisations %}
-        <a href="{{url_for('organisations', 
+        <a href="{{url_for('get_organisations',
 			 organisation_code=organisation.Organisation.organisation_code)}}">
-		  {{organisation.Organisation.organisation_name}}</a> 
+		  {{organisation.Organisation.organisation_name}}</a>
         {% endfor %}
         </td>
     {% endif %}

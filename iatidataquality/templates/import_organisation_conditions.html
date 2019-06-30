@@ -1,20 +1,20 @@
 {% set active_page='import_conditions'%}{% extends "layout.html" %}
 {% block title %}Import organisation conditions{% endblock %}
 {% block content %}
-    
-    <form action="{{url_for('import_organisation_conditions', step=2)}}" 
+
+    <form action="{{url_for('import_organisation_conditions', step=2)}}"
 		  method="post">
     <fieldset>
         <legend>Import conditions</legend>
         <p>
 		  <label for="url">URL:</label>
-		  <input type="text" 
+		  <input class="form-control" type="text"
 				 value="http://raw.github.com/pwyf/IATI-Data-Quality/master/tests/organisation_structures.txt" name="url" />
 		</p>
         <p>
-		  <input type="submit" 
+		  <input type="submit"
 				 value="Import organisation conditions"
-				 class="btn" name="remote" />
+				 class="btn btn-default" name="remote" />
 		</p>
     </fieldset>
     </form>

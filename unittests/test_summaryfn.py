@@ -2,10 +2,6 @@ import os
 import sys
 import csv
 
-current = os.path.dirname(os.path.abspath(__file__))
-parent = os.path.dirname(current)
-sys.path.append(parent)
-
 import iatidataquality
 import iatidq.summary
 
@@ -22,7 +18,7 @@ def teardown_func():
 
 def check_summary(config):
     # FIXME
-    # Don't check summary for now while 
+    # Don't check summary for now while
     # we're changing it a lot...
     return True
     suffix, cls = config

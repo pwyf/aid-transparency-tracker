@@ -14,20 +14,20 @@
 </script>
 
 <form action="" method="post">
-  
+
   <div class="pull-right">
 
 	<p>
-      <input type="submit" name="refresh" class="btn btn-mini" 
-			 value="Refresh list from Registry"/> 
-	  <a class="btn btn-mini" href="{{url_for('registry_deleted')}}">
+      <input type="submit" name="refresh" class="btn btn-default btn-xs"
+			 value="Refresh list from Registry"/>
+	  <a class="btn btn-default btn-xs" href="{{url_for('registry_deleted')}}">
 		Check deleted packages
 	  </a>
 	</p>
 
 	<p>
 	  <a href="{{url_for('packages_edit')}}" class="btn btn-success">
-		<i class="icon-plus icon-white"></i>
+		<i class="glyphicon glyphicon-plus"></i>
 		Add manual package
 	  </a>
 	</p>
@@ -35,7 +35,7 @@
   </div>
 
   <h1>Package management</h1>
-  
+
   <p>Choose active packages</p>
 
   <p>
@@ -43,8 +43,8 @@
 		   value="Activate selected packages" />
   </p>
   <p>
-	<a id="markall" class="btn pull-right btn-mini">Mark all active</a> 
-	<a id="unmarkall" class="btn pull-right btn-mini">Mark all inactive</a>
+	<a id="markall" class="btn btn-default pull-right btn-xs">Mark all active</a>
+	<a id="unmarkall" class="btn btn-default pull-right btn-xs">Mark all inactive</a>
   </p>
 
   <table class="table" id="packages">
@@ -59,10 +59,10 @@
     <tbody>
 	{% for pk in pkgs %}
 
-      <tr{% if pk.deleted %} class="muted"{% endif %}>
+      <tr{% if pk.deleted %} class="text-muted"{% endif %}>
 		<td>
 		  <input type="hidden" name="package" value="{{pk.package_name}}" />
-		  <a href="{{url_for('packages', id=pk.package_name)}}">
+		  <a href="{{url_for('get_packages', id=pk.package_name)}}">
 			{{ pk.package_name }}
 		  </a>
 		</td>
@@ -72,20 +72,20 @@
 		<td>
 		  {% if pk.man_auto=='man' %}
 		  <a href="{{url_for('packages_edit', package_name=pk.package_name)}}">
-			<i class="icon-pencil"></i> Manual
+			<i class="glyphicon glyphicon-pencil"></i> Manual
 		  </a>
 		  {% endif %}
 		</td>
 
 		<td>
-		  <input type="checkbox" {% if pk.active %}checked{% endif %} 
-				 name="active_{{pk.package_name}}"/> 
+		  <input type="checkbox" {% if pk.active %}checked{% endif %}
+				 name="active_{{pk.package_name}}"/>
 		  <span>{% if pk.active %}Active{% endif %}</span>
 		</td>
 
 		<td>
 		  {% if pk.deleted %}
-          <i class="icon icon-remove" title="This package has been deleted"></i>
+          <i class="glyphicon glyphicon-remove" title="This package has been deleted"></i>
 		  <span class="hidden-text">Deleted</span>
           {% endif %}
 		</td>
@@ -95,10 +95,10 @@
 
     </table>
 
-  <input class="btn btn-success" type="submit" 
+  <input class="btn btn-success" type="submit"
 		 value="Activate selected packages" />
-</form> 
-    
+</form>
+
 <script src="{{url_for('static', filename='js/managePackages.js')}}"></script>
 
 {% endblock %}

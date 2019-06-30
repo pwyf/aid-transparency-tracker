@@ -16,10 +16,10 @@ $(".showTests").click(function(e){
 
         re=new RegExp("showindicator-([0-9]*)");
         r=re.exec(this.id);
-        indicator_id = r[1]
+        indicator_id = r[1];
 
         $(this).closest("tr").removeClass("success");
-        $(this).removeClass("visible").html('<i class="icon-chevron-down align-right"></i>');
+        $(this).removeClass("visible").html('<i class="glyphicon glyphicon-chevron-down align-right"></i>');
         $(".group-"+indicator_id).hide();
         $(".th_test").addClass('hidden');
 
@@ -28,9 +28,9 @@ $(".showTests").click(function(e){
 
         re=new RegExp("showindicator-([0-9]*)");
         r=re.exec(this.id);
-        indicator_id = r[1]
+        indicator_id = r[1];
         $(this).closest("tr").addClass("success");
-        $(this).addClass("visible").html('<i class="icon-chevron-up align-right"></i>');
+        $(this).addClass("visible").html('<i class="glyphicon glyphicon-chevron-up align-right"></i>');
         $(".group-"+indicator_id).show().removeClass('hidden');
         $(".th_test").removeClass('hidden');
 }
@@ -51,13 +51,13 @@ $('#aggregation_type').focus(function(){
     var agg_type = $('#aggregation_type_form select').val();
     if (agg_type == 1) {
        // changing to all data
-       var warning_text = "Do you want to switch to show all data? This may include data from several years ago. Please note that the 2014 Index will only consider current data.";
+       var warning_text = "Do you want to switch to show all data? This may include data from several years ago. Please note that the Index will only consider current data.";
     } else {
        // changing to current data
-       var warning_text = "Do you want to switch to show only current data? The 2014 Index will only consider current data - defined as projects that are currently operational, or ended less than 13 months ago.";
+       var warning_text = "Do you want to switch to show only current data? The Index will only consider current data - defined as projects that are currently in implementation, or ended less than 12 months ago, or with a transaction in the last 12 months.";
     }
     if (!$('#dataConfirmModal').length) {
-$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Switch data source</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
+$('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Switch data source</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div></div></div>');
     }
     $('#dataConfirmModal').find('.modal-body').text(warning_text);
     $('#dataConfirmOK').addClass('confirmswitch');

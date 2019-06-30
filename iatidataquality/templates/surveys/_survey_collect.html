@@ -1,6 +1,6 @@
-{% from "surveys/ind_commitment_collect.html" 
+{% from "surveys/ind_commitment_collect.html"
         import ind_commitment as ind_commitment %}
-{% from "surveys/ind_zero_collect.html" 
+{% from "surveys/ind_zero_collect.html"
         import ind_zero as ind_zero %}
 
 {% extends "surveys/survey_edit.html" %}
@@ -8,27 +8,26 @@
 {% set rows = 0 %}
 
 {% block ask %}
-	Please provide data for 
-	  {{org_indicators.zero|count+org_indicators.commitment|count}} 
-	  information items.
+    Please provide data for
+    {{ org_indicators.zero|count + org_indicators.commitment|count }}
+    indicators.
 {% endblock %}
 
 {% block guidance %}
-        <p class="lead">Thank you for agreeing to contribute to the 2016 
-          Aid Transparency Index. The data you are collecting will help to 
+        <p class="lead">Thank you for agreeing to contribute to the {{ ati_year }}
+          UK Aid Review. The data you are collecting will help to
           accurately capture the levels of aid information available.</p>
         <h4>Guidelines</h4>
         <ol>
-            <li>Please answer the publication questions for the <b>largest recipient
-                country</b>, and for <b>current activities</b> only (currently active, 
+            <li>Please answer the publication questions for the <strong>largest recipient
+                country</strong>, and for <strong>current activities</strong> only (currently active,
                 or ended within the last 12 months).</li>
-            <li>2014 survey data has been provided to help you identify where the
-                information might be found. As the largest recipient country or 
-                the information available may have changed, the results may be 
+            <li>2016 survey data has been provided to help you identify where the
+                information might be found. As the largest recipient country or
+                the information available may have changed, the results may be
                 different from last year.</li>
-            <li>Commitment questions have already been filled in by Publish What 
-                You Fund &ndash; so you only need to complete the <b>Publication</b> section.</li>
+            <li>Commitment questions have already been filled in by Publish What
+                You Fund &ndash; so you only need to complete the <strong>Publication</strong> section.</li>
         </ol>
-        <p><b>All data and comments collected will be made public once the Index is published.</b></p>
-        <a class="btn" href="{{ url_for('about_data_collection') }}" target="_blank">Detailed guidelines &raquo;</a>
+        <p><strong>All data and comments collected will be made public once the Index is published.</strong></p>
 {% endblock %}

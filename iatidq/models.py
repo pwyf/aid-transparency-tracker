@@ -7,21 +7,24 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from sqlalchemy import *
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy_utils import get_hybrid_properties
-from iatidq import db
 from datetime import datetime
+
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy_mixins import AllFeaturesMixin, ModelNotFoundError
 
-## TEST RUNTIME-SPECIFIC DATA
+from iatidataquality import db
 
-class PackageStatus(db.Model):
+
+class BaseModel(db.Model, AllFeaturesMixin):
+    __abstract__ = True
+
+
+class PackageStatus(BaseModel):
     __tablename__ = 'packagestatus'
-    id = Column(Integer, primary_key=True)
-    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
-    status = Column(Integer, nullable=False)
-    runtime_datetime = Column(DateTime)
+    id = db.Column(db.Integer, primary_key=True)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
+    status = db.Column(db.Integer, nullable=False)
+    runtime_datetime = db.Column(db.DateTime)
 
     def __init__(self):
         self.runtime_datetime = datetime.utcnow()
@@ -32,10 +35,10 @@ class PackageStatus(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class Runtime(db.Model):
+class Runtime(BaseModel):
     __tablename__ = 'runtime'
-    id = Column(Integer, primary_key=True)
-    runtime_datetime = Column(DateTime, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    runtime_datetime = db.Column(db.DateTime, nullable=False)
 
     def __init__(self):
         self.runtime_datetime = datetime.utcnow()
@@ -45,36 +48,36 @@ class Runtime(db.Model):
 
 ## IATI REGISTRY PACKAGEGROUPS AND PACKAGES
 
-class PackageGroup(db.Model):
+class PackageGroup(BaseModel):
     __tablename__ = 'packagegroup'
-    id = Column(Integer, primary_key=True)
-    man_auto = Column(UnicodeText)
-    name = Column(UnicodeText, nullable=False)
-    ckan_id = Column(UnicodeText)
-    revision_id = Column(UnicodeText)
-    title = Column(UnicodeText)
-    created_date = Column(UnicodeText)
-    state = Column(UnicodeText)
-    publisher_iati_id = Column(UnicodeText)
-    publisher_segmentation = Column(UnicodeText)
-    publisher_type = Column(UnicodeText)
-    publisher_ui = Column(UnicodeText)
-    publisher_organization_type = Column(UnicodeText)
-    publisher_frequency = Column(UnicodeText)
-    publisher_thresholds = Column(UnicodeText)
-    publisher_units = Column(UnicodeText)
-    publisher_contact = Column(UnicodeText)
-    publisher_agencies = Column(UnicodeText)
-    publisher_field_exclusions = Column(UnicodeText)
-    publisher_description = Column(UnicodeText)
-    publisher_record_exclusions = Column(UnicodeText)
-    publisher_timeliness = Column(UnicodeText)
-    license_id = Column(UnicodeText)
-    publisher_country = Column(UnicodeText)
-    publisher_refs = Column(UnicodeText)
-    publisher_constraints = Column(UnicodeText)
-    publisher_data_quality = Column(UnicodeText)
-    __table_args__ = (UniqueConstraint('name',),)
+    id = db.Column(db.Integer, primary_key=True)
+    man_auto = db.Column(db.UnicodeText)
+    name = db.Column(db.UnicodeText, nullable=False)
+    ckan_id = db.Column(db.UnicodeText)
+    revision_id = db.Column(db.UnicodeText)
+    title = db.Column(db.UnicodeText)
+    created_date = db.Column(db.UnicodeText)
+    state = db.Column(db.UnicodeText)
+    publisher_iati_id = db.Column(db.UnicodeText)
+    publisher_segmentation = db.Column(db.UnicodeText)
+    publisher_type = db.Column(db.UnicodeText)
+    publisher_ui = db.Column(db.UnicodeText)
+    publisher_organization_type = db.Column(db.UnicodeText)
+    publisher_frequency = db.Column(db.UnicodeText)
+    publisher_thresholds = db.Column(db.UnicodeText)
+    publisher_units = db.Column(db.UnicodeText)
+    publisher_contact = db.Column(db.UnicodeText)
+    publisher_agencies = db.Column(db.UnicodeText)
+    publisher_field_exclusions = db.Column(db.UnicodeText)
+    publisher_description = db.Column(db.UnicodeText)
+    publisher_record_exclusions = db.Column(db.UnicodeText)
+    publisher_timeliness = db.Column(db.UnicodeText)
+    license_id = db.Column(db.UnicodeText)
+    publisher_country = db.Column(db.UnicodeText)
+    publisher_refs = db.Column(db.UnicodeText)
+    publisher_constraints = db.Column(db.UnicodeText)
+    publisher_data_quality = db.Column(db.UnicodeText)
+    __table_args__ = (db.UniqueConstraint('name',),)
 
     def __init__(self, man_auto=None, name=None):
         if man_auto is not None:
@@ -85,31 +88,31 @@ class PackageGroup(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class Package(db.Model):
+class Package(BaseModel):
     __tablename__ = 'package'
-    id = Column(Integer, primary_key=True)
-    man_auto = Column(UnicodeText)
-    source_url = Column(UnicodeText)
-    package_ckan_id = Column(UnicodeText)
-    package_name = Column(UnicodeText, nullable=False)
-    package_title = Column(UnicodeText)
-    package_license_id = Column(UnicodeText)
-    package_license = Column(UnicodeText)
-    package_metadata_created = Column(UnicodeText)
-    package_metadata_modified = Column(UnicodeText)
-    package_group = Column(Integer, ForeignKey('packagegroup.id'))
-    package_activity_from = Column(UnicodeText)
-    package_activity_to = Column(UnicodeText)
-    package_activity_count = Column(UnicodeText)
-    package_country = Column(UnicodeText)
-    package_archive_file = Column(UnicodeText)   
-    package_verified = Column(UnicodeText)  
-    package_filetype = Column(UnicodeText)  
-    package_revision_id = Column(UnicodeText)    
-    active = Column(Boolean)
-    hash = Column(UnicodeText)
-    deleted = Column(Boolean, default=False)
-    __table_args__ = (UniqueConstraint('package_name'),)
+    id = db.Column(db.Integer, primary_key=True)
+    man_auto = db.Column(db.UnicodeText)
+    source_url = db.Column(db.UnicodeText)
+    package_ckan_id = db.Column(db.UnicodeText)
+    package_name = db.Column(db.UnicodeText, nullable=False)
+    package_title = db.Column(db.UnicodeText)
+    package_license_id = db.Column(db.UnicodeText)
+    package_license = db.Column(db.UnicodeText)
+    package_metadata_created = db.Column(db.UnicodeText)
+    package_metadata_modified = db.Column(db.UnicodeText)
+    package_group_id = db.Column(db.Integer, db.ForeignKey('packagegroup.id', ondelete='CASCADE'))
+    package_activity_from = db.Column(db.UnicodeText)
+    package_activity_to = db.Column(db.UnicodeText)
+    package_activity_count = db.Column(db.UnicodeText)
+    package_country = db.Column(db.UnicodeText)
+    package_archive_file = db.Column(db.UnicodeText)
+    package_verified = db.Column(db.UnicodeText)
+    package_filetype = db.Column(db.UnicodeText)
+    package_revision_id = db.Column(db.UnicodeText)
+    active = db.Column(db.Boolean)
+    hash = db.Column(db.UnicodeText)
+    deleted = db.Column(db.Boolean, default=False)
+    __table_args__ = (db.UniqueConstraint('package_name'),)
 
     def __init__(self, man_auto=None, source_url=None):
         if man_auto is not None:
@@ -126,49 +129,41 @@ class Package(db.Model):
 
 ## RESULTS
 
-class Result(db.Model):
+class Result(BaseModel):
     __tablename__ = 'result'
-    id = Column(Integer, primary_key=True)
-    runtime_id = Column(Integer, ForeignKey('runtime.id'), nullable=False)
-    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'))
-    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
-    result_data = Column(Integer, nullable=False)
-    result_identifier = Column(UnicodeText)
-    result_hierarchy = Column(Integer)
+    id = db.Column(db.Integer, primary_key=True)
+    runtime_id = db.Column(db.Integer, db.ForeignKey('runtime.id', ondelete='CASCADE'), nullable=False)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'))
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'), nullable=False)
+    result_data = db.Column(db.Integer, nullable=False)
+    result_identifier = db.Column(db.UnicodeText)
+    result_hierarchy = db.Column(db.Integer)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-db.Index('result_runpack', 
+db.Index('result_runpack',
          Result.runtime_id, Result.package_id, Result.result_identifier)
 db.Index('result_test',
          Result.test_id)
 
-# there should be a uniqueness constraint, roughly:
-#
-# alter table aggregateresult add unique  (
-#   package_id, test_id, result_hierarchy, aggregateresulttype_id, 
-#   organisation_id
-# );
-#
-# but after normalisation the package/organisation thing should go away
-
-class AggregateResult(db.Model):
+class AggregateResult(BaseModel):
     __tablename__='aggregateresult'
-    id = Column(Integer,primary_key=True)
-    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'))
-    aggregateresulttype_id = Column(Integer, ForeignKey('aggregationtype.id'),
+    id = db.Column(db.Integer,primary_key=True)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=True)
+    package_name = db.Column(db.UnicodeText)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'))
+    aggregateresulttype_id = db.Column(db.Integer, db.ForeignKey('aggregationtype.id', ondelete='CASCADE'),
                                     nullable=False)
-    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
-    result_hierarchy = Column(Integer, nullable=False)
-    results_data = Column(Float)
-    results_num = Column(Integer)
-    __table_args__ = (UniqueConstraint('package_id', 
-                                       'test_id', 
-                                       'result_hierarchy', 
-                                       'aggregateresulttype_id', 
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'), nullable=False)
+    result_hierarchy = db.Column(db.Integer, nullable=False)
+    results_data = db.Column(db.Float)
+    results_num = db.Column(db.Integer)
+    __table_args__ = (db.UniqueConstraint('package_id',
+                                       'test_id',
+                                       'result_hierarchy',
+                                       'aggregateresulttype_id',
                                        'organisation_id'),)
 
     def as_dict(self):
@@ -176,14 +171,14 @@ class AggregateResult(db.Model):
 
 # AggregationType allows for different aggregations
 # Particularly used for looking only at current data
-class AggregationType(db.Model):
+class AggregationType(BaseModel):
     __tablename__ = 'aggregationtype'
-    id = Column(Integer,primary_key=True)
-    name = Column(UnicodeText, nullable=False)
-    description = Column(UnicodeText)
-    test_id = Column(Integer, ForeignKey('test.id'))
-    test_result = Column(Integer, nullable=False)
-    active = Column(Integer)
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.UnicodeText, nullable=False)
+    description = db.Column(db.UnicodeText)
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'))
+    test_result = db.Column(db.Integer, nullable=False)
+    active = db.Column(db.Integer)
 
     def setup(self,
                  name,
@@ -205,16 +200,16 @@ class AggregationType(db.Model):
 
 ## TESTS
 
-class Test(db.Model):
+class Test(BaseModel):
     __tablename__ = 'test'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText, nullable=False)
-    description = Column(UnicodeText, nullable=False)
-    test_group = Column(UnicodeText)
-    file = Column(UnicodeText)
-    line = Column(Integer)
-    test_level = Column(Integer, nullable=False)
-    active = Column(Boolean)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.UnicodeText, nullable=False)
+    description = db.Column(db.UnicodeText, nullable=False)
+    test_group = db.Column(db.UnicodeText)
+    file = db.Column(db.UnicodeText)
+    line = db.Column(db.Integer)
+    test_level = db.Column(db.Integer, nullable=False)
+    active = db.Column(db.Boolean)
 
     def setup(self,
                  name,
@@ -239,12 +234,12 @@ class Test(db.Model):
 
 ## CODELISTS
 
-class Codelist(db.Model):
+class Codelist(BaseModel):
     __tablename__ = 'codelist'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText, nullable=False)
-    description = Column(UnicodeText)
-    source = Column(UnicodeText)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.UnicodeText, nullable=False)
+    description = db.Column(db.UnicodeText)
+    source = db.Column(db.UnicodeText)
 
     def setup(self,
                  name,
@@ -261,13 +256,13 @@ class Codelist(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class CodelistCode(db.Model):
+class CodelistCode(BaseModel):
     __tablename__ = 'codelistcode'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText, nullable=False)
-    code = Column(UnicodeText, nullable=False)
-    codelist_id = Column(Integer, ForeignKey('codelist.id'), nullable=False)
-    source = Column(UnicodeText)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.UnicodeText, nullable=False)
+    code = db.Column(db.UnicodeText, nullable=False)
+    codelist_id = db.Column(db.Integer, db.ForeignKey('codelist.id', ondelete='CASCADE'), nullable=False)
+    source = db.Column(db.UnicodeText)
 
     def setup(self,
                  name,
@@ -288,11 +283,11 @@ class CodelistCode(db.Model):
 
 ## INDICATORS
 
-class IndicatorGroup(db.Model):
+class IndicatorGroup(BaseModel):
     __tablename__ = 'indicatorgroup'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText, nullable=False)
-    description = Column(UnicodeText)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.UnicodeText, nullable=False)
+    description = db.Column(db.UnicodeText)
 
     def setup(self,
                  name,
@@ -309,29 +304,29 @@ class IndicatorGroup(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class Indicator(db.Model):
+class Indicator(BaseModel):
     __tablename__ = 'indicator'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText, nullable=False)
-    description = Column(UnicodeText)
-    longdescription = Column(UnicodeText)
-    indicatorgroup_id = Column(Integer, ForeignKey('indicatorgroup.id'),
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.UnicodeText, nullable=False)
+    description = db.Column(db.UnicodeText)
+    longdescription = db.Column(db.UnicodeText)
+    indicatorgroup_id = db.Column(db.Integer, db.ForeignKey('indicatorgroup.id', ondelete='CASCADE'),
                                nullable=False)
-    indicator_type = Column(UnicodeText)
-    indicator_category_name = Column(UnicodeText)
-    indicator_subcategory_name = Column(UnicodeText)
-    indicator_ordinal = Column(Boolean)
-    indicator_noformat = Column(Boolean)
-    indicator_order = Column(Integer, nullable=False)
-    indicator_weight = Column(Float(precision=4))
-    
-    @hybrid_property
+    indicator_type = db.Column(db.UnicodeText)
+    indicator_category_name = db.Column(db.UnicodeText)
+    indicator_subcategory_name = db.Column(db.UnicodeText)
+    indicator_ordinal = db.Column(db.Boolean)
+    indicator_noformat = db.Column(db.Boolean)
+    indicator_order = db.Column(db.Integer, nullable=False)
+    indicator_weight = db.Column(db.Float(precision=4))
+
+    @property
     def indicator_category_name_text(self):
-        return self.indicator_category_name.title()
-    
-    @hybrid_property
+        return self.indicator_category_name
+
+    @property
     def indicator_subcategory_name_text(self):
-        return self.indicator_subcategory_name.title()
+        return self.indicator_subcategory_name
 
     def setup(self,
                  name,
@@ -365,16 +360,14 @@ class Indicator(db.Model):
 
     def as_dict(self):
        d = {c.name: getattr(self, c.name) for c in self.__table__.columns}
-       d.update({col: getattr(self, col) for col in
-                get_hybrid_properties(Indicator).keys()})
        return d
 
-class IndicatorTest(db.Model):
+class IndicatorTest(BaseModel):
     __tablename__ = 'indicatortest'
-    id = Column(Integer, primary_key=True)
-    indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
-    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
-    __table_args__ = (UniqueConstraint('test_id'), )
+    id = db.Column(db.Integer, primary_key=True)
+    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id', ondelete='CASCADE'), nullable=False)
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'), nullable=False)
+    __table_args__ = (db.UniqueConstraint('test_id'), )
 
     def setup(self,
                  indicator_id,
@@ -388,11 +381,11 @@ class IndicatorTest(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class IndicatorInfoType(db.Model):
+class IndicatorInfoType(BaseModel):
     __tablename__ = 'indicatorinfotype'
-    id = Column(Integer, primary_key=True)
-    indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
-    infotype_id = Column(Integer, ForeignKey('info_type.id'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id', ondelete='CASCADE'), nullable=False)
+    infotype_id = db.Column(db.Integer, db.ForeignKey('info_type.id', ondelete='CASCADE'), nullable=False)
 
     def setup(self,
                  indicator_id,
@@ -406,32 +399,32 @@ class IndicatorInfoType(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class OrganisationCondition(db.Model):
+class OrganisationCondition(BaseModel):
     __tablename__ = 'organisationcondition'
-    id = Column(Integer, primary_key=True)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'),
+    id = db.Column(db.Integer, primary_key=True)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
-    test_id = Column(Integer, ForeignKey('test.id'), nullable=False)
-    operation = Column(Integer) # show (1) or don't show (0) result
-    condition = Column(UnicodeText) # activity level, hierarchy 2
-    condition_value = Column(UnicodeText) # True, 2, etc.
-    description = Column(UnicodeText)
-    file = Column(UnicodeText)
-    line = Column(Integer)
-    active = Column(Boolean)
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'), nullable=False)
+    operation = db.Column(db.Integer) # show (1) or don't show (0) result
+    condition = db.Column(db.UnicodeText) # activity level, hierarchy 2
+    condition_value = db.Column(db.UnicodeText) # True, 2, etc.
+    description = db.Column(db.UnicodeText)
+    file = db.Column(db.UnicodeText)
+    line = db.Column(db.Integer)
+    active = db.Column(db.Boolean)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class OrganisationConditionFeedback(db.Model):
+class OrganisationConditionFeedback(BaseModel):
     __tablename__ ='organisationconditionfeedback'
-    id = Column(Integer, primary_key=True)
-    organisation_id = Column(Integer,
-                             ForeignKey('organisation.id'),
+    id = db.Column(db.Integer, primary_key=True)
+    organisation_id = db.Column(db.Integer,
+                             db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
-    uses = Column(UnicodeText)
-    element = Column(UnicodeText)
-    where = Column(UnicodeText)
+    uses = db.Column(db.UnicodeText)
+    element = db.Column(db.UnicodeText)
+    where = db.Column(db.UnicodeText)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -445,29 +438,31 @@ alter table organisationconditionfeedback add constraint ofbkorg FOREIGN KEY (or
 
 ## ORGANISATIONS; RELATIONS WITH PACKAGES
 
-class Organisation(db.Model):
+class Organisation(BaseModel):
     __tablename__ = 'organisation'
-    id = Column(Integer, primary_key=True)
-    organisation_name = Column(UnicodeText, nullable=False)
-    organisation_code = Column(UnicodeText, nullable=False)
-    organisation_total_spend = Column(Float(precision=2))
-    organisation_total_spend_source = Column(UnicodeText)
-    organisation_currency = Column(UnicodeText)
-    organisation_currency_conversion = Column(Float(precision=4))
-    organisation_currency_conversion_source = Column(UnicodeText)
-    organisation_largest_recipient = Column(UnicodeText)
-    organisation_largest_recipient_source = Column(UnicodeText)
-    frequency = Column(UnicodeText)
-    frequency_comment = Column(UnicodeText)
-    no_independent_reviewer=Column(Boolean)
-    organisation_responded=Column(Integer)
-    __table_args__ = (UniqueConstraint('organisation_name'),
-                      UniqueConstraint('organisation_code'))
+    id = db.Column(db.Integer, primary_key=True)
+    organisation_name = db.Column(db.UnicodeText, nullable=False)
+    registry_slug = db.Column(db.UnicodeText)
+    organisation_code = db.Column(db.UnicodeText, nullable=False)
+    organisation_total_spend = db.Column(db.Float(precision=2))
+    organisation_total_spend_source = db.Column(db.UnicodeText)
+    organisation_currency = db.Column(db.UnicodeText)
+    organisation_currency_conversion = db.Column(db.Float(precision=4))
+    organisation_currency_conversion_source = db.Column(db.UnicodeText)
+    organisation_largest_recipient = db.Column(db.UnicodeText)
+    organisation_largest_recipient_source = db.Column(db.UnicodeText)
+    frequency = db.Column(db.UnicodeText)
+    frequency_comment = db.Column(db.UnicodeText)
+    no_independent_reviewer=db.Column(db.Boolean)
+    organisation_responded=db.Column(db.Integer)
+    __table_args__ = (db.UniqueConstraint('organisation_name'),
+                      db.UniqueConstraint('organisation_code'))
     # organisation_code is also used to communicate
     # with implementation schedules
-    
+
     def setup(self,
                  organisation_name,
+                 registry_slug,
                  organisation_code,
                  organisation_total_spend=None,
                  organisation_total_spend_source=None,
@@ -478,6 +473,7 @@ class Organisation(db.Model):
                  organisation_largest_recipient_source=None,
                  id=None):
         self.organisation_name = organisation_name
+        self.registry_slug = registry_slug,
         self.organisation_code = organisation_code
         self.organisation_total_spend = organisation_total_spend,
         self.organisation_currency = organisation_currency,
@@ -490,14 +486,14 @@ class Organisation(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class OrganisationPackage(db.Model):
+class OrganisationPackage(BaseModel):
     __tablename__ = 'organisationpackage'
-    id = Column(Integer, primary_key=True)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'),
+    id = db.Column(db.Integer, primary_key=True)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
-    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
-    condition = Column(UnicodeText)
-    __table_args__ = (UniqueConstraint('organisation_id', 'package_id', name='_organisation_package_uc'),
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
+    condition = db.Column(db.UnicodeText)
+    __table_args__ = (db.UniqueConstraint('organisation_id', 'package_id', name='_organisation_package_uc'),
                      )
     def setup(self,
                  organisation_id,
@@ -510,15 +506,15 @@ class OrganisationPackage(db.Model):
         if id is not None:
             self.id = id
 
-class OrganisationPackageGroup(db.Model):
+class OrganisationPackageGroup(BaseModel):
     __tablename__ = 'organisationpackagegroup'
-    id = Column(Integer, primary_key=True)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'),
+    id = db.Column(db.Integer, primary_key=True)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
-    packagegroup_id = Column(Integer, ForeignKey('packagegroup.id'),
+    packagegroup_id = db.Column(db.Integer, db.ForeignKey('packagegroup.id', ondelete='CASCADE'),
                              nullable=False)
-    condition = Column(UnicodeText)
-    __table_args__ = (UniqueConstraint('organisation_id', 'packagegroup_id'),)
+    condition = db.Column(db.UnicodeText)
+    __table_args__ = (db.UniqueConstraint('organisation_id', 'packagegroup_id'),)
 
     def setup(self,
                  organisation_id,
@@ -536,21 +532,22 @@ class OrganisationPackageGroup(db.Model):
 # ==> total amount of disbursements in this package
 # e.g. 1 = total disbursements
 
-class InfoResult(db.Model):
+class InfoResult(BaseModel):
     __tablename__ = 'info_result'
-    id = Column(Integer, primary_key=True)
-    runtime_id = Column(Integer, ForeignKey('runtime.id'), nullable=False)
-    package_id = Column(Integer, ForeignKey('package.id'), nullable=False)
-    info_id = Column(Integer, ForeignKey('info_type.id'), nullable=False)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'))
-    result_data = Column(Float)
-    
-class InfoType(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    runtime_id = db.Column(db.Integer, db.ForeignKey('runtime.id', ondelete='CASCADE'), nullable=False)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
+    info_id = db.Column(db.Integer, db.ForeignKey('info_type.id', ondelete='CASCADE'), nullable=False)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'))
+    result_data = db.Column(db.Float)
+    result_num = db.Column(db.Integer)
+
+class InfoType(BaseModel):
     __tablename__ = 'info_type'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText, nullable=False)
-    description = Column(UnicodeText)
-    level = Column(Integer, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.UnicodeText, nullable=False)
+    description = db.Column(db.UnicodeText)
+    level = db.Column(db.Integer, nullable=False)
 
     def setup(self,
                  name,
@@ -565,19 +562,19 @@ class InfoType(db.Model):
 
 ## USERS
 
-class User(db.Model):
+class User(BaseModel):
     __tablename__ = 'dquser'
-    id = Column(Integer, primary_key=True)
-    username = Column(UnicodeText, nullable=False)
-    name = Column(UnicodeText)
-    email_address = Column(UnicodeText)
-    reset_password_key = Column(UnicodeText)
-    pw_hash = db.Column(String(255))
-    organisation = Column(UnicodeText)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.UnicodeText, nullable=False)
+    name = db.Column(db.UnicodeText)
+    email_address = db.Column(db.UnicodeText)
+    reset_password_key = db.Column(db.UnicodeText)
+    pw_hash = db.Column(db.String(255))
+    organisation = db.Column(db.UnicodeText)
     children = db.relationship("UserPermission",
                     cascade="all, delete-orphan",
                     passive_deletes=True)
-    __table_args__ = (UniqueConstraint('username',),)
+    __table_args__ = (db.UniqueConstraint('username',),)
 
     def setup(self,
                  username,
@@ -593,7 +590,7 @@ class User(db.Model):
         self.organisation = organisation
         if id is not None:
             self.id = id
-    
+
     def check_password(self, password):
         return check_password_hash(self.pw_hash, password)
 
@@ -609,13 +606,13 @@ class User(db.Model):
     def is_authenticated(self):
         return True
 
-class UserPermission(db.Model):
+class UserPermission(BaseModel):
     __tablename__ = 'userpermission'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('dquser.id', ondelete='CASCADE'))
-    permission_name = Column(UnicodeText) # survey_donorreview
-    permission_method = Column(UnicodeText) # edit
-    permission_value = Column(UnicodeText) # 1
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('dquser.id', ondelete='CASCADE'))
+    permission_name = db.Column(db.UnicodeText) # survey_donorreview
+    permission_method = db.Column(db.UnicodeText) # edit
+    permission_value = db.Column(db.UnicodeText) # 1
 
     def setup(self,
                  user_id,
@@ -635,16 +632,18 @@ class UserPermission(db.Model):
 
 ## ORGANISATION SURVEYS
 
-class OrganisationSurvey(db.Model):
+class OrganisationSurvey(BaseModel):
     __tablename__ = 'organisationsurvey'
-    id = Column(Integer,primary_key=True)
-    currentworkflow_id = Column(Integer, ForeignKey('workflow.id'), 
+    id = db.Column(db.Integer,primary_key=True)
+    currentworkflow_id = db.Column(db.Integer, db.ForeignKey('workflow.id', ondelete='CASCADE'),
                                 nullable=False)
-    currentworkflow_deadline = Column(DateTime)
-    organisation_id = Column(Integer, ForeignKey('organisation.id'), 
+    currentworkflow_deadline = db.Column(db.DateTime)
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              nullable=False)
-    __table_args__ = (UniqueConstraint('organisation_id',),)
-    
+    __table_args__ = (db.UniqueConstraint('organisation_id',),)
+
+    workflow = db.relationship('Workflow')
+
     def setup(self,
                  organisation_id,
                  currentworkflow_id,
@@ -656,21 +655,21 @@ class OrganisationSurvey(db.Model):
         if id is not None:
             self.id = id
 
-class OrganisationSurveyData(db.Model):
+class OrganisationSurveyData(BaseModel):
     __tablename__ = 'organisationsurveydata'
-    id = Column(Integer,primary_key=True)
-    organisationsurvey_id = Column(Integer, 
-                                   ForeignKey('organisationsurvey.id'),
+    id = db.Column(db.Integer,primary_key=True)
+    organisationsurvey_id = db.Column(db.Integer,
+                                   db.ForeignKey('organisationsurvey.id', ondelete='CASCADE'),
                                    nullable=False)
-    indicator_id = Column(Integer, ForeignKey('indicator.id'), nullable=False)
-    workflow_id = Column(Integer, ForeignKey('workflow.id'), nullable=False)
-    published_status = Column(Integer, ForeignKey('publishedstatus.id'))
-    published_source = Column(UnicodeText)
-    published_comment = Column(UnicodeText)
-    published_format = Column(Integer, ForeignKey('publishedformat.id'))
-    published_accepted = Column(Integer)
-    ordinal_value = Column(Float(precision=2))
-    __table_args__ = (UniqueConstraint('organisationsurvey_id',
+    indicator_id = db.Column(db.Integer, db.ForeignKey('indicator.id', ondelete='CASCADE'), nullable=False)
+    workflow_id = db.Column(db.Integer, db.ForeignKey('workflow.id', ondelete='CASCADE'), nullable=False)
+    published_status_id = db.Column(db.Integer, db.ForeignKey('publishedstatus.id', ondelete='CASCADE'))
+    published_source = db.Column(db.UnicodeText)
+    published_comment = db.Column(db.UnicodeText)
+    published_format_id = db.Column(db.Integer, db.ForeignKey('publishedformat.id', ondelete='CASCADE'))
+    published_accepted = db.Column(db.Integer)
+    ordinal_value = db.Column(db.Float(precision=2))
+    __table_args__ = (db.UniqueConstraint('organisationsurvey_id',
                                        'indicator_id',
                                        'workflow_id'),)
 
@@ -678,20 +677,20 @@ class OrganisationSurveyData(db.Model):
                  organisationsurvey_id,
                  indicator_id,
                  workflow_id=None,
-                 published_status=None,
+                 published_status_id=None,
                  published_source=None,
                  published_comment=None,
-                 published_format=None,
+                 published_format_id=None,
                  published_accepted=None,
                  ordinal_value=None,
                  id=None):
         self.organisationsurvey_id = organisationsurvey_id
         self.workflow_id = workflow_id
         self.indicator_id = indicator_id
-        self.published_status = published_status
+        self.published_status_id = published_status_id
         self.published_source = published_source
         self.published_comment = published_comment
-        self.published_format = published_format
+        self.published_format_id = published_format_id
         self.published_accepted = published_accepted
         self.ordinal_value = ordinal_value
 
@@ -701,14 +700,14 @@ class OrganisationSurveyData(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class PublishedFormat(db.Model):
+class PublishedFormat(BaseModel):
     __tablename__ = 'publishedformat'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
-    title = Column(UnicodeText)
-    format_class = Column(UnicodeText)
-    format_value = Column(Float)
-    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.UnicodeText)
+    title = db.Column(db.UnicodeText)
+    format_class = db.Column(db.UnicodeText)
+    format_value = db.Column(db.Float)
+
     def setup(self,
                  name,
                  title,
@@ -725,14 +724,14 @@ class PublishedFormat(db.Model):
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class PublishedStatus(db.Model):
+class PublishedStatus(BaseModel):
     __tablename__ = 'publishedstatus'
-    id = Column(Integer, primary_key=True)
-    name = Column(UnicodeText)
-    title = Column(UnicodeText)
-    publishedstatus_class = Column(UnicodeText)
-    publishedstatus_value = Column(Float)
-    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.UnicodeText)
+    title = db.Column(db.UnicodeText)
+    publishedstatus_class = db.Column(db.UnicodeText)
+    publishedstatus_value = db.Column(db.Float)
+
     def setup(self,
                  name,
                  title,
@@ -748,27 +747,37 @@ class PublishedStatus(db.Model):
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-    
-class Workflow(db.Model):
+
+class Workflow(BaseModel):
     __tablename__='workflow'
-    id = Column(Integer,primary_key=True)
-    name = Column(UnicodeText)
-    title = Column(UnicodeText)
-    leadsto = Column(Integer, ForeignKey('workflow.id'))
-    workflow_type = Column(Integer, ForeignKey('workflowtype.id'))
-    duration = Column(Integer)
-    
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.UnicodeText)
+    title = db.Column(db.UnicodeText)
+    order = db.Column(db.Integer)
+    workflow_type_id = db.Column(db.Integer, db.ForeignKey('workflowtype.id', ondelete='CASCADE'))
+    duration = db.Column(db.Integer)
+
+    workflow_type = db.relationship('WorkflowType')
+
+    def get_next(self):
+        cls = self.__class__
+        return cls.query.filter(
+            cls.order > self.order
+        ).order_by(
+            cls.order
+        ).first()
+
     def setup(self,
                  name,
                  title,
-                 leadsto,
-                 workflow_type=None,
+                 order,
+                 workflow_type_id=None,
                  duration=None,
                  id=None):
         self.name = name
         self.title = title
-        self.leadsto = leadsto
-        self.workflow_type = workflow_type
+        self.order = order
+        self.workflow_type_id = workflow_type_id
         self.duration = duration
         if id is not None:
             self.id = id
@@ -779,12 +788,12 @@ class Workflow(db.Model):
 # WorkflowType: define what sort of workflow this should be.
 #   Will initially be hardcoded but this should make it easier
 #   to expand and define later.
-class WorkflowType(db.Model):
+class WorkflowType(BaseModel):
     __tablename__='workflowtype'
 
-    id = Column(Integer,primary_key=True)
-    name = Column(UnicodeText)
-    
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.UnicodeText)
+
     def setup(self,
                  name,
                  id=None):
@@ -792,33 +801,20 @@ class WorkflowType(db.Model):
         if id is not None:
             self.id = id
 
-class WorkflowNotification(db.Model):
-    __tablename__='workflownotifications'
-    id = Column(Integer, primary_key=True)
-    workflow_from = Column(Integer, ForeignKey('workflow.id'))
-    workflow_to = Column(Integer, ForeignKey('workflow.id'))
-    workflow_notice = Column(UnicodeText)
 
-
-class PackageTested(db.Model):
-    __tablename__ = 'package_tested'
-    package_id = Column(Integer, ForeignKey('package.id'), primary_key=True)
-    runtime = Column(Integer, ForeignKey('package.id'), nullable=False)
-
-
-class UserActivity(db.Model):
+class UserActivity(BaseModel):
     __tablename__='useractivity'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('dquser.id'))
-    activity_type = Column(Integer)
-    activity_data = Column(UnicodeText)
-    ip_address = Column(UnicodeText)
-    activity_date = Column(DateTime)
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('dquser.id', ondelete='CASCADE'))
+    activity_type = db.Column(db.Integer)
+    activity_data = db.Column(db.UnicodeText)
+    ip_address = db.Column(db.UnicodeText)
+    activity_date = db.Column(db.DateTime)
 
 
-class SamplingFailure(db.Model):
+class SamplingFailure(BaseModel):
     __tablename__ = 'sampling_failure'
-    organisation_id = Column(Integer, ForeignKey('organisation.id'), 
+    organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'),
                              primary_key=True)
-    test_id = Column(Integer, ForeignKey('test.id'),
+    test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'),
                      primary_key=True)

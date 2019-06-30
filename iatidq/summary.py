@@ -7,12 +7,11 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import operator
 import itertools
-import models # damn!
-import pprint
-import sys
-from iatidq import db
+
+from iatidataquality import db
+from . import models
+
 
 COL_INDICATOR = 0
 COL_TEST = 1
@@ -34,7 +33,7 @@ def reform_dict(d):
         HIER = 0
         TEST = 1
         matches_first = lambda ht: ht[HIER] == hier
-        return dict([ (test, d[(hier, test)]) for test in 
+        return dict([ (test, d[(hier, test)]) for test in
                       map(lambda ht: ht[TEST], filter(matches_first, d.keys())) ])
 
     return dict([ (hier, inner(hier))
@@ -42,9 +41,9 @@ def reform_dict(d):
 
 def remove_empty_dicts(d):
     has_keys = lambda kvp: len(kvp[1])
-    return dict([ 
-            (hier, dict(filter(has_keys, test_data.items()))) 
-            for hier, test_data in d.items() 
+    return dict([
+            (hier, dict(filter(has_keys, test_data.items())))
+            for hier, test_data in d.items()
             ])
 
 
@@ -80,7 +79,7 @@ class TestInfo(object):
 
 class IndicatorInfo(object):
     def __init__(self):
-        self.inds = dict([ (i.id, i.as_dict()) for i in 
+        self.inds = dict([ (i.id, i.as_dict()) for i in
                            models.Indicator.query.all() ])
 
     def as_dict(self, indicator_id):
@@ -118,7 +117,7 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
             "results_pct": (results_pct/num_tests),
             "results_num": results_num
             }
-    
+
     return dict([ (i, per_indicator(i)) for i in indicators ])
 
 
@@ -145,11 +144,11 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators,
 
         for hierarchy in filter(relevant, hierarchies):
             test_info = out[hierarchy][t]
-            
+
             results_pct += test_info["results_pct"]
             results_num += test_info["results_num"]
             results_weighted_pct_average_numerator += (
-                test_info["results_pct"] * 
+                test_info["results_pct"] *
                 test_info["results_num"]
                 )
 
@@ -171,7 +170,24 @@ def publisher_simple(all_test_info, out, cdtns, indicator_lookup, indicators,
     return dict([ (t, per_test(t)) for t in tests ])
 
 
-class Summary(object):
+class PublisherSummary(object):
+    def __init__(self, conditions, organisation_id, aggregation_type):
+        self.conditions = conditions
+        self.indicators = IndicatorInfo()
+        self.tests = TestInfo()
+        self.sampling_data = self.get_sampling_data(organisation_id)
+
+        join_clause = ''
+        # join_clause = '''
+        #     JOIN organisationpackage USING (package_id, organisation_id)
+        # '''
+
+        where_clause = '''WHERE aggregateresult.organisation_id = %d AND
+                            aggregateresulttype_id = %d''' % (organisation_id,
+                                                              aggregation_type)
+
+        self._summary = self.calculate(join_clause, where_clause)
+
     def summary(self):
         return self._summary
 
@@ -179,9 +195,9 @@ class Summary(object):
         for h, t in itertools.product(hierarchies, tests):
             yield h, t, summary_f(h, t)
 
-    def summarise_results(self, hierarchies, 
+    def summarise_results(self, hierarchies,
                       tests, indicators,
-                      indicators_tests, indicator_lookup, 
+                      indicators_tests, indicator_lookup,
                       summary_f):
 
         def add_condition(i):
@@ -205,31 +221,9 @@ class Summary(object):
                            indicators_tests, indicator_lookup):
         return out
 
-
-class PublisherSummary(Summary):
-    pass
-
-
-class NewPublisherSummary(PublisherSummary):
-    def __init__(self, conditions, organisation_id, aggregation_type):
-        self.conditions = conditions
-        self.indicators = IndicatorInfo()
-        self.tests = TestInfo()
-        self.sampling_data = self.get_sampling_data(organisation_id)
-
-        join_clause = '''
-            JOIN organisationpackage USING (package_id, organisation_id)
-        '''
-
-        where_clause = '''WHERE aggregateresult.organisation_id = %d AND 
-                            aggregateresulttype_id = %d''' % (organisation_id,
-                                                              aggregation_type)
-
-        self._summary = self.calculate(join_clause, where_clause)
-
     def calculate(self, join_clause, where_clause):
-        # make list of data; hand over to 
-        # summarise_results(hierarchies, tests, indicators, 
+        # make list of data; hand over to
+        # summarise_results(hierarchies, tests, indicators,
         #                   indicators_tests, summary_f):
         conn = db.session.connection()
 
@@ -279,7 +273,7 @@ class NewPublisherSummary(PublisherSummary):
             USING (result_hierarchy, test_id)
             GROUP BY result_hierarchy, test_id;
         '''
-        
+
         stmt = sql % (join_clause, where_clause)
         data = dict([ ((ar[0], ar[1]), ar) for ar in (conn.execute(stmt)) ])
         conn.close()
@@ -294,19 +288,19 @@ class NewPublisherSummary(PublisherSummary):
             sampling_ok = self.sampling_data[test_id]
             indicator_id = indicator_lookup[test_id]
 
-            tmp = self.tests.as_dict(test_id, aresult[2], aresult[3], 
+            tmp = self.tests.as_dict(test_id, aresult[2], aresult[3],
                                      sampling_ok)
             tmp["indicator"] = self.indicators.as_dict(indicator_id)
             return tmp
 
-        return self.summarise_results(hierarchies, tests, indicators, 
+        return self.summarise_results(hierarchies, tests, indicators,
                                       indicators_tests, indicator_lookup,
                                       summary_f)
 
     def get_sampling_data(self, organisation_id):
         sql = '''SELECT test_id FROM sampling_failure
                    WHERE organisation_id = %s;'''
-        failed_test_ids = [ row[0] for row in 
+        failed_test_ids = [ row[0] for row in
                             db.engine.execute(sql, (organisation_id,)) ]
 
         def ok(t):
@@ -315,35 +309,17 @@ class NewPublisherSummary(PublisherSummary):
         return dict([ (t, ok(t)) for t in self.tests.tests.keys() ])
 
 
-class NewPackageSummary(NewPublisherSummary):
-    def __init__(self, conditions, package_id, aggregation_type):
-        self.conditions = conditions
-        self.indicators = IndicatorInfo()
-        self.tests = TestInfo()
-        self.sampling_data = self.get_sampling_data(None)
-
-        join_clause = ""
-        
-        where_clause = '''WHERE package_id = %d AND 
-                            aggregateresulttype_id = %d''' % (package_id,
-                                                              aggregation_type)
-
-        self._summary = self.calculate(join_clause, where_clause)
-
-        
-
-class PublisherIndicatorsSummary(NewPublisherSummary):
+class PublisherIndicatorsSummary(PublisherSummary):
     def add_indicator_info(self, out, indicators,
                            indicators_tests, indicator_lookup):
 
         simple_out = publisher_simple(self.tests, out, self.conditions,
                                       indicator_lookup, self.indicators,
                                       self.sampling_data)
-        return publisher_indicators(self.indicators, indicators, 
+        return publisher_indicators(self.indicators, indicators,
                                     indicators_tests, simple_out)
 
 
-from models import *
 
 
 class OrgConditions(object):
@@ -353,7 +329,7 @@ class OrgConditions(object):
             self._conditions = {}
             return
 
-        cc = OrganisationCondition.query.filter_by(
+        cc = models.OrganisationCondition.query.filter_by(
             organisation_id=organisation_id
             ).all()
         self._conditions = dict(map(lambda x: (
@@ -402,18 +378,9 @@ class PublisherSummaryCreator(SummaryCreator):
         organisation_id = organisation.id
         pconditions = OrgConditions(organisation_id)
 
-        self._summary = NewPublisherSummary(pconditions, 
-                                            organisation_id, 
+        self._summary = PublisherSummary(pconditions,
+                                            organisation_id,
                                             aggregation_type)
-
-
-class PackageSummaryCreator(SummaryCreator):
-    def __init__(self, package_id, latest_runtime, aggregation_type):
-        
-
-        self._summary = NewPackageSummary(OrgConditions(None),
-                                          package_id, 
-                                          aggregation_type).summary()
 
 
 class PublisherIndicatorsSummaryCreator(SummaryCreator):
@@ -421,16 +388,16 @@ class PublisherIndicatorsSummaryCreator(SummaryCreator):
         organisation_id = organisation.id
         pconditions = OrgConditions(organisation_id)
 
-        self._summary = PublisherIndicatorsSummary(pconditions, 
-                                                   organisation_id, 
+        self._summary = PublisherIndicatorsSummary(pconditions,
+                                                   organisation_id,
                                                    aggregation_type)
 
 # The model for the big SQL query at the core of the class:
 
-# select domain, sum(results_data * results_num::float/t1.total) 
+# select domain, sum(results_data * results_num::float/t1.total)
 # from example_summary join
-#      (select domain, sum(results_num) as total 
-#         from example_summary 
-#         group by domain) as t1 
-# using (domain) 
+#      (select domain, sum(results_num) as total
+#         from example_summary
+#         group by domain) as t1
+# using (domain)
 # group by example_summary.domain;

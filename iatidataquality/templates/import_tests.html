@@ -6,12 +6,12 @@
         <legend>Import tests</legend>
         <p>
 		  <label for="url">URL:</label>
-		  <input type="text" 
-				 value="http://raw.github.com/pwyf/IATI-Data-Quality/master/tests/activity_tests.csv" name="url" />
+		  <input class="form-control" type="text"
+				 value="https://raw.githubusercontent.com/pwyf/IATI-Data-Quality/master/tests/tests.csv" name="url" />
 		</p>
 
         <p><label for="level">Level:</label>
-            <select name="level">
+            <select class="form-control" name="level">
                 <option value="2">File</option>
                 <option value="1" selected>Activity</option>
                 <option value="0">Transaction</option>
@@ -20,11 +20,11 @@
 
         <p>
 		  <label for="password">Password:</label>
-		  <input type="passowrd" value="" name="password" />
+		  <input class="form-control" type="password" value="" name="password" />
 		</p>
         <p>
-		  <input type="submit" value="Import tests" 
-				 class="btn" name="remote" />
+		  <input type="submit" value="Import tests"
+				 class="btn btn-default" name="remote" />
 		</p>
     </fieldset>
     </form>

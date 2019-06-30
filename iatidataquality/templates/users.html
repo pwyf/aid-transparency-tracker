@@ -1,9 +1,9 @@
 {% set active_page='users'%}{% extends "layout.html" %}
 {% block title %}Users{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/deletePrompt.js')}}"></script>
     <script >
     $(function() {
@@ -15,11 +15,11 @@
 
     <div class="pull-right">
       <a class="btn btn-success" href="{{url_for('users_edit')}}">
-		<i class="icon-white icon-plus"></i> 
-		<b>New</b>
+		<i class="glyphicon glyphicon-plus"></i>
+		<strong>New</strong>
 	  </a>
     </div>
-	
+
     <table class="table" id="users">
     <thead>
     <th>Username</th><th>Name</th><th>Email</th><th>Organisation</th><th></th>
@@ -35,11 +35,11 @@
     <td>{{user.organisation}}</td>
     <td>
 	  <a href="{{url_for('users_edit', username=user.username)}}">
-		<i class="icon-pencil"></i>
+		<i class="glyphicon glyphicon-pencil"></i>
 	  </a>
-	  <a href="{{url_for('users_delete', username=user.username)}}" 
+	  <a href="{{url_for('users_delete', username=user.username)}}"
 		 data-confirm="Are you sure you want to delete user {{user.username}}?">
-		<i class="icon-trash"></i>
+		<i class="glyphicon glyphicon-trash"></i>
 	  </a>
 	</td>
     </tr>

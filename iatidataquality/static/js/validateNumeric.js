@@ -13,7 +13,7 @@ $("form").submit(function(e){
         e.preventDefault();
         $('#dataConfirmModal').modal('hide');
         if (!$('#commitmentWarning').length) {
-            $('body').append('<div id="commitmentWarning" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Errors in your survey input</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">OK</button></div></div>');
+            $('body').append('<div id="commitmentWarning" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Errors in your survey input</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">OK</button></div></div></div></div>');
         }
         warning_text = "Commitment indicators must have numerical scores. Please correct errors above.";
         $('#commitmentWarning').find('.modal-body').text(warning_text);
@@ -27,7 +27,7 @@ function checkNumeric(n){
 $("#submit").click(function(e){
     e.preventDefault();
     if (!$('#dataConfirmModal').length) {
-        $('form').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Confirm submit survey</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><input type="submit" name="submit" class="btn btn-success" id="dataConfirmOK" value="Submit data" /></div></div>');
+        $('form').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Confirm submit survey</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><input type="submit" name="submit" class="btn btn-success" id="dataConfirmOK" value="Submit data" /></div></div></div></div>');
     }
     warning_text = "Are you sure you want to submit this survey? You cannot make any changes once you have submitted.";
     $('#dataConfirmModal').find('.modal-body').text(warning_text);

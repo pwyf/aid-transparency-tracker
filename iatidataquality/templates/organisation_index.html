@@ -8,76 +8,76 @@
     <div class="container">
         <div class="pull-right">
             {% if admin %}
-            <a class="btn" 
-			   href="{{url_for('organisation_edit', 
+            <a class="btn btn-default"
+			   href="{{url_for('organisation_edit',
 					 organisation_code=organisation.organisation_code)}}">
-			  <i class="icon-wrench"></i> Manage organisation</a>
+			  <i class="glyphicon glyphicon-wrench"></i> Manage organisation</a>
             {% endif %}
 
             {% if allowed_to_view_survey %}
-            <a class="btn" 
-			   href="{{url_for('organisation_survey', 
+            <a class="btn btn-default"
+			   href="{{url_for('organisation_survey',
 					 organisation_code=organisation.organisation_code)}}">
-			  <i class="icon-info-sign"></i> View survey</a>
+			  <i class="glyphicon glyphicon-info-sign"></i> View survey</a>
             {% endif %}
 
             {% if show_researcher_button %}
-            <a class="btn" href="{{url_for('organisation_survey_edit', 
-                                            organisation_code=organisation.organisation_code, 
+            <a class="btn btn-default" href="{{url_for('organisation_survey_edit',
+                                            organisation_code=organisation.organisation_code,
                                             workflow_name='researcher')}}">
-			  <i class="icon-star"></i> Start survey</a>
+			  <i class="glyphicon glyphicon-star"></i> Start survey</a>
             {% endif %}
         </div>
     </div>
     {% endif %}
 
-    <div class="jumbotron jumbotron-index">
+    <div class="pwyf-jumbotron">
     <h1>{{organisation.organisation_name}}</h1>
     <p class="lead">An initial assessment of your organisation's aid
     transparency is available below.</p>
     </div>
-    
+
     <div class="row">
-        <div class="span6 commitment">
-            <h1>Commitment</h1>
-            <p class="foundschedule muted">
-			  <i class="icon icon-refresh"></i>
-			  Checking for implementation schedule...</p>
-            <p class="approach"></p>
-            <p class="elements"></p>
-            <p class="review"></p>
-        </div>
-        <div class="span6 publication">
+        <div class="col-md-12 publication">
             <h1>Publication</h1>
 			{% include "publication_box.html" %}
         </div>
-    </div>    
+    </div>
     <hr />
     <div class="row">
-        <div class="span6">
+        <div class="col-md-8">
         <h3>Timeline</h3>
         <table class="table">
         <tbody>
         <tr>
-            <td><b>October 1</b></td>
+            <td><strong>1 July 2019</strong></td>
 			<td>Data collection begins</td>
-			<td><i class="icon-arrow-left"></i></td>
         </tr>
         <tr class="success">
-            <td><b>End of October</b></td>
-			<td>Initial assessments shared with organisations and independent reviewers</td>
-			<td></td>
+            <td><strong>22 July 2019</strong></td>
+			<td>Initial assessments shared with departments</td>
         </tr>
         <tr>
-            <td><b>January 15</b></td>
-			<td>Data collection ends</td>
-			<td></td>
+            <td><strong>12 August 2019</strong></td>
+            <td>Results of sampling shared with departments</td>
+        </tr>
+        <tr class="success">
+            <td><strong>2 September 2019</strong></td>
+            <td>Results shared with departments</td>
+        </tr>
+        <tr>
+            <td><strong>30 September 2019</strong></td>
+			<td>Final IATI data pull</td>
+        </tr>
+        <tr class="success">
+            <td><strong>20 October 2019</strong></td>
+            <td>Final assessments shared with departments</td>
         </tr>
            </tbody>
         </table>
         </div>
 
-        <div class="span6">
+        <div class="col-md-4">
             <h3>Scoring approach</h3>
             <p>Information published in more accessible formats is
             scored more highly. IATI is the only international
@@ -86,13 +86,5 @@
             transparency.</p>
         </div>
     </div>
-
-	<script type="text/javascript">
-	  // sorry about global
-	  var organisation_code = "{{organisation.organisation_code}}";
-	</script>
-
-    <script src="{{url_for('static', filename='js/organisationIndex.js')}}">
-	</script>
 
 {% endblock %}

@@ -1,9 +1,9 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}Indicators{% endblock %}
 {% block content %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/deletePrompt.js')}}"></script>
     <script >
     $(function() {
@@ -14,13 +14,13 @@
     <div class="pull-right">
 
       <a class="btn btn-success" href="{{url_for('indicators_import')}}">
-		<i class="icon-white icon-plus"></i> 
-		<b>Import</b>
-	  </a> 
+		<i class="glyphicon glyphicon-plus"></i>
+		<strong>Import</strong>
+	  </a>
 
 	  <a class="btn btn-success" href="{{url_for('indicatorgroups_new')}}">
-		<i class="icon-white icon-plus"></i> 
-		<b>New</b>
+		<i class="glyphicon glyphicon-plus"></i>
+		<strong>New</strong>
 	  </a>
 
     </div>
@@ -32,24 +32,24 @@
 	{% for indicatorgroup in indicatorgroups %}
     <tr>
 	<td>
-        <a href="{{url_for('indicators', 
+        <a href="{{url_for('get_indicators',
 				 indicatorgroup=indicatorgroup.name)}}">
 		  {{ indicatorgroup.name }}
 		</a>
     </td>
     <td>{{indicatorgroup.description}}</td>
     <td>
-        <a href="{{url_for('indicatorgroups_edit', 
+        <a href="{{url_for('indicatorgroups_edit',
 				 indicatorgroup=indicatorgroup.name)}}">
-		  <i class="icon-pencil"></i>
-		</a> 
-        <a href="{{url_for('indicatorgroups_delete', 
-				 indicatorgroup=indicatorgroup.name)}}" 
-		   data-confirm="Are you sure you want to delete indicator group 
-						 {{indicatorgroup.name}}? This action will also 
-						 delete all indicators associated with this group, 
+		  <i class="glyphicon glyphicon-pencil"></i>
+		</a>
+        <a href="{{url_for('indicatorgroups_delete',
+				 indicatorgroup=indicatorgroup.name)}}"
+		   data-confirm="Are you sure you want to delete indicator group
+						 {{indicatorgroup.name}}? This action will also
+						 delete all indicators associated with this group,
 						 and cannot be undone.">
-		  <i class="icon-trash"></i></a>
+		  <i class="glyphicon glyphicon-trash"></i></a>
     </td>
     </tr>
 	{% endfor %}

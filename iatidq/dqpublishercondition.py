@@ -7,8 +7,9 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-import models
+from iatidataquality import db
+from . import models
+
 
 def configure_organisation_condition(pc, request):
     with db.session.begin():
@@ -33,7 +34,7 @@ def get_publisher_condition(pc_id):
             models.Organisation.organisation_name.label("organisation_name"),
             models.Organisation.organisation_code.label("organisation_code"),
             models.Organisation.id.label("organisation_id"),
-            models.Test.name.label("test_name"),    
+            models.Test.name.label("test_name"),
             models.Test.description.label("test_description"),
             models.Test.id.label("test_id")
             ).filter_by(id=pc_id
@@ -46,7 +47,7 @@ def get_publisher_conditions():
             models.Organisation.organisation_name.label("organisation_name"),
             models.Organisation.organisation_code.label("organisation_code"),
             models.Organisation.id.label("organisation_id"),
-            models.Test.name.label("test_name"),    
+            models.Test.name.label("test_name"),
             models.Test.description.label("test_description"),
             models.Test.id.label("test_id")
             ).order_by(

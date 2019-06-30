@@ -7,20 +7,20 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-import models
-import unicodecsv
+import re
+import urllib2
 
-import util
+import yaml
 
-import test_level
-import hardcoded_test
+from iatidataquality import db
+from . import hardcoded_test, models, test_level
+
 
 def hardcodedTests():
     hardcoded_tests = [
-        (hardcoded_test.URL_EXISTS, 
+        (hardcoded_test.URL_EXISTS,
          u'url_exists', u"Check that the xml file actually exists."),
-        (hardcoded_test.VALID_XML, 
+        (hardcoded_test.VALID_XML,
          u'valid_xml', u"Check that xml is well structured"),
         (hardcoded_test.SCHEMA_CONFORMANCE,
          u'schema_conformance', u"Check that xml conforms to schema")
@@ -28,18 +28,19 @@ def hardcodedTests():
 
     with db.session.begin():
         for hc_test in hardcoded_tests:
-            if models.Test.query.filter(models.Test.id==hc_test[0]).first():
+            if models.Test.query.filter(models.Test.id == hc_test[0]).first():
                 continue
             test = models.Test()
             test.setup(
-                name = hc_test[1],
-                description = hc_test[2],
-                test_group = None,
-                test_level = 2,
-                active = True,
-                id = hc_test[0]
+                name=hc_test[1],
+                description=hc_test[2],
+                test_group=None,
+                test_level=test_level.FILE,
+                active=True,
+                id=hc_test[0]
                 )
             db.session.add(test)
+
 
 def returnLevel(row, level):
     if (('test_level' in row) and (row['test_level'] != "")):
@@ -47,53 +48,85 @@ def returnLevel(row, level):
     else:
         return level
 
+
 def _importTests(fh, filename, level=1, local=True):
-    data = unicodecsv.DictReader(fh)
-    
-    for row in data:
-        with db.session.begin():
-            test = models.Test.query.filter(
-                models.Test.name==row['test_name']).first()
+    data = yaml.load(fh)
+    # indicators = [i for c in data['components'] for i in c['indicators']]
 
-            if not test:
-                test = models.Test()
+    line_num = 0
+    for indicator in data['indicators']:
+        indicator_name = indicator['name'].lower()
+        indicator_name = re.sub(r'[\(\)\s/-]+', '-', indicator_name)
+        for row in indicator['tests']:
+            line_num += 1
+            with db.session.begin():
+                test = models.Test.query.filter(
+                    models.Test.description == row['name']).first()
 
-            test.setup(
-                name = row['test_name'],
-                description = row['test_description'],
-                test_group = row['indicator_name'],
-                test_level = returnLevel(row, level),
-                active = True
+                if not test:
+                    test = models.Test()
+
+                test.setup(
+                    name=row['expression'],
+                    description=row['name'],
+                    test_group=indicator_name,
+                    test_level=returnLevel(row, level),
+                    active=True
                 )
-            test.file = filename
-            test.line = data.line_num
-            db.session.add(test)
+                test.file = filename
+                test.line = line_num
+                db.session.add(test)
 
-        with db.session.begin():
-            test = models.Test.query.filter(
-                models.Test.name==row['test_name']).first()
+            with db.session.begin():
+                test = models.Test.query.filter(
+                    models.Test.description == row['name']).first()
 
-            if row['indicator_name']:
-                ind = models.Indicator.query.filter(
-                    models.Indicator.name==row['indicator_name']).first()
+                if indicator_name:
+                    ind = models.Indicator.query.filter(
+                        models.Indicator.name == indicator_name).first()
 
-                assert ind
-                assert test
-                assert test.id
+                    assert ind
+                    assert test
+                    assert test.id
 
-                newIT = models.IndicatorTest()
-                newIT.setup(
-                    indicator_id = ind.id,
-                    test_id = test.id
-                    )
-                db.session.add(newIT)
+                    newIT = models.IndicatorTest.query.filter(
+                        models.IndicatorTest.test_id == test.id).first()
+                    if not newIT:
+                        newIT = models.IndicatorTest()
+                    newIT.setup(
+                        indicator_id=ind.id,
+                        test_id=test.id
+                        )
+                    db.session.add(newIT)
 
-    print "Imported successfully"
+    line_num += 1
+    row = data['filter']
+    with db.session.begin():
+        test = models.Test.query.filter(
+            models.Test.description == row['name']).first()
+
+        if not test:
+            test = models.Test()
+
+        test.setup(
+            name=row['expression'],
+            description=row['name'],
+            test_group='',
+            test_level=returnLevel(row, level),
+            active=True
+        )
+        test.file = filename
+        test.line = line_num
+        db.session.add(test)
+
+    print("Imported successfully")
     return True
 
+
 def importTestsFromFile(filename, level):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importTests(fh, filename, level=level, local=True)
+
 
 def importTestsFromUrl(url, level=1):
     fh = urllib2.urlopen(url)

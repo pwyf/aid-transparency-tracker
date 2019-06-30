@@ -1,7 +1,7 @@
 {% set active_page='aggregationtype'%}{% extends "layout.html" %}
 {% block title %}Aggregation Types{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', 
+   <script src="{{url_for('static',
 				          filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
@@ -10,9 +10,9 @@
     </script>
 	<h1>Aggregation Types</h1>
     <div class="pull-right">
-    <a class="btn btn-success" 
+    <a class="btn btn-success"
 	   href="{{url_for('aggregationtypes_edit')}}">
-	  <i class="icon-white icon-plus"></i> <b>New</b></a>
+	  <i class="glyphicon glyphicon-plus"></i> <strong>New</strong></a>
     </div>
     <table class="table" id="at">
     <thead>
@@ -26,14 +26,14 @@
     </td>
     <td>{{aggregationtype.AggregationType.description}}</td>
     <td>
-	  <a href="{{url_for('tests', 
+	  <a href="{{url_for('get_tests',
 	     id=aggregationtype.Test.id)}}">{{aggregationtype.Test.description}}</a>
 	</td>
     <td>{{aggregationtype.AggregationType.test_result}}</td>
     <td>
-	  <a href="{{url_for('aggregationtypes_edit', 
+	  <a href="{{url_for('aggregationtypes_edit',
 			   aggregationtype_id=aggregationtype.AggregationType.id)}}">
-		<i class="icon-pencil"></i></a>
+		<i class="glyphicon glyphicon-pencil"></i></a>
 	</td>
     </tr>
 	{% endfor %}

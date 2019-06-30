@@ -7,25 +7,18 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
 import os
+
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__.split('.')[0])
 app.config.from_pyfile(os.path.join('..', 'config.py'))
-db = SQLAlchemy(app)
+db = SQLAlchemy(app, session_options={"autocommit": True})
 
-import usermanagement
-import api
-import routes
-import publisher_conditions
-import tests
-import organisations
-import organisations_feedback
-import registry
-import packages
-import indicators
-import aggregationtypes
-import surveys
-import users
-import sampling
+
+from . import tmpl_filters
+from . import usermanagement
+from . import routes
+from . import cli

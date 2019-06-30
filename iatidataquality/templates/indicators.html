@@ -1,110 +1,53 @@
 {% set active_page='indicators'%}{% extends "layout.html" %}
 {% block title %}Indicators{% endblock %}
 {% block content %}
+<style>
+code {
+    white-space: normal;
+}
+</style>
 
-<div id="template-target">
-</div>
+<h1>{{indicatorgroup.description}}</h1>
+<h3>Indicators</h3>
 
-{% raw %}
-<script type="text/template" id="template-source">
+<table class="table x-template" id="tests">
+<thead>
+<th width="10%">No</th>
+<th>Category</th>
+<th colspan="2" width="90%">
+  Description
+</th>
+</thead>
+<tbody>
+  {% for i in indicator %}
+    <tr id="indicator-{{ i.id }}">
+        <td>{{i.indicator_order}}</td>
+        <td>{{i.indicator_subcategory_name}}</td>
+        <td>{{i.description}}</td>
 
-    {{#admin}}
-	{{#links}}
-
-    <style>
-    code {
-        white-space: normal;
-    }
-    </style>
-    <div class="pull-right">
-    <p>
-	  <a class="btn btn-success" 
-		 href="{{edit_group}}">
-		<i class="icon-white icon-pencil"></i> <b>Edit Group</b></a>
-
-      <a class="btn btn-danger" 
-		 href="{{delete_group}}" 
-		 data-confirm="Are you sure you want to delete indicator group 
-					   {{indicatorgroup.name}}? This action will also 
-					   delete all indicators associated with this group, 
-					   and cannot be undone.">
-		<i class="icon-white icon-trash"></i> <b>Delete Group</b></a>
-	</p>
-
-    <p>
-	  <a class="btn btn-success" href="{{new_indicator}}">
-		<i class="icon-white icon-plus"></i> <b>New Indicator</b></a>
-	</p>
-
-    <p>
-	  <a class="btn btn-mini" href="{{csv_assoc_tests}}">
-		<i class="icon-download"></i> <b>CSV of associated tests</b></a>
-	</p>
-
-    <p>
-	  <a class="btn btn-mini" href="{{csv_unassoc_tests}}">
-		<i class="icon-download"></i> <b>CSV of unassociated tests</b></a>
-	</p>
-    </div>
-	{{/links}}
-    {{/admin}}
-	<h1>{{indicatorgroup.description}}</h1>
-	<h3>Indicators</h3>
-
-    <table class="table x-template" id="tests">
-    <thead>
-    <th width="10%">No</th>
-	<th>Type</th>
-    <th colspan="2" width="{{#admin}}80%{{/admin}}{{#admin}}90%{{/admin}}">
-	  Description
-	</th>
-    {{#admin}}
-    <th width="10%">Edit</th>
-    {{/admin}}
-    </thead>
-    <tbody>
-	  {{#indicator}}
-        <tr id="indicator-{{id}}">
-        <td>{{indicator_order}}</td>
-		<td>{{indicator_type}}</td>
-	    <td>{{description}}</td>
-          {{#admin}}
-        <td>
-            <a href="{{links.edit}}">
-			  <i class="icon-pencil"></i>
-			</a>
-            <a href="{{links.delete}}" 
-			   data-confirm="Are you sure you want to delete 
-							 Indicator {{name}}?">
-			  <i class="icon-trash"></i>
-			</a>
+        <td><a href="#" class="showTests"
+               id="showindicator-{{ i.id }}">
+            <i class="glyphicon glyphicon-chevron-down align-right"></i></a>
         </td>
-          {{/admin}}
-        <td><a href="#" class="showTests" 
-			   id="showindicator-{{id}}">
-			<i class="icon-chevron-down align-right"></i></a>
-		</td>
-        </tr>
-        <tr class="group-{{id}} hidden">
+    </tr>
+    <tr class="group-{{ i.id }} hidden">
+        <td></td>
+        <td colspan="2">{{ i.longdescription|replace('\n', '<br>')|safe }}</td>
+    </tr>
+        {% for test in i.test %}
+        <tr id="tr{{ test.test_id }}" class="group-{{ i.id }} hidden">
             <td></td>
-            <td colspan="2">{{longdescription}}</td>
+            <td><i>{{ test.description }}</i></td>
+            <td><pre>{{ test.name }}</pre></td>
         </tr>
-		    {{#test}}
-                <tr id="tr{{test_id}}" class="group-{{id}} hidden">
-                <td></td>
-                <td><i>{{ description}}</i></td>
-	            <td><code>{{ name }}</code></td>
-                </tr>
-		    {{/test}}
-        {{/indicator}}
-    </tbody>
-    </table>
-</script>
-{% endraw %}
+        {% endfor %}
+    {% endfor %}
+</tbody>
+</table>
 {% endblock %}
 
 {% block final_scripts %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/organisationPublication.js')}}"></script>
     <script src="{{url_for('static', filename='js/deletePrompt.js')}}"></script>
 {% endblock %}

@@ -7,62 +7,77 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db, app
-
-import urllib2
-import models
+import itertools
 import json
-import ckanclient
+import re
+import urllib2
 
-import util
+import ckanapi
 
-from dqfunctions import packages_from_iati_registry, get_package_organisations
+from iatidataquality import app, db
+from . import models, util
 
-REGISTRY_URL = "http://iatiregistry.org/api/2/search/dataset?fl=id,name,groups,title&offset=%s&limit=1000"
 
-CKANurl = 'http://iatiregistry.org/api'
+REGISTRY_TMPL = 'https://iatiregistry.org/api/3/action/package_search?start={}&rows=1000'
 
-IATIUPDATES_URL = 'http://tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/'
+CKANurl = 'https://iatiregistry.org'
+
 
 class PackageMissing(Exception): pass
 
-def _set_deleted_package(package_ckan_id, set_deleted=False):
-    with db.session.begin():
-        p = models.Package.query.filter(
-            models.Package.package_ckan_id==package_ckan_id
-            ).first()
-        if p:        
-            p.deleted = set_deleted
-            db.session.add(p)
+
+def packages_from_iati_registry():
+    offset = 0
+    while True:
+        registry_url = REGISTRY_TMPL.format(offset)
+        data = urllib2.urlopen(registry_url, timeout=60).read()
+        print(registry_url)
+        data = json.loads(data)['result']
+
+        if len(data['results']) == 0:
+            break
+
+        for pkg in data['results']:
+            yield pkg
+
+        offset += 1000
+
+def _set_deleted_package(package, set_deleted=False):
+    if package.deleted != set_deleted:
+        with db.session.begin():
+            package.deleted = set_deleted
+            db.session.add(package)
         return True
     return False
 
 def check_deleted_packages():
-    data = urllib2.urlopen(IATIUPDATES_URL, timeout=60).read()
-    print IATIUPDATES_URL
-    data = json.loads(data)
+    offset = 0
+    # all packages on IATI currently
+    registry_packages = [x['id'] for x in packages_from_iati_registry()]
+    # all packages in the database currently
+    db_packages = models.Package.query.all()
     count_deleted = 0
-    for pkg in data['data']:
+    for pkg in db_packages:
         # Need to do both in case a package is deleted and then resurrected
-        if pkg['deleted'] == True:
-            print "Should delete package", pkg['name']
-            _set_deleted_package(pkg['id'], True)
-            count_deleted +=1
-        else:            
-            _set_deleted_package(pkg['id'], False)
+        if pkg.package_ckan_id in registry_packages:
+            _set_deleted_package(pkg, False)
+        else:
+            print "Should delete package", pkg.package_name
+            if _set_deleted_package(pkg, True):
+                count_deleted += 1
     return count_deleted
-    
+
 
 # pg is sqlalchemy model; ckangroup is a ckan object
 def copy_pg_attributes(pg, ckangroup):
-    mapping = [
-        ("title", "title"),
-        ("ckan_id", "id"),
-        ("revision_id", "revision_id"),
-        ("created_date", "created"),
-        ("state", "state")
-        ]
-    for attr, key in mapping:
+    mapping = {
+        "title": "title",
+        "ckan_id": "id",
+        "revision_id": "revision_id",
+        "created_date": "created",
+        "state": "state",
+    }
+    for attr, key in mapping.items():
         try:
             setattr(pg, attr, ckangroup[key])
         except Exception, e:
@@ -84,13 +99,13 @@ def copy_pg_misc_attributes(pg, ckangroup, handle_country):
 # pg is sqlalchemy model; ckangroup is a ckan object
 def copy_pg_fields(pg, ckangroup):
     fields = [
-        'publisher_iati_id', 'publisher_segmentation', 'publisher_type', 
-        'publisher_ui', 'publisher_organization_type', 
-        'publisher_frequency', 'publisher_thresholds', 'publisher_units', 
-        'publisher_contact', 'publisher_agencies', 
-        'publisher_field_exclusions', 'publisher_description', 
-        'publisher_record_exclusions', 'publisher_timeliness', 
-        'publisher_country', 'publisher_refs', 
+        'publisher_iati_id', 'publisher_segmentation', 'publisher_type',
+        'publisher_ui', 'publisher_organization_type',
+        'publisher_frequency', 'publisher_thresholds', 'publisher_units',
+        'publisher_contact', 'publisher_agencies',
+        'publisher_field_exclusions', 'publisher_description',
+        'publisher_record_exclusions', 'publisher_timeliness',
+        'publisher_country', 'publisher_refs',
         'publisher_constraints', 'publisher_data_quality'
         ]
 
@@ -107,9 +122,8 @@ def create_package_group(group, handle_country=True):
         pg.man_auto = u"auto"
 
         # Query CKAN
-        import ckanclient
-        registry = ckanclient.CkanClient(base_location=CKANurl)
-        ckangroup = registry.group_entity_get(group)
+        registry = ckanapi.RemoteCKAN(CKANurl)
+        ckangroup = registry.action.group_show(id=group)
 
         copy_pg_attributes(pg, ckangroup)
         copy_pg_misc_attributes(pg, ckangroup, handle_country)
@@ -127,26 +141,30 @@ def setup_package_group(group):
             pg = models.PackageGroup.query.filter_by(name=group).first()
             if pg is None:
                 pg = create_package_group(group, handle_country=False)
-                print "Created new group"
+                print('Created new package group: {}'.format(group))
             return pg
 
 # FIXME: compare this with similar function in download_queue
 
 # pkg is sqlalchemy model; package is ckan object
 def copy_pkg_attributes(pkg, package):
-    components = [ 
-        ("id","package_ckan_id"),
-        ("name","package_name"),
-        ("title","package_title")
-        ]
-    for attr, key in components:
+    components = {
+        "id": "package_ckan_id",
+        "name": "package_name",
+        "title": "package_title",
+    }
+    for attr, key in components.items():
         setattr(pkg, key, package[attr])
-    
-# Don't get revision ID; 
+
+# Don't get revision ID;
 # empty var will trigger download of file elsewhere
-def refresh_package(package, packages_groups):
+def refresh_package(package):
+    if package.get('organization') and package['organization'].get('name'):
+        packagegroup_name = package['organization']['name']
+    else:
+        packagegroup_name = None
+
     # Setup packagegroup outside of package transaction
-    packagegroup_name = packages_groups.get(package["name"]) #odd
     packagegroup = setup_package_group(packagegroup_name)
     if packagegroup:
         packagegroup_id = packagegroup.id
@@ -161,67 +179,54 @@ def refresh_package(package, packages_groups):
             pkg = models.Package()
 
         copy_pkg_attributes(pkg, package)
-        pkg.package_group = packagegroup_id
+        pkg.package_group_id = packagegroup_id
         pkg.man_auto = u'auto'
         db.session.add(pkg)
 
 def refresh_package_by_name(package_name):
-    registry = ckanclient.CkanClient(base_location=CKANurl)
+    registry = ckanapi.RemoteCKAN(CKANurl)
     try:
-        package = registry.package_entity_get(package_name)
-        if package.get('organization') and package['organization'].get('name'):
-            packagegroup_name = package['organization']['name']
-        else:
-            packagegroup_name = None
-        packages_groups = {package['name']: packagegroup_name}
-        refresh_package(package, packages_groups)
-    except ckanclient.CkanApiNotAuthorizedError:
+        package = registry.action.package_show(id=package_name)
+        refresh_package(package)
+    except ckanapi.NotAuthorized:
         print "Error 403 (Not authorised) when retrieving '%s'" % package_name
-    except ckanclient.CkanApiNotFoundError:
+    except ckanapi.NotFound:
         print "Error 404 (Not found) when retrieving '%s'" % package_name
         raise
-        
+
 def _refresh_packages():
     setup_orgs = app.config.get("SETUP_ORGS", [])
     counter = app.config.get("SETUP_PKG_COUNTER", None)
 
-    for package in packages_from_iati_registry(REGISTRY_URL):
+    for package in packages_from_iati_registry():
         package_name = package["name"]
-        if len(setup_orgs) and ('-' in package_name):
-            org, country = package_name.split('-', 1)
-            if org not in setup_orgs:
+        if len(setup_orgs):
+            if [x for x in setup_orgs if package_name.startswith('{}-'.format(x))] == []:
                 continue
-        registry = ckanclient.CkanClient(base_location=CKANurl)
-        pkg = registry.package_entity_get(package_name)
+        registry = ckanapi.RemoteCKAN(CKANurl)
+        while True:
+            try:
+                package = registry.action.package_show(id=package_name)
+                break
+            except ckanapi.CKANAPIError:
+                pass
 
-        #FIXME: could remove the next 5 lines and just
-        # fix refresh_package()
-
-        if pkg.get('organization') and pkg['organization'].get('name'):
-            packagegroup_name = pkg['organization']['name']
-        else:
-            packagegroup_name = None
-        packages_groups = {pkg['name']: packagegroup_name}
-
-        refresh_package(pkg, packages_groups)
+        refresh_package(package)
         if counter is not None:
             counter -= 1
             if counter <= 0:
                 break
 
 def matching_packages(regexp):
-    import re
-    import itertools
     r = re.compile(regexp)
 
-    pkgs = packages_from_iati_registry(REGISTRY_URL)
+    pkgs = packages_from_iati_registry()
     pkgs = itertools.ifilter(lambda i: r.match(i["name"]), pkgs)
     for package in pkgs:
         yield package["name"]
 
 def refresh_packages():
-    with util.report_error(None, "Couldn't open Registry"):
-        return _refresh_packages()
+    return _refresh_packages()
 
 def activate_packages(data, clear_revision_id=None):
     with db.session.begin():

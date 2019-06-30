@@ -9,8 +9,8 @@
     $("table").tablesorter({ sortList: [[1,0], [2,0]] });
     });
     </script>
-    
-    <form action="{{url_for('import_organisation_conditions', step=3)}}" 
+
+    <form action="{{url_for('import_organisation_conditions', step=3)}}"
 		  method="post">
 
     {% if results %}
@@ -29,42 +29,42 @@
             {% set num = (loop.index) %}
             {% for test in result.tests %}
             <tr>
-            <td><input type="checkbox" name="include" 
+            <td><input type="checkbox" name="include"
 					   value="{{num}}{{loop.index}}" checked /></td>
-			
-            <td><input type="hidden" 
-					   name="pc[{{num}}{{loop.index}}][organisation_id]" 
+
+            <td><input type="hidden"
+					   name="pc[{{num}}{{loop.index}}][organisation_id]"
 					   value="{{result.organisation.id}}"/>
-			  <a href="{{url_for('organisations', 
+			  <a href="{{url_for('get_organisations',
 					   organisation_code=result.organisation.organisation_code)}}">
 				{{result.organisation.organisation_name}}</a>
 			</td>
 
-            <td><input type="hidden" name="pc[{{num}}{{loop.index}}][test_id]" 
+            <td><input type="hidden" name="pc[{{num}}{{loop.index}}][test_id]"
 					   value="{{test.id}}"/>
-			  <a href="{{url_for('tests', id=test.id)}}">{{test.name}}</a>
+			  <a href="{{url_for('get_tests', id=test.id)}}">{{test.name}}</a>
 			</td>
 
-            <td><input type="hidden" 
-					   name="pc[{{num}}{{loop.index}}][operation]" 
+            <td><input type="hidden"
+					   name="pc[{{num}}{{loop.index}}][operation]"
 					   value="{{result.operation}}"/>
 			  {{result.operation}}
 			</td>
 
-            <td><input type="hidden" 
-					   name="pc[{{num}}{{loop.index}}][condition]" 
+            <td><input type="hidden"
+					   name="pc[{{num}}{{loop.index}}][condition]"
 					   value="{{result.condition}}"/>
 			  {{result.condition}}
 			</td>
 
-            <td><input type="hidden" 
-					   name="pc[{{num}}{{loop.index}}][condition_value]" 
+            <td><input type="hidden"
+					   name="pc[{{num}}{{loop.index}}][condition_value]"
 					   value="{{result.condition_value}}"/>
 			  {{result.condition_value}}
 			</td>
 
-            <td><input type="hidden" 
-					   name="pc[{{num}}{{loop.index}}][description]" 
+            <td><input type="hidden"
+					   name="pc[{{num}}{{loop.index}}][description]"
 					   value="{{result.description}}"/>
 			  {{result.description}}
 			</td>

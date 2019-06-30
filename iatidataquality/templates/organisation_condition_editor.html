@@ -24,13 +24,13 @@
     <tbody>
     <tr>
         <td>Description</td>
-        <td><input type="text" value="{{pc.description}}" 
+        <td><input class="form-control" type="text" value="{{pc.description}}"
 				   name="description" /></td>
     </tr>
     <tr>
         <td>Organisation ID</td>
         <td>
-        <select name="organisation_id">
+        <select class="form-control" name="organisation_id">
         {% for organisation in organisations %}
         <option value="{{organisation.id}}"
 				{% if pc.organisation_id == organisation.id %}
@@ -43,11 +43,11 @@
     <tr>
         <td>Test ID</td>
         <td>
-        <select name="test_id">
+        <select class="form-control" name="test_id">
         {% for test in tests %}
         <option value="{{test.id}}"
 				{% if pc.test_id == test.id %} selected{% endif %}>
-      {{test.id}}. 
+      {{test.id}}.
 		  {{test.description}}
 		</option>
         {%endfor%}
@@ -56,7 +56,7 @@
     <tr>
         <td>Don't show at hierarchy number</td>
         <td>
-          <select name="condition_value">
+          <select class="form-control" name="condition_value">
             <option value="1" {% if pc.condition_value == "1" %}selected{%endif%}>1</option>
             <option value="2" {% if pc.condition_value == "2" %}selected{%endif%}>2</option>
             <option value="3" {% if pc.condition_value == "3" %}selected{%endif%}>3</option>
@@ -70,7 +70,7 @@
     <input type="hidden" value="" name="file" />
     <input type="hidden" value="0" name="line" />
     <input type="hidden" value="1" name="active" />
-    <input type="submit" value="Update" class="btn" />
+    <input type="submit" value="Update" class="btn btn-default" />
     </td>
     </tr>
     </tbody>

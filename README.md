@@ -1,34 +1,25 @@
-IATI-Data-Quality
-=================
+# Aid Transparency Tracker
 
 IATI Data Quality measurement tool
 
-License: AGPL v3.0
-==================
+## Installation
 
-Copyright (C) 2012
+Clone the relevant branch of this repo:
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-Installation
-============
-
-You need RabbitMQ running for the tests processing to work. It's probably sensible to configure that before starting.
+    git clone --recursive --branch original-version https://github.com/pwyf/aid-transparency-tracker.git
+    cd aid-transparency-tracker
 
 Set up a virtualenv:
 
     virtualenv ./pyenv
+
+Append the following to your virtualenv activate script:
+
+    export FLASK_APP=iatidataquality/__init__.py
+
+E.g. with:
+
+    echo "export FLASK_APP=iatidataquality/__init__.py" >> pyenv/bin/activate
 
 Activate the virtualenv:
 
@@ -42,90 +33,51 @@ Copy and edit the config.py.tmpl:
 
     cp config.py.tmpl config.py
 
-Run the setup script to populate the database (append ` --minimal` if you want to try it out with just a few packages):
+Run the setup script to populate the database:
 
-    python quickstart.py --setup
+    flask setup
 
-This will also create a default username and password; please create a new user and then delete the default one!
+This will prompt you to create a new admin user.
 
-Run the server:
+You can download a new set of IATI data with:
 
-    python manage.py runserver
+    flask download_data
 
-To get the download data and the tests running, run the backends (more details below):
+The relevant data can then be extracted and moved into place with:
 
-    python download_backend.py
-    python tests_backend.py
+    flask import_data
 
-You can also use `supervisor`:
+Tests can then be run on this data using:
 
-1. Rename the provided `supervisord.conf.tmpl` file to `supervisord.conf`, and ensure it matches your paths (especially the path to your virtualenv)
-2. Run `supervisord -n` (Remove `-n` if you don't want to see the output, but it's probably useful for testing)
+    flask test_data
 
+Finally, you can refresh the aggregate data shown in the tracker using:
 
-Choose packages for activation
-==============================
+    flask aggregate_results
 
-From the web interface, log in and from the top-right drop-down menu, click `manage packages`. Select the packages you want to activate and click `activate packages`. Then, you can click the drop-down menu again and choose `run tests`.
+## Running
 
-Remember, you need the download and tests backends working for this, which you could do directly with `./download_backend.py` or through supervisor.
+You can run a development server with:
 
-Survey component 
-================
+    flask run
+
+## Survey component
 
 The survey component currently requires the existence of three files (could be abstracted in future). Move them from the tests directory to the DATA_STORAGE_DIR you specified in config.py. E.g., if you set the directory to be /home/me/data/:
-    
+
     cp tests/2012_2013_organisation_mapping.csv /home/me/data/
     cp tests/2012_indicators.csv /home/me/data/
     cp tests/2012_results.csv /home/me/data/
 
-Reinitialise
-============
+## Reinitialise
 
-    python quickstart.py --drop-db
-    python quickstart.py --init-db
-    python quickstart.py --setup --minimal
-    python quickstart.py --refresh --minimal
-    bin/dqtool --mode=reload-packages --organisation=GB-1
-    python download_once.py
-    python tests_once.py
+You can drop all tables with:
 
-Run unit tests
-==============
+    flask drop_db
 
-FIXME
+Then follow the installation instructions to get reinitialise.
 
-Run aggregation test
-====================
+## Updating sampling poisoning
 
-    bin/dqtool --mode compare-aggregation --organisation GB-1 --filename unittests/artefacts/json/dfid-sample-aggregation-data.json
-
-This runs an aggregation on the packages for organisation GB-1 and compares
-the results with the stashed file in unittests/artefacts/json/dfid-sample-aggregation-data.json; if the results are different, then a new file is output
-
-Reload a package
-================
-
-    bin/dqtool --mode reload-package --name dfid-tz
-
-Adding new tests
-================
-
-    ./quickstart.py --enroll-tests --filename tests/some-new-file.csv
-
-You will then need to associate each test with an indicator:
-
-    bin/dqtool --mode associate-test --test-id 52 --indicator conditions
-
-
-Checking if tests are complete
-==============================
-
-    bin/dqtool --mode check-package-results --all --organisation GB-1
-
-
-Updating sampling poisoning
-===========================
-
-    bin/dqtool --mode update-sampling
+    bin/dqtool update-sampling
 

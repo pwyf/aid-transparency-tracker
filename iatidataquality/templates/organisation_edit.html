@@ -4,15 +4,15 @@
     Edit
   {% else %}
     New
-  {% endif %} 
-  Organisation {{organisation.organisation_name}} &raquo; 
+  {% endif %}
+  Organisation {{organisation.organisation_name}} &raquo;
   Organisations
 {% endblock %}
 {% block content %}
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='js/deletePrompt.js')}}"></script>
 
-    <script src="{{url_for('static', 
+    <script src="{{url_for('static',
 				 filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
@@ -22,13 +22,13 @@
 
     <ul class="breadcrumb">
       <li>
-		<a href="{{url_for('organisations')}}">Organisations</a> 
-		<span class="divider">/</span></li>
+		<a href="{{url_for('get_organisations')}}">Organisations</a>
+		<span class="divider"></span></li>
       <li>
-		<a href="{{url_for('organisations', 
+		<a href="{{url_for('get_organisations',
 				   organisation_code=organisation.organisation_code)}}">
-		  {{organisation.organisation_name}}</a> 
-		<span class="divider">/</span>
+		  {{organisation.organisation_name}}</a>
+		<span class="divider"></span>
 	  </li>
       <li class="active">Manage</li>
     </ul>
@@ -37,18 +37,18 @@
 
     <div class="pull-right">
       <p>
-		<a class="btn btn-success" href="#addPackages" role="button" 
+		<a class="btn btn-success" href="#addPackages" role="button"
 		   data-toggle="modal">
-		  <i class="icon-white icon-plus"></i> 
-		  <b>Add Package to Organisation</b>
+		  <i class="glyphicon glyphicon-plus"></i>
+		  <strong>Add Package to Organisation</strong>
 	    </a>
 	  </p>
 
       <p>
-		<a class="btn btn-success" href="#addPackageGroup" role="button" 
+		<a class="btn btn-success" href="#addPackageGroup" role="button"
 		   data-toggle="modal">
-		  <i class="icon-white icon-plus"></i> 
-		  <b>Add Package Group to Organisation</b>
+		  <i class="glyphicon glyphicon-plus"></i>
+		  <strong>Add Package Group to Organisation</strong>
 	    </a>
 	  </p>
     </div>
@@ -62,20 +62,20 @@
     <tbody>
     <tr>
 	  <td>Organisation name:</td>
-	  <td><input type="text" name="organisation_name" 
+	  <td><input class="form-control" type="text" name="organisation_name"
 				 value="{{ organisation.organisation_name }}"/></td>
     </tr>
     <tr>
       <td>Organisation code:</td>
-	  <td><input type="text" name="organisation_code" 
+	  <td><input class="form-control" type="text" name="organisation_code"
 			   value="{{organisation.organisation_code}}"/></td>
     </tr>
     <tr>
         <td>Organisation responded:</td>
         <td>
-            <select name="organisation_responded">
+            <select class="form-control" name="organisation_responded">
             {% for dr in donorresponses.items() %}
-            <option value="{{dr[0]}}" 
+            <option value="{{dr[0]}}"
 					{% if dr[1].id == organisation.organisation_responded %}
 					selected
 					{% endif %}>
@@ -88,7 +88,7 @@
     <tr>
         <td>No independent reviewer:</td>
         <td><input type="checkbox" name="no_independent_reviewer"
-				   value="1" 
+				   value="1"
 				   {% if organisation.no_independent_reviewer %}
 				   checked
 				   {% endif %}/>
@@ -96,7 +96,7 @@
     </tr>
     <tr>
     <td colspan="2">
-	  <input type="submit" value="Update" class="btn" 
+	  <input type="submit" value="Update" class="btn btn-default"
 			 name="updateorganisation"/>
 	</td>
     </tr>
@@ -104,48 +104,52 @@
     </table>
     </form>
 
-    <div id="addPackages" class="modal hide fade" tabindex="-1" 
-		 role="dialog" aria-labelledby="addPackagesModalLabel" 
-		 aria-hidden="true"> 
-
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" 
-					aria-hidden="true">×</button>
+    <div id="addPackages" class="modal fade" tabindex="-1"
+		 role="dialog" aria-labelledby="addPackagesModalLabel"
+		 aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
             <form method="post" action="">
-            <h3 id="addPackagesModalLabel">Add Packages</h3>
-        </div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+    					aria-hidden="true">×</button>
+                <h3 id="addPackagesModalLabel">Add Packages</h3>
+            </div>
 
-        <div class="modal-body">
-        {% for package in packages %}
-            <label for="package_{{package.id}}">
-			  <input type="checkbox" value="{{package.id}}" 
-					 id="package_{{package.id}}" name="package" /> 
-			  {{package.package_name}}
-			</label>
-        {% endfor %}
+            <div class="modal-body">
+            {% for package in packages %}
+                <label for="package_{{package.id}}">
+    			  <input type="checkbox" value="{{package.id}}"
+    					 id="package_{{package.id}}" name="package" />
+    			  {{package.package_name}}
+    			</label>
+            {% endfor %}
 
-        </div>
-        <div class="modal-footer">
-            Condition (optional, must be unicode): 
-			<input type="text" name="condition" /><br />
-            <button class="btn" data-dismiss="modal" 
-					aria-hidden="true">Close</button>
-            <input type="submit" 
-				   value="Add packages to this organisation" 
-				   name="addpackages" class="btn btn-success" />
-        </div>
-    </form>
+            </div>
+            <div class="modal-footer">
+                Condition (optional, must be unicode):
+    			<input class="form-control" type="text" name="condition" /><br />
+                <button class="btn btn-default" data-dismiss="modal"
+    					aria-hidden="true">Close</button>
+                <input type="submit"
+    				   value="Add packages to this organisation"
+    				   name="addpackages" class="btn btn-success" />
+            </div>
+            </form>
+        </div></div>
     </div>
 
-    <div id="addPackageGroup" class="modal hide fade" tabindex="-1" 
-		 role="dialog" aria-labelledby="addPackageGroupModalLabel" 
-		 aria-hidden="true"> 
+    <div id="addPackageGroup" class="modal fade" tabindex="-1"
+		 role="dialog" aria-labelledby="addPackageGroupModalLabel"
+		 aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
+        <form method="post" action="">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" 
+            <button type="button" class="close" data-dismiss="modal"
 					aria-hidden="true">×</button>
 
-            <form method="post" action="">
               <h3 id="addPackageGroupModalLabel">
 				Add packages based on package group
 			  </h3>
@@ -162,10 +166,10 @@
         <tr>
             <td>Package Group:</td>
             <td>
-            <select name="packagegroup">
+            <select class="form-control" name="packagegroup">
             <option value="" selected></option>
             {% for packagegroup in packagegroups %}
-                <option value="{{packagegroup.id}}"> 
+                <option value="{{packagegroup.id}}">
 				  {{packagegroup.name}}</option>
             {%endfor%}
             </select>
@@ -173,7 +177,7 @@
         </tr>
         <tr>
             <td>Condition (optional, must be unicode): </td>
-			<td><input type="text" name="condition" /></td>
+			<td><input class="form-control" type="text" name="condition" /></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -182,30 +186,31 @@
 				Also apply to new packages in this package group
 			  </label>
 			</td>
+        </tr>
         </tbody>
         </table>
         </div>
         <div class="modal-footer">
-            <button class="btn" data-dismiss="modal" 
+            <button class="btn btn-default" data-dismiss="modal"
 					aria-hidden="true">Close</button>
-            <input type="submit" 
-				   value="Add all packages in this package group to this 
-						  organisation" name="addpackagegroup" 
+            <input type="submit"
+				   value="Add all packages in this package group to this organisation" name="addpackagegroup"
 				   class="btn btn-success" />
         </div>
-    </form>
+        </form>
+        </div></div>
     </div>
 
-    <h1>Organisation's packages</h1>
+    <h1>Organisation's packages ({{ organisationpackages|length }} in total)</h1>
     <table class="table" id="organisationpackage">
     <thead>
     <th>Package ID</th><th>Package Name</th><th>Condition</th>
     </thead>
     <tbody>
     {% for pp in organisationpackages %}
-    <tr{% if pp.Package.deleted %} class="muted"{% endif %}>
+    <tr{% if pp.Package.deleted %} class="text-muted"{% endif %}>
     <td>
-	  <a href="{{url_for('packages', 
+	  <a href="{{url_for('get_packages',
 			   package_name=pp.Package.package_name)}}">
 		{{pp.Package.package_name}}</a>
 	</td>
@@ -213,21 +218,21 @@
     <td>{{pp.OrganisationPackage.condition}}</td>
     <td>
         {% if pp.Package.man_auto=='man' %}
-		<a href="{{url_for('packages_edit', 
+		<a href="{{url_for('packages_edit',
 				 package_name=pp.Package.package_name)}}">
-		  <i class="icon-pencil"></i></a>
+		  <i class="glyphicon glyphicon-pencil"></i></a>
 		{% endif %}
     </td>
     <td>
-        <a href="{{url_for('organisationpackage_delete', 
-				 organisation_code=organisation.organisation_code, 
-				 package_name=pp.Package.package_name, 
-				 organisationpackage_id=pp.OrganisationPackage.id)}}" 
-		   data-confirm="Are you sure you want to remove 
-						 Package {{pp.Package.package_name}} from 
-						 {{organisation.organisation_code}}? 
+        <a href="{{url_for('organisationpackage_delete',
+				 organisation_code=organisation.organisation_code,
+				 package_name=pp.Package.package_name,
+				 organisationpackage_id=pp.OrganisationPackage.id)}}"
+		   data-confirm="Are you sure you want to remove
+						 Package {{pp.Package.package_name}} from
+						 {{organisation.organisation_code}}?
 						 This action will not delete the package itself.">
-		  <i class="icon-trash"></i></a>
+		  <i class="glyphicon glyphicon-trash"></i></a>
     </td>
     </tr>
     {% endfor %}

@@ -4,7 +4,7 @@
     Edit
   {% else %}
     New
-  {% endif %} 
+  {% endif %}
   Indicator Group {{indicatorgroup.name}} &raquo; Indicators
 {% endblock %}
 {% block content %}
@@ -17,17 +17,17 @@
     <tbody>
     <tr>
 	<td>Name:</td>
-	<td><input type="text" name="name" value="{{ indicatorgroup.name }}"/></td>
+	<td><input class="form-control" type="text" name="name" value="{{ indicatorgroup.name }}"/></td>
     </tr>
     <tr>
 	  <td>Description:</td>
 	  <td>
-		<input type="text" name="description" 
+		<input class="form-control" type="text" name="description"
 			   value="{{indicatorgroup.description}}"/>
 	  </td>
     </tr>
     <tr>
-    <td colspan="2"><input type="submit" value="Update" class="btn"/></td>
+    <td colspan="2"><input type="submit" value="Update" class="btn btn-default"/></td>
     </tr>
     </tbody>
     </table>

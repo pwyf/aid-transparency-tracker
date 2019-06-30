@@ -7,11 +7,12 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-import re
-import sys
 from functools import partial
-import models
+import re
+
+from iatidataquality import db
+from . import models
+
 
 mappings = []
 
@@ -37,34 +38,35 @@ def parsePC(organisation_structures):
     def organisation_and_test_level(groups):
         organisation = models.Organisation.query.filter_by(organisation_code=groups[0]).first()
         tests = db.session.query(
-            models.Test.id, 
-            models.Test.name, 
+            models.Test.id,
+            models.Test.name,
             models.Test.description
             ).all()
-        # bit of a hack: we look for tests that include the condition
-        # before their first bracket.
-        like = re.compile(r'[^\(]*?{}'.format(groups[1]))
-        tests = filter(lambda test: like.match(test[1]) is not None, tests)
+        # we look for tests that include the condition
+        # after the 'then'
+        print(groups[1])
+        like = re.compile(r'\sthen .*?{}'.format(groups[1]))
+        tests = filter(lambda test: like.search(test[1]) is not None, tests)
         return organisation, tests
 
     @add_partial('(\S*) does not use (\S*) at activity level')
     def doesnt_use_at_activity_level(activity, groups):
         organisation, tests = organisation_and_test_level(groups)
         if not organisation or not tests: return {}
-        return {'organisation':organisation, 
-                'tests': tests, 
-                'operation': 0, 
-                'condition': 'activity level', 
+        return {'organisation':organisation,
+                'tests': tests,
+                'operation': 0,
+                'condition': 'activity level',
                 'condition_value': 1}
 
     @add_partial('(\S*) does not use (\S*) at activity hierarchy (\d*)')
     def doesnt_use_at_activity_hierarchy(activity, groups):
         organisation, tests = organisation_and_test_level(groups)
         if not organisation or not tests: return {}
-        return {'organisation':organisation, 
-                'tests': tests, 
-                'operation': 0, 
-                'condition': 'activity hierarchy', 
+        return {'organisation':organisation,
+                'tests': tests,
+                'operation': 0,
+                'condition': 'activity hierarchy',
                 'condition_value': groups[2]}
 
     @add('(.*)')

@@ -7,15 +7,16 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-from iatidq import db
-import dqorganisations
-import models
 import unicodecsv
 
+from iatidataquality import db
+from . import dqorganisations, models
+
+
 def importManualPackages(organisation_code, filename, prefix_url):
-    with file(filename) as fh:
+    with open(filename) as fh:
         packages = unicodecsv.DictReader(fh)
-        organisation = dqorganisations.organisations(organisation_code)
+        organisation = models.Organisation.where(organisation_code=organisation_code).first()
         for package in packages:
             data = {
                 'package_name': "manual_" + package['package_name'],
@@ -33,7 +34,7 @@ def importManualPackages(organisation_code, filename, prefix_url):
                     'condition': None
                 })
     print "Success"
-            
+
 
 def addPackage(data):
     checkP = models.Package.query.filter_by(
@@ -90,14 +91,14 @@ def packages_by_packagegroup(packagegroup_id=None):
         models.PackageGroup.id==packagegroup_id
                 ).join(models.PackageGroup
                 ).order_by(models.Package.package_name
-                ).all()    
+                ).all()
 
 def packages_by_packagegroup_name(packagegroup_name=None):
     return models.Package.query.filter(
         models.PackageGroup.name==packagegroup_name
                 ).join(models.PackageGroup
                 ).order_by(models.Package.package_name
-                ).all()    
+                ).all()
 
 def packageGroups():
     return models.PackageGroup.query.order_by(models.PackageGroup.name).all()

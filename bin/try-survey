@@ -12,7 +12,7 @@ base_url = "http://localhost:5000/"
 
 def clear_survey(org_id):
     dqtool_path = os.path.join(curdir, "dqtool")
-    subprocess.call([dqtool_path, 
+    subprocess.call([dqtool_path,
                      "--mode", "clear-survey",
                      "--organisation", org_id])
     # ignore exit code
@@ -34,10 +34,10 @@ class Survey(object):
         self.username = username
         self.password = password
         self.br = mechanize.Browser()
-        self.br.set_handle_robots(False)  
-        self.br.set_handle_refresh(False)  
+        self.br.set_handle_robots(False)
+        self.br.set_handle_refresh(False)
         self.handlers = {}
-        
+
     def run(self):
         clear_survey(self.org_id)
 

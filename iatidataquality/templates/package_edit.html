@@ -4,7 +4,7 @@
     {{package.id}}
   {% else %}
     New
-  {% endif %} 
+  {% endif %}
   &raquo; Package
 {% endblock %}
 {% block content %}
@@ -25,14 +25,14 @@
     <tr>
         <td>Name</td>
         <td>
-          <div class="input-prepend">
+          <div class="input-group">
 
 			{% if not package.id %}
-			<span class="add-on">manual_</span>
+			<span class="input-group-addon">manual_</span>
 			{% endif %}
 
-			<input type="text" id="appendedPrependedInput" 
-				   value="{{package.package_name}}" name="package_name" 
+			<input class="form-control" type="text" id="appendedPrependedInput"
+				   value="{{package.package_name}}" name="package_name"
 				   placeholder="e.g. dfid-tz" />
           </div>
 		</td>
@@ -40,27 +40,27 @@
     <tr>
         <td>Title</td>
         <td>
-		  <input type="text" value="{{package.package_title}}" 
-				 name="package_title" 
+		  <input class="form-control" type="text" value="{{package.package_title}}"
+				 name="package_title"
 				 placeholder="e.g. DFID Activity File Tanzania" />
 		</td>
     </tr>
     <tr>
         <td>URL</td>
         <td>
-		  <input type="text" value="{{package.source_url}}" 
-				 name="source_url" 
+		  <input class="form-control" type="text" value="{{package.source_url}}"
+				 name="source_url"
 				 placeholder="e.g. http://projects.dfid.gov.uk/iati/Country/TZ" />
 		</td>
     </tr>
     <tr>
         <td>Organisation</td>
         <td>
-		  <select name="organisation">
+		  <select class="form-control" name="organisation">
             <option value=""></option>
-			
+
 			{% for organisation in organisations %}
-            <option value="{{organisation.id}}" 
+            <option value="{{organisation.id}}"
 					{% if organisation.id == package_org_id %}
 					selected
 					{% endif %}>
@@ -74,8 +74,8 @@
     <tr>
         <td>Hash (leave blank to make this package update)</td>
         <td>
-		  <input type="text" 
-				 value="{% if package.hash %}{{package.hash}}{% endif %}" 
+		  <input class="form-control" type="text"
+				 value="{% if package.hash %}{{package.hash}}{% endif %}"
 				 name="hash" placeholder="" />
 		</td>
     </tr>
@@ -88,7 +88,7 @@
     </tr>
     <tr>
     <td colspan="2">
-    <input type="submit" value="Update" class="btn" />
+    <input type="submit" value="Update" class="btn btn-default" />
     </td>
     </tr>
     </tbody>

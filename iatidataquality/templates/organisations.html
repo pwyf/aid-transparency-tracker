@@ -1,7 +1,7 @@
 {% set active_page='organisations'%}{% extends "layout.html" %}
 {% block title %}Organisations{% endblock %}
 {% block content %}
-   <script src="{{url_for('static', 
+   <script src="{{url_for('static',
 				filename='jquery.tablesorter.min.js')}}"></script>
     <script >
     $(function() {
@@ -14,8 +14,8 @@
 
     <div class="pull-right">
 	  <a class="btn btn-success" href="{{url_for('organisation_new')}}">
-		<i class="icon-plus icon-white"></i>
-		<b> New organisation</b>
+		<i class="glyphicon glyphicon-plus"></i>
+		<strong> New organisation</strong>
 	  </a>
 	</div>
 
@@ -23,10 +23,10 @@
 
 	<h1>Organisations</h1>
 
-    <p class="lead"> 
+    <p class="lead">
 
 	  The following organisations are included in
-	  the 2016 Aid Transparency Index. Each organisation's page contains an
+	  the {{ ati_year }} UK Aid Review. Each organisation's page contains an
 	  initial assessment of the quality of the aid information they
 	  publish. Publish What You Fund will work with these
 	  organisations and independent reviewers over the course of the
@@ -41,7 +41,7 @@
 	{% for organisation in organisations %}
     <tr>
 	<td>
-	  <a href="{{url_for('organisations', 
+	  <a href="{{url_for('get_organisations',
 			   organisation_code=organisation.organisation_code)}}">
 		{{ organisation.organisation_name }}
 	  </a>

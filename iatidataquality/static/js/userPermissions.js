@@ -1,8 +1,8 @@
 $(document).on("click", "a[data-confirm]", function(ev) {
     var href = $(this).attr('href');
     if (!$('#dataConfirmModal').length) {
-        $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div>');
-    } 
+        $('body').append('<div id="dataConfirmModal" class="modal" role="dialog" aria-labelledby="dataConfirmLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h3 id="dataConfirmLabel">Please Confirm</h3></div><div class="modal-body"></div><div class="modal-footer"><button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button><a class="btn btn-primary" id="dataConfirmOK">OK</a></div></div></div></div>');
+    }
     $('#dataConfirmModal').find('.modal-body').text($(this).attr('data-confirm'));
     $('#dataConfirmOK').attr('data-permission-id', $(this).attr('data-permission-id')).addClass('deletepermission');
     $('#dataConfirmModal').modal({show:true});
@@ -37,7 +37,7 @@ $("#addpermissionbtn").click(function(e){
     $.post('addpermission/', permissiondata, function(resultdata) {
         permission_id=resultdata.id;
         if (!(resultdata['error'])) {
-            $("#permissions tbody").append('<tr id="permission' + permission_id + '"><td><input type="hidden" name="permission" value="' + permission_id + '" /><input type="hidden" name="name' + permission_id + '" value="' + name + '" />' + name + '</td><td><input type="hidden" name="method' + permission_id + '" value="' + method + '" />' + method + '</td><td>' + value + '</td><input type="hidden" name="value' + permission_id + '" value="' + value + '" /></td><td><a href="" data-confirm="Are you sure you want to delete this permission?" data-permission-id="' + permission_id + '"><i class="icon-trash"></i></td></tr>');
+            $("#permissions tbody").append('<tr id="permission' + permission_id + '"><td><input type="hidden" name="permission" value="' + permission_id + '" /><input type="hidden" name="name' + permission_id + '" value="' + name + '" />' + name + '</td><td><input type="hidden" name="method' + permission_id + '" value="' + method + '" />' + method + '</td><td>' + value + '</td><input type="hidden" name="value' + permission_id + '" value="' + value + '" /></td><td><a href="" data-confirm="Are you sure you want to delete this permission?" data-permission-id="' + permission_id + '"><i class="glyphicon glyphicon-trash"></i></td></tr>');
             $("#addPermission").modal('hide');
         } else {
             alert("Couldn't add that permission. Maybe you're not authorised, or maybe that permission already exists?");
@@ -78,7 +78,7 @@ $("#addpermissionSetbtn").click(function(e){
     permissions['csoresearcher'].push({
              'permission_name': 'survey_researcher',
              'permission_method': 'view',
-             'permission_value': value}, 
+             'permission_value': value},
             {'permission_name': 'survey_researcher',
              'permission_method': 'edit',
              'permission_value': value})
@@ -114,7 +114,7 @@ $("#addpermissionSetbtn").click(function(e){
             permission_id=resultdata.id;
             if (!(resultdata['error'])) {
                 successcount++;
-                $("#permissions tbody").append('<tr id="permission' + permission_id + '"><td><input type="hidden" name="permission" value="' + permission_id + '" /><input type="hidden" name="name' + permission_id + '" value="' + permissiondata['permission_name'] + '" />' + permissiondata['permission_name'] + '</td><td><input type="hidden" name="method' + permission_id + '" value="' + permissiondata['permission_method'] + '" />' + permissiondata['permission_method'] + '</td><td>' + permissiondata['permission_value'] + '</td><input type="hidden" name="value' + permission_id + '" value="' + permissiondata['permission_value'] + '" /></td><td><a href="" data-confirm="Are you sure you want to delete this permission?" data-permission-id="' + permission_id + '"><i class="icon-trash"></i></td></tr>');
+                $("#permissions tbody").append('<tr id="permission' + permission_id + '"><td><input type="hidden" name="permission" value="' + permission_id + '" /><input type="hidden" name="name' + permission_id + '" value="' + permissiondata['permission_name'] + '" />' + permissiondata['permission_name'] + '</td><td><input type="hidden" name="method' + permission_id + '" value="' + permissiondata['permission_method'] + '" />' + permissiondata['permission_method'] + '</td><td>' + permissiondata['permission_value'] + '</td><input type="hidden" name="value' + permission_id + '" value="' + permissiondata['permission_value'] + '" /></td><td><a href="" data-confirm="Are you sure you want to delete this permission?" data-permission-id="' + permission_id + '"><i class="glyphicon glyphicon-trash"></i></td></tr>');
             }
         });
     }).promise()

@@ -1,29 +1,29 @@
-{% from "surveys/ind_commitment_finalreview.html" 
+{% from "surveys/ind_commitment_finalreview.html"
         import ind_commitment as ind_commitment %}
-{% from "surveys/ind_zero_finalreview.html" 
+{% from "surveys/ind_zero_finalreview.html"
         import ind_zero as ind_zero %}
 {% extends "surveys/survey_edit.html" %}
 
 {% set rows = surveydata|count %}
-{% if not workflow.Workflow.name in surveydata %}
+{% if not workflow.name in surveydata %}
   {% set rows = rows+2 %}
 {% else %}
   {% set rows = rows+1 %}
 {% endif %}
 
 {% block ask %}
-    Please check the assessment for 
-	  {{org_indicators.zero|count+org_indicators.commitment|count}} 
-	  information items.
+    Please check the assessment for
+	  {{org_indicators.zero|count+org_indicators.commitment|count}}
+	  indicators.
 {% endblock %}
 
 {% block guidance %}
         <h4>Guidelines</h4>
-        <p>The final assessment below has been conducted based on a review 
+        <p>The final assessment below has been conducted based on a review
 		  of the evidence provided by the donor organisation and an independent reviewer.</p>
         <p>As part of the data standardisation process, please check if
-		  the responses below are consistent with our scoring approach 
+		  the responses below are consistent with our scoring approach
 		  and methodology. Any change in response should be a result of
-		  this data standardisation process alone. No new information can 
+		  this data standardisation process alone. No new information can
 		  be provided by the donor or the independent reviewer at this time.</p>
 {% endblock %}

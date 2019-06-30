@@ -1,47 +1,47 @@
-{% from "surveys/ind_commitment_comment.html" 
+{% from "surveys/ind_commitment_comment.html"
         import ind_commitment as ind_commitment %}
-{% from "surveys/ind_zero_comment.html" 
+{% from "surveys/ind_zero_comment.html"
         import ind_zero as ind_zero %}
 {% extends "surveys/survey_edit.html" %}
 
 {% set rows = surveydata|count %}
-{% if not workflow.Workflow.name in surveydata %}
+{% if not workflow.name in surveydata %}
   {% set rows = rows+1 %}
 {% endif %}
-{% if (workflow.Workflow.name != 'cso') and ('cso' in surveydata) and (workflow.Workflow.name != 'donorcomments') %}
+{% if (workflow.name != 'cso') and ('cso' in surveydata) and (workflow.name != 'donorcomments') %}
   {% set rows = rows-1 %}
 {% endif %}
-{% if (workflow.Workflow.name != 'donorcomments') and ('donorcomments' in surveydata) %}
+{% if (workflow.name != 'donorcomments') and ('donorcomments' in surveydata) %}
   {% set rows = rows-1 %}
 {% endif %}
-{% if ('pwyffinal' in surveydata) and (workflow.Workflow.name != 'donorcomments') %}
+{% if ('pwyffinal' in surveydata) and (workflow.name != 'donorcomments') %}
   {% set rows = rows-1 %}
 {% endif %}
 
 {% block ask %}
-	Please check the assessment for 
-	  {{org_indicators.zero|count+org_indicators.commitment|count}} 
-	  information items.
+	Please check the assessment for
+	  {{org_indicators.zero|count+org_indicators.commitment|count}}
+	  indicators.
 {% endblock %}
 
 {% block guidance %}
-		{% if workflow.Workflow.name != 'cso' %}
+		{% if workflow.name != 'cso' %}
 		<!-- text if we're not a CSO reviewer: -->
 
-        <p class="lead">Thank you for taking part in the 2016 Aid 
+        <p class="lead">Thank you for taking part in the {{ ati_year }} Aid
           Transparency Index. This is our final assessment for
           {{organisation.organisation_name}}.</p>
         <h4>Guidelines</h4>
         <ul>
-            <li>Based on feedback from your organisation and an independent reviewer, 
-		       Publish What You Fund has reviewed responses to the survey. 
-		       Some of our responses may have changed based on evidence provided 
+            <li>Based on feedback from your organisation and an independent reviewer,
+		       Publish What You Fund has reviewed responses to the survey.
+		       Some of our responses may have changed based on evidence provided
 		       by you or the independent reviewer.</li>
             <li>Please let us know if you disagree with our assessment, or have
                any further comments.</li>
         </ul>
-        <p><b>All data and comments collected will be made public once the 
-          Index is published.</b></p>
+        <p><strong>All data and comments collected will be made public once the
+          Index is published.</strong></p>
 
         {% if organisation.no_independent_reviewer %}
         <hr />
@@ -52,33 +52,33 @@
         {% endif %}
 		{% else %}
 		<!-- text if we're a CSO reviewer -->
-        <p class="lead">We have conducted an initial assessment of 22 
-        organisations' aid transparency. Thank you for agreeing to review 
+        <p class="lead">We have conducted an initial assessment of 46
+        organisations' aid transparency. Thank you for agreeing to review
         the assessment for {{organisation.organisation_name}}.</p>
         <h4>Notes</h4>
         <ol>
             <li>We are only looking for information which is:</li>
             <ul>
-                <li><b>current</b> (ongoing activities, or ended 
+                <li><strong>current</strong> (ongoing activities, or ended
                 within the last 12 months);</li>
-                <li><b>publicly available</b>.</li>
+                <li><strong>publicly available</strong>.</li>
             </ul>
-            <li>Only information which is <b>Always</b> published will be 
+            <li>Only information which is <strong>Always</strong> published will be
                 scored. The more open and comparable the format, the higher
                 the score (machine-readable scores highest, PDF lowest).</li>
         </ol>
         <h4>Guidelines</h4>
         <ol>
-            <li>Donor organisations were asked to provide feedback on our 
-	            findings. Please let us know if you disagree <b>with Publish 
-                What You Fund's assessment</b> for each information item.</li>
+            <li>Donor organisations were asked to provide feedback on our
+	            findings. Please let us know if you disagree <strong>with Publish
+                What You Fund's assessment</strong> for each indicator.</li>
             <li>In the comments box, please add any feedback or clarifications
-		        that you think will help us better understand your response. 
-		        This is particularly helpful if you think the donor's 
+		        that you think will help us better understand your response.
+		        This is particularly helpful if you think the donor's
 		        response might be unclear or open to interpretation.</li>
         </ol>
-        <p><b>All data and comments collected will be made public once the 
-          Index is published.</b></p>
+        <p><strong>All data and comments collected will be made public once the
+          Index is published.</strong></p>
         {% if organisation.organisation_responded and organisation.organisation_responded >=3 %}
         <hr />
         <div class="alert alert-danger">
@@ -86,6 +86,5 @@
         <p>{{organisation.organisation_name}} {{donorresponses[organisation.organisation_responded].description}}.</p>
         </div>
         {% endif %}
-  		<a href="{{ url_for('about_independent') }}" target="_blank" class="btn">Detailed guidelines &raquo;</a>
 		{% endif %}
 {% endblock %}

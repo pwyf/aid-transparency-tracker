@@ -13,31 +13,31 @@
     <tbody>
     <tr>
         <td>Name</td>
-        <td><input type="text" value="{{test.name}}" name="name" /></td>
+        <td><input class="form-control" type="text" value="{{test.name}}" name="name" /></td>
     </tr>
     <tr>
         <td>Description</td>
-        <td><input type="text" value="{{test.description}}" 
+        <td><input class="form-control" type="text" value="{{test.description}}"
 				   name="description" /></td>
     </tr>
     <tr>
         <td>Level</td>
-        <td><input type="text" value="{{test.test_level}}" 
+        <td><input class="form-control" type="text" value="{{test.test_level}}"
 				   name="test_level" /></td>
     </tr>
     <tr>
         <td>Active</td>
-        <td><input type="checkbox" name="active" 
+        <td><input type="checkbox" name="active"
 				   value="1"{% if (test.active==1) %} checked{%endif%} /></td>
     </tr>
     <tr>
         <td>Group</td>
-        <td><input type="text" value="{{test.test_group}}" 
+        <td><input class="form-control" type="text" value="{{test.test_group}}"
 				   name="test_group" /></td>
     </tr>
     <tr>
     <td colspan="2">
-    <input type="submit" value="Update" class="btn" />
+    <input type="submit" value="Update" class="btn btn-default" />
     </td>
     </tr>
     </tbody>

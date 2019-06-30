@@ -9,6 +9,7 @@
 
 import itertools
 
+
 RESULT_FAILURE = 0
 RESULT_SUCCESS = 1
 
