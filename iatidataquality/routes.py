@@ -96,11 +96,6 @@ def api_packages():
     return api.api_packages()
 
 
-@app.route("/api/packages/run/<package_id>/")
-def api_package_run(package_id):
-    return api.api_package_run(package_id)
-
-
 @app.route("/api/packages/status/<package_id>/")
 def api_package_status(package_id):
     return api.api_package_status(package_id)
