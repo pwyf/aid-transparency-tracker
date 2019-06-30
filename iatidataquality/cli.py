@@ -255,7 +255,7 @@ def aggregate_results(date):
         raise click.Abort()
 
     click.secho('\nWarning! This is a destructive operation!', fg='red')
-    click.echo('\nExisting aggregate data will be deleted from the database.')
+    click.echo('\nAny existing aggregate data will be deleted from the database.')
     click.echo('(If you still have the raw results, you can regenerate ' +
                'old aggregate data by specifying a date.)')
     click.confirm('\nAre you really really sure?', abort=True)
