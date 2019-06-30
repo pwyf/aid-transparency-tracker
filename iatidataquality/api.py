@@ -16,7 +16,7 @@ import urllib2
 from flask import abort, url_for, request, current_app, make_response
 
 from . import app, db
-from iatidq import dqdownload, dqpackages
+from iatidq import dqpackages
 from iatidq.models import Organisation, Package, PackageGroup, Result, Runtime, Test
 
 
@@ -173,15 +173,6 @@ def api_packages():
 
     return jsonify(
                    aggregated_test_results= aggregated_test_results(data), results_by_org=results_by_org(data, packages))
-
-
-def api_package_run(package_id):
-    try:
-        dqdownload.run(package_id)
-        status = "ok"
-    except Exception, e:
-        status = "failed"
-    return jsonify({"status": status})
 
 
 @nocache

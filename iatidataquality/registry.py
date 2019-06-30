@@ -9,17 +9,12 @@
 
 from flask import flash, redirect, url_for
 
-from iatidq import dqdownload, dqregistry
+from iatidq import dqregistry
 
 
 def registry_refresh():
     dqregistry.refresh_packages()
     return "Refreshed"
-
-
-def registry_download():
-    dqdownload.run()
-    return "Downloading"
 
 
 def registry_deleted():
