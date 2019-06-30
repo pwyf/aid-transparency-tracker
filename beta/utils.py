@@ -12,7 +12,7 @@ from iatidq.models import AggregateResult, Test
 def load_tests():
     """Load the index tests."""
     base_path = join(dirname(current_app.root_path),
-                     'index-indicator-definitions', 'test_definitions')
+                     'index_indicator_definitions', 'test_definitions')
     step_definitions = join(base_path, 'step_definitions.py')
     feature_filepaths = glob(join(base_path, '*', '*.feature'))
     tester = BDDTester(step_definitions)
@@ -31,7 +31,7 @@ def load_tests():
 def load_current_data_test():
     """Load the current data test."""
     base_path = join(dirname(current_app.root_path),
-                     'index-indicator-definitions', 'test_definitions')
+                     'index_indicator_definitions', 'test_definitions')
     step_definitions = join(base_path, 'step_definitions.py')
     tester = BDDTester(step_definitions)
     return tester.load_feature(
