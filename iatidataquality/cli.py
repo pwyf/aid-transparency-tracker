@@ -78,8 +78,8 @@ def import_organisations(filename):
 
 @app.cli.command()
 @click.option('--filename', required=True, help='Set filename of users to import')
-def setup_users(filename):
-    """Setup users and permissions."""
+def import_users(filename):
+    """Import users and permissions."""
     dqusers.importUserDataFromFile(filename)
 
 
