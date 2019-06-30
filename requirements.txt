@@ -34,7 +34,6 @@ simplejson==3.16.0
 six==1.10.0
 SQLAlchemy==1.1.14
 sqlalchemy-mixins==0.2.2
-supervisor==3.3.3
 text-unidecode==1.2
 typing==3.6.2
 unicodecsv==0.14.1
