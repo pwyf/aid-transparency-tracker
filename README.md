@@ -1,59 +1,61 @@
 # Aid Transparency Tracker
 
-IATI Data Quality measurement tool
+A data quality measurement tool for international aid data.
 
 ## Installation
 
-Clone the relevant branch of this repo:
+Run the following commands to bootstrap your environment:
 
     git clone --recursive --branch original-version https://github.com/pwyf/aid-transparency-tracker.git
     cd aid-transparency-tracker
 
-Set up a virtualenv:
+Setup a virtual environment, and install dependencies:
 
-    virtualenv ./pyenv
-
-Append the following to your virtualenv activate script:
-
-    export FLASK_APP=iatidataquality/__init__.py
-
-E.g. with:
-
+    virtualenv pyenv
     echo "export FLASK_APP=iatidataquality/__init__.py" >> pyenv/bin/activate
-
-Activate the virtualenv:
-
-    source ./pyenv/bin/activate
-
-Install the requirements:
-
+    source pyenv/bin/activate
     pip install -r requirements.txt
 
-Copy and edit the config.py.tmpl:
+Set the FLASK_APP environment variable:
+
+    export FLASK_APP=iatidataquality/__init__.py
+    echo "export FLASK_APP=iatidataquality/__init__.py" >> pyenv/bin/activate
+
+Copy and edit the config.py.tmpl, including pointing at a postgres database:
 
     cp config.py.tmpl config.py
 
-Run the setup script to populate the database:
+Finally, run the setup script to populate your database:
 
     flask setup
 
 This will prompt you to create a new admin user.
 
-You can download a new set of IATI data with:
+## Fetching and testing data
 
-    flask download_data
+1. You can download a dump of today’s IATI data with:
 
-The relevant data can then be extracted and moved into place with:
+       flask download_data
 
-    flask import_data
+   The data will be downloaded to the __iatikitcache__ directory by default, or you can add an iatikit.ini file to specify a different location.
 
-Tests can then be run on this data using:
+2. The relevant data (according to the organisations in your database) should then be moved into place using:
 
-    flask test_data
+       flask import_data
 
-Finally, you can refresh the aggregate data shown in the tracker using:
+   This will move files into the `IATI_DATA_PATH` specified in your config.py
 
-    flask aggregate_results
+3. Tests are run on this data using:
+
+       flask test_data
+
+   The complete output of this is stored as CSV files in the `IATI_RESULT_PATH` specified in your config.py
+
+4. Finally, you can refresh the aggregate data shown in the tracker using:
+
+       flask aggregate_results
+
+   This step will destructively populate the `aggregateresult` table of your database.
 
 ## Running
 
@@ -71,13 +73,14 @@ The survey component currently requires the existence of three files (could be a
 
 ## Reinitialise
 
-You can drop all tables with:
+If at any time you need to reset, you can drop all tables using:
 
     flask drop_db
 
-Then follow the installation instructions to get reinitialise.
+Then follow the installation instructions to reinitialise.
+
+----
 
 ## Updating sampling poisoning
 
     bin/dqtool update-sampling
-
