@@ -1,0 +1,3 @@
+[submodule "index-indicator-definitions"]
+	path = index-indicator-definitions
+	url = https://github.com/pwyf/index-indicator-definitions.git
