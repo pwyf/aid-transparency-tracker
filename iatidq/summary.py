@@ -177,9 +177,10 @@ class PublisherSummary(object):
         self.tests = TestInfo()
         self.sampling_data = self.get_sampling_data(organisation_id)
 
-        join_clause = '''
-            JOIN organisationpackage USING (package_id, organisation_id)
-        '''
+        join_clause = ''
+        # join_clause = '''
+        #     JOIN organisationpackage USING (package_id, organisation_id)
+        # '''
 
         where_clause = '''WHERE aggregateresult.organisation_id = %d AND
                             aggregateresulttype_id = %d''' % (organisation_id,

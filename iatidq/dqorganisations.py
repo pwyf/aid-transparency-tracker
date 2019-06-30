@@ -111,9 +111,6 @@ def downloadOrganisationFrequency():
 
 
 def _updateOrganisationFrequency(fh):
-    # FIXME: relative import to work around circular dependency
-    from . import dqpackages
-
     def get_frequency():
         rows = unicodecsv.DictReader(fh)
 
@@ -132,7 +129,8 @@ def _updateOrganisationFrequency(fh):
             yield row["Publisher Registry Id"], frequency, comment
 
     for packagegroup, frequency, comment in get_frequency():
-        organisations = dqpackages.packageGroupOrganisations(packagegroup)
+        organisations = (
+            models.Organisation.where(registry_slug=packagegroup).all())
         if not organisations:
             continue
         for organisation in organisations:
@@ -190,6 +188,7 @@ def addOrganisation(data):
         newP = models.Organisation()
         newP.setup(
             organisation_name=data["organisation_name"],
+            registry_slug=data["packagegroup_name"],
             organisation_code=data["organisation_code"],
             organisation_total_spend=0,
             organisation_currency_conversion=1,

@@ -151,7 +151,8 @@ db.Index('result_test',
 class AggregateResult(BaseModel):
     __tablename__='aggregateresult'
     id = db.Column(db.Integer,primary_key=True)
-    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=False)
+    package_id = db.Column(db.Integer, db.ForeignKey('package.id', ondelete='CASCADE'), nullable=True)
+    package_name = db.Column(db.UnicodeText)
     organisation_id = db.Column(db.Integer, db.ForeignKey('organisation.id', ondelete='CASCADE'))
     aggregateresulttype_id = db.Column(db.Integer, db.ForeignKey('aggregationtype.id', ondelete='CASCADE'),
                                     nullable=False)
@@ -441,6 +442,7 @@ class Organisation(BaseModel):
     __tablename__ = 'organisation'
     id = db.Column(db.Integer, primary_key=True)
     organisation_name = db.Column(db.UnicodeText, nullable=False)
+    registry_slug = db.Column(db.UnicodeText)
     organisation_code = db.Column(db.UnicodeText, nullable=False)
     organisation_total_spend = db.Column(db.Float(precision=2))
     organisation_total_spend_source = db.Column(db.UnicodeText)
@@ -460,6 +462,7 @@ class Organisation(BaseModel):
 
     def setup(self,
                  organisation_name,
+                 registry_slug,
                  organisation_code,
                  organisation_total_spend=None,
                  organisation_total_spend_source=None,
@@ -470,6 +473,7 @@ class Organisation(BaseModel):
                  organisation_largest_recipient_source=None,
                  id=None):
         self.organisation_name = organisation_name
+        self.registry_slug = registry_slug,
         self.organisation_code = organisation_code
         self.organisation_total_spend = organisation_total_spend,
         self.organisation_currency = organisation_currency,

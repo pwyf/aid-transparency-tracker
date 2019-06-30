@@ -50,7 +50,7 @@ Copy and edit the config.py.tmpl:
 
     cp config.py.tmpl config.py
 
-Run the setup script to populate the database (append ` --minimal` if you want to try it out with just a few packages):
+Run the setup script to populate the database:
 
     flask setup
 
@@ -60,23 +60,7 @@ Run the server:
 
     flask run
 
-To get the download data and the tests running, run the backends (more details below):
 
-    python download_backend.py
-    python tests_backend.py
-
-You can also use `supervisor`:
-
-1. Rename the provided `supervisord.conf.tmpl` file to `supervisord.conf`, and ensure it matches your paths (especially the path to your virtualenv)
-2. Run `supervisord -n` (Remove `-n` if you don't want to see the output, but it's probably useful for testing)
-
-
-Choose packages for activation
-==============================
-
-From the web interface, log in and from the top-right drop-down menu, click `manage packages`. Select the packages you want to activate and click `activate packages`. Then, you can click the drop-down menu again and choose `run tests`.
-
-Remember, you need the download and tests backends working for this, which you could do directly with `./download_backend.py` or through supervisor.
 
 Survey component
 ================
@@ -91,45 +75,6 @@ Reinitialise
 ============
 
     flask drop_db
-    flask setup --minimal
-    flask refresh --minimal
-    bin/dqtool reload-packages --organisation-code=GB-1
-    python download_once.py
-    python tests_once.py
-
-Run unit tests
-==============
-
-FIXME
-
-Run aggregation test
-====================
-
-    bin/dqtool compare-aggregation --organisation-code GB-1 --filename unittests/artefacts/json/dfid-sample-aggregation-data.json
-
-This runs an aggregation on the packages for organisation GB-1 and compares
-the results with the stashed file in unittests/artefacts/json/dfid-sample-aggregation-data.json; if the results are different, then a new file is output
-
-Reload a package
-================
-
-    bin/dqtool reload-package --package-name dfid-tz
-
-Adding new tests
-================
-
-    flask enroll_tests --filename tests/some-new-file.csv
-
-You will then need to associate each test with an indicator:
-
-    bin/dqtool associate-test --test-id 52 --indicator conditions
-
-
-Checking if tests are complete
-==============================
-
-    bin/dqtool check-package-results --all-packages --organisation-code GB-1
-
 
 Updating sampling poisoning
 ===========================

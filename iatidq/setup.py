@@ -70,42 +70,6 @@ def setup_common():
     dqimporttests.importTestsFromFile(
         default_tests_filename,
         test_level.ACTIVITY)
-    print "Importing codelists"
-    dqcodelists.importCodelists()
-    print "Importing basic countries"
-    codelist_name='countriesbasic'
-    codelist_description='Basic list of countries for running tests against'
-    dqcodelists.add_manual_codelist(default_basic_countries_filename, codelist_name, codelist_description)
-
-def setup_packages_minimal():
-    print "Creating packages"
-    pkg_names = [i[0] for i in dqminimal.which_packages]
-
-    if pkg_names is not None:
-        [ dqregistry.refresh_package_by_name(name) for name in pkg_names ]
-    else:
-        print "No packages are defined in quickstart"
-
-def setup_organisations_minimal():
-    for organisation in dqminimal.default_minimal_organisations:
-        inserted_organisation = dqorganisations.addOrganisation(
-            organisation)
-        if inserted_organisation is False:
-            inserted_organisation = models.Organisation.where(organisation_code=organisation['organisation_code']).first()
-        thepackage = models.Package.query.filter_by(
-            package_name=organisation['package_name']
-                ).first()
-
-        if thepackage is None:
-            print "Organisation lookup failure", organisation
-            raise ValueError
-
-        organisationpackage_data = {
-            "organisation_id": inserted_organisation.id,
-            "package_id": thepackage.id,
-            "condition": organisation["condition"]
-            }
-        dqorganisations.addOrganisationPackage(organisationpackage_data)
 
 def setup_organisations():
     print "Adding organisations"
@@ -133,13 +97,12 @@ def setup_admin_user(username=None, password=None):
     })
     print('Admin user successfully created.')
 
-def setup(minimal):
+def setup():
     setup_common()
 
-    if minimal:
-        setup_packages_minimal()
-    else:
-        setup_packages()
+    setup_admin_user()
+
+    # setup_packages()
 
     create_aggregation_types()
     create_inforesult_types()
@@ -149,17 +112,12 @@ def setup(minimal):
         default_indicator_group_name,
         default_infotypes_filename, True)
 
-    if minimal:
-        setup_organisations_minimal()
-    else:
-        setup_organisations()
+    setup_organisations()
 
     print "Getting organisation frequency"
     dqorganisations.downloadOrganisationFrequency()
     print "Setting up survey"
     survey.setup.setupSurvey()
-
-    setup_admin_user()
 
     # print("Importing all users and creating permissions")
     # dqusers.importUserDataFromFile(default_userdata_filename)

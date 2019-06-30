@@ -1,4 +1,4 @@
-from os.path import dirname, join, realpath
+from os.path import abspath, dirname, join, realpath
 
 
 BROKER_HOST = "localhost"
@@ -44,3 +44,7 @@ INTRO_HTML = ''
 
 ATI_YEAR = '2019'
 PREVIOUS_ATI_YEAR = '2018'
+
+basedir = dirname(abspath(__file__))
+IATI_DATA_PATH = join(basedir, 'data')
+IATI_RESULT_PATH = join(basedir, 'results')

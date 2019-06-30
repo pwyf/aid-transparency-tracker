@@ -1,5 +1,7 @@
 # sample_work sqlite database
 sample_work.db
+iatikit.ini
+__iatikitcache__/
 
 # config file
 config.py

@@ -1,12 +1,16 @@
-from os.path import join
+from os.path import exists, join, isdir
+from os import listdir, makedirs
+import shutil
 
 import click
+import iatikit
 
 from . import app, db
-from iatidq import dqcodelists, dqdownload, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqruntests, dqusers, queue
+from iatidq import dqcodelists, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqusers
 from iatidq import setup as dqsetup
 from iatidq.models import Organisation
 from iatidq.sample_work import sample_work, db as sample_work_db
+from beta import utils
 
 
 @app.cli.command()
@@ -18,7 +22,7 @@ def init_db():
 
 @app.cli.command()
 def drop_db():
-    """Drop the database."""
+    """Drop all tables."""
     click.echo('\nWarning! This will drop all database tables!')
     click.confirm('Are you really really sure?', abort=True)
     db.drop_all()
@@ -26,13 +30,12 @@ def drop_db():
 
 
 @app.cli.command()
-@click.option('--minimal', is_flag=True, help='Operate on a minimal set of packages')
-def setup(minimal):
+def setup():
     """
     Quick setup. Will init db, add tests, add codelists,
     add indicators, refresh package data from Registry
     """
-    dqsetup.setup(minimal)
+    dqsetup.setup()
 
 
 @app.cli.command()
@@ -41,55 +44,6 @@ def setup(minimal):
 def create_admin(username, password):
     """Create an admin user."""
     dqsetup.setup_admin_user(username, password)
-
-
-@app.cli.command()
-@click.option('--filename', required=True, help='Set filename of data to test')
-@click.option('--level', type=int, default=1, help='Test level (e.g. 1 == Activity)')
-def enroll_tests(filename, level):
-    """Enroll a CSV file of tests."""
-    result = dqimporttests.importTestsFromFile(
-        filename=filename.decode(),
-        level=level
-    )
-    if not result:
-        print('Error importing')
-
-
-@app.cli.command()
-def clear_revisionid():
-    """Clear CKAN revision ids"""
-    dqfunctions.clear_revisions()
-
-
-@app.cli.command()
-def import_codelists():
-    """Import codelists"""
-    dqcodelists.importCodelists()
-
-
-@app.cli.command()
-def import_basic_countries():
-    """Import basic list of countries"""
-    filename = 'tests/countries_basic.csv'
-    codelist_name = 'countriesbasic'
-    codelist_description = 'Basic list of countries for running tests against'
-    dqcodelists.add_manual_codelist(filename, codelist_name, codelist_description)
-
-
-@app.cli.command()
-@click.option('--minimal', is_flag=True, help='Operate on a minimal set of packages')
-@click.option('--matching', help='Regular expression for matching packages')
-def download_packages(minimal, matching):
-    """Download packages"""
-    if minimal:
-        for package_name, _ in dqminimal.which_packages:
-            dqdownload.run(package_name=package_name)
-    elif matching:
-        for pkg_name in dqregistry.matching_packages(matching):
-            dqdownload.run(package_name=pkg_name)
-    else:
-        dqdownload.run()
 
 
 @app.cli.command()
@@ -120,59 +74,8 @@ def import_organisations(filename):
 
 
 @app.cli.command()
-@click.option('--package-name', required=True, help='Set name of package to be tested')
-@click.option('--filename', required=True, help='Set filename of data to test')
-def enqueue_test(package_name, filename):
-    """Set a package to be tested"""
-    dqruntests.enqueue_package_for_test(filename, package_name)
-
-
-@app.cli.command()
-@click.option('--package-name', help='Set name of package to be tested')
-@click.option('--minimal', is_flag=True, help='Operate on a minimal set of packages')
-@click.option('--matching', help='Regular expression for matching packages')
-def refresh_packages(package_name, minimal, matching):
-    """Refresh packages"""
-    pkg_names = None
-    if package_name:
-        pkg_names = [package_name]
-    elif minimal:
-        pkg_names = [i[0] for i in dqminimal.which_packages]
-    elif matching:
-        pkg_names = [i for i in dqregistry.matching_packages(matching)]
-
-    if pkg_names is not None:
-        for name in pkg_names:
-            dqregistry.refresh_package_by_name(name)
-    else:
-        dqregistry.refresh_packages()
-
-
-@app.cli.command()
-@click.option('--matching', required=True, help='Regular expression for matching packages')
-def activate_packages(matching):
-    """Mark all packages as active"""
-    matching_packages = [(i, True) for i in dqregistry.matching_packages(matching)]
-    dqregistry.activate_packages(matching_packages, clear_revision_id=True)
-
-
-@app.cli.command()
-def create_aggregation_types():
-    """Create basic aggregation types."""
-    dqsetup.create_aggregation_types()
-
-
-@app.cli.command()
-@click.option('--runtime-id', required=True, type=int, help='Runtime ID')
-@click.option('--package-id', required=True, type=int, help='Package ID')
-def aggregate_results(runtime_id, package_id):
-    """Trigger result aggregation"""
-    dqprocessing.aggregate_results(runtime_id, package_id)
-
-
-@app.cli.command()
 def create_inforesult_types():
-    """Create basic infroresult types."""
+    """Create basic inforesult types."""
     dqsetup.create_inforesult_types()
 
 
@@ -187,41 +90,6 @@ def setup_organisations():
 def setup_users(filename):
     """Setup users and permissions."""
     dqusers.importUserDataFromFile(filename)
-
-
-@app.cli.command()
-def clear_queues():
-    queue_names = ['iati_download_queue', 'iati_tests_queue']
-    for queue_name in queue_names:
-        queue.delete_queue(queue_name)
-
-
-@app.cli.command()
-@click.option('--organisation-code', help='Code of organisation to test')
-@click.option('--package-name', help='Name of package to test')
-def test_packages(organisation_code=None, package_name=None):
-    """Test packages for a given organisation"""
-    sql = '''
-        select distinct package_name from organisation
-            left join organisationpackage on organisation.id = organisation_id
-            left join package on package_id = package.id
-            where active = 't'
-    '''
-    if organisation_code:
-        sql += " and organisation_code = '{}'".format(organisation_code)
-    if package_name:
-        sql += " and package_name = '{}'".format(package_name)
-    sql += ' order by package_name'
-    results = db.engine.execute(sql)
-    package_names = [row[0] for row in results.fetchall()]
-
-    total_packages = len(package_names)
-    for idx, package_name in enumerate(package_names):
-        print('{} of {}'.format(idx+1, total_packages))
-        dirname = app.config.get('DATA_STORAGE_DIR')
-        filename = join(dirname, '{}.xml'.format(package_name))
-        from iatidq import test_queue
-        test_queue.test_one_package(filename, package_name)
 
 
 @app.cli.command()
@@ -246,3 +114,168 @@ def setup_sampling(filename, org_ids, test_ids, create):
 
     print("test ids: {}".format(test_ids))
     sample_work_db.make_db(filename, org_ids, test_ids, create)
+
+
+@app.cli.command()
+def download_data():
+    """Download a snapshot of all IATI data."""
+    click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
+    iatikit.download.data()
+
+
+@app.cli.command()
+def import_data():
+    """Import the relevant data from the downloaded IATI snapshot."""
+    updated_on = iatikit.data().last_updated.date()
+    input_path = iatikit.data().path
+    output_path = join(app.config.get('IATI_DATA_PATH'), str(updated_on))
+
+    click.echo('Copying files into place ...')
+    click.echo('Output path: {output_path}'.format(output_path=output_path))
+
+    if exists(output_path):
+        click.secho('Error: Output path exists.', fg='red', err=True)
+        raise click.Abort()
+    makedirs(output_path)
+
+    shutil.copy(join(input_path, 'metadata.json'),
+                join(output_path, 'metadata.json'))
+
+    with click.progressbar(Organisation.all()) as all_organisations:
+        for organisation in all_organisations:
+            if not organisation.registry_slug:
+                continue
+            # Copy data files into place
+            shutil.copytree(join(input_path, 'data', organisation.registry_slug),
+                            join(output_path, 'data', organisation.registry_slug))
+            # Copy metadata files into place
+            shutil.copytree(join(input_path, 'metadata', organisation.registry_slug),
+                            join(output_path, 'metadata', organisation.registry_slug))
+
+
+@app.cli.command()
+@click.option('--date', default='latest',
+              help='Date of the data to test, in YYYY-MM-DD. ' +
+                   'Defaults to most recent.')
+@click.option('--refresh/--no-refresh', default=True,
+              help='Refresh schema and codelists.')
+def test_data(date, refresh):
+    """Test a set of imported IATI data."""
+
+    iati_data_path = app.config.get('IATI_DATA_PATH')
+    iati_result_path = app.config.get('IATI_RESULT_PATH')
+    try:
+        snapshot_dates = listdir(join(iati_data_path))
+        if date == 'latest':
+            snapshot_date = max(snapshot_dates)
+        else:
+            if not exists(join(iati_data_path, date)):
+                raise ValueError
+            snapshot_date = date
+    except ValueError:
+        if date:
+            click.secho('Error: No IATI data found for given date ' +
+                        '({}).'.format(date),
+                        fg='red', err=True)
+        else:
+            click.secho('Error: No IATI data to test.', fg='red', err=True)
+        click.echo('Perhaps you need to download some, using:', err=True)
+        click.echo('\n    $ flask download_data\n', err=True)
+        raise click.Abort()
+
+    snapshot_xml_path = join(iati_data_path, snapshot_date)
+    root_output_path = join(iati_result_path, snapshot_date)
+
+    if exists(root_output_path):
+        click.secho('Error: Output path exists.', fg='red', err=True)
+        raise click.Abort()
+
+    if refresh:
+        click.echo('Downloading latest schemas and codelists ...')
+        iatikit.download.standard()
+    codelists = iatikit.codelists()
+
+    click.echo('Loading tests ...')
+    all_tests = utils.load_tests()
+    all_tests.append(utils.load_current_data_test())
+
+    click.echo('Testing IATI data snapshot ' +
+               '({}) ...'.format(snapshot_date))
+    publishers = iatikit.data(path=snapshot_xml_path).publishers
+    for publisher in publishers:
+        org = Organisation.where(registry_slug=publisher.name).first()
+        if not org:
+            click.secho('Error: Publisher "{}" '.format(publisher.name) +
+                        'not found in database. Database and XML ' +
+                        'may be out of sync.',
+                        fg='red', err=True)
+            raise click.Abort()
+        click.echo('\nTesting organisation: {name} ({slug}) ...'.format(
+            name=org.organisation_name, slug=org.registry_slug
+        ))
+        output_path = join(root_output_path, org.registry_slug)
+        makedirs(output_path)
+        for test in all_tests:
+            output_filepath = join(output_path,
+                                   utils.slugify(test.name) + '.csv')
+            click.echo(test)
+            utils.run_test(test, publisher, output_filepath,
+                           None, codelists=codelists,
+                           today=snapshot_date)
+
+
+@app.cli.command()
+@click.option('--date', default='latest',
+              help='Date of the data to summarize, in YYYY-MM-DD. ' +
+                   'Defaults to most recent.')
+def aggregate_results(date):
+    """Summarize results of IATI data tests."""
+
+    iati_result_path = app.config.get('IATI_RESULT_PATH')
+    try:
+        result_dates = listdir(join(iati_result_path))
+        if date == 'latest':
+            result_date = max(result_dates)
+        else:
+            if not exists(join(iati_result_path, date)):
+                raise ValueError
+            result_date = date
+    except ValueError:
+        if date:
+            click.secho('Error: No IATI results found for given ' +
+                        'date ({}).'.format(date), fg='red', err=True)
+        else:
+            click.secho('Error: No IATI results to summarize.', fg='red', err=True)
+        click.echo('Perhaps you need to run tests, using:', err=True)
+        click.echo('\n    $ flask test_data ' +
+                   '--date {}\n'.format(date), err=True)
+        raise click.Abort()
+
+    with db.session.begin():
+        db.session.execute('''truncate aggregateresult''')
+
+    click.echo('Loading tests ...')
+    all_tests = utils.load_tests()
+
+    snapshot_result_path = join(iati_result_path, result_date)
+
+    click.echo('Summarizing results from IATI data snapshot ' +
+               '({}) ...'.format(result_date))
+    publishers = [x for x in listdir(snapshot_result_path)
+                  if isdir(join(snapshot_result_path, x))]
+    for registry_slug in publishers:
+        org = Organisation.where(registry_slug=unicode(registry_slug)).first()
+        if not org:
+            click.secho('Error: Publisher '
+                        '"{}" '.format(registry_slug) +
+                        'not found in database. Database and XML ' +
+                        'may be out of sync.',
+                        fg='red', err=True)
+            raise click.Abort()
+        click.echo('Summarizing results for organisation: ' +
+                   '{} ({}) ...'.format(
+                    org.organisation_name, org.registry_slug))
+        utils.summarize_results(org, snapshot_result_path, all_tests)
+
+        current_data_results = utils.load_current_data_results(org, snapshot_result_path)
+        utils.summarize_results(org, snapshot_result_path, all_tests, current_data_results)
