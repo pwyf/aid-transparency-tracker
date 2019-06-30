@@ -77,18 +77,6 @@ def import_organisations(filename):
 
 
 @app.cli.command()
-def create_inforesult_types():
-    """Create basic inforesult types."""
-    dqsetup.create_inforesult_types()
-
-
-@app.cli.command()
-def setup_organisations():
-    """Setup organisations."""
-    dqsetup.setup_organisations()
-
-
-@app.cli.command()
 @click.option('--filename', required=True, help='Set filename of users to import')
 def setup_users(filename):
     """Setup users and permissions."""
