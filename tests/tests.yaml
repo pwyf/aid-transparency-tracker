@@ -88,6 +88,13 @@ indicators:
        Given file is an organisation file
        Then `document-link/category[@code="B05"]` should be present
 
+ - name: Country strategy or MoU
+   tests:
+    - name: Strategy (country/sector) or Memorandum of Understanding
+      expression: |
+       Given this test involves both organisation and activity files
+        Then skip it
+
  - name: Total organisation budget
    tests:
     - name: Organisation budget available one year forward
@@ -107,6 +114,13 @@ indicators:
       expression: |
        Given file is an organisation file
         Then `total-budget` should be available 3 years forward
+
+ - name: Disaggregated budgets
+   tests:
+    - name: Disaggregated budget
+      expression: |
+       Given this test involves both organisation and activity files
+        Then skip it
 
  - name: Project budget
    tests:
