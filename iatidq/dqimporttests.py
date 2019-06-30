@@ -7,6 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
+import re
 import urllib2
 
 import yaml
@@ -54,8 +55,8 @@ def _importTests(fh, filename, level=1, local=True):
 
     line_num = 0
     for indicator in data['indicators']:
-        indicator_name = indicator['name'].lower().replace(' ', '-')
-        indicator_name = indicator_name.replace('---', '-')
+        indicator_name = indicator['name'].lower()
+        indicator_name = re.sub(r'[\(\)\s/-]+', '-', indicator_name)
         for row in indicator['tests']:
             line_num += 1
             with db.session.begin():
