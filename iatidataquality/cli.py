@@ -125,8 +125,9 @@ def import_data():
     click.echo('Output path: {output_path}'.format(output_path=output_path))
 
     if exists(output_path):
-        click.secho('Error: Output path exists.', fg='red', err=True)
-        raise click.Abort()
+        click.secho('Warning: Output path exists.', fg='red')
+        click.confirm('Overwrite and continue?', abort=True)
+        shutil.rmtree(output_path)
     makedirs(output_path)
 
     shutil.copy(join(input_path, 'metadata.json'),
@@ -177,9 +178,13 @@ def test_data(date, refresh):
     snapshot_xml_path = join(iati_data_path, snapshot_date)
     root_output_path = join(iati_result_path, snapshot_date)
 
+    click.echo('Testing: {}'.format(snapshot_xml_path))
+    click.echo('Output path: {}'.format(root_output_path))
+
     if exists(root_output_path):
-        click.secho('Error: Output path exists.', fg='red', err=True)
-        raise click.Abort()
+        click.secho('Warning: Output path exists.', fg='red')
+        click.confirm('Overwrite and continue?', abort=True)
+        shutil.rmtree(root_output_path)
 
     if refresh:
         click.echo('Downloading latest schemas and codelists ...')
