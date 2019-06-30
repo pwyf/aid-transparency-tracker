@@ -199,7 +199,7 @@ def test_data(date, refresh):
                '({}) ...'.format(snapshot_date))
     publishers = iatikit.data(path=snapshot_xml_path).publishers
     for publisher in publishers:
-        org = Organisation.where(registry_slug=publisher.name).first()
+        org = Organisation.where(registry_slug=unicode(publisher.name)).first()
         if not org:
             click.secho('Error: Publisher "{}" '.format(publisher.name) +
                         'not found in database. Database and XML ' +
