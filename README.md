@@ -39,6 +39,22 @@ Run the setup script to populate the database:
 
 This will prompt you to create a new admin user.
 
+You can download a new set of IATI data with:
+
+    flask download_data
+
+The relevant data can then be extracted and moved into place with:
+
+    flask import_data
+
+Tests can then be run on this data using:
+
+    flask test_data
+
+Finally, you can refresh the aggregate data shown in the tracker using:
+
+    flask aggregate_results
+
 ## Running
 
 You can run a development server with:
