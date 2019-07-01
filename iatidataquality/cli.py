@@ -10,7 +10,7 @@ from iatidq import dqcodelists, dqfunctions, dqimporttests, dqindicators, dqmini
 from iatidq import setup as dqsetup
 from iatidq.models import Organisation
 from iatidq.sample_work import sample_work, db as sample_work_db
-from beta import utils
+from beta import utils, infotest
 
 
 @app.cli.command()
@@ -280,3 +280,6 @@ def aggregate_results(date):
 
         current_data_results = utils.load_current_data_results(org, snapshot_result_path)
         utils.summarize_results(org, snapshot_result_path, all_tests, current_data_results)
+
+        # run country strategy / MoU test
+        infotest.country_strategy_or_mou(org, result_date, current_data_results)
