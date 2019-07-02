@@ -205,7 +205,7 @@ def test_data(date, refresh):
                '({}) ...'.format(snapshot_date))
     publishers = iatikit.data(path=snapshot_xml_path).publishers
     for publisher in publishers:
-        org = Organisation.where(registry_slug=unicode(publisher.name)).first()
+        org = Organisation.where(registry_slug=publisher.name.decode()).first()
         if not org:
             click.secho('Error: Publisher "{}" '.format(publisher.name) +
                         'not found in database. Database and XML ' +
@@ -284,7 +284,7 @@ def aggregate_results(date):
     publishers = [x for x in listdir(snapshot_result_path)
                   if isdir(join(snapshot_result_path, x))]
     for registry_slug in publishers:
-        org = Organisation.where(registry_slug=unicode(registry_slug)).first()
+        org = Organisation.where(registry_slug=registry_slug.decode()).first()
         if not org:
             click.secho('Error: Publisher '
                         '"{}" '.format(registry_slug) +

@@ -147,7 +147,7 @@ def save_summary(dataset, dataset_test_results, test_id, org,
         results_data = 100. * scores['pass'] / total
 
         ar = AggregateResult()
-        ar.package_name = unicode(dataset)
+        ar.package_name = dataset.decode()
         ar.organisation_id = org.id
         ar.aggregateresulttype_id = aggregateresulttype
         ar.test_id = test_id
