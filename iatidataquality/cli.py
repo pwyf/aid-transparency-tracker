@@ -225,6 +225,17 @@ def test_data(date, refresh):
                            None, codelists=codelists,
                            today=snapshot_date)
 
+        current_data_results = utils.load_current_data_results(
+            org, root_output_path)
+
+        # run country strategy / MoU test
+        test_name = 'Strategy (country/sector) or Memorandum of Understanding'
+        click.echo(test_name)
+        infotest.country_strategy_or_mou(
+            org, snapshot_date, test_name, current_data_results)
+
+        # TODO: run disaggregated budget test
+
 
 @app.cli.command()
 @click.option('--date', default='latest',
@@ -286,8 +297,7 @@ def aggregate_results(date):
                     org.organisation_name, org.registry_slug))
         utils.summarize_results(org, snapshot_result_path, all_tests)
 
-        current_data_results = utils.load_current_data_results(org, snapshot_result_path)
-        utils.summarize_results(org, snapshot_result_path, all_tests, current_data_results)
-
-        # run country strategy / MoU test
-        infotest.country_strategy_or_mou(org, result_date, current_data_results)
+        current_data_results = utils.load_current_data_results(
+            org, snapshot_result_path)
+        utils.summarize_results(
+            org, snapshot_result_path, all_tests, current_data_results)
