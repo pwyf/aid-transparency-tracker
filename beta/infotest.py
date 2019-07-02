@@ -56,8 +56,10 @@ def country_strategy_or_mou(org, snapshot_date, current_data_results):
         country_strategies = list(set(country_strategies))
 
     for organisation in publisher.organisations:
-        country_strategies += organisation.etree.xpath('document-link[category/@code="B03"]/recipient-country/@code')
-        country_strategies += organisation.etree.xpath('document-link[category/@code="B13"]/recipient-country/@code')
+        country_strategies += organisation.etree.xpath(
+            'document-link[category/@code="B03"]/recipient-country/@code')
+        country_strategies += organisation.etree.xpath(
+            'document-link[category/@code="B13"]/recipient-country/@code')
         country_strategies = list(set(country_strategies))
 
     country_strategies = [x for x in country_strategies

@@ -35,7 +35,8 @@ def setup():
     Quick setup. Will init db, add tests, add codelists,
     add indicators, refresh package data from Registry
     """
-    click.secho('\nWarning! This is a potentially destructive operation!', fg='red')
+    click.secho('\nWarning! This is a potentially destructive operation!',
+                fg='red')
     click.confirm('Are you really really sure?', abort=True)
     db.drop_all()
     dqsetup.setup()
@@ -77,7 +78,8 @@ def import_organisations(filename):
 
 
 @app.cli.command()
-@click.option('--filename', required=True, help='Set filename of users to import')
+@click.option('--filename', required=True,
+              help='Set filename of users to import')
 def import_users(filename):
     """Import users and permissions."""
     dqusers.importUserDataFromFile(filename)
@@ -138,11 +140,15 @@ def import_data():
             if not organisation.registry_slug:
                 continue
             # Copy data files into place
-            shutil.copytree(join(input_path, 'data', organisation.registry_slug),
-                            join(output_path, 'data', organisation.registry_slug))
+            shutil.copytree(join(input_path, 'data',
+                                 organisation.registry_slug),
+                            join(output_path, 'data',
+                                 organisation.registry_slug))
             # Copy metadata files into place
-            shutil.copytree(join(input_path, 'metadata', organisation.registry_slug),
-                            join(output_path, 'metadata', organisation.registry_slug))
+            shutil.copytree(join(input_path, 'metadata',
+                                 organisation.registry_slug),
+                            join(output_path, 'metadata',
+                                 organisation.registry_slug))
 
 
 @app.cli.command()
@@ -241,14 +247,16 @@ def aggregate_results(date):
             click.secho('Error: No IATI results found for given ' +
                         'date ({}).'.format(date), fg='red', err=True)
         else:
-            click.secho('Error: No IATI results to summarize.', fg='red', err=True)
+            click.secho('Error: No IATI results to summarize.',
+                        fg='red', err=True)
         click.echo('Perhaps you need to run tests, using:', err=True)
         click.echo('\n    $ flask test_data ' +
                    '--date {}\n'.format(date), err=True)
         raise click.Abort()
 
     click.secho('\nWarning! This is a destructive operation!', fg='red')
-    click.echo('\nAny existing aggregate data will be deleted from the database.')
+    click.echo('\nAny existing aggregate data will be deleted ' +
+               'from the database.')
     click.echo('(If you still have the raw results, you can regenerate ' +
                'old aggregate data by specifying a date.)')
     click.confirm('\nAre you really really sure?', abort=True)
