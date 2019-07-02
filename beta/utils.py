@@ -102,10 +102,6 @@ def summarize_results(org, snapshot_result_path, all_tests,
     aggregateresulttype = 2 if current_data_results else 1
     for test in all_tests:
         t = Test.where(description=test.name).first()
-        if not t:
-            # these are "info tests". They are run separately.
-            # Ignore them for now.
-            continue
         test_id = t.id
         result_filepath = join(snapshot_result_path, org.registry_slug,
                                slugify(test.name) + '.csv')
