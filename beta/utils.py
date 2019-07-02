@@ -97,7 +97,8 @@ def run_test(test, publisher, output_path, test_condition, **kwargs):
             })
 
 
-def summarize_results(org, snapshot_result_path, all_tests, current_data_results=None):
+def summarize_results(org, snapshot_result_path, all_tests,
+                      current_data_results=None):
     aggregateresulttype = 2 if current_data_results else 1
     for test in all_tests:
         t = Test.where(description=test.name).first()
