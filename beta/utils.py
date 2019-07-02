@@ -114,7 +114,8 @@ def summarize_results(org, snapshot_result_path, all_tests,
                     dataset_test_results = {}
                     dataset = row['dataset']
                 elif dataset != row['dataset']:
-                    save_summary(dataset, dataset_test_results, test_id, org, aggregateresulttype)
+                    save_summary(dataset, dataset_test_results, test_id,
+                                 org, aggregateresulttype)
                     dataset_test_results = {}
                     dataset = row['dataset']
                 hierarchy = row['hierarchy']
@@ -127,15 +128,18 @@ def summarize_results(org, snapshot_result_path, all_tests,
                 if result == 'not relevant':
                     continue
                 idx = int(row['index'])
-                if current_data_results and \
-                    current_data_results.get(dataset, {}).get(idx, 'not relevant') == 'fail':
+                if (current_data_results and
+                    current_data_results.get(dataset, {}).get(
+                        idx, 'not relevant') == 'fail'):
                     continue
                 dataset_test_results[hierarchy][result] += 1
             if dataset is not None:
-                save_summary(dataset, dataset_test_results, test_id, org, aggregateresulttype)
+                save_summary(dataset, dataset_test_results, test_id,
+                             org, aggregateresulttype)
 
 
-def save_summary(dataset, dataset_test_results, test_id, org, aggregateresulttype):
+def save_summary(dataset, dataset_test_results, test_id, org,
+                 aggregateresulttype):
     for hierarchy, scores in dataset_test_results.items():
         total = sum(scores.values())
         if total == 0:
