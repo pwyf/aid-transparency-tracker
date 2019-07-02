@@ -110,7 +110,7 @@ def summarize_results(org, snapshot_result_path, all_tests,
         with open(result_filepath) as handler:
             dataset = None
             for row in csv.DictReader(handler):
-                if not dataset:
+                if dataset is None:
                     dataset_test_results = {}
                     dataset = row['dataset']
                 elif dataset != row['dataset']:
