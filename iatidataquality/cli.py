@@ -6,7 +6,7 @@ import click
 import iatikit
 
 from . import app, db
-from iatidq import dqcodelists, dqfunctions, dqimporttests, dqindicators, dqminimal, dqorganisations, dqprocessing, dqregistry, dqusers
+from iatidq import dqimporttests, dqindicators, dqorganisations, dqusers
 from iatidq import setup as dqsetup
 from iatidq.models import Organisation
 from iatidq.sample_work import sample_work, db as sample_work_db
