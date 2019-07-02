@@ -4,7 +4,7 @@ iatikit.ini
 __iatikitcache__/
 
 # config file
-config.py
+/config.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -109,3 +109,7 @@ pyenv/
 
 # mypy
 .mypy_cache/
+
+# vagrant
+
+.vagrant
