@@ -11,6 +11,8 @@ vagrant up
 ## How to run
 
 ``` bash
+vagrant ssh
+
 cd /vagrant
 
 source pyenv/bin/activate
