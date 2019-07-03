@@ -2,13 +2,20 @@
 
 Make sure disksize plugin is installed:
 
+```
 vagrant plugin install vagrant-disksize
 
+vagrant up
+```
 
 ## How to run
 
 ``` bash
+vagrant ssh
+
 cd /vagrant
+
+source pyenv/bin/activate
 
 flask download_data
 
