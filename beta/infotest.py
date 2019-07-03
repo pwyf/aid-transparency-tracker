@@ -89,3 +89,9 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
             row = country_strategies.get(country_code, dict(default_row))
             row['explanation'] = row['explanation'].format(country_code)
             writer.writerow(row)
+
+
+def disaggregated_budget(org, snapshot_date, test_name,
+                         current_data_results):
+    # TODO
+    pass

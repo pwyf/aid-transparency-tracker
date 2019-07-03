@@ -234,7 +234,11 @@ def test_data(date, refresh):
         infotest.country_strategy_or_mou(
             org, snapshot_date, test_name, current_data_results)
 
-        # TODO: run disaggregated budget test
+        # run disaggregated budget test
+        test_name = 'Disaggregated budget'
+        click.echo(test_name)
+        infotest.disaggregated_budget(
+            org, snapshot_date, test_name, current_data_results)
 
 
 @app.cli.command()
