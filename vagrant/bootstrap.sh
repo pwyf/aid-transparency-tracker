@@ -37,6 +37,8 @@ pip install -r requirements.txt
 
 cp vagrant/config.py .
 
+rm -rf dq
+rm -rf impsched
 mkdir dq dq/data dq/sample_work
 mkdir impsched impsched/data impsched/data/temp impsched/data/xml
 

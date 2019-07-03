@@ -1,7 +1,4 @@
 Vagrant.configure(2) do |config|
-
-  config.vm.box = "ubuntu/xenial64"
-
     config.vm.define "pwyf" do |normal|
 
         config.vm.box = "ubuntu/bionic64"
@@ -16,12 +13,6 @@ Vagrant.configure(2) do |config|
 
           # Customize the amount of memory on the VM:
           vb.memory = "2048"
-
-          # https://github.com/boxcutter/ubuntu/issues/82#issuecomment-260902424
-          vb.customize [
-              "modifyvm", :id,
-              "--cableconnected1", "on",
-          ]
 
         end
 
