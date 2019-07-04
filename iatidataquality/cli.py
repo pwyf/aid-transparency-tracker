@@ -205,7 +205,7 @@ def test_data(date, refresh):
                '({}) ...'.format(snapshot_date))
     publishers = iatikit.data(path=snapshot_xml_path).publishers
     for publisher in publishers:
-        org = Organisation.where(registry_slug=unicode(publisher.name)).first()
+        org = Organisation.where(registry_slug=publisher.name.decode()).first()
         if not org:
             click.secho('Error: Publisher "{}" '.format(publisher.name) +
                         'not found in database. Database and XML ' +
@@ -224,6 +224,21 @@ def test_data(date, refresh):
             utils.run_test(test, publisher, output_filepath,
                            None, codelists=codelists,
                            today=snapshot_date)
+
+        current_data_results = utils.load_current_data_results(
+            org, root_output_path)
+
+        # run country strategy / MoU test
+        test_name = 'Strategy (country/sector) or Memorandum of Understanding'
+        click.echo(test_name)
+        infotest.country_strategy_or_mou(
+            org, snapshot_date, test_name, current_data_results)
+
+        # run disaggregated budget test
+        test_name = 'Disaggregated budget'
+        click.echo(test_name)
+        infotest.disaggregated_budget(
+            org, snapshot_date, test_name, current_data_results)
 
 
 @app.cli.command()
@@ -273,7 +288,7 @@ def aggregate_results(date):
     publishers = [x for x in listdir(snapshot_result_path)
                   if isdir(join(snapshot_result_path, x))]
     for registry_slug in publishers:
-        org = Organisation.where(registry_slug=unicode(registry_slug)).first()
+        org = Organisation.where(registry_slug=registry_slug.decode()).first()
         if not org:
             click.secho('Error: Publisher '
                         '"{}" '.format(registry_slug) +
@@ -286,8 +301,7 @@ def aggregate_results(date):
                     org.organisation_name, org.registry_slug))
         utils.summarize_results(org, snapshot_result_path, all_tests)
 
-        current_data_results = utils.load_current_data_results(org, snapshot_result_path)
-        utils.summarize_results(org, snapshot_result_path, all_tests, current_data_results)
-
-        # run country strategy / MoU test
-        infotest.country_strategy_or_mou(org, result_date, current_data_results)
+        current_data_results = utils.load_current_data_results(
+            org, snapshot_result_path)
+        utils.summarize_results(
+            org, snapshot_result_path, all_tests, current_data_results)

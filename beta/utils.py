@@ -97,14 +97,11 @@ def run_test(test, publisher, output_path, test_condition, **kwargs):
             })
 
 
-def summarize_results(org, snapshot_result_path, all_tests, current_data_results=None):
+def summarize_results(org, snapshot_result_path, all_tests,
+                      current_data_results=None):
     aggregateresulttype = 2 if current_data_results else 1
     for test in all_tests:
         t = Test.where(description=test.name).first()
-        if not t:
-            # these are "info tests". They are run separately.
-            # Ignore them for now.
-            continue
         test_id = t.id
         result_filepath = join(snapshot_result_path, org.registry_slug,
                                slugify(test.name) + '.csv')
@@ -113,11 +110,12 @@ def summarize_results(org, snapshot_result_path, all_tests, current_data_results
         with open(result_filepath) as handler:
             dataset = None
             for row in csv.DictReader(handler):
-                if not dataset:
+                if dataset is None:
                     dataset_test_results = {}
                     dataset = row['dataset']
                 elif dataset != row['dataset']:
-                    save_summary(dataset, dataset_test_results, test_id, org, aggregateresulttype)
+                    save_summary(dataset, dataset_test_results, test_id,
+                                 org, aggregateresulttype)
                     dataset_test_results = {}
                     dataset = row['dataset']
                 hierarchy = row['hierarchy']
@@ -130,15 +128,18 @@ def summarize_results(org, snapshot_result_path, all_tests, current_data_results
                 if result == 'not relevant':
                     continue
                 idx = int(row['index'])
-                if current_data_results and \
-                    current_data_results.get(dataset, {}).get(idx, 'not relevant') == 'fail':
+                if (current_data_results and
+                    current_data_results.get(dataset, {}).get(
+                        idx, 'not relevant') == 'fail'):
                     continue
                 dataset_test_results[hierarchy][result] += 1
             if dataset is not None:
-                save_summary(dataset, dataset_test_results, test_id, org, aggregateresulttype)
+                save_summary(dataset, dataset_test_results, test_id,
+                             org, aggregateresulttype)
 
 
-def save_summary(dataset, dataset_test_results, test_id, org, aggregateresulttype):
+def save_summary(dataset, dataset_test_results, test_id, org,
+                 aggregateresulttype):
     for hierarchy, scores in dataset_test_results.items():
         total = sum(scores.values())
         if total == 0:
@@ -146,7 +147,7 @@ def save_summary(dataset, dataset_test_results, test_id, org, aggregateresulttyp
         results_data = 100. * scores['pass'] / total
 
         ar = AggregateResult()
-        ar.package_name = unicode(dataset)
+        ar.package_name = dataset.decode()
         ar.organisation_id = org.id
         ar.aggregateresulttype_id = aggregateresulttype
         ar.test_id = test_id
