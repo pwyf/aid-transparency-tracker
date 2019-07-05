@@ -316,21 +316,20 @@ def aggregate_results(date):
                '({}) ...'.format(result_date))
     publishers = [x for x in listdir(snapshot_result_path)
                   if isdir(join(snapshot_result_path, x))]
-    for registry_slug in publishers:
-        org = Organisation.where(registry_slug=registry_slug.decode()).first()
-        if not org:
-            click.secho('Error: Publisher '
-                        '"{}" '.format(registry_slug) +
-                        'not found in database. Database and XML ' +
-                        'may be out of sync.',
-                        fg='red', err=True)
-            raise click.Abort()
-        click.echo('Summarizing results for organisation: ' +
-                   '{} ({}) ...'.format(
-                    org.organisation_name, org.registry_slug))
-        utils.summarize_results(org, snapshot_result_path, all_tests)
+    with click.progressbar(publishers) as publishers:
+        for registry_slug in publishers:
+            org = Organisation.where(
+                registry_slug=registry_slug.decode()).first()
+            if not org:
+                click.secho('Error: Publisher '
+                            '"{}" '.format(registry_slug) +
+                            'not found in database. Database and XML ' +
+                            'may be out of sync.',
+                            fg='red', err=True)
+                raise click.Abort()
+            utils.summarize_results(org, snapshot_result_path, all_tests)
 
-        current_data_results = utils.load_current_data_results(
-            org, snapshot_result_path)
-        utils.summarize_results(
-            org, snapshot_result_path, all_tests, current_data_results)
+            current_data_results = utils.load_current_data_results(
+                org, snapshot_result_path)
+            utils.summarize_results(
+                org, snapshot_result_path, all_tests, current_data_results)
