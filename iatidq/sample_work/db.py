@@ -55,26 +55,16 @@ def create_db(c):
     c.execute(stmt)
 
 
-def make_db(filename, org_ids, test_ids, create):
+def make_db(filename, orgs, tests, snapshot_path):
     from sample_work import WorkItems
-
-    if create:
-        if os.path.exists(filename):
-            print('Deleting old sampling db ...')
-            os.unlink(filename)
 
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    if create:
-        create_db(c)
-    else:
-        stmt = """delete from sample_work_item where test_id in ({}) and organisation_id in ({})""".format(','.join(map(str, test_ids)), ','.join(map(str, org_ids)))
-        print('Deleted {} rows'.format(c.execute(stmt).rowcount))
-        database.commit()
+    create_db(c)
 
     # populate db
-    work_items = WorkItems(org_ids, test_ids, create)
+    work_items = WorkItems(orgs, tests, snapshot_path)
     for wi in work_items:
         wi_info = tuple(map(lambda k: wi[k], keys))
 

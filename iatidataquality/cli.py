@@ -1,5 +1,5 @@
 from os.path import exists, join, isdir
-from os import listdir, makedirs
+from os import listdir, makedirs, unlink
 import shutil
 
 import click
@@ -8,7 +8,7 @@ import iatikit
 from . import app, db
 from iatidq import dqimporttests, dqindicators, dqorganisations, dqusers
 from iatidq import setup as dqsetup
-from iatidq.models import Organisation
+from iatidq.models import Organisation, Test
 from iatidq.sample_work import sample_work, db as sample_work_db
 from beta import utils, infotest
 
@@ -86,27 +86,56 @@ def import_users(filename):
 
 
 @app.cli.command()
+@click.option('--date', default='latest',
+              help='Date of the data to test, in YYYY-MM-DD. ' +
+                   'Defaults to most recent.')
 @click.option("--filename")
 @click.option("--org-ids")
 @click.option("--test-ids")
-@click.option("--create", is_flag=True)
-def setup_sampling(filename, org_ids, test_ids, create):
+def setup_sampling(date, filename, org_ids, test_ids):
+    iati_result_path = app.config.get('IATI_RESULT_PATH')
+    try:
+        snapshot_dates = listdir(join(iati_result_path))
+        if date == 'latest':
+            snapshot_date = max(snapshot_dates)
+        else:
+            if not exists(join(iati_result_path, date)):
+                raise ValueError
+            snapshot_date = date
+    except ValueError:
+        if date:
+            click.secho('Error: No IATI results found for given date ' +
+                        '({}).'.format(date),
+                        fg='red', err=True)
+        else:
+            click.secho('Error: No IATI results to sample.', fg='red', err=True)
+        click.echo('Perhaps you need to run tests, using:', err=True)
+        click.echo('\n    $ flask test_data ' +
+                   '--date {}\n'.format(date), err=True)
+        raise click.Abort()
+
+    snapshot_path = join(iati_result_path, snapshot_date)
+
     if not filename:
         filename = app.config['SAMPLING_DB_FILENAME']
+    if exists(filename):
+        click.secho('Warning: Sample database exists.', fg='red')
+        click.confirm('Delete and continue?', abort=True)
+        unlink(filename)
 
     if org_ids:
         org_ids = map(int, org_ids.split(","))
+        orgs = [Organisation.find(id_) for id_ in org_ids]
     else:
-        org_ids = [org.id for org in Organisation.all()]
+        orgs = Organisation.all()
 
     if test_ids:
         test_ids = map(int, test_ids.split(","))
+        tests = [Test.find(id_) for id_ in test_ids]
     else:
-        all_tests = sample_work.all_tests()
-        test_ids = [x.id for x in all_tests]
+        tests = sample_work.all_tests()
 
-    print("test ids: {}".format(test_ids))
-    sample_work_db.make_db(filename, org_ids, test_ids, create)
+    sample_work_db.make_db(filename, orgs, tests, snapshot_path)
 
 
 @app.cli.command()

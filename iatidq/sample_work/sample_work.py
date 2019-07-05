@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import csv
 import os
 import random
 import re
@@ -10,10 +11,12 @@ from psycopg2.extensions import adapt
 import requests
 import lxml.etree
 
+from iatidq.models import AggregateResult, Test
 from iatidataquality import app
 from iatidq import models
 from test_mapping import test_to_kind
 import db
+from beta.utils import slugify
 
 
 class NoIATIActivityFound(Exception):
@@ -21,10 +24,8 @@ class NoIATIActivityFound(Exception):
 
 
 def all_tests():
-    sampling_tests = []
-    all_tests = {test.description: test for test in models.Test.all()}
-    for k in test_to_kind.keys():
-        sampling_tests.append(all_tests[k])
+    all_tests = models.Test.all()
+    sampling_tests = filter(lambda x: x.description in test_to_kind, all_tests)
     return sorted(sampling_tests, key=lambda x: x.description)
 
 
@@ -53,29 +54,10 @@ def query(*args, **kwargs):
 
 
 class WorkItems(object):
-    def __init__(self, org_ids, test_ids, create):
-        self.org_ids = org_ids
-        self.test_ids = test_ids
-
-        query('''DROP TABLE IF EXISTS current_data_result;''', write=True)
-        query('''DROP TABLE IF EXISTS sampling_current_result_tmp;''', write=True)
-        query('''DROP TABLE IF EXISTS sampling_current_result;''', write=True)
-
-        query('''CREATE TABLE current_data_result AS
-                 SELECT * FROM result
-                 WHERE test_id = 46
-                 AND result_data > 0;''', write=True)
-
-        query('''CREATE TABLE sampling_current_result_tmp AS
-                   SELECT * FROM result
-                   WHERE test_id = ANY(%s)
-                   AND result_data > 0;''', (test_ids,), write=True)
-
-        query('''CREATE TABLE sampling_current_result AS
-                   SELECT sampling_current_result_tmp.* FROM sampling_current_result_tmp, current_data_result
-                   WHERE sampling_current_result_tmp.result_identifier = current_data_result.result_identifier;''', write=True)
-
-        self.update = not create
+    def __init__(self, orgs, tests, snapshot_path):
+        self.orgs = orgs
+        self.tests = tests
+        self.snapshot_path = snapshot_path
 
     def test_desc_of_test_id(self, test_id):
         results = query('''select description from test where id = %s;''', (test_id,));
@@ -87,22 +69,17 @@ class WorkItems(object):
         return test_to_kind[test_desc]
 
     def __iter__(self):
-        total_samples = 20
-        for org_id in self.org_ids:
-            print("Org: {}".format(org_id))
-            for test_id in self.test_ids:
-                if self.update:
-                    total_samples_done = db.count_samples(
-                        org_id=org_id, test_id=test_id)
-                    total_samples_todo = total_samples - total_samples_done
-                else:
-                    total_samples_todo = total_samples
-                print("Test: {}".format(test_id))
+        total_samples_todo = 20
+        for org in self.orgs:
+            print("Org: {}".format(org.id))
+            for test in self.tests:
+                print("Test: {}".format(test.id))
                 print('{} samples to add'.format(total_samples_todo))
-                sot = SampleOrgTest(org_id, test_id)
+
+                sot = SampleOrgTest(org, test, self.snapshot_path)
                 sample_ids = sot.sample_activity_ids(total_samples_todo)
 
-                test_kind = self.kind_of_test(test_id)
+                test_kind = self.kind_of_test(test.id)
 
                 for act_id in sample_ids:
                     try:
@@ -115,8 +92,8 @@ class WorkItems(object):
 
                     args = {
                         "uuid": u,
-                        "organisation_id": org_id,
-                        "test_id": test_id,
+                        "organisation_id": org.id,
+                        "test_id": test.id,
                         "activity_id": act_id[0],
                         "package_id": act_id[1],
                         "xml_data": act,
@@ -128,37 +105,46 @@ class WorkItems(object):
 
 
 class SampleOrgTest(object):
-    def __init__(self, organisation_id, test_id):
-        self.org_id = organisation_id
-        self.test_id = test_id
+    def __init__(self, organisation, test, snapshot_path):
+        self.organisation = organisation
+        self.test = test
+        self.snapshot_path = snapshot_path
 
-        if self.qualifies():
-            self.activities = self.activity_ids()
+    def sample_activity_ids(self, num_samples):
+        ag_results = AggregateResult.where(
+            test_id=self.test.id,
+            organisation_id=self.organisation.id,
+            aggregateresulttype_id=2,
+        )
+        total = int(sum([x.results_data / 100. * x.results_num
+                         for x in ag_results]))
+        if total <= num_samples:
+            indexes = range(total)
         else:
-            self.activities = []
+            indexes = sorted(random.sample(range(total), num_samples))
 
-    def qualifies(self):
-        rows = query('''select result_data from sampling_current_result
-                          where organisation_id = %s
-                            and test_id = %s
-                            and result_data != 0''',
-                     [self.org_id, self.test_id])
-        return len(rows) >= 1
-
-    def activity_ids(self):
-        rows = query('''select result_identifier, package_name from sampling_current_result
-                          left join package on sampling_current_result.package_id = package.id
-                          where organisation_id = %s
-                            and test_id = %s
-                            and result_data = 1''',
-                     [self.org_id, self.test_id])
-        ids = [ i for i in rows ]
-        return ids
-
-    def sample_activity_ids(self, max):
-        act_ids = [i for i in self.activities]
-        random.shuffle(act_ids)
-        return act_ids[:max]
+        current_data_path = os.path.join(
+            self.snapshot_path,
+            self.organisation.registry_slug,
+            'current_data.csv')
+        test_path = os.path.join(
+            self.snapshot_path,
+            self.organisation.registry_slug,
+            '{}.csv'.format(slugify(self.test.description)))
+        with open(current_data_path) as cd_handler:
+            with open(test_path) as test_handler:
+                cd_reader = csv.DictReader(cd_handler)
+                test_reader = csv.DictReader(test_handler)
+                idx = 0
+                for cd_result in cd_reader:
+                    if indexes == []:
+                        break
+                    test_result = next(test_reader)
+                    if cd_result['result'] == 'pass' and test_result['result'] == 'pass':
+                        if idx == indexes[0]:
+                            indexes.pop(0)
+                            yield cd_result['identifier']
+                        idx += 1
 
     def xml_of_package(self, package_name):
         filename = package_name + '.xml'
