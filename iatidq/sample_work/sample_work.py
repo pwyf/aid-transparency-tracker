@@ -19,10 +19,6 @@ import db
 from beta.utils import slugify
 
 
-class NoIATIActivityFound(Exception):
-    pass
-
-
 def all_tests():
     all_tests = models.Test.all()
     sampling_tests = filter(lambda x: x.description in test_to_kind, all_tests)
@@ -71,18 +67,24 @@ class WorkItems(object):
     def __iter__(self):
         total_samples_todo = 20
         for org in self.orgs:
-            print("Org: {}".format(org.id))
+            print("Org: {}".format(org.organisation_name))
             for test in self.tests:
-                print("Test: {}".format(test.id))
+                print("Test: {}".format(test.description))
 
                 sot = SampleOrgTest(org, test, self.snapshot_date)
                 samples = sot.sample_activity_ids(total_samples_todo)
 
                 test_kind = self.kind_of_test(test.id)
 
-                for activity_id, package_name in samples:
-                    act = sot.xml_of_activity(activity_id, package_name)
-                    parent_act = sot.xml_of_parent_activity(activity_id, package_name)
+                for package_name, index, activity_id in samples:
+                    act = sot.get_activity(package_name, index)
+                    act_xml = (
+                        lxml.etree.tostring(act, pretty_print=True)
+                        if act is not None else None)
+                    parent_act = sot.get_parent_activity(act, package_name)
+                    parent_xml = (
+                        lxml.etree.tostring(parent_act, pretty_print=True)
+                        if parent_act is not None else None)
 
                     u = str(uuid.uuid4())
 
@@ -92,8 +94,8 @@ class WorkItems(object):
                         "test_id": test.id,
                         "activity_id": activity_id,
                         "package_id": package_name,
-                        "xml_data": act,
-                        "xml_parent_data": parent_act,
+                        "xml_data": act_xml,
+                        "xml_parent_data": parent_xml,
                         "test_kind": test_kind
                     }
 
@@ -141,7 +143,11 @@ class SampleOrgTest(object):
                     if cd_result['result'] == 'pass' and test_result['result'] == 'pass':
                         if idx == indexes[0]:
                             indexes.pop(0)
-                            yield cd_result['identifier'], cd_result['dataset']
+                            yield (
+                                cd_result['dataset'],
+                                cd_result['index'],
+                                cd_result['identifier'],
+                            )
                         idx += 1
 
     def xml_of_package(self, package_name):
@@ -154,48 +160,33 @@ class SampleOrgTest(object):
             filename)
         return lxml.etree.parse(path)
 
-    def xml_of_activity(self, activity_id, package_name):
+    def get_activity(self, package_name, index):
         xml = self.xml_of_package(package_name)
 
-        xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
+        print(package_name, index)
 
-        activities = xml.xpath(xpath_str % activity_id)
-        if 0 == len(activities):
-            raise NoIATIActivityFound
-        # Some publishers are re-using iati identifiers, so unfortunately
-        # we can't rely on this assertion.
-        # At least we know we have >0 though.
-        # assert len(activities) == 1
-        return lxml.etree.tostring(activities[0], pretty_print=True)
-
-    def xml_of_parent_activity(self, activity_id, package_name):
-        xml = self.xml_of_package(package_name)
-
-        xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
-        activities = xml.xpath(xpath_str % activity_id)
-
-        # More than one IATI activity could be found (if a publisher re-using
-        # iati-identifiers, but should be >0.
+        activities = xml.xpath('//iati-activity[{}]'.format(index))
         assert len(activities) > 0
-        activity_xml = activities[0]
+        return activities[0]
 
-        xpath_str = '''related-activity[@type='1']/@ref'''
-        related_activity_ids = activity_xml.xpath(xpath_str)
+    def get_parent_activity(self, activity, package_name):
+        xml = self.xml_of_package(package_name)
 
-        count_relateds = len(related_activity_ids)
-        if 0 == count_relateds:
+        xpath_str = 'related-activity[@type="1"]/@ref'
+        related_activity_ids = activity.xpath(xpath_str)
+
+        if related_activity_ids == []:
             return None
-
-        assert 0 < count_relateds
-
-        xpath_str = '''//iati-activity[iati-identifier/text()="%s"]'''
 
         parent_id = related_activity_ids[0]
 
-        try:
-            return lxml.etree.tostring(xml.xpath(xpath_str % parent_id)[0])
-        except IndexError:
+        xpath_str = '//iati-activity[iati-identifier/text()="{}"]'
+        parent_acts = xml.xpath(xpath_str.format(parent_id))
+
+        if parent_acts == []:
             return None
+
+        return parent_acts[0]
 
 
 class DocumentLink(object):
