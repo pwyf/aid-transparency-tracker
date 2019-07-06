@@ -493,6 +493,6 @@ def import_tests():
     return tests.import_tests()
 
 
-@app.route("/rawdata/<filename>")
-def rawdata(filename):
-    return send_from_directory(app.config.get('IATI_DATA_PATH'), filename)
+@app.route("/data/<path:path>")
+def raw_data(path):
+    return send_from_directory(app.config.get('IATI_DATA_PATH'), path)
