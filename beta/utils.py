@@ -72,17 +72,21 @@ def run_test(test, publisher, output_path, test_condition, **kwargs):
         # Skipping test (it's not tagged as activity or organisation level)
         return None
 
+    prev_dataset = None
     with open(output_path, 'w') as handler:
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
         if 'iati-activity' in tags:
-            if test_condition:
-                items = publisher.activities.where(xpath=test_condition)
-            else:
-                items = publisher.activities
+            items = publisher.activities
         elif 'iati-organisation' in tags:
             items = publisher.organisations
         for item in items:
+            if item.dataset.name != prev_dataset:
+                idx = 0
+            prev_dataset = item.dataset.name
+            if test_condition and not item.etree.xpath(test_condition):
+                idx += 1
+                continue
             result, explanation = test(item.etree, bdd_verbose=True, **kwargs)
             hierarchy = item.etree.get('hierarchy')
             if not hierarchy:
@@ -90,11 +94,12 @@ def run_test(test, publisher, output_path, test_condition, **kwargs):
             writer.writerow({
                 'dataset': item.dataset.name,
                 'identifier': item.id,
-                'index': item.etree.getparent().index(item.etree),
+                'index': idx,
                 'result': result_lookup.get(result),
                 'hierarchy': hierarchy,
                 'explanation': str(explanation) if not result else '',
             })
+            idx += 1
 
 
 def summarize_results(org, snapshot_result_path, all_tests,

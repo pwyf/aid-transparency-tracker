@@ -10,12 +10,12 @@ from . import utils
 def get_current_countries(publisher, current_data):
     country_codes = []
 
-    for activity in publisher.activities:
-        idx = activity.etree.getparent().index(activity.etree)
-        if current_data[activity.dataset.name][idx] is False:
-            continue
-        country_codes += activity.etree.xpath('recipient-country/@code')
-        country_codes = list(set(country_codes))
+    for dataset in publisher.datasets:
+        for idx, activity in enumerate(dataset.activities):
+            if current_data[dataset.name][idx] is False:
+                continue
+            country_codes += activity.etree.xpath('recipient-country/@code')
+            country_codes = list(set(country_codes))
     return country_codes
 
 
@@ -38,39 +38,38 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
         return
 
     country_strategies = {}
-    for activity in publisher.activities:
-        idx = activity.etree.getparent().index(activity.etree)
-        if current_data_results[activity.dataset.name][idx] is False:
-            continue
-        mous = activity.etree.xpath('document-link[category/@code="A09"]')
-        if mous == []:
-            continue
-        for c in activity.etree.xpath('recipient-country/@code'):
-            country_strategies[c] = {
-                'dataset': activity.dataset.name,
-                'identifier': activity.id,
-                'index': activity.etree.getparent().index(activity.etree),
-                'result': 'pass',
-                'hierarchy': activity.etree.get('hierarchy', '1'),
-                'explanation': 'A09 found for {}',
-            }
+    for dataset in publisher.datasets:
+        for idx, activity in enumerate(dataset.activities):
+            if current_data_results[dataset.name][idx] is False:
+                continue
+            mous = activity.etree.xpath('document-link[category/@code="A09"]')
+            if mous == []:
+                continue
+            for c in activity.etree.xpath('recipient-country/@code'):
+                country_strategies[c] = {
+                    'dataset': dataset.name,
+                    'identifier': activity.id,
+                    'index': idx,
+                    'result': 'pass',
+                    'hierarchy': activity.etree.get('hierarchy', '1'),
+                    'explanation': 'A09 found for {}',
+                }
 
-    for organisation in publisher.organisations:
-        org_level_docs = organisation.etree.xpath(
-            'document-link[category/@code="B03"]/recipient-country/@code')
-        org_level_docs += organisation.etree.xpath(
-            'document-link[category/@code="B13"]/recipient-country/@code')
-        org_level_docs = list(set(org_level_docs))
-        for c in org_level_docs:
-            idx = organisation.etree.getparent().index(organisation.etree)
-            country_strategies[c] = {
-                'dataset': organisation.dataset.name,
-                'identifier': organisation.id,
-                'index': idx,
-                'result': 'pass',
-                'hierarchy': 1,
-                'explanation': 'B03 or B13 found for {}',
-            }
+        for idx, organisation in enumerate(dataset.organisations):
+            org_level_docs = organisation.etree.xpath(
+                'document-link[category/@code="B03"]/recipient-country/@code')
+            org_level_docs += organisation.etree.xpath(
+                'document-link[category/@code="B13"]/recipient-country/@code')
+            org_level_docs = list(set(org_level_docs))
+            for c in org_level_docs:
+                country_strategies[c] = {
+                    'dataset': dataset.name,
+                    'identifier': organisation.id,
+                    'index': idx,
+                    'result': 'pass',
+                    'hierarchy': 1,
+                    'explanation': 'B03 or B13 found for {}',
+                }
 
     default_row = {
         'dataset': '',
