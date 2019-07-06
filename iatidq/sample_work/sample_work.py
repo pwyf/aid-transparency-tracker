@@ -163,8 +163,6 @@ class SampleOrgTest(object):
     def get_activity(self, package_name, index):
         xml = self.xml_of_package(package_name)
 
-        print(package_name, index)
-
         activities = xml.xpath('//iati-activity[{}]'.format(index))
         assert len(activities) > 0
         return activities[0]
