@@ -114,8 +114,6 @@ def setup_sampling(date, filename, org_ids, test_ids):
                    '--date {}\n'.format(date), err=True)
         raise click.Abort()
 
-    snapshot_path = join(iati_result_path, snapshot_date)
-
     if not filename:
         filename = app.config['SAMPLING_DB_FILENAME']
     if exists(filename):
@@ -135,7 +133,7 @@ def setup_sampling(date, filename, org_ids, test_ids):
     else:
         tests = sample_work.all_tests()
 
-    sample_work_db.make_db(filename, orgs, tests, snapshot_path)
+    sample_work_db.make_db(filename, orgs, tests, snapshot_date)
 
 
 @app.cli.command()

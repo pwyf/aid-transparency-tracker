@@ -495,4 +495,4 @@ def import_tests():
 
 @app.route("/rawdata/<filename>")
 def rawdata(filename):
-    return send_from_directory(app.config.get('DATA_STORAGE_DIR'), filename)
+    return send_from_directory(app.config.get('IATI_DATA_PATH'), filename)

@@ -54,10 +54,10 @@ def query(*args, **kwargs):
 
 
 class WorkItems(object):
-    def __init__(self, orgs, tests, snapshot_path):
+    def __init__(self, orgs, tests, snapshot_date):
         self.orgs = orgs
         self.tests = tests
-        self.snapshot_path = snapshot_path
+        self.snapshot_date = snapshot_date
 
     def test_desc_of_test_id(self, test_id):
         results = query('''select description from test where id = %s;''', (test_id,));
@@ -74,19 +74,15 @@ class WorkItems(object):
             print("Org: {}".format(org.id))
             for test in self.tests:
                 print("Test: {}".format(test.id))
-                print('{} samples to add'.format(total_samples_todo))
 
-                sot = SampleOrgTest(org, test, self.snapshot_path)
-                sample_ids = sot.sample_activity_ids(total_samples_todo)
+                sot = SampleOrgTest(org, test, self.snapshot_date)
+                samples = sot.sample_activity_ids(total_samples_todo)
 
                 test_kind = self.kind_of_test(test.id)
 
-                for act_id in sample_ids:
-                    try:
-                        act = sot.xml_of_activity(act_id)
-                        parent_act = sot.xml_of_parent_activity(act_id)
-                    except:
-                        continue
+                for activity_id, package_name in samples:
+                    act = sot.xml_of_activity(activity_id, package_name)
+                    parent_act = sot.xml_of_parent_activity(activity_id, package_name)
 
                     u = str(uuid.uuid4())
 
@@ -94,21 +90,21 @@ class WorkItems(object):
                         "uuid": u,
                         "organisation_id": org.id,
                         "test_id": test.id,
-                        "activity_id": act_id[0],
-                        "package_id": act_id[1],
+                        "activity_id": activity_id,
+                        "package_id": package_name,
                         "xml_data": act,
                         "xml_parent_data": parent_act,
                         "test_kind": test_kind
-                        }
+                    }
 
                     yield args
 
 
 class SampleOrgTest(object):
-    def __init__(self, organisation, test, snapshot_path):
+    def __init__(self, organisation, test, snapshot_date):
         self.organisation = organisation
         self.test = test
-        self.snapshot_path = snapshot_path
+        self.snapshot_date = snapshot_date
 
     def sample_activity_ids(self, num_samples):
         ag_results = AggregateResult.where(
@@ -124,11 +120,13 @@ class SampleOrgTest(object):
             indexes = sorted(random.sample(range(total), num_samples))
 
         current_data_path = os.path.join(
-            self.snapshot_path,
+            app.config.get('IATI_RESULT_PATH'),
+            self.snapshot_date,
             self.organisation.registry_slug,
             'current_data.csv')
         test_path = os.path.join(
-            self.snapshot_path,
+            app.config.get('IATI_RESULT_PATH'),
+            self.snapshot_date,
             self.organisation.registry_slug,
             '{}.csv'.format(slugify(self.test.description)))
         with open(current_data_path) as cd_handler:
@@ -143,17 +141,21 @@ class SampleOrgTest(object):
                     if cd_result['result'] == 'pass' and test_result['result'] == 'pass':
                         if idx == indexes[0]:
                             indexes.pop(0)
-                            yield cd_result['identifier']
+                            yield cd_result['identifier'], cd_result['dataset']
                         idx += 1
 
     def xml_of_package(self, package_name):
         filename = package_name + '.xml'
-        path = os.path.join(app.config['DATA_STORAGE_DIR'], filename)
+        path = os.path.join(
+            app.config['IATI_DATA_PATH'],
+            self.snapshot_date,
+            'data',
+            self.organisation.registry_slug,
+            filename)
         return lxml.etree.parse(path)
 
-    def xml_of_activity(self, activity):
-        activity_id, pkg = activity
-        xml = self.xml_of_package(pkg)
+    def xml_of_activity(self, activity_id, package_name):
+        xml = self.xml_of_package(package_name)
 
         xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
 
@@ -166,9 +168,8 @@ class SampleOrgTest(object):
         # assert len(activities) == 1
         return lxml.etree.tostring(activities[0], pretty_print=True)
 
-    def xml_of_parent_activity(self, activity):
-        activity_id, pkg = activity
-        xml = self.xml_of_package(pkg)
+    def xml_of_parent_activity(self, activity_id, package_name):
+        xml = self.xml_of_package(package_name)
 
         xpath_str = '//iati-activity[iati-identifier/text()="%s"]'
         activities = xml.xpath(xpath_str % activity_id)
