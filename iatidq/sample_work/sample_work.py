@@ -145,7 +145,7 @@ class SampleOrgTest(object):
                             indexes.pop(0)
                             yield (
                                 cd_result['dataset'],
-                                cd_result['index'],
+                                int(cd_result['index']),
                                 cd_result['identifier'],
                             )
                         idx += 1
@@ -163,7 +163,7 @@ class SampleOrgTest(object):
     def get_activity(self, package_name, index):
         xml = self.xml_of_package(package_name)
 
-        activities = xml.xpath('//iati-activity[{}]'.format(index))
+        activities = xml.xpath('//iati-activity[{}]'.format(index + 1))
         assert len(activities) > 0
         return activities[0]
 
