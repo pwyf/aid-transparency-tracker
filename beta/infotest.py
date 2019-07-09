@@ -1,8 +1,9 @@
 import csv
-from os.path import join
+from os.path import dirname, join
 
 from flask import current_app
 import iatikit
+from bdd_tester import BDDTester
 
 from . import utils
 
@@ -92,5 +93,68 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
 
 def disaggregated_budget(org, snapshot_date, test_name,
                          current_data_results):
-    # TODO
-    pass
+    iati_result_path = current_app.config.get('IATI_RESULT_PATH')
+    output_filepath = join(iati_result_path,
+                           snapshot_date, org.registry_slug,
+                           utils.slugify(test_name) + '.csv')
+
+    iati_data_path = current_app.config.get('IATI_DATA_PATH')
+    snapshot_xml_path = join(iati_data_path, snapshot_date)
+    publisher = iatikit.data(snapshot_xml_path).publishers.get(
+        org.registry_slug)
+
+    codelists = iatikit.codelists()
+    current_country_codes = get_current_countries(
+        publisher, current_data_results)
+
+    disaggregated_budget_tmpl = u'''@iati-organisation
+Feature: Total disaggregated budget
+
+  Scenario: Country budget available one year forward
+    Given file is an organisation file
+     Then `recipient-country-budget[recipient-country/@code="{country_code}"]` should be available 1 year forward
+
+  Scenario: Country budget available two years forward
+    Given file is an organisation file
+     Then `recipient-country-budget[recipient-country/@code="{country_code}"]` should be available 2 years forward
+
+  Scenario: Country budget available three years forward
+    Given file is an organisation file
+     Then `recipient-country-budget[recipient-country/@code="{country_code}"]` should be available 3 years forward
+    '''
+    base_path = join(dirname(current_app.root_path),
+                     'index_indicator_definitions', 'test_definitions')
+    step_definitions = join(base_path, 'step_definitions.py')
+    tester = BDDTester(step_definitions)
+
+    explanation_tmpl = 'Budget for {country_code} {found} ' + \
+                       '{year} year{plural} forward'
+    fieldnames = ['dataset', 'identifier', 'index', 'result',
+                  'hierarchy', 'explanation']
+    with open(output_filepath, 'w') as handler:
+        writer = csv.DictWriter(handler, fieldnames=fieldnames)
+        writer.writeheader()
+        for country_code in current_country_codes:
+            feature = tester._gherkinify_feature(
+                disaggregated_budget_tmpl.format(country_code=country_code))
+            for dataset in publisher.datasets:
+                for idx, organisation in enumerate(dataset.organisations):
+                    for year, test in enumerate(feature.tests):
+                        result = test(
+                            organisation.etree,
+                            today=snapshot_date,
+                            codelists=codelists)
+                        explanation = explanation_tmpl.format(
+                            country_code=country_code,
+                            found='found' if result else 'not found',
+                            year=year + 1,
+                            plural='s' if year > 0 else '',
+                        )
+                        writer.writerow({
+                            'dataset': dataset.name,
+                            'identifier': organisation.id,
+                            'index': idx,
+                            'result': result,
+                            'hierarchy': 1,
+                            'explanation': explanation,
+                        })
