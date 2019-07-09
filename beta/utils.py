@@ -135,7 +135,7 @@ def summarize_results(org, snapshot_result_path, all_tests,
                 idx = int(row['index'])
                 if (current_data_results and
                     current_data_results.get(dataset, {}).get(
-                        idx, False) is False):
+                        idx, 'not relevant') is False):
                     continue
                 dataset_test_results[hierarchy][result] += 1
             if dataset is not None:
