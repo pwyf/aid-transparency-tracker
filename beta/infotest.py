@@ -154,7 +154,7 @@ Feature: Total disaggregated budget
                             'dataset': dataset.name,
                             'identifier': organisation.id,
                             'index': idx,
-                            'result': result,
+                            'result': 'pass' if result else 'fail',
                             'hierarchy': 1,
                             'explanation': explanation,
                         })
