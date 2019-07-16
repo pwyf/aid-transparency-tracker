@@ -110,6 +110,6 @@ pyenv/
 # mypy
 .mypy_cache/
 
-# vagrant
-
+# dev tools
 .vagrant
+.vscode
