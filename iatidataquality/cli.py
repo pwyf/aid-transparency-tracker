@@ -4,14 +4,14 @@ import shutil
 
 import click
 import iatikit
+import csv
 
 from . import app, db
 from iatidq import dqimporttests, dqindicators, dqorganisations, dqusers
 from iatidq import setup as dqsetup
-from iatidq.models import Organisation, Test
+from iatidq.models import Organisation, Test, OrganisationCondition
 from iatidq.sample_work import sample_work, db as sample_work_db
 from beta import utils, infotest
-
 
 @app.cli.command()
 def init_db():
@@ -331,3 +331,52 @@ def aggregate_results(date):
                 org, snapshot_result_path)
             utils.summarize_results(
                 org, snapshot_result_path, all_tests, current_data_results)
+
+@app.cli.command()
+@click.option('--filepath', '-f', help='path to the CSV file with the list of organisation exclusions.')
+def excluded_conditions(filepath):
+    """Import all test exclusions based on test group per organisation and hierarchy level"""
+
+    def get_all_test_objects(testgroup):
+        tests = db.session.query(Test).filter_by(test_group=testgroup).all()
+        return {test.as_dict()["id"]: test.as_dict()["description"] for test in tests}
+
+    with open(filepath) as fh:
+        data = csv.reader(fh)
+        condition = unicode("activity hierarchy")
+        operation = unicode(0)
+        try:
+            for row in data:
+                organisation_slug = unicode(row[0].lower())
+                org = db.session.query(Organisation).filter_by(registry_slug=organisation_slug).first()
+                organisation_id = org.as_dict()["id"]
+                condition_value = unicode(row[2])
+
+                # import pdb; pdb.set_trace()
+
+                test_group = unicode(row[1].lower())
+                test_objects = get_all_test_objects(test_group)
+                for test_id, test_description in test_objects.items():
+                    pc = OrganisationCondition.query.filter_by(
+                        organisation_id=organisation_id, test_id=test_id,
+                        operation=operation, condition=condition,
+                        condition_value=condition_value).first()
+
+                    with db.session.begin():
+                        if (pc is None):
+                            pc = OrganisationCondition()
+
+                        pc.organisation_id = organisation_id
+                        pc.test_id = test_id
+                        pc.operation = operation
+                        pc.condition = condition
+                        pc.condition_value = condition_value
+                        pc.description = test_description
+                        pc.file = filepath
+                        pc.line = unicode(0)
+                        pc.active = unicode('t')
+                        db.session.add(pc)
+
+        except:
+            db.session.rollback()
+            raise
