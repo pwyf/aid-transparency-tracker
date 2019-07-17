@@ -13,6 +13,7 @@ from iatidq.models import Organisation, Test, OrganisationCondition
 from iatidq.sample_work import sample_work, db as sample_work_db
 from beta import utils, infotest
 
+
 @app.cli.command()
 def init_db():
     """Initialize the database."""
@@ -108,7 +109,8 @@ def setup_sampling(date, filename, org_ids, test_ids):
                         '({}).'.format(date),
                         fg='red', err=True)
         else:
-            click.secho('Error: No IATI results to sample.', fg='red', err=True)
+            click.secho('Error: No IATI results to sample.',
+                        fg='red', err=True)
         click.echo('Perhaps you need to run tests, using:', err=True)
         click.echo('\n    $ flask test_data ' +
                    '--date {}\n'.format(date), err=True)
@@ -332,6 +334,7 @@ def aggregate_results(date):
             utils.summarize_results(
                 org, snapshot_result_path, all_tests, current_data_results)
 
+
 @app.cli.command()
 @click.option('--filepath', '-f', help='path to the CSV file with the list of organisation exclusions.')
 def excluded_conditions(filepath):
@@ -340,14 +343,16 @@ def excluded_conditions(filepath):
     def get_all_test_objects(test_group):
         tests = db.session.query(Test).filter_by(test_group=test_group).all()
         return {test.as_dict()["id"]: test.as_dict()["description"] for test in tests}
-    
+
     def check_organisations_exist(data):
         click.echo('Checking that all organisations in the CSV exist')
         for row in data:
             organisation_slug = unicode(row[0].lower())
-            org = db.session.query(Organisation).filter_by(registry_slug=organisation_slug).first()
+            org = db.session.query(Organisation).filter_by(
+                registry_slug=organisation_slug).first()
             if org is None:
-                raise Exception('The organisation "{}" could not be found in the database'.format(organisation_slug))
+                raise Exception('The organisation "{}" could not be found in the database'.format(
+                    organisation_slug))
             else:
                 click.echo('Organisation {} exists.'.format(organisation_slug))
 
@@ -355,12 +360,14 @@ def excluded_conditions(filepath):
         click.echo('Checking that all test groups in the CSV exist')
         for row in data:
             test_group = unicode(row[1].lower())
-            tests = db.session.query(Test).filter_by(test_group=test_group).all()
+            tests = db.session.query(Test).filter_by(
+                test_group=test_group).all()
             if len(tests) is 0:
-                raise Exception('The test group "{}" could not be found in the database'.format(test_group))
+                raise Exception(
+                    'The test group "{}" could not be found in the database'.format(test_group))
             else:
                 click.echo('Test group {} exists.'.format(test_group))
-    
+
     def insert_organisation_conditions(data):
         click.echo('Inserting data into the database where applicable')
         condition = unicode("activity hierarchy")
@@ -368,7 +375,8 @@ def excluded_conditions(filepath):
 
         for row in data:
             organisation_slug = unicode(row[0].lower())
-            org = db.session.query(Organisation).filter_by(registry_slug=organisation_slug).first()
+            org = db.session.query(Organisation).filter_by(
+                registry_slug=organisation_slug).first()
             organisation_id = org.as_dict()["id"]
             condition_value = unicode(row[2])
 
@@ -379,7 +387,7 @@ def excluded_conditions(filepath):
                     organisation_id=organisation_id, test_id=test_id,
                     operation=operation, condition=condition,
                     condition_value=condition_value).first()
-                
+
                 print(pc)
 
                 with db.session.begin():
@@ -396,7 +404,7 @@ def excluded_conditions(filepath):
                     pc.line = unicode(0)
                     pc.active = unicode('t')
                     db.session.add(pc)
-    
+
     with open(filepath) as fh:
         try:
             csv_file = csv.reader(fh)
@@ -410,6 +418,5 @@ def excluded_conditions(filepath):
         try:
             insert_organisation_conditions(csv_list)
         except:
-            raise Exception("An error occured when inserting the conditions into the database.")
-
-
+            raise Exception(
+                "An error occured when inserting the conditions into the database.")
