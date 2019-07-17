@@ -388,8 +388,6 @@ def excluded_conditions(filepath):
                     operation=operation, condition=condition,
                     condition_value=condition_value).first()
 
-                print(pc)
-
                 with db.session.begin():
                     if (pc is None):
                         pc = OrganisationCondition()
