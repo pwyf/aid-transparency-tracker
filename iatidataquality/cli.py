@@ -337,46 +337,79 @@ def aggregate_results(date):
 def excluded_conditions(filepath):
     """Import all test exclusions based on test group per organisation and hierarchy level"""
 
-    def get_all_test_objects(testgroup):
-        tests = db.session.query(Test).filter_by(test_group=testgroup).all()
+    def get_all_test_objects(test_group):
+        tests = db.session.query(Test).filter_by(test_group=test_group).all()
         return {test.as_dict()["id"]: test.as_dict()["description"] for test in tests}
+    
+    def check_organisations_exist(data):
+        click.echo('Checking that all organisations in the CSV exist')
+        for row in data:
+            organisation_slug = unicode(row[0].lower())
+            org = db.session.query(Organisation).filter_by(registry_slug=organisation_slug).first()
+            if org is None:
+                raise Exception('The organisation "{}" could not be found in the database'.format(organisation_slug))
+            else:
+                click.echo('Organisation {} exists.'.format(organisation_slug))
 
-    with open(filepath) as fh:
-        data = csv.reader(fh)
+    def check_tests_exist(data):
+        click.echo('Checking that all test groups in the CSV exist')
+        for row in data:
+            test_group = unicode(row[1].lower())
+            tests = db.session.query(Test).filter_by(test_group=test_group).all()
+            if len(tests) is 0:
+                raise Exception('The test group "{}" could not be found in the database'.format(test_group))
+            else:
+                click.echo('Test group {} exists.'.format(test_group))
+    
+    def insert_organisation_conditions(data):
+        click.echo('Inserting data into the database where applicable')
         condition = unicode("activity hierarchy")
         operation = unicode(0)
+
+        for row in data:
+            organisation_slug = unicode(row[0].lower())
+            org = db.session.query(Organisation).filter_by(registry_slug=organisation_slug).first()
+            organisation_id = org.as_dict()["id"]
+            condition_value = unicode(row[2])
+
+            test_group = unicode(row[1].lower())
+            test_objects = get_all_test_objects(test_group)
+            for test_id, test_description in test_objects.items():
+                pc = OrganisationCondition.query.filter_by(
+                    organisation_id=organisation_id, test_id=test_id,
+                    operation=operation, condition=condition,
+                    condition_value=condition_value).first()
+                
+                print(pc)
+
+                with db.session.begin():
+                    if (pc is None):
+                        pc = OrganisationCondition()
+
+                    pc.organisation_id = organisation_id
+                    pc.test_id = test_id
+                    pc.operation = operation
+                    pc.condition = condition
+                    pc.condition_value = condition_value
+                    pc.description = test_description
+                    pc.file = filepath
+                    pc.line = unicode(0)
+                    pc.active = unicode('t')
+                    db.session.add(pc)
+    
+    with open(filepath) as fh:
         try:
-            for row in data:
-                organisation_slug = unicode(row[0].lower())
-                org = db.session.query(Organisation).filter_by(registry_slug=organisation_slug).first()
-                organisation_id = org.as_dict()["id"]
-                condition_value = unicode(row[2])
-
-                # import pdb; pdb.set_trace()
-
-                test_group = unicode(row[1].lower())
-                test_objects = get_all_test_objects(test_group)
-                for test_id, test_description in test_objects.items():
-                    pc = OrganisationCondition.query.filter_by(
-                        organisation_id=organisation_id, test_id=test_id,
-                        operation=operation, condition=condition,
-                        condition_value=condition_value).first()
-
-                    with db.session.begin():
-                        if (pc is None):
-                            pc = OrganisationCondition()
-
-                        pc.organisation_id = organisation_id
-                        pc.test_id = test_id
-                        pc.operation = operation
-                        pc.condition = condition
-                        pc.condition_value = condition_value
-                        pc.description = test_description
-                        pc.file = filepath
-                        pc.line = unicode(0)
-                        pc.active = unicode('t')
-                        db.session.add(pc)
-
+            csv_file = csv.reader(fh)
+            csv_list = list(csv_file)
         except:
-            db.session.rollback()
-            raise
+            raise Exception("An error occured reading the CSV file.")
+
+        check_organisations_exist(csv_list)
+        check_tests_exist(csv_list)
+
+        try:
+            insert_organisation_conditions(csv_list)
+        except:
+            raise Exception("An error occured when inserting the conditions into the database.")
+
+
