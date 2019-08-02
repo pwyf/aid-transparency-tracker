@@ -17,6 +17,8 @@ cd /vagrant
 
 source pyenv/bin/activate
 
+flask setup
+
 flask download_data
 
 flask import_data
@@ -28,8 +30,8 @@ flask aggregate_results
 
 ## Run webservice with vagrant
 
-webservice:
+webservice (flask uses port 5000 by default, this is opened on the vagrant box):
 
 ``` bash
-flask run --host 0.0.0.0 --port 8080
+flask run --host 0.0.0.0
 ```
