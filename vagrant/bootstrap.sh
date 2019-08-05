@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export DEBIAN_FRONTEND=noninteractive
 set -e
 
 sudo echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
