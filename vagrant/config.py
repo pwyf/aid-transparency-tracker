@@ -26,7 +26,7 @@ SETUP_ORGS = ['dfid', 'fco', 'beis', 'dhsc', 'defra_transparency', 'dwp', 'ukmod
 
 # SETUP_PKG_COUNTER = 10
 
-ORG_FREQUENCY_API_URL = "http://dashboard.iatistandard.org/timeliness_frequency.csv"
+ORG_FREQUENCY_API_URL = "http://publishingstats.iatistandard.org/timeliness_frequency.csv"
 IATIUPDATES_URL = "http://2018tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
 
 REMOVE_RESULTS = True
