@@ -30,12 +30,12 @@ cd /vagrant
 #git clone --recursive --branch original-version https://github.com/pwyf/aid-transparency-tracker.git
 #cd aid-transparency-tracker
 
-python3 -m venv venv
-echo "export FLASK_APP=iatidataquality/__init__.py" >> venv/bin/activate
-source venv/bin/activate
+python3 -m venv .ve
+echo "export FLASK_APP=iatidataquality/__init__.py" >> .ve/bin/activate
+source .ve/bin/activate
 pip install -r requirements.txt
 
-cp vagrant/config.py .
+# cp vagrant/config.py .
 
 rm -rf dq
 rm -rf impsched
