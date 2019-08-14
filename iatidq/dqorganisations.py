@@ -475,7 +475,7 @@ def get_ordinal_values_years():
             'text': 'No forward data',
             'class': 'inverse',
         },
-        None: {
+        "": {
             'text': 'Unknown',
             'class': '',
         },

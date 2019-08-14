@@ -229,7 +229,7 @@ def organisation_survey_view(organisation, workflow, organisationsurvey):
     publishedformats = dict(list(map(id_tuple, dqsurveys.publishedFormatAll())))
     year_data = dqorganisations.get_ordinal_values_years()
 
-    years = sorted(list(year_data.items()), reverse=True)
+    years = sorted(year_data.items(), reverse=True)
     years.pop()
 
     donorresponses = donorresponse.RESPONSE_IDS
