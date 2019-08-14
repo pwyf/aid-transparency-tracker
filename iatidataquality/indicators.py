@@ -11,7 +11,7 @@ import io
 
 from flask import abort, render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
-import unicodecsv
+import csv
 
 from . import app, usermanagement
 from iatidq import dqindicators, dqorganisations, models, util
@@ -149,7 +149,7 @@ def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
         fieldnames = "test_name test_description test_level indicator_name indicator_description".split()
     else:
         fieldnames = "test_name test_description test_level".split()
-    out = unicodecsv.DictWriter(strIO, fieldnames=fieldnames)
+    out = csv.DictWriter(strIO, fieldnames=fieldnames)
     headers = {}
     for fieldname in fieldnames:
         headers[fieldname] = fieldname

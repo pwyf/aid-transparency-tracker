@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import unicodecsv
+import csv
 
 from iatidataquality import db
 from . import dqorganisations, models
@@ -15,7 +15,7 @@ from . import dqorganisations, models
 
 def importManualPackages(organisation_code, filename, prefix_url):
     with open(filename) as fh:
-        packages = unicodecsv.DictReader(fh)
+        packages = csv.DictReader(fh)
         organisation = models.Organisation.where(organisation_code=organisation_code).first()
         for package in packages:
             data = {

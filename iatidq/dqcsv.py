@@ -9,7 +9,7 @@
 
 import io
 
-import unicodecsv
+import csv
 
 from . import dqorganisations, models
 from .survey import data as dqsurveys
@@ -400,7 +400,7 @@ def make_csv(organisations, index_data=False, history=False):
         csv_headers = csv_fieldnames
     if history:
         csv_headers.extend(["survey_workflow_name", "survey_source", "survey_comment", "survey_agree"])
-    out = unicodecsv.DictWriter(strIO, fieldnames=csv_headers)
+    out = csv.DictWriter(strIO, fieldnames=csv_headers)
     headers = {}
 
     for fieldname in csv_headers:

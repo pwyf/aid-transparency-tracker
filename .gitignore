@@ -1,7 +1,8 @@
-# sample_work sqlite database
+# sample_work sqlite database and data folders
 sample_work.db
 iatikit.ini
 __iatikitcache__/
+dq
 
 # config file
 /config.py

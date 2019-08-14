@@ -10,7 +10,7 @@
 from collections import defaultdict
 
 import requests
-import unicodecsv
+import csv
 
 from iatidataquality import app, db
 from . import models
@@ -60,7 +60,7 @@ def handle_row(codelist, codelist_url, crow):
 
 def add_manual_codelist(filename, codelist_name, codelist_description):
     f = open(filename)
-    codelist_data = unicodecsv.DictReader(f)
+    codelist_data = csv.DictReader(f)
 
     with db.session.begin():
         codelist = models.Codelist.query.filter(

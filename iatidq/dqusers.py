@@ -8,7 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 import datetime
-import unicodecsv
+import csv
 
 from iatidataquality import db
 from . import models
@@ -99,7 +99,7 @@ def _importUserData(fh):
 
     def generate_permissions():
         permissions = []
-        data = unicodecsv.DictReader(fh)
+        data = csv.DictReader(fh)
         for row in data:
 
             user=getCreateUser(row)
