@@ -12,7 +12,7 @@ from contextlib import contextmanager
 import json
 import os
 import traceback
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import ssl
 
 from flask import request, current_app
@@ -23,10 +23,10 @@ def report_error(success, failure):
     try:
         yield
         if success is not None:
-            print success
-    except Exception, e:
+            print(success)
+    except Exception as e:
         if failure is not None:
-            print failure, e
+            print(failure, e)
             #print traceback.print_exc()
 
 def ensure_download_dir(directory):
@@ -36,8 +36,8 @@ def ensure_download_dir(directory):
 
 def download_file(url, path):
     with open(path, 'w') as localFile:
-        req = urllib2.Request(url, headers={'User-Agent': 'PWYF/Aid Transparency Tracker'})
-        webFile = urllib2.urlopen(req)
+        req = urllib.request.Request(url, headers={'User-Agent': 'PWYF/Aid Transparency Tracker'})
+        webFile = urllib.request.urlopen(req)
         localFile.write(webFile.read())
         webFile.close()
 
@@ -55,20 +55,20 @@ def jsonify(*args, **kwargs):
 def resort_sqlalchemy_indicator(data):
     resort_fn = lambda x, y: cmp(x[1]['indicator']["indicator_order"],
                                     y[1]['indicator']["indicator_order"])
-    new = sorted(data.items(),
+    new = sorted(list(data.items()),
                     cmp=resort_fn)
     return collections.OrderedDict(new)
 
 def resort_dict_indicator(data):
     resort_fn = lambda x, y: cmp(x[1]['indicator']['indicator_order'],
                                         y[1]['indicator']['indicator_order'])
-    new = sorted(data.items(),
+    new = sorted(list(data.items()),
                     cmp=resort_fn)
     return collections.OrderedDict(new)
 
 def group_by_subcategory(data):
     grouped_data = collections.OrderedDict()
-    for x in data.values():
+    for x in list(data.values()):
         subcat = x['indicator']['indicator_subcategory_name']
         if subcat not in grouped_data:
             grouped_data[subcat] = []
@@ -78,6 +78,6 @@ def group_by_subcategory(data):
 def resort_indicator_tests(data):
     resort_fn = lambda x, y: cmp(x[1]["indicator_order"],
                                         y[1]["indicator_order"])
-    new = sorted(data.items(),
+    new = sorted(list(data.items()),
                     cmp=resort_fn)
     return collections.OrderedDict(new)

@@ -10,9 +10,9 @@ sudo locale-gen
 apt-get update
 apt-get upgrade -y
 
-apt-get install -y git python python-dev libxml2-dev libxslt1-dev libpq-dev sqlite rabbitmq-server python-pip xclip apache2 screen libapache2-mod-wsgi postgresql-10 uwsgi apache2 libapache2-mod-proxy-uwsgi uwsgi-plugin-python3 supervisor redis
+apt-get install -y git python3 python3-dev python3-venv libxml2-dev libxslt1-dev libpq-dev sqlite rabbitmq-server python3-pip xclip apache2 screen libapache2-mod-wsgi postgresql-10 uwsgi apache2 libapache2-mod-proxy-uwsgi uwsgi-plugin-python3 supervisor redis
 
-pip install virtualenv
+# pip install virtualenv
 
 #adduser --quiet --disabled-password --shell /bin/bash --home /home/tracker tracker
 
@@ -30,9 +30,9 @@ cd /vagrant
 #git clone --recursive --branch original-version https://github.com/pwyf/aid-transparency-tracker.git
 #cd aid-transparency-tracker
 
-virtualenv pyenv
-echo "export FLASK_APP=iatidataquality/__init__.py" >> pyenv/bin/activate
-source pyenv/bin/activate
+python3 -m venv venv
+echo "export FLASK_APP=iatidataquality/__init__.py" >> venv/bin/activate
+source venv/bin/activate
 pip install -r requirements.txt
 
 cp vagrant/config.py .

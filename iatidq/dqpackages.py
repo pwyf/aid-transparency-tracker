@@ -25,7 +25,7 @@ def importManualPackages(organisation_code, filename, prefix_url):
                 'man_auto': 'man',
                 'active': True
             }
-            print "Adding package", package["package_name"]
+            print("Adding package", package["package_name"])
             newp = addPackage(data)
             if newp:
                 dqorganisations.addOrganisationPackage({
@@ -33,7 +33,7 @@ def importManualPackages(organisation_code, filename, prefix_url):
                     'package_id': newp.id,
                     'condition': None
                 })
-    print "Success"
+    print("Success")
 
 
 def addPackage(data):
@@ -149,20 +149,20 @@ def get_organisations_for_testing(package_id):
         if condition is not None:
             # unicode-escape is necessary to deal with an umlaut in a condition.
             condition_unbracketed = condition.decode('unicode-escape').strip()
-            condition = u"[" + condition_unbracketed + u"]"
+            condition = "[" + condition_unbracketed + "]"
             conditions.append(condition)
             conditions_unbracketed.append(condition_unbracketed)
         else:
-            condition_unbracketed = u""
-            condition = u""
+            condition_unbracketed = ""
+            condition = ""
 
         organisations.append({
                 'organisation_id': organisation_id,
-                'activities_xpath': u"//iati-activity%s" % condition
+                'activities_xpath': "//iati-activity%s" % condition
                 })
 
     conditions_str = " or ".join(conditions_unbracketed)
-    remainder_xpath = u"//iati-activity[not(%s)]" % conditions_str
+    remainder_xpath = "//iati-activity[not(%s)]" % conditions_str
 
     if conditions:
         organisations.append({

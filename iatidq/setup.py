@@ -56,33 +56,33 @@ def create_aggregation_types():
 def setup_common():
     print("Creating tables")
     db.create_all()
-    print "Adding hardcoded tests"
+    print("Adding hardcoded tests")
     dqimporttests.hardcodedTests()
-    print "Importing indicators"
+    print("Importing indicators")
     dqindicators.importIndicatorsFromFile(
         default_indicator_group_name,
         default_indicator_filename)
-    print "Importing indicator descriptions"
+    print("Importing indicator descriptions")
     dqindicators.importIndicatorDescriptionsFromFile(
         app.config["INDICATOR_GROUP"],
         "tests/indicators.csv")
-    print "Importing tests"
+    print("Importing tests")
     dqimporttests.importTestsFromFile(
         default_tests_filename,
         test_level.ACTIVITY)
 
 def setup_organisations():
-    print "Adding organisations"
+    print("Adding organisations")
     dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
 
 def setup_packages():
-    print "Refreshing package data from Registry"
+    print("Refreshing package data from Registry")
     dqregistry.refresh_packages()
 
 def setup_admin_user(username=None, password=None):
     print('Creating admin user ...')
     while not username:
-        username = raw_input('Username: ')
+        username = input('Username: ')
     while not password:
         password = getpass('Password: ')
     user_dict = {
@@ -114,13 +114,13 @@ def setup():
 
     setup_organisations()
 
-    print "Getting organisation frequency"
+    print("Getting organisation frequency")
     dqorganisations.downloadOrganisationFrequency()
-    print "Setting up survey"
+    print("Setting up survey")
     survey.setup.setupSurvey()
 
     # print("Importing all users and creating permissions")
     # dqusers.importUserDataFromFile(default_userdata_filename)
     # print("Finished importing users")
 
-    print "Setup complete."
+    print("Setup complete.")

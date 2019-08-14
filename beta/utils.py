@@ -145,7 +145,7 @@ def summarize_results(org, snapshot_result_path, all_tests,
 
 def save_summary(dataset, dataset_test_results, test_id, org,
                  aggregateresulttype):
-    for hierarchy, scores in dataset_test_results.items():
+    for hierarchy, scores in list(dataset_test_results.items()):
         total = sum(scores.values())
         if total == 0:
             continue

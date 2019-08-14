@@ -33,7 +33,7 @@ def updateTest(data):
     checkTest = tests(data['id'])
     if checkTest:
         with db.session.begin():
-            for k, v in data.items():
+            for k, v in list(data.items()):
                 setattr(checkTest, k, v)
             db.session.add(checkTest)
         return checkTest

@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import StringIO
+import io
 
 from flask import abort, render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
@@ -144,7 +144,7 @@ def get_indicators(indicatorgroup=None):
 
 
 def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
-    strIO = StringIO.StringIO()
+    strIO = io.StringIO()
     if (option != "no"):
         fieldnames = "test_name test_description test_level indicator_name indicator_description".split()
     else:

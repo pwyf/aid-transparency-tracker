@@ -51,7 +51,7 @@ def get_response(kind, response):
 
 def kind_to_list(kind):
     kind_data = test_mapping.kind_to_status[kind]
-    kind_data = map(lambda x: (x[1]), kind_data.items())
+    kind_data = [(x[1]) for x in list(kind_data.items())]
     return kind_data
 
 
@@ -309,7 +309,7 @@ def sampling_summary():
             failures_dict[x.organisation_id][x.test_id] = True
     data = [
         dict(
-            x.items() + [
+            list(x.items()) + [
                 ('failed', failures_dict.get(x['organisation_id'], {}).get(x['test_id'], False))])
         for x in data]
 

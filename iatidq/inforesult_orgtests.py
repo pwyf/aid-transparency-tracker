@@ -2,6 +2,7 @@ import datetime
 import re
 
 from . import dqcodelists
+from functools import reduce
 
 
 def fixVal(value):
@@ -163,11 +164,11 @@ def total_country_budgets(doc, totalbudgets):
 
     data = [generate_total_years_data(budgetdata, year) for year in years]
 
-    total_pcts = budgetdata['summary']['total_pct'].items()
+    total_pcts = list(budgetdata['summary']['total_pct'].items())
 
     # For scoring, restrict to forward years (year >=1)
-    total_pcts = dict(filter(lambda x: x[0]>=1, total_pcts))
-    total_pcts = total_pcts.values()
+    total_pcts = dict([x for x in total_pcts if x[0]>=1])
+    total_pcts = list(total_pcts.values())
 
     # Return average of 3 forward years
     budgetdata['summary']['total_pct_all_years'] = (reduce(lambda x, y: float(x) + float(y), total_pcts) / float(len(total_pcts)))
@@ -193,7 +194,7 @@ def country_strategy_papers(doc):
 
     countrycodelist = dqcodelists.reformatCodelist("countriesbasic")
 
-    for code, name in countries.items():
+    for code, name in list(countries.items()):
         # Some donors have not provided the name of the country; the
         # country code could theoretically be looked up to find the
         # name of the country
@@ -216,10 +217,10 @@ def country_strategy_papers(doc):
                         countries.pop(code)
                     except Exception:
                         pass
-    print "Remaining countries are", countries
+    print("Remaining countries are", countries)
     csp = 100-(float(len(countries))/float(total_countries))*100
     if csp > 0: return csp
-    print doc
+    print(doc)
     return total_sector_strategy_papers(doc)
 
 def getCountryName(code, name, countrycodelist):
@@ -270,10 +271,10 @@ def total_budgets_available(doc):
     future_years = total_future_budgets(doc)
     # Only look for future years >=1, i.e. exclude
     # current year.
-    future_years = dict(filter(lambda x: x[0]>=1, future_years.items()))
+    future_years = dict([x for x in list(future_years.items()) if x[0]>=1])
 
     available = 0
-    for year, data in future_years.items():
+    for year, data in list(future_years.items()):
         if data['available'] == True:
             available+=1
     return (float(available)/3.0)*100
@@ -311,17 +312,11 @@ def total_sector_budgets(doc):
 
 def total_sector_budgets_single_result(doc):
     result = total_sector_budgets(doc)
-    return sum(by["budgetlines_pct"] for by in result.values()) / len(result)
+    return sum(by["budgetlines_pct"] for by in list(result.values())) / len(result)
 
 def total_sector_strategy_papers(doc):
     all_budgets = total_sector_budgets(doc)
-    sector_names = set(sum(list(map(
-        lambda x: list(map(
-            lambda b: b['budget_name'],
-            x['budget-lines'].values()
-            )),
-        all_budgets.values()
-        )), []))
+    sector_names = set(sum(list([list([b['budget_name'] for b in list(x['budget-lines'].values())]) for x in list(all_budgets.values())]), []))
 
     all_sector_document_titles = doc.xpath("//document-link[category/@code='B11']/title/narrative/text()|document-link[category/@code='B12']/title/narrative/text()")
     found = 0.0

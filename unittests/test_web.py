@@ -16,5 +16,5 @@ class TestWeb(unittest.TestCase):
     @nose.with_setup(setUp, tearDown)
     def test1(self):
         rv = self.app.get('/organisations/GB-1/')
-        print rv.data
+        print(rv.data)
         assert "Publication" in rv.data

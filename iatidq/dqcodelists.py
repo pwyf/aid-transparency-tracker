@@ -40,7 +40,7 @@ def generateACodelist(codelist_name):
 
 def reformatCodelist(codelist_name):
     codelist = generateACodelist(codelist_name)
-    return dict(map(lambda x: (x.code, x.name), codelist))
+    return dict([(x.code, x.name) for x in codelist])
 
 
 def handle_row(codelist, codelist_url, crow):
@@ -118,7 +118,7 @@ def importCodelists():
         version = version.replace('.', '')
         codelists_url = mapping_tmpl.format(version=version)
         mapping = requests.get(codelists_url).json()
-        codelist_names = {x['codelist']: None for x in mapping}.keys()
+        codelist_names = list({x['codelist']: None for x in mapping}.keys())
         for codelist_name in codelist_names:
             codelist_url = codelist_tmpl.format(
                 version=version, codelist_name=codelist_name)

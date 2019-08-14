@@ -95,25 +95,25 @@ def getElements(data):
     return zelements
 
 def printAttributes(element, attributes, parent_element=None):
-    for attribute, attribute_data in attributes.items():
+    for attribute, attribute_data in list(attributes.items()):
         if attribute is not None:
             if parent_element is not None:
                 parent = parent_element
             else:
                 parent = element
-            print parent + "/@" + attribute + " exists?"
+            print(parent + "/@" + attribute + " exists?")
             if attribute_data['type'] in supported_attributes:
-                print parent + "/@" + attribute + " is a " + attribute_data['type'] + "?"
+                print(parent + "/@" + attribute + " is a " + attribute_data['type'] + "?")
             if 'codelist' in attribute_data:
-                print parent + "/@" + attribute + " is on codelist " + attribute_data['codelist'] + "?"
+                print(parent + "/@" + attribute + " is on codelist " + attribute_data['codelist'] + "?")
 
 def printElements(elements, parent_element=None):
-    for element, element_data in elements.items():
+    for element, element_data in list(elements.items()):
         if ((element != "elements") and (element != "attributes") and (element != None)):
             if (parent_element is not None):
-                print str(parent_element) + "/" + str(element) + " exists?"
+                print(str(parent_element) + "/" + str(element) + " exists?")
             else:
-                print element, "exists?"
+                print(element, "exists?")
             if ((parent_element is not None) and (element is not None)):
                 parent = parent_element + "/" + element
             else:

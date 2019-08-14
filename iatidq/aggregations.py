@@ -47,13 +47,13 @@ def _aggregate_percentages(data, dims):
 
     dims_dict = dict(dims)
     dim_names = [ i[0] for i in dims ]
-    dimension_lists = map(generate_dimension, dim_names)
+    dimension_lists = list(map(generate_dimension, dim_names))
     breakdown = lambda x: (
         prepend(x[FIELD_STATUS], lookups(x)),
         x[FIELD_RESULT]
         )
 
-    d = dict(map(breakdown, data))
+    d = dict(list(map(breakdown, data)))
 
     def calc_percentages(dimensions):
         fail    = d.get(prepend(RESULT_FAILURE, dimensions), 0)
@@ -71,8 +71,8 @@ def _aggregate_percentages(data, dims):
             data[dim] = dimensions[i]
         return data
 
-    out = map(calc_percentages, itertools.product(*dimension_lists))
-    out = filter(lambda i: i is not None, out)
+    out = list(map(calc_percentages, itertools.product(*dimension_lists)))
+    out = [i for i in out if i is not None]
 
     return out
 

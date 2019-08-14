@@ -1,4 +1,4 @@
 
-import data
-import setup
-import mapping
+from . import data
+from . import setup
+from . import mapping

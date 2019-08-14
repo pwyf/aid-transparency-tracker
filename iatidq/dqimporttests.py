@@ -8,7 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 import re
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 import yaml
 
@@ -19,11 +19,11 @@ from . import hardcoded_test, models, test_level
 def hardcodedTests():
     hardcoded_tests = [
         (hardcoded_test.URL_EXISTS,
-         u'url_exists', u"Check that the xml file actually exists."),
+         'url_exists', "Check that the xml file actually exists."),
         (hardcoded_test.VALID_XML,
-         u'valid_xml', u"Check that xml is well structured"),
+         'valid_xml', "Check that xml is well structured"),
         (hardcoded_test.SCHEMA_CONFORMANCE,
-         u'schema_conformance', u"Check that xml conforms to schema")
+         'schema_conformance', "Check that xml conforms to schema")
     ]
 
     with db.session.begin():
@@ -129,5 +129,5 @@ def importTestsFromFile(filename, level):
 
 
 def importTestsFromUrl(url, level=1):
-    fh = urllib2.urlopen(url)
+    fh = urllib.request.urlopen(url)
     return _importTests(fh, url, level=level, local=False)

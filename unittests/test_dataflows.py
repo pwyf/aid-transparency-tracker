@@ -21,7 +21,7 @@ def teardown_func():
 
 @nose.with_setup(setup_func, teardown_func)
 def test_change_title():
-    with file('unittests/artefacts/json/pkgdata-worldbank-tz.json') as f:
+    with open('unittests/artefacts/json/pkgdata-worldbank-tz.json') as f:
         package = json.load(f)
     dqregistry.refresh_package(package)
 

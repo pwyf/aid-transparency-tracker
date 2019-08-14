@@ -56,7 +56,7 @@ def create_db(c):
 
 
 def make_db(filename, orgs, tests, snapshot_path):
-    from sample_work import WorkItems
+    from .sample_work import WorkItems
 
     database = sqlite.connect(filename)
     c = database.cursor()
@@ -66,7 +66,7 @@ def make_db(filename, orgs, tests, snapshot_path):
     # populate db
     work_items = WorkItems(orgs, tests, snapshot_path)
     for wi in work_items:
-        wi_info = tuple(map(lambda k: wi[k], keys))
+        wi_info = tuple([wi[k] for k in keys])
 
         c.execute("""insert into sample_work_item
                         ("uuid", "organisation_id", "test_id", "activity_id",
@@ -144,7 +144,7 @@ def read_db_response(uuid=None, org_id=None, test_id=None, offset=0, limit=-1):
 
     c.execute(stmt)
 
-    return [dict(zip(keys_response, wi)) for wi in c.fetchall()]
+    return [dict(list(zip(keys_response, wi))) for wi in c.fetchall()]
 
 
 def work_item_generator():
@@ -167,7 +167,7 @@ def work_item_generator():
     # ignore the case where limit 1 nevertheless returns >1 result
 
     wi = wis[0]
-    data = dict(zip(keys, wi))
+    data = dict(list(zip(keys, wi)))
 
     work_item_uuid = wi[0]  # hack
     try:
@@ -225,7 +225,7 @@ def get_total_results():
 
     out = []
     for wi in c.fetchall():
-        data = dict(zip(total_results_response, wi))
+        data = dict(list(zip(total_results_response, wi)))
         out.append(data)
     return out
 
@@ -233,21 +233,21 @@ def get_total_results():
 def get_summary_org_test(results):
     from iatidq import models, dqtests
 
-    orgtests = set(map(lambda x: (x['organisation_id'], x['test_id']), results))
+    orgtests = set([(x['organisation_id'], x['test_id']) for x in results])
     ot = []
 
     for orgtest in orgtests:
-        orgtest_results = filter(lambda x: (
+        orgtest_results = [x for x in results if (
                 x['organisation_id'] == orgtest[0] and
                 x['test_id'] == orgtest[1]
-                ), results)
+                )]
 
-        success = filter(lambda x: x['response'] == 1, orgtest_results)
-        fail = filter(lambda x: x['response'] != 1 and x['response'] is not None, orgtest_results)
+        success = [x for x in orgtest_results if x['response'] == 1]
+        fail = [x for x in orgtest_results if x['response'] != 1 and x['response'] is not None]
 
-        total = sum(map(lambda x: x['count'], orgtest_results))
-        totalsuccess = sum(map(lambda x: x['count'], success))
-        totalfail = sum(map(lambda x: x['count'], fail))
+        total = sum([x['count'] for x in orgtest_results])
+        totalsuccess = sum([x['count'] for x in success])
+        totalfail = sum([x['count'] for x in fail])
 
         if totalsuccess >= 10:
             pass_status = 'passing'

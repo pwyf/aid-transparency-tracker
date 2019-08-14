@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import StringIO
+import io
 
 import unicodecsv
 
@@ -71,7 +71,7 @@ def write_organisation_publications_csv(out, organisation):
 
     freq = get_frequency_multiplier(organisation.frequency)
 
-    for resultid, result in aggregate_results.items():
+    for resultid, result in list(aggregate_results.items()):
         write_agg_csv_result(out, organisation, freq, result)
 
 
@@ -233,13 +233,13 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
             else:
                 sd=surveydata
                 for workflow in workflows:
-                    print workflow.name
+                    print(workflow.name)
                     if not sd:
                         continue
                     surveydata = sd.get(workflow.name)
                     if not surveydata:
                         continue
-                    print "continuing"
+                    print("continuing")
                     iati_data_quality_total_points = 0
                     iati_data_quality_points = 0
                     iati_data_quality_passed = 0
@@ -277,7 +277,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
                     survey_source = surveydata[indicator_info.id].OrganisationSurveyData.published_source
                     survey_comment = surveydata[indicator_info.id].OrganisationSurveyData.published_comment
                     survey_agree = surveydata[indicator_info.id].OrganisationSurveyData.published_accepted
-                    print "writing csv row for", workflow.name
+                    print("writing csv row for", workflow.name)
 
                     csv_row = CSVRow(organisation, indicator_info,
                         indicator_total_weighted_points, indicator_category_subcategory,
@@ -336,16 +336,16 @@ def write_organisation_publications_csv_index(out, organisation, history=False):
         workflows = models.Workflow.all()
         surveydata_workflow=None
 
-    published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatsAll()))
+    published_status_by_id = dict(list(map(id_tuple, dqsurveys.publishedStatus())))
+    publishedformats = dict(list(map(id_tuple, dqsurveys.publishedFormatsAll())))
 
-    for resultid, result in aggregate_results["non_zero"].items():
+    for resultid, result in list(aggregate_results["non_zero"].items()):
         write_agg_csv_result_index(out, organisation, freq, result, "iati", None, None, None, None)
 
-    for resultid, result in aggregate_results["zero"].items():
+    for resultid, result in list(aggregate_results["zero"].items()):
         write_agg_csv_result_index(out, organisation, freq, result, "manual", surveydata, surveydata_workflow, published_status_by_id, publishedformats, history, workflows)
 
-    for resultid, result in aggregate_results["commitment"].items():
+    for resultid, result in list(aggregate_results["commitment"].items()):
         write_agg_csv_result_index(out, organisation, freq, result, "commitment", surveydata, surveydata_workflow, published_status_by_id, publishedformats, history, workflows)
 
 
@@ -392,7 +392,7 @@ def make_csv(organisations, index_data=False, history=False):
         "survey_total_points"
         ]
 
-    strIO = StringIO.StringIO()
+    strIO = io.StringIO()
 
     if index_data:
         csv_headers = csv_fieldnames_index

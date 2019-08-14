@@ -11,15 +11,10 @@ Run the following commands to bootstrap your environment:
 
 Setup a virtual environment, and install dependencies:
 
-    virtualenv pyenv
-    echo "export FLASK_APP=iatidataquality/__init__.py" >> pyenv/bin/activate
-    source pyenv/bin/activate
+    python3 -m venv venv
+    echo "export FLASK_APP=iatidataquality/__init__.py" >> venv/bin/activate
+    source venv/bin/activate
     pip install -r requirements.txt
-
-Set the FLASK_APP environment variable:
-
-    export FLASK_APP=iatidataquality/__init__.py
-    echo "export FLASK_APP=iatidataquality/__init__.py" >> pyenv/bin/activate
 
 Copy and edit the config.py.tmpl, including pointing at a postgres database:
 

@@ -19,6 +19,7 @@ from iatidq.dqcsv import make_csv
 import iatidq.survey.data as dqsurveys
 import iatidq.inforesult
 from iatidq.models import InfoResult, Organisation
+from functools import reduce
 
 
 def get_info_results(org_packages, organisation):
@@ -217,8 +218,8 @@ def organisation_publication(organisation_code, aggregation_type):
     surveydata, surveydata_workflow = dqsurveys.get_survey_data_and_workflow(
         organisation_survey, surveydata)
 
-    published_status_by_id = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatsAll()))
+    published_status_by_id = dict(list(map(id_tuple, dqsurveys.publishedStatus())))
+    publishedformats = dict(list(map(id_tuple, dqsurveys.publishedFormatsAll())))
 
     published_status_by_id[None] = {
         'title': 'Unknown',
@@ -338,7 +339,7 @@ def organisation_publication(organisation_code, aggregation_type):
             tmp["points_minus_50"] = round((tmp["points"] - 50), 2)
             # it all fails if the other branch tries to use this value
 
-        tmp["tests"] = map(annotate_test, res["tests"])
+        tmp["tests"] = list(map(annotate_test, res["tests"]))
 
         if zero:
             if surveydata:
@@ -383,8 +384,7 @@ def organisation_publication(organisation_code, aggregation_type):
         if not surveydata:
             return None
 
-        return dict(map(lambda x: (x[0], get_sd(x[1])),
-                    surveydata.items()))
+        return dict([(x[0], get_sd(x[1])) for x in list(surveydata.items())])
 
     payload = {
         "links": links,
@@ -392,8 +392,8 @@ def organisation_publication(organisation_code, aggregation_type):
         "freq": freq_score,
         "freq_alert": freq_alert,
         "result": {
-            "non_zero": map(annotate_nonzero, aggregate_results["non_zero"].values()),
-            "zero": map(annotate_zero, aggregate_results["zero"].values())
+            "non_zero": list(map(annotate_nonzero, list(aggregate_results["non_zero"].values()))),
+            "zero": list(map(annotate_zero, list(aggregate_results["zero"].values())))
             },
         "surveydata": jsonsurvey(surveydata)
     }
@@ -592,9 +592,9 @@ def _organisation_indicators_summary(organisation, aggregation_type=2):
     if not summarydata:
         return None
 
-    testing = [(i["indicator"]["name"], i["results_pct"]) for i in summarydata.values()]
+    testing = [(i["indicator"]["name"], i["results_pct"]) for i in list(summarydata.values())]
     print(testing)
-    percentages = [i["results_pct"] for i in summarydata.values()]
+    percentages = [i["results_pct"] for i in list(summarydata.values())]
     totalpct = reduce(operator.add, percentages, 0.0)
     totalindicators = len(percentages)
     totalscore = totalpct / totalindicators

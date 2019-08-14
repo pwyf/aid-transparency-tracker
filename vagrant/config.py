@@ -18,15 +18,15 @@ SAMPLING_DB_FILENAME = join(realpath(dirname(__file__)), 'dq', 'sample_work', 's
 
 SECRET_KEY = "secret"
 
-INDICATOR_GROUP = u"2018index"
+INDICATOR_GROUP = "2018index"
 
-CODELIST_API = u"https://reference.iatistandard.org/{version}/codelists/downloads/clv2"
+CODELIST_API = "https://reference.iatistandard.org/{version}/codelists/downloads/clv2"
 
 SETUP_ORGS = ['dfid', 'fco', 'beis', 'dhsc', 'defra_transparency', 'dwp', 'ukmod']
 
 # SETUP_PKG_COUNTER = 10
 
-ORG_FREQUENCY_API_URL = "http://dashboard.iatistandard.org/timeliness_frequency.csv"
+ORG_FREQUENCY_API_URL = "http://publishingstats.iatistandard.org/timeliness_frequency.csv"
 IATIUPDATES_URL = "http://2018tracker.publishwhatyoufund.org/iatiupdates/api/package/hash/"
 
 REMOVE_RESULTS = True

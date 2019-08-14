@@ -7,9 +7,10 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
-import unicodecsv
+import csv
+import codecs
 
 from iatidataquality import app, db
 from . import dqindicators, models, summary
@@ -57,7 +58,7 @@ def _importOrganisationPackages(fh, local):
             models.PackageGroup.name == pg_name
             ).first()
 
-    data = unicodecsv.DictReader(fh)
+    data = csv.DictReader(fh)
 
     for row in data:
         condition = checkCondition(row)
@@ -106,13 +107,13 @@ def _importOrganisationPackages(fh, local):
 
 
 def downloadOrganisationFrequency():
-    fh = urllib2.urlopen(app.config["ORG_FREQUENCY_API_URL"])
+    fh = urllib.request.urlopen(app.config["ORG_FREQUENCY_API_URL"])
     return _updateOrganisationFrequency(fh)
 
 
 def _updateOrganisationFrequency(fh):
     def get_frequency():
-        rows = unicodecsv.DictReader(fh)
+        rows = csv.DictReader(codecs.iterdecode(fh, 'utf-8'))
 
         for row in rows:
             freq = row["Frequency"]
@@ -136,11 +137,11 @@ def _updateOrganisationFrequency(fh):
         for organisation in organisations:
             with db.session.begin():
                 if organisation.frequency_comment != comment:
-                    print('{}: {} (previously: {})'.format(
+                    print(('{}: {} (previously: {})'.format(
                         organisation.organisation_name,
                         comment,
                         organisation.frequency_comment
-                    ))
+                    )))
                     organisation.frequency = frequency
                     organisation.frequency_comment = comment
                     db.session.add(organisation)
@@ -358,7 +359,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
     data.update([info_result_tuple(ir) for ir in inforesults])
 
     # make sure indicators are complete
-    indicators = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], u"publication")
+    indicators = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], "publication")
     for indc in indicators:
         if indc.id in data:
             continue
@@ -417,13 +418,13 @@ def _organisation_indicators_complete_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
 
     commitment_data = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"],
-                                                     u"commitment")
-    commitment_results = dict(map(lambda x: (x.id, {'indicator': x.as_dict() }), commitment_data))
+                                                     "commitment")
+    commitment_results = dict([(x.id, {'indicator': x.as_dict() }) for x in commitment_data])
 
     publication_organisation = lambda kv: (kv[1]["indicator"]["indicator_category_name"]=="organisation")
     publication_activity = lambda kv: (kv[1]["indicator"]["indicator_category_name"]=="activity")
-    publication_organisation_results = dict(filter(publication_organisation, results.iteritems()))
-    publication_activity_results = dict(filter(publication_activity, results.iteritems()))
+    publication_organisation_results = dict(list(filter(publication_organisation, iter(results.items()))))
+    publication_activity_results = dict(list(filter(publication_activity, iter(results.items()))))
 
     return {"publication_activity": publication_activity_results,
             "publication_organisation": publication_organisation_results,
@@ -434,26 +435,22 @@ def _organisation_indicators_split(organisation, aggregation_type=2):
     results = _organisation_indicators(organisation, aggregation_type)
     commitment_data = dqindicators.indicators_subset(
                     app.config["INDICATOR_GROUP"],
-                    u"commitment")
-    commitment = dict(map(lambda x: (x.id, {'indicator': x.as_dict() }), commitment_data))
+                    "commitment")
+    commitment = dict([(x.id, {'indicator': x.as_dict() }) for x in commitment_data])
     if not results:
         indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
-        indicators_restructured = dict(map(lambda x: (x.id, {
+        indicators_restructured = dict([(x.id, {
             'indicator': {
                 'name': x.name,
                 'indicator_subcategory_name': x.indicator_subcategory_name,
             }
-        }), indicators))
+        }) for x in indicators])
         return {"zero": indicators_restructured,
                 "non_zero": {},
                 "commitment": commitment}
 
-    zero_results = dict(filter(
-        lambda kv: not kv[1]["results_pct"],
-        results.iteritems()))
-    non_zero_results = dict(filter(
-        lambda kv: kv[1]["results_pct"],
-        results.iteritems()))
+    zero_results = dict([kv for kv in iter(results.items()) if not kv[1]["results_pct"]])
+    non_zero_results = dict([kv for kv in iter(results.items()) if kv[1]["results_pct"]])
 
     return {"zero": zero_results,
             "non_zero": non_zero_results,

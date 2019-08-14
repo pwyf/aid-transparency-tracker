@@ -135,7 +135,7 @@ def _importUserData(fh):
                     'permission_value': ''
                 })
             else:
-                print "Warning: no role provided, so could not add user for row %s" % row
+                print("Warning: no role provided, so could not add user for row %s" % row)
 
         for permission in permissions:
             addUserPermission(permission)

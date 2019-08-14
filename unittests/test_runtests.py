@@ -51,7 +51,7 @@ def check_against_files(test_str):
         parse_tree = lxml.etree.parse(os.path.join(current, data_file))
         activity = parse_tree.find('iati-activity')
         observed = test_functions[test.id](activity)
-        print observed, expected_result
+        print(observed, expected_result)
         assert observed == expected_result
 
     [ check_data_file(data_file, expected_result)
@@ -79,9 +79,9 @@ def test_checks_from_csv():
     filename = os.path.join(os.path.dirname(__file__),
                             "activity_tests.csv")
 
-    with file(filename) as f:
+    with open(filename) as f:
         reader = csv.reader(f)
-        header = reader.next() # i.e., discard first line
+        header = next(reader) # i.e., discard first line
         for test_str, description, group in reader:
             yield check_against_files, test_str
 

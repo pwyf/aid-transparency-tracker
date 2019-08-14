@@ -9,7 +9,7 @@
 
 import pprint
 
-import unicodecsv
+import csv
 
 from iatidataquality import db, app
 from . import models
@@ -21,7 +21,7 @@ def importIndicatorDescriptions():
     return importIndicatorDescriptionsFromFile(indicatorgroup_name, filename)
 
 def importIndicatorDescriptionsFromFile(indicatorgroup_name, filename):
-    with file(filename) as fh:
+    with open(filename) as fh:
         return _importIndicatorDescriptions(indicatorgroup_name,
                                                    fh, True)
 
@@ -33,7 +33,7 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
         indicatorgroup = addIndicatorGroup({"name": indicatorgroup_name,
                                             "description": ""
                                             })
-    rows = unicodecsv.DictReader(fh)
+    rows = csv.DictReader(fh)
 
     for row in rows:
         data = {}
@@ -58,11 +58,11 @@ def _importIndicatorDescriptions(indicatorgroup_name, fh, local):
 def importIndicators():
     filename = 'tests/tests.csv'
     indicatorgroup_name = app.config["INDICATOR_GROUP"]
-    with open(filename) as fh:
+    with open(filename, newline='') as fh:
         return _importIndicators(indicatorgroup_name, fh, True, False)
 
 def importIndicatorsFromFile(indicatorgroup_name, filename, infotype=False):
-    with open(filename) as fh:
+    with open(filename, newline='') as fh:
         return _importIndicators(indicatorgroup_name, fh, True, infotype)
 
 def _importIndicators(indicatorgroup_name, fh, local, infotype):
@@ -74,7 +74,7 @@ def _importIndicators(indicatorgroup_name, fh, local, infotype):
                                             "description": ""
                                             })
 
-    data = unicodecsv.DictReader(fh)
+    data = csv.DictReader(fh)
 
     for row in data:
         if infotype:
@@ -393,5 +393,5 @@ def disableUnassociatedTests(indicatorgroup_name):
             utest.active=False
             db.session.add(utest)
             count +=1
-    print "Deactivated", count, "tests"
+    print("Deactivated", count, "tests")
     return count

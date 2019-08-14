@@ -107,7 +107,7 @@ def disaggregated_budget(org, snapshot_date, test_name,
     current_country_codes = get_current_countries(
         publisher, current_data_results)
 
-    disaggregated_budget_tmpl = u'''@iati-organisation
+    disaggregated_budget_tmpl = '''@iati-organisation
 Feature: Total disaggregated budget
 
   Scenario: Country budget available one year forward

@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import StringIO
+import io
 
 from flask import render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
@@ -207,7 +207,7 @@ def export_organisation_conditions():
             conditionstext = conditionstext + "\n"
         conditionstext = conditionstext + condition.description
 
-    strIO = StringIO.StringIO()
+    strIO = io.StringIO()
     strIO.write(str(conditionstext))
     strIO.seek(0)
     return send_file(strIO,

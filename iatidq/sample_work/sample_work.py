@@ -14,21 +14,21 @@ import lxml.etree
 from iatidq.models import AggregateResult, Test
 from iatidataquality import app
 from iatidq import models
-from test_mapping import test_to_kind
-import db
+from .test_mapping import test_to_kind
+from . import db
 from beta.utils import slugify
 
 
 def all_tests():
     all_tests = models.Test.all()
-    sampling_tests = filter(lambda x: x.description in test_to_kind, all_tests)
+    sampling_tests = [x for x in all_tests if x.description in test_to_kind]
     return sorted(sampling_tests, key=lambda x: x.description)
 
 
 def all_orgs():
     all_orgs = models.Organisation.all()
     sample_org_ids = [x[0] for x in db.all_sample_orgs()]
-    sample_orgs = filter(lambda x: x.id in sample_org_ids, all_orgs)
+    sample_orgs = [x for x in all_orgs if x.id in sample_org_ids]
     return sorted(sample_orgs, key=lambda x: x.organisation_name)
 
 
@@ -67,9 +67,9 @@ class WorkItems(object):
     def __iter__(self):
         total_samples_todo = 20
         for org in self.orgs:
-            print("Org: {}".format(org.organisation_name))
+            print(("Org: {}".format(org.organisation_name)))
             for test in self.tests:
-                print("Test: {}".format(test.description))
+                print(("Test: {}".format(test.description)))
 
                 sot = SampleOrgTest(org, test, self.snapshot_date)
                 samples = sot.sample_activity_ids(total_samples_todo)
@@ -117,9 +117,9 @@ class SampleOrgTest(object):
         total = int(sum([x.results_data / 100. * x.results_num
                          for x in ag_results]))
         if total <= num_samples:
-            indexes = range(total)
+            indexes = list(range(total))
         else:
-            indexes = sorted(random.sample(range(total), num_samples))
+            indexes = sorted(random.sample(list(range(total)), num_samples))
 
         current_data_path = os.path.join(
             app.config.get('IATI_RESULT_PATH'),
@@ -297,7 +297,7 @@ class Period(object):
                     actual = re.sub(",", "", actual[0])
                     actual = re.sub("%", "", actual)
                     return format_pct((float(actual) / float(target)) * 100.00)
-                except Exception, e:
+                except Exception as e:
                     return ""
 
         data = {

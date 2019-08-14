@@ -10,7 +10,7 @@
 import itertools
 import json
 import re
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 import ckanapi
 
@@ -30,7 +30,7 @@ def packages_from_iati_registry():
     offset = 0
     while True:
         registry_url = REGISTRY_TMPL.format(offset)
-        data = urllib2.urlopen(registry_url, timeout=60).read()
+        data = urllib.request.urlopen(registry_url, timeout=60).read()
         print(registry_url)
         data = json.loads(data)['result']
 
@@ -62,7 +62,7 @@ def check_deleted_packages():
         if pkg.package_ckan_id in registry_packages:
             _set_deleted_package(pkg, False)
         else:
-            print "Should delete package", pkg.package_name
+            print("Should delete package", pkg.package_name)
             if _set_deleted_package(pkg, True):
                 count_deleted += 1
     return count_deleted
@@ -77,23 +77,23 @@ def copy_pg_attributes(pg, ckangroup):
         "created_date": "created",
         "state": "state",
     }
-    for attr, key in mapping.items():
+    for attr, key in list(mapping.items()):
         try:
             setattr(pg, attr, ckangroup[key])
-        except Exception, e:
+        except Exception as e:
             pass
 
 # pg is sqlalchemy model; ckangroup is a ckan object
 def copy_pg_misc_attributes(pg, ckangroup, handle_country):
     try:
         pg.license_id = ckangroup['extras']['publisher_license_id']
-    except Exception, e:
+    except Exception as e:
         pass
 
     if handle_country:
         try:
             pg.package_country = ckangroup['extras']['country']
-        except Exception, e:
+        except Exception as e:
             pass
 
 # pg is sqlalchemy model; ckangroup is a ckan object
@@ -112,14 +112,14 @@ def copy_pg_fields(pg, ckangroup):
     for field in fields:
         try:
             setattr(pg, field, ckangroup['extras'][field])
-        except Exception, e:
+        except Exception as e:
             pass
 
 def create_package_group(group, handle_country=True):
     with db.session.begin():
         pg = models.PackageGroup()
         pg.name = group
-        pg.man_auto = u"auto"
+        pg.man_auto = "auto"
 
         # Query CKAN
         registry = ckanapi.RemoteCKAN(CKANurl)
@@ -141,7 +141,7 @@ def setup_package_group(group):
             pg = models.PackageGroup.query.filter_by(name=group).first()
             if pg is None:
                 pg = create_package_group(group, handle_country=False)
-                print('Created new package group: {}'.format(group))
+                print(('Created new package group: {}'.format(group)))
             return pg
 
 # FIXME: compare this with similar function in download_queue
@@ -153,7 +153,7 @@ def copy_pkg_attributes(pkg, package):
         "name": "package_name",
         "title": "package_title",
     }
-    for attr, key in components.items():
+    for attr, key in list(components.items()):
         setattr(pkg, key, package[attr])
 
 # Don't get revision ID;
@@ -172,7 +172,7 @@ def refresh_package(package):
         packagegroup_id = None
 
     with db.session.begin():
-        print package['name']
+        print(package['name'])
         pkg = models.Package.query.filter_by(
             package_name=package['name']).first()
         if (pkg is None):
@@ -180,7 +180,7 @@ def refresh_package(package):
 
         copy_pkg_attributes(pkg, package)
         pkg.package_group_id = packagegroup_id
-        pkg.man_auto = u'auto'
+        pkg.man_auto = 'auto'
         db.session.add(pkg)
 
 def refresh_package_by_name(package_name):
@@ -189,9 +189,9 @@ def refresh_package_by_name(package_name):
         package = registry.action.package_show(id=package_name)
         refresh_package(package)
     except ckanapi.NotAuthorized:
-        print "Error 403 (Not authorised) when retrieving '%s'" % package_name
+        print("Error 403 (Not authorised) when retrieving '%s'" % package_name)
     except ckanapi.NotFound:
-        print "Error 404 (Not found) when retrieving '%s'" % package_name
+        print("Error 404 (Not found) when retrieving '%s'" % package_name)
         raise
 
 def _refresh_packages():
@@ -221,7 +221,7 @@ def matching_packages(regexp):
     r = re.compile(regexp)
 
     pkgs = packages_from_iati_registry()
-    pkgs = itertools.ifilter(lambda i: r.match(i["name"]), pkgs)
+    pkgs = filter(lambda i: r.match(i["name"]), pkgs)
     for package in pkgs:
         yield package["name"]
 
@@ -236,7 +236,7 @@ def activate_packages(data, clear_revision_id=None):
                 msg = "Package: %s found on CKAN, not in DB" % package_name
                 raise PackageMissing(msg)
             if (clear_revision_id is not None):
-                pkg.package_revision_id = u""
+                pkg.package_revision_id = ""
             pkg.active = active
             db.session.add(pkg)
 

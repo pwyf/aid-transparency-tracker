@@ -20,7 +20,7 @@ from iatidataquality import db
 
 def log(s):
     return
-    print >>sys.stderr, s
+    print(s, file=sys.stderr)
 
 def setup_func():
     db.drop_all()
@@ -80,13 +80,13 @@ def test_refresh():
     assert pkg.package_name == package_name
 
 def create_aggregation_types(options):
-    print "Adding an aggregation type for all data"
+    print("Adding an aggregation type for all data")
     all_ag = iatidq.dqaggregationtypes.addAggregationType({'name':'All data',
                                                 'description': '',
                                                 'test_id': None,
                                                 'test_result':'1'})
     assert all_ag
-    print "Adding an aggregation type for current data"
+    print("Adding an aggregation type for current data")
     currentdata_test = iatidq.dqtests.test_by_test_name(
         "activity-date[@type='start-planned']/@iso-date or transaction-date/@iso-date (for each transaction) is less than 13 months ago?"
         )
@@ -118,7 +118,7 @@ def _test_example_tests(publisher, country):
         "tests/sample_tests.csv",
         test_level.ACTIVITY)
 
-    print "Importing indicators"
+    print("Importing indicators")
     iatidq.dqindicators.importIndicatorsFromFile(
         "test_pwyf2013",
         "tests/sample_tests.csv")
@@ -168,7 +168,7 @@ def _test_example_tests(publisher, country):
 
     results = models.Result.query.all()
     assert len(results) > 0
-    print >>sys.stderr, len(results)
+    print(len(results), file=sys.stderr)
 
     aggtest_results = models.AggregateResult.query.filter(
         models.AggregateResult.aggregateresulttype_id == all_ag.id
@@ -192,8 +192,8 @@ def _test_example_tests(publisher, country):
 
     observed_test_ids = [ i.test_id for i in aggtest_results ]
 
-    print "expected test ids: ", expected_test_ids
-    print "observed test ids: ", observed_test_ids
+    print("expected test ids: ", expected_test_ids)
+    print("observed test ids: ", observed_test_ids)
     assert set(expected_test_ids) == set(observed_test_ids)
 
 

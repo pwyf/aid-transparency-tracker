@@ -104,7 +104,7 @@ def __survey_process(organisation, workflow, request,
                      organisationsurvey, published_accepted):
 
     indicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
-    form_indicators = map(int, request.form.getlist('indicator'))
+    form_indicators = list(map(int, request.form.getlist('indicator')))
 
     workflow_id = workflow.id
 
@@ -206,7 +206,7 @@ def get_old_publication_status():
             "text": ps[1],
             "class": ps[2]
             })
-    return dict(map(struct, pses))
+    return dict(list(map(struct, pses)))
 
 
 id_tuple = lambda p: (p.id, p)
@@ -222,14 +222,14 @@ def organisation_survey_view(organisation, workflow, organisationsurvey):
 
     old_survey_data = iatidq.survey.mapping.get_organisation_results(
         organisation.organisation_code,
-        [i[1]["indicator"]["name"] for i in org_indicators["zero"].items()]
+        [i[1]["indicator"]["name"] for i in list(org_indicators["zero"].items())]
         )
 
-    publishedstatuses = dict(map(id_tuple, dqsurveys.publishedStatus()))
-    publishedformats = dict(map(id_tuple, dqsurveys.publishedFormatAll()))
+    publishedstatuses = dict(list(map(id_tuple, dqsurveys.publishedStatus())))
+    publishedformats = dict(list(map(id_tuple, dqsurveys.publishedFormatAll())))
     year_data = dqorganisations.get_ordinal_values_years()
 
-    years = sorted(year_data.items(), reverse=True)
+    years = sorted(list(year_data.items()), reverse=True)
     years.pop()
 
     donorresponses = donorresponse.RESPONSE_IDS

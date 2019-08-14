@@ -8,10 +8,10 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 which_packages = [
-    (u'dfid-ml', True),
-    (u'dfid-589', True),
-    (u'dfid-ph', True),
-    (u'worldbank-ao', True),
+    ('dfid-ml', True),
+    ('dfid-589', True),
+    ('dfid-ph', True),
+    ('worldbank-ao', True),
     ]
 
 default_minimal_organisations = [

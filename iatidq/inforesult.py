@@ -9,7 +9,7 @@
 
 import datetime
 
-import unicodecsv
+import csv
 
 from iatidataquality import db
 from . import models
@@ -100,7 +100,7 @@ def returnLevel(row, level):
         return level
 
 def _importInfoTypesFromFile(fh, filename, level=1, local=True):
-    data = unicodecsv.DictReader(fh)
+    data = csv.DictReader(fh)
 
     for row in data:
         infotype = models.InfoType.query.filter(models.InfoType.name==row['infotype_name']).first()
@@ -116,7 +116,7 @@ def _importInfoTypesFromFile(fh, filename, level=1, local=True):
                 )
             db.session.add(infotype)
 
-    print "Imported successfully"
+    print("Imported successfully")
     return True
 
 def importInfoTypesFromFile(filename, level):

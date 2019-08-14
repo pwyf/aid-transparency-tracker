@@ -244,8 +244,7 @@ def given_at_least_x_months_ahead(xml, xpath_expression,
               )
         raise StepException(xml, msg)
 
-    valid_dates = list(filter(
-        lambda x: x, [mkdate(date_str) for date_str in dates]))
+    valid_dates = list([x for x in [mkdate(date_str) for date_str in dates] if x])
     if not valid_dates:
         # explain = '{date} does not use format YYYY-MM-DD, so ' \
         #           'assuming it is not at least {months} months ahead'
@@ -291,8 +290,7 @@ def given_is_less_than_x_months_ago(xml, xpath_expression,
                          months_ago=months_ago)
         raise StepException(xml, msg)
 
-    valid_dates = list(filter(
-        lambda x: x, [mkdate(date_str) for date_str in dates]))
+    valid_dates = list([x for x in [mkdate(date_str) for date_str in dates] if x])
     if not valid_dates:
         msg = '{xpath_expression} ({date}) does not use format ' + \
               'YYYY-MM-DD, so assuming it is not less than {months_ago} ' + \
@@ -377,8 +375,7 @@ def then_is_available_forward(xml, xpath_expression, period, **kwargs):
 
     def check_after(element, today):
         dates = element.xpath('period-start/@iso-date | period-end/@iso-date')
-        dates = list(filter(
-            lambda x: x is not None, [mkdate(d) for d in dates]))
+        dates = list([x for x in [mkdate(d) for d in dates] if x is not None])
         return any([date >= today for date in dates])
 
     def max_budget_length(element, max_budget_length):

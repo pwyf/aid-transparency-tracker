@@ -30,7 +30,7 @@ class PackageStatus(BaseModel):
         self.runtime_datetime = datetime.utcnow()
 
     def __repr__(self):
-        return unicode(self.runtime_datetime)+u' '+unicode(self.id)
+        return str(self.runtime_datetime)+' '+str(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -44,7 +44,7 @@ class Runtime(BaseModel):
         self.runtime_datetime = datetime.utcnow()
 
     def __repr__(self):
-        return unicode(self.runtime_datetime)+u' '+unicode(self.id)
+        return str(self.runtime_datetime)+' '+str(self.id)
 
 ## IATI REGISTRY PACKAGEGROUPS AND PACKAGES
 
@@ -122,7 +122,7 @@ class Package(BaseModel):
 
     def __repr__(self):
         source_url = self.source_url or "None"
-        return source_url+u", "+str(self.id)
+        return source_url+", "+str(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -227,7 +227,7 @@ class Test(BaseModel):
             self.id = id
 
     def __repr__(self):
-        return self.name+u', '+unicode(self.id)
+        return self.name+', '+str(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -251,7 +251,7 @@ class Codelist(BaseModel):
             self.id = id
 
     def __repr__(self):
-        return self.name+u', '+unicode(self.id)
+        return self.name+', '+str(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -276,7 +276,7 @@ class CodelistCode(BaseModel):
             self.id = id
 
     def __repr__(self):
-        return self.name+u', '+unicode(self.id)
+        return self.name+', '+str(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -299,7 +299,7 @@ class IndicatorGroup(BaseModel):
             self.id = id
 
     def __repr__(self):
-        return self.name+u', '+unicode(self.id)
+        return self.name+', '+str(self.id)
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -356,7 +356,7 @@ class Indicator(BaseModel):
             self.id = id
 
     def __repr__(self):
-        return self.name+u', '+unicode(self.id)
+        return self.name+', '+str(self.id)
 
     def as_dict(self):
        d = {c.name: getattr(self, c.name) for c in self.__table__.columns}

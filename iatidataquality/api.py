@@ -11,7 +11,7 @@ import datetime
 from functools import wraps, update_wrapper
 import json
 import math
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 from flask import abort, url_for, request, current_app, make_response
 
@@ -60,14 +60,14 @@ class AggregatedTestResults:
     def make_division(self,i):
         return [i* self.divisions, (i+1) * self.divisions]
     def x_axis(self):
-        return map(self.make_division, range(self.n))
+        return list(map(self.make_division, list(range(self.n))))
     def __init__(self, n, data):
         self.n = n
         self.data = data
         self.divisions = 100.0/n
     def aggregate_data(self):
         out = [0] * self.n
-        for value in self.data.values():
+        for value in list(self.data.values()):
             if value == 100.0: out[-1] += 1
             else: out[ int(math.floor(value/(100.0/self.n))) ] += 1
         return out
@@ -76,8 +76,8 @@ class AggregatedTestResults:
 
 
 def test_percentages(data):
-    packages = set(map(lambda x: x[2], data))
-    d = dict(map(lambda x: ((x[2],x[1]),x[0]), data))
+    packages = set([x[2] for x in data])
+    d = dict([((x[2],x[1]),x[0]) for x in data])
     out = {}
     for p in packages:
         try: fail = d[(p,0)]
@@ -89,8 +89,8 @@ def test_percentages(data):
 
 
 def test_tuples(data):
-    packages = set(map(lambda x: x[2], data))
-    d = dict(map(lambda x: ((x[2],x[1]),x[0]), data))
+    packages = set([x[2] for x in data])
+    d = dict([((x[2],x[1]),x[0]) for x in data])
     out = {}
     for p in packages:
         try: fail = d[(p,0)]
@@ -107,7 +107,7 @@ def aggregated_test_results(data):
 
 def results_by_org(data, packages):
     tests = test_tuples(data)
-    package_dict = map(lambda x: x.as_dict(), packages)
+    package_dict = [x.as_dict() for x in packages]
     for package in package_dict:
         try:
             package['passed'] = tests[package['id']][0]
@@ -134,9 +134,7 @@ def api_tests():
             ).group_by(Result.result_data).all()
     percentage_passed = test_percentages(data)
 
-    tests = map(lambda x: x.as_dict(),
-                session.query(Test).all()
-            )
+    tests = [x.as_dict() for x in session.query(Test).all()]
     for test in tests:
         try:
             test["percentage_passed"] = percentage_passed[test['id']]
@@ -197,14 +195,14 @@ def api_package(package_name):
 def api_publisher_data(publisher_id):
     url = "http://staging.publishwhatyoufund.org/api/publishers/" + publisher_id
 
-    req = urllib2.Request(url)
+    req = urllib.request.Request(url)
     try:
-        response = urllib2.urlopen(req)
+        response = urllib.request.urlopen(req)
         the_page = response.read()
         rv = app.make_response(the_page)
         rv.mimetype = 'application/json'
         return rv
-    except urllib2.HTTPError, e:
+    except urllib.error.HTTPError as e:
         return jsonify(e)
 
 
@@ -294,7 +292,7 @@ def api_publisher_activities(packagegroup_name, test_id, hierarchy_id=None):
             ).offset(offset
             ).all()
 
-    test_results = dict(map(lambda x: (x[0],x[1]), test_results))
+    test_results = dict([(x[0],x[1]) for x in test_results])
 
     if ((packagegroup == None) or (test_results==None)):
         abort(404)
@@ -356,7 +354,7 @@ def api_organisation_activities(organisation_code, test_id, hierarchy_id=None):
             ).offset(offset
             ).all()
 
-    test_results = dict(map(lambda x: (x[0],x[1]), test_results))
+    test_results = dict([(x[0],x[1]) for x in test_results])
 
     if ((organisation_code == None) or (test_results==None)):
         abort(404)

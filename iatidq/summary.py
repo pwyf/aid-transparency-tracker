@@ -34,16 +34,16 @@ def reform_dict(d):
         TEST = 1
         matches_first = lambda ht: ht[HIER] == hier
         return dict([ (test, d[(hier, test)]) for test in
-                      map(lambda ht: ht[TEST], filter(matches_first, d.keys())) ])
+                      [ht[TEST] for ht in list(filter(matches_first, list(d.keys())))] ])
 
     return dict([ (hier, inner(hier))
-                   for hier in set( hier for hier, test in d.keys() ) ])
+                   for hier in set( hier for hier, test in list(d.keys()) ) ])
 
 def remove_empty_dicts(d):
     has_keys = lambda kvp: len(kvp[1])
     return dict([
-            (hier, dict(filter(has_keys, test_data.items())))
-            for hier, test_data in d.items()
+            (hier, dict(list(filter(has_keys, list(test_data.items())))))
+            for hier, test_data in list(d.items())
             ])
 
 
@@ -101,7 +101,7 @@ def publisher_indicators(indicator_info, indicators, indicators_tests,
         results_num = 0.0
 
         relevant = lambda test: (indicator, test) in indicators_tests
-        tests = filter(relevant, simple_out.keys())
+        tests = list(filter(relevant, list(simple_out.keys())))
 
         for test in tests:
             indic_info = simple_out[test]
@@ -306,7 +306,7 @@ class PublisherSummary(object):
         def ok(t):
             return t not in failed_test_ids
 
-        return dict([ (t, ok(t)) for t in self.tests.tests.keys() ])
+        return dict([ (t, ok(t)) for t in list(self.tests.tests.keys()) ])
 
 
 class PublisherIndicatorsSummary(PublisherSummary):
@@ -332,10 +332,10 @@ class OrgConditions(object):
         cc = models.OrganisationCondition.query.filter_by(
             organisation_id=organisation_id
             ).all()
-        self._conditions = dict(map(lambda x: (
+        self._conditions = dict([(
                     (x.test_id, x.condition, x.condition_value),
                     (x.operation, x.description)
-                    ), cc))
+                    ) for x in cc])
 
     def _key(self, test_id, hierarchy):
         return (test_id, 'activity hierarchy', str(hierarchy))

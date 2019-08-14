@@ -154,7 +154,7 @@ def getSurveyData(organisation_code, workflow_name):
         ).join(models.OrganisationSurvey
         ).join(models.Organisation
         ).all()
-    surveyDataByIndicator = dict(map(lambda x: (x.OrganisationSurveyData.indicator_id, x), surveyData))
+    surveyDataByIndicator = dict([(x.OrganisationSurveyData.indicator_id, x) for x in surveyData])
     return surveyDataByIndicator
 
 def getSurveyDataAllWorkflows(organisation_code):
@@ -170,8 +170,8 @@ def getSurveyDataAllWorkflows(organisation_code):
                 ).join(models.Workflow, (models.OrganisationSurveyData.workflow_id==models.Workflow.id)
                 ).all()
 
-    workflows = set(map(lambda x: x.Workflow.name, surveyData))
-    indicators = set(map(lambda x: x.OrganisationSurveyData.indicator_id, surveyData))
+    workflows = set([x.Workflow.name for x in surveyData])
+    indicators = set([x.OrganisationSurveyData.indicator_id for x in surveyData])
     out = {}
     for w in workflows:
         out[w] = {}
@@ -272,7 +272,7 @@ def repairSurveyData(organisation_code):
     changed_indicators = []
 
     allindicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
-    allindicators = map(lambda x: x.id, allindicators)
+    allindicators = [x.id for x in allindicators]
 
     organisation = models.Organisation.where(organisation_code=organisation_code).first()
     org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"]
@@ -280,12 +280,12 @@ def repairSurveyData(organisation_code):
     survey = getSurvey(organisation_code).OrganisationSurvey
 
     survey_data = getSurveyDataAllWorkflows(organisation_code)
-    for workflow_name, v in survey_data.items():
+    for workflow_name, v in list(survey_data.items()):
         workflow = models.Workflow.where(name=workflow_name).first()
-        survey_indicators = v.keys()
-        for indicator, indicatordata in org_indicators.items():
+        survey_indicators = list(v.keys())
+        for indicator, indicatordata in list(org_indicators.items()):
             if indicator not in survey_indicators:
-                print "NOT FOUND:", indicator
+                print("NOT FOUND:", indicator)
                 data = {
                     'organisationsurvey_id' : survey.id,
                     'workflow_id' : workflow.id,
@@ -301,7 +301,7 @@ def repairSurveyData(organisation_code):
                 changes = True
                 changed_indicators.append(indicatordata["indicator_name"])
             else:
-                print "FOUND:", indicator
+                print("FOUND:", indicator)
     return {'changes': changes, 'changed_indicators': changed_indicators}
 
 def checkSurveyData(organisation_code):
@@ -310,16 +310,16 @@ def checkSurveyData(organisation_code):
     # if not, then create one
 
     allindicators = dqindicators.indicators(app.config["INDICATOR_GROUP"])
-    allindicators = map(lambda x: x.id, allindicators)
+    allindicators = [x.id for x in allindicators]
 
     organisation = models.Organisation.where(organisation_code=organisation_code).first()
-    org_indicators = dqorganisations._organisation_indicators_split(organisation, 2)["zero"].keys()
+    org_indicators = list(dqorganisations._organisation_indicators_split(organisation, 2)["zero"].keys())
 
     survey = getSurvey(organisation_code).OrganisationSurvey
 
     survey_data = getSurveyDataAllWorkflows(organisation_code)
-    for workflow_name, v in survey_data.items():
-        survey_indicators = v.keys()
+    for workflow_name, v in list(survey_data.items()):
+        survey_indicators = list(v.keys())
         for indicator in org_indicators:
             if indicator not in survey_indicators:
                 return False

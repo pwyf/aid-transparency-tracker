@@ -44,9 +44,9 @@ def parsePC(organisation_structures):
             ).all()
         # we look for tests that include the condition
         # after the 'then'
-        print(groups[1])
+        print((groups[1]))
         like = re.compile(r'\sThen .*?{}'.format(groups[1]))
-        tests = filter(lambda test: like.search(test[1]) is not None, tests)
+        tests = [test for test in tests if like.search(test[1]) is not None]
         return organisation, tests
 
     @add_partial('(\S*) does not use (\S*) at activity level')
@@ -76,7 +76,7 @@ def parsePC(organisation_structures):
     test_functions = {}
     comment = re.compile('#')
     blank = re.compile('^$')
-    for n, line in organisation_structures.items():
+    for n, line in list(organisation_structures.items()):
         line = line.strip('\n')
         number = n
 
@@ -85,15 +85,15 @@ def parsePC(organisation_structures):
             if m:
                 f = mapping[1](m.groups())
                 if f == None:
-                    print "Not implemented:"
-                    print line
+                    print("Not implemented:")
+                    print(line)
                 else:
-                    print "Implemented:"
+                    print("Implemented:")
                     test_functions[number] = f
-                    print f
+                    print(f)
                 break
     return test_functions
 
 if __name__ == '__main__':
     organisation_structures = {"GB-1 does not use document-link at activity hierarchy 2", "44000 does not use default-tied-status at activity level"}
-    print parsePC(organisation_structures)
+    print(parsePC(organisation_structures))

@@ -37,7 +37,7 @@ EditTestNeed = partial(TestNeed, 'edit')
 
 class EditTestPermission(Permission):
     def __init__(self, test_id):
-        need = EditTestNeed(unicode(test_id))
+        need = EditTestNeed(str(test_id))
         super(EditTestPermission, self).__init__(need)
 
 OrganisationNeed = namedtuple('organisation', ['method', 'value'])
@@ -45,14 +45,14 @@ ViewOrganisationNeed = partial(OrganisationNeed, 'view')
 
 class ViewOrganisationPermission(Permission):
     def __init__(self, organisation_code):
-        need = ViewOrganisationNeed(unicode(organisation_code))
+        need = ViewOrganisationNeed(str(organisation_code))
         super(ViewOrganisationPermission, self).__init__(need)
 
 EditOrganisationNeed = partial(OrganisationNeed, 'edit')
 
 class EditOrganisationPermission(Permission):
     def __init__(self, organisation_code):
-        need = EditOrganisationNeed(unicode(organisation_code))
+        need = EditOrganisationNeed(str(organisation_code))
         super(EditOrganisationPermission, self).__init__(need)
 
 OrganisationFeedbackNeed = namedtuple('organisation_feedback',
@@ -61,12 +61,12 @@ CreateOrganisationFeedbackNeed = partial(OrganisationFeedbackNeed, 'create')
 
 class CreateOrganisationFeedbackPermission(Permission):
     def __init__(self, organisation_code):
-        need = CreateOrganisationFeedbackNeed(unicode(organisation_code))
+        need = CreateOrganisationFeedbackNeed(str(organisation_code))
         super(CreateOrganisationFeedbackPermission, self).__init__(need)
 
 class SurveyPermission(Permission):
     def __init__(self, name, method, value):
-        need = (unicode(name), unicode(method), unicode(value))
+        need = (str(name), str(method), str(value))
         super(SurveyPermission, self).__init__(need)
 
 def check_perms(name, method=None, kwargs=None):
@@ -110,9 +110,9 @@ def check_perms(name, method=None, kwargs=None):
     if name.startswith('survey'):
         if kwargs:
             value = kwargs['organisation_code']
-            return SurveyPermission(unicode(name),
-                                    unicode(method),
-                                    unicode(value)).can()
+            return SurveyPermission(str(name),
+                                    str(method),
+                                    str(value)).can()
         else:
             value = ""
             return SurveyPermission(name, method, value).can()
@@ -140,15 +140,15 @@ def on_identity_loaded(sender, identity):
         identity.provides.add(UserNeed(current_user.id))
 
     def set_survey_permissions(permission):
-        identity.provides.add((unicode(permission.permission_name), unicode(permission.permission_method), unicode(permission.permission_value)))
+        identity.provides.add((str(permission.permission_name), str(permission.permission_method), str(permission.permission_value)))
 
     def set_permissions(permission):
         if (permission.permission_name=='tests' and permission.permission_method=='edit'):
-            identity.provides.add(EditTestNeed(unicode(permission.permission_value)))
+            identity.provides.add(EditTestNeed(str(permission.permission_value)))
         if (permission.permission_name=='organisation' and permission.permission_method=='view'):
-            identity.provides.add(ViewOrganisationNeed(unicode(permission.permission_value)))
+            identity.provides.add(ViewOrganisationNeed(str(permission.permission_value)))
         if (permission.permission_name=='organisation_feedback' and permission.permission_method=='create'):
-            identity.provides.add(CreateOrganisationFeedbackNeed(unicode(permission.permission_value)))
+            identity.provides.add(CreateOrganisationFeedbackNeed(str(permission.permission_value)))
         if (permission.permission_method=='role'):
             identity.provides.add(RoleNeed(permission.permission_name))
         if (permission.permission_name.startswith('survey')):
@@ -182,7 +182,7 @@ def login():
             else:
                 flash("Sorry, but you could not log in.", "danger")
         else:
-            flash(u"Invalid username or password.", "danger")
+            flash("Invalid username or password.", "danger")
     return render_template("login.html",
              admin=check_perms('admin'),
              loggedinuser=current_user)

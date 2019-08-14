@@ -124,13 +124,13 @@ def setup_sampling(date, filename, org_ids, test_ids):
         unlink(filename)
 
     if org_ids:
-        org_ids = map(int, org_ids.split(","))
+        org_ids = list(map(int, org_ids.split(",")))
         orgs = [Organisation.find(id_) for id_ in org_ids]
     else:
         orgs = Organisation.all()
 
     if test_ids:
-        test_ids = map(int, test_ids.split(","))
+        test_ids = list(map(int, test_ids.split(",")))
         tests = [Test.find(id_) for id_ in test_ids]
     else:
         tests = sample_work.all_tests()
@@ -347,7 +347,7 @@ def excluded_conditions(filepath):
     def check_organisations_exist(data):
         click.echo('Checking that all organisations in the CSV exist')
         for row in data:
-            organisation_slug = unicode(row[0].lower())
+            organisation_slug = str(row[0].lower())
             org = db.session.query(Organisation).filter_by(
                 registry_slug=organisation_slug).first()
             if org is None:
@@ -359,7 +359,7 @@ def excluded_conditions(filepath):
     def check_tests_exist(data):
         click.echo('Checking that all test groups in the CSV exist')
         for row in data:
-            test_group = unicode(row[1].lower())
+            test_group = str(row[1].lower())
             tests = db.session.query(Test).filter_by(
                 test_group=test_group).all()
             if len(tests) is 0:
@@ -370,19 +370,19 @@ def excluded_conditions(filepath):
 
     def insert_organisation_conditions(data):
         click.echo('Inserting data into the database where applicable')
-        condition = unicode("activity hierarchy")
-        operation = unicode(0)
+        condition = str("activity hierarchy")
+        operation = str(0)
 
         for row in data:
-            organisation_slug = unicode(row[0].lower())
+            organisation_slug = str(row[0].lower())
             org = db.session.query(Organisation).filter_by(
                 registry_slug=organisation_slug).first()
             organisation_id = org.as_dict()["id"]
-            condition_value = unicode(row[2])
+            condition_value = str(row[2])
 
-            test_group = unicode(row[1].lower())
+            test_group = str(row[1].lower())
             test_objects = get_all_test_objects(test_group)
-            for test_id, test_description in test_objects.items():
+            for test_id, test_description in list(test_objects.items()):
                 pc = OrganisationCondition.query.filter_by(
                     organisation_id=organisation_id, test_id=test_id,
                     operation=operation, condition=condition,
@@ -399,8 +399,8 @@ def excluded_conditions(filepath):
                     pc.condition_value = condition_value
                     pc.description = test_description
                     pc.file = filepath
-                    pc.line = unicode(0)
-                    pc.active = unicode('t')
+                    pc.line = str(0)
+                    pc.active = str('t')
                     db.session.add(pc)
 
     with open(filepath) as fh:

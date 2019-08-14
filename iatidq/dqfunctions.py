@@ -8,7 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 import json
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 from iatidataquality import db
 from . import models
@@ -33,8 +33,8 @@ def clear_revisions():
             db.session.add(pkg)
 
 def get_package_organisations(iatiupdates_url):
-    data = urllib2.urlopen(iatiupdates_url, timeout=60).read()
-    print iatiupdates_url
+    data = urllib.request.urlopen(iatiupdates_url, timeout=60).read()
+    print(iatiupdates_url)
     data = json.loads(data)
     package_data = data["data"]
     out = {}

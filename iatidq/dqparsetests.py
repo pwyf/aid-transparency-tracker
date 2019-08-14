@@ -33,8 +33,8 @@ def get_active_tests():
 def test_functions():
     with db.session.begin():
         tests = get_active_tests()
-        tests = itertools.ifilter(lambda test: test.test_level != test_level.FILE, tests)
-        tests = itertools.ifilter(lambda test: not ignore_line(test.name), tests)
+        tests = filter(lambda test: test.test_level != test_level.FILE, tests)
+        tests = filter(lambda test: not ignore_line(test.name), tests)
         tests = [
             (x.id, 'Feature: {name}\nScenario: {name}\n{expression}'.format(
                 name=x.id, expression=x.name))
