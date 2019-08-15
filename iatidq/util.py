@@ -53,17 +53,15 @@ def jsonify(*args, **kwargs):
         mimetype='application/json')
 
 def resort_sqlalchemy_indicator(data):
-    resort_fn = lambda x, y: cmp(x[1]['indicator']["indicator_order"],
-                                    y[1]['indicator']["indicator_order"])
-    new = sorted(list(data.items()),
-                    cmp=resort_fn)
+    resort_fn = lambda x: x[1]['indicator_order']
+
+    new = sorted(list(data.items()),key=resort_fn)
     return collections.OrderedDict(new)
 
 def resort_dict_indicator(data):
-    resort_fn = lambda x, y: cmp(x[1]['indicator']['indicator_order'],
-                                        y[1]['indicator']['indicator_order'])
+    resort_fn = lambda x: x[1]['indicator']['indicator_order']
     new = sorted(list(data.items()),
-                    cmp=resort_fn)
+                    key=resort_fn)
     return collections.OrderedDict(new)
 
 def group_by_subcategory(data):
@@ -76,8 +74,7 @@ def group_by_subcategory(data):
     return grouped_data
 
 def resort_indicator_tests(data):
-    resort_fn = lambda x, y: cmp(x[1]["indicator_order"],
-                                        y[1]["indicator_order"])
+    resort_fn = lambda x: x[1]['indicator_order']
     new = sorted(list(data.items()),
-                    cmp=resort_fn)
+                    key=resort_fn)
     return collections.OrderedDict(new)
