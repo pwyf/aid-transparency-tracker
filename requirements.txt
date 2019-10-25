@@ -36,7 +36,7 @@ SQLAlchemy==1.1.14
 sqlalchemy-mixins==0.2.2
 text-unidecode==1.2
 typing==3.6.2
-csv==0.14.1
+unicodecsv==0.14.1
 urllib3==1.24.2
 vine==1.1.4
 Werkzeug==0.12.2
