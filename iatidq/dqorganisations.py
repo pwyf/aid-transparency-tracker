@@ -193,6 +193,7 @@ def addOrganisation(data):
             organisation_code=data["organisation_code"],
             organisation_total_spend=0,
             organisation_currency_conversion=1,
+            condition=data.get('packagegroup_condition'),
         )
         db.session.add(newP)
     return newP

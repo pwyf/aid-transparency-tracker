@@ -13,7 +13,7 @@ def get_current_countries(publisher, current_data):
 
     for dataset in publisher.datasets:
         for idx, activity in enumerate(dataset.activities):
-            if current_data[dataset.name][idx] is False:
+            if dataset.name not in current_data or idx not in current_data[dataset.name] or current_data[dataset.name][idx] is False:
                 continue
             country_codes += activity.etree.xpath('recipient-country/@code')
             country_codes = list(set(country_codes))
@@ -24,7 +24,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
                             current_data_results):
     iati_result_path = current_app.config.get('IATI_RESULT_PATH')
     output_filepath = join(iati_result_path,
-                           snapshot_date, org.registry_slug,
+                           snapshot_date, org.organisation_code,
                            utils.slugify(test_name) + '.csv')
 
     iati_data_path = current_app.config.get('IATI_DATA_PATH')
@@ -41,7 +41,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
     country_strategies = {}
     for dataset in publisher.datasets:
         for idx, activity in enumerate(dataset.activities):
-            if current_data_results[dataset.name][idx] is False:
+            if dataset.name not in current_data_results or idx not in current_data_results[dataset.name] or current_data_results[dataset.name][idx] is False:
                 continue
             mous = activity.etree.xpath('document-link[category/@code="A09"]')
             if mous == []:
@@ -95,7 +95,7 @@ def disaggregated_budget(org, snapshot_date, test_name,
                          current_data_results):
     iati_result_path = current_app.config.get('IATI_RESULT_PATH')
     output_filepath = join(iati_result_path,
-                           snapshot_date, org.registry_slug,
+                           snapshot_date, org.organisation_code,
                            utils.slugify(test_name) + '.csv')
 
     iati_data_path = current_app.config.get('IATI_DATA_PATH')

@@ -168,6 +168,11 @@ def import_data():
         for organisation in all_organisations:
             if not organisation.registry_slug:
                 continue
+            if exists(join(output_path, 'data', organisation.registry_slug)):
+                continue
+            if not exists(join(input_path, 'data', organisation.registry_slug)):
+                click.echo(' Org "{}" does not exist in download'.format(organisation.registry_slug))
+                continue
             # Copy data files into place
             shutil.copytree(join(input_path, 'data',
                                  organisation.registry_slug),
@@ -233,25 +238,25 @@ def test_data(date, refresh):
     click.echo('Testing IATI data snapshot ' +
                '({}) ...'.format(snapshot_date))
     publishers = iatikit.data(path=snapshot_xml_path).publishers
-    for publisher in publishers:
-        org = Organisation.where(registry_slug=publisher.name).first()
-        if not org:
-            click.secho('Error: Publisher "{}" '.format(publisher.name) +
-                        'not found in database. Database and XML ' +
-                        'may be out of sync.',
-                        fg='red', err=True)
-            raise click.Abort()
+    name_to_publisher = dict((publisher.name, publisher) for publisher in publishers)
+
+    for org in db.session.query(Organisation).all():
+        if not org.registry_slug:
+            continue
+        if org.registry_slug not in name_to_publisher:
+            continue
         click.echo('\nTesting organisation: {name} ({slug}) ...'.format(
             name=org.organisation_name, slug=org.registry_slug
         ))
-        output_path = join(root_output_path, org.registry_slug)
+        output_path = join(root_output_path, org.organisation_code)
         makedirs(output_path)
         for test in all_tests:
             output_filepath = join(output_path,
                                    utils.slugify(test.name) + '.csv')
             click.echo(test)
-            utils.run_test(test, publisher, output_filepath,
-                           None, codelists=codelists,
+            click.echo(org.condition)
+            utils.run_test(test, name_to_publisher[org.registry_slug], output_filepath,
+                           org.condition, codelists=codelists,
                            today=snapshot_date)
 
         current_data_results = utils.load_current_data_results(
@@ -317,12 +322,12 @@ def aggregate_results(date):
     publishers = [x for x in listdir(snapshot_result_path)
                   if isdir(join(snapshot_result_path, x))]
     with click.progressbar(publishers) as publishers:
-        for registry_slug in publishers:
+        for organisation_code in publishers:
             org = Organisation.where(
-                registry_slug=registry_slug).first()
+                organisation_code=organisation_code).first()
             if not org:
                 click.secho('Error: Publisher '
-                            '"{}" '.format(registry_slug) +
+                            '"{}" '.format(organisation_code) +
                             'not found in database. Database and XML ' +
                             'may be out of sync.',
                             fg='red', err=True)

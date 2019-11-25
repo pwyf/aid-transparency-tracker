@@ -42,7 +42,7 @@ def load_current_data_results(org, snapshot_result_path):
     test = load_current_data_test()
 
     current_data_results = {}
-    current_data_filepath = join(snapshot_result_path, org.registry_slug,
+    current_data_filepath = join(snapshot_result_path, org.organisation_code,
                                  slugify(test.name) + '.csv')
     with open(current_data_filepath) as handler:
         data = csv.DictReader(handler)
@@ -108,7 +108,7 @@ def summarize_results(org, snapshot_result_path, all_tests,
     for test in all_tests:
         t = Test.where(description=test.name).first()
         test_id = t.id
-        result_filepath = join(snapshot_result_path, org.registry_slug,
+        result_filepath = join(snapshot_result_path, org.organisation_code,
                                slugify(test.name) + '.csv')
         if not exists(result_filepath):
             continue

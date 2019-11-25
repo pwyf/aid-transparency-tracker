@@ -16,7 +16,7 @@ components:
     - Project budget document
     - Commitments
     - Disbursements and expenditures
-    - Capital spend
+    - Budget Alignment
 
  - name: Local level monitoring
    indicators:
@@ -166,9 +166,17 @@ indicators:
         And `activity-status/@code` is one of 2, 3 or 4
         Then `transaction[transaction-type/@code="3" or transaction-type/@code="D" or transaction-type/@code="4" or transaction-type/@code="E"]` should be present and of non-zero value
 
- - name: Capital spend
+ - name: Budget Alignment
    tests:
     - name: Capital spend is present
+      expression: |
+       Given an IATI activity
+        And `activity-status/@code` is one of 2, 3 or 4
+        And `default-aid-type/@code` is not any of A01, A02 or G01
+        And `transaction/aid-type/@code` is not any of A01 or A02
+        Then `capital-spend` should be present
+
+    - name: Publish detailed CRS purpose codes in the sector field
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4

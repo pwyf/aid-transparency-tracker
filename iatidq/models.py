@@ -455,6 +455,7 @@ class Organisation(BaseModel):
     frequency_comment = db.Column(db.UnicodeText)
     no_independent_reviewer=db.Column(db.Boolean)
     organisation_responded=db.Column(db.Integer)
+    condition = db.Column(db.UnicodeText)
     __table_args__ = (db.UniqueConstraint('organisation_name'),
                       db.UniqueConstraint('organisation_code'))
     # organisation_code is also used to communicate
@@ -471,6 +472,7 @@ class Organisation(BaseModel):
                  organisation_currency_conversion_source=None,
                  organisation_largest_recipient=None,
                  organisation_largest_recipient_source=None,
+                 condition=None,
                  id=None):
         self.organisation_name = organisation_name
         self.registry_slug = registry_slug,
@@ -480,6 +482,7 @@ class Organisation(BaseModel):
         self.organisation_currency_conversion = organisation_currency_conversion,
         self.organisation_currency_conversion_source = organisation_currency_conversion_source,
         self.organisation_largest_recipient = organisation_largest_recipient
+        self.condition = condition
         if id is not None:
             self.id = id
 
