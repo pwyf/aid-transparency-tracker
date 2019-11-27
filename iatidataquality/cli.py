@@ -127,7 +127,7 @@ def setup_sampling(date, filename, org_ids, test_ids):
         org_ids = list(map(int, org_ids.split(",")))
         orgs = [Organisation.find(id_) for id_ in org_ids]
     else:
-        orgs = Organisation.all()
+        orgs = [org for org in Organisation.all() if org.registry_slug]
 
     if test_ids:
         test_ids = list(map(int, test_ids.split(",")))

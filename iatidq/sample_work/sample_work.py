@@ -124,13 +124,18 @@ class SampleOrgTest(object):
         current_data_path = os.path.join(
             app.config.get('IATI_RESULT_PATH'),
             self.snapshot_date,
-            self.organisation.registry_slug,
+            self.organisation.organisation_code,
             'current_data.csv')
         test_path = os.path.join(
             app.config.get('IATI_RESULT_PATH'),
             self.snapshot_date,
-            self.organisation.registry_slug,
+            self.organisation.organisation_code,
             '{}.csv'.format(slugify(self.test.description)))
+
+        if not os.path.exists(current_data_path):
+            print('Results with organization code %s does not exist' % self.organisation.organisation_code)
+            return
+
         with open(current_data_path) as cd_handler:
             with open(test_path) as test_handler:
                 cd_reader = csv.DictReader(cd_handler)
