@@ -84,9 +84,10 @@ def run_test(test, publisher, output_path, test_condition, **kwargs):
             if item.dataset.name != prev_dataset:
                 idx = 0
             prev_dataset = item.dataset.name
-            if test_condition and not item.etree.xpath(test_condition):
-                idx += 1
-                continue
+            if 'iati-activity' in tags:
+                if test_condition and not item.etree.xpath(test_condition):
+                    idx += 1
+                    continue
             result, explanation = test(item.etree, bdd_verbose=True, **kwargs)
             hierarchy = item.etree.get('hierarchy')
             if not hierarchy:
