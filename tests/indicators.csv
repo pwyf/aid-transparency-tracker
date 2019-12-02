@@ -91,13 +91,13 @@ disbursements-and-expenditures,Disbursements and expenditures,publication,activi
 The IATI reference for this indicator is: Transaction (transaction type = disbursement and expenditure).
 
 While such information might be considered to be commercially sensitive by some organisations, Publish What You Fund’s view is that actual expenditure information is less sensitive once the money has been spent. Hence all organisations are scored on this indicator. For IFIs and DFIs, the total fund/loan amount spent is accepted and details of the loan repayment costs and related charges can be redacted. The specific reasons for the redactions need to be explicitly stated in detail and must clarify why the information is commercially sensitive and would cause material and direct harm if published.",14,0,1./30,,,
-budget-alignment,Budget Alignment,publication,activity,Finance and budgets,"This indicator captures the percentage of the total commitment allocated to or planned for capital expenditure. Content must be a positive decimal number between 0 and 100, with no percentage sign.
+budget-alignment,Budget Alignment,publication,activity,Finance and budgets,"The budget alignment indicator helps to link the activity to the recipient country government’s own budget codes. 
 
-The definition of capital expenditure follows the IMF GFS definition approved by WP Stat in February 2016. Capital spending is generally defined as physical assets with a useful life of more than one year. But it also includes capital improvements or the rehabilitation of physical assets that enhance or extend the useful life of the asset (as distinct from repair or maintenance, which assures that the asset is functional for its planned life). Capital includes all aspects of design and construction that are required to make the asset operational.
+This is only expected if the activity is in the implementation, completion or post-completion phase, and if the aid type is not budget support. This is not expected if the aid type is budget support (A01 or A02) or if the default aid type code is administrative costs (G01). 
 
-The IATI reference for this indicator is: capital spend.
+The test follows the guidance on country budget alignment, found here on the IATI reference website: http://reference.iatistandard.org/203/activity-standard/overview/country-budget-alignment/ 
 
-This element of the indicator is retained for all organisations. Differentiating between expenditure on consumption or investment in capital is of critical importance for recipient country governments in macroeconomic management and in short- and long-term growth strategy.",15,0,1./30,,,
+This guidance also includes the relevant CRS codelist guidance that will be used for this test. ",15,0,1./30,,,
 title,Title,publication,activity,Project attributes,"The title of the activity is its name. This is preferably the formal name of the activity, but does not have to be.
 
 The title needs to be complete with any abbreviations or acronyms explained.
