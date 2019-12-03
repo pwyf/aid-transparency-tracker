@@ -92,7 +92,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
 
 
 def disaggregated_budget(org, snapshot_date, test_name,
-                         current_data_results):
+                         current_data_results, condition):
     iati_result_path = current_app.config.get('IATI_RESULT_PATH')
     output_filepath = join(iati_result_path,
                            snapshot_date, org.organisation_code,
@@ -139,6 +139,13 @@ Feature: Total disaggregated budget
                 disaggregated_budget_tmpl.format(country_code=country_code))
             for dataset in publisher.datasets:
                 for idx, organisation in enumerate(dataset.organisations):
+
+                    if condition:
+                        activity_condition, org_condition = condition.split('|')
+
+                        if org_condition.strip() and not organisation.etree.xpath(org_condition):
+                            continue
+
                     for year, test in enumerate(feature.tests):
                         result = test(
                             organisation.etree,

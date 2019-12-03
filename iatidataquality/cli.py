@@ -241,6 +241,7 @@ def test_data(date, refresh):
     name_to_publisher = dict((publisher.name, publisher) for publisher in publishers)
 
     for org in db.session.query(Organisation).all():
+
         if not org.registry_slug:
             continue
         if org.registry_slug not in name_to_publisher:
@@ -254,7 +255,6 @@ def test_data(date, refresh):
             output_filepath = join(output_path,
                                    utils.slugify(test.name) + '.csv')
             click.echo(test)
-            click.echo(org.condition)
             utils.run_test(test, name_to_publisher[org.registry_slug], output_filepath,
                            org.condition, codelists=codelists,
                            today=snapshot_date)
@@ -272,7 +272,7 @@ def test_data(date, refresh):
         test_name = 'Disaggregated budget'
         click.echo(test_name)
         infotest.disaggregated_budget(
-            org, snapshot_date, test_name, current_data_results)
+            org, snapshot_date, test_name, current_data_results, org.condition)
 
 
 @app.cli.command()

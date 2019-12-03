@@ -127,7 +127,7 @@ indicators:
     - name: Budget available forward annually
       expression: |
        Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
+        And `activity-status/@code` is one of 2 or 3
         And `default-aid-type/@code` is not G01
         And `activity-date[@type="3" or @type="4" or @type="end-planned" or @type="end-actual"]/@iso-date` is at least 6 months ahead
         Then `budget | planned-disbursement` should be available forward annually
@@ -135,7 +135,7 @@ indicators:
     - name: Budget available forward quarterly
       expression: |
        Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
+        And `activity-status/@code` is one of 2 or 3
         And `default-aid-type/@code` is not G01
         And `activity-date[@type="3" or @type="4" or @type="end-planned" or @type="end-actual"]/@iso-date` is at least 6 months ahead
         Then `budget | planned-disbursement` should be available forward quarterly
@@ -164,7 +164,7 @@ indicators:
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
-        Then `transaction[transaction-type/@code="3" or transaction-type/@code="D" or transaction-type/@code="4" or transaction-type/@code="E"]` should be present and of non-zero value
+        Then `transaction[transaction-type/@code="3"  or transaction-type/@code="4"]` should be present
 
  - name: Budget Alignment
    tests:
@@ -179,10 +179,13 @@ indicators:
     - name: Publish detailed CRS purpose codes in the sector field
       expression: |
        Given an IATI activity
+        And the activity is current
         And `activity-status/@code` is one of 2, 3 or 4
         And `default-aid-type/@code` is not any of A01, A02 or G01
         And `transaction/aid-type/@code` is not any of A01 or A02
-        Then `capital-spend` should be present
+        Then `sector/@code` should be present
+        And `sector/@code` is not any of 43010, 43050, 43081, 43082, 52010, 99810, 11230, 11320, 15110, 15111, 15112, 15114, 15130, 16010, 16061, 21010, 21020, 22010, 23110, 43030 or 43040
+
 
  - name: Title
    tests:
@@ -273,6 +276,10 @@ indicators:
         And `activity-status/@code` is one of 2, 3 or 4
         And `recipient-region/@code` is not 998
         And `default-aid-type/@code` is not G01
+        And `default-aid-type/@code` is not B01
+        And `default-aid-type/@code` is not B02
+        And `transaction/aid-type/@code` is not B01
+        And `transaction/aid-type/@code` is not B02
         Then `location` should be present
 
     - name: Location (sub-national) coordinates or point
@@ -281,6 +288,10 @@ indicators:
         And `activity-status/@code` is one of 2, 3 or 4
         And `recipient-region/@code` is not 998
         And `default-aid-type/@code` is not G01
+        And `default-aid-type/@code` is not B01
+        And `default-aid-type/@code` is not B02
+        And `transaction/aid-type/@code` is not B01
+        And `transaction/aid-type/@code` is not B02
         Then `location[coordinates or point]` should be present
 
  - name: Implementer
@@ -409,7 +420,8 @@ indicators:
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of B02 or G01
+        And `default-aid-type/@code` is not any of A01, A02, B01, B02, B03, B04, D01, D02, E01, E02, F01, H01, H02, H03, H04, H05 or G01 
+        And `transaction/aid-type/@code` is not any of A01, A02, B01, B02, B03, B04, D01, D02, E01, E02, F01, H01, H02, H03, H04, H05 or G01 
         Then `document-link/category[@code="A01"]` should be present
 
  - name: Reviews and evaluations
