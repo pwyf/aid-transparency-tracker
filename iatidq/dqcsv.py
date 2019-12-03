@@ -414,4 +414,11 @@ def make_csv(organisations, index_data=False, history=False):
             write_organisation_publications_csv(out, organisation)
 
     strIO.seek(0)
-    return strIO
+
+    # send_file wants bytes in python3 - this converts the StringIO to BytesIO
+    bytesIO = io.BytesIO()
+    bytesIO.write(strIO.getvalue().encode('utf-8'))
+    bytesIO.seek(0)
+    strIO.close()
+
+    return bytesIO
