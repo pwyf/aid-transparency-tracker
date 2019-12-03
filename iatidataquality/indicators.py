@@ -170,7 +170,14 @@ def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
     strIO.seek(0)
     if option ==None:
         option = ""
-    return send_file(strIO,
+
+    # send_file wants bytes in python3 - this converts the StringIO to BytesIO
+    bytesIO = io.BytesIO()
+    bytesIO.write(strIO.getvalue().encode('utf-8'))
+    bytesIO.seek(0)
+    strIO.close()
+
+    return send_file(BytesIO,
                      attachment_filename=indicatorgroup + "_" + option + "tests.csv",
                      as_attachment=True)
 

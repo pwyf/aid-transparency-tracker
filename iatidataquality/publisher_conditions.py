@@ -210,6 +210,13 @@ def export_organisation_conditions():
     strIO = io.StringIO()
     strIO.write(str(conditionstext))
     strIO.seek(0)
-    return send_file(strIO,
+
+    # send_file wants bytes in python3 - this converts the StringIO to BytesIO
+    bytesIO = io.BytesIO()
+    bytesIO.write(strIO.getvalue().encode('utf-8'))
+    bytesIO.seek(0)
+    strIO.close()
+    
+    return send_file(bytesIO,
                      attachment_filename="organisation_structures.txt",
                      as_attachment=True)
