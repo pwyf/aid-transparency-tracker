@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import io
+from io import StringIO, BytesIO
 
 from flask import abort, render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
@@ -144,7 +144,7 @@ def get_indicators(indicatorgroup=None):
 
 
 def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
-    strIO = io.StringIO()
+    strIO = StringIO()
     if (option != "no"):
         fieldnames = "test_name test_description test_level indicator_name indicator_description".split()
     else:
@@ -172,12 +172,12 @@ def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
         option = ""
 
     # send_file wants bytes in python3 - this converts the StringIO to BytesIO
-    bytesIO = io.BytesIO()
+    bytesIO = BytesIO()
     bytesIO.write(strIO.getvalue().encode('utf-8'))
     bytesIO.seek(0)
     strIO.close()
 
-    return send_file(BytesIO,
+    return send_file(bytesIO,
                      attachment_filename=indicatorgroup + "_" + option + "tests.csv",
                      as_attachment=True)
 

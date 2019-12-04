@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import io
+from io import StringIO, BytesIO
 
 from flask import render_template, flash, request, redirect, url_for, send_file
 from flask_login import current_user
@@ -207,12 +207,12 @@ def export_organisation_conditions():
             conditionstext = conditionstext + "\n"
         conditionstext = conditionstext + condition.description
 
-    strIO = io.StringIO()
+    strIO = StringIO()
     strIO.write(str(conditionstext))
     strIO.seek(0)
 
     # send_file wants bytes in python3 - this converts the StringIO to BytesIO
-    bytesIO = io.BytesIO()
+    bytesIO = BytesIO()
     bytesIO.write(strIO.getvalue().encode('utf-8'))
     bytesIO.seek(0)
     strIO.close()
