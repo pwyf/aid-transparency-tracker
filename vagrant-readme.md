@@ -15,7 +15,7 @@ vagrant ssh
 
 cd /vagrant
 
-source pyenv/bin/activate
+source venv/bin/activate
 
 flask setup
 

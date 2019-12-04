@@ -32,6 +32,7 @@ def importPCsFromText(text):
 def _importPCs(fh, local=True):
     results = {}
     for n, line in enumerate(fh):
+        line = line.decode()
         if line == "\n":
             continue
         if line.startswith('#'):

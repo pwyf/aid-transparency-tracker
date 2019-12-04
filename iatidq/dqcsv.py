@@ -7,7 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
-import io
+from io import StringIO, BytesIO
 
 import csv
 
@@ -392,7 +392,7 @@ def make_csv(organisations, index_data=False, history=False):
         "survey_total_points"
         ]
 
-    strIO = io.StringIO()
+    strIO = StringIO()
 
     if index_data:
         csv_headers = csv_fieldnames_index
@@ -414,4 +414,11 @@ def make_csv(organisations, index_data=False, history=False):
             write_organisation_publications_csv(out, organisation)
 
     strIO.seek(0)
-    return strIO
+
+    # send_file wants bytes in python3 - this converts the StringIO to BytesIO
+    bytesIO = BytesIO()
+    bytesIO.write(strIO.getvalue().encode('utf-8'))
+    bytesIO.seek(0)
+    strIO.close()
+
+    return bytesIO
