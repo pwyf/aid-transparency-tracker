@@ -166,7 +166,7 @@ def indicatorsTests(indicatorgroup_name):
     indicators = db.session.query(models.Indicator,
                                   models.Test
                 ).filter(models.IndicatorGroup.name==indicatorgroup_name
-                ).outerjoin(models.IndicatorTest
+                ).outerjoin(models.IndicatorTest, models.Indicator.id==models.IndicatorTest.indicator_id
                 ).outerjoin(models.Test
                 ).order_by(models.Indicator.indicator_order
                 ).all()
