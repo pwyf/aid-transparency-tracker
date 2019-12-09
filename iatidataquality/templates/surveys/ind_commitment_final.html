@@ -38,7 +38,7 @@
         <tr>
             <td><span>Donor review</span></td>
 
-            {% if organisation.organisation_responded >= 3 %}
+            {% if organisation.organisation_responded and organisation.organisation_responded >= 3 %}
                 <td colspan="3">No response</td>
             {% else %}
                 <td>{{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value}}<br />
@@ -125,7 +125,7 @@
 
             <tr>
                 <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
-                {% if organisation.organisation_responded >= 3 %}
+                {% if organisation.organisation_responded and organisation.organisation_responded >= 3 %}
                     <td colspan="3">No response</td>
                 {% else %}
                     <td>
