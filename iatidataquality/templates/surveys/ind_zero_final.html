@@ -59,8 +59,8 @@
         {% set data = surveydata['donorreview'] %}
         <tr>
             <td><span>Donor review</span></td>
-            {% if organisation.organisation_responded >= 3 %}
-                <td colspan="3">No response</td>
+            {% if organisation.organisation_responded and organisation.organisation_responded >= 3 %}
+              <td colspan="3">No response</td>
             {% else %}
                 <td>
                   {% if indicator.indicator.indicator_ordinal %}
@@ -160,8 +160,8 @@
         <tr>
             <td><span>{{data[indicator.indicator.id].Workflow.title}}</span></td>
 
-            {% if organisation.organisation_responded >= 3 %}
-                <td colspan="3">No response</td>
+            {% if organisation.organisation_responded and organisation.organisation_responded >= 3 %}
+              <td colspan="3">No response</td>
             {% else %}
                 <td>
                 <span class="label label-{{accepted_class}}" title="Agree or disagree">{{accepted}}</span>
