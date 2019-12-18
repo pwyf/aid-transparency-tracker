@@ -405,7 +405,7 @@ def excluded_conditions(filepath):
                     pc.description = test_description
                     pc.file = filepath
                     pc.line = str(0)
-                    pc.active = str('t')
+                    pc.active = True
                     db.session.add(pc)
 
     with open(filepath) as fh:
