@@ -24,7 +24,7 @@
             {% if show_researcher_button %}
             <a class="btn btn-default" href="{{url_for('organisation_survey_edit',
                                             organisation_code=organisation.organisation_code,
-                                            workflow_name='researcher')}}">
+                                            workflow_name=survey_workflow)}}">
 			  <i class="glyphicon glyphicon-star"></i> Start survey</a>
             {% endif %}
         </div>
