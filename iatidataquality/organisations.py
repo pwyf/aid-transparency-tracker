@@ -109,16 +109,24 @@ def organisations_index(organisation_code=None):
     allowed_to_view_survey = usermanagement.check_perms(
         "survey",
         "view")
+
     allowed_to_edit_survey_researcher = usermanagement.check_perms(
         "survey_researcher",
         "edit",
         {"organisation_code": organisation_code})
 
+    allowed_to_edit_survey_cso = usermanagement.check_perms(
+        "survey_cso",
+        "edit",
+        {"organisation_code": organisation_code})
+
     show_researcher_button = (
-        allowed_to_edit_survey_researcher and
+        (allowed_to_edit_survey_researcher or allowed_to_edit_survey_cso)
+        and
          (
-          (organisation_survey and
-           organisation_survey.Workflow.name == 'researcher') or
+           (organisation_survey and
+           organisation_survey.Workflow.name == 'researcher') 
+           or
            (organisation_survey and
            organisation_survey.Workflow.name == 'cso')
            or
