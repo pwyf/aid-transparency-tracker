@@ -109,20 +109,32 @@ def organisations_index(organisation_code=None):
     allowed_to_view_survey = usermanagement.check_perms(
         "survey",
         "view")
+
     allowed_to_edit_survey_researcher = usermanagement.check_perms(
         "survey_researcher",
         "edit",
         {"organisation_code": organisation_code})
 
+    allowed_to_edit_survey_cso = usermanagement.check_perms(
+        "survey_cso",
+        "edit",
+        {"organisation_code": organisation_code})
+
     show_researcher_button = (
-        allowed_to_edit_survey_researcher and
+        (allowed_to_edit_survey_researcher or allowed_to_edit_survey_cso)
+        and
          (
-          (organisation_survey and
-           organisation_survey.Workflow.name == 'researcher')
+           (organisation_survey and
+           organisation_survey.Workflow.name == 'researcher') 
+           or
+           (organisation_survey and
+           organisation_survey.Workflow.name == 'cso')
            or
           (not organisation_survey)
          )
         )
+    
+    survey_workflow = 'researcher' if organisation_survey is None else organisation_survey.Workflow.name
 
     template_args = dict(organisation=organisation,
                          summary_data=summary_data,
@@ -132,7 +144,8 @@ def organisations_index(organisation_code=None):
                          admin=usermanagement.check_perms('admin'),
                          loggedinuser=current_user,
                          allowed_to_view_survey=allowed_to_view_survey,
-                         show_researcher_button=show_researcher_button)
+                         show_researcher_button=show_researcher_button,
+                         survey_workflow=survey_workflow)
 
     return render_template("organisation_index.html", **template_args)
 
