@@ -103,7 +103,7 @@ title,Title,publication,activity,Project attributes,"The title of the activity i
 The title needs to be complete with any abbreviations or acronyms explained.
 
 Titles need to contain at least 10 characters.",16,0,0.01,,,
-description,Description,publication,activity,Project attributes,"The description of the activity is a descriptive text, longer than the title, explaining what the activity is.
+description,Description,publication,activity,Project attributes,"The description of the activity is a meaningful descriptive text, longer than the title, explaining what the activity is.
 
 The description of the activity needs to contain a minimum of 80 characters in order to be considered a description rather than just a title.
 
@@ -230,4 +230,4 @@ results,Results,publication,activity,Performance,"The results show whether activ
 
 The IATI references for this indicator are: Result and/or Results, outcomes and outputs (Document code = A08).
 
-Both current and completed activities are considered for this indicator. If the activity is ongoing then the expected results should be available. If the activity has ended then the actual results should be available within 12-months of ending.",36,0,0.05,,,
+Both current and completed activities are considered for this indicator. If the activity is ongoing then up to date results should be available. If the activity has ended then the actual results should be available within 12-months of ending.",36,0,0.05,,,
