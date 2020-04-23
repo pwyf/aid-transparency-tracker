@@ -6,7 +6,7 @@ A data quality measurement tool for international aid data.
 
 Run the following commands to bootstrap your environment:
 
-    git clone --recursive --branch original-version https://github.com/pwyf/aid-transparency-tracker.git
+    git clone --recursive --branch 2020tracker https://github.com/pwyf/aid-transparency-tracker.git
     cd aid-transparency-tracker
 
 Setup a virtual environment, and install dependencies:
