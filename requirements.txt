@@ -28,7 +28,7 @@ openpyxl==2.4.8
 psycopg2==2.7.3.1
 python-dateutil==2.6.1
 python-slugify==3.0.2
-PyYAML==5.1.1
+PyYAML==5.4
 requests==2.20.0
 simplejson==3.16.0
 six==1.10.0
