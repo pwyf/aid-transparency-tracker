@@ -25,7 +25,7 @@ Markdown==2.6.9
 MarkupSafe
 meld3==1.0.2
 openpyxl==2.4.8
-psycopg2==2.7.3.1
+psycopg2-binary
 python-dateutil==2.6.1
 python-slugify==3.0.2
 PyYAML==5.4
