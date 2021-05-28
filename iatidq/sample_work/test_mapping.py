@@ -13,6 +13,7 @@ test_to_kind = {
     "Description is present": "text",
     "Location (sub-national)": "location",
     "Location (sub-national) coordinates or point": "location",
+    "Networked Data Participating Org Ref": "participating-org",
 }
 
 ## Integers 2, 3, 4, etc. Are the response integer that goes into
@@ -171,6 +172,24 @@ kind_to_status = {
               "icon": "remove",
               "class": "danger",
               "value": "3",
+            },
+    },
+    "participating-org": {
+        1:
+            {
+              "text:": "pass",
+              "button": "pass",
+              "icon": "ok",
+              "class": "success",
+              "value": "1",
+            },
+        2:
+            {
+              "text:": "references look correct",
+              "button": "references look incorrect",
+              "icon": "remove",
+              "class": "danger",
+              "value": "2",
             },
     },
 }

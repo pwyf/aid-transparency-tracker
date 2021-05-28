@@ -118,6 +118,7 @@ def summarize_results(org, snapshot_result_path, all_tests,
         result_filepath = join(snapshot_result_path, org.organisation_code,
                                slugify(test.name) + '.csv')
         if not exists(result_filepath):
+            print(f'can not find {result_filepath}')
             continue
         with open(result_filepath) as handler:
             dataset = None
@@ -135,6 +136,7 @@ def summarize_results(org, snapshot_result_path, all_tests,
                     dataset_test_results[hierarchy] = {
                         'total': 0,
                         'score': 0,
+                        'sample': 0,
                     }
                 result = row['result']
                 if result == 'not relevant':
@@ -145,7 +147,10 @@ def summarize_results(org, snapshot_result_path, all_tests,
                         idx, 'not relevant') is False):
                     continue
                 dataset_test_results[hierarchy]['total'] += 1
-                dataset_test_results[hierarchy]['score'] += int(result)
+                dataset_test_results[hierarchy]['score'] += float(result)
+                if float(result) > 0:
+                    dataset_test_results[hierarchy]['sample'] += 1
+
             if dataset is not None:
                 save_summary(dataset, dataset_test_results, test_id,
                              org, aggregateresulttype)
@@ -158,6 +163,7 @@ def save_summary(dataset, dataset_test_results, test_id, org,
         if total == 0:
             continue
         results_data = 100. * scores['score'] / total
+        sample = scores['sample']
 
         ar = AggregateResult()
         ar.package_name = dataset
@@ -167,6 +173,7 @@ def save_summary(dataset, dataset_test_results, test_id, org,
         ar.result_hierarchy = hierarchy
         ar.results_data = results_data
         ar.results_num = total
+        ar.sample_num = sample
 
         with db.session.begin():
             db.session.add(ar)

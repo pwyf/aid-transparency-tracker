@@ -103,6 +103,15 @@ def make_sample_json(work_item):
         data = [get_cond_from_xml(xml) for xml in xml_strings]
         return data[0]+data[1]
 
+    def get_pos(xml_strings):
+        def get_po_from_xml(xml):
+            if xml is None:
+                return []
+            pos = [sample_work.ParticipatingOrgs(work_item["xml_data"]).get_po()]
+            return pos
+        data = [get_po_from_xml(xml) for xml in xml_strings]
+        return data[0]+data[1]
+
     xml_strings = [work_item["xml_data"],
                    work_item["xml_parent_data"]]
     docs = get_docs(xml_strings)
@@ -123,6 +132,11 @@ def make_sample_json(work_item):
     else:
         conditions = []
 
+    if work_item["test_kind"] == "participating-org":
+        pos = get_pos(xml_strings)
+    else:
+        pos = []
+
     activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
     work_item_test = get_test_info(work_item["test_id"])
@@ -138,6 +152,7 @@ def make_sample_json(work_item):
                 "locations": locs,
                 "results": res,
                 "conditions": conditions,
+                "pos": pos,
                 "sampling_id": work_item["uuid"],
                 "test_id": work_item["test_id"],
                 "organisation_id": work_item["organisation_id"],
@@ -146,7 +161,9 @@ def make_sample_json(work_item):
                 "activity_other_titles?": len(activity_info.titles) > 1,
                 "activity_descriptions": activity_info.descriptions,
                 "test_kind": work_item["test_kind"],
+                "result": work_item["result"],
                 "xml": xml,
+
             },
             "headers": {
                 "test_id": work_item_test.id,

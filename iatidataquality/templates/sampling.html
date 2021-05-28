@@ -210,6 +210,58 @@
 
 </script>
 
+<script id="participating-org-template" type="x-tmpl-mustache">
+
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+
+    {{#activity_other_titles?}}
+    <div>
+      <strong>Other title(s):</strong>
+      {{#activity_other_titles}}
+        <p>{{ text }}</p>
+      {{/activity_other_titles}}
+    </div>
+    {{/activity_other_titles?}}
+
+    <div>
+      <strong>Description(s):</strong>
+      {{#activity_descriptions}}
+        <p>{{ text }}</p>
+      {{/activity_descriptions}}
+    </div>
+
+    <div>
+      <strong>Score From Test:</strong>
+      <p>{{ result }}</p>
+    </div>
+
+    <hr />
+    <div class="row" id="data-content">
+	{{# pos }}
+        <div class="col-md-11 col-md-offset-1">
+        	{{# pos }}
+            <h5><span class="text-muted">Text</span></h5>
+                {{# texts }}
+                <p>{{ text }}</p>
+                {{/ texts }}
+            <p><span class="text-muted">Ref:</span> {{ ref }}
+            <p><span class="text-muted">Role:</span> {{ role }}
+            <p><span class="text-muted">Type:</span> {{ type }}
+            <br/>
+            <br/>
+        	{{/ pos }}
+        </div>
+	{{/ pos }}
+    </div>
+
+    <hr />
+
+    {{> xml-template}}
+
+	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
+
+</script>
+
 <script id="document-template" type="x-tmpl-mustache">
 
     <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>

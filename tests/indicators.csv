@@ -128,7 +128,7 @@ The IATI reference for this indicator is: Activity status.",20,0,0.01,,,
 contact-details,Contact details,publication,activity,Project attributes,"This shows who can be contacted in relation to this activity. This does not have to be the contact information for an individual or project manager and could refer to a central contact or information desk. Contacts for either the funding organisation or the implementing organisation were accepted.
 
 This has to be stated alongside the activity or on an obvious “contact us” link alongside the activity.",21,0,0.01,,,
-implementer,Implementer,publication,activity,Project attributes,"The implementer of the activity is the organisation that is principally responsible for delivering it.
+networked-data,Networked Data,publication,activity,Project attributes,"The implementer of the activity is the organisation that is principally responsible for delivering it.
 
 The IATI reference for this indicator is: Implementing organisation (participatingorg role = implementing).
 

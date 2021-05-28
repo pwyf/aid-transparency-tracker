@@ -294,13 +294,18 @@ indicators:
         And `transaction/aid-type/@code` is not B02
         Then `location[coordinates or point]` should be present
 
- - name: Implementer
+ - name: Networked Data
    tests:
     - name: Implementing organisation
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
         Then `participating-org[@role="Implementing" or @role="4"]` should be present
+
+    - name: Networked Data Participating Org Ref
+      expression: |
+       Given this test involves both organisation and activity files
+        Then skip it
 
  - name: Unique ID
    tests:

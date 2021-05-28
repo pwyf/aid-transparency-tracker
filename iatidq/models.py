@@ -160,6 +160,7 @@ class AggregateResult(BaseModel):
     result_hierarchy = db.Column(db.Integer, nullable=False)
     results_data = db.Column(db.Float)
     results_num = db.Column(db.Integer)
+    sample_num = db.Column(db.Integer)
     __table_args__ = (db.UniqueConstraint('package_id',
                                        'test_id',
                                        'result_hierarchy',

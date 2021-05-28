@@ -8,6 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 from getpass import getpass
+import os
 
 from iatidataquality import app, db
 from . import dqaggregationtypes
@@ -73,7 +74,8 @@ def setup_common():
 
 def setup_organisations():
     print("Adding organisations")
-    dqorganisations.importOrganisationPackagesFromFile("tests/organisations_with_identifiers.csv")
+    org_file = os.environ.get('ORG_FILE', "tests/organisations_with_identifiers.csv")
+    dqorganisations.importOrganisationPackagesFromFile(org_file)
 
 def setup_packages():
     print("Refreshing package data from Registry")
