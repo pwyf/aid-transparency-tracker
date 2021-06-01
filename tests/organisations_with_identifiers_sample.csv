@@ -1,6 +1,6 @@
 country,donor,organisation_name,organisation_total_spend,organisation_total_spend_source,organisation_code,2018_organisation_code,2016_organisation_code,2015_organisation_code,2014_organisation_code,packagegroup_name,packagegroup_condition,organisation_currency,organisation_currency_conversion,organisation_currency_conversion_source,organisation_largest_recipient,organisation_largest_recipient_source
 Africa,,AfDB,,,46002,46002,46002,46002,46002,afdb,,,,,,
-"Germany,",BMZ-KFW,"Germany, BMZ-KFW",,,DE-2,DE-2,DE-2,DE-2,DE-2,bmz,participating-org[@role='2'][@ref='XM-DAC-5-2']|,,,,,
+"Germany,",BMZ-KFW,"Germany, BMZ-KFW",,,XM-DAC-5-2,DE-2,DE-2,DE-2,DE-2,bmz,participating-org[@role='2'][@ref='XM-DAC-5-2']|,,,,,
 U.S.A,State,"US, State",,,US-11,US-11,US-11,US-11,US-11,unitedstates,participating-org[@role='2'][@ref='US-GOV-11']|organisation-identifier/text()='US-GOV-1',,,,,
 U.S.A,IDA,"World Bank, IDA",,,44002,44002,44002,44002,44002,worldbank,participating-org[@role='1'][@ref='44002']|,,,,,
 U.S.A,IFC,"World Bank, IFC",,,44004,44004,44004,44004,44004,ifcwbg,,,,,,
