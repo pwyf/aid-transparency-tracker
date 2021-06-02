@@ -329,7 +329,7 @@ def organisation_publication(organisation_code, aggregation_type):
 
         def points():
             if not zero:
-                return round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
+                return round((tmp["results_pct"] * multiplier / 1.5 + 100.0/3), 2)
 
             ind_id = res["indicator"]["id"]
 
@@ -349,7 +349,7 @@ def organisation_publication(organisation_code, aggregation_type):
 
         tmp["points"] = points()
         if not zero:
-            tmp["points_minus_50"] = round((tmp["points"] - 50), 2)
+            tmp["points_minus_50"] = round((tmp["points"] - 100/3), 2)
             # it all fails if the other branch tries to use this value
 
         tmp["tests"] = list(map(annotate_test, res["tests"]))
@@ -376,7 +376,7 @@ def organisation_publication(organisation_code, aggregation_type):
                 tmp["format_class"], tmp["format_text"] = format_class_and_text()
 
         tmp["results_pct_rounded"] = round(tmp["results_pct"], 2)
-        tmp["results_pct_halved_rounded"] = round(tmp["results_pct"]/2.0, 2)
+        tmp["results_pct_halved_rounded"] = round(tmp["results_pct"]/1.5, 2)
 
         return tmp
 
