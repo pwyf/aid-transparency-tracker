@@ -366,9 +366,10 @@ def networked_data_ref(org, snapshot_date, test_name,
         writer.writeheader()
 
         for dataset in publisher.datasets:
-            if dataset.name not in current_data_results or idx not in current_data_results[dataset.name] or current_data_results[dataset.name][idx] is False:
-                continue
             for idx, activity in enumerate(dataset.activities):
+                if dataset.name not in current_data_results or idx not in current_data_results[dataset.name]:
+                    continue
+
                 explanation, score = test_participating_org_refs(org.registry_slug, organisation.etree, activity.etree, self_refs)
 
                 if score is None:
