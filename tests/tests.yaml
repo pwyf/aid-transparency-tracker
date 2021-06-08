@@ -1,4 +1,4 @@
-components:
+﻿components:
  - name: Organisational planning and commitments
    indicators:
     - Organisation strategy
@@ -294,7 +294,7 @@ indicators:
         And `transaction/aid-type/@code` is not B02
         Then `location[coordinates or point]` should be present
 
- - name: Networked Data
+ - name: "Networked Data - Implementors"
    tests:
     - name: Implementing organisation
       expression: |
@@ -302,7 +302,9 @@ indicators:
         And `activity-status/@code` is one of 2, 3 or 4
         Then `participating-org[@role="Implementing" or @role="4"]` should be present
 
-    - name: Networked Data Participating Org Ref
+ - name: "Networked Data - Participating Orgs"
+   tests:
+    - name: Participating Orgs
       expression: |
        Given this test involves both organisation and activity files
         Then skip it
