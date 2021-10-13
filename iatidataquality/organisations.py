@@ -413,6 +413,7 @@ def organisation_publication(organisation_code, aggregation_type):
 
     return render_template("organisation_indicators.html",
                            ati_year=app.config['ATI_YEAR'],
+                           previous_ati_year=app.config['PREVIOUS_ATI_YEAR'],
                            organisation=organisation,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,
