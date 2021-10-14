@@ -107,7 +107,7 @@ description,Description,publication,activity,Project attributes,"The description
 
 The description of the activity needs to contain a minimum of 80 characters in order to be considered a description rather than just a title.
 
-For child activities that sit underneath a main activity (parent-child), the description might be the most relevant place to explain the relationship between the parent and child activities. For example, explaining how and why the activity has been broken up in a certain way.",17,0,0.01,,,
+For child activities that sit underneath a main activity (parent-child), the description might be the most relevant place to explain the relationship between the parent and child activities. For example, explaining how and why the activity has been broken up in a certain way.",17,0,0.03,,,
 planned-dates,Planned dates,publication,activity,Project attributes,"The planned dates are the dates that the activity is scheduled to start and end on. If there is one set of dates but they are not explicitly planned or actual dates, given that these are for activities which are current (i.e. being implemented at the time of data collection) it is assumed that they are planned dates.
 
 The IATI reference for this indicator is: Activity date (activity date type = startplanned and end-planned).
@@ -130,7 +130,7 @@ contact-details,Contact details,publication,activity,Project attributes,"This sh
 This has to be stated alongside the activity or on an obvious “contact us” link alongside the activity.",21,0,0.01,,,
 sector,Sectors,publication,activity,Project attributes,"The sectors of the activity explain whether this is, for example, a health or education project. It does not count if it is just mentioned incidentally within the title, description, etc. It needs to be stated separately and explicitly.
 
-If projects are presented by sector on an organisation’s website, it must be clearly stated whether the organisation works only in those sectors that are listed.",22,0,0.035,,,
+If projects are presented by sector on an organisation’s website, it must be clearly stated whether the organisation works only in those sectors that are listed.",22,0,0.025,,,
 sub-national-location,Sub-national location,publication,activity,Project attributes,"The sub-national geographic location is information about where the activity is located within a country. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.
 
 The IATI reference for this indicator is: Location.
@@ -153,7 +153,7 @@ unique-id,Unique ID,publication,activity,Project attributes,"The activity identi
 
 The IATI reference for this indicator is: iati-identifier.
 
-The project ID must be stated clearly on the page. It is not sufficient if it is only stated in the URL. It must be numeric or alpha-numeric.",25,0,0.035,,,
+The project ID must be stated clearly on the page. It is not sufficient if it is only stated in the URL. It must be numeric or alpha-numeric.",25,0,0.025,,,
 flow-type,Flow type,publication,activity,Joining-up development data,"The flow type shows whether the organisation states that this activity counts as ODA, OOF, climate finance or any other type of flow. This has to be explicitly stated per activity OR once in a country strategy paper OR in a single place on the organisation’s website if there is only one flow type for all activities, e.g. “all aid is ODA”, or “we only provide private grants”.",26,0,0.03,,,
 aid-type,Aid type,publication,activity,Joining-up development data,"The type of aid shows whether the activity is classed as budget support, a project, technical assistance, debt relief, administrative costs, and so on. This needs to be explicitly stated per activity OR once in a country strategy paper OR on a clear place on the organisation’s website if there is only one aid type for the whole organisation, e.g. “all aid is project-type interventions”.
 
@@ -202,7 +202,7 @@ This indicator is retained for all organisations. In cases where organisations c
 
 Due to the difficulty in checking contracts manually, rather than looking for the specific activity and the contract linked to it, a review of the organisation’s overall contracts is completed in line with the organisation’s procurement policy.
 
-For vertical funds, equivalent documents are accepted, such as approved country proposals or agreements between the recipient and the funder.",32,0,9/400,1,,
+For vertical funds, equivalent documents are accepted, such as approved country proposals or agreements between the recipient and the funder.",32,0,0.02,1,,
 project-procurement-tenders,Project procurement - Tenders,publication,activity,Joining-up development data,"Tenders are the individual contracts or proposals that have been put out to invite bids from companies or organisations that want to provide goods and services for an activity. They may be on a separate website, possibly on a central government procurement website.
 
 The IATI reference for this indicator is: Tender (document code = A10).
@@ -211,7 +211,7 @@ Investment codes or policies for IFIs and DFIs are accepted. For private foundat
 
 Due to the difficulty with manually finding tenders linked to current activities, rather than looking for the specific tender, a review of the organisation’s overall calls for tenders is completed to check it is publishing them consistently and in-line with their procurement policy.
 
-For organisations that do not issue tenders related to aid projects (e.g. if procurement is undertaken by grantees or other implementing agencies), a statement explicitly clarifying this is required.",33,0,3/400,1,,
+For organisations that do not issue tenders related to aid projects (e.g. if procurement is undertaken by grantees or other implementing agencies), a statement explicitly clarifying this is required.",33,0,0.01,1,,
 objectives,Objectives,publication,activity,Performance,"The objectives or purposes of the activity are those that the activity intends to achieve.
 
 The IATI reference for this indicator is: Objectives / Purpose of activity (document code = A02) or Description (description type = 2).
