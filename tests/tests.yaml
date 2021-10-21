@@ -440,14 +440,14 @@ indicators:
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not F01 or G01
+        And `default-aid-type/@code` is not any of F01 or G01
         Then `result` should be present
 
     - name: Results document
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not F01 or G01
+        And `default-aid-type/@code` is not any of F01 or G01
         Then `document-link/category[@code="A08"]` should be present
 
 filter:
