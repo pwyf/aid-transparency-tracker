@@ -369,6 +369,10 @@ def networked_data_ref(org, snapshot_date, test_name,
             for idx, activity in enumerate(dataset.activities):
                 if dataset.name not in current_data_results or idx not in current_data_results[dataset.name]:
                     continue
+                
+                aid_types = activity.etree.xpath('default-aid-type/@code')
+                if 'F01' in aid_types or 'G01' in aid_types:
+                    continue
 
                 explanation, score = test_participating_org_refs(org.registry_slug, organisation.etree, activity.etree, self_refs)
 
