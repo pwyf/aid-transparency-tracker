@@ -219,8 +219,10 @@ def process_orgid():
 
 def test_participating_org_refs(publisher_prefix, org_tree, activity_tree, self_refs):
 
-    #org_tree = etree.fromstring(org_string)
-    #activity_tree = etree.fromstring(activity_string)
+    aid_types = activity_tree.xpath('default-aid-type/@code')
+    if 'F01' in aid_types or 'G01' in aid_types:
+        return 'Aid type is F01 (Debt relief) or G01 (Administrative costs not included elsewhere)', None
+
     publishers_by_prefix, publishers_by_ident = process_publishers() 
     sector_by_code = process_sector()
     orgid_by_code = process_orgid()
@@ -368,10 +370,6 @@ def networked_data_ref(org, snapshot_date, test_name,
         for dataset in publisher.datasets:
             for idx, activity in enumerate(dataset.activities):
                 if dataset.name not in current_data_results or idx not in current_data_results[dataset.name]:
-                    continue
-                
-                aid_types = activity.etree.xpath('default-aid-type/@code')
-                if 'F01' in aid_types or 'G01' in aid_types:
                     continue
 
                 explanation, score = test_participating_org_refs(org.registry_slug, organisation.etree, activity.etree, self_refs)
