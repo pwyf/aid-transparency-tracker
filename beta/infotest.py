@@ -354,7 +354,7 @@ def networked_data_ref(org, snapshot_date, test_name,
                 organisation = org_dataset
 
     if not organisation:
-        raise Exception('Can not find organization for {org.organisation_code} - {org.registry_slug}')
+        raise Exception(f'Can not find organization for {org.organisation_code} - {org.registry_slug}')
 
     self_refs = set()
     if condition:
