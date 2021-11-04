@@ -191,7 +191,13 @@ def import_data():
                    'Defaults to most recent.')
 @click.option('--refresh/--no-refresh', default=True,
               help='Refresh schema and codelists.')
-def test_data(date, refresh):
+@click.option('--part-count', default=1,
+              help='Number of parts to split up testing into')
+@click.option('--part', default=1,
+              help='Select part to run, between 1 and part-count above')
+@click.option('--delete/--no-delete', default=True,
+              help='delete output path if it exists already')
+def test_data(date, refresh, part_count, part, delete):
     """Test a set of imported IATI data."""
 
     iati_data_path = app.config.get('IATI_DATA_PATH')
@@ -221,7 +227,7 @@ def test_data(date, refresh):
     click.echo('Testing: {}'.format(snapshot_xml_path))
     click.echo('Output path: {}'.format(root_output_path))
 
-    if exists(root_output_path):
+    if exists(root_output_path) and delete:
         click.secho('Warning: Output path exists.', fg='red')
         click.confirm('Overwrite and continue?', abort=True)
         shutil.rmtree(root_output_path)
@@ -241,6 +247,8 @@ def test_data(date, refresh):
     name_to_publisher = dict((publisher.name, publisher) for publisher in publishers)
 
     for org in db.session.query(Organisation).all():
+        if org.id % part_count != (part -1):
+            continue
 
         if not org.registry_slug:
             continue
@@ -250,7 +258,7 @@ def test_data(date, refresh):
             name=org.organisation_name, slug=org.registry_slug
         ))
         output_path = join(root_output_path, org.organisation_code)
-        makedirs(output_path)
+        makedirs(output_path, exist_ok=True)
         for test in all_tests:
             output_filepath = join(output_path,
                                    utils.slugify(test.name) + '.csv')
