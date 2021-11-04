@@ -217,11 +217,14 @@ def process_orgid():
     return orgid_by_code
 
 
-def test_participating_org_refs(publisher_prefix, org_tree, activity_tree, self_refs):
+def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
 
     aid_types = activity_tree.xpath('default-aid-type/@code')
     if 'A01' in aid_types or 'A02' in aid_types:
         return 'Aid type is A01 or A02', None
+
+    if not self_refs:
+        return 'Organisation excluded from networked data test', None
 
     publishers_by_prefix, publishers_by_ident = process_publishers() 
     sector_by_code = process_sector()
@@ -232,24 +235,6 @@ def test_participating_org_refs(publisher_prefix, org_tree, activity_tree, self_
     organisation_reporting_org_ref = None
     activity_reporting_org_ref = None
 
-    result = org_tree.xpath('organisation-identifier/text()')
-
-    if not self_refs:
-        self_refs = set([publisher_registry_id])
-        if len(result):
-            organisation_ident = result[0]
-            self_refs.add(organisation_ident)
-
-        result = org_tree.xpath('reporting-org/@ref')
-        if len(result):
-            organisation_reporting_org_ref = result[0]
-            self_refs.add(organisation_reporting_org_ref)
-
-        result = activity_tree.xpath('reporting-org/@ref')
-        if len(result):
-            activity_reporting_org_ref = result[0]
-            self_refs.add(activity_reporting_org_ref)
-    
     # print('self refs:', self_refs)
     
     participating_orgs = set(activity_tree.xpath('participating-org'))
@@ -340,28 +325,10 @@ def networked_data_ref(org, snapshot_date, test_name,
     sector_by_code = process_sector()
     orgid_by_code = process_orgid()
 
-    organisation = None
-
-    for dataset in publisher.datasets:
-        for idx, org_dataset in enumerate(dataset.organisations):
-            if condition:
-                activity_condition, org_condition = condition.split('|')
-                if org_condition.strip() and not org_dataset.etree.xpath(org_condition):
-                    continue
-                organisation = org_dataset
-                break
-            else:
-                organisation = org_dataset
-
-    if not organisation:
-        raise Exception(f'Can not find organization for {org.organisation_code} - {org.registry_slug}')
-
     self_refs = set()
-    if condition:
-        activity_condition, org_condition = condition.split('|')
 
-        if activity_condition:
-            self_refs = set([org.organisation_code])
+    if org.self_ref:
+        self_refs.update(org.self_ref.split(","))
 
     with open(output_filepath, 'w') as handler:
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
@@ -372,7 +339,7 @@ def networked_data_ref(org, snapshot_date, test_name,
                 if dataset.name not in current_data_results or idx not in current_data_results[dataset.name]:
                     continue
 
-                explanation, score = test_participating_org_refs(org.registry_slug, organisation.etree, activity.etree, self_refs)
+                explanation, score = test_participating_org_refs(org.registry_slug, activity.etree, self_refs)
 
                 if score is None:
                     score = 'not relevant'
