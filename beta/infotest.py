@@ -220,8 +220,8 @@ def process_orgid():
 def test_participating_org_refs(publisher_prefix, org_tree, activity_tree, self_refs):
 
     aid_types = activity_tree.xpath('default-aid-type/@code')
-    if 'F01' in aid_types or 'G01' in aid_types:
-        return 'Aid type is F01 (Debt relief) or G01 (Administrative costs not included elsewhere)', None
+    if 'A01' in aid_types or 'A02' in aid_types:
+        return 'Aid type is A01 or A02', None
 
     publishers_by_prefix, publishers_by_ident = process_publishers() 
     sector_by_code = process_sector()
