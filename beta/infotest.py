@@ -190,7 +190,7 @@ def process_sector():
 
     sector_by_code = {}
 
-    with open(join(test_data_path,'Sector.json')) as f:
+    with open(join(test_data_path,'CRSChannelCode.json')) as f:
         sector_json = json.load(f)  
     for sector in sector_json['data']:
         code = sector['code']
