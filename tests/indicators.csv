@@ -176,7 +176,10 @@ networked-data-implementors,Networked Data - Implementors,publication,activity,J
 
 The first tests whether the activity’s implementing organisation name is published. The implementer of the activity is the organisation that is principally responsible for delivering it.   
 
-The IATI reference for this indicator is: Implementing organisation: participating-org role = “4” (implementing). The second part of the test assesses whether references are used for organisations across the participating organisation roles (Funding, Accountable, Extending and Implementing).   
+The IATI reference for this indicator is: Implementing organisation: participating-org role = “4” (implementing). The second part of the test assesses whether references are used for organisations across the participating organisation roles (Funding, Accountable, Extending and Implementing).",30,0,1/30,,,
+networked-data-participating-orgs,Networked Data - Participating Orgs,publication,activity,Joining-up development data,"References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves.  OECD DAC CRS Channel Codes will need to use the XM-DAC prefix in order for the codes to be accepted as organisation references. 
+
+Generic or nonspecific organisation references (such as “Developing country-based NGO” or “Multilateral Organisations”) will not be accepted since these do not allow networking of organisations.
 
 References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves. OECD DAC CRS Channel Codes will need to use the XM-DAC- prefix in order for the codes to be accepted as organisation references. Generic or non-specific organisation references (such as “Developing country-based NGO” or “Multilateral Organisations”) will not be accepted since these do not allow networking of organisations.  
 
@@ -188,12 +191,7 @@ For example, humanitarian agencies may not be able to reveal who the implementin
 
 Organisations should use existing references where these have been created and used previously. If no reference currently exists, a reference can be created using the recommended approach (often combing a prefix and official registration number). Guidance is available on the IATI website. To pass the Index test references must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers.  
 
-Organisations working exclusively with partner country governments or private sector investments will be excluded from the organisation references test since there is currently no accepted way to refer to these participating organisations. ",30,0,1/30,,,
-networked-data-participating-orgs,Networked Data - Participating Orgs,publication,activity,Joining-up development data,"The second part of the test assesses whether references are used for organisations across the participating organisation roles (Funding, Accountable, Extending and Implementing). 
-
-References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves.  OECD DAC CRS Channel Codes will need to use the XM-DAC prefix in order for the codes to be accepted as organisation references. 
-
-Generic or nonspecific organisation references (such as “Developing country-based NGO” or “Multilateral Organisations”) will not be accepted since these do not allow networking of organisations.",31,0,1/60,,,
+Organisations working exclusively with partner country governments or private sector investments will be excluded from the organisation references test since there is currently no accepted way to refer to these participating organisations. ",31,0,1/60,,,
 project-procurement-contracts,Project procurement - Contracts,publication,activity,Joining-up development data,"The individual contract(s) signed with a company, organisation or individual that provides goods and services for the activity. This could be on a procurement section of the organisation’s website, on a separate website or on a central government procurement website.
 
 Contract documents cannot simply be at the country level. If an activity contract is included in a larger country-level document, it is only accepted if the contract mentions the activity specifically and in detail.
