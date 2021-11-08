@@ -194,6 +194,7 @@ def addOrganisation(data):
             organisation_total_spend=0,
             organisation_currency_conversion=1,
             condition=data.get('packagegroup_condition'),
+            self_ref=data.get('self_ref'),
         )
         db.session.add(newP)
     return newP
