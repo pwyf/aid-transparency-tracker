@@ -13,7 +13,7 @@ test_to_kind = {
     "Description is present": "text",
     "Location (sub-national)": "location",
     "Location (sub-national) coordinates or point": "location",
-    "Networked Data Participating Org Ref": "participating-org",
+    "Participating Orgs": "participating-org",
 }
 
 ## Integers 2, 3, 4, etc. Are the response integer that goes into
