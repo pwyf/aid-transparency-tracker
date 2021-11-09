@@ -1,6 +1,6 @@
 country,donor,organisation_name,organisation_code,self_ref,packagegroup_name,packagegroup_condition
-Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,,afdb,contact-info/email/text()='private-sector@afdb.org'|
-Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,,afdb,not(contact-info/email/text()='private-sector@afdb.org')|
+Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,,afdb,contact-info/person-name/narrative/text()='private-sector@afdb.org'|
+Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,,afdb,not(contact-info/person-name/narrative/text()='private-sector@afdb.org')|
 Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,,asdb,participating-org[@role='4' and (@type='70')]|
 Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,asdb,participating-org[@role='4' and not(@type='70')]|
 Australia,DFAT,"Australia, DFAT",AU-5,AU-5,ausgov,
