@@ -283,7 +283,7 @@ def test_data(date, refresh, part_count, part, delete):
             org, snapshot_date, test_name, current_data_results, org.condition)
 
         # run Networked Data Organisation Refs
-        test_name = 'Networked Data Participating Org Ref'
+        test_name = 'Participating Orgs'
         click.echo(test_name)
         infotest.networked_data_ref(
             org, snapshot_date, test_name, current_data_results, org.condition)
