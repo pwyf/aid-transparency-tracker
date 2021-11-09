@@ -197,7 +197,9 @@ def import_data():
               help='Select part to run, between 1 and part-count above')
 @click.option('--delete/--no-delete', default=True,
               help='delete output path if it exists already')
-def test_data(date, refresh, part_count, part, delete):
+@click.option('--orgs', default='',
+              help='Comman delimeted list of orgs to check, defaults to all orgs')
+def test_data(date, refresh, part_count, part, delete, orgs):
     """Test a set of imported IATI data."""
 
     iati_data_path = app.config.get('IATI_DATA_PATH')
@@ -250,6 +252,11 @@ def test_data(date, refresh, part_count, part, delete):
         if org.id % part_count != (part -1):
             continue
 
+        orgs_list = orgs.split(',')
+
+        if orgs_list and org.organisation_code not in orgs_list:
+            continue
+
         if not org.registry_slug:
             continue
         if org.registry_slug not in name_to_publisher:
@@ -258,7 +265,10 @@ def test_data(date, refresh, part_count, part, delete):
             name=org.organisation_name, slug=org.registry_slug
         ))
         output_path = join(root_output_path, org.organisation_code)
+
+        shutil.rmtree(output_path)
         makedirs(output_path, exist_ok=True)
+
         for test in all_tests:
             output_filepath = join(output_path,
                                    utils.slugify(test.name) + '.csv')
