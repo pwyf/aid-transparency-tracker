@@ -65,7 +65,7 @@ class WorkItems(object):
         return test_to_kind[test_desc]
 
     def __iter__(self):
-        total_samples_todo = 20
+        total_samples_todo = int(os.environ.get('PWYF_SAMPLE_SIZE', 20))
         for org in self.orgs:
             print(("Org: {}".format(org.organisation_name)))
             for test in self.tests:
