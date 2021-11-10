@@ -37,9 +37,6 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
     current_country_codes = get_current_countries(
         publisher, current_data_results)
 
-    if current_country_codes == []:
-        return
-
     country_strategies = {}
     for dataset in publisher.datasets:
         for idx, activity in enumerate(dataset.activities):
