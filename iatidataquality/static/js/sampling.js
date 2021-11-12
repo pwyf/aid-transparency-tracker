@@ -49,8 +49,8 @@ var setupLocation = function(survey_data) {
 	// ARC: https://d.tiles.mapbox.com/v3/americanredcross.map-ms6tihx6/{z}/{x}/{y}.png
 
 	layer_MapBox = new L.tileLayer(
-	    'https://d.tiles.mapbox.com/v3/americanredcross.map-ms6tihx6/{z}/{x}/{y}.png',{
-			maxZoom: 18, attribution: 'Map data <a href="http://mapbox.com">MapBox Streets</a>'
+	    'http://{s}.tile.osm.org/{z}/{x}/{y}.png',{
+			maxZoom: 18, attribution: 'Map data <a href="https://www.openstreetmap.org/">OSM</a>'
 	    }
 	);
 
