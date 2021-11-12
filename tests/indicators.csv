@@ -107,7 +107,9 @@ description,Description,publication,activity,Project attributes,"The description
 
 The description of the activity needs to contain a minimum of 80 characters in order to be considered a description rather than just a title.
 
-For child activities that sit underneath a main activity (parent-child), the description might be the most relevant place to explain the relationship between the parent and child activities. For example, explaining how and why the activity has been broken up in a certain way.",17,0,0.03,,,
+For child activities that sit underneath a main activity (parent-child), the description might be the most relevant place to explain the relationship between the parent and child activities. For example, explaining how and why the activity has been broken up in a certain way.
+
+To pass our data quality sampling, at a minimum a description should include a description of what the project intends to do and how it intends to do it (the mode of intervention). If possible, it is also helpful to include information about who the project intends to benefit and where the project will be implemented.",17,0,0.03,,,
 planned-dates,Planned dates,publication,activity,Project attributes,"The planned dates are the dates that the activity is scheduled to start and end on. If there is one set of dates but they are not explicitly planned or actual dates, given that these are for activities which are current (i.e. being implemented at the time of data collection) it is assumed that they are planned dates.
 
 The IATI reference for this indicator is: Activity date (activity date type = startplanned and end-planned).
