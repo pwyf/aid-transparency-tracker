@@ -1,27 +1,27 @@
 country,donor,organisation_name,organisation_code,self_ref,packagegroup_name,packagegroup_condition
 Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,,afdb,contact-info/person-name/narrative/text()='private-sector@afdb.org'|
 Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,,afdb,not(contact-info/person-name/narrative/text()='private-sector@afdb.org')|
-Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,,asdb,participating-org[@role='4' and (@type='70')]|
-Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,asdb,participating-org[@role='4' and not(@type='70')]|
+Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,,asdb,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,asdb,participating-org[not(@type='70' or @type='71' or @type='72' or @type='73')]|
 Australia,DFAT,"Australia, DFAT",AU-5,AU-5,ausgov,
 Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,XM-DAC-2-10,be-dgd,
-Canada,Global Affairs,"Canada, Global Affairs",CA-3,CA-3,gac-amc,
+Canada,Global Affairs,"Canada, Global Affairs",CA-3,"CA-3,CA-1",gac-amc,
 China,MOFCOM,"China, MOFCOM",CN-1,CN-1,,
-Denmark,MFA,"Denmark, MFA",DK-1,DK-1,danida,
-EU,EBRD - non-sovereign,EBRD - non-sovereign,46015-non-sovereign,,ebrd,participating-org[@role='4' and (@type='70')]|
-EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,,ebrd,participating-org[@role='4' and not(@type='70')]|
+Denmark,MFA,"Denmark, MFA",DK-1,"DK-1,XM-DAC-3-1",danida,
+EU,EBRD - non-sovereign,EBRD - non-sovereign,46015-non-sovereign,,ebrd,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,,ebrd,participating-org[not(@type='70' or @type='71' or @type='72' or @type='73')]|
 EU,INTPA,"EC, INTPA",XI-IATI-EC_INTPA,XI-IATI-EC_INTPA,ec-intpa,
 EU,ECHO,"EC, ECHO",XI-IATI-EC_ECHO,XI-IATI-EC_ECHO,ec-echo,
 EU,NEAR,"EC, NEAR",XI-IATI-EC_NEAR,XI-IATI-EC_NEAR,ec-near,
-EU,EIB - non-sovereign,EIB - non-Sovereign,XM-DAC-918-3-non-sovereign,,eib,participating-org[@role='4' and (@type='70')]|
-EU,EIB - sovereign,EIB - sovereign,XM-DAC-918-3-sovereign,,eib,participating-org[@role='4' and not(@type='70')]|
+EU,EIB - non-sovereign,EIB - non-Sovereign,XM-DAC-918-3-non-sovereign,,eib,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+EU,EIB - sovereign,EIB - sovereign,XM-DAC-918-3-sovereign,,eib,participating-org[not(@type='70' or @type='71' or @type='72' or @type='73')]|
 Finland,MFA,"Finland, MFA",FI-3,FI-3,finland_mfa,
 France,AFD,"France, AFD",FR-3,FR-3,afd,
 U.S.A,Gates Foundation,Gates Foundation,DAC-1601,DAC-1601,bmgf,
 (blank),GAVI,GAVI,47122,,gavi,
 "Germany,",BMZ-GIZ,"Germany, BMZ-GIZ",DE-1,"DE-1,XM-DAC-5-52",bmz,participating-org[@role='2'][@ref='XM-DAC-5-52']|
 (blank),Global Fund,Global Fund,47045,47045,theglobalfund,
-,IDB Invest,IDB Invest,,,,
+,IDB Invest,IDB Invest,XM-DAC-46012,XM-DAC-46012,idbinvest,
 U.S.A,IADB,IADB,XI-IATI-IADB,,iadb,
 Ireland,Irish Aid,"Ireland, Irish Aid",XM-DAC-21-1,XM-DAC-21-1,irishaid,
 Italy,AICS,"Italy, AICS",XM-DAC-6-4,XM-DAC-6-4,aics,
@@ -31,7 +31,7 @@ Netherlands,MFA,"Netherlands, MFA",XM-DAC-7,XM-DAC-7,minbuza_nl,
 New Zealand,MFAT,"New Zealand, MFAT",NZ-1,NZ-1,mfat,
 Norway,MFA,"Norway, MFA",NO-4,NO-4,norad,
 Spain,AECID,"Spain, AECID",ES-DIR3-EA0035768,ES-DIR3-EA0035768,aecid,
-Sweden,Sida,"Sweden, Sida",SE-0,SE-0,sida,
+Sweden,Sida,"Sweden, Sida",SE-0,"SE-0,SE-6",sida,
 Switzerland,SDC,"Switzerland, SDC",CH-4,CH-4,sdc_ch,
 United Arab Emirates,MOFAIC,"UAE, MOFAIC",AE-2,AE-2,,
 United Kingdom,FCDO,"UK, FCDO",GB-GOV-1,GB-GOV-1,fcdo,
