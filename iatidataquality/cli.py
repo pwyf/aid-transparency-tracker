@@ -254,7 +254,7 @@ def test_data(date, refresh, part_count, part, delete, orgs):
 
         orgs_list = orgs.split(',')
 
-        if orgs_list and org.organisation_code not in orgs_list:
+        if orgs and org.organisation_code not in orgs_list:
             continue
 
         if not org.registry_slug:
@@ -266,8 +266,8 @@ def test_data(date, refresh, part_count, part, delete, orgs):
         ))
         output_path = join(root_output_path, org.organisation_code)
 
-        shutil.rmtree(output_path)
-        makedirs(output_path, exist_ok=True)
+        shutil.rmtree(output_path, ignore_errors=True)
+        makedirs(output_path)
 
         for test in all_tests:
             output_filepath = join(output_path,
