@@ -45,19 +45,20 @@ var setupLocation = function(survey_data) {
 	}
 
 	// OSM: http://{s}.tile.osm.org/{z}/{x}/{y}.png
-	// MB: http://{s}.tiles.mapbox.com/v3/markbrough.map-qmxr8jb5/{z}/{x}/{y}.png
-	// ARC: https://d.tiles.mapbox.com/v3/americanredcross.map-ms6tihx6/{z}/{x}/{y}.png
 
-	layer_MapBox = new L.tileLayer(
-	    'https://d.tiles.mapbox.com/v3/americanredcross.map-ms6tihx6/{z}/{x}/{y}.png',{
-			maxZoom: 18, attribution: 'Map data <a href="http://mapbox.com">MapBox Streets</a>'
-	    }
-	);
+	layer_MapBox = 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    // maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoiamFyZWQtb2RzYyIsImEiOiJja3Z3aWNwYnkwOG1yMnBsY2tnbHIzOHliIn0.vABo87NxRnNP_7bqDOuwyA' // temp access token on my personal account (jared.parnell@opendataservices.coop)
+	})
 
-    map = new L.Map('projectMap', {
-        zoom: 5,
-        maxZoom: 15
-    });
+	map = new L.Map('projectMap', {
+			zoom: 5,
+			maxZoom: 15
+	});
 	layer_MapBox.addTo(map);
     map.addLayer(markers);
     map.fitBounds(markers.getBounds());
