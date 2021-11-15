@@ -40,7 +40,7 @@ US/ Switzerland,UN OCHA,UN OCHA,XM-DAC-41127,XM-DAC-41127,unocha,
 U.S.A,UNDP,UNDP,XM-DAC-41114,XM-DAC-41114,undp,
 U.S.A,UNICEF,UNICEF,41122,41122,unicef,
 U.S.A,MCC,"US, MCC",US-18,,millenniumchallenge,participating-org[@role='3'][@ref='US-18']|
-U.S.A,PEPFAR,"US, PEPFAR",US-14,"US-14,US-GOV-14,US-USAGOV",unitedstates,contact-info/website/text()='http://www.pepfar.gov'|organisation-identifier/text()='US-GOV-1'
+U.S.A,PEPFAR,"US, PEPFAR",US-14,"US-14,US-GOV-14,US-USAGOV",unitedstates,contact-info/website/text()='https://www.state.gov/pepfar/'|organisation-identifier/text()='US-GOV-1'
 U.S.A,State,"US, State",US-11,"US-11,US-GOV-11,US-USAGOV",unitedstates,participating-org[@role='2'][@ref='US-GOV-11']|organisation-identifier/text()='US-GOV-1'
 U.S.A,USAID,"US, USAID",US-GOV-1,US-GOV-1,usaid,
 U.S.A,IDA,"World Bank, IDA",44002,,worldbank,participating-org[@role='1'][@ref='44002']|
