@@ -2,19 +2,19 @@ country,donor,organisation_name,organisation_code,self_ref,packagegroup_name,pac
 Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,,afdb,contact-info/person-name/narrative/text()='private-sector@afdb.org'|
 Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,,afdb,not(contact-info/person-name/narrative/text()='private-sector@afdb.org')|
 Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,,asdb,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,asdb,participating-org[not(@type='70' or @type='71' or @type='72' or @type='73')]|
+Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,asdb,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
 Australia,DFAT,"Australia, DFAT",AU-5,AU-5,ausgov,
 Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,XM-DAC-2-10,be-dgd,
 Canada,Global Affairs,"Canada, Global Affairs",CA-3,"CA-3,CA-1",gac-amc,
 China,MOFCOM,"China, MOFCOM",CN-1,CN-1,,
 Denmark,MFA,"Denmark, MFA",DK-1,"DK-1,XM-DAC-3-1",danida,
 EU,EBRD - non-sovereign,EBRD - non-sovereign,46015-non-sovereign,,ebrd,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,,ebrd,participating-org[not(@type='70' or @type='71' or @type='72' or @type='73')]|
+EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,,ebrd,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
 EU,INTPA,"EC, INTPA",XI-IATI-EC_INTPA,XI-IATI-EC_INTPA,ec-intpa,
 EU,ECHO,"EC, ECHO",XI-IATI-EC_ECHO,XI-IATI-EC_ECHO,ec-echo,
 EU,NEAR,"EC, NEAR",XI-IATI-EC_NEAR,XI-IATI-EC_NEAR,ec-near,
 EU,EIB - non-sovereign,EIB - non-Sovereign,XM-DAC-918-3-non-sovereign,,eib,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-EU,EIB - sovereign,EIB - sovereign,XM-DAC-918-3-sovereign,,eib,participating-org[not(@type='70' or @type='71' or @type='72' or @type='73')]|
+EU,EIB - sovereign,EIB - sovereign,XM-DAC-918-3-sovereign,,eib,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
 Finland,MFA,"Finland, MFA",FI-3,FI-3,finland_mfa,
 France,AFD,"France, AFD",FR-3,FR-3,afd,
 U.S.A,Gates Foundation,Gates Foundation,DAC-1601,DAC-1601,bmgf,
