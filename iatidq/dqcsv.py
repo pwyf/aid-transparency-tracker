@@ -37,9 +37,9 @@ def get_publication_format(surveydata, indicator_id):
 
 def get_frequency_multiplier(frequency):
     if (frequency == "less than quarterly"):
-        return 0.5
+        return 0.625
     elif (frequency == "quarterly"):
-        return 0.9
+        return 0.925
     else:
         return 1.0
 

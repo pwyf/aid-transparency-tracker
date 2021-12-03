@@ -284,12 +284,12 @@ def organisation_publication(organisation_code, aggregation_type):
     agg_type = [agg_detail(agt) for agt in all_aggregation_types]
 
     frequencies = {
-        "less than quarterly": (0.5,
+        "less than quarterly": (0.625,
                                 """It looks like you publish less often than
           quarterly, so the maximum you can score for IATI data is
           75 points. The total points for the relevant indicators have been
           adjusted accordingly"""),
-        "quarterly": (0.9,
+        "quarterly": (0.925,
                       """It looks like you publish quarterly and not monthly,
           so the maximum you can score for IATI data is 95 points. The total
           points for the relevant indicators have been adjusted
