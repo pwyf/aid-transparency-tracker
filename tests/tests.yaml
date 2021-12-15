@@ -376,15 +376,16 @@ indicators:
     - name: Conditions data
       expression: |
        Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `conditions` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `default-aid-type/@code` is one of A01, A02, C01 or F01
+       Then `conditions` should be present
 
     - name: Conditions document
       expression: |
        Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `conditions/@attached` is not 0
-        Then `document-link/category[@code="A04"]` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `default-aid-type/@code` is one of A01, A02, C01 or F01
+       Then `document-link/category[@code="A04"]` should be present
 
  - name: "Project procurement - Tenders"
    tests:
