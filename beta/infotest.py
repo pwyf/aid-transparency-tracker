@@ -240,12 +240,12 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
     for participating_org in participating_orgs:
         narratives = [po for po in participating_org.xpath('narrative/text()') if po.strip()]
         refs = participating_org.xpath('@ref')
-        if len(narratives) and not len(refs):
+        if len(narratives) and not len([ref for ref in refs if ref.strip()]):
             narratives_no_refs += 1
     
     # print(f"narratives with no refs count: {narratives_no_refs}")
         
-    participating_orgs_refs = set(activity_tree.xpath('participating-org/@ref'))
+    participating_orgs_refs = set(ref for ref in activity_tree.xpath('participating-org/@ref') if ref.strip())
     # print('participating org refs:', participating_orgs_refs)
 
 
