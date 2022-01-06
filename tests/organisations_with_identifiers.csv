@@ -26,7 +26,7 @@ U.S.A,IADB,IADB,XI-IATI-IADB,XI-IATI-IADB,,iadb,
 Ireland,Irish Aid,"Ireland, Irish Aid",XM-DAC-21-1,XM-DAC-21-1,XM-DAC-21-1,irishaid,
 Italy,AICS,"Italy, AICS",XM-DAC-6-4,XM-DAC-6-4,XM-DAC-6-4,aics,
 Japan,JICA,"Japan, JICA",XM-DAC-701-8,XM-DAC-701-8,XM-DAC-701-8,jica,
-South Korea,KOICA,"Korea, KOICA",KR-4,KR-4,KR-4,odakorea,
+South Korea,KOICA,"Korea, KOICA",KR-4,KR-4,KR-4,odakorea,participating-org[@role='3'][@ref='KR-GOV-051']|organisation-identifier/text()='KR-GOV-051'
 Netherlands,MFA,"Netherlands, MFA",XM-DAC-7,XM-DAC-7,XM-DAC-7,minbuza_nl,
 New Zealand,MFAT,"New Zealand, MFAT",NZ-1,NZ-1,NZ-1,mfat,
 Norway,MFA,"Norway, MFA",NO-4,NO-4,NO-4,norad,
