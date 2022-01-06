@@ -188,8 +188,11 @@ def process_sector():
     sector_by_code = {}
 
     with open(join(test_data_path,'CRSChannelCode.json')) as f:
-        sector_json = json.load(f)  
-    for sector in sector_json['data']:
+        sector_json = json.load(f) 
+    with open(join(test_data_path,'AgencyCodes.json')) as f:
+        agency_json = json.load(f)
+    all_codes = sector_json['data'] + agency_json['data']
+    for sector in all_codes:
         code = sector['code']
         if code in excluded_xm_dac:
             continue
