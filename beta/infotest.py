@@ -265,7 +265,14 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
     # publisher matching
     publisher_idents = set(publishers_by_ident)
 
+    # temporary fix for Korean organisations
+    if publisher_prefix == "odakorea":
+        korean_orgs = set([x for x in participating_orgs_no_self_ref if x.startswith('KR-GOV')])
+        publisher_idents = publisher_idents | korean_orgs
+
     publisher_matches = participating_orgs_no_self_ref & publisher_idents
+
+    # print(publisher_matches)
 
     # print('matching publisher:', publisher_matches)
 
@@ -302,6 +309,9 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
 
     score = (len(participating_orgs_no_self_ref) * 1.0 - len(failed_to_match))/denominator
     explanation = f'score: ({len(participating_orgs_no_self_ref)} - {len(failed_to_match)})/{denominator}'
+
+    # print(score)
+    # print(explanation)
 
     return explanation, score
 
