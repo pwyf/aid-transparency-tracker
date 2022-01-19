@@ -94,6 +94,7 @@ def import_users(filename):
 @click.option("--org-ids")
 @click.option("--test-ids")
 def setup_sampling(date, filename, org_ids, test_ids):
+    """Generate the sampling database (Environment variable PWYF_SAMPLE_SIZE can be used to set the number of samples per test)"""
     iati_result_path = app.config.get('IATI_RESULT_PATH')
     try:
         snapshot_dates = listdir(join(iati_result_path))
