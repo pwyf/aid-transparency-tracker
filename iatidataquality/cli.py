@@ -69,6 +69,13 @@ def import_indicators(filename):
 
 
 @app.cli.command()
+@click.option('--filename', default="tests/tests.yaml", help="Import the test definitions from file")
+def import_tests(filename):
+    """Import test definitions"""
+    dqimporttests.importTestsFromFile(filename, 1)
+
+
+@app.cli.command()
 @click.option('--filename', required=True, help='Set filename of data to test')
 def import_organisations(filename):
     """
