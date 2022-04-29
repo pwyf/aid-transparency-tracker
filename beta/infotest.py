@@ -359,6 +359,6 @@ def networked_data_ref(org, snapshot_date, test_name,
                     'identifier': activity.id,
                     'index': idx,
                     'result': str(score),
-                    'hierarchy': 1,
+                    'hierarchy': activity.etree.get('hierarchy', '1'),
                     'explanation': explanation,
                 })
