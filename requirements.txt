@@ -22,7 +22,7 @@ Jinja2==2.11.3
 kombu==4.1.0
 lxml==4.6.5
 Markdown==2.6.9
-MarkupSafe
+markupsafe==2.0.1
 meld3==1.0.2
 openpyxl==2.4.8
 psycopg2-binary
