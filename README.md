@@ -9,7 +9,7 @@ A data quality measurement tool for international aid data.
 Run the following commands to bootstrap your environment:
 
 ``` bash
-git clone --recursive --branch original-version https://github.com/pwyf/aid-transparency-tracker.git
+git clone --recursive https://github.com/pwyf/aid-transparency-tracker.git
 cd aid-transparency-tracker
 ```
 
@@ -19,6 +19,7 @@ Setup a virtual environment, and install dependencies:
     python3 -m venv .ve
     echo "export FLASK_APP=iatidataquality/__init__.py" >> .ve/bin/activate
     source .ve/bin/activate
+    pip install "setuptools<58"
     pip install -r requirements.txt
 ```
 
