@@ -160,6 +160,7 @@ class AggregateResult(BaseModel):
     result_hierarchy = db.Column(db.Integer, nullable=False)
     results_data = db.Column(db.Float)
     results_num = db.Column(db.Integer)
+    sample_num = db.Column(db.Integer)
     __table_args__ = (db.UniqueConstraint('package_id',
                                        'test_id',
                                        'result_hierarchy',
@@ -456,6 +457,7 @@ class Organisation(BaseModel):
     no_independent_reviewer=db.Column(db.Boolean)
     organisation_responded=db.Column(db.Integer)
     condition = db.Column(db.UnicodeText)
+    self_ref = db.Column(db.UnicodeText)
     __table_args__ = (db.UniqueConstraint('organisation_name'),
                       db.UniqueConstraint('organisation_code'))
     # organisation_code is also used to communicate
@@ -473,6 +475,7 @@ class Organisation(BaseModel):
                  organisation_largest_recipient=None,
                  organisation_largest_recipient_source=None,
                  condition=None,
+                 self_ref=None,
                  id=None):
         self.organisation_name = organisation_name
         self.registry_slug = registry_slug,
@@ -483,6 +486,7 @@ class Organisation(BaseModel):
         self.organisation_currency_conversion_source = organisation_currency_conversion_source,
         self.organisation_largest_recipient = organisation_largest_recipient
         self.condition = condition
+        self.self_ref = self_ref
         if id is not None:
             self.id = id
 

@@ -1,4 +1,4 @@
-components:
+﻿components:
  - name: Organisational planning and commitments
    indicators:
     - Organisation strategy
@@ -184,7 +184,7 @@ indicators:
         And `default-aid-type/@code` is not any of A01, A02 or G01
         And `transaction/aid-type/@code` is not any of A01 or A02
         Then `sector/@code` should be present
-        And `sector/@code` is not any of 43010, 43050, 43081, 43082, 52010, 99810, 11230, 11320, 15110, 15111, 15112, 15114, 15130, 16010, 16061, 21010, 21020, 22010, 23110, 43030 or 43040
+        And `sector/@code` is not any of 43010, 43050, 43081, 43082, 52010, 99810, 15110, 15111, 15112, 15114, 15130, 16010, 16061, 21010, 21020, 22010, 23110, 43030 or 43040
 
 
  - name: Title
@@ -275,11 +275,8 @@ indicators:
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
         And `recipient-region/@code` is not 998
-        And `default-aid-type/@code` is not G01
-        And `default-aid-type/@code` is not B01
-        And `default-aid-type/@code` is not B02
-        And `transaction/aid-type/@code` is not B01
-        And `transaction/aid-type/@code` is not B02
+        And `default-aid-type/@code` is not any of B01, B02, F01, H01, H02, H03, H04, H05 or G01
+        And `transaction/aid-type/@code` is not any of B01, B02, F01, H01, H02, H03, H04, H05 or G01
         Then `location` should be present
 
     - name: Location (sub-national) coordinates or point
@@ -287,20 +284,24 @@ indicators:
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
         And `recipient-region/@code` is not 998
-        And `default-aid-type/@code` is not G01
-        And `default-aid-type/@code` is not B01
-        And `default-aid-type/@code` is not B02
-        And `transaction/aid-type/@code` is not B01
-        And `transaction/aid-type/@code` is not B02
+        And `default-aid-type/@code` is not any of B01, B02, F01, H01, H02, H03, H04, H05 or G01
+        And `transaction/aid-type/@code` is not any of B01, B02, F01, H01, H02, H03, H04, H05 or G01
         Then `location[coordinates or point]` should be present
 
- - name: Implementer
+ - name: "Networked Data - Implementors"
    tests:
     - name: Implementing organisation
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
         Then `participating-org[@role="Implementing" or @role="4"]` should be present
+
+ - name: "Networked Data - Participating Orgs"
+   tests:
+    - name: Participating Orgs
+      expression: |
+       Given this test involves both organisation and activity files
+        Then skip it
 
  - name: Unique ID
    tests:
@@ -375,15 +376,16 @@ indicators:
     - name: Conditions data
       expression: |
        Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `conditions` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `default-aid-type/@code` is one of A01, A02, C01 or F01
+       Then `conditions` should be present
 
     - name: Conditions document
       expression: |
        Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `conditions/@attached` is not 0
-        Then `document-link/category[@code="A04"]` should be present
+       And `activity-status/@code` is one of 2, 3 or 4
+       And `default-aid-type/@code` is one of A01, A02, C01 or F01
+       Then `document-link/category[@code="A04"]` should be present
 
  - name: "Project procurement - Tenders"
    tests:
@@ -439,14 +441,14 @@ indicators:
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not G01
+        And `default-aid-type/@code` is not any of F01 or G01
         Then `result` should be present
 
     - name: Results document
       expression: |
        Given an IATI activity
         And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not G01
+        And `default-aid-type/@code` is not any of F01 or G01
         Then `document-link/category[@code="A08"]` should be present
 
 filter:

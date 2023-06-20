@@ -284,12 +284,12 @@ def organisation_publication(organisation_code, aggregation_type):
     agg_type = [agg_detail(agt) for agt in all_aggregation_types]
 
     frequencies = {
-        "less than quarterly": (0.5,
+        "less than quarterly": (0.625,
                                 """It looks like you publish less often than
           quarterly, so the maximum you can score for IATI data is
           75 points. The total points for the relevant indicators have been
           adjusted accordingly"""),
-        "quarterly": (0.9,
+        "quarterly": (0.925,
                       """It looks like you publish quarterly and not monthly,
           so the maximum you can score for IATI data is 95 points. The total
           points for the relevant indicators have been adjusted
@@ -329,7 +329,7 @@ def organisation_publication(organisation_code, aggregation_type):
 
         def points():
             if not zero:
-                return round((tmp["results_pct"] * multiplier / 2.0 + 50), 2)
+                return round((tmp["results_pct"] * multiplier / 1.5 + 100.0/3), 2)
 
             ind_id = res["indicator"]["id"]
 
@@ -349,7 +349,7 @@ def organisation_publication(organisation_code, aggregation_type):
 
         tmp["points"] = points()
         if not zero:
-            tmp["points_minus_50"] = round((tmp["points"] - 50), 2)
+            tmp["points_minus_50"] = round((tmp["points"] - 100/3), 2)
             # it all fails if the other branch tries to use this value
 
         tmp["tests"] = list(map(annotate_test, res["tests"]))
@@ -376,7 +376,7 @@ def organisation_publication(organisation_code, aggregation_type):
                 tmp["format_class"], tmp["format_text"] = format_class_and_text()
 
         tmp["results_pct_rounded"] = round(tmp["results_pct"], 2)
-        tmp["results_pct_halved_rounded"] = round(tmp["results_pct"]/2.0, 2)
+        tmp["results_pct_halved_rounded"] = round(tmp["results_pct"]/1.5, 2)
 
         return tmp
 
@@ -413,6 +413,7 @@ def organisation_publication(organisation_code, aggregation_type):
 
     return render_template("organisation_indicators.html",
                            ati_year=app.config['ATI_YEAR'],
+                           previous_ati_year=app.config['PREVIOUS_ATI_YEAR'],
                            organisation=organisation,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,

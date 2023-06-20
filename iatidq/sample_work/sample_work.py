@@ -65,7 +65,7 @@ class WorkItems(object):
         return test_to_kind[test_desc]
 
     def __iter__(self):
-        total_samples_todo = 20
+        total_samples_todo = int(os.environ.get('PWYF_SAMPLE_SIZE', 20))
         for org in self.orgs:
             print(("Org: {}".format(org.organisation_name)))
             for test in self.tests:
@@ -76,14 +76,14 @@ class WorkItems(object):
 
                 test_kind = self.kind_of_test(test.id)
 
-                for package_name, index, activity_id in samples:
+                for package_name, index, activity_id, result in samples:
                     act = sot.get_activity(package_name, index)
                     act_xml = (
-                        lxml.etree.tostring(act, pretty_print=True)
+                        lxml.etree.tostring(act, encoding="UTF-8", pretty_print=True)
                         if act is not None else None)
                     parent_act = sot.get_parent_activity(act, package_name)
                     parent_xml = (
-                        lxml.etree.tostring(parent_act, pretty_print=True)
+                        lxml.etree.tostring(parent_act, encoding="UTF-8", pretty_print=True)
                         if parent_act is not None else None)
 
                     u = str(uuid.uuid4())
@@ -96,7 +96,8 @@ class WorkItems(object):
                         "package_id": package_name,
                         "xml_data": act_xml,
                         "xml_parent_data": parent_xml,
-                        "test_kind": test_kind
+                        "test_kind": test_kind,
+                        "result": result,
                     }
 
                     yield args
@@ -114,8 +115,7 @@ class SampleOrgTest(object):
             organisation_id=self.organisation.id,
             aggregateresulttype_id=2,
         )
-        total = int(sum([x.results_data / 100. * x.results_num
-                         for x in ag_results]))
+        total = int(sum([x.sample_num for x in ag_results]))
         if total <= num_samples:
             indexes = list(range(total))
         else:
@@ -145,13 +145,17 @@ class SampleOrgTest(object):
                     if indexes == []:
                         break
                     test_result = next(test_reader)
-                    if cd_result['result'] == 'pass' and test_result['result'] == 'pass':
+                    if test_result['result'] == 'not relevant':
+                        continue
+
+                    if cd_result['result'] == '1' and float(test_result['result']) > 0:
                         if idx == indexes[0]:
                             indexes.pop(0)
                             yield (
                                 cd_result['dataset'],
                                 int(cd_result['index']),
                                 cd_result['identifier'],
+                                float(test_result['result']),
                             )
                         idx += 1
 
@@ -407,6 +411,39 @@ class Conditions(object):
         return {
             'attached': self.root.xpath("conditions/@attached"),
             'conditions': [Condition(condition).to_dict() for condition in self.root.xpath('conditions/condition')]}
+
+
+class ParticipatingOrg(object):
+    def __init__(self, elt):
+        self.elt = elt
+
+    def __repr__(self):
+        return '''<ParticipatingOrg: %s>''' % self.elt
+
+    def to_dict(self):
+        texts = [{'text': x} for x in self.elt.xpath('narrative/text()')]
+
+        if len(texts) == 0:
+            texts = ['']
+
+        data = {
+            "type": self.elt.xpath("@type"),
+            "ref": self.elt.xpath("@ref"),
+            "role": self.elt.xpath("@role"),
+            "texts": texts,
+            }
+        return data
+
+
+class ParticipatingOrgs(object):
+    def __init__(self, xml_string):
+        root = lxml.etree.fromstring(xml_string)
+        self.root = root
+
+    def get_po(self):
+        return {
+            'pos': [ParticipatingOrg(po).to_dict() for po in self.root.xpath('participating-org')]
+        }
 
 
 class ActivityInfo(object):

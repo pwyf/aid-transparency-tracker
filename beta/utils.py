@@ -51,7 +51,7 @@ def load_current_data_results(org, snapshot_result_path):
             dataset = row['dataset']
             if dataset not in current_data_results:
                 current_data_results[dataset] = {}
-            current_data_results[dataset][idx] = row['result'] == 'pass'
+            current_data_results[dataset][idx] = row['result'] == '1'
     return current_data_results
 
 
@@ -64,7 +64,7 @@ def slugify(some_text):
 
 def run_test(test, publisher, output_path, test_condition, **kwargs):
     """Run test for a given publisher, and output results to a CSV."""
-    result_lookup = {True: 'pass', False: 'fail', None: 'not relevant'}
+    result_lookup = {True: '1', False: '0', None: 'not relevant'}
     fieldnames = ['dataset', 'identifier', 'index', 'result',
                   'hierarchy', 'explanation']
     tags = test.tags + test.feature.tags
@@ -118,6 +118,7 @@ def summarize_results(org, snapshot_result_path, all_tests,
         result_filepath = join(snapshot_result_path, org.organisation_code,
                                slugify(test.name) + '.csv')
         if not exists(result_filepath):
+            print(f'can not find {result_filepath}')
             continue
         with open(result_filepath) as handler:
             dataset = None
@@ -133,8 +134,9 @@ def summarize_results(org, snapshot_result_path, all_tests,
                 hierarchy = row['hierarchy']
                 if hierarchy not in dataset_test_results:
                     dataset_test_results[hierarchy] = {
-                        'pass': 0,
-                        'fail': 0,
+                        'total': 0,
+                        'score': 0,
+                        'sample': 0,
                     }
                 result = row['result']
                 if result == 'not relevant':
@@ -144,7 +146,11 @@ def summarize_results(org, snapshot_result_path, all_tests,
                     current_data_results.get(dataset, {}).get(
                         idx, 'not relevant') is False):
                     continue
-                dataset_test_results[hierarchy][result] += 1
+                dataset_test_results[hierarchy]['total'] += 1
+                dataset_test_results[hierarchy]['score'] += float(result)
+                if float(result) > 0:
+                    dataset_test_results[hierarchy]['sample'] += 1
+
             if dataset is not None:
                 save_summary(dataset, dataset_test_results, test_id,
                              org, aggregateresulttype)
@@ -153,10 +159,11 @@ def summarize_results(org, snapshot_result_path, all_tests,
 def save_summary(dataset, dataset_test_results, test_id, org,
                  aggregateresulttype):
     for hierarchy, scores in list(dataset_test_results.items()):
-        total = sum(scores.values())
+        total = scores['total']
         if total == 0:
             continue
-        results_data = 100. * scores['pass'] / total
+        results_data = 100. * scores['score'] / total
+        sample = scores['sample']
 
         ar = AggregateResult()
         ar.package_name = dataset
@@ -166,6 +173,7 @@ def save_summary(dataset, dataset_test_results, test_id, org,
         ar.result_hierarchy = hierarchy
         ar.results_data = results_data
         ar.results_num = total
+        ar.sample_num = sample
 
         with db.session.begin():
             db.session.add(ar)

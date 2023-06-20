@@ -12,10 +12,10 @@ class NoMoreSamplingWork(Exception):
 
 
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
-        "xml_data", "xml_parent_data", "test_kind"]
+        "xml_data", "xml_parent_data", "test_kind", "result"]
 
 keys_response = ["uuid", "organisation_id", "test_id", "activity_id",
-                 "package_id", "xml_data", "xml_parent_data", "test_kind",
+                 "package_id", "xml_data", "xml_parent_data", "test_kind", "result",
                  "response", "comment", "user_id", "unsure"]
 
 total_results_response = ["organisation_id", "test_id", "response", "count"]
@@ -31,7 +31,8 @@ def create_db(c):
             package_id varchar(100) not null,
             xml_data text not null,
             xml_parent_data text,
-            test_kind varchar(20) not null
+            test_kind varchar(20) not null,
+            result NUMERIC not null
         );
     """
     c.execute(stmt)
@@ -71,8 +72,8 @@ def make_db(filename, orgs, tests, snapshot_path):
         c.execute("""insert into sample_work_item
                         ("uuid", "organisation_id", "test_id", "activity_id",
                          "package_id", "xml_data",
-                         "xml_parent_data", "test_kind")
-                        values (?,?,?,?,?,?,?,?);
+                         "xml_parent_data", "test_kind", "result")
+                        values (?,?,?,?,?,?,?,?, ?);
                   """, wi_info)
 
         database.commit()
@@ -155,7 +156,7 @@ def work_item_generator():
 
     c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
                          "package_id", "xml_data", "xml_parent_data",
-                         "test_kind"
+                         "test_kind", "result"
                  from sample_full
                  where response is null
                  limit 1;""")

@@ -37,22 +37,21 @@ def get_publication_format(surveydata, indicator_id):
 
 def get_frequency_multiplier(frequency):
     if (frequency == "less than quarterly"):
-        return 0.5
+        return 0.625
     elif (frequency == "quarterly"):
-        return 0.9
+        return 0.925
     else:
         return 1.0
 
 def write_agg_csv_result(out, organisation, freq, result):
     i = result["indicator"]
-
     if result['results_pct'] == 0:
         points = 0
     else:
         if i['indicator_category_name'] == 'activity':
-            points = float(result['results_pct']) * freq / 2.0 + 50
+            points = float(result['results_pct']) * freq / 1.5 + 100.0/3
         else:
-            points = float(result['results_pct']) / 2.0 + 50
+            points = float(result['results_pct']) / 1.5 + 100.0/3
 
     out.writerow({
             "organisation_name": organisation.organisation_name,

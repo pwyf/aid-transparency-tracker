@@ -69,6 +69,13 @@ def import_indicators(filename):
 
 
 @app.cli.command()
+@click.option('--filename', default="tests/tests.yaml", help="Import the test definitions from file")
+def import_tests(filename):
+    """Import test definitions"""
+    dqimporttests.importTestsFromFile(filename, 1)
+
+
+@app.cli.command()
 @click.option('--filename', required=True, help='Set filename of data to test')
 def import_organisations(filename):
     """
@@ -94,6 +101,7 @@ def import_users(filename):
 @click.option("--org-ids")
 @click.option("--test-ids")
 def setup_sampling(date, filename, org_ids, test_ids):
+    """Generate the sampling database (Environment variable PWYF_SAMPLE_SIZE can be used to set the number of samples per test)"""
     iati_result_path = app.config.get('IATI_RESULT_PATH')
     try:
         snapshot_dates = listdir(join(iati_result_path))
@@ -191,7 +199,15 @@ def import_data():
                    'Defaults to most recent.')
 @click.option('--refresh/--no-refresh', default=True,
               help='Refresh schema and codelists.')
-def test_data(date, refresh):
+@click.option('--part-count', default=1,
+              help='Number of parts to split up testing into')
+@click.option('--part', default=1,
+              help='Select part to run, between 1 and part-count above')
+@click.option('--delete/--no-delete', default=True,
+              help='delete output path if it exists already')
+@click.option('--orgs', default='',
+              help='Comman delimeted list of orgs to check, defaults to all orgs')
+def test_data(date, refresh, part_count, part, delete, orgs):
     """Test a set of imported IATI data."""
 
     iati_data_path = app.config.get('IATI_DATA_PATH')
@@ -221,7 +237,7 @@ def test_data(date, refresh):
     click.echo('Testing: {}'.format(snapshot_xml_path))
     click.echo('Output path: {}'.format(root_output_path))
 
-    if exists(root_output_path):
+    if exists(root_output_path) and delete:
         click.secho('Warning: Output path exists.', fg='red')
         click.confirm('Overwrite and continue?', abort=True)
         shutil.rmtree(root_output_path)
@@ -241,6 +257,13 @@ def test_data(date, refresh):
     name_to_publisher = dict((publisher.name, publisher) for publisher in publishers)
 
     for org in db.session.query(Organisation).all():
+        if org.id % part_count != (part -1):
+            continue
+
+        orgs_list = orgs.split(',')
+
+        if orgs and org.organisation_code not in orgs_list:
+            continue
 
         if not org.registry_slug:
             continue
@@ -250,7 +273,10 @@ def test_data(date, refresh):
             name=org.organisation_name, slug=org.registry_slug
         ))
         output_path = join(root_output_path, org.organisation_code)
+
+        shutil.rmtree(output_path, ignore_errors=True)
         makedirs(output_path)
+
         for test in all_tests:
             output_filepath = join(output_path,
                                    utils.slugify(test.name) + '.csv')
@@ -272,6 +298,12 @@ def test_data(date, refresh):
         test_name = 'Disaggregated budget'
         click.echo(test_name)
         infotest.disaggregated_budget(
+            org, snapshot_date, test_name, current_data_results, org.condition)
+
+        # run Networked Data Organisation Refs
+        test_name = 'Participating Orgs'
+        click.echo(test_name)
+        infotest.networked_data_ref(
             org, snapshot_date, test_name, current_data_results, org.condition)
 
 
