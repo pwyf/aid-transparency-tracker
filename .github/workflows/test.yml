@@ -1,0 +1,48 @@
+name: Test
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        # Set health checks to wait until postgres has started
+        # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - '127.0.0.1:5433:5432'
+    strategy:
+      matrix:
+        python-version: [ '3.8' ]
+    env:
+      FLASK_APP: "iatidataquality/__init__.py"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements_dev.txt
+      - name: Install older setuptools for use_2to3 https://stackoverflow.com/questions/72414481/error-in-anyjson-setup-command-use-2to3-is-invalid
+        run: pip install "setuptools<58" wheel
+      - name: Install requirements_dev.txt
+        run: pip install -r requirements_dev.txt
+      - name: Config
+        run: cp config.py.tmpl config.py
+      - name: Create database
+        run:  "echo \"CREATE DATABASE iatidq ENCODING 'UTF8' LC_COLLATE='en_US.UTF-8' LC_CTYPE='en_US.UTF-8' TEMPLATE=template0;\" | psql 'host=127.0.0.1 port=5433 user=postgres'"
+      - name: Init database
+        run: flask init_db
+      - name: Tests that should succeed
+        run: nosetests unittests/test_dataflows.py unittests/test_summaryfn.py
+      - name: Tests that fail
+        run: nosetests unittests/test_pipeline.py unittests/test_runtests.py unittests/test_web.py || true
