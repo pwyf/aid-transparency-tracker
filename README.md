@@ -4,7 +4,7 @@ A data quality measurement tool for international aid data.
 
 ## Installation
 
-**N.B. If you would like to develop locally with vagrant follow these [instructions](./vagrant-readme.md)**
+**N.B. If you would like to develop locally with vagrant follow these [instructions](./vagrant/vagrant-readme.md)**
 
 Run the following commands to bootstrap your environment:
 
@@ -23,10 +23,22 @@ Setup a virtual environment, and install dependencies:
     pip install -r requirements.txt
 ```
 
-Copy and edit the config.py.tmpl, including pointing at a postgres database:
+Install and run a postgres database. If you have docker-compose, you can do this:
+
+```
+docker-compose -f docker-compose-postgres.yml up -d
+```
+
+Copy and if necessary edit the config.py.tmpl. (If you installed postgres using docker-compose you shkouldn't need to edit anything.)
 
 ``` bash
 cp config.py.tmpl config.py
+```
+
+If you're running this for the first time, edit `tests/organisations_with_identifiers.csv` to have less organisations. eg.. For just one:
+
+```
+cp tests/organisations_with_identifiers_sample_1_org.csv tests/organisations_with_identifiers.csv
 ```
 
 Finally, run the setup script to populate your database:
@@ -71,13 +83,6 @@ flask run
 ```
 ## Survey component
 
-The survey component currently requires the existence of three files (could be abstracted in future). Move them from the tests directory to the DATA_STORAGE_DIR you specified in config.py. E.g., if you set the directory to be /home/me/data/:
-
-``` bash
-cp tests/2012_2013_organisation_mapping.csv /home/me/data/
-cp tests/2012_indicators.csv /home/me/data/
-cp tests/2012_results.csv /home/me/data/
-```
 
 ## Reinitialise
 

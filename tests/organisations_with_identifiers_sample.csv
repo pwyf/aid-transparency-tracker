@@ -1,6 +1,6 @@
-country,donor,organisation_name,organisation_total_spend,organisation_total_spend_source,organisation_code,2018_organisation_code,2016_organisation_code,2015_organisation_code,2014_organisation_code,packagegroup_name,packagegroup_condition,organisation_currency,organisation_currency_conversion,organisation_currency_conversion_source,organisation_largest_recipient,organisation_largest_recipient_source
-Africa,,AfDB,,,46002,46002,46002,46002,46002,afdb,,,,,,
-"Germany,",BMZ-KFW,"Germany, BMZ-KFW",,,XM-DAC-5-2,DE-2,DE-2,DE-2,DE-2,bmz,participating-org[@role='2'][@ref='XM-DAC-5-2']|,,,,,
-U.S.A,State,"US, State",,,US-11,US-11,US-11,US-11,US-11,unitedstates,participating-org[@role='2'][@ref='US-GOV-11']|organisation-identifier/text()='US-GOV-1',,,,,
-U.S.A,IDA,"World Bank, IDA",,,44002,44002,44002,44002,44002,worldbank,participating-org[@role='1'][@ref='44002']|,,,,,
-U.S.A,IFC,"World Bank, IFC",,,44004,44004,44004,44004,44004,ifcwbg,,,,,,
+country,donor,organisation_name,organisation_code,2020_organisation_code,self_ref,packagegroup_name,packagegroup_condition
+Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,46002-non-sovereign,,afdb,contact-info/person-name/narrative/text()='private-sector@afdb.org'|
+Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,46002-sovereign,,afdb,not(contact-info/person-name/narrative/text()='private-sector@afdb.org')|
+Australia,DFAT,"Australia, DFAT",AU-5,AU-5,AU-5,ausgov,
+Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,XM-DAC-2-10,XM-DAC-2-10,be-dgd,
+Canada,Global Affairs,"Canada, Global Affairs",CA-3,CA-3,"CA-3,CA-1",gac-amc,
