@@ -12,7 +12,7 @@ from flask_login import current_user
 
 from . import app, api, aggregationtypes, indicators, \
               organisations_feedback, organisations, \
-              packages, publisher_conditions, registry, \
+              publisher_conditions, registry, \
               sampling, surveys, tests, usermanagement, users
 
 
@@ -86,35 +86,9 @@ def api_test(test_id):
     return api.api_test(test_id)
 
 
-@app.route("/api/packages/active/")
-def api_packages_active():
-    return api.api_packages_active()
-
-
-@app.route("/api/packages/")
-def api_packages():
-    return api.api_packages()
-
-
-@app.route("/api/packages/status/<package_id>/")
-def api_package_status(package_id):
-    return api.api_package_status(package_id)
-
-
-@app.route('/api/packages/<package_name>')
-def api_package(package_name):
-    return api.api_package(package_name)
-
-
 @app.route('/api/publishers/<publisher_id>')
 def api_publisher_data(publisher_id):
     return api.api_publisher_data(publisher_id)
-
-
-@app.route('/api/packages/<package_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
-@app.route('/api/packages/<package_name>/tests/<test_id>/activities')
-def api_package_activities(package_name, test_id, hierarchy_id=None):
-    return api.api_package_activities(package_name, test_id, hierarchy_id)
 
 
 @app.route('/api/publishers/<packagegroup_name>/hierarchy/<hierarchy_id>/tests/<test_id>/activities')
@@ -220,24 +194,6 @@ def users_edit(username=None):
 @usermanagement.perms_required()
 def users_delete(username=None):
     return users.users_delete(username)
-
-
-@app.route("/packages/manage/", methods=['GET', 'POST'])
-@usermanagement.perms_required()
-def packages_manage():
-    return packages.packages_manage()
-
-
-@app.route("/packages/new/", methods=['POST', 'GET'])
-@app.route("/packages/<package_name>/edit/", methods=['POST', 'GET'])
-def packages_edit(package_name=None):
-    return packages.packages_edit(package_name)
-
-
-@app.route("/packages/")
-@app.route("/packages/<package_name>/")
-def get_packages(package_name=None):
-    return packages.get_packages(package_name)
 
 
 @app.route("/indicators/")

@@ -43,6 +43,6 @@ jobs:
       - name: Init database
         run: flask init_db
       - name: Tests that should succeed
-        run: nosetests unittests/test_dataflows.py unittests/test_summaryfn.py
+        run: nosetests unittests/test_summaryfn.py
       - name: Tests that fail
         run: nosetests unittests/test_pipeline.py unittests/test_runtests.py unittests/test_web.py || true

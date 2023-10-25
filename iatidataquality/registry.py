@@ -9,20 +9,3 @@
 
 from flask import flash, redirect, url_for
 
-from iatidq import dqregistry
-
-
-def registry_refresh():
-    dqregistry.refresh_packages()
-    return "Refreshed"
-
-
-def registry_deleted():
-    num_deleted = dqregistry.check_deleted_packages()
-    if num_deleted > 0:
-        msg = '%s packages were set to deleted' % num_deleted
-    else:
-        msg = "No packages were set to deleted"
-
-    flash(msg, '')
-    return redirect(url_for('packages_manage'))

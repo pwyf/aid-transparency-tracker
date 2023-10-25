@@ -18,7 +18,6 @@ from . import dqindicators
 from . import dqminimal
 from . import dqorganisations
 from . import dqtests
-from . import dqregistry
 from . import dqusers
 from . import inforesult
 from . import models
@@ -77,10 +76,6 @@ def setup_organisations():
     org_file = os.environ.get('ORG_FILE', "tests/organisations_with_identifiers.csv")
     dqorganisations.importOrganisationPackagesFromFile(org_file)
 
-def setup_packages():
-    print("Refreshing package data from Registry")
-    dqregistry.refresh_packages()
-
 def setup_admin_user(username=None, password=None):
     print('Creating admin user ...')
     while not username:
@@ -103,8 +98,6 @@ def setup():
     setup_common()
 
     setup_admin_user()
-
-    # setup_packages()
 
     create_aggregation_types()
     create_inforesult_types()
