@@ -16,11 +16,11 @@ cd aid-transparency-tracker
 Setup a virtual environment, and install dependencies:
 
 ``` bash
-    python3 -m venv .ve
-    echo "export FLASK_APP=iatidataquality/__init__.py" >> .ve/bin/activate
-    source .ve/bin/activate
-    pip install "setuptools<58"
-    pip install -r requirements.txt
+python3 -m venv .ve
+echo "export FLASK_APP=iatidataquality/__init__.py" >> .ve/bin/activate
+source .ve/bin/activate
+pip install "setuptools<58"
+pip install -r requirements.txt
 ```
 
 Install and run a postgres database. If you have docker-compose, you can do this:
