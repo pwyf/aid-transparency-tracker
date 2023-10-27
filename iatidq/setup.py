@@ -94,10 +94,28 @@ def setup_admin_user(username=None, password=None):
     })
     print('Admin user successfully created.')
 
-def setup():
+def setup(admin_from_config):
     setup_common()
 
-    setup_admin_user()
+    admin_username = None
+    admin_password = None
+
+    if admin_from_config:
+        admin_username = app.config['APP_ADMIN_USERNAME'] if 'APP_ADMIN_USERNAME' in app.config \
+                                                             and app.config['APP_ADMIN_USERNAME'] != "" else None
+        admin_password = app.config['APP_ADMIN_PASSWORD'] if 'APP_ADMIN_PASSWORD' in app.config \
+                                                             and app.config['APP_ADMIN_PASSWORD'] != "" else None
+
+        if admin_username is None:
+            print("Flag to create admin user automatically was set, but APP_ADMIN_USERNAME not set or blank")
+
+        if admin_password is None:
+            print("Flag to create admin user automatically was set, but APP_ADMIN_PASSWORD not set or blank")
+
+        if admin_username is None or admin_password is None:
+            admin_username = admin_password = None  # if one is empty, set both to empty, so that both prompted for
+
+    setup_admin_user(admin_username, admin_password)
 
     create_aggregation_types()
     create_inforesult_types()

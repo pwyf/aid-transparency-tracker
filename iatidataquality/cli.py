@@ -31,16 +31,24 @@ def drop_db():
 
 
 @app.cli.command()
-def setup():
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the "This is potentially destructive" confirmation prompt')
+@click.option('--admin-from-config', is_flag=True, default=False,
+              help='Automatically create admin user from config file. Avoids interactive prompts')
+def setup(force, admin_from_config):
     """
     Quick setup. Will init db, add tests, add codelists,
     add indicators, refresh package data from Registry
     """
-    click.secho('\nWarning! This is a potentially destructive operation!',
-                fg='red')
-    click.confirm('Are you really really sure?', abort=True)
+    if force:
+        click.echo('\nSkipping confirmation as --force is set')
+    else:
+        click.secho('\nWarning! This is a potentially destructive operation!',
+                    fg='red')
+        click.confirm('Are you really really sure?', abort=True)
+
     db.drop_all()
-    dqsetup.setup()
+    dqsetup.setup(admin_from_config)
 
 
 @app.cli.command("create_admin")
@@ -311,7 +319,9 @@ def test_data(date, refresh, part_count, part, delete, orgs):
 @click.option('--date', default='latest',
               help='Date of the data to summarize, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
-def aggregate_results(date):
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the "This is potentially destructive" confirmation prompt')
+def aggregate_results(date, force):
     """Summarize results of IATI data tests."""
 
     iati_result_path = app.config.get('IATI_RESULT_PATH')
@@ -335,12 +345,16 @@ def aggregate_results(date):
                    '--date {}\n'.format(date), err=True)
         raise click.Abort()
 
-    click.secho('\nWarning! This is a destructive operation!', fg='red')
-    click.echo('\nAny existing aggregate data will be deleted ' +
-               'from the database.')
-    click.echo('(If you still have the raw results, you can regenerate ' +
-               'old aggregate data by specifying a date.)')
-    click.confirm('\nAre you really really sure?', abort=True)
+    if force:
+        click.echo('\nSkipping confirmation as --force is set')
+    else:
+        click.secho('\nWarning! This is a destructive operation!', fg='red')
+        click.echo('\nAny existing aggregate data will be deleted ' +
+                   'from the database.')
+        click.echo('(If you still have the raw results, you can regenerate ' +
+                   'old aggregate data by specifying a date.)')
+        click.confirm('\nAre you really really sure?', abort=True)
+
     with db.session.begin():
         db.session.execute('''truncate aggregateresult''')
 
