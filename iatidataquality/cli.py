@@ -14,20 +14,20 @@ from iatidq.sample_work import sample_work, db as sample_work_db
 from beta import utils, infotest
 
 
-@app.cli.command()
+@app.cli.command("init_db")
 def init_db():
     """Initialize the database."""
     db.create_all()
     dqimporttests.hardcodedTests()
 
 
-@app.cli.command()
+@app.cli.command("drop_db")
 def drop_db():
     """Drop all tables."""
     click.secho('\nWarning! This will drop all database tables!', fg='red')
     click.confirm('Are you really really sure?', abort=True)
     db.drop_all()
-    click.echo('DB dropped.')
+    click.echo('DB tables dropped.')
 
 
 @app.cli.command()
@@ -43,7 +43,7 @@ def setup():
     dqsetup.setup()
 
 
-@app.cli.command()
+@app.cli.command("create_admin")
 @click.option('--username', prompt='Username')
 @click.password_option()
 def create_admin(username, password):
@@ -51,13 +51,13 @@ def create_admin(username, password):
     dqsetup.setup_admin_user(username, password)
 
 
-@app.cli.command()
+@app.cli.command("update_frequency")
 def update_frequency():
     """Update frequency of publication from IATI dashboard"""
     dqorganisations.downloadOrganisationFrequency()
 
 
-@app.cli.command()
+@app.cli.command("import_indicators")
 @click.option('--filename', help='Set filename of data to test')
 def import_indicators(filename):
     """Import indicators. Will try to assign indicators to existing tests."""
@@ -68,14 +68,14 @@ def import_indicators(filename):
         dqindicators.importIndicators()
 
 
-@app.cli.command()
+@app.cli.command("import_tests")
 @click.option('--filename', default="tests/tests.yaml", help="Import the test definitions from file")
 def import_tests(filename):
     """Import test definitions"""
     dqimporttests.importTestsFromFile(filename, 1)
 
 
-@app.cli.command()
+@app.cli.command("import_organisations")
 @click.option('--filename', required=True, help='Set filename of data to test')
 def import_organisations(filename):
     """
@@ -85,7 +85,7 @@ def import_organisations(filename):
     dqorganisations.importOrganisationPackagesFromFile(filename)
 
 
-@app.cli.command()
+@app.cli.command("import_users")
 @click.option('--filename', required=True,
               help='Set filename of users to import')
 def import_users(filename):
@@ -93,7 +93,7 @@ def import_users(filename):
     dqusers.importUserDataFromFile(filename)
 
 
-@app.cli.command()
+@app.cli.command("setup_sampling")
 @click.option('--date', default='latest',
               help='Date of the data to test, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
@@ -146,14 +146,14 @@ def setup_sampling(date, filename, org_ids, test_ids):
     sample_work_db.make_db(filename, orgs, tests, snapshot_date)
 
 
-@app.cli.command()
+@app.cli.command("download_data")
 def download_data():
     """Download a snapshot of all IATI data."""
     click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
     iatikit.download.data()
 
 
-@app.cli.command()
+@app.cli.command("import_data")
 def import_data():
     """Import the relevant data from the downloaded IATI snapshot."""
     updated_on = iatikit.data().last_updated.date()
@@ -193,7 +193,7 @@ def import_data():
                                  organisation.registry_slug))
 
 
-@app.cli.command()
+@app.cli.command("test_data")
 @click.option('--date', default='latest',
               help='Date of the data to test, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
@@ -307,7 +307,7 @@ def test_data(date, refresh, part_count, part, delete, orgs):
             org, snapshot_date, test_name, current_data_results, org.condition)
 
 
-@app.cli.command()
+@app.cli.command("aggregate_results")
 @click.option('--date', default='latest',
               help='Date of the data to summarize, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
@@ -372,7 +372,7 @@ def aggregate_results(date):
                 org, snapshot_result_path, all_tests, current_data_results)
 
 
-@app.cli.command()
+@app.cli.command("excluded_conditions")
 @click.option('--filepath', '-f', help='path to the CSV file with the list of organisation exclusions.')
 def excluded_conditions(filepath):
     """Import all test exclusions based on test group per organisation and hierarchy level"""

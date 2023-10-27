@@ -178,7 +178,7 @@ def indicatorgroup_tests_csv(indicatorgroup=None, option=None):
     strIO.close()
 
     return send_file(bytesIO,
-                     attachment_filename=indicatorgroup + "_" + option + "tests.csv",
+                     download_name=indicatorgroup + "_" + option + "tests.csv",
                      as_attachment=True)
 
 

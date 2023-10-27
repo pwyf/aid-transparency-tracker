@@ -216,7 +216,7 @@ def export_organisation_conditions():
     bytesIO.write(strIO.getvalue().encode('utf-8'))
     bytesIO.seek(0)
     strIO.close()
-    
+
     return send_file(bytesIO,
-                     attachment_filename="organisation_structures.txt",
+                     download_name="organisation_structures.txt",
                      as_attachment=True)
