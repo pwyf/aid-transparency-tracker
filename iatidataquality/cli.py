@@ -162,7 +162,9 @@ def download_data():
 
 
 @app.cli.command("import_data")
-def import_data():
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the confirmation prompt if data already exists in destination')
+def import_data(force):
     """Import the relevant data from the downloaded IATI snapshot."""
     updated_on = iatikit.data().last_updated.date()
     input_path = iatikit.data().path
@@ -172,9 +174,13 @@ def import_data():
     click.echo('Output path: {output_path}'.format(output_path=output_path))
 
     if exists(output_path):
-        click.secho('Warning: Output path exists.', fg='red')
-        click.confirm('Overwrite and continue?', abort=True)
+        if force:
+            click.secho('Warning: Output path exists. Skipping prompt because --force set', fg='yellow')
+        else:
+            click.secho('Warning: Output path exists.', fg='red')
+            click.confirm('Overwrite and continue?', abort=True)
         shutil.rmtree(output_path)
+
     makedirs(output_path)
 
     shutil.copy(join(input_path, 'metadata.json'),
@@ -215,7 +221,9 @@ def import_data():
               help='delete output path if it exists already')
 @click.option('--orgs', default='',
               help='Comman delimeted list of orgs to check, defaults to all orgs')
-def test_data(date, refresh, part_count, part, delete, orgs):
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the confirmation prompt if data already exists in schema and codelist directory')
+def test_data(date, refresh, part_count, part, delete, orgs, force):
     """Test a set of imported IATI data."""
 
     iati_data_path = app.config.get('IATI_DATA_PATH')
@@ -246,8 +254,11 @@ def test_data(date, refresh, part_count, part, delete, orgs):
     click.echo('Output path: {}'.format(root_output_path))
 
     if exists(root_output_path) and delete:
-        click.secho('Warning: Output path exists.', fg='red')
-        click.confirm('Overwrite and continue?', abort=True)
+        if force:
+            click.secho('Warning: Output path exists. Skipping prompt because --force set', fg='yellow')
+        else:
+            click.secho('Warning: Output path exists.', fg='red')
+            click.confirm('Overwrite and continue?', abort=True)
         shutil.rmtree(root_output_path)
 
     if refresh:
