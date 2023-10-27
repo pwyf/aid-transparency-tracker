@@ -10,6 +10,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: iatidq_test
         # Set health checks to wait until postgres has started
         # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
         options: >-
@@ -45,4 +46,6 @@ jobs:
       - name: Tests that should succeed
         run: nosetests unittests/test_summaryfn.py
       - name: Tests that fail
-        run: nosetests unittests/test_pipeline.py unittests/test_runtests.py unittests/test_web.py || true
+        run: nosetests unittests/test_pipeline.py unittests/test_runtests.py || true
+      - name: Migrating to pytest file by file
+        run: py.test unittests/test_web.py

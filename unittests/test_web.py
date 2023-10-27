@@ -1,20 +1,36 @@
+import pytest
 
-import unittest
-import nose
-import nose.tools
+from iatidataquality import db
+from iatidq import models
 
-from iatidataquality import app
 
-class TestWeb(unittest.TestCase):
-    def setUp(self):
-        self.foo = 1
-        self.app = app.test_client()
+def test_index(client):
+    response = client.get("/")
+    assert response.status_code == 200
+    assert b"Aid Transparency Tracker" in response.data
 
-    def tearDown(self):
-        pass
 
-    @nose.with_setup(setUp, tearDown)
-    def test1(self):
-        rv = self.app.get('/organisations/GB-1/')
-        print(rv.data)
-        assert "Publication" in rv.data
+@pytest.fixture
+def organisation_in_db():
+    with db.session.begin():
+        org = models.Organisation()
+        org.setup(
+            organisation_name="Example Org",
+            registry_slug="example_org",
+            organisation_code="XE-EXAMPLE-1",
+            organisation_total_spend=0,
+        )
+        db.session.add(org)
+
+
+def test_organisations_page(client, organisation_in_db):
+    response = client.get("/organisations/")
+    assert response.status_code == 200
+    assert b"Example Org" in response.data
+
+
+def test_organisation_page(client, as_admin, organisation_in_db):
+    response = client.get("/organisations/XE-EXAMPLE-1/index/")
+    assert response.status_code == 200
+    assert b"Publication" in response.data
+    assert b"Example Org" in response.data
