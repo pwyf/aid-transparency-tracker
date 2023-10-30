@@ -43,9 +43,5 @@ jobs:
         run:  "echo \"CREATE DATABASE iatidq ENCODING 'UTF8' LC_COLLATE='en_US.UTF-8' LC_CTYPE='en_US.UTF-8' TEMPLATE=template0;\" | psql 'host=127.0.0.1 port=5433 user=postgres'"
       - name: Init database
         run: flask init_db
-      - name: Tests that should succeed
-        run: nosetests unittests/test_summaryfn.py
-      - name: Tests that fail
-        run: nosetests unittests/test_pipeline.py unittests/test_runtests.py || true
-      - name: Migrating to pytest file by file
-        run: py.test unittests/test_web.py
+      - name: Run the tests
+        run: py.test

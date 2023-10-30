@@ -12,6 +12,7 @@ import os
 import sys
 
 import nose
+import pytest
 
 import iatidq
 from iatidq import models, test_level
@@ -53,6 +54,7 @@ def get_packages_by_name(name):
     return models.Package.query.filter(
         models.Package.package_name==name).all()
 
+@pytest.mark.xfail
 @nose.with_setup(setup_func, teardown_func)
 def test_refresh():
     publisher = 'dfid'
