@@ -16,7 +16,6 @@ bdd-tester==0.0.8
     # via -r requirements.in
 blinker==1.6.3
     # via
-    #   -r requirements.in
     #   flask
     #   flask-principal
 build==1.0.3
@@ -51,7 +50,7 @@ flask==2.3.3
     #   flask-login
     #   flask-principal
     #   flask-sqlalchemy
-flask-login==0.6.2
+flask-login==0.6.3
     # via -r requirements.in
 flask-principal==0.4.0
     # via -r requirements.in
@@ -105,7 +104,8 @@ pyproject-hooks==1.0.0
     # via build
 python-dateutil==2.6.1
     # via -r requirements.in
-python-dotenv
+python-dotenv==1.0.0
+    # via -r requirements.in
 python-slugify==3.0.2
     # via
     #   -r requirements.in
@@ -161,7 +161,7 @@ werkzeug==2.3.7
     #   -r requirements.in
     #   flask
     #   flask-login
-wheel==0.41.2
+wheel==0.41.3
     # via pip-tools
 zipp==3.17.0
     # via importlib-metadata
