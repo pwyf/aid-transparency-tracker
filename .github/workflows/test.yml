@@ -23,8 +23,6 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.8' ]
-    env:
-      FLASK_APP: "iatidataquality/__init__.py"
     steps:
       - uses: actions/checkout@v3
       - name: Setup python
