@@ -17,7 +17,6 @@ Setup a virtual environment, and install dependencies:
 
 ``` bash
 python3.8 -m venv .ve
-echo "export FLASK_APP=iatidataquality/__init__.py" >> .ve/bin/activate
 source .ve/bin/activate
 pip install "setuptools<58"
 pip install -r requirements.txt
@@ -28,6 +27,15 @@ Install and run a postgres database. If you have docker-compose, you can do this
 ```
 docker-compose -f docker-compose-postgres.yml up -d
 ```
+
+(You may need to run `docker compose` instead of `docker-compose` if you have docker v2 installed).
+
+You can login to the PostgreSQL server (which might be useful to check things are working) using `psql` with the following command (using password from dockerfile; or using port and password you set, if not using the docker compose setup):
+
+```commandline
+psql -h localhost -p 5433 -U postgres
+```
+
 
 Copy and if necessary edit the config.py.tmpl. (If you installed postgres using docker-compose you shouldn't need to edit anything.)
 

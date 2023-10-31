@@ -14,36 +14,44 @@ from iatidq.sample_work import sample_work, db as sample_work_db
 from beta import utils, infotest
 
 
-@app.cli.command()
+@app.cli.command("init_db")
 def init_db():
     """Initialize the database."""
     db.create_all()
     dqimporttests.hardcodedTests()
 
 
-@app.cli.command()
+@app.cli.command("drop_db")
 def drop_db():
     """Drop all tables."""
     click.secho('\nWarning! This will drop all database tables!', fg='red')
     click.confirm('Are you really really sure?', abort=True)
     db.drop_all()
-    click.echo('DB dropped.')
+    click.echo('DB tables dropped.')
 
 
 @app.cli.command()
-def setup():
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the "This is potentially destructive" confirmation prompt')
+@click.option('--admin-from-config', is_flag=True, default=False,
+              help='Automatically create admin user from config file. Avoids interactive prompts')
+def setup(force, admin_from_config):
     """
     Quick setup. Will init db, add tests, add codelists,
     add indicators, refresh package data from Registry
     """
-    click.secho('\nWarning! This is a potentially destructive operation!',
-                fg='red')
-    click.confirm('Are you really really sure?', abort=True)
+    if force:
+        click.echo('\nSkipping confirmation as --force is set')
+    else:
+        click.secho('\nWarning! This is a potentially destructive operation!',
+                    fg='red')
+        click.confirm('Are you really really sure?', abort=True)
+
     db.drop_all()
-    dqsetup.setup()
+    dqsetup.setup(admin_from_config)
 
 
-@app.cli.command()
+@app.cli.command("create_admin")
 @click.option('--username', prompt='Username')
 @click.password_option()
 def create_admin(username, password):
@@ -51,13 +59,13 @@ def create_admin(username, password):
     dqsetup.setup_admin_user(username, password)
 
 
-@app.cli.command()
+@app.cli.command("update_frequency")
 def update_frequency():
     """Update frequency of publication from IATI dashboard"""
     dqorganisations.downloadOrganisationFrequency()
 
 
-@app.cli.command()
+@app.cli.command("import_indicators")
 @click.option('--filename', help='Set filename of data to test')
 def import_indicators(filename):
     """Import indicators. Will try to assign indicators to existing tests."""
@@ -68,14 +76,14 @@ def import_indicators(filename):
         dqindicators.importIndicators()
 
 
-@app.cli.command()
+@app.cli.command("import_tests")
 @click.option('--filename', default="tests/tests.yaml", help="Import the test definitions from file")
 def import_tests(filename):
     """Import test definitions"""
     dqimporttests.importTestsFromFile(filename, 1)
 
 
-@app.cli.command()
+@app.cli.command("import_organisations")
 @click.option('--filename', required=True, help='Set filename of data to test')
 def import_organisations(filename):
     """
@@ -85,7 +93,7 @@ def import_organisations(filename):
     dqorganisations.importOrganisationPackagesFromFile(filename)
 
 
-@app.cli.command()
+@app.cli.command("import_users")
 @click.option('--filename', required=True,
               help='Set filename of users to import')
 def import_users(filename):
@@ -93,7 +101,7 @@ def import_users(filename):
     dqusers.importUserDataFromFile(filename)
 
 
-@app.cli.command()
+@app.cli.command("setup_sampling")
 @click.option('--date', default='latest',
               help='Date of the data to test, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
@@ -146,15 +154,17 @@ def setup_sampling(date, filename, org_ids, test_ids):
     sample_work_db.make_db(filename, orgs, tests, snapshot_date)
 
 
-@app.cli.command()
+@app.cli.command("download_data")
 def download_data():
     """Download a snapshot of all IATI data."""
     click.echo('Fetching a snapshot of *all* data from the IATI registry ...')
     iatikit.download.data()
 
 
-@app.cli.command()
-def import_data():
+@app.cli.command("import_data")
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the confirmation prompt if data already exists in destination')
+def import_data(force):
     """Import the relevant data from the downloaded IATI snapshot."""
     updated_on = iatikit.data().last_updated.date()
     input_path = iatikit.data().path
@@ -164,9 +174,13 @@ def import_data():
     click.echo('Output path: {output_path}'.format(output_path=output_path))
 
     if exists(output_path):
-        click.secho('Warning: Output path exists.', fg='red')
-        click.confirm('Overwrite and continue?', abort=True)
+        if force:
+            click.secho('Warning: Output path exists. Skipping prompt because --force set', fg='yellow')
+        else:
+            click.secho('Warning: Output path exists.', fg='red')
+            click.confirm('Overwrite and continue?', abort=True)
         shutil.rmtree(output_path)
+
     makedirs(output_path)
 
     shutil.copy(join(input_path, 'metadata.json'),
@@ -193,7 +207,7 @@ def import_data():
                                  organisation.registry_slug))
 
 
-@app.cli.command()
+@app.cli.command("test_data")
 @click.option('--date', default='latest',
               help='Date of the data to test, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
@@ -207,7 +221,9 @@ def import_data():
               help='delete output path if it exists already')
 @click.option('--orgs', default='',
               help='Comman delimeted list of orgs to check, defaults to all orgs')
-def test_data(date, refresh, part_count, part, delete, orgs):
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the confirmation prompt if data already exists in schema and codelist directory')
+def test_data(date, refresh, part_count, part, delete, orgs, force):
     """Test a set of imported IATI data."""
 
     iati_data_path = app.config.get('IATI_DATA_PATH')
@@ -238,8 +254,11 @@ def test_data(date, refresh, part_count, part, delete, orgs):
     click.echo('Output path: {}'.format(root_output_path))
 
     if exists(root_output_path) and delete:
-        click.secho('Warning: Output path exists.', fg='red')
-        click.confirm('Overwrite and continue?', abort=True)
+        if force:
+            click.secho('Warning: Output path exists. Skipping prompt because --force set', fg='yellow')
+        else:
+            click.secho('Warning: Output path exists.', fg='red')
+            click.confirm('Overwrite and continue?', abort=True)
         shutil.rmtree(root_output_path)
 
     if refresh:
@@ -307,11 +326,13 @@ def test_data(date, refresh, part_count, part, delete, orgs):
             org, snapshot_date, test_name, current_data_results, org.condition)
 
 
-@app.cli.command()
+@app.cli.command("aggregate_results")
 @click.option('--date', default='latest',
               help='Date of the data to summarize, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
-def aggregate_results(date):
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the "This is potentially destructive" confirmation prompt')
+def aggregate_results(date, force):
     """Summarize results of IATI data tests."""
 
     iati_result_path = app.config.get('IATI_RESULT_PATH')
@@ -335,12 +356,16 @@ def aggregate_results(date):
                    '--date {}\n'.format(date), err=True)
         raise click.Abort()
 
-    click.secho('\nWarning! This is a destructive operation!', fg='red')
-    click.echo('\nAny existing aggregate data will be deleted ' +
-               'from the database.')
-    click.echo('(If you still have the raw results, you can regenerate ' +
-               'old aggregate data by specifying a date.)')
-    click.confirm('\nAre you really really sure?', abort=True)
+    if force:
+        click.echo('\nSkipping confirmation as --force is set')
+    else:
+        click.secho('\nWarning! This is a destructive operation!', fg='red')
+        click.echo('\nAny existing aggregate data will be deleted ' +
+                   'from the database.')
+        click.echo('(If you still have the raw results, you can regenerate ' +
+                   'old aggregate data by specifying a date.)')
+        click.confirm('\nAre you really really sure?', abort=True)
+
     with db.session.begin():
         db.session.execute('''truncate aggregateresult''')
 
@@ -372,7 +397,7 @@ def aggregate_results(date):
                 org, snapshot_result_path, all_tests, current_data_results)
 
 
-@app.cli.command()
+@app.cli.command("excluded_conditions")
 @click.option('--filepath', '-f', help='path to the CSV file with the list of organisation exclusions.')
 def excluded_conditions(filepath):
     """Import all test exclusions based on test group per organisation and hierarchy level"""

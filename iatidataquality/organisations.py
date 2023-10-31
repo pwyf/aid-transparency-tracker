@@ -125,7 +125,7 @@ def organisations_index(organisation_code=None):
         and
          (
            (organisation_survey and
-           organisation_survey.Workflow.name == 'researcher') 
+           organisation_survey.Workflow.name == 'researcher')
            or
            (organisation_survey and
            organisation_survey.Workflow.name == 'cso')
@@ -133,7 +133,7 @@ def organisations_index(organisation_code=None):
           (not organisation_survey)
          )
         )
-    
+
     survey_workflow = 'researcher' if organisation_survey is None else organisation_survey.Workflow.name
 
     template_args = dict(organisation=organisation,
@@ -452,8 +452,7 @@ def organisation_publication_detail(organisation_code=None):
 
 def _org_pub_csv(organisations, filename, index_data=False, history=False):
     string_io = make_csv(organisations, index_data, history)
-    return send_file(string_io, attachment_filename=filename,
-                     as_attachment=True)
+    return send_file(string_io, download_name=filename, as_attachment=True)
 
 
 def all_organisations_publication_index_csv_history():

@@ -3,6 +3,8 @@ sample_work.db
 iatikit.ini
 __iatikitcache__/
 dq
+data/
+results/
 
 # config file
 /config.py
@@ -98,6 +100,7 @@ ENV/
 env.bak/
 venv.bak/
 pyenv/
+.idea/
 
 # Spyder project settings
 .spyderproject

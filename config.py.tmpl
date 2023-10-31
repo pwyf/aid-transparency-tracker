@@ -33,3 +33,9 @@ PREVIOUS_ATI_YEAR = '2022'
 basedir = dirname(abspath(__file__))
 IATI_DATA_PATH = join(basedir, 'data')
 IATI_RESULT_PATH = join(basedir, 'results')
+
+# For local development, the creation of the admin user can be automated by using these config variables
+# Use with the --admin-from-config flag of the `flask setup` command
+# APP_ADMIN_USERNAME = "admin"
+# APP_ADMIN_PASSWORD = "admin"
+
