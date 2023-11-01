@@ -3,3 +3,5 @@ nose
 pytest
 pdbpp
 selenium
+black
+isort
