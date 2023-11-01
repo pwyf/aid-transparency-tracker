@@ -42,4 +42,4 @@ jobs:
       - name: Init database
         run: flask init_db
       - name: Run the tests
-        run: py.test
+        run: py.test unittests

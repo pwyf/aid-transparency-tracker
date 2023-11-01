@@ -204,7 +204,7 @@ class AggregationType(BaseModel):
 class Test(BaseModel):
     __tablename__ = 'test'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.UnicodeText, nullable=False)
+    name = db.Column(db.UnicodeText)
     description = db.Column(db.UnicodeText, nullable=False)
     test_group = db.Column(db.UnicodeText)
     file = db.Column(db.UnicodeText)
@@ -213,12 +213,12 @@ class Test(BaseModel):
     active = db.Column(db.Boolean)
 
     def setup(self,
-                 name,
                  description,
                  test_group,
                  test_level,
                  active,
-                 id=None):
+                 id=None,
+                 name=None):
         self.name = name
         self.description = description
         self.test_group = test_group
