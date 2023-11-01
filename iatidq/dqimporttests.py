@@ -50,7 +50,7 @@ def returnLevel(row, level):
 
 
 def _importTests(fh, filename, level=1, local=True):
-    data = yaml.load(fh)
+    data = yaml.safe_load(fh)
     # indicators = [i for c in data['components'] for i in c['indicators']]
 
     line_num = 0
