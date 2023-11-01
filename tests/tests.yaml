@@ -129,7 +129,7 @@ indicators:
  - name: Sub-national location
    tests:
     - name: Location (sub-national)
-    - name: Location (sub-national) coordinates or point
+    - name: Location (sub-national) point or administrative or location-id
  - name: "Networked Data - Implementors"
    tests:
     - name: Implementing organisation
