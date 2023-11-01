@@ -16,7 +16,7 @@ cd aid-transparency-tracker
 Setup a virtual environment, and install dependencies:
 
 ``` bash
-python3.8 -m venv .ve
+python3 -m venv .ve
 source .ve/bin/activate
 pip install "setuptools<58"
 pip install -r requirements.txt
