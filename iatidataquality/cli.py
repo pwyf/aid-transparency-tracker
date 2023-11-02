@@ -424,7 +424,7 @@ def excluded_conditions(filepath):
             test_group = str(row[1].lower())
             tests = db.session.query(Test).filter_by(
                 test_group=test_group).all()
-            if len(tests) is 0:
+            if len(tests) == 0:
                 raise Exception(
                     'The test group "{}" could not be found in the database'.format(test_group))
             else:
