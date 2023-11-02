@@ -52,407 +52,133 @@ indicators:
    tests:
     - name: Organisation strategy is present
       test_level: 3
-      expression: |
-       Given file is an organisation file
-       Then `document-link/category[@code="B02"]` should be present
-
  - name: Annual report
    tests:
     - name: Annual report is present
       test_level: 3
-      expression: |
-       Given file is an organisation file
-       Then `document-link/category[@code="B01"]` should be present
-
  - name: Allocation policy
    tests:
     - name: Allocation policy is present
       test_level: 3
-      expression: |
-       Given file is an organisation file
-       Then `document-link/category[@code="B04"]` should be present
-
  - name: Audit
    tests:
     - name: Audit is present
       test_level: 3
-      expression: |
-       Given file is an organisation file
-       Then `document-link/category[@code="B06"]` should be present
-
  - name: Procurement policy
    tests:
     - name: Procurement policy is present
       test_level: 3
-      expression: |
-       Given file is an organisation file
-       Then `document-link/category[@code="B05"]` should be present
-
  - name: Country strategy or MoU
    tests:
     - name: Strategy (country/sector) or Memorandum of Understanding
-      expression: |
-       Given this test involves both organisation and activity files
-        Then skip it
-
  - name: Total organisation budget
    tests:
     - name: Organisation budget available one year forward
       test_level: 3
-      expression: |
-       Given file is an organisation file
-        Then `total-budget` should be available 1 year forward
-
     - name: Organisation budget available two years forward
       test_level: 3
-      expression: |
-       Given file is an organisation file
-        Then `total-budget` should be available 2 years forward
-
     - name: Organisation budget available three years forward
       test_level: 3
-      expression: |
-       Given file is an organisation file
-        Then `total-budget` should be available 3 years forward
-
  - name: Disaggregated budgets
    tests:
     - name: Disaggregated budget
-      expression: |
-       Given this test involves both organisation and activity files
-        Then skip it
-
  - name: Project budget
    tests:
     - name: Budget available forward annually
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2 or 3
-        And `default-aid-type/@code` is not G01
-        And `activity-date[@type="3" or @type="4" or @type="end-planned" or @type="end-actual"]/@iso-date` is at least 6 months ahead
-        Then `budget | planned-disbursement` should be available forward annually
-
     - name: Budget available forward quarterly
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2 or 3
-        And `default-aid-type/@code` is not G01
-        And `activity-date[@type="3" or @type="4" or @type="end-planned" or @type="end-actual"]/@iso-date` is at least 6 months ahead
-        Then `budget | planned-disbursement` should be available forward quarterly
-
  - name: Project budget document
    tests:
     - name: Budget document is present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of A01, A02 or G01
-        And `transaction/aid-type/@code` is not any of A01 or A02
-        Then `document-link/category[@code="A05"]` should be present
-
  - name: Commitments
    tests:
     - name: Commitment is present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `transaction[transaction-type/@code="2" or transaction-type/@code="C"]` should be present and of non-zero value
-
  - name: Disbursements and expenditures
    tests:
     - name: Disbursements or expenditures are present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `transaction[transaction-type/@code="3"  or transaction-type/@code="4"]` should be present
-
  - name: Budget Alignment
    tests:
     - name: Capital spend is present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of A01, A02 or G01
-        And `transaction/aid-type/@code` is not any of A01 or A02
-        Then `capital-spend` should be present
-
     - name: Publish detailed CRS purpose codes in the sector field
-      expression: |
-       Given an IATI activity
-        And the activity is current
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of A01, A02 or G01
-        And `transaction/aid-type/@code` is not any of A01 or A02
-        Then `sector/@code` should be present
-        And `sector/@code` is not any of 43010, 43050, 43081, 43082, 52010, 99810, 15110, 15111, 15112, 15114, 15130, 16010, 16061, 21010, 21020, 22010, 23110, 43030 or 43040
-
-
  - name: Title
    tests:
     - name: Title is present
-      expression: |
-       Given an IATI activity
-        Then `title[text() or narrative/text()]` should be present
-
     - name: Title has at least 10 characters
-      expression: |
-       Given an IATI activity
-        Then `title/text() | title/narrative/text()` should have at least 10 characters
-
  - name: Description
    tests:
     - name: Description is present
-      expression: |
-       Given an IATI activity
-        Then `description[text() or narrative/text()]` should be present
-
     - name: Description has at least 80 characters
-      expression: |
-       Given an IATI activity
-        Then `description/text() | description/narrative/text()` should have at least 80 characters
-
  - name: Planned dates
    tests:
     - name: Planned start date is present
-      expression: |
-       Given an IATI activity
-        Then `activity-date[@type="1" or @type="start-planned"]` should be present
-
     - name: Planned end date is present
-      expression: |
-       Given an IATI activity
-        Then `activity-date[@type="3" or @type="end-planned"]` should be present
-
  - name: Actual dates
    tests:
     - name: Actual start date is present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `activity-date[@type="2" or @type="start-actual"]` should be present
-
     - name: Actual end date is present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 3 or 4
-        Then `activity-date[@type="4" or @type="end-actual"]` should be present
-
  - name: Current status
    tests:
     - name: Current status is present
-      expression: |
-       Given an IATI activity
-        Then `activity-status` should be present
-
     - name: Current status is valid
-      expression: |
-       Given an IATI activity
-        Then every `activity-status/@code` should be on the ActivityStatus codelist
-
  - name: Contact details
    tests:
     - name: Contact info is present
-      expression: |
-       Given an IATI activity
-        Then `contact-info` should be present
-
  - name: Sector
    tests:
     - name: Sector is present
-      expression: |
-       Given an IATI activity
-        Then `sector | transaction/sector` should be present
-
     - name: Sector uses DAC CRS 5 digit purpose codes
-      expression: |
-       Given an IATI activity
-        Then every `sector[@vocabulary="DAC" or not(@vocabulary) or @vocabulary="1"]/@code | transaction/sector[@vocabulary="1" or not(@vocabulary)]/@code` should be on the Sector codelist
-
  - name: Sub-national location
    tests:
     - name: Location (sub-national)
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `recipient-region/@code` is not 998
-        And `default-aid-type/@code` is not any of B01, B02, F01, H01, H02, H03, H04, H05 or G01
-        And `transaction/aid-type/@code` is not any of B01, B02, F01, H01, H02, H03, H04, H05 or G01
-        Then `location` should be present
-
-    - name: Location (sub-national) coordinates or point
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `recipient-region/@code` is not 998
-        And `default-aid-type/@code` is not any of B01, B02, F01, H01, H02, H03, H04, H05 or G01
-        And `transaction/aid-type/@code` is not any of B01, B02, F01, H01, H02, H03, H04, H05 or G01
-        Then `location[coordinates or point]` should be present
-
+    - name: Location (sub-national) point or administrative or location-id
  - name: "Networked Data - Implementors"
    tests:
     - name: Implementing organisation
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `participating-org[@role="Implementing" or @role="4"]` should be present
-
  - name: "Networked Data - Participating Orgs"
    tests:
     - name: Participating Orgs
-      expression: |
-       Given this test involves both organisation and activity files
-        Then skip it
-
  - name: Unique ID
    tests:
     - name: IATI Identifier is present
-      expression: |
-       Given an IATI activity
-        Then `iati-identifier` should be present
-
     - name: IATI Identifier starts with reporting org ref
-      expression: |
-       Given an IATI activity
-        Then `iati-identifier/text()` should start with either `reporting-org/@ref` or `other-identifier[@type="B1"]/@ref`
-
  - name: Flow type
    tests:
     - name: Flow type
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `default-flow-type | transaction/flow-type` should be present
-
     - name: Flow type uses standard codelist
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then every `default-flow-type/@code | transaction/flow-type/@code` should be on the FlowType codelist
-
  - name: Aid type
    tests:
     - name: Aid type is present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `default-aid-type | transaction/aid-type` should be present
-
     - name: Aid type is valid
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then every `default-aid-type/@code | transaction/aid-type/@code` should be on the AidType codelist
-
  - name: Finance type
    tests:
     - name: Default finance type
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `default-finance-type | transaction/finance-type` should be present
-
     - name: Finance type uses standard codelist
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-         Then every `default-finance-type/@code | transaction/finance-type/@code` should be on the FinanceType codelist
-
  - name: Tied aid status
    tests:
     - name: Tied aid status
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then `default-tied-status | transaction/tied-status` should be present
-
     - name: Tied aid status uses standard codelist
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        Then every `default-tied-status/@code | transaction/tied-status/@code` should be on the TiedStatus codelist
-
  - name: Conditions
    tests:
     - name: Conditions data
-      expression: |
-       Given an IATI activity
-       And `activity-status/@code` is one of 2, 3 or 4
-       And `default-aid-type/@code` is one of A01, A02, C01 or F01
-       Then `conditions` should be present
-
     - name: Conditions document
-      expression: |
-       Given an IATI activity
-       And `activity-status/@code` is one of 2, 3 or 4
-       And `default-aid-type/@code` is one of A01, A02, C01 or F01
-       Then `document-link/category[@code="A04"]` should be present
-
  - name: "Project procurement - Tenders"
    tests:
     - name: Tender is present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of A01, A02, B02 or G01
-        And `transaction/aid-type/@code` is not any of A01, A02 or B02
-        Then `document-link/category[@code="A10"]` should be present
-
  - name: "Project procurement - Contracts"
    tests:
     - name: Contract is present
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of A01, A02, B02 or G01
-        And `transaction/aid-type/@code` is not any of A01, A02 or B02
-        Then `document-link/category[@code="A06"] | document-link/category[@code="A11"]` should be present
-
  - name: Objectives
    tests:
     - name: Objectives of activity document
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not G01
-        Then `document-link/category[@code="A02"] | description[@type="2"]` should be present
-
  - name: Impact appraisals
    tests:
     - name: Pre- and/or post-project impact appraisal documents
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of A01, A02, B01, B02, B03, B04, D01, D02, E01, E02, F01, H01, H02, H03, H04, H05 or G01 
-        And `transaction/aid-type/@code` is not any of A01, A02, B01, B02, B03, B04, D01, D02, E01, E02, F01, H01, H02, H03, H04, H05 or G01 
-        Then `document-link/category[@code="A01"]` should be present
-
  - name: Reviews and evaluations
    tests:
     - name: Project performance and evaluation document
-      expression: |
-       Given an IATI activity
-        And `default-aid-type/@code` is not G01
-        And either `document-link/category[@code="A07"]` is present, or `activity-status/@code` is one of 3 or 4
-        Then `document-link/category[@code="A07"]` should be present
-
  - name: Results
    tests:
     - name: Results data
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of F01 or G01
-        Then `result` should be present
-
     - name: Results document
-      expression: |
-       Given an IATI activity
-        And `activity-status/@code` is one of 2, 3 or 4
-        And `default-aid-type/@code` is not any of F01 or G01
-        Then `document-link/category[@code="A08"]` should be present
 
 filter:
   name: Current data
-  expression: |
-   Given an IATI activity
-   Then the activity is current

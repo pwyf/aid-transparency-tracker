@@ -67,7 +67,6 @@ def _importTests(fh, filename, level=1, local=True):
                     test = models.Test()
 
                 test.setup(
-                    name=row['expression'],
                     description=row['name'],
                     test_group=indicator_name,
                     test_level=returnLevel(row, level),
@@ -109,7 +108,6 @@ def _importTests(fh, filename, level=1, local=True):
             test = models.Test()
 
         test.setup(
-            name=row['expression'],
             description=row['name'],
             test_group='',
             test_level=returnLevel(row, level),

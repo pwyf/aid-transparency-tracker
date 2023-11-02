@@ -103,3 +103,16 @@ If at any time you need to reset, you can drop all tables using:
 flask drop_db
 ```
 Then follow the installation instructions to reinitialise.
+
+## Code formatting
+
+We are currently incrementally adding files to black and isort code formatting.
+
+To ensure the relevant files are formatted correctly, run:
+
+```
+black conftest.py config_test.py unittests/test_web.py integration_tests/
+isort conftest.py config_test.py unittests/test_web.py integration_tests/
+```
+
+These will be checked by GitHub Actions.

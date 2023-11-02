@@ -114,6 +114,8 @@ def summarize_results(org, snapshot_result_path, all_tests,
     aggregateresulttype = 2 if current_data_results else 1
     for test in all_tests:
         t = Test.where(description=test.name).first()
+        t.name = '\n'.join(str(step) for step in test.steps)
+        db.session.add(t)
         test_id = t.id
         result_filepath = join(snapshot_result_path, org.organisation_code,
                                slugify(test.name) + '.csv')
