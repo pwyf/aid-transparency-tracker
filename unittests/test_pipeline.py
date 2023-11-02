@@ -16,8 +16,9 @@ import pytest
 
 import iatidq
 from iatidq import models, test_level
-from iatidataquality import db
+from iatidataquality import app, db
 
+app.config.from_pyfile(os.path.join("..", "config_test.py"))
 
 def log(s):
     return
