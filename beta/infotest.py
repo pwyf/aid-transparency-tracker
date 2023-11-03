@@ -365,7 +365,9 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
 
         for dataset in publisher.datasets:
             for idx, activity in enumerate(dataset.activities):
-                if dataset.name not in current_data_results or idx not in current_data_results[dataset.name]:
+                if dataset.name not in current_data_results or \
+                    idx not in current_data_results[dataset.name] or \
+                    current_data_results[dataset.name][idx] is False:
                     continue
 
                 explanation, score = test_participating_org_refs(org.registry_slug, activity.etree, self_refs)
