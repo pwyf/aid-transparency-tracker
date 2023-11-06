@@ -5492,7 +5492,7 @@
         "company"
       ],
       "sector": [],
-      "code": "CH-BS-CR",
+      "code": "CH_BS-CR",
       "confirmed": true,
       "deprecated": false,
       "listType": "primary",
@@ -5527,7 +5527,9 @@
         "opencorporates": "",
         "wikipedia": ""
       },
-      "formerPrefixes": [],
+      "formerPrefixes": [
+        "CH-BS-CR"
+      ],
       "meta": {
         "source": "Original research and official records",
         "lastUpdated": "2022-03-25"
@@ -8647,6 +8649,69 @@
     },
     {
       "name": {
+        "en": "Finnish Tax Administration",
+        "local": "Verohallinto/Skattef\u00f6rvaltningen"
+      },
+      "url": "https://www.ytj.fi/en/index/vatnumber.html",
+      "description": {
+        "en": "The Finnish Tax Administration (Finnish: Verohallinto, Swedish: Skattef\u00f6rvaltningen) maintains the register of Finnish companies registered to pay Value Added Tax (VAT). \n\n\u201cA company selling goods or services in the conduct of business is usually liable to pay VAT and has to be entered in the VAT register. In some cases, for example if the company\u2019s turnover is small, VAT registration is voluntary. In addition, some operations are exempt from VAT. A company conducting VAT-exempt operations cannot be entered in the VAT register.\u201d [1]\n\n\u201cVAT number is \u2019ALV-numero\u2019 in Finnish and \u2019momsnummer\u2019 or \u2018merv\u00e4rdesskattenummer\u2019 in Swedish.\u201d  [2]\n\n'[1] https://www.vero.fi/en/businesses-and-corporations/taxes-and-charges/vat/how-to-register-for-vat/'\n'[2] https://www.ytj.fi/en/index/vatnumber.html"
+      },
+      "coverage": [
+        "FI"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "company/community_interest_company",
+        "company/limited_company",
+        "company/mutual",
+        "company/partnership",
+        "company/sole_trader"
+      ],
+      "sector": [],
+      "code": "FI-VERO",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://www.ytj.fi/index.html",
+        "guidanceOnLocatingIds": "Users can search for identifiers on this webpage. They must provide a minimum of a company name or company identifier number - https://www.ytj.fi/index.html\nIt is also available in English - https://www.ytj.fi/en/index.html and Swedish - https://www.ytj.fi/sv/index.html\nSelect the Business ID (\u201cY-tunnus\u201d in Finnish) of the company of interest and if they are registered for VAT this will be listed on the company\u2019s page in the \u201cRegistrations in force\u201d (\u201cVoimassaolevat rekister\u00f6innit\u201d in Finnish, \u201cGiltiga registreringar\u201d in Swedish) table. The VAT number can be constructed from the Business ID by adding FI as a prefix and omitting the dash before the final digit.",
+        "exampleIdentifiers": "FI-VERO-FI08974643, FI-VERO-FI01120389, FI-VERO-FI01113162",
+        "languages": [
+          "fi",
+          "en",
+          "sv"
+        ]
+      },
+      "data": {
+        "availability": [
+          "api"
+        ],
+        "dataAccessDetails": "The API for the Finnish Business Information System is available here - http://avoindata.prh.fi/ytj.html\nIt is also available in English - http://avoindata.prh.fi/ytj_en.html and Swedish - http://avoindata.prh.fi/ytj_sv.html",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "original research",
+        "lastUpdated": ""
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/Finnish_Tax_Administration"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "Availability: API": 2,
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 57
+    },
+    {
+      "name": {
         "en": "Fiji Chart of Accounts",
         "local": ""
       },
@@ -9395,9 +9460,9 @@
         "en": "Government Organisation Register",
         "local": ""
       },
-      "url": "https://government-organisation.register.gov.uk/records",
+      "url": "https://github.com/openregister/registers-data-archive",
       "description": {
-        "en": "The UK Government Organisation Register contains an identifier for every government body with a presence on the gov.uk single domain.\n\nThis covers government departments, agencies and Arms Length Bodies (ALBs).\n\nEach organisation is assigned an alphanumeric identifier, and the register also includes website addresses, that can be mapped to entries in the GB-GOVUK identifier list. \n\nDue to the stable identifiers given in the Government Organisation Register, it should be preferred over codes from the GB-GOVUK list. "
+        "en": "The UK Government Organisation Register was a service provided by the Government Digital Service which retired on March 15 2021. It contained an identifier for every government body with a presence on the gov.uk single domain.\n\nThis covered government departments, agencies and Arms Length Bodies (ALBs).\n\nEach organisation was assigned an alphanumeric identifier, and the register also included website addresses, that could be mapped to entries in the GB-GOVUK identifier list."
       },
       "coverage": [
         "GB"
@@ -9413,8 +9478,8 @@
       "listType": "secondary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "The list is accessible as open data as part of the OpenRegister platform.",
-        "publicDatabase": "https://government-organisation.register.gov.uk/records",
+        "onlineAccessDetails": "The list was accessible as open data as part of the OpenRegister platform. The historic data is provided by the National Archives Government web archive.",
+        "publicDatabase": "https://github.com/openregister/registers-data-archive",
         "guidanceOnLocatingIds": "The identifier is available in the 'government-organisation' field within the register. Identifiers are short alphanumeric strings. ",
         "exampleIdentifiers": "OT1211, PB1204, EA1113, D1198",
         "languages": [
@@ -9423,7 +9488,6 @@
       },
       "data": {
         "availability": [
-          "api",
           "bulk",
           "csv",
           "json",
@@ -9439,7 +9503,7 @@
       },
       "meta": {
         "source": "https://github.com/OpenDataServices/org-ids/issues/67",
-        "lastUpdated": "2017-07-08"
+        "lastUpdated": "2023-09-20"
       },
       "links": {
         "opencorporates": "",
@@ -9447,7 +9511,6 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "Availability: API": 2,
         "Availability: Bulk download": 2,
         "Availability: CSV format": 1,
         "Availability: JSON format": 1,
@@ -9455,7 +9518,7 @@
         "License: Open License": 10,
         "List type: Secondary": 50
       },
-      "quality": 67
+      "quality": 65
     },
     {
       "links": {
@@ -13534,8 +13597,8 @@
       "access": {
         "availableOnline": true,
         "onlineAccessDetails": "An online search is available which requires the user to select which kind of entity they are looking for (Company, LLP), and to search on full or partial name. \n\nBulk data is also available from Data.gov.in.",
-        "publicDatabase": "http://www.mca.gov.in/mcafoportal/findCINAction.do",
-        "guidanceOnLocatingIds": "The online search at http://www.mca.gov.in/mcafoportal/findCINAction.do requires you to choose whether you are searching for an LLP or Company, and to select that you are searching on name. Searches also require completion of a CAPTCHA. \n\nThe identification number is given in the results table under the heading 'CIN / LLPIN'\n\nTo access bulk data, users can also to to the data.gov.in website and applying the filter for the Ministry of Corporate Affairs. Company data is then represented in a number of dataset. Users can click on the 'Company master data' box, and will be presented with datasets for each Registrar of Companies.\n\nThese datasets can either be accessed through the API or downloaded as a CSV. If downloaded as a CSV, the identifier will be under the column header 'CORPORATE_IDENTIFICATION_NUMBER'",
+        "publicDatabase": "https://www.mca.gov.in/mcafoportal/findCIN.do",
+        "guidanceOnLocatingIds": "The online search at https://www.mca.gov.in/mcafoportal/findCIN.do requires you to choose whether you are searching for an LLP or Company, and to select that you are searching on name. Searches also require completion of a CAPTCHA. \n\nThe identification number is given in the results table under the heading 'CIN / LLPIN'\n\nTo access bulk data, users can also go to https://data.gov.in/search website and apply the filter for the Ministry of Corporate Affairs. Company data is then represented in a number of datasets. Users can click on the 'Company Master Data' box and will be presented with datasets for each Registrar of Companies.\n\nThese datasets can either be accessed through the API or downloaded as a CSV. If downloaded as a CSV, the identifier will be under the column header 'CORPORATE_IDENTIFICATION_NUMBER'",
         "exampleIdentifiers": "L24111UR1986PLC015895, U01111UR1995PLC017979, AAE-8458",
         "languages": [
           "en",
@@ -13558,7 +13621,7 @@
       },
       "meta": {
         "source": "Desk research",
-        "lastUpdated": "2018-08-29"
+        "lastUpdated": "2023-08-24"
       },
       "links": {
         "opencorporates": "http://opencorporates.com/companies/in",
@@ -14770,7 +14833,7 @@
         "en": "Kenya Revenue Authority PIN",
         "local": ""
       },
-      "url": "http://www.kra.go.ke/index.php/domestic-taxes/income-tax/about-pin",
+      "url": "https://www.kra.go.ke/individual/individual-pin-registration/learn-about-pin/about-pin",
       "description": {
         "en": "The Personal Identification Number (PIN) is a number which identifies a person or legal entity for purposes of transacting business with Kenya Revenue Authority, other Government agencies and service providers in Kenya. A PIN may be issued to both individuals and 'artificial persons' such as companies, clubs, trusts and partnerships.\n"
       },
@@ -14811,7 +14874,7 @@
       },
       "meta": {
         "source": "https://github.com/org-id/register/issues/231#issuecomment-400702907",
-        "lastUpdated": "2018-06-27"
+        "lastUpdated": "2023-08-15"
       },
       "links": {
         "opencorporates": "",
@@ -15333,6 +15396,59 @@
         "List type: Secondary": 50
       },
       "quality": 57
+    },
+    {
+      "name": {
+        "en": "Ministry of Foreign Affairs",
+        "local": ""
+      },
+      "url": "https://www.mfaic.gov.kh/",
+      "description": {
+        "en": "A foreign NGO must register with the MOFA by entering into a Memorandum of Understanding (\u201cMOU\u201d) with MOFA. After the MOFA has entered into the MOU with a foreign NGO, the NGO must sign a Project Agreement with the MOFA before starting its work.  A foreign NGO may be established for a three (3) year duration which must be renewed with the MOFA before the expiration of the term.\nAn organization registered as a foreign NGO by the MOFA is considered properly licensed to carry out its activities in Cambodia and no further registration is required. However, in the event a foreign organization was to carry out business activities pursuant to Article 272 of the LOCE it may remain subject to registration as in accordance with that provision.\nAfter obtaining MOFA or MOI approval to be established, a foreign or local NGO must also register with the CDC if it wishes to import duty free materials to serve its program. The CDC will periodically require the NGO complete several forms."
+      },
+      "coverage": [
+        "KH"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "charity"
+      ],
+      "sector": [
+        "humantiarian_relief"
+      ],
+      "code": "KH-INGO",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://www.mfaic.gov.kh/Page/2021-02-10-List-of-Foreign-NGOs-Which-Signed-MoU-with-the-Ministry-of-Foreign-Affairs-and-International-Cooperation",
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "",
+        "languages": []
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "open_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Research and official records",
+        "lastUpdated": "06/10/2022"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: Open License": 10,
+        "List type: Secondary": 50
+      },
+      "quality": 60
     },
     {
       "name": {
@@ -16835,6 +16951,63 @@
         "List type: Secondary": 50
       },
       "quality": 55
+    },
+    {
+      "name": {
+        "en": "Luxembourg Trade and Companies Register",
+        "local": "Registre de commerce et des soci\u00e9t\u00e9s \u2013 RCS"
+      },
+      "url": "https://www.lbr.lu/",
+      "description": {
+        "en": "The Luxembourg Trade and Companies Register (Registre de commerce et des soci\u00e9t\u00e9s \u2013 RCS) is a public register and can be freely accessed. It contains information about traders and companies which, by law, must be disclosed and published, alongside their RCS number. This information is published on the RESA publication platform (https://www.lbr.lu/mjrcs-resa/). The RCS is managed by the Luxembourg Business Registers (LBR) (https://www.lbr.lu/).\n\nThe information that is published serves to identify the trader or company, and includes particulars such as a company's articles of association, its rules of procedure, the liability of its directors and officers, and the company accounts.\n\nThe information that the trader/company will be required to disclose for publication depends on the legal form of the business, its size and its sector of activity.\n\nAll companies that are newly incorporated in Luxembourg must be registered with the RCS, and their articles of association must be filed with the latter in full or in extract form depending of the legal form of the business.\n\nSubsequent amendments to published information must also be published.\n\nThe LBR ensures interoperability between the Luxembourg RCS and the business registers of other EU member states through the Business Registers Interconnection System."
+      },
+      "coverage": [
+        "LU"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company"
+      ],
+      "sector": [],
+      "code": "LU-RCS",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://www.lbr.lu/mjrcs/jsp/DisplayConsultDocumentsActionNotSecured.action",
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "B247312, G157",
+        "languages": [
+          "fr",
+          "de",
+          "en"
+        ]
+      },
+      "data": {
+        "availability": [
+          "data_not_available"
+        ],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Desk Research",
+        "lastUpdated": "2022-10-13"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
     },
     {
       "name": {
@@ -19288,6 +19461,58 @@
     },
     {
       "name": {
+        "en": "Namibia Revenue Agency ",
+        "local": ""
+      },
+      "url": "https://www.namra.org.na/",
+      "description": {
+        "en": "The Namibia Revenue Agency maintains the details of all businesses, non-profits and individuals who are required to submit income tax returns. All legal entities must be registered with the Revenue Agency upon incorporation. Information regarding an entity can be requested from the Revenue Agency by the registered representative of the entity, accountants or auditors.\n"
+      },
+      "coverage": [
+        "NA"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "charity"
+      ],
+      "sector": [],
+      "code": "NA-NAMRA",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": null,
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "No. details must be requested through appropriate channels from the Namibia Revenue Agency",
+        "exampleIdentifiers": "",
+        "languages": []
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "orginal research",
+        "lastUpdated": "2022-10-07"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
+    },
+    {
+      "name": {
         "en": "New Caledonia Chart of Accounts",
         "local": ""
       },
@@ -19394,6 +19619,60 @@
         "List type: Secondary": 50
       },
       "quality": 57
+    },
+    {
+      "name": {
+        "en": "Tax Directorate",
+        "local": "Direction G\u00e9n\u00e9rale des Imp\u00f4ts"
+      },
+      "url": "https://www.impots.gouv.ne/index.php/formalites/gestion-d-entreprise-nif/creation-d-entreprise-nif",
+      "description": {
+        "en": "All people, companies, NGOs and organisations undertaking economic or professional activity in Niger must have a Tax Identification Number (Num\u00e9ro d'Identification Fiscale, or NIF).\n\nTheoretically, any natural or legal person, carrying out a professional activity, whatever its nature, is bound by the following registration requirements: \n\n* To sign a declaration of existence to which is attached a registration form in the month of the beginning of the activity or the creation of the enterprise;\n\n* To request the assignment of a Tax Identification Number, commonly known as NIF [1].\n\n[1]: http://www.impots.gouv.ne/missions/immatriculation-et-recensement"
+      },
+      "coverage": [
+        "NE"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "charity",
+        "company"
+      ],
+      "sector": [],
+      "code": "NE-DGI",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": "",
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "5412",
+        "languages": [
+          "fr"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Original research",
+        "lastUpdated": "2023-08-14"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
     },
     {
       "name": {
@@ -24299,12 +24578,12 @@
     },
     {
       "name": {
-        "en": "General Register for Non-Governmental Organizations (Somaliland)",
+        "en": "Ministry of Planning and National Development - General Register for Non-Governmental Organizations (Somaliland)",
         "local": ""
       },
-      "url": "http://slministryofplanning.org/",
+      "url": "https://mopnd.govsomaliland.org/article/about-mopnd/",
       "description": {
-        "en": "(1) This list covers the operations of non-governmental, independent and not-for-profit organizations; Local/National NGOs, Foreign NGOs, and International NGOs within Somaliland. It also includes the Umbrellas and Consortium of Non-governmental Organizations[1]. Registrations have to be regularly renewed.\n\nLocal NGOs will be assigned with an identifier after registering. International NGOs should provide a copy of their home-country registration details. \n\nThe list does not include any regulation for the activities of UN organizations, Professional Associations, Private Companies and Industrial and Employee Associations, and those not relating to humanitarian activities [2]. \n\nThe General Register for Non-Governmental Organizations records and maintains all information and data relating to NGOs. The General Register has separate registration sections for National, International, Foreign, and Umbrellas NGOs [3]. \n\n(2) An NGO is entered into the General Register using the official name of the NGO and the date of registration, serial number and registration number of the certificate. Additional requirements also exist [4].\n\n[1]: Article2.2 and 2.3: http://slministryofplanning.org/images/NGO/ngo-law-final.pdf\n[2]: Article2.4: http://slministryofplanning.org/images/NGO/ngo-law-final.pdf\n[3]: Article 9.1: Register for Non-Governmental Organizations in http://slministryofplanning.org/images/NGO/ngo-law-final.pdf\n[4]: Article 9.7(f):  Register for Non-Governmental Organizations in http://slministryofplanning.org/images/NGO/ngo-law-final.pdf"
+        "en": "This Ministry covers the registration and operation of non-governmental, independent and not-for-profit organizations within Somaliland (Local, National and International NGOs). Registrations have to be regularly renewed. International NGOs can register or renew their certificates at https://mopnd.govsomaliland.org/articles/new-registration and local NGOs at https://mopnd.govsomaliland.org/articles/new-registration-2.\n\nLocal NGOs will be assigned with an identifier after registering. International NGOs should provide a copy of their home-country registration details.\n\nThe list does not include any regulation for the activities of UN organizations, Professional Associations, Private Companies, Industrial and Employee Associations, or those not relating to humanitarian activities.\n\nThe General Register for Non-Governmental Organizations records and maintains all information and data relating to NGOs. It has separate registration sections for National, International, Foreign, and Umbrellas NGOs.\n\nAn NGO is entered into the General Register using the official name of the NGO and the date of registration, serial number and registration number of the certificate."
       },
       "coverage": [
         "SO"
@@ -24324,7 +24603,7 @@
         "onlineAccessDetails": "",
         "publicDatabase": "",
         "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
+        "exampleIdentifiers": "L43135002018MJ",
         "languages": [
           ""
         ]
@@ -24340,7 +24619,7 @@
       },
       "meta": {
         "source": "Original research - https://github.com/org-id/register/issues/205",
-        "lastUpdated": "2018-04-18"
+        "lastUpdated": "2023-08-14"
       },
       "links": {
         "opencorporates": "",
@@ -26402,7 +26681,7 @@
         "en": "National Bureau for NGOs (Uganda)",
         "local": ""
       },
-      "url": "http://www.mia.go.ug/content/registration-ngos",
+      "url": "https://ngobureau.go.ug/",
       "description": {
         "en": "The Ugandan National Bureau for NGOs (NGO Bureau) is a semi-autonomous body under the Ministry of Internal Affairs established by the NGO Act 2016 .The Act mandates it to register, regulate, coordinate, inspect, monitor and oversee all NGO operations in the country.\n\nIt issues certificates of registration to NGOs."
       },
@@ -26419,11 +26698,11 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "No online search of identifiers has been located. ",
-        "publicDatabase": "",
-        "guidanceOnLocatingIds": "Organisations should be able to find their own identifier on their certificate of registration.",
-        "exampleIdentifiers": "5541",
+        "availableOnline": true,
+        "onlineAccessDetails": "A searchable table of organisations and their registration number (column: REG NUMBER) can be found here: https://www.ngobureau.go.ug/en/updated-national-ngo-register",
+        "publicDatabase": "https://www.ngobureau.go.ug/en/updated-national-ngo-register",
+        "guidanceOnLocatingIds": "Organisations should be able to find their own registration number (approx 13-15 characters) on their certificate of registration, or refer to the link with searchable table above.",
+        "exampleIdentifiers": "INDR160665542NB, FORR69845421NB",
         "languages": [
           "en"
         ]
@@ -26439,7 +26718,7 @@
       },
       "meta": {
         "source": "Desk research",
-        "lastUpdated": "2018-07-24"
+        "lastUpdated": "2023-08-28"
       },
       "links": {
         "opencorporates": "",
@@ -26663,7 +26942,7 @@
       },
       "url": "https://apps.irs.gov/app/eos/",
       "description": {
-        "en": "The Internal Revenue Service (IRS) assigns companies an Employer Identification Number (EIN) upon application. However, not all corporate entities are required to have an EIN. For tax-exempt entities (non-profits, charities etc.) the IRS maintains a list of EINs. Public listed company EINs are available via the Securities and Exchange Commission (SEC). \n\nOther EINs may be available by asking the organisation concerned, and are sometimes published on their websites.\n\n\"An Employer Identification Number (EIN) is also known as a Federal Tax Identification Number, and is used to identify a business entity. Generally, businesses need an EIN. \" [1]\n\n\"An employer identification number (EIN), also called a tax ID number or taxpayer ID, is required for most business entities... A tax ID number is not required if you operate a sole proprietorship or an LLC with no employees, in which case you would simply use your own Social Security Number as a tax ID.\" [2]\n\n\"In the US, corporate registration happens at the state level. The timeliness, availability, and licensing of this data varies among all 50 states. There is no federal dataset that contains all corporate registrations. It would be possible to create a unified open registry for all US corporations (even if only via aggregation from state ones) but this does not exist at this time.\n\nAcross those states performance varies widely and in many cases data is not available in bulk, is not machine readable, is not openly licensed etc. For more detail, see the per state summary on Open Corporates.\" [3]\n\n\"The Employer Identification Number (EIN), also known as the Federal Employer Identification Number (FEIN) or the Federal Tax Identification Number, is a unique nine-digit number assigned by the Internal Revenue Service (IRS) to business entities operating in the United States for the purposes of identification. When the number is used for identification rather than employment tax reporting, it is usually referred to as a Taxpayer Identification Number (TIN), and when used for the purposes of reporting employment taxes, it is usually referred to as an EIN. [4] \n\n[1] https://www.irs.gov/businesses/small-businesses-self-employed/employer-id-numbers-eins\n[2] http://tax.findlaw.com/federal-taxes/is-a-tax-id-required-for-my-business-.html\n[3] https://www.irs.gov/businesses/small-businesses-self-employed/employer-id-numbers-eins\n[4] https://en.wikipedia.org/wiki/Employer_Identification_Number"
+        "en": "The Internal Revenue Service (IRS) assigns companies an Employer Identification Number (EIN) upon application. However, not all corporate entities are required to have an EIN. For tax-exempt entities (non-profits, charities etc.) the IRS maintains a list of EINs. Public listed company EINs are available via the Securities and Exchange Commission (SEC). \n\nOther EINs may be available by asking the organisation concerned, and are sometimes published on their websites.\n\n\"An Employer Identification Number (EIN) is also known as a Federal Tax Identification Number, and is used to identify a business entity. Generally, businesses need an EIN. \" [1]\n\n\"An employer identification number (EIN), also called a tax ID number or taxpayer ID, is required for most business entities... A tax ID number is not required if you operate a sole proprietorship or an LLC with no employees, in which case you would simply use your own Social Security Number as a tax ID.\" [2]\n\nIn the US, corporate registration happens at the state level. The timeliness, availability, and licensing of this data varies among all 50 states. There is no federal dataset that contains all corporate registrations.\n\nAcross the states, performance varies widely and in many cases data is not available in bulk, is not machine readable, is not openly licensed etc. For more detail, see the per state summary on Open Corporates. \n\n\"The Employer Identification Number (EIN), also known as the Federal Employer Identification Number (FEIN) or the Federal Tax Identification Number, is a unique nine-digit number assigned by the Internal Revenue Service (IRS) to business entities operating in the United States for the purposes of identification. When the number is used for identification rather than employment tax reporting, it is usually referred to as a Taxpayer Identification Number (TIN), and when used for the purposes of reporting employment taxes, it is usually referred to as an EIN.\" [3] \n\n[1] https://www.irs.gov/businesses/small-businesses-self-employed/employer-id-numbers-eins\n[2] http://tax.findlaw.com/federal-taxes/is-a-tax-id-required-for-my-business-.html\n[3] https://en.wikipedia.org/wiki/Employer_Identification_Number"
       },
       "coverage": [
         "US"
@@ -26685,7 +26964,7 @@
         "availableOnline": false,
         "onlineAccessDetails": null,
         "publicDatabase": "https://apps.irs.gov/app/eos/",
-        "guidanceOnLocatingIds": "To search EINs of Exempt Orgs (nonprofits and charities, including: charitable organizations, churches and religions organizations, political organizations, private foundations, and more): https://apps.irs.gov/app/eos/\n\nTo search most public companies (those that are required to file forms with the US SEC): https://www.sec.gov/edgar.shtml",
+        "guidanceOnLocatingIds": "To search EINs of Exempt Orgs (nonprofits and charities, including: charitable organizations, churches and religions organizations, political organizations, private foundations, and more): https://apps.irs.gov/app/eos/\n\nTo search most public companies (those that are required to file forms with the US SEC): https://www.sec.gov/edgar/searchedgar/companysearch",
         "exampleIdentifiers": "03-0413726, 47-1850312",
         "languages": [
           "en"
@@ -26701,7 +26980,7 @@
       },
       "meta": {
         "source": "",
-        "lastUpdated": "2017-09-21"
+        "lastUpdated": "2023-08-15"
       },
       "links": {
         "opencorporates": "",
@@ -27852,13 +28131,13 @@
         "licenseDetails": "Creative Commons Public Domain Dedication (CC0 1.0 Universal (CC0 1.0). Details at: https://creativecommons.org/publicdomain/zero/1.0/"
       },
       "links": {
-        "opencorporates": "",
+        "opencorporates": "https://www.gleif.org/en/lei-data/lei-mapping/download-oc-to-lei-relationship-files",
         "wikipedia": "https://en.wikipedia.org/wiki/Legal_Entity_Identifier"
       },
       "formerPrefixes": [],
       "meta": {
         "source": "Original research, Official records",
-        "lastUpdated": "2020-08-16"
+        "lastUpdated": "2023-08-31"
       },
       "quality_explained": {
         "Availability: API": 2,
