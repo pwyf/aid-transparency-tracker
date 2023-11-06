@@ -140,6 +140,13 @@ The IATI reference for this indicator is: Location.
 For activities that are relevant at a country or regional level, information on the location where the funds are sent to or where the recipient is located are all accepted for this indicator.
 
 For example, capital city for a country, or location information of the implementing organisation. This includes private sector investment, loans or debt relief payments, where the location of the relevant bank or organisation is accepted.",23,0,0.035,,,
+sub-national-location-with-activity-scope-exclusion-,Sub-national location (with activity-scope exclusion),publication,activity,Project attributes,"The sub-national geographic location is information about where the activity is located within a country. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.
+
+The IATI reference for this indicator is: Location.
+
+For activities that are relevant at a country or regional level, information on the location where the funds are sent to or where the recipient is located are all accepted for this indicator.
+
+For example, capital city for a country, or location information of the implementing organisation. This includes private sector investment, loans or debt relief payments, where the location of the relevant bank or organisation is accepted.",23,0,0.035,,,
 conditions,Conditions,publication,activity,Project attributes,"The terms and conditions of the activity may also be referred to as benchmarks, priors, deliverables or involve words such as “subject to...”. They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released. 
 
 Any policy conditionality related to the activity should be published here.  In cases where there are both terms and conditions and policy conditionalities for an activity, all of these should be declared.  
