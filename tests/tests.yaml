@@ -136,6 +136,9 @@ indicators:
  - name: "Networked Data - Participating Orgs"
    tests:
     - name: Participating Orgs
+ - name: "Networked Data - Transactions with valid receiver"
+   tests:
+    - name: Transactions with valid receiver
  - name: Unique ID
    tests:
     - name: IATI Identifier is present

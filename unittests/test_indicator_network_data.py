@@ -115,7 +115,7 @@ class TestIndicatorNetworkedData:
         # test file `test_be-dgd-2021_1.xml` has been edited to test three conditions:
         # activity 1: 3 / 4 transactions have receiver names; one excluded due to self-ref: expected score: 1
         expected_results = [("score: 3 (passing transactions) / 3 (total transactions assessed)", 1),
-                            ("No relevant transactions to assess", None)]
+                            ("No relevant transactions to assess", 'not relevant')]
     
         org = OrganisationMock("XM-DAC-2-10")
 

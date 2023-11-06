@@ -445,13 +445,14 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
                     activity_status_codes[0] not in ['2', '3', '4']:
                     continue
 
+
                 transactions = activity.etree.xpath('transaction')
 
                 # if an activity has no transactions, it shouldn't be counted
                 # when determining proportion of passing activities 
                 if len(transactions) == 0:
-                    explanation = f'No transactions for this activity'
-                    score = None
+                    explanation = f'No assessable transactions for this activity'
+                    score = 'not relevant'
                 else:
                     explanation, score = calc_networked_data_3_activity_score(org, 
                                                                               transactions,
@@ -475,6 +476,9 @@ def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes,
 
     # make a set of the organisation's self-references, which are to be excluded
     self_refs = set(org.self_ref.split(",")) if org.self_ref else set()
+
+    if len(self_refs) == 0:
+        return 'Organisation excluded from the networked data test', 'not relevant'
 
     total_transactions_assessed = 0
     receivers_w_narratives = 0
@@ -537,7 +541,7 @@ def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes,
             receivers_w_xm_dac += 1
     
     if total_transactions_assessed == 0:
-        return 'No relevant transactions to assess', None
+        return 'No relevant transactions to assess', 'not relevant'
     
     passing_transactions = receivers_w_narratives + receivers_w_valid_prefix + \
                            receivers_w_known_id + receivers_w_xm_dac
