@@ -116,3 +116,19 @@ isort conftest.py config_test.py unittests/test_web.py integration_tests/
 ```
 
 These will be checked by GitHub Actions.
+
+## Data files required by the tests
+
+The PWYF tests which assess the quality of the data use various files which are stored
+in the `tests/` folder. Some of these files need to be updated from the following
+locations:
+
+**`orgid.json`**: http://org-id.guide/download.json
+
+**`publishers.json`**: https://iatiregistry.org/publisher/download/json
+
+**`CRSChannelCode.json`**: https://iatistandard.org/en/iati-standard/203/codelists/crschannelcode/
+
+
+
+
