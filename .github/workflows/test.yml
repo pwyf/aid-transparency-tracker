@@ -37,10 +37,6 @@ jobs:
         run: pip install -r requirements_dev.txt
       - name: Config
         run: cp config.py.tmpl config.py
-      - name: Create database
-        run:  "echo \"CREATE DATABASE iatidq ENCODING 'UTF8' LC_COLLATE='en_US.UTF-8' LC_CTYPE='en_US.UTF-8' TEMPLATE=template0;\" | psql 'host=127.0.0.1 port=5433 user=postgres'"
-      - name: Init database
-        run: flask init_db
       - name: Run the tests
         run: py.test unittests
       - name: Run black code formatting check on some files
