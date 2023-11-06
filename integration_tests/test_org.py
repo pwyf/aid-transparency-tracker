@@ -35,15 +35,14 @@ def browser(request):
     return browser
 
 
-def test_atest(browser):
+def test_organisation_publication(browser):
     browser.get("http://localhost:5000/")
     organisations_link = browser.find_element(By.LINK_TEXT, "Organisations »")
     organisations_link.click()
 
     organisations_table = browser.find_element(By.ID, "organisations")
     organisation_links = organisations_table.find_elements(By.TAG_NAME, "a")
-    # This should work with 0 instead of -1, but currently doesn't
-    organisation_links[-1].click()
+    organisation_links[0].click()
 
     browser.find_element(By.ID, "username").send_keys(config.APP_ADMIN_USERNAME)
     browser.find_element(By.ID, "password").send_keys(config.APP_ADMIN_PASSWORD)
@@ -61,3 +60,29 @@ def test_atest(browser):
         "`title/narrative/text()` should be present"
         in browser.find_element(By.TAG_NAME, "body").text
     )
+
+
+def test_survey(browser):
+    browser.get("http://localhost:5000/login")
+    browser.find_element(By.ID, "username").send_keys(config.APP_ADMIN_USERNAME)
+    browser.find_element(By.ID, "password").send_keys(config.APP_ADMIN_PASSWORD)
+    browser.find_element(By.ID, "password").send_keys(Keys.ENTER)
+    time.sleep(1)
+
+    browser.get("http://localhost:5000/organisations/")
+    organisations_table = browser.find_element(By.ID, "organisations")
+    organisation_links = organisations_table.find_elements(By.TAG_NAME, "a")
+    organisation_links[0].click()
+    organisation_url = browser.current_url
+
+    browser.get(organisation_url)
+    browser.find_element(By.LINK_TEXT, "Manage organisation").click()
+    assert "Organisation responded" in browser.find_element(By.TAG_NAME, "body").text
+
+    browser.get(organisation_url)
+    browser.find_element(By.LINK_TEXT, "View survey").click()
+    assert "Expected activities" in browser.find_element(By.TAG_NAME, "body").text
+
+    browser.get(organisation_url)
+    browser.find_element(By.LINK_TEXT, "Start survey").click()
+    assert "Thank you for agreeing" in browser.find_element(By.TAG_NAME, "body").text
