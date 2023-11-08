@@ -112,7 +112,7 @@ def importCodelists():
 
     mapping_tmpl = tmpl_prefix + '/mapping.json'
     codelist_tmpl = tmpl_prefix + '/json/en/{codelist_name}.json'
-    versions = ('1.05', '2.02',)
+    versions = ('1.05', '2.03',)
 
     for version in versions:
         version = version.replace('.', '')
