@@ -230,7 +230,7 @@ class DocumentLinks(object):
         self.codelists = codelists
 
     def get_elt_text(self, elt, key):
-        # IATI 2.01
+        # IATI 2.0x
         res = elt.xpath(key + '/narrative/text()')
         if not res:
             # IATI 1.05
@@ -254,7 +254,7 @@ class Location(object):
         return '''<Location: %s>''' % self.elt
 
     def get_elt_text(self, elt, key):
-        # IATI 2.01
+        # IATI 2.0x
         res = elt.xpath(key + '/narrative/text()')
         if not res:
             # IATI 1.05
