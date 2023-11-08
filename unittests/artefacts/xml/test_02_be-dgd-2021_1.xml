@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iati-activities generated-datetime="2023-10-31T19:00:00Z" version="2.02">
+<!-- NOTE: This is not real data; it has been edited to create a variety of test cases -->
+
+<!-- 1 Activity with four transactions, all of which have receiver org refs starting w/valid agency code: score 1 -->
+<iati-activity last-updated-datetime="2023-10-31T07:00:00" xml:lang="en" default-currency="EUR" humanitarian="1" hierarchy="1" xmlns:budgetline="http://diplomatie.be/oda/currentbudget.xlsx">
+  <iati-identifier>XM-DAC-2-10-3264</iati-identifier>
+  <reporting-org ref="XM-DAC-2-10" type="10">
+    <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+  </reporting-org>
+  <title>
+    <narrative>Financement des moyens généraux du PAM 2021-2022-2023</narrative>
+  </title>
+  <participating-org role="1" type="10" ref="XM-DAC-2-10">
+    <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+  </participating-org>
+  <participating-org role="4" type="40" ref="41140">
+    <narrative>UN World Food Programme WFP_PAM - WFP - PRT</narrative>
+    <narrative xml:lang="fr">NU PAM/WFP - Programme alimentaire mondial - PRT</narrative>
+  </participating-org>
+  <other-identifier ref="3264" type="A1">
+    <owner-org ref="XM-DAC-2-10">
+      <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    </owner-org>
+  </other-identifier>
+  <activity-status code="2"/>
+  <activity-date iso-date="2021-01-01" type="1">
+    <narrative>Planned start date of the activity</narrative>
+    <narrative xml:lang="fr">Date prévue de début de l&apos;activité</narrative>
+  </activity-date>
+  <activity-date iso-date="2023-12-31" type="3">
+    <narrative>Planned end date of the activity</narrative>
+    <narrative xml:lang="fr">Date prévue de fin de l&apos;activité</narrative>
+  </activity-date>
+  <activity-date iso-date="2021-01-01" type="2">
+    <narrative>Actual start date of the activity</narrative>
+    <narrative xml:lang="fr">Date effective de début de l&apos;activité</narrative>
+  </activity-date>
+  <contact-info type="1">
+    <organisation>
+      <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+      <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+    </organisation>
+    <email>Info.DGD@diplobel.fed.be</email>
+  </contact-info>
+  <activity-scope code="1"/>
+  <recipient-region code="998" vocabulary="1"/>
+  <sector vocabulary="1" code="99810" percentage="100"/>
+  <collaboration-type code="2"/>
+  <default-flow-type code="10"/>
+  <default-finance-type code="110"/>
+  <default-aid-type/>
+  <default-tied-status code="5"/>
+  <transaction ref="4500726415">
+    <transaction-type code="2"/>
+    <transaction-date iso-date="2021-02-26"/>
+    <value currency="EUR" value-date="2021-02-26">15000000</value>
+    <description>
+      <narrative>Commitment</narrative>
+    </description>
+    <receiver-org type="40" ref="HU-AFA-41140">
+      <narrative/>
+    </receiver-org>    
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2023-02-03"/>
+    <value currency="EUR" value-date="2023-02-03">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <disbursement-channel code="1"/>
+    <receiver-org type="40" ref="SE-ON-41140">
+      <narrative/>
+    </receiver-org>       
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2021-08-16"/>
+    <value currency="EUR" value-date="2021-08-16">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="EG-CR-41140">
+      <narrative/>
+    </receiver-org>       
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2022-02-28"/>
+    <value currency="EUR" value-date="2022-02-28">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <disbursement-channel code="1"/>
+    <receiver-org type="40" ref="LV-RE-41140">
+      <narrative/>
+    </receiver-org>       
+  </transaction>
+</iati-activity>
+
+<!-- 2 Activity with four transactions, all of which are publishers with valid IDs but not prefixes: score 1 -->
+<iati-activity last-updated-datetime="2023-10-31T07:00:00" xml:lang="en" default-currency="EUR" humanitarian="1" hierarchy="1" xmlns:budgetline="http://diplomatie.be/oda/currentbudget.xlsx">
+  <iati-identifier>XM-DAC-2-10-3265</iati-identifier>
+  <reporting-org ref="XM-DAC-2-10" type="10">
+    <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+  </reporting-org>
+  <title>
+    <narrative>Financement des moyens généraux du PAM 2021-2022-2023</narrative>
+  </title>
+  <participating-org role="1" type="10" ref="XM-DAC-2-10">
+    <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+  </participating-org>
+  <participating-org role="4" type="40" ref="41140">
+    <narrative>UN World Food Programme WFP_PAM - WFP - PRT</narrative>
+    <narrative xml:lang="fr">NU PAM/WFP - Programme alimentaire mondial - PRT</narrative>
+  </participating-org>
+  <other-identifier ref="3264" type="A1">
+    <owner-org ref="XM-DAC-2-10">
+      <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    </owner-org>
+  </other-identifier>
+  <activity-status code="2"/>
+  <activity-date iso-date="2021-01-01" type="1">
+    <narrative>Planned start date of the activity</narrative>
+    <narrative xml:lang="fr">Date prévue de début de l&apos;activité</narrative>
+  </activity-date>
+  <activity-date iso-date="2023-12-31" type="3">
+    <narrative>Planned end date of the activity</narrative>
+    <narrative xml:lang="fr">Date prévue de fin de l&apos;activité</narrative>
+  </activity-date>
+  <activity-date iso-date="2021-01-01" type="2">
+    <narrative>Actual start date of the activity</narrative>
+    <narrative xml:lang="fr">Date effective de début de l&apos;activité</narrative>
+  </activity-date>
+  <contact-info type="1">
+    <organisation>
+      <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+      <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+    </organisation>
+    <email>Info.DGD@diplobel.fed.be</email>
+  </contact-info>
+  <activity-scope code="1"/>
+  <recipient-region code="998" vocabulary="1"/>
+  <sector vocabulary="1" code="99810" percentage="100"/>
+  <collaboration-type code="2"/>
+  <default-flow-type code="10"/>
+  <default-finance-type code="110"/>
+  <default-aid-type/>
+  <default-tied-status code="5"/>
+  <transaction ref="4500726415">
+    <transaction-type code="2"/>
+    <transaction-date iso-date="2021-02-26"/>
+    <value currency="EUR" value-date="2021-02-26">15000000</value>
+    <description>
+      <narrative>Commitment</narrative>
+    </description>
+    <receiver-org type="40" ref="47135">
+      <narrative>Commitment</narrative>
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2023-02-03"/>
+    <value currency="EUR" value-date="2023-02-03">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="47135">
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2021-08-16"/>
+    <value currency="EUR" value-date="2021-08-16">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="44000">
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2022-02-28"/>
+    <value currency="EUR" value-date="2022-02-28">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="47045">
+    </receiver-org>    
+    <disbursement-channel code="1"/>
+  </transaction>
+</iati-activity>
+
+
+<!-- 3 Activity with four transactions, two of which are publishers with valid IDs but not prefixes: score 0.5 -->
+<iati-activity last-updated-datetime="2023-10-31T07:00:00" xml:lang="en" default-currency="EUR" humanitarian="1" hierarchy="1" xmlns:budgetline="http://diplomatie.be/oda/currentbudget.xlsx">
+  <iati-identifier>XM-DAC-2-10-3265</iati-identifier>
+  <reporting-org ref="XM-DAC-2-10" type="10">
+    <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+  </reporting-org>
+  <title>
+    <narrative>Financement des moyens généraux du PAM 2021-2022-2023</narrative>
+  </title>
+  <participating-org role="1" type="10" ref="XM-DAC-2-10">
+    <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+  </participating-org>
+  <participating-org role="4" type="40" ref="41140">
+    <narrative>UN World Food Programme WFP_PAM - WFP - PRT</narrative>
+    <narrative xml:lang="fr">NU PAM/WFP - Programme alimentaire mondial - PRT</narrative>
+  </participating-org>
+  <other-identifier ref="3264" type="A1">
+    <owner-org ref="XM-DAC-2-10">
+      <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    </owner-org>
+  </other-identifier>
+  <activity-status code="2"/>
+  <activity-date iso-date="2021-01-01" type="1">
+    <narrative>Planned start date of the activity</narrative>
+    <narrative xml:lang="fr">Date prévue de début de l&apos;activité</narrative>
+  </activity-date>
+  <activity-date iso-date="2023-12-31" type="3">
+    <narrative>Planned end date of the activity</narrative>
+    <narrative xml:lang="fr">Date prévue de fin de l&apos;activité</narrative>
+  </activity-date>
+  <activity-date iso-date="2021-01-01" type="2">
+    <narrative>Actual start date of the activity</narrative>
+    <narrative xml:lang="fr">Date effective de début de l&apos;activité</narrative>
+  </activity-date>
+  <contact-info type="1">
+    <organisation>
+      <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+      <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+    </organisation>
+    <email>Info.DGD@diplobel.fed.be</email>
+  </contact-info>
+  <activity-scope code="1"/>
+  <recipient-region code="998" vocabulary="1"/>
+  <sector vocabulary="1" code="99810" percentage="100"/>
+  <collaboration-type code="2"/>
+  <default-flow-type code="10"/>
+  <default-finance-type code="110"/>
+  <default-aid-type/>
+  <default-tied-status code="5"/>
+  <transaction ref="4500726415">
+    <transaction-type code="2"/>
+    <transaction-date iso-date="2021-02-26"/>
+    <value currency="EUR" value-date="2021-02-26">15000000</value>
+    <description>
+      <narrative>Commitment</narrative>
+    </description>
+    <receiver-org type="40" ref="47135">
+      <narrative>Commitment</narrative>
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2023-02-03"/>
+    <value currency="EUR" value-date="2023-02-03">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="47135">
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2021-08-16"/>
+    <value currency="EUR" value-date="2021-08-16">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="INVALID-34534544000">
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2022-02-28"/>
+    <value currency="EUR" value-date="2022-02-28">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="INVALID-47045">
+    </receiver-org>    
+    <disbursement-channel code="1"/>
+  </transaction>
+</iati-activity>
+
+<!-- 4 Activity with five transactions, three of which have valid XM-DAC codes: activity-level score 0.6 -->
+<iati-activity last-updated-datetime="2023-10-31T07:00:00" xml:lang="en" default-currency="EUR" humanitarian="1" hierarchy="1" xmlns:budgetline="http://diplomatie.be/oda/currentbudget.xlsx">
+  <iati-identifier>XM-DAC-2-10-3266</iati-identifier>
+  <reporting-org ref="XM-DAC-2-10" type="10">
+    <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+  </reporting-org>
+  <title>
+    <narrative>Financement des moyens généraux du PAM 2021-2022-2023</narrative>
+  </title>
+  <participating-org role="1" type="10" ref="XM-DAC-2-10">
+    <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+  </participating-org>
+  <participating-org role="4" type="40" ref="41140">
+    <narrative>UN World Food Programme WFP_PAM - WFP - PRT</narrative>
+    <narrative xml:lang="fr">NU PAM/WFP - Programme alimentaire mondial - PRT</narrative>
+  </participating-org>
+  <other-identifier ref="3264" type="A1">
+    <owner-org ref="XM-DAC-2-10">
+      <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+    </owner-org>
+  </other-identifier>
+  <activity-status code="2"/>
+  <activity-date iso-date="2021-01-01" type="1">
+    <narrative>Planned start date of the activity</narrative>
+    <narrative xml:lang="fr">Date prévue de début de l&apos;activité</narrative>
+  </activity-date>
+  <activity-date iso-date="2023-12-31" type="3">
+    <narrative>Planned end date of the activity</narrative>
+    <narrative xml:lang="fr">Date prévue de fin de l&apos;activité</narrative>
+  </activity-date>
+  <activity-date iso-date="2021-01-01" type="2">
+    <narrative>Actual start date of the activity</narrative>
+    <narrative xml:lang="fr">Date effective de début de l&apos;activité</narrative>
+  </activity-date>
+  <contact-info type="1">
+    <organisation>
+      <narrative>Directorate-general Development Cooperation and Humanitarian Aid</narrative>
+      <narrative xml:lang="fr">Direction-Générale Coopération au Développement et Aide humanitaire</narrative>
+    </organisation>
+    <email>Info.DGD@diplobel.fed.be</email>
+  </contact-info>
+  <activity-scope code="1"/>
+  <recipient-region code="998" vocabulary="1"/>
+  <sector vocabulary="1" code="99810" percentage="100"/>
+  <collaboration-type code="2"/>
+  <default-flow-type code="10"/>
+  <default-finance-type code="110"/>
+  <default-aid-type/>
+  <default-tied-status code="5"/>
+  <transaction ref="4500726415">
+    <transaction-type code="2"/>
+    <transaction-date iso-date="2021-02-26"/>
+    <value currency="EUR" value-date="2021-02-26">15000000</value>
+    <description>
+      <narrative>Commitment</narrative>
+    </description>
+    <receiver-org type="40" ref="XM-DAC-77-1">
+      <narrative>Commitment</narrative>
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2023-02-03"/>
+    <value currency="EUR" value-date="2023-02-03">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="XM-DAC-47129">
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2023-02-03"/>
+    <value currency="EUR" value-date="2023-02-03">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="XM-DAC-46027">
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>  
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2021-08-16"/>
+    <value currency="EUR" value-date="2021-08-16">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+    <receiver-org type="40" ref="XM-DAC-SK-77-1">
+    </receiver-org>
+    <disbursement-channel code="1"/>
+  </transaction>
+  <transaction ref="4500726415">
+    <transaction-type code="3"/>
+    <transaction-date iso-date="2022-02-28"/>
+    <value currency="EUR" value-date="2022-02-28">5000000</value>
+    <description>
+      <narrative>disbursement</narrative>
+    </description>
+ 
+    <disbursement-channel code="1"/>
+  </transaction>
+</iati-activity>
+
+</iati-activities>

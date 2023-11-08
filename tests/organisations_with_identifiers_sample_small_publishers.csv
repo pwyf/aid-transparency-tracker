@@ -1,0 +1,15 @@
+country,donor,organisation_name,organisation_code,2020_organisation_code,self_ref,packagegroup_name,packagegroup_condition
+Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,XM-DAC-2-10,XM-DAC-2-10,be-dgd,
+EU,EBRD - non-sovereign,EBRD - non-sovereign,46015-non-sovereign,46015-non-sovereign,,ebrd,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,46015-sovereign,,ebrd,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
+EU,EIB - non-sovereign,EIB - non-Sovereign,XM-DAC-918-3-non-sovereign,XM-DAC-918-3-non-sovereign,,eib,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+EU,EIB - sovereign,EIB - sovereign,XM-DAC-918-3-sovereign,XM-DAC-918-3-sovereign,,eib,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
+France,AFD,"France, AFD",FR-3,FR-3,FR-3,afd,
+,IDB Invest,Inter-American Investment Corporation,XM-DAC-46012,XM-DAC-46012,XM-DAC-46012,idbinvest,
+Ireland,Irish Aid,"Ireland, Irish Aid",XM-DAC-21-1,XM-DAC-21-1,XM-DAC-21-1,irishaid,
+Italy,AICS,"Italy, AICS",XM-DAC-6-4,XM-DAC-6-4,XM-DAC-6-4,aics,
+South Korea,KOICA,"Korea, KOICA",KR-4,KR-4,KR-GOV-051,odakorea,participating-org[@role='3'][@ref='KR-GOV-051']|organisation-identifier/text()='KR-GOV-051'
+Spain,AECID,"Spain, AECID",ES-DIR3-EA0035768,ES-DIR3-EA0035768,ES-DIR3-EA0035768,aecid,
+US/ Switzerland,UN OCHA,UN OCHA,XM-DAC-41127,XM-DAC-41127,XM-DAC-41127,unocha,
+U.S.A,MCC,"US, MCC",US-18,US-18,,millenniumchallenge,participating-org[@role='3'][@ref='US-18']|
+Saudi Arabia,King Salman Relief fund,King Salman Relief fund,XM-OCHA-HPC6770,XM-OCHA-HPC6770,XM-OCHA-HPC6770,ksrelief291,

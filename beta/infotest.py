@@ -316,8 +316,27 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
     return explanation, score
 
 
-def networked_data_ref(org, snapshot_date, test_name,
-                       current_data_results, condition):
+def networked_data_part_2(org, snapshot_date, test_name, current_data_results, condition):
+    """Calculates score for Networked Data test, part 2: participating orgs with valid IDs
+    
+    Part 2 of the Networked Data scores each activity according to how many of the
+    participating organisations are referred to with valid references. The score for the
+    organisation is the average of the scores for each of their activities. This
+    function calculates the score for each activity and writes it to the file
+    <test_name.csv> (test_name for this test is currently 'participating_orgs').
+    
+    :param org: The organisation to be processed.
+    :type org: iatidq.models.Organisation
+    :param snapshot_date: The date of the data snapshot/download to use.
+    :type snapshot_date: str (in YYYY-MM-DD format)
+    :param test_name: The test name
+    :type test_name: str
+    :param current_data_results: All of the organisation's activities, grouped by
+        dataset slug, indicating whether the activity is current or not.
+    :type current_data_results: dictionary<dataset-slug, dictionary<activity-index, boolean>>
+    :param condition: A condition which must be satisfied for the test to be applied
+    :type condition: str (XPath expression)
+    """
 
     iati_result_path = current_app.config.get('IATI_RESULT_PATH')
     output_filepath = join(iati_result_path,
@@ -346,7 +365,9 @@ def networked_data_ref(org, snapshot_date, test_name,
 
         for dataset in publisher.datasets:
             for idx, activity in enumerate(dataset.activities):
-                if dataset.name not in current_data_results or idx not in current_data_results[dataset.name]:
+                if dataset.name not in current_data_results or \
+                    idx not in current_data_results[dataset.name] or \
+                    current_data_results[dataset.name][idx] is False:
                     continue
 
                 explanation, score = test_participating_org_refs(org.registry_slug, activity.etree, self_refs)
@@ -362,3 +383,189 @@ def networked_data_ref(org, snapshot_date, test_name,
                     'hierarchy': activity.etree.get('hierarchy', '1'),
                     'explanation': explanation,
                 })
+
+
+def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
+    """Calculate scores for Networked Data part 3: proportion transactions w/receivers
+    
+    Part 3 of the Networked Data scores each activity according to how many of its
+    transactions have valid receiving organisations listed. The score per activity is
+    the proportion of valid transactions among assessable transactions.
+    
+    :param org: The organisation to be processed.
+    :type org: iatidq.models.Organisation
+    :param snapshot_date: The date of the data snapshot/download to use.
+    :type snapshot_date: str (in YYYY-MM-DD format)
+    :param test_name: The test name
+    :type test_name: str
+    :param current_data_results: All of the organisation's activities, grouped by
+        dataset slug, indicating whether the activity is current or not.
+    :type current_data_results: dictionary<dataset-slug, dictionary<activity-index, boolean>>
+    """
+
+    output_filepath = join(current_app.config.get('IATI_RESULT_PATH'),
+                           snapshot_date, 
+                           org.organisation_code,
+                           utils.slugify(test_name) + '.csv')
+
+    snapshot_xml_path = join(current_app.config.get('IATI_DATA_PATH'), snapshot_date)
+
+    # get an IATIKIT Publisher object for the organisation being processed
+    publisher = iatikit.data(snapshot_xml_path).publishers.get(org.registry_slug)
+
+    fieldnames = ['dataset', 'identifier', 'index', 
+                  'result', 'hierarchy', 'explanation']
+    
+    
+    # we create three lists of publishers, or publisher prefixes, which are used to 
+    # check the validity of the receiver-org refs; do that here so it's just done once
+    org_id_prefixes = set(process_orgid())  # list of prefixes, except XM-DAC
+    _, publishers_by_ident = process_publishers() 
+    publisher_ids = set(publishers_by_ident)  # list of publishers on Registry
+    xm_dac_codes = set(process_sector())  # list of acceptable XM-DAC codes
+
+
+    with open(output_filepath, 'w') as handler:
+        writer = csv.DictWriter(handler, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for dataset in publisher.datasets:
+            for idx, activity in enumerate(dataset.activities):
+                # this test only applies to activities which are "current". "current" is
+                # defined as: an activity that was in implementation, had transactions
+                # or ended in the last 12 months
+                if not (dataset.name in current_data_results and \
+                        idx in current_data_results[dataset.name] and \
+                        current_data_results[dataset.name][idx] == 1):
+                    continue
+
+                # if activity status code is not in [2, 3, 4] then skip
+                activity_status_codes = activity.etree.xpath('activity-status/@code')
+                if len(activity_status_codes) > 0 and \
+                    activity_status_codes[0] not in ['2', '3', '4']:
+                    continue
+
+
+                transactions = activity.etree.xpath('transaction')
+
+                # if an activity has no transactions, it shouldn't be counted
+                # when determining proportion of passing activities 
+                if len(transactions) == 0:
+                    explanation = f'No assessable transactions for this activity'
+                    score = 'not relevant'
+                else:
+                    explanation, score = calc_networked_data_3_activity_score(org, 
+                                                                              transactions,
+                                                                              org_id_prefixes,
+                                                                              publisher_ids,
+                                                                              xm_dac_codes)
+
+                writer.writerow({
+                    'dataset': dataset.name,
+                    'identifier': activity.id,
+                    'index': idx,
+                    'result': str(score),
+                    'hierarchy': activity.etree.get('hierarchy', '1'),
+                    'explanation': explanation,
+                })
+
+
+def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes, 
+                                         publisher_ids, xm_dac_codes):
+    """Calculates score for part 3 of Networked data indicator for single activity"""
+
+    # make a set of the organisation's self-references, which are to be excluded
+    self_refs = set(org.self_ref.split(",")) if org.self_ref else set()
+
+    if len(self_refs) == 0:
+        return 'Organisation excluded from the networked data test', 'not relevant'
+
+    total_transactions_assessed = 0
+    receivers_w_narratives = 0
+    receivers_w_valid_prefix = 0
+    receivers_w_known_id = 0
+    receivers_w_xm_dac = 0
+
+    for transaction in transactions:
+
+        # extract the data values the tests query
+        receiver_orgs_refs = transaction.xpath("receiver-org/@ref")
+        narrative_content = ''.join([k.strip() for k in 
+                                    transaction.xpath('receiver-org/narrative/text()')])        
+
+        # pre-assessment exclusions:
+
+        # skip transactions which state receiver is current organisation
+        if len(receiver_orgs_refs) > 0 and receiver_orgs_refs[0] in self_refs:
+            continue
+        
+        # skip transactions which are not of type 2 or 3
+        transaction_types = transaction.xpath("transaction-type/@code")
+        if len(transaction_types) > 0 and transaction_types[0] not in ['2', '3']:
+            continue
+
+
+        # all pre-assessment exclusions now applied; so this transaction is assessable
+        total_transactions_assessed += 1
+
+        # to pass, either: it has some text in a <narrative> element. since the
+        # <narrative> element can be repeated, this checks at least one has some content
+        if len(narrative_content) > 0:
+            receivers_w_narratives += 1            
+            continue  # since we've passed the test, move to next transaction
+
+        # if there is no receiver org ID, move on; this transaction fails, because
+        # it has no org ID nor any name/narrative (transactions with narratives already)
+        # handled
+        if len(receiver_orgs_refs) == 0:
+            continue  
+
+        # get the receiver org id
+        receiver_org_id = receiver_orgs_refs[0]
+
+        # or: the receiver org ID must be a valid organisation ID; there are three
+        # ways the ID is counted valid              
+
+        # 1. the receiver organisation ID starts with a valid agency code
+        if any([receiver_org_id.startswith(org_id) for org_id in org_id_prefixes]):
+            receivers_w_valid_prefix += 1
+            continue
+
+        # 2. the receiver org ID is an existing IATI publisher on Registry
+        if receiver_org_id in publisher_ids:
+            receivers_w_known_id += 1
+            continue
+
+        # 3. the receiver org ID is one of the acceptable XM-DAC codes
+        if receiver_org_id in xm_dac_codes:
+            receivers_w_xm_dac += 1
+    
+    if total_transactions_assessed == 0:
+        return 'No relevant transactions to assess', 'not relevant'
+    
+    passing_transactions = receivers_w_narratives + receivers_w_valid_prefix + \
+                           receivers_w_known_id + receivers_w_xm_dac
+    score = passing_transactions / total_transactions_assessed
+    explanation = 'score: {a} (passing transactions) / {b} (total transactions assessed)'.format(
+            a=(passing_transactions),
+            b=total_transactions_assessed)
+    
+    # this alternative explanation for score breaks down the valid receivers according
+    # to which test they passed; it's useful for debugging, but it is potentially 
+    # misleading, inasmuch as when a transaction has both a narrative and a valid 
+    # receiver reference, it will only be listed as having a valid narrative, which
+    # may be confusing for the end user. 
+            #f'score: ({receivers_w_narratives} (receivers w/narrative) + ' \
+            #f'{receivers_w_valid_prefix} (receivers w/prefix) + ' \
+            #f'{receivers_w_known_id} (receivers w/known ID) + ' \
+            #f'{receivers_w_xm_dac} (receivers w/XM-DAC)) / {total_transactions_assessed}'
+
+    
+    return explanation, score
+        
+
+
+
+
+
+

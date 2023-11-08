@@ -319,11 +319,19 @@ def test_data(date, refresh, part_count, part, delete, orgs, force):
         infotest.disaggregated_budget(
             org, snapshot_date, test_name, current_data_results, org.condition)
 
-        # run Networked Data Organisation Refs
+        # run Networked Data Part 2: use of standardised refs for participating orgs
         test_name = 'Participating Orgs'
         click.echo(test_name)
-        infotest.networked_data_ref(
+        infotest.networked_data_part_2(
             org, snapshot_date, test_name, current_data_results, org.condition)
+        
+        # run Networked Data Part 3: proportion transactions with receiver name/ref
+        test_name = 'Transactions with valid receiver'
+        click.echo(test_name)
+        infotest.networked_data_part_3(
+            org, snapshot_date, test_name, current_data_results)
+
+
 
 
 @app.cli.command("aggregate_results")
