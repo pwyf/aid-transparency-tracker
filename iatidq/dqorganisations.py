@@ -108,10 +108,23 @@ def _importOrganisationPackages(fh, local):
 
 def downloadOrganisationFrequency():
     fh = urllib.request.urlopen(app.config["ORG_FREQUENCY_API_URL"])
-    return _updateOrganisationFrequency(fh)
 
+    timelag_fh = urllib.request.urlopen(app.config["ORG_FREQUENCY_API_URL"].replace("_frequency", "_timelag"))
+    timelag_dict = {}
 
-def _updateOrganisationFrequency(fh):
+    rows = csv.DictReader(codecs.iterdecode(timelag_fh, 'utf-8'))
+
+    for row in rows:
+        timelag_in_csv = row["Time lag"]
+
+        if timelag_in_csv == "One month":
+            timelag = "one month"
+        elif timelag_in_csv == "A quarter":
+            timelag = "a quarter"
+        else:
+            timelag = "more than a quarter"
+        timelag_dict[row["Publisher Registry Id"]] = timelag
+
     def get_frequency():
         rows = csv.DictReader(codecs.iterdecode(fh, 'utf-8'))
 
@@ -120,30 +133,30 @@ def _updateOrganisationFrequency(fh):
 
             if freq == "Monthly":
                 frequency = "monthly"
-                comment = "Updated monthly"
             elif freq == "Quarterly":
                 frequency = "quarterly"
-                comment = "Updated quarterly"
             else:
                 frequency = "less than quarterly"
-                comment = "Updated less than quarterly"
-            yield row["Publisher Registry Id"], frequency, comment
+            yield row["Publisher Registry Id"], frequency
 
-    for packagegroup, frequency, comment in get_frequency():
+    for packagegroup, frequency in get_frequency():
         organisations = (
             models.Organisation.where(registry_slug=packagegroup).all())
         if not organisations:
             continue
         for organisation in organisations:
             with db.session.begin():
-                if organisation.frequency_comment != comment:
-                    print(('{}: {} (previously: {})'.format(
+                if organisation.frequency != frequency:
+                    timelag = timelag_dict.get(packagegroup)
+                    print(('{}: Updated {}, with time lag {} (previously: Updated {}, with time lag {})'.format(
                         organisation.organisation_name,
-                        comment,
-                        organisation.frequency_comment
+                        frequency,
+                        timelag,
+                        organisation.frequency,
+                        organisation.timelag
                     )))
                     organisation.frequency = frequency
-                    organisation.frequency_comment = comment
+                    organisation.timelag = timelag
                     db.session.add(organisation)
 
 

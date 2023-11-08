@@ -97,10 +97,10 @@
     the <i class="glyphicon glyphicon-chevron-down"></i> icon.
   </p>
 
-  {% if freq_alert %}
+  {% if timeliness_alert %}
   <div class="alert alert-info">
-    <h3>Frequency of publication</h3>
-    <p class="lead">{{ freq_alert.text }}</p>
+    <h3>Timeliness of publication</h3>
+    <p class="lead">{{ timeliness_alert }}</p>
   </div>
   {% endif %}
   <table class="table" id="results_iati">
@@ -186,9 +186,9 @@
                       </tr>
                       {% if row.is_activity %}
                       <tr class="text-muted">
-                          <td>Frequency</td>
-                          <td>x {{freq[0]}} ({{ freq[1] }})</td>
-                          <td>{{organisation.frequency_comment}}</td>
+                          <td>Timeliness</td>
+                        <td>x {{timeliness_score}} ({{timeliness_alert}})</td>
+                          <td>(Updated {{ organisation.frequency }} and with {{ organisation.timelag }}) time lag</td>
                       </tr>
                       {% endif %}
                       <tr>
