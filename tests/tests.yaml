@@ -130,6 +130,10 @@ indicators:
    tests:
     - name: Location (sub-national)
     - name: Location (sub-national) point or administrative or location-id
+ - name: Sub-national location (with activity-scope exclusion)
+   tests:
+    - name: Location (sub-national) (with activity-scope exclusion)
+    - name: Location (sub-national) point or administrative or location-id (with activity-scope exclusion)
  - name: "Networked Data - Implementors"
    tests:
     - name: Implementing organisation
