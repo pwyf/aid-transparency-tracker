@@ -126,14 +126,14 @@ indicators:
    tests:
     - name: Sector is present
     - name: Sector uses DAC CRS 5 digit purpose codes
- - name: Sub-national location
+ - name: Location
    tests:
-    - name: Location (sub-national)
-    - name: Location (sub-national) point or administrative or location-id
- - name: Sub-national location (with activity-scope exclusion)
+    - name: Location
+    - name: Location point or administrative or location-id
+ - name: Location (with activity-scope exclusion)
    tests:
-    - name: Location (sub-national) (with activity-scope exclusion)
-    - name: Location (sub-national) point or administrative or location-id (with activity-scope exclusion)
+    - name: Location (with activity-scope exclusion)
+    - name: Location point or administrative or location-id (with activity-scope exclusion)
  - name: "Networked Data - Implementors"
    tests:
     - name: Implementing organisation
