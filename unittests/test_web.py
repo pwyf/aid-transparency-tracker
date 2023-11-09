@@ -96,7 +96,7 @@ def test_organisation_publication_page(
     assert response.status_code == 200
 
     assert (
-        '<p class="lead">It looks like you publish quarterly with a time lag of more than a quarter, so the maximum you can score for IATI data is 87.5 points. The total points for the relevant indicators have been adjusted accordingly.</p>'
+        '<p class="lead">It looks like you publish quarterly with a time lag of more than a quarter, so the maximum you can score for IATI data is 87.5 points. The total points for the relevant indicators have been adjusted accordingly.'
         in response.text
     )
 
@@ -123,8 +123,8 @@ def test_organisation_publication_page(
 
           <tr class="text-muted">
               <td>Timeliness</td>
-            <td>x 0.813 (It looks like you publish quarterly with a time lag of more than a quarter, so the maximum you can score for IATI data is 87.5 points. The total points for the relevant indicators have been adjusted accordingly.)</td>
-              <td>(Updated quarterly and with more than a quarter) time lag</td>
+              <td>x 0.813 (It looks like you publish quarterly with a time lag of more than a quarter, so the maximum you can score for IATI data is 87.5 points. The total points for the relevant indicators have been adjusted accordingly. For more information see <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/#page=21">Section 3.4 (page 20) of the Technical Paper</a>.)</td>
+              <td>(Updated quarterly and with more than a quarter time lag)</td>
           </tr>
 
           <tr>

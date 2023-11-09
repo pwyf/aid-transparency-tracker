@@ -91,7 +91,7 @@
   <h3>Published to the IATI Registry</h3>
 
   <p class="lead">Information published to the IATI Registry can
-    score up to 100 points based on the quality and frequency of
+    score up to 100 points based on the quality and timeliness of
     publication. This is determined by running a series of tests
     on the data. You can see more details by clicking on
     the <i class="glyphicon glyphicon-chevron-down"></i> icon.
@@ -100,7 +100,7 @@
   {% if timeliness_alert %}
   <div class="alert alert-info">
     <h3>Timeliness of publication</h3>
-    <p class="lead">{{ timeliness_alert }}</p>
+    <p class="lead">{{ timeliness_alert }} For more information see <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/#page=21">Section 3.4 (page 20) of the Technical Paper</a>.</p>
   </div>
   {% endif %}
   <table class="table" id="results_iati">
@@ -187,8 +187,8 @@
                       {% if row.is_activity %}
                       <tr class="text-muted">
                           <td>Timeliness</td>
-                        <td>x {{timeliness_score}} ({{timeliness_alert}})</td>
-                          <td>(Updated {{ organisation.frequency }} and with {{ organisation.timelag }}) time lag</td>
+                        <td>x {{timeliness_score}} ({{timeliness_alert}} For more information see <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/#page=21">Section 3.4 (page 20) of the Technical Paper</a>.)</td>
+                          <td>(Updated {{ organisation.frequency }} and with {{ organisation.timelag }} time lag)</td>
                       </tr>
                       {% endif %}
                       <tr>
@@ -296,9 +296,9 @@
         <ul>
             <li>33.33 points are awarded for publication in an accessible format</li>
 
-            <li>66.66 points can additionally be awarded based on data quality and frequency of publication</li>
+            <li>66.66 points can additionally be awarded based on data quality and timeliness of publication</li>
         </ul>
-        <a href="https://www.publishwhatyoufund.org/wp-content/uploads/dlm_uploads/2021/08/2022-Index-Technical-Paper_compressed.pdf" class="btn btn-default">More details &raquo;</a>
+        <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/" class="btn btn-default">More details &raquo;</a>
         </div>
         <div class="col-md-6">
             <h4>How do you structure your data?</h4>
@@ -492,7 +492,7 @@
                     </tr>
                 </tbody>
             </table>
-        <a href="https://www.publishwhatyoufund.org/wp-content/uploads/dlm_uploads/2021/08/2022-Index-Technical-Paper_compressed.pdf"
+        <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/"
            class="btn btn-default">More details &raquo;</a>
         </div>
         <div class="col-md-6">
