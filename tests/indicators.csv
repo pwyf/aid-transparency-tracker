@@ -12,7 +12,7 @@ Note that raw IATI files are not accepted for this indicator as the underlying p
 organisation-strategy,Organisation strategy,publication,,Organisational planning and commitments,"An overarching strategy document explains the general approach and policies of the organisation towards international development. This should be forward looking. The IATI reference for this indicator is: Institutional strategy paper (document code = B02).
 
 For organisations whose primary mandate is not development, a document clarifying its overarching development strategy is accepted. This information needs to be forward looking.",3,0,0.01875,1,,
-annual-report,Annual report,publication,,Organisational planning and commitments,"Annual reports outline basic (normally aggregate) information about how aid was spent in the previous year, broken down by sector and/or country. This should be backward looking.
+annual-report,Annual report,publication,,Organisational planning and commitments,"Annual reports outline basic (normally aggregate) information about how aid was spent in the previous year, broken down by sector and/or country. It should provide some narrative insights into the work of an agency for example by evaluating results against their stated yearly goals and strategies. This should be backward looking.
 
 Annual reports that are up to date within their regular cycle, i.e. the organisation publishes an annual report a year behind, the most recent document within this time frame are accepted.
 
@@ -41,7 +41,22 @@ For organisations such as IFIs, philanthropic organisations and vertical funds, 
 
 If the organisation follows the strategy of a parent or related organisation, a statement clarifying this is needed on the website along with a link to the relevant strategy document. Similarly, if the organisation supports a country-led or developed strategy, this must be explicitly stated on the website and the link to the relevant strategy document needs to be provided.
 
-Some organisations do not sign MoUs, so jointly developed documents governing the relationship between the organisation and the recipient are accepted as equivalent, e.g. investment codes or partnership/country agreements that have been developed in conjunction with recipient governments, agreements with implementing partners or with grantees.",7,0,0.01875,1,,
+Some organisations do not sign MoUs, so jointly developed documents governing the relationship between the organisation and the recipient are accepted as equivalent, e.g. investment codes or partnership/country agreements that have been developed in conjunction with recipient governments, agreements with implementing partners or with grantees.
+
+Several publishers report IATI transactions to countries that do not have a specific country strategy or MoU and including one is not reflective of the geographic focus of the entity. This test will exclude these countries from the country strategy document test, testing only for relevant countries.
+
+We will determine the relevant recipient countries for by checking an official source (such as an annual report or organisation data portal) to confirm the list of countries in which the organisation worked and directly implemented projects within the last year. This is used as the denominator when calculating the score. Ahead of each Index Publish What You Fund will survey publishers for their baseline countries along with those countries which they deem suitable for exclusion, and why. This list will be compared to an official source. Exclusions of countries from the baseline will be allowed if they are on the Allowed exclusions list.
+
+The IATI organisation file is then consulted for the full list of country strategy or MoU documents and checked against the total list of countries. Points are awarded for the proportion of recipient countries that have an associated country strategy or MoU.
+
+Allowed exclusions:
+
+ Funding is diverted to a country for administrative purposes only
+ Where a country falls into the bottom 10% of recipient countries by volume of aid channelled by the assessed organisation.
+ Investments to a specific country are part of a co-financing venture only
+ The country is not being targeted directly (I.E through multilateral funding or regional funding)
+ Exclusions for country funding for immediate humanitarian disaster response where there is no development focus
+",7,0,0.01875,1,,
 audit,Audit,publication,,Organisational planning and commitments,"The organisation’s annual audit of its activities is an official inspection of the accounts and activities of this organisation, typically by an independent body.
 
 Audits up to date with regular audit cycles are accepted, i.e. if the organisation publishes biennial audits, the most recent document within this time frame is accepted.
@@ -91,13 +106,24 @@ disbursements-and-expenditures,Disbursements and expenditures,publication,activi
 The IATI reference for this indicator is: Transaction (transaction type = disbursement and expenditure).
 
 While such information might be considered to be commercially sensitive by some organisations, Publish What You Fund’s view is that actual expenditure information is less sensitive once the money has been spent. Hence all organisations are scored on this indicator. For IFIs and DFIs, the total fund/loan amount spent is accepted and details of the loan repayment costs and related charges can be redacted. The specific reasons for the redactions need to be explicitly stated in detail and must clarify why the information is commercially sensitive and would cause material and direct harm if published.",14,0,1./30,,,
-budget-alignment,Budget Alignment,publication,activity,Finance and budgets,"The budget alignment indicator helps to link the activity to the recipient country government’s own budget codes. 
+budget-alignment,Budget Alignment,publication,activity,Finance and budgets,"The budget classification is a way of linking the activity to the recipient country governments own budget codes. There are two parts to this indicator.
 
-This is only expected if the activity is in the implementation, completion or post-completion phase, and if the aid type is not budget support. This is not expected if the aid type is budget support (A01 or A02) or if the default aid type code is administrative costs (G01). 
+The first part captures the percentage of the total commitment allocated to or planned for capital expenditure. When publishing in IATI, a number between 0 and 100 should be used, with no percentage sign.
 
-The test follows the guidance on country budget alignment, found here on the IATI reference website: http://reference.iatistandard.org/203/activity-standard/overview/country-budget-alignment/ 
+The definition of capital expenditure follows the IMF GFS definition approved by WP Stat in February 2016.
 
-This guidance also includes the relevant CRS codelist guidance that will be used for this test. ",15,0,1./30,,,
+Capital spending is generally defined as physical assets with a useful life of more than one year. But it also includes capital improvements or the rehabilitation of physical assets that enhance or extend the useful life of the asset (as distinct from repair or maintenance, which assures that the asset is functional for its planned life). Capital includes all aspects of design and construction that are required to make the asset operational.
+
+The IATI reference for this indicator is: capital spend.
+
+The second part checks that the activity is not using broad multisector aid or sector not specified sector codes. It checks that the activity is using one of the detailed voluntary CRS purpose codes and not aggregated parent codes.
+
+Further detail about this indicator and details of the relevant codes can be found in the IATI guidance on country budget alignment.
+
+Differentiating between expenditure on consumption or investment in capital is of critical importance for recipient country governments in macroeconomic management and in short- and long-term growth strategy.  Capital spend can be reported as 0 for those projects that do not include any capital expenditure.
+
+This test encourages use of codes that can be used to map against recipient country budgets. If organisations want to make their aid data useful to partner countries in their budget processes, they should not use very broad codes that make it hard to understand the nature of a particular project and therefore where it should be placed in the budget.
+",15,0,1./30,,,
 title,Title,publication,activity,Project attributes,"The title of the activity is its name. This is preferably the formal name of the activity, but does not have to be.
 
 The title needs to be complete with any abbreviations or acronyms explained.
@@ -116,7 +142,9 @@ The IATI reference for this indicator is: Activity date (activity date type = st
 
 Both month and year are required to score on this indicator in recognition of recipient countries needing to be able to map activities to their own financial year rather than the calendar year.
 
-If the activity has started or has finished, the original planned start and end dates must be retained in addition to the actual dates in order to score on this indicator.",18,0,0.01,,,
+If the activity has started or has finished, the original planned start and end dates must be retained in addition to the actual dates in order to score on this indicator.
+
+This indicator will exclude equity, hybrid and interest finance types from tests for planned end dates. Investments by development finance institutions include equity and hybrid financing which often have unspecified end dates.",18,0,0.01,,,
 actual-dates,Actual dates,publication,activity,Project attributes,"These are the dates that the activity actually started (and ended on, if the activity has finished). If there is only one set of dates but they are not explicitly stated as planned or actual dates, then it is assumed they are planned dates.
 
 Actual dates are accepted where specific events occurred, e.g. the date the project/programme agreement is signed, a board presentation or an appraisal date.
@@ -133,29 +161,37 @@ This has to be stated alongside the activity or on an obvious “contact us” l
 sector,Sectors,publication,activity,Project attributes,"The sectors of the activity explain whether this is, for example, a health or education project. It does not count if it is just mentioned incidentally within the title, description, etc. It needs to be stated separately and explicitly.
 
 If projects are presented by sector on an organisation’s website, it must be clearly stated whether the organisation works only in those sectors that are listed.",22,0,0.025,,,
-sub-national-location,Sub-national location,publication,activity,Project attributes,"The sub-national geographic location is information about where the activity is located within a country. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.
+location,Location,publication,activity,Project attributes,"For activities with a sub-national geographic scope, location information about where the activity is located within a country should be provided. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.
 
 The IATI reference for this indicator is: Location.
 
-For activities that are relevant at a country or regional level, information on the location where the funds are sent to or where the recipient is located are all accepted for this indicator.
+Where no activity scope code is used for an activity or where the scope element is not being used to identify the scope of the geographic location of an activity we assume that the activity is relevant for the location test.
 
-For example, capital city for a country, or location information of the implementing organisation. This includes private sector investment, loans or debt relief payments, where the location of the relevant bank or organisation is accepted.",23,0,0.035,,,
-sub-national-location-with-activity-scope-exclusion-,Sub-national location (with activity-scope exclusion),publication,activity,Project attributes,"The sub-national geographic location is information about where the activity is located within a country. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.
+The test accepts longitude and latitude points although some publishers may want to describe their location with another type of descriptive vocabulary. There are two other descriptor elements which can support this: Location-ID and Location-administration . Both of those allow publishers to include vocabularies from the Geographic Vocabulary codelist which includes the use of geonames.
+
+The location should identify where the activity is taking place. For example, if a development project is being implemented in a particular community or subnational district. For private sector investments the location of the investee company should be identified. Projects distributing humanitarian aid should identify where the recipient communities are located.
+
+Activities that are national or supranational in scope  for example support for a national policy or national health system working across a country, or finance for a bank or fund that invests in activities throughout a national geography, no subnational location is required. These activities can be identified and excluded from the test by using the Activity Scope element to differentiate between activities with or without a subnational location.",23,0,0.035,,,
+location-with-activity-scope-exclusion-,Location (with activity-scope exclusion),publication,activity,Project attributes,"For activities with a sub-national geographic scope, location information about where the activity is located within a country should be provided. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.
 
 The IATI reference for this indicator is: Location.
 
-For activities that are relevant at a country or regional level, information on the location where the funds are sent to or where the recipient is located are all accepted for this indicator.
+Where no activity scope code is used for an activity or where the scope element is not being used to identify the scope of the geographic location of an activity we assume that the activity is relevant for the location test.
 
-For example, capital city for a country, or location information of the implementing organisation. This includes private sector investment, loans or debt relief payments, where the location of the relevant bank or organisation is accepted.",23,0,0.035,,,
-conditions,Conditions,publication,activity,Project attributes,"The terms and conditions of the activity may also be referred to as benchmarks, priors, deliverables or involve words such as “subject to...”. They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released. 
+The test accepts longitude and latitude points although some publishers may want to describe their location with another type of descriptive vocabulary. There are two other descriptor elements which can support this: Location-ID and Location-administration . Both of those allow publishers to include vocabularies from the Geographic Vocabulary codelist which includes the use of geonames.
 
-Any policy conditionality related to the activity should be published here.  In cases where there are both terms and conditions and policy conditionalities for an activity, all of these should be declared.  
+The location should identify where the activity is taking place. For example, if a development project is being implemented in a particular community or subnational district. For private sector investments the location of the investee company should be identified. Projects distributing humanitarian aid should identify where the recipient communities are located.
 
-The IATI references for this indicator are: Conditions and/or Conditions document (document code = A04).  
+Activities that are national or supranational in scope  for example support for a national policy or national health system working across a country, or finance for a bank or fund that invests in activities throughout a national geography, no subnational location is required. These activities can be identified and excluded from the test by using the Activity Scope element to differentiate between activities with or without a subnational location.",23,0,0.035,,,
+conditions,Conditions,publication,activity,Project attributes,"The terms and conditions of the activity may also be referred to as benchmarks, priors, deliverables or involve words such as “subject to...”. They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released.
 
-For IFIs and DFIs, this includes loan repayment conditions or special terms and conditions. In cases where the loan repayment terms are considered commercially sensitive, this information can be redacted. The reason for the redactions needs to be explicitly stated in detail and must clarify why the information is commercially sensitive and would cause material and direct harm if published.   
+Any policy conditionality related to the activity should be published here.  In cases where there are both terms and conditions and policy conditionalities for an activity, all of these should be declared.
 
-For private foundations and humanitarian agencies, statements setting out what the grant can be spent on are accepted.   
+The IATI references for this indicator are: Conditions and/or Conditions document (document code = A04).
+
+For IFIs and DFIs, this includes loan repayment conditions or special terms and conditions. In cases where the loan repayment terms are considered commercially sensitive, this information can be redacted. The reason for the redactions needs to be explicitly stated in detail and must clarify why the information is commercially sensitive and would cause material and direct harm if published.
+
+For private foundations and humanitarian agencies, statements setting out what the grant can be spent on are accepted.
 
 Templates for general terms and conditions are not accepted for scoring this indicator. If there are no policy, performance or fiduciary conditions associated with an activity, this must be explicitly stated. An official document stating this will be accepted in lieu of a conditions document.",24,0,0.035,1,,
 unique-id,Unique ID,publication,activity,Project attributes,"The activity identifier is a unique reference ID for the activity, e.g. a project number. It allows an activity to be referred to and searched for by a code, which can be used to retrieve the project from a database or filing system.
@@ -165,6 +201,8 @@ The IATI reference for this indicator is: iati-identifier.
 The project ID must be stated clearly on the page. It is not sufficient if it is only stated in the URL. It must be numeric or alpha-numeric.",25,0,0.025,,,
 flow-type,Flow type,publication,activity,Joining-up development data,"The flow type shows whether the organisation states that this activity counts as ODA, OOF, climate finance or any other type of flow. This has to be explicitly stated per activity OR once in a country strategy paper OR in a single place on the organisation’s website if there is only one flow type for all activities, e.g. “all aid is ODA”, or “we only provide private grants”.",26,0,0.03,,,
 aid-type,Aid type,publication,activity,Joining-up development data,"The type of aid shows whether the activity is classed as budget support, a project, technical assistance, debt relief, administrative costs, and so on. This needs to be explicitly stated per activity OR once in a country strategy paper OR on a clear place on the organisation’s website if there is only one aid type for the whole organisation, e.g. “all aid is project-type interventions”.
+
+Publishers using other aid type vocabularies (such as: the Grand Bargain Earmarking Category; Earmarking Modality the Tracking Cash or the Voucher Assistance modality) alongside the default aid type code list will not be penalised.
 
 The advisory services business line/type of intervention (investment climate, publicprivate partnership, etc.), can be seen as broadly equivalent.
 
@@ -181,41 +219,38 @@ Specifying location requirements in activity documents such as procurement polic
 The IATI reference for this indicator is: Default tied status.
 
 For organisations’ lending directly to national investment agencies, an explicit statement demonstrating their aid is not tied is required. For IFIs and DFIs, investment codes clarifying their position are accepted. For private foundations, grant-making policies are accepted. If these are not available, the organisation’s procurement policy must clearly state if there are any eligibility requirements for contracts based on country of origin.",29,0,0.03,,,
-networked-data-implementors,Networked Data - Implementors,publication,activity,Joining-up development data,"The Networked data indicator assesses how organisations provide information about other organisations participating in their activities. There are two parts to this indicator.   
+networked-data-implementors,Networked Data - Implementors,publication,activity,Joining-up development data,"The Networked data indicator assesses how organisations provide information about other organisations participating in their activities. There are three parts to this indicator.
 
-The first tests whether the activity’s implementing organisation name is published. The implementer of the activity is the organisation that is principally responsible for delivering it.   
+The first tests whether the activity’s implementing organisation name is published. The implementer of the activity is the organisation that is principally responsible for delivering it.
 
-The IATI reference for this indicator is: Implementing organisation: participating-org role = “4” (implementing). The second part of the test assesses whether references are used for organisations across the participating organisation roles (Funding, Accountable, Extending and Implementing).",30,0,0.02,,,
-networked-data-participating-orgs,Networked Data - Participating Orgs,publication,activity,Joining-up development data,"References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves.  OECD DAC CRS Channel Codes will need to use the XM-DAC prefix in order for the codes to be accepted as organisation references. 
+The IATI reference for this indicator is: Implementing organisation: participating-org role = “4” (implementing). ",30,0,0.02,,,
+networked-data-participating-orgs,Networked Data - Participating Orgs,publication,activity,Joining-up development data,"The second part of the test assesses whether references are used for organisations across the participating organisation roles (Funding, Accountable, Extending and Implementing).
 
-Generic or nonspecific organisation references (such as “Developing country-based NGO” or “Multilateral Organisations”) will not be accepted since these do not allow networking of organisations.
-
-References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves. OECD DAC CRS Channel Codes will need to use the XM-DAC- prefix in order for the codes to be accepted as organisation references. Generic or non-specific organisation references (such as “Developing country-based NGO” or “Multilateral Organisations”) will not be accepted since these do not allow networking of organisations.  
-
-Each activity will receive a percentage score based on the number of participating organisations that have references and those that don’t. This will be calculated as follows: Number of participating organisations using refs / Total number of participating organisations (excluding self-references) These scores will then be aggregated across an organisation’s activities to calculate the final score for this test.  
-
-Implementer information may not be available in certain cases due to “legitimate exclusions”.   
-
-For example, humanitarian agencies may not be able to reveal who the implementing agencies are in certain contexts due to security reasons. Such exclusions are accepted but need to be explicitly stated (in order to distinguish these from cases of simple omission).  
-
-Organisations should use existing references where these have been created and used previously. If no reference currently exists, a reference can be created using the recommended approach (often combing a prefix and official registration number). Guidance is available on the IATI website. To pass the Index test references must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers.  
-
-Organisations working exclusively with partner country governments or private sector investments will be excluded from the organisation references test since there is currently no accepted way to refer to these participating organisations. ",31,0,0.02,,,
-networked-data-transactions-with-valid-receiver,Networked Data - Transactions with valid receiver,publication,activity,Joining-up development data,"References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves.  OECD DAC CRS Channel Codes will need to use the XM-DAC prefix in order for the codes to be accepted as organisation references. 
+References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves.  OECD DAC CRS Channel Codes will need to use the XM-DAC prefix in order for the codes to be accepted as organisation references.
 
 Generic or nonspecific organisation references (such as “Developing country-based NGO” or “Multilateral Organisations”) will not be accepted since these do not allow networking of organisations.
 
-References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves. OECD DAC CRS Channel Codes will need to use the XM-DAC- prefix in order for the codes to be accepted as organisation references. Generic or non-specific organisation references (such as “Developing country-based NGO” or “Multilateral Organisations”) will not be accepted since these do not allow networking of organisations.  
+References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves. OECD DAC CRS Channel Codes will need to use the XM-DAC- prefix in order for the codes to be accepted as organisation references. Generic or non-specific organisation references (such as “Developing country-based NGO” or “Multilateral Organisations”) will not be accepted since these do not allow networking of organisations.
 
-Each activity will receive a percentage score based on the number of participating organisations that have references and those that don’t. This will be calculated as follows: Number of participating organisations using refs / Total number of participating organisations (excluding self-references) These scores will then be aggregated across an organisation’s activities to calculate the final score for this test.  
+Each activity will receive a percentage score based on the number of participating organisations that have references and those that don’t. This will be calculated as follows: Number of participating organisations using refs / Total number of participating organisations (excluding self-references) These scores will then be aggregated across an organisation’s activities to calculate the final score for this test.
 
-Implementer information may not be available in certain cases due to “legitimate exclusions”.   
+Implementer information may not be available in certain cases due to “legitimate exclusions”.
 
-For example, humanitarian agencies may not be able to reveal who the implementing agencies are in certain contexts due to security reasons. Such exclusions are accepted but need to be explicitly stated (in order to distinguish these from cases of simple omission).  
+For example, humanitarian agencies may not be able to reveal who the implementing agencies are in certain contexts due to security reasons. Such exclusions are accepted but need to be explicitly stated (in order to distinguish these from cases of simple omission).
 
-Organisations should use existing references where these have been created and used previously. If no reference currently exists, a reference can be created using the recommended approach (often combing a prefix and official registration number). Guidance is available on the IATI website. To pass the Index test references must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers.  
+Organisations should use existing references where these have been created and used previously. If no reference currently exists, a reference can be created using the recommended approach (often combing a prefix and official registration number). Guidance is available on the IATI website. To pass the Index test references must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers.
 
-Organisations working exclusively with partner country governments or private sector investments will be excluded from the organisation references test since there is currently no accepted way to refer to these participating organisations. ",32,0,0.01,,,
+Organisations working exclusively with private sector investments will be excluded from the organisation references test since there is currently no accepted way to refer to these participating organisations. ",31,0,0.02,,,
+networked-data-transactions-with-valid-receiver,Networked Data - Transactions with valid receiver,publication,activity,Joining-up development data,"Part three of the networked data test will see if a receiver organisation (name or reference) is reported in each activity transaction. The receiver organisation is the organisation receiving the funds from the transaction. Part three uses the same criteria for references as part two.
+
+For the receiver organisations test each activity will receive a percentage score based on the proportion of transactions that include a receiver name or reference.
+
+This will be calculated as follows:
+
+Number of transactions that include either a receiver organisation name or a receiver organisation reference / Total number of transactions (excluding self-references)
+
+These scores will then be aggregated across an organisations activities to calculate the final score for this test.
+",32,0,0.01,,,
 project-procurement-contracts,Project procurement - Contracts,publication,activity,Joining-up development data,"The individual contract(s) signed with a company, organisation or individual that provides goods and services for the activity. This could be on a procurement section of the organisation’s website, on a separate website or on a central government procurement website.
 
 Contract documents cannot simply be at the country level. If an activity contract is included in a larger country-level document, it is only accepted if the contract mentions the activity specifically and in detail.
@@ -243,20 +278,20 @@ objectives,Objectives,publication,activity,Performance,"The objectives or purpos
 The IATI reference for this indicator is: Objectives / Purpose of activity (document code = A02) or Description (description type = 2).
 
 The objectives need to include the detailed description of the activity, the target sector/group and expected outcomes.",35,0,0.05,1,,
-impact-appraisals,Pre-project impact appraisals,publication,activity,Performance,"Pre-project impact appraisals explain the totality of positive and negative, primary and secondary effects expected to be produced by a development intervention.   
+impact-appraisals,Pre-project impact appraisals,publication,activity,Performance,"Pre-project impact appraisals explain the totality of positive and negative, primary and secondary effects expected to be produced by a development intervention.
 
-Environmental, social or human rights impact assessments are accepted.   
+Environmental, social or human rights impact assessments are accepted.
 
-The IATI reference for this indicator is: Pre and post-project impact appraisal (document code = A01).  
+The IATI reference for this indicator is: Pre and post-project impact appraisal (document code = A01).
 
-IFIs and DFIs tend only to publish impact appraisals if regulations require them to, but given the link they have to the eventual impact and results of the activity, all organisations are scored on this indicator.   
+IFIs and DFIs tend only to publish impact appraisals if regulations require them to, but given the link they have to the eventual impact and results of the activity, all organisations are scored on this indicator.
 
-For loans or private sector investment, risk assessments and the fiscal objectives detailed in the loan document are accepted. These need to be sufficiently detailed and include any criteria used to assess eligibility for receiving the loan. For DFI projects categorised as high-risk (environmental or social risk category A or equivalent) the full impact appraisal document(s) should be published. A summary of the appraisal will not be sufficient.   
+For loans or private sector investment, risk assessments and the fiscal objectives detailed in the loan document are accepted. These need to be sufficiently detailed and include any criteria used to assess eligibility for receiving the loan. For DFI projects categorised as high-risk (environmental or social risk category A or equivalent) the full impact appraisal document(s) should be published. A summary of the appraisal will not be sufficient.
 
-Humanitarian Implementation Plans (HIPs) and project plans are accepted for humanitarian agencies.  
+Humanitarian Implementation Plans (HIPs) and project plans are accepted for humanitarian agencies.
 
 If an official internal procedure has concluded that a pre-project impact appraisal is not necessary for a particular project or programme, official documentation confirming this will be accepted in lieu of an appraisal document.",36,0,0.05,1,,
-reviews-and-evaluations,Reviews and evaluations,publication,activity,Performance,"Evaluation documents consider what the activity achieved, whether the intended objectives were met, what the major factors influencing the achievement or nonachievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation’s website.
+reviews-and-evaluations,Reviews and evaluations,publication,activity,Performance,"Evaluation documents consider what the activity achieved or what the impact of funding provided were. This can include whether the intended objectives were met, what the major factors influencing the achievement or nonachievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation’s website.
 
 If the activity under assessment is not completed but evaluation or review documents are available for other completed activities, these will be accepted.
 
