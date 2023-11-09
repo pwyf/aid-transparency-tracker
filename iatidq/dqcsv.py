@@ -13,6 +13,7 @@ import csv
 
 from . import dqorganisations, models
 from .survey import data as dqsurveys
+from .timeliness import get_timeliness_score
 
 
 id_tuple = lambda x: (x.id, x)
@@ -35,13 +36,6 @@ def get_publication_format(surveydata, indicator_id):
     return extract_survey_data_with_guards(surveydata, indicator_id, 'PublishedFormat',
                                            'name', 'format_value')
 
-def get_frequency_multiplier(frequency):
-    if (frequency == "less than quarterly"):
-        return 0.625
-    elif (frequency == "quarterly"):
-        return 0.925
-    else:
-        return 1.0
 
 def write_agg_csv_result(out, organisation, freq, result):
     i = result["indicator"]
@@ -68,7 +62,7 @@ def write_agg_csv_result(out, organisation, freq, result):
 def write_organisation_publications_csv(out, organisation):
     aggregate_results = dqorganisations._organisation_indicators(organisation)
 
-    freq = get_frequency_multiplier(organisation.frequency)
+    freq = get_timeliness_score(organisation.frequency, organisation.timelag)
 
     for resultid, result in list(aggregate_results.items()):
         write_agg_csv_result(out, organisation, freq, result)
@@ -322,7 +316,7 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
 def write_organisation_publications_csv_index(out, organisation, history=False):
     aggregate_results = dqorganisations._organisation_indicators_split(organisation)
 
-    freq = get_frequency_multiplier(organisation.frequency)
+    freq = get_timeliness_score(organisation.frequency, organisation.timelag)
 
     organisation_survey = dqsurveys.getSurvey(organisation.organisation_code)
     surveydata = dqsurveys.getSurveyDataAllWorkflows(organisation.organisation_code)

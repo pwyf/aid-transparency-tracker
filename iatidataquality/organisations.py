@@ -19,6 +19,7 @@ from iatidq.dqcsv import make_csv
 import iatidq.survey.data as dqsurveys
 import iatidq.inforesult
 from iatidq.models import InfoResult, Organisation
+from iatidq.timeliness import get_timeliness_score
 from functools import reduce
 
 
@@ -283,24 +284,9 @@ def organisation_publication(organisation_code, aggregation_type):
 
     agg_type = [agg_detail(agt) for agt in all_aggregation_types]
 
-    frequencies = {
-        "less than quarterly": (0.625,
-                                """It looks like you publish less often than
-          quarterly, so the maximum you can score for IATI data is
-          75 points. The total points for the relevant indicators have been
-          adjusted accordingly"""),
-        "quarterly": (0.925,
-                      """It looks like you publish quarterly and not monthly,
-          so the maximum you can score for IATI data is 95 points. The total
-          points for the relevant indicators have been adjusted
-          accordingly.""")
-        }
-
-    freq_score = frequencies.get(organisation.frequency, (1.0, ))
-    if organisation.frequency in frequencies:
-        freq_alert = {"text": frequencies.get(organisation.frequency)[1]}
-    else:
-        freq_alert = None
+    timeliness_score = get_timeliness_score(organisation.frequency, organisation.timelag)
+    max_points = round(33.3 + 66.7 * timeliness_score, 1)
+    timeliness_alert = "It looks like you publish {} with a time lag of {}, so the maximum you can score for IATI data is {} points. The total points for the relevant indicators have been adjusted accordingly.".format(organisation.frequency, organisation.timelag, max_points)
 
     def annotate(res, zero):
         def annotate_test(t):
@@ -325,7 +311,7 @@ def organisation_publication(organisation_code, aggregation_type):
         tmp["is_activity"] = (
             tmp["indicator"]["indicator_category_name"] == "activity")
 
-        multiplier = {True: freq_score[0], False: 1}[tmp["is_activity"]]
+        multiplier = {True: timeliness_score, False: 1}[tmp["is_activity"]]
 
         def points():
             if not zero:
@@ -402,8 +388,8 @@ def organisation_publication(organisation_code, aggregation_type):
     payload = {
         "links": links,
         "agg_type": agg_type,
-        "freq": freq_score,
-        "freq_alert": freq_alert,
+        "timeliness_score": timeliness_score,
+        "timeliness_alert": timeliness_alert,
         "result": {
             "non_zero": list(map(annotate_nonzero, list(aggregate_results["non_zero"].values()))),
             "zero": list(map(annotate_zero, list(aggregate_results["zero"].values())))
