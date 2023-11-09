@@ -1,51 +1,51 @@
 country,donor,organisation_name,organisation_code,2022_organisation_code,self_ref,packagegroup_name,packagegroup_condition
-Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,46002-non-sovereign,,afdb,contact-info/person-name/narrative/text()='private-sector@afdb.org'|
-Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,46002-sovereign,,afdb,not(contact-info/person-name/narrative/text()='private-sector@afdb.org')|
-Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,46004-non-sovereign,,asdb,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,46004-sovereign,,asdb,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
-Australia,DFAT,"Australia, DFAT",AU-5,AU-5,AU-5,ausgov,
-Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,XM-DAC-2-10,XM-DAC-2-10,be-dgd,
-Canada,Global Affairs,"Canada, Global Affairs",CA-3,CA-3,"CA-3,CA-1",gac-amc,
-China,MOFCOM,"China, MOFCOM",CN-1,CN-1,CN-1,,
-Denmark,MFA,"Denmark, MFA",DK-1,DK-1,"DK-1,XM-DAC-3-1",danida,
-EU,EBRD - non-sovereign,EBRD - non-sovereign,46015-non-sovereign,46015-non-sovereign,,ebrd,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,46015-sovereign,,ebrd,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
-EU,INTPA,"EC, INTPA",XI-IATI-EC_INTPA,XI-IATI-EC_INTPA,XI-IATI-EC_INTPA,ec-intpa,
-EU,ECHO,"EC, ECHO",XI-IATI-EC_ECHO,XI-IATI-EC_ECHO,XI-IATI-EC_ECHO,ec-echo,
-EU,NEAR,"EC, NEAR",XI-IATI-EC_NEAR,XI-IATI-EC_NEAR,XI-IATI-EC_NEAR,ec-near,
-EU,EIB - non-sovereign,EIB - non-Sovereign,XM-DAC-918-3-non-sovereign,XM-DAC-918-3-non-sovereign,,eib,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-EU,EIB - sovereign,EIB - sovereign,XM-DAC-918-3-sovereign,XM-DAC-918-3-sovereign,,eib,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
-Finland,MFA,"Finland, MFA",FI-3,FI-3,FI-3,finland_mfa,
-France,AFD,"France, AFD",FR-3,FR-3,FR-3,afd,
-U.S.A,Gates Foundation,Gates Foundation,DAC-1601,DAC-1601,DAC-1601,bmgf,
-(blank),GAVI,GAVI,47122,47122,,gavi,
-"Germany,",BMZ-GIZ,"Germany, BMZ-GIZ",DE-1,DE-1,"DE-1,XM-DAC-5-52",bmz,participating-org[@role='2'][@ref='XM-DAC-5-52']|
-(blank),Global Fund,Global Fund,47045,47045,47045,theglobalfund,
-,IDB Invest,Inter-American Investment Corporation,XM-DAC-46012,XM-DAC-46012,XM-DAC-46012,idbinvest,
-U.S.A,IADB,IADB,XI-IATI-IADB,XI-IATI-IADB,,iadb,
-Ireland,Irish Aid,"Ireland, Irish Aid",XM-DAC-21-1,XM-DAC-21-1,XM-DAC-21-1,irishaid,
-Italy,AICS,"Italy, AICS",XM-DAC-6-4,XM-DAC-6-4,XM-DAC-6-4,aics,
-Japan,JICA,"Japan, JICA",XM-DAC-701-8,XM-DAC-701-8,XM-DAC-701-8,jica,
-South Korea,KOICA,"Korea, KOICA",KR-4,KR-4,KR-GOV-051,odakorea,participating-org[@role='3'][@ref='KR-GOV-051']|organisation-identifier/text()='KR-GOV-051'
-Netherlands,MFA,"Netherlands, MFA",XM-DAC-7,XM-DAC-7,XM-DAC-7,minbuza_nl,
-New Zealand,MFAT,"New Zealand, MFAT",NZ-1,NZ-1,NZ-1,mfat,
-Norway,MFA,"Norway, MFA",NO-4,NO-4,NO-4,norad,
-Spain,AECID,"Spain, AECID",ES-DIR3-EA0035768,ES-DIR3-EA0035768,ES-DIR3-EA0035768,aecid,
-Sweden,Sida,"Sweden, Sida",SE-0,SE-0,"SE-0,SE-6",sida,
-Switzerland,SDC,"Switzerland, SDC",CH-4,CH-4,CH-4,sdc_ch,
-United Arab Emirates,MOFAIC,"UAE, MOFAIC",AE-2,AE-2,AE-2,,
-United Kingdom,FCDO,"UK, FCDO",GB-GOV-1,GB-GOV-1,GB-GOV-1,fcdo,
-United Kingdom,BEIS,"UK, BEIS",GB-GOV-13,GB-GOV-13,GB-GOV-13,beis,
-US/ Switzerland,UN OCHA,UN OCHA,XM-DAC-41127,XM-DAC-41127,XM-DAC-41127,unocha,
-U.S.A,UNDP,UNDP,XM-DAC-41114,XM-DAC-41114,XM-DAC-41114,undp,
-U.S.A,UNICEF,UNICEF,41122,41122,41122,unicef,
-U.S.A,MCC,"US, MCC",US-18,US-18,,millenniumchallenge,participating-org[@role='3'][@ref='US-18']|
-U.S.A,PEPFAR,"US, PEPFAR",US-14,US-14,"US-14,US-GOV-14,US-USAGOV",unitedstates,contact-info/website/text()='https://www.state.gov/pepfar/'|organisation-identifier/text()='US-GOV-1'
-U.S.A,State,"US, State",US-11,US-11,"US-11,US-GOV-11,US-USAGOV",unitedstates,participating-org[@role='2'][@ref='US-GOV-11']|organisation-identifier/text()='US-GOV-1'
-U.S.A,USAID,"US, USAID",US-GOV-1,US-GOV-1,US-GOV-1,usaid,
-U.S.A,IDA,"World Bank, IDA",44002,44002,,worldbank,participating-org[@role='1'][@ref='44002']|
-U.S.A,IFC,"World Bank, IFC",44004,44004,,ifcwbg,
-Saudi Arabia,King Salman Relief fund,King Salman Relief fund,XM-OCHA-HPC6770,XM-OCHA-HPC6770,XM-OCHA-HPC6770,ksrelief291,
-Turkey,TIKA,TIKA,TIKA-1,TIKA-1,TIKA-1,,
-,World Health Organisation,World Health Organisation,XM-DAC-928,XM-DAC-928,XM-DAC-928,who,
-Germany,German Federal Foreign Office,"Germany, Foreign Office",XM-DAC-5-7,XM-DAC-5-7,XM-DAC-5-7,fo_germany,
+Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,,46002,afdb,contact-info/person-name/narrative/text()='private-sector@afdb.org'|
+Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,,46002,afdb,not(contact-info/person-name/narrative/text()='private-sector@afdb.org')|
+Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,,46004,asdb,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,46004,asdb,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
+Australia,DFAT,"Australia, DFAT",AU-5,,AU-5,ausgov,
+Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,,XM-DAC-2-10,be-dgd,
+Canada,Global Affairs,"Canada, Global Affairs",CA-3,,"CA-3,CA-1,CA-4",gac-amc,
+China,MOFCOM,"China, MOFCOM",CN-1,,CN-1,,
+Denmark,MFA,"Denmark, MFA",XM-DAC-3-1,,"DK-1,XM-DAC-3-1",danida,
+EU,EBRD - non-sovereign,EBRD - non-sovereign,46015-non-sovereign,,XI-IATI-EBRD,ebrd,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,,XI-IATI-EBRD,ebrd,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
+EU,INTPA,"EC, INTPA",XI-IATI-EC_INTPA,,XI-IATI-EC_INTPA,ec-intpa,
+EU,ECHO,"EC, ECHO",XI-IATI-EC_ECHO,,XI-IATI-EC_ECHO,ec-echo,
+EU,NEAR,"EC, NEAR",XI-IATI-EC_NEAR,,"XI-IATI-EC_NEAR,EC_NEAR",ec-near,
+EU,EIB - non-sovereign,EIB - non-Sovereign,XM-DAC-918-3-non-sovereign,,XM-DAC-918-3,eib,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+EU,EIB - sovereign,EIB - sovereign,XM-DAC-918-3-sovereign,,XM-DAC-918-3,eib,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
+Finland,MFA,"Finland, MFA",FI-3,,"FI-3,FI-1,FI-2",finland_mfa,
+France,AFD,"France, AFD",FR-3,,FR-3,afd,
+U.S.A,Gates Foundation,Gates Foundation,DAC-1601,,DAC-1601,bmgf,
+(blank),GAVI,GAVI,47122,,47122,gavi,
+"Germany,",BMZ-GIZ,"Germany, BMZ-GIZ",DE-1,,"DE-1,XM-DAC-5-52,XM-DAC-5-2",bmz,participating-org[@role='2'][@ref='XM-DAC-5-52']|
+(blank),Global Fund,Global Fund,47045,,47045,theglobalfund,
+U.S.A,IDB Invest,Inter-American Investment Corporation,XM-DAC-46012,,XM-DAC-46012,idbinvest,
+U.S.A,IADB,IADB,XI-IATI-IADB,,XI-IATI-IADB,iadb,
+Ireland,Irish Aid,"Ireland, Irish Aid",XM-DAC-21-1,,XM-DAC-21-1,irishaid,
+Italy,AICS,"Italy, AICS",XM-DAC-6-4,,XM-DAC-6-4,aics,
+Japan,JICA,"Japan, JICA",XM-DAC-701-8,,"XM-DAC-701-8,XM-DAC-701-2,XM-DAC-701",jica,
+South Korea,KOICA,"Korea, KOICA",KR-GOV-051,,KR-GOV-051,odakorea,participating-org[@role='3'][@ref='KR-GOV-051']|organisation-identifier/text()='KR-GOV-051'
+Netherlands,MFA,"Netherlands, MFA",XM-DAC-7,,XM-DAC-7,minbuza_nl,
+New Zealand,MFAT,"New Zealand, MFAT",NZ-1,,NZ-1,mfat,
+Norway,MFA,"Norway, MFA",NO-BRC-971277882,,NO-BRC-971277882,norad,
+Spain,AECID,"Spain, AECID",ES-DIR3-E04585801,,ES-DIR3-E04585801,aecid,
+Sweden,Sida,"Sweden, Sida",SE-0,,"SE-0,SE-6",sida,
+Switzerland,SDC,"Switzerland, SDC",CH-4,,CH-4,sdc_ch,
+United Arab Emirates,MOFAIC,"UAE, MOFAIC",XM-DAC-576,,AE-2,,
+United Kingdom,FCDO,"UK, FCDO",GB-GOV-1,,GB-GOV-1,fcdo,
+US/ Switzerland,UN OCHA,UN OCHA,XM-DAC-41127,,XM-DAC-41127,unocha,
+U.S.A,UNDP,UNDP,XM-DAC-41114,,XM-DAC-41114,undp,
+Switzerland,UNHCR,UNHCR,XM-DAC-41121,,XM-DAC-41121,unhcr,
+U.S.A,UNICEF,UNICEF,XM-DAC-41122,,XM-DAC-41122,unicef,
+U.S.A,MCC,"US, MCC",US-GOV-18,,US-GOV-18,millenniumchallenge,
+U.S.A,"US, HHS","US, HHS",US-GOV-14,,US-GOV-14,hhs,
+U.S.A,State,"US, State",US-GOV-11,,US-GOV-11,state,
+U.S.A,USAID,"US, USAID",US-GOV-1,,"US-GOV-1,US-GOV-11",usaid,
+U.S.A,IDA,"World Bank, IDA",44002,,,worldbank,participating-org[@role='1'][@ref='44002']|
+U.S.A,IFC,"World Bank, IFC",44004,,,ifcwbg,
+Saudi Arabia,King Salman Relief fund,King Salman Relief fund,XM-OCHA-HPC6770,,XM-OCHA-HPC6770,ksrelief291,
+(blank),World Health Organisation,World Health Organisation,XM-DAC-928,,XM-DAC-928,who,
+Italy,WFP,World Food Programme,XM-DAC-41140,,XM-DAC-41140,wfp,
+Germany,German Federal Foreign Office,"Germany, Foreign Office",XM-DAC-5-7,,XM-DAC-5-7,fo_germany,
