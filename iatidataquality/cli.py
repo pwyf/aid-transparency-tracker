@@ -76,6 +76,12 @@ def import_indicators(filename):
         dqindicators.importIndicators()
 
 
+@app.cli.command("import_indicator_descriptions")
+def import_indicator_descriptions():
+    dqindicators.importIndicatorDescriptionsFromFile(
+        app.config["INDICATOR_GROUP"],
+        "tests/indicators.csv")
+
 @app.cli.command("import_tests")
 @click.option('--filename', default="tests/tests.yaml", help="Import the test definitions from file")
 def import_tests(filename):
