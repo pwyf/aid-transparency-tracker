@@ -40,6 +40,6 @@ jobs:
       - name: Run the tests
         run: py.test unittests
       - name: Run black code formatting check on some files
-        run: black --check conftest.py config_test.py unittests/test_web.py integration_tests/
+        run: black --check conftest.py config_test.py unittests/test_web.py unittests/test_utils.py integration_tests/
       - name: Run isort import sorter check in some files
-        run: isort --check conftest.py config_test.py unittests/test_web.py integration_tests/
+        run: isort --check conftest.py config_test.py unittests/test_web.py unittests/test_utils.py integration_tests/

@@ -62,6 +62,24 @@ def slugify(some_text):
     return ''.join(safe_char(char) for char in some_text).strip('_')
 
 
+def condition_applies(test_condition, item, tags):
+    if test_condition:
+        activity_condition, org_condition, *extras = test_condition.split('|')
+        if 'iati-activity' in tags:
+            if activity_condition.startswith("DATASET="):
+                if item.dataset.name != activity_condition[len("DATASET="):]:
+                    return False
+            elif activity_condition.startswith("DATASET!="):
+                if item.dataset.name == activity_condition[len("DATASET!="):]:
+                    return False
+            elif not item.etree.xpath(activity_condition):
+                return False
+        if org_condition.strip() and 'iati-organisation' in tags:
+            if not item.etree.xpath(org_condition):
+                return False
+    return True
+
+
 def run_test(test, publisher, output_path, test_condition, **kwargs):
     """Run test for a given publisher, and output results to a CSV."""
     result_lookup = {True: '1', False: '0', None: 'not relevant'}
@@ -84,16 +102,9 @@ def run_test(test, publisher, output_path, test_condition, **kwargs):
             if item.dataset.name != prev_dataset:
                 idx = 0
             prev_dataset = item.dataset.name
-            if test_condition:
-                activity_condition, org_condition = test_condition.split('|')
-                if 'iati-activity' in tags:
-                    if not item.etree.xpath(activity_condition):
-                        idx += 1
-                        continue
-                if org_condition.strip() and 'iati-organisation' in tags:
-                    if not item.etree.xpath(org_condition):
-                        idx += 1
-                        continue
+            if not condition_applies(test_condition, item, tags):
+                idx += 1
+                continue
             result, explanation = test(item.etree, bdd_verbose=True, **kwargs)
             hierarchy = item.etree.get('hierarchy')
             if not hierarchy:
