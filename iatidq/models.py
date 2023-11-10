@@ -8,6 +8,7 @@
 #  it under the terms of the GNU Affero General Public License v3.0
 
 from datetime import datetime
+from math import floor
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy_mixins import AllFeaturesMixin, ModelNotFoundError
@@ -318,7 +319,7 @@ class Indicator(BaseModel):
     indicator_subcategory_name = db.Column(db.UnicodeText)
     indicator_ordinal = db.Column(db.Boolean)
     indicator_noformat = db.Column(db.Boolean)
-    indicator_order = db.Column(db.Integer, nullable=False)
+    indicator_order = db.Column(db.Float(precision=1), nullable=False)
     indicator_weight = db.Column(db.Float(precision=4))
 
     @property
@@ -361,6 +362,7 @@ class Indicator(BaseModel):
 
     def as_dict(self):
        d = {c.name: getattr(self, c.name) for c in self.__table__.columns}
+       d["indicator_order_str"] = str(floor(self.indicator_order)) if floor(self.indicator_order) == self.indicator_order else str(self.indicator_order)
        return d
 
 class IndicatorTest(BaseModel):

@@ -171,7 +171,7 @@ The test accepts longitude and latitude points although some publishers may want
 
 The location should identify where the activity is taking place. For example, if a development project is being implemented in a particular community or subnational district. For private sector investments the location of the investee company should be identified. Projects distributing humanitarian aid should identify where the recipient communities are located.
 
-Activities that are national or supranational in scope – for example support for a national policy or national health system working across a country, or finance for a bank or fund that invests in activities throughout a national geography, no subnational location is required. These activities can be identified and excluded from the test by using the Activity Scope element to differentiate between activities with or without a subnational location.",23,0,0.035,,,
+Activities that are national or supranational in scope – for example support for a national policy or national health system working across a country, or finance for a bank or fund that invests in activities throughout a national geography, no subnational location is required. These activities can be identified and excluded from the test by using the Activity Scope element to differentiate between activities with or without a subnational location.",23.1,0,0.035,,,
 location-with-activity-scope-exclusion-,Location (with activity-scope exclusion),publication,activity,Project attributes,"For activities with a sub-national geographic scope, location information about where the activity is located within a country should be provided. This may be a province or city, or it could be geo-coded (whereby the precise longitude and latitude is published). It needs to be stated separately and explicitly.
 
 The IATI reference for this indicator is: Location.
@@ -182,7 +182,7 @@ The test accepts longitude and latitude points although some publishers may want
 
 The location should identify where the activity is taking place. For example, if a development project is being implemented in a particular community or subnational district. For private sector investments the location of the investee company should be identified. Projects distributing humanitarian aid should identify where the recipient communities are located.
 
-Activities that are national or supranational in scope – for example support for a national policy or national health system working across a country, or finance for a bank or fund that invests in activities throughout a national geography, no subnational location is required. These activities can be identified and excluded from the test by using the Activity Scope element to differentiate between activities with or without a subnational location.",23,0,0.035,,,
+Activities that are national or supranational in scope – for example support for a national policy or national health system working across a country, or finance for a bank or fund that invests in activities throughout a national geography, no subnational location is required. These activities can be identified and excluded from the test by using the Activity Scope element to differentiate between activities with or without a subnational location.",23.2,0,0.035,,,
 conditions,Conditions,publication,activity,Project attributes,"The terms and conditions of the activity may also be referred to as benchmarks, priors, deliverables or involve words such as “subject to...”. They are specific to an individual activity and explain what the recipient must do in order to be eligible for the funds to be released.
 
 Any policy conditionality related to the activity should be published here.  In cases where there are both terms and conditions and policy conditionalities for an activity, all of these should be declared.
@@ -223,7 +223,7 @@ networked-data-implementors,Networked Data - Implementors,publication,activity,J
 
 The first tests whether the activity’s implementing organisation name is published. The implementer of the activity is the organisation that is principally responsible for delivering it.
 
-The IATI reference for this indicator is: Implementing organisation: participating-org role = “4” (implementing). ",30,0,0.02,,,
+The IATI reference for this indicator is: Implementing organisation: participating-org role = “4” (implementing). ",30.1,0,0.02,,,
 networked-data-participating-orgs,Networked Data - Participating Orgs,publication,activity,Joining-up development data,"The second part of the test assesses whether references are used for organisations across the participating organisation roles (Funding, Accountable, Extending and Implementing).
 
 References must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers to be accepted. The test will exclude references to the publisher themselves.  OECD DAC CRS Channel Codes will need to use the XM-DAC prefix in order for the codes to be accepted as organisation references.
@@ -240,7 +240,7 @@ For example, humanitarian agencies may not be able to reveal who the implementin
 
 Organisations should use existing references where these have been created and used previously. If no reference currently exists, a reference can be created using the recommended approach (often combing a prefix and official registration number). Guidance is available on the IATI website. To pass the Index test references must use a prefix from the list of valid prefixes for IATI organisation references or be on the list of IATI publishers.
 
-Organisations working exclusively with private sector investments will be excluded from the organisation references test since there is currently no accepted way to refer to these participating organisations. ",31,0,0.02,,,
+Organisations working exclusively with private sector investments will be excluded from the organisation references test since there is currently no accepted way to refer to these participating organisations. ",30.2,0,0.02,,,
 networked-data-transactions-with-valid-receiver,Networked Data - Transactions with valid receiver,publication,activity,Joining-up development data,"Part three of the networked data test will see if a receiver organisation (name or reference) is reported in each activity transaction. The receiver organisation is the organisation receiving the funds from the transaction. Part three uses the same criteria for references as part two.
 
 For the receiver organisations test each activity will receive a percentage score based on the proportion of transactions that include a receiver name or reference.
@@ -250,7 +250,7 @@ This will be calculated as follows:
 Number of transactions that include either a receiver organisation name or a receiver organisation reference / Total number of transactions (excluding self-references)
 
 These scores will then be aggregated across an organisation’s activities to calculate the final score for this test.
-",32,0,0.01,,,
+",30.3,0,0.01,,,
 project-procurement-contracts,Project procurement - Contracts,publication,activity,Joining-up development data,"The individual contract(s) signed with a company, organisation or individual that provides goods and services for the activity. This could be on a procurement section of the organisation’s website, on a separate website or on a central government procurement website.
 
 Contract documents cannot simply be at the country level. If an activity contract is included in a larger country-level document, it is only accepted if the contract mentions the activity specifically and in detail.
@@ -263,7 +263,7 @@ This indicator is retained for all organisations. In cases where organisations c
 
 Due to the difficulty in checking contracts manually, rather than looking for the specific activity and the contract linked to it, a review of the organisation’s overall contracts is completed in line with the organisation’s procurement policy.
 
-For vertical funds, equivalent documents are accepted, such as approved country proposals or agreements between the recipient and the funder.",33,0,0.02,1,,
+For vertical funds, equivalent documents are accepted, such as approved country proposals or agreements between the recipient and the funder.",31.1,0,0.02,1,,
 project-procurement-tenders,Project procurement - Tenders,publication,activity,Joining-up development data,"Tenders are the individual contracts or proposals that have been put out to invite bids from companies or organisations that want to provide goods and services for an activity. They may be on a separate website, possibly on a central government procurement website.
 
 The IATI reference for this indicator is: Tender (document code = A10).
@@ -272,12 +272,12 @@ Investment codes or policies for IFIs and DFIs are accepted. For private foundat
 
 Due to the difficulty with manually finding tenders linked to current activities, rather than looking for the specific tender, a review of the organisation’s overall calls for tenders is completed to check it is publishing them consistently and in-line with their procurement policy.
 
-For organisations that do not issue tenders related to aid projects (e.g. if procurement is undertaken by grantees or other implementing agencies), a statement explicitly clarifying this is required.",34,0,0.01,1,,
+For organisations that do not issue tenders related to aid projects (e.g. if procurement is undertaken by grantees or other implementing agencies), a statement explicitly clarifying this is required.",31.2,0,0.01,1,,
 objectives,Objectives,publication,activity,Performance,"The objectives or purposes of the activity are those that the activity intends to achieve.
 
 The IATI reference for this indicator is: Objectives / Purpose of activity (document code = A02) or Description (description type = 2).
 
-The objectives need to include the detailed description of the activity, the target sector/group and expected outcomes.",35,0,0.05,1,,
+The objectives need to include the detailed description of the activity, the target sector/group and expected outcomes.",32,0,0.05,1,,
 impact-appraisals,Pre-project impact appraisals,publication,activity,Performance,"Pre-project impact appraisals explain the totality of positive and negative, primary and secondary effects expected to be produced by a development intervention.
 
 Environmental, social or human rights impact assessments are accepted.
@@ -290,7 +290,7 @@ For loans or private sector investment, risk assessments and the fiscal objectiv
 
 Humanitarian Implementation Plans (HIPs) and project plans are accepted for humanitarian agencies.
 
-If an official internal procedure has concluded that a pre-project impact appraisal is not necessary for a particular project or programme, official documentation confirming this will be accepted in lieu of an appraisal document.",36,0,0.05,1,,
+If an official internal procedure has concluded that a pre-project impact appraisal is not necessary for a particular project or programme, official documentation confirming this will be accepted in lieu of an appraisal document.",33,0,0.05,1,,
 reviews-and-evaluations,Reviews and evaluations,publication,activity,Performance,"Evaluation documents consider what the activity achieved or what the impact of funding provided were. This can include whether the intended objectives were met, what the major factors influencing the achievement or nonachievement of the objectives were and an assessment of the impact, effect and value of the activity. This information may be on a specific evaluation section of the organisation’s website.
 
 If the activity under assessment is not completed but evaluation or review documents are available for other completed activities, these will be accepted.
@@ -299,9 +299,9 @@ The IATI reference for this indicator is: Review of project performance and eval
 
 Not all organisations carry out formal evaluations for all of their activities.
 
-Organisations can score on this indicator as long as they publish review documents that meet the definition of the indicator.",37,0,0.05,1,,
+Organisations can score on this indicator as long as they publish review documents that meet the definition of the indicator.",34,0,0.05,1,,
 results,Results,publication,activity,Performance,"The results show whether activities achieved their intended outputs in accordance with the stated goals or plans. This information often refers to log frames and results chains and may be within a specific results or evaluation section of the organisation’s website.
 
 The IATI references for this indicator are: Result and/or Results, outcomes and outputs (Document code = A08).
 
-Both current and completed activities are considered for this indicator. If the activity has started recently (within the last 18 months), then no actual results are expected. If the activity is ongoing then up to date results should be available. If the activity has ended then the actual results should be available within 12-months of ending.",38,0,0.05,,,
+Both current and completed activities are considered for this indicator. If the activity has started recently (within the last 18 months), then no actual results are expected. If the activity is ongoing then up to date results should be available. If the activity has ended then the actual results should be available within 12-months of ending.",35,0,0.05,,,
