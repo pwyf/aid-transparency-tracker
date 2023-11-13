@@ -48,5 +48,6 @@ jobs:
       - run: flask import_data
       - run: /usr/bin/time -v flask test_data
       - run: flask aggregate_results --force
+      - run: flask setup_sampling
       - name: Run the tests
         run: flask run & py.test integration_tests
