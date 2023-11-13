@@ -170,7 +170,7 @@ Feature: Total disaggregated budget
 def process_publishers():
     test_data_path = join(dirname(current_app.root_path), 'tests')
     publishers_by_prefix = {}
-    publishers_by_ident = {}   
+    publishers_by_ident = {}
 
     with open(join(test_data_path,'publishers.json')) as f:
         publishers_json = json.load(f)
@@ -179,7 +179,7 @@ def process_publishers():
         publisher['prefix'] = publisher['Datasets Link'].split('/')[-1]
         publishers_by_ident[publisher['ident']] = publisher
         publishers_by_prefix[publisher['prefix']] = publisher
-    
+
     return publishers_by_prefix, publishers_by_ident
 
 def process_sector():
@@ -188,7 +188,7 @@ def process_sector():
     sector_by_code = {}
 
     with open(join(test_data_path,'CRSChannelCode.json')) as f:
-        sector_json = json.load(f) 
+        sector_json = json.load(f)
     with open(join(test_data_path,'AgencyCodes.json')) as f:
         agency_json = json.load(f)
     all_codes = sector_json['data'] + agency_json['data']
@@ -207,7 +207,7 @@ def process_orgid():
     orgid_by_code = {}
 
     with open(join(test_data_path,'orgid.json')) as f:
-        orgid_json = json.load(f)  
+        orgid_json = json.load(f)
     for orgid in orgid_json['lists']:
         code = orgid['code']
         if code == 'XM-DAC':
@@ -226,7 +226,7 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
     if not self_refs:
         return 'Organisation excluded from networked data test', None
 
-    publishers_by_prefix, publishers_by_ident = process_publishers() 
+    publishers_by_prefix, publishers_by_ident = process_publishers()
     sector_by_code = process_sector()
     orgid_by_code = process_orgid()
 
@@ -236,7 +236,7 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
     activity_reporting_org_ref = None
 
     # print('self refs:', self_refs)
-    
+
     participating_orgs = set(activity_tree.xpath('participating-org'))
 
     narratives_no_refs = 0
@@ -245,9 +245,9 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
         refs = participating_org.xpath('@ref')
         if len(narratives) and not len([ref for ref in refs if ref.strip()]):
             narratives_no_refs += 1
-    
+
     # print(f"narratives with no refs count: {narratives_no_refs}")
-        
+
     participating_orgs_refs = set(ref for ref in activity_tree.xpath('participating-org/@ref') if ref.strip())
     # print('participating org refs:', participating_orgs_refs)
 
@@ -257,7 +257,7 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
 
     denominator =  len(participating_orgs_no_self_ref) + narratives_no_refs
     # print('count of orgs to test:',len(participating_orgs_no_self_ref))
-    
+
     # print(f'denominator: {denominator}')
     if denominator == 0:
         return 'All self refs', None
@@ -272,7 +272,7 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
     # print('matching publisher:', publisher_matches)
 
     remaining = participating_orgs_no_self_ref - publisher_matches
-    
+
     # sectors matching
     # print('sectors to test:', remaining)
 
@@ -282,11 +282,11 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
 
     # print('matching sectors:', sectors_matches)
 
-    remaining = remaining - sectors_matches    
-    
+    remaining = remaining - sectors_matches
+
     # org ids
     # print('org_id_to_test:', remaining)
-    
+
     org_ids = set(orgid_by_code)
 
     matching_org_ids = set()
@@ -300,7 +300,7 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
 
     # print(f'failed to match:', failed_to_match)
     # print(f'failed to match count:', len(failed_to_match))
-    
+
 
     score = (len(participating_orgs_no_self_ref) * 1.0 - len(failed_to_match))/denominator
     explanation = f'score: ({len(participating_orgs_no_self_ref)} - {len(failed_to_match)})/{denominator}'
@@ -313,13 +313,13 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
 
 def networked_data_part_2(org, snapshot_date, test_name, current_data_results, condition):
     """Calculates score for Networked Data test, part 2: participating orgs with valid IDs
-    
+
     Part 2 of the Networked Data scores each activity according to how many of the
     participating organisations are referred to with valid references. The score for the
     organisation is the average of the scores for each of their activities. This
     function calculates the score for each activity and writes it to the file
     <test_name.csv> (test_name for this test is currently 'participating_orgs').
-    
+
     :param org: The organisation to be processed.
     :type org: iatidq.models.Organisation
     :param snapshot_date: The date of the data snapshot/download to use.
@@ -345,7 +345,7 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
     fieldnames = ['dataset', 'identifier', 'index', 'result',
                   'hierarchy', 'explanation']
 
-    publishers_by_prefix, publishers_by_ident = process_publishers() 
+    publishers_by_prefix, publishers_by_ident = process_publishers()
     sector_by_code = process_sector()
     orgid_by_code = process_orgid()
 
@@ -382,11 +382,11 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
 
 def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
     """Calculate scores for Networked Data part 3: proportion transactions w/receivers
-    
+
     Part 3 of the Networked Data scores each activity according to how many of its
     transactions have valid receiving organisations listed. The score per activity is
     the proportion of valid transactions among assessable transactions.
-    
+
     :param org: The organisation to be processed.
     :type org: iatidq.models.Organisation
     :param snapshot_date: The date of the data snapshot/download to use.
@@ -399,7 +399,7 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
     """
 
     output_filepath = join(current_app.config.get('IATI_RESULT_PATH'),
-                           snapshot_date, 
+                           snapshot_date,
                            org.organisation_code,
                            utils.slugify(test_name) + '.csv')
 
@@ -408,14 +408,14 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
     # get an IATIKIT Publisher object for the organisation being processed
     publisher = iatikit.data(snapshot_xml_path).publishers.get(org.registry_slug)
 
-    fieldnames = ['dataset', 'identifier', 'index', 
+    fieldnames = ['dataset', 'identifier', 'index',
                   'result', 'hierarchy', 'explanation']
-    
-    
-    # we create three lists of publishers, or publisher prefixes, which are used to 
+
+
+    # we create three lists of publishers, or publisher prefixes, which are used to
     # check the validity of the receiver-org refs; do that here so it's just done once
     org_id_prefixes = set(process_orgid())  # list of prefixes, except XM-DAC
-    _, publishers_by_ident = process_publishers() 
+    _, publishers_by_ident = process_publishers()
     publisher_ids = set(publishers_by_ident)  # list of publishers on Registry
     xm_dac_codes = set(process_sector())  # list of acceptable XM-DAC codes
 
@@ -444,12 +444,12 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
                 transactions = activity.etree.xpath('transaction')
 
                 # if an activity has no transactions, it shouldn't be counted
-                # when determining proportion of passing activities 
+                # when determining proportion of passing activities
                 if len(transactions) == 0:
                     explanation = f'No assessable transactions for this activity'
                     score = 'not relevant'
                 else:
-                    explanation, score = calc_networked_data_3_activity_score(org, 
+                    explanation, score = calc_networked_data_3_activity_score(org,
                                                                               transactions,
                                                                               org_id_prefixes,
                                                                               publisher_ids,
@@ -465,7 +465,7 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
                 })
 
 
-def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes, 
+def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes,
                                          publisher_ids, xm_dac_codes):
     """Calculates score for part 3 of Networked data indicator for single activity"""
 
@@ -485,15 +485,15 @@ def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes,
 
         # extract the data values the tests query
         receiver_orgs_refs = transaction.xpath("receiver-org/@ref")
-        narrative_content = ''.join([k.strip() for k in 
-                                    transaction.xpath('receiver-org/narrative/text()')])        
+        narrative_content = ''.join([k.strip() for k in
+                                    transaction.xpath('receiver-org/narrative/text()')])
 
         # pre-assessment exclusions:
 
         # skip transactions which state receiver is current organisation
         if len(receiver_orgs_refs) > 0 and receiver_orgs_refs[0] in self_refs:
             continue
-        
+
         # skip transactions which are not of type 2 or 3
         transaction_types = transaction.xpath("transaction-type/@code")
         if len(transaction_types) > 0 and transaction_types[0] not in ['2', '3']:
@@ -506,20 +506,20 @@ def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes,
         # to pass, either: it has some text in a <narrative> element. since the
         # <narrative> element can be repeated, this checks at least one has some content
         if len(narrative_content) > 0:
-            receivers_w_narratives += 1            
+            receivers_w_narratives += 1
             continue  # since we've passed the test, move to next transaction
 
         # if there is no receiver org ID, move on; this transaction fails, because
         # it has no org ID nor any name/narrative (transactions with narratives already)
         # handled
         if len(receiver_orgs_refs) == 0:
-            continue  
+            continue
 
         # get the receiver org id
         receiver_org_id = receiver_orgs_refs[0]
 
         # or: the receiver org ID must be a valid organisation ID; there are three
-        # ways the ID is counted valid              
+        # ways the ID is counted valid
 
         # 1. the receiver organisation ID starts with a valid agency code
         if any([receiver_org_id.startswith(org_id) for org_id in org_id_prefixes]):
@@ -534,30 +534,30 @@ def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes,
         # 3. the receiver org ID is one of the acceptable XM-DAC codes
         if receiver_org_id in xm_dac_codes:
             receivers_w_xm_dac += 1
-    
+
     if total_transactions_assessed == 0:
         return 'No relevant transactions to assess', 'not relevant'
-    
+
     passing_transactions = receivers_w_narratives + receivers_w_valid_prefix + \
                            receivers_w_known_id + receivers_w_xm_dac
     score = passing_transactions / total_transactions_assessed
     explanation = 'score: {a} (passing transactions) / {b} (total transactions assessed)'.format(
             a=(passing_transactions),
             b=total_transactions_assessed)
-    
+
     # this alternative explanation for score breaks down the valid receivers according
-    # to which test they passed; it's useful for debugging, but it is potentially 
-    # misleading, inasmuch as when a transaction has both a narrative and a valid 
+    # to which test they passed; it's useful for debugging, but it is potentially
+    # misleading, inasmuch as when a transaction has both a narrative and a valid
     # receiver reference, it will only be listed as having a valid narrative, which
-    # may be confusing for the end user. 
+    # may be confusing for the end user.
             #f'score: ({receivers_w_narratives} (receivers w/narrative) + ' \
             #f'{receivers_w_valid_prefix} (receivers w/prefix) + ' \
             #f'{receivers_w_known_id} (receivers w/known ID) + ' \
             #f'{receivers_w_xm_dac} (receivers w/XM-DAC)) / {total_transactions_assessed}'
 
-    
+
     return explanation, score
-        
+
 
 
 
