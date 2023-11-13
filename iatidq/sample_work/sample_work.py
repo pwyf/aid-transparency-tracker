@@ -79,11 +79,11 @@ class WorkItems(object):
                 for package_name, index, activity_id, result in samples:
                     act = sot.get_activity(package_name, index)
                     act_xml = (
-                        lxml.etree.tostring(act, encoding="UTF-8", pretty_print=True)
+                        lxml.etree.tostring(act, encoding="unicode", pretty_print=True)
                         if act is not None else None)
                     parent_act = sot.get_parent_activity(act, package_name)
                     parent_xml = (
-                        lxml.etree.tostring(parent_act, encoding="UTF-8", pretty_print=True)
+                        lxml.etree.tostring(parent_act, encoding="unicode", pretty_print=True)
                         if parent_act is not None else None)
 
                     u = str(uuid.uuid4())
