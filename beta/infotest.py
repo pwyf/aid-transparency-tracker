@@ -360,9 +360,14 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
 
         for dataset in publisher.datasets:
             for idx, activity in enumerate(dataset.activities):
+                # Look for the activity index (idx) as a key in current_data_results,
+                # to determine whether a condition was applied to it or not.
+                # We don't check whether it was assessed as a current activity,
+                # as we wish to score all current and non-current activities (that meet the condition).
+                # The current data exclusion is then applied separately later.
+                # This allows us to also present a view of the data without the current data exclusion
                 if dataset.name not in current_data_results or \
-                    idx not in current_data_results[dataset.name] or \
-                    current_data_results[dataset.name][idx] is False:
+                        idx not in current_data_results[dataset.name]:
                     continue
 
                 explanation, score = test_participating_org_refs(org.registry_slug, activity.etree, self_refs)
@@ -426,12 +431,14 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
 
         for dataset in publisher.datasets:
             for idx, activity in enumerate(dataset.activities):
-                # this test only applies to activities which are "current". "current" is
-                # defined as: an activity that was in implementation, had transactions
-                # or ended in the last 12 months
+                # Look for the activity index (idx) as a key in current_data_results,
+                # to determine whether a condition was applied to it or not.
+                # We don't check whether it was assessed as a current activity,
+                # as we wish to score all current and non-current activities (that meet the condition).
+                # The current data exclusion is then applied separately later.
+                # This allows us to also present a view of the data without the current data exclusion
                 if not (dataset.name in current_data_results and \
-                        idx in current_data_results[dataset.name] and \
-                        current_data_results[dataset.name][idx] == 1):
+                        idx in current_data_results[dataset.name]):
                     continue
 
                 # if activity status code is not in [2, 3, 4] then skip

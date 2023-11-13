@@ -1,4 +1,5 @@
 from os.path import abspath, dirname, join, realpath
+from urllib.parse import urlparse
 
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -6,8 +7,13 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 #SQLALCHEMY_DATABASE_URI = 'sqlite:///dataquality.sqlite'
 #SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2:///iatidq'
 SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://postgres:dcf5636196aa409b75a0f7a73a314df4c8fc05d9b9fc0cad9b87ee64f2d6d2b1@127.0.0.1:5433/iatidq'
+database_uri_parsed = urlparse(SQLALCHEMY_DATABASE_URI)
 DATABASE_INFO = {
-    'database': 'iatidq'
+    "user": database_uri_parsed.username,
+    "password": database_uri_parsed.password,
+    "database": database_uri_parsed.path[1:],
+    "host": database_uri_parsed.hostname,
+    "port": database_uri_parsed.port,
 }
 SAMPLING_DB_FILENAME = join(realpath(dirname(__file__)), 'sample_work.db')
 
