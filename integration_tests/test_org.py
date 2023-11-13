@@ -49,6 +49,11 @@ def test_organisation_publication(browser):
     browser.find_element(By.ID, "password").send_keys(Keys.ENTER)
     time.sleep(1)
 
+    body_text = browser.find_element(By.TAG_NAME, "body").text
+    assert "16." in body_text
+    assert "16.0." not in body_text
+    assert "30.1." in body_text
+
     browser.find_element(By.ID, "showindicator-16").find_element(
         By.TAG_NAME, "i"
     ).click()
@@ -86,3 +91,11 @@ def test_survey(browser):
     browser.get(organisation_url)
     browser.find_element(By.LINK_TEXT, "Start survey").click()
     assert "Thank you for agreeing" in browser.find_element(By.TAG_NAME, "body").text
+
+
+def test_indicators(browser):
+    browser.get("http://localhost:5000/indicators/")
+    body_text = browser.find_element(By.TAG_NAME, "body").text
+    assert "16" in body_text
+    assert "16.0" not in body_text
+    assert "30.1" in body_text
