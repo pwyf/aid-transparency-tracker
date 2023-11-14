@@ -44,7 +44,7 @@
     "IATI Organisation Identifier": "XI-IATI-EC_INTPA",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "(No country assigned)",
-    "Datasets Count": 195,
+    "Datasets Count": 166,
     "Datasets Link": "https://iatiregistry.org/publisher/ec-intpa"
   },
   {
@@ -1100,7 +1100,7 @@
     "IATI Organisation Identifier": "XI-IATI-EC_FPI",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Europe, regional",
-    "Datasets Count": 140,
+    "Datasets Count": 119,
     "Datasets Link": "https://iatiregistry.org/publisher/ec-fpi"
   },
   {
@@ -1108,7 +1108,7 @@
     "IATI Organisation Identifier": "XI-IATI-EC_NEAR",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "(No country assigned)",
-    "Datasets Count": 45,
+    "Datasets Count": 33,
     "Datasets Link": "https://iatiregistry.org/publisher/ec-near"
   },
   {
@@ -1140,7 +1140,7 @@
     "IATI Organisation Identifier": "XM-DAC-21-1",
     "Organization Type": "Government",
     "HQ Country or Region": "Ireland",
-    "Datasets Count": 14,
+    "Datasets Count": 15,
     "Datasets Link": "https://iatiregistry.org/publisher/irishaid"
   },
   {
@@ -1476,7 +1476,7 @@
     "IATI Organisation Identifier": "FR-3",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "France",
-    "Datasets Count": 84,
+    "Datasets Count": 86,
     "Datasets Link": "https://iatiregistry.org/publisher/afd"
   },
   {
@@ -1692,7 +1692,7 @@
     "IATI Organisation Identifier": "GB-CHC-1047501",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 43,
+    "Datasets Count": 44,
     "Datasets Link": "https://iatiregistry.org/publisher/acf"
   },
   {
@@ -2044,7 +2044,7 @@
     "IATI Organisation Identifier": "GB-CHC-1001813",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 14,
+    "Datasets Count": 15,
     "Datasets Link": "https://iatiregistry.org/publisher/halo"
   },
   {
@@ -3820,7 +3820,7 @@
     "IATI Organisation Identifier": "NL-KVK-41208813",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 18,
+    "Datasets Count": 20,
     "Datasets Link": "https://iatiregistry.org/publisher/dciecpatnl"
   },
   {
@@ -4252,7 +4252,7 @@
     "IATI Organisation Identifier": "KR-GOV-010",
     "Organization Type": "Government",
     "HQ Country or Region": "Korea (Republic of)",
-    "Datasets Count": 52,
+    "Datasets Count": 53,
     "Datasets Link": "https://iatiregistry.org/publisher/odakorea"
   },
   {
@@ -4908,7 +4908,7 @@
     "IATI Organisation Identifier": "US-GOV-1",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 189,
+    "Datasets Count": 190,
     "Datasets Link": "https://iatiregistry.org/publisher/usaid"
   },
   {
@@ -9372,7 +9372,7 @@
     "IATI Organisation Identifier": "GB-COH-OC350651",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "(No country assigned)",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/montrose_llp"
   },
   {
@@ -9718,6 +9718,14 @@
     "HQ Country or Region": "Ethiopia",
     "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/fgae_ethiopia"
+  },
+  {
+    "Publisher": "Ministry of Foreign Affairs - United Arab Emirates (UAE)",
+    "IATI Organisation Identifier": "XM-DAC-576",
+    "Organization Type": "Government",
+    "HQ Country or Region": "United Arab Emirates",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/mofaic_uae"
   },
   {
     "Publisher": "Population Services Kenya",
@@ -11300,7 +11308,7 @@
     "IATI Organisation Identifier": "GB-HESA-10004113",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/lboro"
   },
   {
@@ -11500,7 +11508,7 @@
     "IATI Organisation Identifier": "CA_ON-ONT-1783682",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Canada",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/genderatwork"
   },
   {
@@ -12870,6 +12878,14 @@
     "HQ Country or Region": "United States",
     "Datasets Count": 1,
     "Datasets Link": "https://iatiregistry.org/publisher/ia"
+  },
+  {
+    "Publisher": "Child Rights Coalition Asia",
+    "IATI Organisation Identifier": "PH-SEC-CN201214699",
+    "Organization Type": "Regional NGO",
+    "HQ Country or Region": "(No country assigned)",
+    "Datasets Count": 1,
+    "Datasets Link": "https://iatiregistry.org/publisher/crcasia"
   },
   {
     "Publisher": "AIDS and Rights Alliance for Southern Africa",
