@@ -96,7 +96,7 @@ def test_organisation_publication_page(
     assert response.status_code == 200
 
     assert (
-        '<p class="lead">It looks like you publish quarterly with a time lag of more than a quarter, so the maximum you can score for IATI data is 87.5 points. The total points for the relevant indicators have been adjusted accordingly.'
+        '<p class="lead">It looks like you publish quarterly with a time lag of more than a quarter, so the maximum you can score for IATI data is 85.0 points. The total points for the relevant indicators have been adjusted accordingly.'
         in response.text
     )
 
@@ -123,13 +123,13 @@ def test_organisation_publication_page(
 
           <tr class="text-muted">
               <td>Timeliness</td>
-              <td>x 0.813 (It looks like you publish quarterly with a time lag of more than a quarter, so the maximum you can score for IATI data is 87.5 points. The total points for the relevant indicators have been adjusted accordingly. For more information see <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/#page=21">Section 3.4 (page 20) of the Technical Paper</a>.)</td>
+              <td>x 0.775 (It looks like you publish quarterly with a time lag of more than a quarter, so the maximum you can score for IATI data is 85.0 points. The total points for the relevant indicators have been adjusted accordingly. For more information see <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/#page=21">Section 3.4 (page 20) of the Technical Paper</a>.)</td>
               <td>(Updated quarterly and with more than a quarter time lag)</td>
           </tr>
 
           <tr>
               <td><strong>Total data quality points</strong></td>
-              <td>32.52</td><td></td>
+              <td>31.0</td><td></td>
           </tr>
           </tbody>
           </table>
@@ -139,7 +139,7 @@ def test_organisation_publication_page(
           </thead>
           <tbody>
           <tr>
-              <td>Data quality points</td><td>32.52</td>
+              <td>Data quality points</td><td>31.0</td>
               <td></td>
           </tr>
           <tr>
@@ -148,7 +148,7 @@ def test_organisation_publication_page(
           </tr>
           <tr class="success">
               <td><strong>Total points for this indicator</strong></td>
-              <td>65.85</td><td></td>
+              <td>64.33</td><td></td>
           </tr>
           </tbody>
           </table>
