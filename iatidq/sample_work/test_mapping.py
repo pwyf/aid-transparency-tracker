@@ -11,8 +11,8 @@ test_to_kind = {
     "Results data": "result",
     "Title is present": "text",
     "Description is present": "text",
-    "Location (sub-national)": "location",
-    "Location (sub-national) coordinates or point": "location",
+    "Location": "location",
+    "Location (with activity-scope exclusion)": "location",
     "Participating Orgs": "participating-org",
 }
 
