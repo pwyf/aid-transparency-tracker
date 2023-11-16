@@ -12,7 +12,9 @@ test_to_kind = {
     "Title is present": "text",
     "Description is present": "text",
     "Location": "location",
+    "Location point or administrative or location-id" : "location",
     "Location (with activity-scope exclusion)": "location",
+    "Location point or administrative or location-id (with activity-scope exclusion)" : "location",
     "Participating Orgs": "participating-org",
 }
 
@@ -191,7 +193,7 @@ kind_to_status = {
               "class": "danger",
               "value": "2",
             },
-    },
+    }, 
 }
 
 """
