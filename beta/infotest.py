@@ -1,6 +1,7 @@
 import csv
 from os.path import dirname, join
 import json
+from collections import defaultdict
 
 from flask import current_app
 import iatikit
@@ -10,16 +11,18 @@ from . import utils
 from .excluded_xm_dac import excluded_xm_dac
 
 
-def get_current_countries(publisher, current_data):
-    country_codes = []
+current_country_codes_by_org = defaultdict(set)
+current_country_codes_by_org_country_strategy_exclusions = defaultdict(set)
 
-    for dataset in publisher.datasets:
-        for idx, activity in enumerate(dataset.activities):
-            if dataset.name not in current_data or idx not in current_data[dataset.name] or current_data[dataset.name][idx] is False:
-                continue
-            country_codes += activity.etree.xpath('recipient-country/@code')
-            country_codes = list(set(country_codes))
-    return country_codes
+with open("tests/current_country_code_lookup.csv") as fp:
+    for row in csv.DictReader(fp):
+        current_country_codes_by_org[row['organisation_code']].add(row['country_code'])
+        if not row['country_strategy_exclusion']:
+            current_country_codes_by_org_country_strategy_exclusions[row['organisation_code']].add(row['country_code'])
+
+
+def remove_organisation_code_suffix(organisation_code):
+    return organisation_code.replace("-non-sovereign", "").replace("-sovereign", "")
 
 
 def country_strategy_or_mou(org, snapshot_date, test_name,
@@ -34,8 +37,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
     publisher = iatikit.data(snapshot_xml_path).publishers.get(
         org.registry_slug)
 
-    current_country_codes = get_current_countries(
-        publisher, current_data_results)
+    current_country_codes = list(current_country_codes_by_org_country_strategy_exclusions[remove_organisation_code_suffix(org.organisation_code)])
 
     country_strategies = {}
     for dataset in publisher.datasets:
@@ -103,8 +105,7 @@ def disaggregated_budget(org, snapshot_date, test_name,
         org.registry_slug)
 
     codelists = iatikit.codelists()
-    current_country_codes = get_current_countries(
-        publisher, current_data_results)
+    current_country_codes = list(current_country_codes_by_org[remove_organisation_code_suffix(org.organisation_code)])
 
     disaggregated_budget_tmpl = '''@iati-organisation
 Feature: Total disaggregated budget
