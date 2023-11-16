@@ -112,6 +112,15 @@ def make_sample_json(work_item):
         data = [get_po_from_xml(xml) for xml in xml_strings]
         return data[0]+data[1]
 
+    def get_receiver_orgs(xml_strings):
+        def get_receiver_org_from_xml(xml):
+            if xml is None:
+                return []
+            receiver_orgs = [sample_work.ReceiverOrgs(work_item["xml_data"]).get_receiver_org()]
+            return receiver_orgs
+        data = [get_receiver_org_from_xml(xml) for xml in xml_strings]
+        return data[0]+data[1]
+
     xml_strings = [work_item["xml_data"],
                    work_item["xml_parent_data"]]
     docs = get_docs(xml_strings)
@@ -137,6 +146,11 @@ def make_sample_json(work_item):
     else:
         pos = []
 
+    if work_item["test_kind"] == "transactions-with-valid-receiver":
+        receiver_orgs = get_receiver_orgs(xml_strings)
+    else:
+        receiver_orgs = []
+
     activity_info = sample_work.ActivityInfo(work_item["xml_data"])
 
     work_item_test = get_test_info(work_item["test_id"])
@@ -153,6 +167,7 @@ def make_sample_json(work_item):
                 "results": res,
                 "conditions": conditions,
                 "pos": pos,
+                "receiver_orgs": receiver_orgs,
                 "sampling_id": work_item["uuid"],
                 "test_id": work_item["test_id"],
                 "organisation_id": work_item["organisation_id"],

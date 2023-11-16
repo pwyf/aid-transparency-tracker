@@ -16,6 +16,7 @@ test_to_kind = {
     "Location (with activity-scope exclusion)": "location",
     "Location point or administrative or location-id (with activity-scope exclusion)" : "location",
     "Participating Orgs": "participating-org",
+    "Transactions with valid receiver": "transactions-with-valid-receiver",
 }
 
 ## Integers 2, 3, 4, etc. Are the response integer that goes into
@@ -193,7 +194,25 @@ kind_to_status = {
               "class": "danger",
               "value": "2",
             },
-    }, 
+    },
+    "transactions-with-valid-receiver": {
+        1:
+            {
+              "text:": "pass",
+              "button": "pass",
+              "icon": "ok",
+              "class": "success",
+              "value": "1",
+            },
+        2:
+            {
+              "text:": "references look correct",
+              "button": "references look incorrect",
+              "icon": "remove",
+              "class": "danger",
+              "value": "2",
+            },
+    },    
 }
 
 """
