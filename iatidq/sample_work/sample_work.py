@@ -445,6 +445,36 @@ class ParticipatingOrgs(object):
             'pos': [ParticipatingOrg(po).to_dict() for po in self.root.xpath('participating-org')]
         }
 
+class ReceiverOrg(object):
+    def __init__(self, elt):
+        self.elt = elt
+
+    def __repr__(self):
+        return '''<ReceiverOrg: %s>''' % self.elt
+
+    def to_dict(self):
+        texts = [{'text': x} for x in self.elt.xpath('narrative/text()')]
+
+        if len(texts) == 0:
+            texts = ['']
+
+        data = {
+            "ref": self.elt.xpath("@ref"),
+            "receiver_activity_id": self.elt.xpath("@receiver-activity-id"),
+            "type": self.elt.xpath("@type"),
+            "texts": texts,
+            }
+        return data
+
+class ReceiverOrgs(object):
+    def __init__(self, xml_string):
+        root = lxml.etree.fromstring(xml_string)
+        self.root = root
+
+    def get_receiver_org(self):
+        return {
+            'receiver_orgs': [ReceiverOrg(receiver).to_dict() for receiver in self.root.xpath('transaction/receiver-org')]
+        }
 
 class ActivityInfo(object):
     def __init__(self, xml_string):

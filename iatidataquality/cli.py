@@ -114,7 +114,9 @@ def import_users(filename):
 @click.option("--filename")
 @click.option("--org-ids")
 @click.option("--test-ids")
-def setup_sampling(date, filename, org_ids, test_ids):
+@click.option('--force', is_flag=True, default=False,
+              help='Skip the "This is potentially destructive" confirmation prompt')
+def setup_sampling(date, filename, org_ids, test_ids, force):
     """Generate the sampling database (Environment variable PWYF_SAMPLE_SIZE can be used to set the number of samples per test)"""
     iati_result_path = app.config.get('IATI_RESULT_PATH')
     try:
@@ -142,7 +144,8 @@ def setup_sampling(date, filename, org_ids, test_ids):
         filename = app.config['SAMPLING_DB_FILENAME']
     if exists(filename):
         click.secho('Warning: Sample database exists.', fg='red')
-        click.confirm('Delete and continue?', abort=True)
+        if not force:
+            click.confirm('Delete and continue?', abort=True)
         unlink(filename)
 
     if org_ids:

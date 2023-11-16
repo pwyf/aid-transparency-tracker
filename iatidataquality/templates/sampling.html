@@ -262,6 +262,58 @@
 
 </script>
 
+<script id="transactions-with-valid-receiver-template" type="x-tmpl-mustache">
+
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+
+    {{#activity_other_titles?}}
+    <div>
+      <strong>Other title(s):</strong>
+      {{#activity_other_titles}}
+        <p>{{ text }}</p>
+      {{/activity_other_titles}}
+    </div>
+    {{/activity_other_titles?}}
+
+    <div>
+      <strong>Description(s):</strong>
+      {{#activity_descriptions}}
+        <p>{{ text }}</p>
+      {{/activity_descriptions}}
+    </div>
+
+    <div>
+      <strong>Score From Test:</strong>
+      <p>{{ result }}</p>
+    </div>
+
+    <hr />
+    <div class="row" id="data-content">
+	{{# receiver_orgs }}
+        <div class="col-md-11 col-md-offset-1">
+        	{{# receiver_orgs }}
+            <h5><span class="text-muted">Text</span></h5>
+                {{# texts }}
+                <p>{{ text }}</p>
+                {{/ texts }}
+            <p><span class="text-muted">Ref:</span> {{ ref }}
+            <p><span class="text-muted">Type:</span> {{ type }}
+            <p><span class="text-muted">Receiver activity ID:</span> {{ receiver_activity_id }}
+            <br/>
+            <br/>
+        	{{/ receiver_orgs }}
+        </div>
+	{{/ receiver_orgs }}
+    </div>
+
+    <hr />
+
+    {{> xml-template}}
+
+	<input type="hidden" name="sampling_id" value="{{ sampling_id }}"></input>
+
+</script>
+
 <script id="document-template" type="x-tmpl-mustache">
 
     <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
