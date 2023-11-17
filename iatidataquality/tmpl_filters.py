@@ -1,5 +1,6 @@
 import os
 import re
+from math import floor
 
 from flask import Markup, url_for
 
@@ -33,3 +34,11 @@ def hyperlink(value):
     result = url_re.sub(r'<a target="_blank" href="\g<0>">Link</a>', value)
     result = Markup(result)
     return result
+
+
+@app.template_filter('optional_decimal')
+def optional_decimal(number):
+    if floor(number) == number:
+        return (floor(number))
+    else:
+        return number
