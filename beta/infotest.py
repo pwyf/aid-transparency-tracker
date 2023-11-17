@@ -444,23 +444,23 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
                 # if activity status code is not in [2, 3, 4] then skip
                 activity_status_codes = activity.etree.xpath('activity-status/@code')
                 if len(activity_status_codes) > 0 and \
-                    activity_status_codes[0] not in ['2', '3', '4']:
-                    continue
-
-
-                transactions = activity.etree.xpath('transaction')
-
-                # if an activity has no transactions, it shouldn't be counted
-                # when determining proportion of passing activities
-                if len(transactions) == 0:
-                    explanation = f'No assessable transactions for this activity'
+                        activity_status_codes[0] not in ['2', '3', '4']:
                     score = 'not relevant'
+                    explanation = f"`activity-status/@code` is not one of 2, 3 or 4 (it's {activity_status_codes[0]})"
                 else:
-                    explanation, score = calc_networked_data_3_activity_score(org,
-                                                                              transactions,
-                                                                              org_id_prefixes,
-                                                                              publisher_ids,
-                                                                              xm_dac_codes)
+                    transactions = activity.etree.xpath('transaction')
+
+                    # if an activity has no transactions, it shouldn't be counted
+                    # when determining proportion of passing activities
+                    if len(transactions) == 0:
+                        explanation = f'No assessable transactions for this activity'
+                        score = 'not relevant'
+                    else:
+                        explanation, score = calc_networked_data_3_activity_score(org,
+                                                                                  transactions,
+                                                                                  org_id_prefixes,
+                                                                                  publisher_ids,
+                                                                                  xm_dac_codes)
 
                 writer.writerow({
                     'dataset': dataset.name,
