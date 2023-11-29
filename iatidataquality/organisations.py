@@ -285,7 +285,7 @@ def organisation_publication(organisation_code, aggregation_type):
     agg_type = [agg_detail(agt) for agt in all_aggregation_types]
 
     timeliness_score = get_timeliness_score(organisation.frequency, organisation.timelag)
-    max_points = round(100.0 * timeliness_score / 1.5 + 100.0/3, 2)
+    max_points = round(100.0 * timeliness_score / 1.5 + 100.0/3, 1)
     timeliness_alert = 'It looks like you publish {} with a time lag of {}, so the maximum you can score for IATI data is {} points. The total points for the relevant indicators have been adjusted accordingly.'.format(organisation.frequency, organisation.timelag, max_points)
 
     def annotate(res, zero):
