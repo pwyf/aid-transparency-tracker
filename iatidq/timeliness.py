@@ -19,4 +19,6 @@ TIMELINESS_SCORE_LOOKUP = {
 }
 
 def get_timeliness_score(frequency, timelag):
+    if frequency is None or timelag is None:
+        return None
     return TIMELINESS_SCORE_LOOKUP[frequency][timelag]
