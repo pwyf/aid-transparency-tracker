@@ -39,7 +39,10 @@ def _importOrganisationPackages(fh, local):
     def get_or_create_organisation(row):
         organisation = models.Organisation.where(
             organisation_code=row['organisation_code']).first()
-        if not organisation:
+        if organisation:
+            organisation.self_ref = row.get('self_ref')
+            db.session.add(organisation)
+        else:
             organisation = addOrganisation(row)
         return organisation
 
