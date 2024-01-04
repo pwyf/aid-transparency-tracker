@@ -1,8 +1,8 @@
 country,donor,organisation_name,organisation_code,2022_organisation_code,self_ref,packagegroup_name,packagegroup_condition
-Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,,46002,afdb,DATASET=afdb-nonsovereign|
-Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,,46002,afdb,DATASET!=afdb-nonsovereign|
-Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,,46004,asdb,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,46004,asdb,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
+Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,,"46002,XM-DAC-46002,XM-DAC-46003",afdb,DATASET=afdb-nonsovereign|
+Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,,"46002,XM-DAC-46002,XM-DAC-46003",afdb,DATASET!=afdb-nonsovereign|
+Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,,"46004,XM-DAC-46004",asdb,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
+Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,"46004,XM-DAC-46004",asdb,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
 Australia,DFAT,"Australia, DFAT",AU-5,,AU-5,ausgov,
 Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,,XM-DAC-2-10,be-dgd,
 Canada,Global Affairs,"Canada, Global Affairs",CA-3,,"CA-3,CA-1,CA-4",gac-amc,
@@ -29,11 +29,11 @@ Japan,JICA,"Japan, JICA",XM-DAC-701-8,,"XM-DAC-701-8,XM-DAC-701-2,XM-DAC-701",ji
 South Korea,KOICA,"Korea, KOICA",KR-GOV-051,,"KR-GOV-010,KR-GOV-020,KR-GOV-021,KR-GOV-030,KR-GOV-040,KR-GOV-050,KR-GOV-051,KR-GOV-060,KR-GOV-070,KR-GOV-080,KR-GOV-090,KR-GOV-100,KR-GOV-110,KR-GOV-111,KR-GOV-120,KR-GOV-130,KR-GOV-140,KR-GOV-150,KR-GOV-160,KR-GOV-170,KR-GOV-180,KR-GOV-200,KR-GOV-210,KR-GOV-220,KR-GOV-230,KR-GOV-240,KR-GOV-250,KR-GOV-270,KR-GOV-280,KR-GOV-300,KR-GOV-310,KR-GOV-320,KR-GOV-330,KR-GOV-340,KR-GOV-350,KR-GOV-360,KR-GOV-370,KR-GOV-380,KR-GOV-390,KR-GOV-400,KR-GOV-410,KR-GOV-420,KR-GOV-430,KR-GOV-480,KR-GOV-500,KR-GOV-520,KR-GOV-530,KR-GOV-540",odakorea,participating-org[@role='3'][@ref='KR-GOV-051']|organisation-identifier/text()='KR-GOV-051'
 Netherlands,MFA,"Netherlands, MFA",XM-DAC-7,,XM-DAC-7,minbuza_nl,
 New Zealand,MFAT,"New Zealand, MFAT",NZ-1,,NZ-1,mfat,
-Norway,MFA,"Norway, MFA",NO-BRC-971277882,,NO-BRC-971277882,norad,
+Norway,MFA,"Norway, MFA",NO-BRC-971277882,,"NO-BRC-971277882,NO-BRC-972417920",norad,
 Spain,AECID,"Spain, AECID",ES-DIR3-E04585801,,ES-DIR3-E04585801,aecid,
-Sweden,Sida,"Sweden, Sida",SE-0,,"SE-0,SE-6",sida,
+Sweden,Sida,"Sweden, Sida",SE-0,,"SE-0,SE-6,SE-2",sida,
 Switzerland,SDC,"Switzerland, SDC",CH-4,,CH-4,sdc_ch,
-United Arab Emirates,MOFAIC,"UAE, MOFAIC",XM-DAC-576,,AE-2,mofaic_uae,
+United Arab Emirates,MOFAIC,"UAE, MOFAIC",XM-DAC-576,,"AE-2,XM-DAC-576",mofaic_uae,
 United Kingdom,FCDO,"UK, FCDO",GB-GOV-1,,GB-GOV-1,fcdo,
 US/ Switzerland,UN OCHA,UN OCHA,XM-DAC-41127,,XM-DAC-41127,unocha,
 U.S.A,UNDP,UNDP,XM-DAC-41114,,XM-DAC-41114,undp,
