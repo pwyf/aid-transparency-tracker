@@ -6,7 +6,7 @@ Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,"46004,XM-DAC-46004",asd
 Australia,DFAT,"Australia, DFAT",AU-5,,AU-5,ausgov,
 Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,,XM-DAC-2-10,be-dgd,
 Canada,Global Affairs,"Canada, Global Affairs",CA-3,,"CA-3,CA-1,CA-4",gac-amc,
-China,MOFCOM,"China, MOFCOM",CN-1,,CN-1,,
+China,"China International Development Cooperation Agency","China International Development Cooperation Agency",CN-1,,CN-1,,
 Denmark,MFA,"Denmark, MFA",XM-DAC-3-1,,"DK-1,XM-DAC-3-1",danida,
 EU,EBRD - non-sovereign,EBRD - non-sovereign,46015-non-sovereign,,XI-IATI-EBRD,ebrd,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
 EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,,XI-IATI-EBRD,ebrd,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
