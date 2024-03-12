@@ -60,7 +60,7 @@ gherkin-official==4.1.3
     # via
     #   -r requirements.in
     #   bdd-tester
-iatikit==3.2.1
+iatikit==3.4.0
     # via -r requirements.in
 idna==2.6
     # via
