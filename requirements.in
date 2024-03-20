@@ -12,7 +12,7 @@ Flask-Login
 Flask-Principal==0.4.0
 Flask-SQLAlchemy<3
 gherkin-official==4.1.3
-iatikit==3.2.1
+iatikit>3.3.1
 idna==2.6
 jdcal==1.3
 kombu==4.1.0
