@@ -2855,7 +2855,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/BF/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "14, 1",
+        "exampleIdentifiers": "14, 01",
         "languages": [
           "en"
         ]
@@ -3243,16 +3243,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Benin.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/BJ/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "001, 002",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/BJ/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -3267,10 +3272,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -4049,16 +4056,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Botswana.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/BW/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "0100, 0101",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/BW/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -4073,10 +4085,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -5366,6 +5380,59 @@
     },
     {
       "name": {
+        "en": "Ministry of Justice and Human Rights",
+        "local": "Minist\u00e8re de la Justice et Droits Humains"
+      },
+      "url": "http://droits-humains.gouv.cd/dh_ong_liste.html",
+      "description": {
+        "en": "NGOs and associations apply to the Ministry of Justice and Human Rights (Le Ministre de la Justice et Droits Humain) and are issued with a certificate of registration. The Official Journal of the Democratic Republic of the Congo is the government gazette of the country. It publishes major legal official information including a bulletin of acts of companies, associations and political parties registered with the Ministry of Justice and Human Rights. This is referred to as the second part (Deuxieme parties) and is published on the 1st and on the 15th of each month. The ministerial decree number, under which the organisation is registered, can be used as an identifier. This appears both on the organisation's certificate and in the gazette."
+      },
+      "coverage": [
+        "CD"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "charity"
+      ],
+      "sector": [],
+      "code": "CD-MJDH",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://journalofficiel.cd/rech/7/0",
+        "guidanceOnLocatingIds": "Select \"Actes l\u00e9gaux et r\u00e9glementaires : loi, ordonnance, d\u00e9cret, arr\u00eat\u00e9, d\u00e9cision, circulaire, etc.\" from the drop down box and the name, or part of, the charity or NGO you are looking for. If you are successful you will be presented with a text similar to\n\nArr\u00eat\u00e9 minist\u00e9riel n\u00b0123/CAB/MIN/J&DH/2022 du 30 avril 2022 accordant la personnalit\u00e9 juridique \u00e0 l'Association sans but lucratif non confessionnelle d\u00e9nomm\u00e9e \u00ab Name Of Charity or NGO \u00bb, en sigle \u00ab IPDH \u00bb\n\nThe identifier is constructed by using the number quoted (n\u00b0123/CAB/MIN/J&DH/2022) and replacing slashes for dashes",
+        "exampleIdentifiers": "123-CAB-MIN-JDH-2022, 160-CAB-MIN-JDH-2014",
+        "languages": []
+      },
+      "data": {
+        "availability": [
+          "data_not_available"
+        ],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "original research",
+        "lastUpdated": "2023-11-13"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/Ministry_of_Justice_%28Democratic_Republic_of_the_Congo%29"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
+    },
+    {
+      "name": {
         "en": "Central African Republic (the) Chart of Accounts",
         "local": ""
       },
@@ -5390,7 +5457,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/CF/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "01, 02 ",
+        "exampleIdentifiers": "01, 02",
         "languages": [
           "en"
         ]
@@ -5444,16 +5511,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Congo (the).",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/CG/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "01, 02",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/CG/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -5468,10 +5540,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -5682,7 +5756,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/CI/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "01, 02 ",
+        "exampleIdentifiers": "101, 102",
         "languages": [
           "en"
         ]
@@ -6010,7 +6084,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/CM/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "01 , 02",
+        "exampleIdentifiers": "01, 02",
         "languages": [
           "en"
         ]
@@ -8146,12 +8220,12 @@
     },
     {
       "name": {
-        "en": "Ministerio de Justicia ",
-        "local": "es"
+        "en": "Ministry of Justice, Spain",
+        "local": "Ministerio de Justicia"
       },
-      "url": "http://www.mjusticia.gob.es/cs/Satellite/Portal/es/areas-tematicas/registros",
+      "url": "https://www.mjusticia.gob.es/ca/ciudadania/registros",
       "description": {
-        "en": "The Ministry of Justice keeps a broad array of records, covering organisations, events, and individuals. Some of these records (such as organisations) are public and searchable, whilst others (civil registration) are not.\n\nThis list covers the following types of organisations (roughly translated): \"Property and Mercantile\", \"Mediators and Mediation Institutions\", \"Foundations Under the Jurisdiction of the State\", and \"Religious Entities\"."
+        "en": "The Ministry of Justice keeps a broad array of records, covering organisations, events, and individuals. Some of these records (such as organisations) are public and searchable, whilst others (civil registration) are not.\n\nThis list covers the following types of organisations (roughly translated): \"Property and Mercantile\", \"Mediators and Mediation Institutions\", and \"Foundations Under the Jurisdiction of the State\"."
       },
       "coverage": [
         "ES"
@@ -8168,8 +8242,8 @@
       "listType": "secondary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "High level records page (including non-organisation sections): http://www.mjusticia.gob.es/cs/Satellite/Portal/es/areas-tematicas/registros\n\nNavigable from this page, there are multiple search interfaces for each of the organisation types which can be accessed through the direct links below, though there does not appear to be any way of bulk downloading the data.\n\nNote that this search is very brittle. Searching for \"AYUDA EN ACCION\" yields a result for the organisation of that name, but searching \"AYUDA ACCION\" does not yield any results, nor does searching for all three words in the wrong order.\n\nMediators and Mediation Institutions: http://www.mjusticia.gob.es/cs/Satellite/Portal/es/areas-tematicas/registros/mediadores-instituciones\nState Competition Foundations: http://www.mjusticia.gob.es/cs/Satellite/Portal/es/ciudadanos/registros/fundaciones-competencia\nReligious Entities: http://www.mjusticia.gob.es/cs/Satellite/Portal/es/areas-tematicas/registros/entidades-religiosas",
-        "publicDatabase": "http://www.mjusticia.gob.es/cs/Satellite/Portal/es/areas-tematicas/registros",
+        "onlineAccessDetails": "High level records page (including non-organisation sections): https://www.mjusticia.gob.es/ca/ciudadania/registros\n\nNavigable from this page, there are multiple search interfaces for each of the organisation types which can be accessed through the direct links below, though there does not appear to be any way of bulk downloading the data.\n\nNote that this search is very brittle. Searching for \"AYUDA EN ACCION\" yields a result for the organisation of that name, but searching \"AYUDA ACCION\" does not yield any results, nor does searching for all three words in the wrong order.\n\nMediator Institutions: https://remediabuscador.mjusticia.gob.es/remediabuscador/RegistroMediador \nMediation Institutions: https://remediabuscador.mjusticia.gob.es/remediabuscador/RegistroInstitucion\nFoundations: https://fundosbuscador.mjusticia.gob.es/fundosbuscador/cargaBuscador.action?lang=es_es",
+        "publicDatabase": "https://www.mjusticia.gob.es/ca/ciudadania/registros",
         "guidanceOnLocatingIds": "Search using the appropriate finder interface.",
         "exampleIdentifiers": "539SND; 842EDU",
         "languages": [
@@ -8186,7 +8260,7 @@
       },
       "meta": {
         "source": "Original research; official website",
-        "lastUpdated": "2019-01-28"
+        "lastUpdated": "2024-01-22"
       },
       "links": {
         "opencorporates": "",
@@ -8337,7 +8411,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/ET/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "100, 110",
+        "exampleIdentifiers": "111, 112",
         "languages": [
           "en"
         ]
@@ -9322,6 +9396,60 @@
     },
     {
       "name": {
+        "en": "Church of England Church Codes",
+        "local": ""
+      },
+      "url": "https://facultyonline.churchofengland.org/churches",
+      "description": {
+        "en": "Church Codes are a unique identification number supplied to each church building by the Church of England Central Services, which is part of the administrative bodies of the National Church Institutions that work together to support the mission and ministries of the Church of England. This code provides a unique number for the property assets of the Church of England.\n\nThe codes are used to represent the church as an entity as well as everything connected to it such as financial and congregational records.\n\nThe churches are owned locally, held in trust by the incumbent of the church (priest) and the management is run by a committee, a Parochial Church Council (PCC). These organisations are often not registered for a GB-CHC number due their income being less than \u00a3100,000 number despite being otherwise regulated by the Charity Commission. They are also excluded from the UK Register of Trusts. For this reason, these church codes may be used to identified PCCs."
+      },
+      "coverage": [
+        "GB"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "charity",
+        "trust"
+      ],
+      "sector": [],
+      "code": "GB-COE",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "local",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://facultyonline.churchofengland.org/churches",
+        "guidanceOnLocatingIds": "Search interface by Church name and select the church from the dropdown, then select it on the map and follow the link through to a web page for the entry.\n\nAlternatively, use the map to navigate to a known church and click it. Then click through the link to reach the page for the entry.",
+        "exampleIdentifiers": "608393, 616142, 625011",
+        "languages": [
+          "en"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Original research submitted by a community member with citations and links to resources.",
+        "lastUpdated": "2024-02-13"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Local": 5
+      },
+      "quality": 10
+    },
+    {
+      "name": {
         "en": "Companies House",
         "local": ""
       },
@@ -9971,9 +10099,9 @@
         "en": "Mutuals Public Register",
         "local": ""
       },
-      "url": "https://mutuals.fsa.gov.uk/",
+      "url": "https://mutuals.fca.org.uk/",
       "description": {
-        "en": "The Mutuals Public Register is the public record of registered mutual societies:\n\n* building societies\n* credit unions\n* friendly societies\n* registered societies\n\nIt contains:\n\n* details of societies\u2019 registered offices and contact information\nthe services they offer\n* public documents such as yearly returns and accounts"
+        "en": "The Mutuals Public Register is the public record of registered mutual societies:\n\n* building societies\n* credit unions\n* friendly societies\n* registered societies\n\nIt contains:\n\n* details of societies\u2019 registered offices, contact information and services\n* public documents such as yearly returns and accounts"
       },
       "coverage": [
         "GB"
@@ -9990,7 +10118,7 @@
       "listType": "primary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "It is possible to search the register online, documents that have been digitised are freely available. It is also possible to bulk download data although this does not include the organisation's unique identifier on the register.",
+        "onlineAccessDetails": "It is possible to search the register online; documents that have been digitised are freely available. It is also possible to bulk download data although this does not include the organisation's unique identifier on the register.",
         "publicDatabase": "https://mutuals.fca.org.uk/",
         "guidanceOnLocatingIds": "Search for an organisation through the interface. Their registration number is returned as part of the results.",
         "exampleIdentifiers": "235C, IP031455",
@@ -10009,7 +10137,7 @@
       },
       "meta": {
         "source": "",
-        "lastUpdated": ""
+        "lastUpdated": "2023-08-25"
       },
       "links": {
         "opencorporates": "http://opencorporates.com/companies/gb",
@@ -11084,7 +11212,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/GH/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "1, 2",
+        "exampleIdentifiers": "001, 002",
         "languages": [
           "en"
         ]
@@ -11356,7 +11484,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/GM/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "01 , 02 ",
+        "exampleIdentifiers": "01, 02",
         "languages": [
           "en"
         ]
@@ -11519,16 +11647,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Equatorial Guinea.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/GQ/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "01, 02",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/GQ/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -11543,10 +11676,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -11946,7 +12081,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/GW/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "1, 6",
+        "exampleIdentifiers": "1, 2",
         "languages": [
           "en"
         ]
@@ -13954,6 +14089,75 @@
     },
     {
       "name": {
+        "en": "Icelandic Social Security Number",
+        "local": "\u00cdslensk kennitala"
+      },
+      "url": "https://www.skra.is/",
+      "description": {
+        "en": "**Identification number - kennitala**. \nIn Iceland, persons and enterprises are issued a unique identification number which is recorded in the national register and register of enterprises.\n\nIndividuals are identified with the ID numbers in the national registry system. There are two types of personal ID number registered in the national registry i.e. system ID No. and personal ID No.  \nPersonal ID numbers are issued at birth to all children born in Iceland and Icelandic citizens born abroad. Personal ID numbers are also assigned to all individuals who register their domicile in Iceland.\nA system ID number is only issued to individuals who intend to stay less than 3-6 months in Iceland or do not intend to stay in the country at all. \n"
+      },
+      "coverage": [
+        "IS"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company"
+      ],
+      "sector": [],
+      "code": "IS-KEN",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://www.skatturinn.is/fyrirtaekjaskra/",
+        "guidanceOnLocatingIds": "Entities can be searched by name, address, Kennitala or VAT number. ",
+        "exampleIdentifiers": "5711160300, 5512982489, 7105101130",
+        "languages": [
+          "is"
+        ]
+      },
+      "data": {
+        "availability": [
+          "api"
+        ],
+        "dataAccessDetails": "Closed API is documented at https://gagnatorg.ja.is/docs/skra/v1/",
+        "features": [
+          "directors_trustees_governors",
+          "shareholders",
+          "registered_address",
+          "contact_address",
+          "industry_classifications",
+          "date_of_registration",
+          "tax_id_number",
+          "post_code_zip_code",
+          "objectives_purpose",
+          "activities_sector_code",
+          "financial_turnover_details",
+          "expiry_date"
+        ],
+        "licenseStatus": "closed_license",
+        "licenseDetails": "It is not permitted to copy, change, distribute, rent, sell, publish or produce any content based on information from the search engine of the company register, annual accounts register and value added tax register.  https://www.skatturinn.is/notkunarskilmalar "
+      },
+      "meta": {
+        "source": "Original research",
+        "lastUpdated": "2024-02-13"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/Icelandic_identification_number"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "Availability: API": 2,
+        "License: Closed License": 0,
+        "List type: Primary": 75
+      },
+      "quality": 77
+    },
+    {
+      "name": {
         "en": "Italian Tax Code / VAT Number",
         "local": "Codice Fiscale (CF) / Partitia IVA (P.IVA)"
       },
@@ -14796,7 +15000,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/KE/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "110, 119",
+        "exampleIdentifiers": "101, 1011",
         "languages": [
           "en"
         ]
@@ -15074,21 +15278,16 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": true,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
+        "availableOnline": false,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Kyrgyzstan.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/KG/",
-        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "11, 11",
-        "languages": [
-          "en"
-        ]
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "",
+        "languages": []
       },
       "data": {
-        "availability": [
-          "json",
-          "csv"
-        ],
-        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/KG/",
+        "availability": [],
+        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -15103,12 +15302,10 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "Availability: JSON format": 1,
-        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 57
+      "quality": 55
     },
     {
       "name": {
@@ -15361,21 +15558,16 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": true,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
+        "availableOnline": false,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Cambodia.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/KH/",
-        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "1, 2",
-        "languages": [
-          "en"
-        ]
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "",
+        "languages": []
       },
       "data": {
-        "availability": [
-          "json",
-          "csv"
-        ],
-        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/KH/",
+        "availability": [],
+        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -15390,12 +15582,10 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "Availability: JSON format": 1,
-        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 57
+      "quality": 55
     },
     {
       "name": {
@@ -15640,7 +15830,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/KN/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "01, 02 ",
+        "exampleIdentifiers": "01, 02",
         "languages": [
           "en"
         ]
@@ -17201,16 +17391,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Morocco.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/MA/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "02, 03",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/MA/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -17225,10 +17420,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -17582,7 +17779,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/MG/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "01 , 02",
+        "exampleIdentifiers": "01, 02",
         "languages": [
           "en"
         ]
@@ -17613,6 +17810,62 @@
         "List type: Secondary": 50
       },
       "quality": 57
+    },
+    {
+      "name": {
+        "en": "Directorate General of Taxes",
+        "local": "Direction G\u00e9n\u00e9rale des Imp\u00f4ts (DGI)"
+      },
+      "url": "https://www.impots.mg/",
+      "description": {
+        "en": "Madagascar's General tax office (DGI) are responsible for issuing 'Num\u00e9ro d'Identification Fiscale' (NIF) identification numbers."
+      },
+      "coverage": [
+        "MG"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "charity",
+        "company"
+      ],
+      "sector": [],
+      "code": "MG-NIF",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": "",
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "4001257310",
+        "languages": [
+          "fr",
+          "mg",
+          "en"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Original research",
+        "lastUpdated": "2024-02-16"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
     },
     {
       "name": {
@@ -18659,7 +18912,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/MW/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "010 , 020 ",
+        "exampleIdentifiers": "010, 020",
         "languages": [
           "en"
         ]
@@ -19430,16 +19683,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Namibia.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/NA/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "01, 02",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/NA/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -19454,10 +19712,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -19859,16 +20119,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Nigeria.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/NG/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "0111, 0112",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/NG/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -19883,10 +20148,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -20006,7 +20273,7 @@
     },
     {
       "name": {
-        "en": "Netherlands (the) Chart of Accounts",
+        "en": "Netherlands (Kingdom of the) Chart of Accounts",
         "local": ""
       },
       "url": "https://gov-id-finder.codeforiati.org/countries/NL/",
@@ -20027,7 +20294,7 @@
       "listType": "secondary",
       "access": {
         "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Netherlands (the).",
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Netherlands (Kingdom of the).",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/NL/",
         "guidanceOnLocatingIds": "",
         "exampleIdentifiers": "",
@@ -21150,16 +21417,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Philippines (the).",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/PH/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "01, 02",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/PH/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -21174,10 +21446,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -21201,10 +21475,10 @@
       "deprecated": false,
       "listType": "primary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "A search of registered names exists, but does not provide access to identifiers.",
-        "publicDatabase": "http://www.sec.gov.ph/online-services/search-registered-companies/",
-        "guidanceOnLocatingIds": "Companies are issued with a Certificate or Incorporation, or a License to Transact Business. Sometimes these are published by those organisations, or otherwise the 'Company Reg No.' value contained on them can be requested from the organisation.",
+        "availableOnline": true,
+        "onlineAccessDetails": "A search of registered names exists, and provides access to identifiers.",
+        "publicDatabase": "https://checkwithsec.sec.gov.ph/",
+        "guidanceOnLocatingIds": "It is possible to search by either company name or SEC number. Note that search results are returned in alphabetical order and are limited to just ten results. It might be necessary to change the text of the search to find the company being searched for.\n\nWhere a company can't be found via the search, companies are issued with a Certificate or Incorporation, or a License to Transact Business. Sometimes these are published by those organisations, or otherwise the 'Company Reg No.' value contained on them can be requested from the organisation.",
         "exampleIdentifiers": "FS200813283, CS2010407120, AN094003039",
         "languages": [
           "en"
@@ -21221,7 +21495,7 @@
       },
       "meta": {
         "source": "IATI - https://discuss.iatistandard.org/t/added-proposed-addition-to-the-organisation-registration-agency-codelist-philippines/888",
-        "lastUpdated": "2017-07-17"
+        "lastUpdated": "2024-01-19"
       },
       "links": {
         "opencorporates": "",
@@ -22033,6 +22307,60 @@
         "List type: Secondary": 50
       },
       "quality": 50
+    },
+    {
+      "name": {
+        "en": "Tax Identifier Number, Palestine",
+        "local": ""
+      },
+      "url": "http://www.pmof.ps/",
+      "description": {
+        "en": "The Palestinian National Authority's Ministry of Finance issues a certificate with taxpayer registration data (\u0628\u064a\u0627\u0646\u0627\u062a \u062a\u0633\u062c\u064a\u0644 \u062f\u0627\u0641\u0639\u064a \u0627\u0644\u0636\u0631\u0627\u0626\u0628). The number (\u0627\u0644\u0631\u0642\u0645) is the Tax Identification Number for the given organisation."
+      },
+      "coverage": [
+        "PS"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "charity",
+        "company"
+      ],
+      "sector": [],
+      "code": "PS-TIN",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": null,
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "684014271",
+        "languages": []
+      },
+      "data": {
+        "availability": [
+          "data_not_available"
+        ],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "original research",
+        "lastUpdated": "2023-11-13"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
     },
     {
       "name": {
@@ -22917,7 +23245,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/RW/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "01, 02 ",
+        "exampleIdentifiers": "01, 02",
         "languages": [
           "en"
         ]
@@ -25049,6 +25377,58 @@
     },
     {
       "name": {
+        "en": "Ministry of Commerce, Industry and Trade, Eswatini",
+        "local": ""
+      },
+      "url": "https://www.gov.sz/index.php/ministries-departments/minnistry-of-commerce",
+      "description": {
+        "en": "Companies and non-governmental organisations (NGOs) are registered with the Government of Eswatini (Swaziland)'s Ministry of Commerce, Industry and Trade. They receive a registration ID, which does not change over time.\n\nA full list of services that the Ministry provides can be found at https://www.gov.sz/index.php/services-sp-831484471, and specific information on company registration here: https://www.gov.sz/index.php/departments-sp-1596706154?id=522. "
+      },
+      "coverage": [
+        "SZ"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "charity"
+      ],
+      "sector": [],
+      "code": "SZ-CIT",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "http://www.online.gov.sz/e-companysearch.aspx",
+        "guidanceOnLocatingIds": "Companies can be searched using this online database, though this only confirms the registration status and date of the company. Asking the organisation for their registration certificate will be needed to confirm their unique company ID.",
+        "exampleIdentifiers": "201710132021804",
+        "languages": []
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Original research and information from a local company",
+        "lastUpdated": "2024-03-13"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
+    },
+    {
+      "name": {
         "en": "Eswatini Chart of Accounts",
         "local": ""
       },
@@ -25069,16 +25449,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Eswatini.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/SZ/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "01, 02",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/SZ/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -25093,10 +25478,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "name": {
@@ -25503,21 +25890,16 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": true,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
+        "availableOnline": false,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Tajikistan.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/TJ/",
-        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "04 , 05 ",
-        "languages": [
-          "en"
-        ]
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "",
+        "languages": []
       },
       "data": {
-        "availability": [
-          "json",
-          "csv"
-        ],
-        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/TJ/",
+        "availability": [],
+        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -25532,12 +25914,10 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "Availability: JSON format": 1,
-        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 57
+      "quality": 55
     },
     {
       "name": {
@@ -25863,7 +26243,7 @@
     },
     {
       "name": {
-        "en": "Turkey Chart of Accounts",
+        "en": "T\u00fcrkiye Chart of Accounts",
         "local": ""
       },
       "url": "https://gov-id-finder.codeforiati.org/countries/TR/",
@@ -25884,7 +26264,7 @@
       "listType": "secondary",
       "access": {
         "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for Turkey.",
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for T\u00fcrkiye.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/TR/",
         "guidanceOnLocatingIds": "",
         "exampleIdentifiers": "",
@@ -26256,7 +26636,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/TZ/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "02, 03",
+        "exampleIdentifiers": "01, 02",
         "languages": [
           "en"
         ]
@@ -29261,6 +29641,59 @@
     },
     {
       "name": {
+        "en": "Commercial Registry, Yemen",
+        "local": ""
+      },
+      "url": "https://moit-ye.com/",
+      "description": {
+        "en": "The Yemen Ministry of Industry and Trade manages the commercial registry of trade names for corporations and sole traders."
+      },
+      "coverage": [
+        "YE"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company"
+      ],
+      "sector": [],
+      "code": "YE-CR",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://moit.gov.ye/tn-searc/index.php",
+        "guidanceOnLocatingIds": "Company numbers or identifiers are not available via the public search facility.",
+        "exampleIdentifiers": "",
+        "languages": []
+      },
+      "data": {
+        "availability": [
+          "data_not_available"
+        ],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "original research",
+        "lastUpdated": "2023-11-27"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
+    },
+    {
+      "name": {
         "en": "Ministry of Social Affairs and Labour",
         "local": ""
       },
@@ -29504,16 +29937,21 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. However, no codes have yet been extracted for South Africa.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/ZA/",
-        "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
-        "languages": []
+        "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
+        "exampleIdentifiers": "01, 02",
+        "languages": [
+          "en"
+        ]
       },
       "data": {
-        "availability": [],
-        "dataAccessDetails": "Look at the government budget or Chart of Accounts. If you find identifiers, you can also submit them for inclusion to Gov Org ID Finder: https://gov-id-finder.codeforiati.org/about",
+        "availability": [
+          "json",
+          "csv"
+        ],
+        "dataAccessDetails": "A download of the data is available from https://gov-id-finder.codeforiati.org/countries/ZA/",
         "features": [],
         "licenseStatus": "no_license",
         "licenseDetails": ""
@@ -29528,10 +29966,12 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
+        "Availability: JSON format": 1,
+        "Availability: CSV format": 1,
         "License: No License": 5,
         "List type: Secondary": 50
       },
-      "quality": 55
+      "quality": 57
     },
     {
       "links": {
@@ -29677,7 +30117,7 @@
         "onlineAccessDetails": "Codes can be found in the government budget or Chart of Accounts. Gov Org ID Finder extracts and makes some of these codes available for the convenience of users. The authoritative source remains the government's budget or Chart of Accounts.",
         "publicDatabase": "https://gov-id-finder.codeforiati.org/countries/ZM/",
         "guidanceOnLocatingIds": "The codes from the Organisation or Administrative classification should be used. ",
-        "exampleIdentifiers": "01 , 02 ",
+        "exampleIdentifiers": "01, 02",
         "languages": [
           "en"
         ]
