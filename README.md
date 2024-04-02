@@ -127,8 +127,5 @@ locations:
 
 **`publishers.json`**: https://iatiregistry.org/publisher/download/json
 
-**`CRSChannelCode.json`**: https://iatistandard.org/en/iati-standard/203/codelists/crschannelcode/
-
-
-
+**`CRSChannelCode.json`**: https://iatistandard.org/reference_downloads/203/codelists/downloads/clv3/json/en/CRSChannelCode.json (see https://iatistandard.org/en/iati-standard/203/codelists/crschannelcode/ for more information)
 

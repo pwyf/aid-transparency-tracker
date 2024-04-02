@@ -4,7 +4,7 @@
     "IATI Organisation Identifier": "AU-5",
     "Organization Type": "Government",
     "HQ Country or Region": "Australia",
-    "Datasets Count": 173,
+    "Datasets Count": 172,
     "Datasets Link": "https://iatiregistry.org/publisher/ausgov"
   },
   {
@@ -12,7 +12,7 @@
     "IATI Organisation Identifier": "44000",
     "Organization Type": "Multilateral",
     "HQ Country or Region": "(No country assigned)",
-    "Datasets Count": 145,
+    "Datasets Count": 147,
     "Datasets Link": "https://iatiregistry.org/publisher/worldbank"
   },
   {
@@ -28,7 +28,7 @@
     "IATI Organisation Identifier": "41AAA",
     "Organization Type": "Multilateral",
     "HQ Country or Region": "(No country assigned)",
-    "Datasets Count": 176,
+    "Datasets Count": 177,
     "Datasets Link": "https://iatiregistry.org/publisher/unops"
   },
   {
@@ -52,7 +52,7 @@
     "IATI Organisation Identifier": "SE-0",
     "Organization Type": "Government",
     "HQ Country or Region": "Sweden",
-    "Datasets Count": 182,
+    "Datasets Count": 54,
     "Datasets Link": "https://iatiregistry.org/publisher/sida"
   },
   {
@@ -92,7 +92,7 @@
     "IATI Organisation Identifier": "FI-3",
     "Organization Type": "Government",
     "HQ Country or Region": "Finland",
-    "Datasets Count": 157,
+    "Datasets Count": 158,
     "Datasets Link": "https://iatiregistry.org/publisher/finland_mfa"
   },
   {
@@ -156,7 +156,7 @@
     "IATI Organisation Identifier": "GB-CHC-285776",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 96,
+    "Datasets Count": 99,
     "Datasets Link": "https://iatiregistry.org/publisher/cafod"
   },
   {
@@ -556,15 +556,15 @@
     "IATI Organisation Identifier": "GB-COH-1364201",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 2,
+    "Datasets Count": 3,
     "Datasets Link": "https://iatiregistry.org/publisher/plan_uk"
   },
   {
     "Publisher": "Population Service International",
-    "IATI Organisation Identifier": "21032",
+    "IATI Organisation Identifier": "XM-DAC-21032",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United States",
-    "Datasets Count": 13,
+    "Datasets Count": 14,
     "Datasets Link": "https://iatiregistry.org/publisher/psi"
   },
   {
@@ -828,7 +828,7 @@
     "IATI Organisation Identifier": "GB-COH-871954",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/pa"
   },
   {
@@ -852,7 +852,7 @@
     "IATI Organisation Identifier": "DE-1",
     "Organization Type": "Government",
     "HQ Country or Region": "Germany",
-    "Datasets Count": 145,
+    "Datasets Count": 146,
     "Datasets Link": "https://iatiregistry.org/publisher/bmz"
   },
   {
@@ -860,7 +860,7 @@
     "IATI Organisation Identifier": "GB-CHC-1099776",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 156,
+    "Datasets Count": 157,
     "Datasets Link": "https://iatiregistry.org/publisher/malariaconsortium"
   },
   {
@@ -916,7 +916,7 @@
     "IATI Organisation Identifier": "US-EIN-13-2702768",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United States",
-    "Datasets Count": 4,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/pact"
   },
   {
@@ -1000,7 +1000,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/acodev"
   },
   {
-    "Publisher": "D\u00f3chas - Irish Association of Non Governmental Development Organisations",
+    "Publisher": "Dóchas - Irish Association of Non Governmental Development Organisations",
     "IATI Organisation Identifier": "IE-CHY-6410",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Ireland",
@@ -1140,12 +1140,12 @@
     "IATI Organisation Identifier": "XM-DAC-21-1",
     "Organization Type": "Government",
     "HQ Country or Region": "Ireland",
-    "Datasets Count": 15,
+    "Datasets Count": 14,
     "Datasets Link": "https://iatiregistry.org/publisher/irishaid"
   },
   {
     "Publisher": "UK - Department for Work and Pensions",
-    "IATI Organisation Identifier": "GB-GOV-GB-9",
+    "IATI Organisation Identifier": "GB-GOV-9",
     "Organization Type": "Government",
     "HQ Country or Region": "United Kingdom",
     "Datasets Count": 1,
@@ -1204,7 +1204,7 @@
     "IATI Organisation Identifier": "XI-IATI-EC_ECHO",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "(No country assigned)",
-    "Datasets Count": 13,
+    "Datasets Count": 14,
     "Datasets Link": "https://iatiregistry.org/publisher/ec-echo"
   },
   {
@@ -1332,7 +1332,7 @@
     "IATI Organisation Identifier": "CH-4",
     "Organization Type": "Government",
     "HQ Country or Region": "Switzerland",
-    "Datasets Count": 10,
+    "Datasets Count": 11,
     "Datasets Link": "https://iatiregistry.org/publisher/sdc_ch"
   },
   {
@@ -1380,7 +1380,7 @@
     "IATI Organisation Identifier": "GB-COH-03259922",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 6,
+    "Datasets Count": 5,
     "Datasets Link": "https://iatiregistry.org/publisher/cal"
   },
   {
@@ -1424,7 +1424,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/unocha"
   },
   {
-    "Publisher": "DAI Europe",
+    "Publisher": "DAI Global UK",
     "IATI Organisation Identifier": "GB-COH-1858644",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "United Kingdom",
@@ -1472,7 +1472,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/plan_ireland"
   },
   {
-    "Publisher": "Agence Fran\u00e7aise de D\u00e9veloppement",
+    "Publisher": "Agence Française de Développement",
     "IATI Organisation Identifier": "FR-3",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "France",
@@ -1504,7 +1504,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/vao"
   },
   {
-    "Publisher": "Girls\u2019 Education Challenge \u2013 Fund Manager PwC",
+    "Publisher": "Girls’ Education Challenge – Fund Manager PwC",
     "IATI Organisation Identifier": "GB-COH-03580586-GEC",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "United Kingdom",
@@ -1620,7 +1620,7 @@
     "IATI Organisation Identifier": "NL-KVK-41166983",
     "Organization Type": "Foundation",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/cilc"
   },
   {
@@ -1648,10 +1648,10 @@
     "Datasets Link": "https://iatiregistry.org/publisher/eel"
   },
   {
-    "Publisher": "KPMG East Africa",
+    "Publisher": "KPMG Advisory Limited (Tanzania)",
     "IATI Organisation Identifier": "TZ-BRLA-36057",
     "Organization Type": "Private Sector",
-    "HQ Country or Region": "Kenya",
+    "HQ Country or Region": "Tanzania, United Republic of",
     "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/kpmgea"
   },
@@ -1692,11 +1692,11 @@
     "IATI Organisation Identifier": "GB-CHC-1047501",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 44,
+    "Datasets Count": 45,
     "Datasets Link": "https://iatiregistry.org/publisher/acf"
   },
   {
-    "Publisher": "Canada Department of Finance / Minist\u00e8re des Finances Canada",
+    "Publisher": "Canada Department of Finance / Ministère des Finances Canada",
     "IATI Organisation Identifier": "CA-4",
     "Organization Type": "Government",
     "HQ Country or Region": "Canada",
@@ -1864,7 +1864,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/defra_transparency"
   },
   {
-    "Publisher": "Avocats Sans Fronti\u00e8res",
+    "Publisher": "Avocats Sans Frontières",
     "IATI Organisation Identifier": "BE-BCE_KBO-0447404580",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -1884,7 +1884,7 @@
     "IATI Organisation Identifier": "XM-DAC-701-8",
     "Organization Type": "Government",
     "HQ Country or Region": "Japan",
-    "Datasets Count": 43,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/jica"
   },
   {
@@ -1988,7 +1988,7 @@
     "IATI Organisation Identifier": "GB-COH-3799145",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 32,
+    "Datasets Count": 30,
     "Datasets Link": "https://iatiregistry.org/publisher/coffey"
   },
   {
@@ -2044,7 +2044,7 @@
     "IATI Organisation Identifier": "GB-CHC-1001813",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 15,
+    "Datasets Count": 16,
     "Datasets Link": "https://iatiregistry.org/publisher/halo"
   },
   {
@@ -2136,20 +2136,20 @@
     "Datasets Link": "https://iatiregistry.org/publisher/cfyas"
   },
   {
-    "Publisher": "Netherlands Enterprise Agency (RVO)",
-    "IATI Organisation Identifier": "NL-KVK-27378529",
-    "Organization Type": "Government",
-    "HQ Country or Region": "Netherlands",
-    "Datasets Count": 2,
-    "Datasets Link": "https://iatiregistry.org/publisher/rvo"
-  },
-  {
     "Publisher": "SeeYou Foundation",
     "IATI Organisation Identifier": "NL-KVK-41180500",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
     "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/syf"
+  },
+  {
+    "Publisher": "Netherlands Enterprise Agency (RVO)",
+    "IATI Organisation Identifier": "NL-KVK-27378529",
+    "Organization Type": "Government",
+    "HQ Country or Region": "Netherlands",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/rvo"
   },
   {
     "Publisher": "Private Infrastructure Development Group",
@@ -2184,7 +2184,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/amrefnl"
   },
   {
-    "Publisher": "Canada - International Development Research Centre/Centre de recherches pour le d\u00e9veloppement international",
+    "Publisher": "Canada - International Development Research Centre/Centre de recherches pour le développement international",
     "IATI Organisation Identifier": "XM-DAC-301-2",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Canada",
@@ -2288,7 +2288,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/abaseen"
   },
   {
-    "Publisher": "Association de Soutien au De\u0301veloppement des Activite\u0301s de Population",
+    "Publisher": "Association de Soutien au Développement des Activités de Population",
     "IATI Organisation Identifier": "ML-NIF-086108989R",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Mali",
@@ -2724,7 +2724,7 @@
     "IATI Organisation Identifier": "NP-CRO-45995/063/064",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "Nepal",
-    "Datasets Count": 3,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/yipl"
   },
   {
@@ -3100,7 +3100,7 @@
     "IATI Organisation Identifier": "BD-NAB-1301",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Bangladesh",
-    "Datasets Count": 53,
+    "Datasets Count": 54,
     "Datasets Link": "https://iatiregistry.org/publisher/tib"
   },
   {
@@ -3228,7 +3228,7 @@
     "IATI Organisation Identifier": "GB-COH-2695347",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 12,
+    "Datasets Count": 11,
     "Datasets Link": "https://iatiregistry.org/publisher/options"
   },
   {
@@ -3432,7 +3432,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/nri"
   },
   {
-    "Publisher": "War Child Holland",
+    "Publisher": "War Child Netherlands",
     "IATI Organisation Identifier": "NL-KVK-41215393",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
@@ -3532,7 +3532,7 @@
     "IATI Organisation Identifier": "NL-KVK-30214009",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 11,
+    "Datasets Count": 12,
     "Datasets Link": "https://iatiregistry.org/publisher/pax"
   },
   {
@@ -3564,7 +3564,7 @@
     "IATI Organisation Identifier": "NL-KVK-41177385",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 7,
+    "Datasets Count": 8,
     "Datasets Link": "https://iatiregistry.org/publisher/tear"
   },
   {
@@ -3620,7 +3620,7 @@
     "IATI Organisation Identifier": "NL-KVK-41201463",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 40,
+    "Datasets Count": 33,
     "Datasets Link": "https://iatiregistry.org/publisher/scnl"
   },
   {
@@ -3684,7 +3684,7 @@
     "IATI Organisation Identifier": "XI-IATI-CWSEC",
     "Organization Type": "Multilateral",
     "HQ Country or Region": "(No country assigned)",
-    "Datasets Count": 6,
+    "Datasets Count": 8,
     "Datasets Link": "https://iatiregistry.org/publisher/commonwealthsecretariat"
   },
   {
@@ -3828,7 +3828,7 @@
     "IATI Organisation Identifier": "XM-DAC-41302",
     "Organization Type": "Multilateral",
     "HQ Country or Region": "Switzerland",
-    "Datasets Count": 11,
+    "Datasets Count": 12,
     "Datasets Link": "https://iatiregistry.org/publisher/ilo"
   },
   {
@@ -3964,7 +3964,7 @@
     "IATI Organisation Identifier": "NL-KVK-51756811",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 3,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/solidaridad"
   },
   {
@@ -3980,7 +3980,7 @@
     "IATI Organisation Identifier": "NL-KVK-40530953",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/amnesty"
   },
   {
@@ -4008,7 +4008,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/iwda"
   },
   {
-    "Publisher": "IUCN Nederlands Comit\u00e9",
+    "Publisher": "IUCN Nederlands Comité",
     "IATI Organisation Identifier": "NL-KVK-41180885",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
@@ -4196,7 +4196,7 @@
     "IATI Organisation Identifier": "GB-COH-03846881",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/sddirect"
   },
   {
@@ -4856,7 +4856,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/giz"
   },
   {
-    "Publisher": "Minist\u00e8re de l'Economie et des Finances du B\u00e9nin",
+    "Publisher": "Ministère de l'Economie et des Finances du Bénin",
     "IATI Organisation Identifier": "XM-DAC-236",
     "Organization Type": "Government",
     "HQ Country or Region": "Benin",
@@ -4888,7 +4888,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/iucn"
   },
   {
-    "Publisher": "Soci\u00e9t\u00e9 Nationale des eaux du B\u00e9nin (SONEB)",
+    "Publisher": "Société Nationale des eaux du Bénin (SONEB)",
     "IATI Organisation Identifier": "BJ-IFU-3200700033415",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -4908,7 +4908,7 @@
     "IATI Organisation Identifier": "US-GOV-1",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 190,
+    "Datasets Count": 198,
     "Datasets Link": "https://iatiregistry.org/publisher/usaid"
   },
   {
@@ -5144,7 +5144,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/mvo_nederland"
   },
   {
-    "Publisher": "DNH Mali (Direction Nationale de l\u2019Hydraulique du Mali)",
+    "Publisher": "DNH Mali (Direction Nationale de l’Hydraulique du Mali)",
     "IATI Organisation Identifier": "ML-NIF-400100027H",
     "Organization Type": "Government",
     "HQ Country or Region": "Mali",
@@ -5236,7 +5236,7 @@
     "IATI Organisation Identifier": "US-EIN-26-4129153",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "United States",
-    "Datasets Count": 4,
+    "Datasets Count": 5,
     "Datasets Link": "https://iatiregistry.org/publisher/cpi"
   },
   {
@@ -5280,7 +5280,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/dec_ethiopia"
   },
   {
-    "Publisher": "Fundaci\u00f3n Fondo Mujeres del Sur",
+    "Publisher": "Fundación Fondo Mujeres del Sur",
     "IATI Organisation Identifier": "AR-CENOC-16969-A",
     "Organization Type": "Foundation",
     "HQ Country or Region": "Argentina",
@@ -5316,11 +5316,11 @@
     "IATI Organisation Identifier": "US-EIN-13-2626135",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United States",
-    "Datasets Count": 4,
+    "Datasets Count": 3,
     "Datasets Link": "https://iatiregistry.org/publisher/tns"
   },
   {
-    "Publisher": "Administra\u00e7\u00e3o de Infra-Estruturas de \u00c1guas e Saneamento",
+    "Publisher": "Administração de Infra-Estruturas de Águas e Saneamento",
     "IATI Organisation Identifier": "MZ-NUIT-700098168",
     "Organization Type": "Government",
     "HQ Country or Region": "Mozambique",
@@ -5344,7 +5344,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/w_r_c"
   },
   {
-    "Publisher": "Ag\u00eancia de Desenvolvimento do Vale do Zambeze",
+    "Publisher": "Agência de Desenvolvimento do Vale do Zambeze",
     "IATI Organisation Identifier": "MZ-NUIT-50039061",
     "Organization Type": "Government",
     "HQ Country or Region": "Mozambique",
@@ -5377,7 +5377,7 @@
   },
   {
     "Publisher": "International NGO Safety Orgnisation",
-    "IATI Organisation Identifier": "GB-CHC-1140276",
+    "IATI Organisation Identifier": "NL-KVK-73728489",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United Kingdom",
     "Datasets Count": 5,
@@ -5408,7 +5408,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/atsf"
   },
   {
-    "Publisher": "Oxfam Solidarit\u00e9-Solidariteit",
+    "Publisher": "Oxfam Solidarité-Solidariteit",
     "IATI Organisation Identifier": "BE-BCE_KBO-0408643875",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -5468,7 +5468,7 @@
     "IATI Organisation Identifier": "GB-CHC-1082565",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 26,
+    "Datasets Count": 25,
     "Datasets Link": "https://iatiregistry.org/publisher/hiuk"
   },
   {
@@ -5604,7 +5604,7 @@
     "IATI Organisation Identifier": "NL-KVK-41159889",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 13,
+    "Datasets Count": 16,
     "Datasets Link": "https://iatiregistry.org/publisher/pcf"
   },
   {
@@ -5648,7 +5648,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/universityofbirmingham"
   },
   {
-    "Publisher": "Fundo de Investimento e Patrimonio do Abastecimento de \u00c1gua (FIPAG)",
+    "Publisher": "Fundo de Investimento e Patrimonio do Abastecimento de Água (FIPAG)",
     "IATI Organisation Identifier": "MZ-NUIT-600000381",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Mozambique",
@@ -5712,7 +5712,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/gggi"
   },
   {
-    "Publisher": "Collectif Strat\u00e9gies Alimentaires",
+    "Publisher": "Collectif Stratégies Alimentaires",
     "IATI Organisation Identifier": "BE-BCE_KBO-0448755949",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -5732,7 +5732,7 @@
     "IATI Organisation Identifier": "NL-KVK-41201198",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/thp_org"
   },
   {
@@ -5824,7 +5824,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ct-admin"
   },
   {
-    "Publisher": "Entraide et Fraternit\u00e9",
+    "Publisher": "Entraide et Fraternité",
     "IATI Organisation Identifier": "BE-BCE_KBO-0418015461",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -5840,7 +5840,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/sci"
   },
   {
-    "Publisher": "Louvain Coop\u00e9ration",
+    "Publisher": "Louvain Coopération",
     "IATI Organisation Identifier": "BE-BCE_KBO-0422717486",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -5856,7 +5856,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/brulocalis"
   },
   {
-    "Publisher": "Centre National de Coop\u00e9ration au D\u00e9veloppement (CNCD-11.11.11)",
+    "Publisher": "Centre National de Coopération au Développement (CNCD-11.11.11)",
     "IATI Organisation Identifier": "BE-BCE_KBO-0421207751",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -5944,7 +5944,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/tfb_admin1"
   },
   {
-    "Publisher": "Wereldsolidariteit-Solidarit\u00e9 Mondiale (WSM)",
+    "Publisher": "Wereldsolidariteit-Solidarité Mondiale (WSM)",
     "IATI Organisation Identifier": "BE-BCE_KBO-0413986102",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6000,7 +6000,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/akf_afghanistan"
   },
   {
-    "Publisher": "ULB-Coop\u00e9ration",
+    "Publisher": "ULB-Coopération",
     "IATI Organisation Identifier": "BE-BCE_KBO-0415627875",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6048,7 +6048,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/wag-1983"
   },
   {
-    "Publisher": "SOS Kinderdorpen Belgi\u00eb / SOS Villages d'Enfants Belgique",
+    "Publisher": "SOS Kinderdorpen België / SOS Villages d'Enfants Belgique",
     "IATI Organisation Identifier": "BE-BCE_KBO-0408628435",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Belgium",
@@ -6104,7 +6104,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/shc"
   },
   {
-    "Publisher": "Association pour la Promotion de l'Education et de la Formation \u00e0 l'Etranger",
+    "Publisher": "Association pour la Promotion de l'Education et de la Formation à l'Etranger",
     "IATI Organisation Identifier": "BE-BCE_KBO-0415880570",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Belgium",
@@ -6112,7 +6112,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/apefe"
   },
   {
-    "Publisher": "D\u00e9fi Belgique Afrique",
+    "Publisher": "Défi Belgique Afrique",
     "IATI Organisation Identifier": "BE-BCE_KBO-0433439550",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6120,7 +6120,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/dba"
   },
   {
-    "Publisher": "Cha\u00eene de l'Espoir Belgique / Keten van Hoop Belgi\u00eb / Chain of Hope Belgium",
+    "Publisher": "Chaîne de l'Espoir Belgique / Keten van Hoop België / Chain of Hope Belgium",
     "IATI Organisation Identifier": "BE-BCE_KBO-0463455904",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6168,7 +6168,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/rc4d"
   },
   {
-    "Publisher": "RCN Justice & D\u00e9mocratie",
+    "Publisher": "RCN Justice & Démocratie",
     "IATI Organisation Identifier": "BE-BCE_KBO-0454555163",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6176,7 +6176,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/rcn"
   },
   {
-    "Publisher": "Medecins du Monde Belgique - Dokters van de Wereld Belg\u00efe",
+    "Publisher": "Medecins du Monde Belgique - Dokters van de Wereld Belgïe",
     "IATI Organisation Identifier": "BE-BCE_KBO-0460162753",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6192,7 +6192,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/via-db"
   },
   {
-    "Publisher": "Croix-Rouge de Belgique Communaut\u00e9 francophone - Activit\u00e9s internationales ASBL",
+    "Publisher": "Croix-Rouge de Belgique Communauté francophone - Activités internationales ASBL",
     "IATI Organisation Identifier": "BE-BCE_KBO-0462132150",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6256,7 +6256,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/sg"
   },
   {
-    "Publisher": "Beweging voor Internationale Solidariteit - Mouvement pour la Solidarit\u00e9 Internationale",
+    "Publisher": "Beweging voor Internationale Solidariteit - Mouvement pour la Solidarité Internationale",
     "IATI Organisation Identifier": "BE-BCE_KBO-0478060441",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6296,7 +6296,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/solsoc"
   },
   {
-    "Publisher": "Auto-D\u00e9veloppement Afrique (ADA)",
+    "Publisher": "Auto-Développement Afrique (ADA)",
     "IATI Organisation Identifier": "BE-BCE_KBO-0408095925",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6304,7 +6304,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ada"
   },
   {
-    "Publisher": "Asociaci\u00f3n Profamilia",
+    "Publisher": "Asociación Profamilia",
     "IATI Organisation Identifier": "CO-RUE-860013779-5",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "Colombia",
@@ -6312,7 +6312,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/profamilia"
   },
   {
-    "Publisher": "Forum Universitaire pour la Coop\u00e9ration Internationale au D\u00e9veloppement -FUCID ASBL",
+    "Publisher": "Forum Universitaire pour la Coopération Internationale au Développement -FUCID ASBL",
     "IATI Organisation Identifier": "BE-BCE_KBO-0416934803",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6388,11 +6388,11 @@
     "IATI Organisation Identifier": "XM-DAC-7-PPR-4000005312",
     "Organization Type": "Foundation",
     "HQ Country or Region": "Indonesia",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/ybawahid"
   },
   {
-    "Publisher": "Asociaci\u00f3n Movimiento Feminista Por La Paz Ruta Pac\u00edfica de las Mujeres",
+    "Publisher": "Asociación Movimiento Feminista Por La Paz Ruta Pacífica de las Mujeres",
     "IATI Organisation Identifier": "CO-RUE-900.683.942-8",
     "Organization Type": "Public Private Partnership",
     "HQ Country or Region": "Colombia",
@@ -6488,7 +6488,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/baag"
   },
   {
-    "Publisher": "Acad\u00e9mie de recherche et d'enseignement sup\u00e9rieur",
+    "Publisher": "Académie de recherche et d'enseignement supérieur",
     "IATI Organisation Identifier": "BE-BCE_KBO-0546740696",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "Belgium",
@@ -6520,7 +6520,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ec"
   },
   {
-    "Publisher": "M\u00e9decins Sans Vacances",
+    "Publisher": "Médecins Sans Vacances",
     "IATI Organisation Identifier": "BE-BCE_KBO-0448723978",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6528,7 +6528,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/msv"
   },
   {
-    "Publisher": "Comit\u00e9 pour l'abolition des dettes ill\u00e9gitimes",
+    "Publisher": "Comité pour l'abolition des dettes illégitimes",
     "IATI Organisation Identifier": "BE-BCE_KBO-0446340550",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6536,7 +6536,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/cadtm"
   },
   {
-    "Publisher": "ITECO - Centre de formation pour le d\u00e9veloppement",
+    "Publisher": "ITECO - Centre de formation pour le développement",
     "IATI Organisation Identifier": "BE-BCE_KBO-0415499795",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6548,7 +6548,7 @@
     "IATI Organisation Identifier": "ES-CIF-G81164105",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Spain",
-    "Datasets Count": 15,
+    "Datasets Count": 14,
     "Datasets Link": "https://iatiregistry.org/publisher/acfspain"
   },
   {
@@ -6572,7 +6572,7 @@
     "IATI Organisation Identifier": "NL-KVK-41208024",
     "Organization Type": "Foundation",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 6,
+    "Datasets Count": 7,
     "Datasets Link": "https://iatiregistry.org/publisher/aidenvironment"
   },
   {
@@ -6608,7 +6608,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/mondefemmes"
   },
   {
-    "Publisher": "Coop\u00e9ration par l'Education et la Culture",
+    "Publisher": "Coopération par l'Education et la Culture",
     "IATI Organisation Identifier": "BE-BCE_KBO-0417549465",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -6632,7 +6632,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/needs"
   },
   {
-    "Publisher": "Fundaci\u00f3n Ori\u00e9ntame",
+    "Publisher": "Fundación Oriéntame",
     "IATI Organisation Identifier": "CO-RUE-860049972",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Colombia",
@@ -6796,7 +6796,7 @@
     "IATI Organisation Identifier": "XM-DAC-21018",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Switzerland",
-    "Datasets Count": 66,
+    "Datasets Count": 67,
     "Datasets Link": "https://iatiregistry.org/publisher/ifrcrcs"
   },
   {
@@ -6852,7 +6852,7 @@
     "IATI Organisation Identifier": "NL-KVK-56821743",
     "Organization Type": "Foundation",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 2,
+    "Datasets Count": 3,
     "Datasets Link": "https://iatiregistry.org/publisher/mdf"
   },
   {
@@ -6872,7 +6872,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/iraq_foundation"
   },
   {
-    "Publisher": "Oxfam Interm\u00f3n",
+    "Publisher": "Oxfam Intermón",
     "IATI Organisation Identifier": "ES-CIF-G-8236803",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Spain",
@@ -7152,7 +7152,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/intersos_main"
   },
   {
-    "Publisher": "UK \u2013 Department for Education",
+    "Publisher": "UK – Department for Education",
     "IATI Organisation Identifier": "GB-GOV-14",
     "Organization Type": "Government",
     "HQ Country or Region": "United Kingdom",
@@ -7388,7 +7388,7 @@
     "IATI Organisation Identifier": "US-GOV-TBD",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 53,
+    "Datasets Count": 62,
     "Datasets Link": "https://iatiregistry.org/publisher/ftc"
   },
   {
@@ -7428,7 +7428,7 @@
     "IATI Organisation Identifier": "GB-COH-02622374",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 3,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/energy_saving_trust"
   },
   {
@@ -7508,7 +7508,7 @@
     "IATI Organisation Identifier": "US-GOV-22",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 10,
+    "Datasets Count": 20,
     "Datasets Link": "https://iatiregistry.org/publisher/dfc"
   },
   {
@@ -7624,7 +7624,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/dangbo"
   },
   {
-    "Publisher": "Commune de Adjarra - B\u00e9nin",
+    "Publisher": "Commune de Adjarra - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201810251129",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7632,7 +7632,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/adjarra"
   },
   {
-    "Publisher": "Commune de Parakou - B\u00e9nin",
+    "Publisher": "Commune de Parakou - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201000068802",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7640,7 +7640,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/parakou"
   },
   {
-    "Publisher": "Commune de Toffo - B\u00e9nin",
+    "Publisher": "Commune de Toffo - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-5200081145006",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7648,7 +7648,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/toffo"
   },
   {
-    "Publisher": "Commune de Toviklin - B\u00e9nin",
+    "Publisher": "Commune de Toviklin - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6200901945503",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7656,7 +7656,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/toviklin"
   },
   {
-    "Publisher": "Commune de Kpomass\u00e8 - B\u00e9nin",
+    "Publisher": "Commune de Kpomassè - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201101182902",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7664,7 +7664,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/kpomasse"
   },
   {
-    "Publisher": "Commune de Z\u00e8 - B\u00e9nin",
+    "Publisher": "Commune de Zè - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6200801257400",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7672,7 +7672,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ze"
   },
   {
-    "Publisher": "Commune de Allada - B\u00e9nin",
+    "Publisher": "Commune de Allada - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201501755307",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7680,7 +7680,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/allada"
   },
   {
-    "Publisher": "Commune de Aplahou\u00e9 - B\u00e9nin",
+    "Publisher": "Commune de Aplahoué - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201001076902",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7688,7 +7688,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/aplahoue"
   },
   {
-    "Publisher": "Commune de Lalo - B\u00e9nin",
+    "Publisher": "Commune de Lalo - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6200901944805",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7704,7 +7704,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/twnafrica"
   },
   {
-    "Publisher": "Commune de K\u00e9tou - B\u00e9nin",
+    "Publisher": "Commune de Kétou - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6200901851300",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7712,7 +7712,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ketou"
   },
   {
-    "Publisher": "Commune de Adjohoun - B\u00e9nin",
+    "Publisher": "Commune de Adjohoun - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-5200801335602",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7720,7 +7720,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/adjohoun"
   },
   {
-    "Publisher": "Commune de Adja-Ouere - B\u00e9nin",
+    "Publisher": "Commune de Adja-Ouere - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6200901944008",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7728,7 +7728,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/adja-ouere"
   },
   {
-    "Publisher": "Commune de Pob\u00e8 - B\u00e9nin",
+    "Publisher": "Commune de Pobè - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201200579608",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7736,7 +7736,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/pobe"
   },
   {
-    "Publisher": "Commune de Bopa - B\u00e9nin",
+    "Publisher": "Commune de Bopa - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6200901944209",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7744,7 +7744,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/bopa"
   },
   {
-    "Publisher": "Commune de Akpro-Miss\u00e9r\u00e9t\u00e9 - B\u00e9nin",
+    "Publisher": "Commune de Akpro-Missérété - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201001843703",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7752,7 +7752,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/akpro-misserete"
   },
   {
-    "Publisher": "Commune de Com\u00e8 - B\u00e9nin",
+    "Publisher": "Commune de Comè - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201000370801",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7760,7 +7760,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/come"
   },
   {
-    "Publisher": "Commune de Avrankou - B\u00e9nin",
+    "Publisher": "Commune de Avrankou - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201300688700",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7768,7 +7768,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/avrankou"
   },
   {
-    "Publisher": "Commune de Ifangni - B\u00e9nin",
+    "Publisher": "Commune de Ifangni - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201100143407",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7784,7 +7784,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/weeffect"
   },
   {
-    "Publisher": "Commune de Klou\u00e9kanm\u00e8 - B\u00e9nin",
+    "Publisher": "Commune de Klouékanmè - Bénin",
     "IATI Organisation Identifier": "BJ-IFU-6201100034408",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "Benin",
@@ -7840,7 +7840,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/sac_kenya"
   },
   {
-    "Publisher": "Global Rights Compliance",
+    "Publisher": "Global Rights Compliance Foundation",
     "IATI Organisation Identifier": "NL-KVK-70048436",
     "Organization Type": "Foundation",
     "HQ Country or Region": "Netherlands",
@@ -8048,7 +8048,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/whh"
   },
   {
-    "Publisher": "Direc\u00e7\u00e3o Provincial de Sa\u00fade de Nampula",
+    "Publisher": "Direcção Provincial de Saúde de Nampula",
     "IATI Organisation Identifier": "MZ-NUIT-500004037",
     "Organization Type": "Government",
     "HQ Country or Region": "Mozambique",
@@ -8116,7 +8116,7 @@
     "IATI Organisation Identifier": "DK-CVR-18243717",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Denmark",
-    "Datasets Count": 17,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/aadk"
   },
   {
@@ -8144,7 +8144,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ja_ppmn"
   },
   {
-    "Publisher": "Mission \u00d8st",
+    "Publisher": "Mission Øst",
     "IATI Organisation Identifier": "DK-CVR-14723692",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Denmark",
@@ -8416,7 +8416,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/particip"
   },
   {
-    "Publisher": "Groupe Pivot Sant\u00e9 Population",
+    "Publisher": "Groupe Pivot Santé Population",
     "IATI Organisation Identifier": "ML-NIF-082208943A",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "Mali",
@@ -8424,7 +8424,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/gpsp-org"
   },
   {
-    "Publisher": "Plataforma Mo\u00e7ambicana da \u00c1gua (PLAMA)",
+    "Publisher": "Plataforma Moçambicana da Água (PLAMA)",
     "IATI Organisation Identifier": "MZ-NUIT-700179850",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Mozambique",
@@ -8516,7 +8516,7 @@
     "IATI Organisation Identifier": "US-EIN-13-3622707",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "United States",
-    "Datasets Count": 2,
+    "Datasets Count": 1,
     "Datasets Link": "https://iatiregistry.org/publisher/lbg"
   },
   {
@@ -8528,7 +8528,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/opennorth"
   },
   {
-    "Publisher": "PlanB\u00f8rnefonden",
+    "Publisher": "PlanBørnefonden",
     "IATI Organisation Identifier": "DK-CVR-20356731",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Denmark",
@@ -8540,7 +8540,7 @@
     "IATI Organisation Identifier": "NL-KVK-32092131",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Netherlands",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/edukans_foundation"
   },
   {
@@ -8888,7 +8888,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/us-imawh"
   },
   {
-    "Publisher": "Centre International de D\u00e9veloppement et de Recherche",
+    "Publisher": "Centre International de Développement et de Recherche",
     "IATI Organisation Identifier": "FR-RCS-78049888700022",
     "Organization Type": "International NGO",
     "HQ Country or Region": "France",
@@ -8972,11 +8972,11 @@
     "IATI Organisation Identifier": "XM-OCHA-HPC6770",
     "Organization Type": "Government",
     "HQ Country or Region": "Saudi Arabia",
-    "Datasets Count": 85,
+    "Datasets Count": 90,
     "Datasets Link": "https://iatiregistry.org/publisher/ksrelief291"
   },
   {
-    "Publisher": "IMD Mo\u00e7ambique",
+    "Publisher": "IMD Moçambique",
     "IATI Organisation Identifier": "MZ-MOJ-100717344",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Mozambique",
@@ -9232,7 +9232,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/rcel"
   },
   {
-    "Publisher": "Drugs for Neglected Diseases initiative",
+    "Publisher": "Drugs for Neglected Diseases initiative (DNDi)",
     "IATI Organisation Identifier": "CH-FDJP-CHE110141200",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "Switzerland",
@@ -9312,7 +9312,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/msm-ipd"
   },
   {
-    "Publisher": "Centre Dioc\u00e9sain de Communication de Ouahigouya",
+    "Publisher": "Centre Diocésain de Communication de Ouahigouya",
     "IATI Organisation Identifier": "BF-MATD-RNRD00045-4000004688",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Burkina Faso",
@@ -9432,7 +9432,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ide"
   },
   {
-    "Publisher": "Triangle G\u00e9n\u00e9ration Humanitaire",
+    "Publisher": "Triangle Génération Humanitaire",
     "IATI Organisation Identifier": "FR-RCS-40885667200030",
     "Organization Type": "International NGO",
     "HQ Country or Region": "France",
@@ -9528,7 +9528,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/clientearth-1"
   },
   {
-    "Publisher": "Terre des hommes- Aide \u00e0 l'enfance dans le monde- Fondation",
+    "Publisher": "Terre des hommes- Aide à l'enfance dans le monde- Fondation",
     "IATI Organisation Identifier": "CH-FDJP-CHE106823242",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Switzerland",
@@ -9840,7 +9840,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/crisisgroup"
   },
   {
-    "Publisher": "Biblioth\u00e8ques Sans Fronti\u00e8res",
+    "Publisher": "Bibliothèques Sans Frontières",
     "IATI Organisation Identifier": "FR-RCS-49962201700014",
     "Organization Type": "International NGO",
     "HQ Country or Region": "France",
@@ -10092,7 +10092,7 @@
     "IATI Organisation Identifier": "US-EIN-37-1552838",
     "Organization Type": "Foundation",
     "HQ Country or Region": "United States",
-    "Datasets Count": 4,
+    "Datasets Count": 6,
     "Datasets Link": "https://iatiregistry.org/publisher/gsma_foundation"
   },
   {
@@ -10344,7 +10344,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/clgf_data"
   },
   {
-    "Publisher": "Co\u00f6peratief Climate Fund Managers U.A.",
+    "Publisher": "Coöperatief Climate Fund Managers U.A.",
     "IATI Organisation Identifier": "NL-KVK-64460789",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "Netherlands",
@@ -10400,7 +10400,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/shortlistogti"
   },
   {
-    "Publisher": "International Campaign Women\u00b4s Right to Safe Abortion",
+    "Publisher": "International Campaign Women´s Right to Safe Abortion",
     "IATI Organisation Identifier": "GB-CHC-1187935",
     "Organization Type": "National NGO",
     "HQ Country or Region": "United Kingdom",
@@ -10432,12 +10432,20 @@
     "Datasets Link": "https://iatiregistry.org/publisher/inhive"
   },
   {
-    "Publisher": "Fr\u00e8res des Hommes",
+    "Publisher": "Frères des Hommes",
     "IATI Organisation Identifier": "BE-BCE-KBO-0461977940",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
     "Datasets Count": 1,
     "Datasets Link": "https://iatiregistry.org/publisher/fdhommes"
+  },
+  {
+    "Publisher": "Brink Innovation",
+    "IATI Organisation Identifier": "GB-COH-11116719",
+    "Organization Type": "Private Sector",
+    "HQ Country or Region": "United Kingdom",
+    "Datasets Count": 1,
+    "Datasets Link": "https://iatiregistry.org/publisher/brink_innovation"
   },
   {
     "Publisher": "RedR UK",
@@ -10452,7 +10460,7 @@
     "IATI Organisation Identifier": "XI-IATI-WBTF",
     "Organization Type": "Multilateral",
     "HQ Country or Region": "United States",
-    "Datasets Count": 286,
+    "Datasets Count": 287,
     "Datasets Link": "https://iatiregistry.org/publisher/wbtf"
   },
   {
@@ -10488,7 +10496,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/uclan"
   },
   {
-    "Publisher": "Conseil et Appui pour l'Education \u00e0 la Base Mali",
+    "Publisher": "Conseil et Appui pour l'Education à la Base Mali",
     "IATI Organisation Identifier": "ML-NIF-084106436R",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Mali",
@@ -10684,7 +10692,7 @@
     "IATI Organisation Identifier": "GB-GOV-1",
     "Organization Type": "Government",
     "HQ Country or Region": "United Kingdom",
-    "Datasets Count": 32,
+    "Datasets Count": 31,
     "Datasets Link": "https://iatiregistry.org/publisher/fcdo"
   },
   {
@@ -10696,7 +10704,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/impact_initiatives"
   },
   {
-    "Publisher": "Synerg\u00eda - Initiatives for Human Rights",
+    "Publisher": "Synergía - Initiatives for Human Rights",
     "IATI Organisation Identifier": "US-EIN-82-0644678",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United States",
@@ -10768,7 +10776,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/kemitraan"
   },
   {
-    "Publisher": "Soluciones en Legislaci\u00f3n y Pol\u00edtica Ambiental AC",
+    "Publisher": "Soluciones en Legislación y Política Ambiental AC",
     "IATI Organisation Identifier": "MX-RFC-SLP1412039F3",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Mexico",
@@ -10908,7 +10916,7 @@
     "IATI Organisation Identifier": "NG-CAC-30547",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Nigeria",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/paradigm"
   },
   {
@@ -11072,7 +11080,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ces-ua"
   },
   {
-    "Publisher": "Association de solidarit\u00e9 internationale, Agriculteurs fran\u00e7ais et d\u00e9veloppement international (Afdi) France",
+    "Publisher": "Association de solidarité internationale, Agriculteurs français et développement international (Afdi) France",
     "IATI Organisation Identifier": "FR-INSEE-31827645800037",
     "Organization Type": "Other Public Sector",
     "HQ Country or Region": "France",
@@ -11216,7 +11224,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/mdm_spain"
   },
   {
-    "Publisher": "La\u00efcit\u00e9 et Humanisme en Afrique Centrale (LHAC)",
+    "Publisher": "Laïcité et Humanisme en Afrique Centrale (LHAC)",
     "IATI Organisation Identifier": "BE-BCE_KBO-0464147473",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
@@ -11440,7 +11448,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/leprazending-tlm-nl"
   },
   {
-    "Publisher": "Synergie des Femmes pour la Paix et la R\u00e9conciliation des Peuples des Grands Lacs d'Afrique",
+    "Publisher": "Synergie des Femmes pour la Paix et la Réconciliation des Peuples des Grands Lacs d'Afrique",
     "IATI Organisation Identifier": "XI-IATI-SPR",
     "Organization Type": "Regional NGO",
     "HQ Country or Region": "Congo (Democratic Republic of the)",
@@ -11696,7 +11704,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/traide_foundation"
   },
   {
-    "Publisher": "Centro de Aprendizagem e Capacita\u00e7\u00e3o da Sociedade Civil",
+    "Publisher": "Centro de Aprendizagem e Capacitação da Sociedade Civil",
     "IATI Organisation Identifier": "MZ-NUIT-700089584",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Mozambique",
@@ -11768,7 +11776,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/apn"
   },
   {
-    "Publisher": "Fundaci\u00f3n Avina",
+    "Publisher": "Fundación Avina",
     "IATI Organisation Identifier": "PA-PRP-5789",
     "Organization Type": "Foundation",
     "HQ Country or Region": "Panama",
@@ -11896,7 +11904,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ntfp-ep"
   },
   {
-    "Publisher": "Fundaci\u00f3n Gaia Amazonas",
+    "Publisher": "Fundación Gaia Amazonas",
     "IATI Organisation Identifier": "CO-RUE-8300033586",
     "Organization Type": "Regional NGO",
     "HQ Country or Region": "Colombia",
@@ -11912,7 +11920,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/gnbcc"
   },
   {
-    "Publisher": "Secr\u00e9tariat Permanent des Organisation non-gouvernementales du Burkina Faso (SPONG-BURKINA)",
+    "Publisher": "Secrétariat Permanent des Organisation non-gouvernementales du Burkina Faso (SPONG-BURKINA)",
     "IATI Organisation Identifier": "BF-MATD-2407",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Burkina Faso",
@@ -11960,7 +11968,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ad"
   },
   {
-    "Publisher": "Plateforme des Acteurs de la Soci\u00e9t\u00e9 Civile au BENIN",
+    "Publisher": "Plateforme des Acteurs de la Société Civile au BENIN",
     "IATI Organisation Identifier": "BJ-IFU-6201500233008",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Benin",
@@ -11968,7 +11976,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/pascib_benin"
   },
   {
-    "Publisher": "Secr\u00e9tariat de Concertation des Organisations Non Gouvernementales Maliennes",
+    "Publisher": "Secrétariat de Concertation des Organisations Non Gouvernementales Maliennes",
     "IATI Organisation Identifier": "ML-MAT-028-MAT-DNIC-DAG",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Mali",
@@ -12088,7 +12096,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/wwf-py"
   },
   {
-    "Publisher": "Centre des Etudes M\u00e9diterran\u00e9ennes et Internationales",
+    "Publisher": "Centre des Etudes Méditerranéennes et Internationales",
     "IATI Organisation Identifier": "TN-RNE-1027578P",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Tunisia",
@@ -12208,7 +12216,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/profemmes"
   },
   {
-    "Publisher": "Corporaci\u00f3n de Apoyo a Comunidades Populares",
+    "Publisher": "Corporación de Apoyo a Comunidades Populares",
     "IATI Organisation Identifier": "CO-RUES-800121811",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Colombia",
@@ -12232,7 +12240,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/avsi-ssd"
   },
   {
-    "Publisher": "SOS B\u00f8rnebyerne",
+    "Publisher": "SOS Børnebyerne",
     "IATI Organisation Identifier": "DK-CVR-25825012",
     "Organization Type": "International NGO",
     "HQ Country or Region": "Denmark",
@@ -12248,7 +12256,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/dalbergcatalyst"
   },
   {
-    "Publisher": "Association B\u00e9ninoise pour le Marketing Social et la Communication pour la Sant\u00e9 (ABMS)",
+    "Publisher": "Association Béninoise pour le Marketing Social et la Communication pour la Santé (ABMS)",
     "IATI Organisation Identifier": "BJ-IFU-6201810257535",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Benin",
@@ -12264,6 +12272,14 @@
     "Datasets Link": "https://iatiregistry.org/publisher/wilpf_22"
   },
   {
+    "Publisher": "PATTIRO",
+    "IATI Organisation Identifier": "ID-DJP-030079198015000",
+    "Organization Type": "National NGO",
+    "HQ Country or Region": "Indonesia",
+    "Datasets Count": 1,
+    "Datasets Link": "https://iatiregistry.org/publisher/pattiro"
+  },
+  {
     "Publisher": "Stichting Habitat for Humanity Nederland",
     "IATI Organisation Identifier": "NL-KVK-41226182",
     "Organization Type": "National NGO",
@@ -12276,7 +12292,7 @@
     "IATI Organisation Identifier": "US-GOV-11",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 200,
+    "Datasets Count": 207,
     "Datasets Link": "https://iatiregistry.org/publisher/state"
   },
   {
@@ -12284,7 +12300,7 @@
     "IATI Organisation Identifier": "US-GOV-32",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 34,
+    "Datasets Count": 39,
     "Datasets Link": "https://iatiregistry.org/publisher/epa"
   },
   {
@@ -12292,7 +12308,7 @@
     "IATI Organisation Identifier": "US-GOV-16",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 59,
+    "Datasets Count": 63,
     "Datasets Link": "https://iatiregistry.org/publisher/doc"
   },
   {
@@ -12300,7 +12316,7 @@
     "IATI Organisation Identifier": "US-GOV-12",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 94,
+    "Datasets Count": 102,
     "Datasets Link": "https://iatiregistry.org/publisher/ustda"
   },
   {
@@ -12308,7 +12324,7 @@
     "IATI Organisation Identifier": "US-GOV-2",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 139,
+    "Datasets Count": 153,
     "Datasets Link": "https://iatiregistry.org/publisher/usda"
   },
   {
@@ -12324,7 +12340,7 @@
     "IATI Organisation Identifier": "US-GOV-21",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 29,
+    "Datasets Count": 32,
     "Datasets Link": "https://iatiregistry.org/publisher/iaf"
   },
   {
@@ -12332,7 +12348,7 @@
     "IATI Organisation Identifier": "US-GOV-26",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 34,
+    "Datasets Count": 43,
     "Datasets Link": "https://iatiregistry.org/publisher/dot"
   },
   {
@@ -12340,7 +12356,7 @@
     "IATI Organisation Identifier": "US-GOV-14",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 76,
+    "Datasets Count": 77,
     "Datasets Link": "https://iatiregistry.org/publisher/hhs"
   },
   {
@@ -12352,11 +12368,19 @@
     "Datasets Link": "https://iatiregistry.org/publisher/doj"
   },
   {
+    "Publisher": "Devidayal Solar Solutions Private Limited",
+    "IATI Organisation Identifier": "IN-MCA-U74999MH2015PTC264094",
+    "Organization Type": "Private Sector",
+    "HQ Country or Region": "India",
+    "Datasets Count": 1,
+    "Datasets Link": "https://iatiregistry.org/publisher/ddsolar"
+  },
+  {
     "Publisher": "United States Department of Interior",
     "IATI Organisation Identifier": "US-GOV-9",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 125,
+    "Datasets Count": 126,
     "Datasets Link": "https://iatiregistry.org/publisher/doi"
   },
   {
@@ -12364,7 +12388,7 @@
     "IATI Organisation Identifier": "US-GOV-7",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 154,
+    "Datasets Count": 159,
     "Datasets Link": "https://iatiregistry.org/publisher/dod"
   },
   {
@@ -12372,7 +12396,7 @@
     "IATI Organisation Identifier": "US-GOV-20",
     "Organization Type": "Government",
     "HQ Country or Region": "United States",
-    "Datasets Count": 92,
+    "Datasets Count": 93,
     "Datasets Link": "https://iatiregistry.org/publisher/doe"
   },
   {
@@ -12392,7 +12416,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/jrf_2022"
   },
   {
-    "Publisher": "SOS Jeunesse et D\u00e9fis",
+    "Publisher": "SOS Jeunesse et Défis",
     "IATI Organisation Identifier": "BF-MATD-N00000408001",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Burkina Faso",
@@ -12400,10 +12424,10 @@
     "Datasets Link": "https://iatiregistry.org/publisher/sosjd6"
   },
   {
-    "Publisher": "convention de la soci\u00e9t\u00e9 civile ivoirienne",
+    "Publisher": "convention de la société civile ivoirienne",
     "IATI Organisation Identifier": "ci-moi-474-mis-dgat-dag-sdva",
     "Organization Type": "National NGO",
-    "HQ Country or Region": "C\u00f4te D'Ivoire",
+    "HQ Country or Region": "Côte D'Ivoire",
     "Datasets Count": 1,
     "Datasets Link": "https://iatiregistry.org/publisher/csci_benkadi"
   },
@@ -12438,6 +12462,14 @@
     "HQ Country or Region": "United States",
     "Datasets Count": 1,
     "Datasets Link": "https://iatiregistry.org/publisher/ipa_"
+  },
+  {
+    "Publisher": "WAJIBU - Institute of Public Accountability",
+    "IATI Organisation Identifier": "TZ-NNCB-00NGO-R2-00056",
+    "Organization Type": "National NGO",
+    "HQ Country or Region": "Tanzania, United Republic of",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/wajibu"
   },
   {
     "Publisher": "International Nepal Fellowship Nepal",
@@ -12592,7 +12624,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/globalshea"
   },
   {
-    "Publisher": "E3 - Ecolog\u00eda, Econom\u00eda y Et\u00edca",
+    "Publisher": "E3 - Ecología, Economía y Etíca",
     "IATI Organisation Identifier": "CO-CCB-01952534",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "Colombia",
@@ -12640,7 +12672,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/rabi3"
   },
   {
-    "Publisher": "Association B\u00e9ninoise pour la Promotion de la Famille",
+    "Publisher": "Association Béninoise pour la Promotion de la Famille",
     "IATI Organisation Identifier": "BJ-IFU-6201001214905",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Benin",
@@ -12732,7 +12764,7 @@
     "IATI Organisation Identifier": "KE-NCB-10488",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Kenya",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/sp"
   },
   {
@@ -12828,7 +12860,7 @@
     "IATI Organisation Identifier": "US-EIN-45-4535664",
     "Organization Type": "International NGO",
     "HQ Country or Region": "United States",
-    "Datasets Count": 1,
+    "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/harvard_global"
   },
   {
@@ -12848,6 +12880,14 @@
     "Datasets Link": "https://iatiregistry.org/publisher/bfa_global"
   },
   {
+    "Publisher": "Gatsby Africa",
+    "IATI Organisation Identifier": "KE-RCO-CF2015185025",
+    "Organization Type": "Foundation",
+    "HQ Country or Region": "Kenya",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/ga"
+  },
+  {
     "Publisher": "TRIAL International",
     "IATI Organisation Identifier": "CH-FDJP-CHE326267730",
     "Organization Type": "International NGO",
@@ -12862,6 +12902,14 @@
     "HQ Country or Region": "Afghanistan",
     "Datasets Count": 2,
     "Datasets Link": "https://iatiregistry.org/publisher/sca_afghanistan"
+  },
+  {
+    "Publisher": "International Foundation for Electoral Systems",
+    "IATI Organisation Identifier": "US-EIN-52-1527835",
+    "Organization Type": "International NGO",
+    "HQ Country or Region": "United States",
+    "Datasets Count": 1,
+    "Datasets Link": "https://iatiregistry.org/publisher/ifes"
   },
   {
     "Publisher": "Imfact Working Capital Solutions Limited",
@@ -12896,6 +12944,14 @@
     "Datasets Link": "https://iatiregistry.org/publisher/arasaregional"
   },
   {
+    "Publisher": "Iftiin Foundation",
+    "IATI Organisation Identifier": "SO-COA-107-0081-2023",
+    "Organization Type": "National NGO",
+    "HQ Country or Region": "Somalia",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/iffoundation12"
+  },
+  {
     "Publisher": "Global Integrity",
     "IATI Organisation Identifier": "US-EIN-26-0126537",
     "Organization Type": "International NGO",
@@ -12920,7 +12976,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/bboxx"
   },
   {
-    "Publisher": "Nadji.Bi S\u00e9n\u00e9gal SUARL",
+    "Publisher": "Nadji.Bi Sénégal SUARL",
     "IATI Organisation Identifier": "SN-NINEA-50255162X2",
     "Organization Type": "Private Sector",
     "HQ Country or Region": "Senegal",
@@ -12936,7 +12992,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/ptarupidn"
   },
   {
-    "Publisher": "Centro de Intelig\u00eancia Territorial",
+    "Publisher": "Centro de Inteligência Territorial",
     "IATI Organisation Identifier": "BR-CNPJ-30619995-0001-34",
     "Organization Type": "Academic, Training and Research",
     "HQ Country or Region": "Brazil",
@@ -12968,6 +13024,14 @@
     "Datasets Link": "https://iatiregistry.org/publisher/chpd_ulab"
   },
   {
+    "Publisher": "Upinion Netherlands",
+    "IATI Organisation Identifier": "NL-KVK-51837609",
+    "Organization Type": "Private Sector",
+    "HQ Country or Region": "Netherlands",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/upinion"
+  },
+  {
     "Publisher": "B. P. Koirala Institute of Health Sciences",
     "IATI Organisation Identifier": "NP-IRD-201252183",
     "Organization Type": "Academic, Training and Research",
@@ -12976,7 +13040,7 @@
     "Datasets Link": "https://iatiregistry.org/publisher/bpkihs_dharan"
   },
   {
-    "Publisher": "CONEXI\u00d3N",
+    "Publisher": "CONEXIÓN",
     "IATI Organisation Identifier": "BO-NIT-351775028",
     "Organization Type": "Regional NGO",
     "HQ Country or Region": "Bolivia",
@@ -13008,11 +13072,91 @@
     "Datasets Link": "https://iatiregistry.org/publisher/bepl"
   },
   {
+    "Publisher": "UK-Ghana Chamber of Commerce",
+    "IATI Organisation Identifier": "GH-RGD-CG034642016",
+    "Organization Type": "National NGO",
+    "HQ Country or Region": "Ghana",
+    "Datasets Count": 1,
+    "Datasets Link": "https://iatiregistry.org/publisher/ukgcc"
+  },
+  {
     "Publisher": "International Peace Information Service",
     "IATI Organisation Identifier": "BE-BCE_KB0-0421408778",
     "Organization Type": "National NGO",
     "HQ Country or Region": "Belgium",
     "Datasets Count": 1,
     "Datasets Link": "https://iatiregistry.org/publisher/ipis"
+  },
+  {
+    "Publisher": "Institute for Family Health",
+    "IATI Organisation Identifier": "XI-IATI-KHF_IFH",
+    "Organization Type": "National NGO",
+    "HQ Country or Region": "Jordan",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/khf_ifh"
+  },
+  {
+    "Publisher": "Water Sector Regulatory Council",
+    "IATI Organisation Identifier": "PS-TIN-888005972",
+    "Organization Type": "Other Public Sector",
+    "HQ Country or Region": "Palestine, State of",
+    "Datasets Count": 3,
+    "Datasets Link": "https://iatiregistry.org/publisher/wsrc1"
+  },
+  {
+    "Publisher": "Stiching Cardano Development",
+    "IATI Organisation Identifier": "NL-KVK-57504091",
+    "Organization Type": "Foundation",
+    "HQ Country or Region": "Netherlands",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/stichting_cd"
+  },
+  {
+    "Publisher": "Centro Brasileiro de Análise e Planejamento - Cebrap",
+    "IATI Organisation Identifier": "BR-CNPJ-62579164-0001-72",
+    "Organization Type": "Academic, Training and Research",
+    "HQ Country or Region": "Brazil",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/_cebrap"
+  },
+  {
+    "Publisher": "Rijksakademie van beeldende kunsten",
+    "IATI Organisation Identifier": "NL-KVK-34123218",
+    "Organization Type": "Academic, Training and Research",
+    "HQ Country or Region": "Netherlands",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/rabk"
+  },
+  {
+    "Publisher": "Cambridge Institute for Sustainability Leadership",
+    "IATI Organisation Identifier": "ZA-CIP-2011-003386-08",
+    "Organization Type": "Academic, Training and Research",
+    "HQ Country or Region": "South Africa",
+    "Datasets Count": 1,
+    "Datasets Link": "https://iatiregistry.org/publisher/cisl"
+  },
+  {
+    "Publisher": "DiXi Group NGO",
+    "IATI Organisation Identifier": "UA-EDR-36159679",
+    "Organization Type": "National NGO",
+    "HQ Country or Region": "Ukraine",
+    "Datasets Count": 1,
+    "Datasets Link": "https://iatiregistry.org/publisher/dixigroup"
+  },
+  {
+    "Publisher": "Welfare Association (Taawon)",
+    "IATI Organisation Identifier": "PS-MOI-QR-0049-F",
+    "Organization Type": "International NGO",
+    "HQ Country or Region": "Palestine, State of",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/xm-dac-7-ppr-4000005167"
+  },
+  {
+    "Publisher": "Agsol Limited",
+    "IATI Organisation Identifier": "HK-CR-2436455",
+    "Organization Type": "Private Sector",
+    "HQ Country or Region": "Hong Kong",
+    "Datasets Count": 2,
+    "Datasets Link": "https://iatiregistry.org/publisher/agsollimited"
   }
 ]
