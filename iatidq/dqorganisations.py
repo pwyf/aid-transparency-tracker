@@ -149,8 +149,8 @@ def downloadOrganisationFrequency():
             continue
         for organisation in organisations:
             with db.session.begin():
-                if organisation.frequency != frequency:
-                    timelag = timelag_dict.get(packagegroup)
+                timelag = timelag_dict.get(packagegroup)
+                if organisation.frequency != frequency or organisation.timelag != timelag:
                     print(('{}: Updated {}, with time lag {} (previously: Updated {}, with time lag {})'.format(
                         organisation.organisation_name,
                         frequency,
