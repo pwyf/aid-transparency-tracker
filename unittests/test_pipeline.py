@@ -203,15 +203,12 @@ def _test_example_tests(publisher, country):
 
 
 @nose.with_setup(setup_func, teardown_func)
-def test_samples():
-    data = [ ('worldbank', '789'),
-             ('dfid', 'ph')
-             ]
-
-    #data = [ data[1] ]
-
-    for publisher, country in data:
-        yield _test_example_tests, publisher, country
+@pytest.mark.parametrize("publisher, country", [
+    ('worldbank', '789'),
+    ('dfid', 'ph')
+])
+def _test_samples(publisher, country):
+    _test_example_tests(publisher, country)
 
 if __name__ == '__main__':
     setup_func()
