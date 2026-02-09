@@ -141,6 +141,8 @@ pytest==9.0.2
     #   pytest-mock
 pytest-mock==3.15.1
     # via -r requirements_dev.in
+python-dotenv==1.2.1
+    # via -r requirements.txt
 pytokens==0.4.1
     # via black
 pyyaml==6.0.3
