@@ -3,6 +3,7 @@ Flask<3
 Flask-Login
 Flask-Principal==0.4.0
 Flask-SQLAlchemy<3
+gherkin-official==4.1.3
 iatikit==3.6.1
 lxml
 pip-tools
