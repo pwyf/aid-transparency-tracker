@@ -10,57 +10,63 @@ attrs==25.4.0
     # via
     #   outcome
     #   trio
+bdd-tester==0.0.8
+    # via -r requirements.txt
 black==26.1.0
     # via -r requirements_dev.in
 blinker==1.9.0
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   flask
     #   flask-principal
 build==1.4.0
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   pip-tools
 certifi==2026.1.4
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   requests
     #   selenium
 charset-normalizer==3.4.4
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   requests
 click==8.3.1
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   black
     #   flask
     #   pip-tools
 configparser==7.2.0
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   iatikit
 fancycompleter==0.11.1
     # via pdbpp
 flask==2.3.3
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   flask-login
     #   flask-principal
     #   flask-sqlalchemy
 flask-login==0.6.3
-    # via -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    # via -r requirements.txt
 flask-principal==0.4.0
-    # via -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    # via -r requirements.txt
 flask-sqlalchemy==2.5.1
-    # via -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    # via -r requirements.txt
+gherkin-official==38.0.0
+    # via
+    #   -r requirements.txt
+    #   bdd-tester
 h11==0.16.0
     # via wsproto
 iatikit==3.6.1
-    # via -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    # via -r requirements.txt
 idna==3.11
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   requests
     #   trio
 importlib-metadata==8.7.1
@@ -71,19 +77,19 @@ isort==7.0.0
     # via -r requirements_dev.in
 itsdangerous==2.2.0
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   flask
 jinja2==3.1.6
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   flask
 lxml==6.0.2
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   iatikit
 markupsafe==3.0.3
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   jinja2
     #   werkzeug
 mypy-extensions==1.1.0
@@ -98,7 +104,7 @@ outcome==1.3.0.post0
     #   trio-websocket
 packaging==26.0
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   black
     #   build
     #   pytest
@@ -109,20 +115,20 @@ pathspec==1.0.4
 pdbpp==0.12.0.post1
     # via -r requirements_dev.in
 pip-tools==7.5.2
-    # via -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    # via -r requirements.txt
 platformdirs==4.5.1
     # via black
 pluggy==1.6.0
     # via pytest
 psycopg2-binary==2.9.11
-    # via -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    # via -r requirements.txt
 pygments==2.19.2
     # via
     #   pdbpp
     #   pytest
 pyproject-hooks==1.2.0
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   build
     #   pip-tools
 pyrepl==0.11.4
@@ -137,15 +143,18 @@ pytest-mock==3.15.1
     # via -r requirements_dev.in
 pytokens==0.4.1
     # via black
+pyyaml==6.0.3
+    # via -r requirements.txt
 requests==2.32.5
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   iatikit
 selenium==4.40.0
     # via -r requirements_dev.in
 six==1.17.0
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
+    #   bdd-tester
     #   sqlalchemy-mixins
 sniffio==1.3.1
     # via trio
@@ -153,11 +162,11 @@ sortedcontainers==2.4.0
     # via trio
 sqlalchemy==1.3.11
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   flask-sqlalchemy
     #   sqlalchemy-mixins
 sqlalchemy-mixins==0.2.2
-    # via -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    # via -r requirements.txt
 trio==0.32.0
     # via
     #   selenium
@@ -173,27 +182,29 @@ types-urllib3==1.26.25.14
     # via selenium
 typing==3.7.4.3
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   sqlalchemy-mixins
 typing-extensions==4.15.0
     # via
+    #   -r requirements.txt
+    #   gherkin-official
     #   selenium
     #   trio-typing
 urllib3[socks]==2.6.3
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   requests
     #   selenium
 websocket-client==1.9.0
     # via selenium
 werkzeug==3.1.5
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   flask
     #   flask-login
 wheel==0.46.3
     # via
-    #   -r /Users/mark/sites/emergentally/aid-transparency-tracker/requirements.txt
+    #   -r requirements.txt
     #   pip-tools
 wsproto==1.3.2
     # via trio-websocket
