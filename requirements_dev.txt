@@ -10,8 +10,6 @@ amqp==2.2.2
     #   kombu
 amqplib==1.0.2
     # via -r requirements.txt
-anyjson==0.3.3
-    # via -r requirements.txt
 attrs==23.1.0
     # via
     #   outcome
@@ -86,7 +84,7 @@ gherkin-official==4.1.3
     #   bdd-tester
 h11==0.14.0
     # via wsproto
-iatikit==3.4.0
+iatikit>3.6.1
     # via -r requirements.txt
 idna==2.6
     # via
