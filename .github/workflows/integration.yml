@@ -22,19 +22,17 @@ jobs:
           - '127.0.0.1:5433:5432'
     strategy:
       matrix:
-        python-version: [ '3.8', '3.10' ]
+        python-version: [ '3.11', '3.12' ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           submodules: recursive
       - name: Setup python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
           cache-dependency-path: requirements_dev.txt
-      - name: Install older setuptools for use_2to3 https://stackoverflow.com/questions/72414481/error-in-anyjson-setup-command-use-2to3-is-invalid
-        run: pip install "setuptools<58" wheel
       - name: Install requirements_dev.txt
         run: pip install -r requirements_dev.txt
       - name: Config
