@@ -1,2948 +1,2568 @@
-County list,country_code,country_strategy_exclusion,Agency name,organisation_code
-Algeria,DZ,,AfDB - Sov.,46002
-Angola,AO,,AfDB - Sov.,46002
-Benin,BJ,,AfDB - Sov.,46002
-Botswana,BW,,AfDB - Sov.,46002
-Burkina Faso,BF,,AfDB - Sov.,46002
-Burundi,BI,,AfDB - Sov.,46002
-Cabo Verde,CV,,AfDB - Sov.,46002
-Cameroon,CM,,AfDB - Sov.,46002
-Central African Republic,CF,,AfDB - Sov.,46002
-Chad,TD,,AfDB - Sov.,46002
-Comoros,KM,,AfDB - Sov.,46002
-Congo,CG,,AfDB - Sov.,46002
-Côte d’Ivoire,CI,,AfDB - Sov.,46002
-Democratic Republic of Congo,CD,,AfDB - Sov.,46002
-Djibouti,DJ,,AfDB - Sov.,46002
-Egypt,EG,,AfDB - Sov.,46002
-Equatorial Guinea,GQ,,AfDB - Sov.,46002
-Eritrea,ER,,AfDB - Sov.,46002
-eSwatini,SZ,,AfDB - Sov.,46002
-Ethiopia,ET,,AfDB - Sov.,46002
-Gabon,GA,,AfDB - Sov.,46002
-Gambia,GM,,AfDB - Sov.,46002
-Ghana,GH,,AfDB - Sov.,46002
-Guinea,GN,,AfDB - Sov.,46002
-Guinea-Bissau,GW,,AfDB - Sov.,46002
-Kenya,KE,,AfDB - Sov.,46002
-Lesotho,LS,1,AfDB - Sov.,46002
-Liberia,LR,,AfDB - Sov.,46002
-Libya,LY,,AfDB - Sov.,46002
-Madagascar,MG,,AfDB - Sov.,46002
-Malawi,MW,1,AfDB - Sov.,46002
-Mali,ML,1,AfDB - Sov.,46002
-Mauritania,MR,1,AfDB - Sov.,46002
-Mauritius,MU,,AfDB - Sov.,46002
-Morocco,MA,,AfDB - Sov.,46002
-Mozambique,MZ,1,AfDB - Sov.,46002
-Namibia,NA,,AfDB - Sov.,46002
-Niger,NE,,AfDB - Sov.,46002
-Nigeria,NG,,AfDB - Sov.,46002
-Rwanda,RW,,AfDB - Sov.,46002
-São Tomé and Príncipe,ST,,AfDB - Sov.,46002
-Senegal,SN,,AfDB - Sov.,46002
-Seychelles,SC,,AfDB - Sov.,46002
-Sierra Leone,SL,,AfDB - Sov.,46002
-Somalia,SO,1,AfDB - Sov.,46002
-South Africa,ZA,,AfDB - Sov.,46002
-South Sudan,SS,,AfDB - Sov.,46002
-Sudan,SD,,AfDB - Sov.,46002
-Tanzania,TZ,,AfDB - Sov.,46002
-Togo,TG,,AfDB - Sov.,46002
-Tunisia,TN,,AfDB - Sov.,46002
-Uganda,UG,,AfDB - Sov.,46002
-Zambia,ZM,,AfDB - Sov.,46002
-Zimbabwe,ZW,1,AfDB - Sov.,46002
-[Bahasa Indonesia],ID,,AsDB- sov,46004
-‌Afghanistan,AF,,AsDB- sov,46004
-‌Armenia,AM,,AsDB- sov,46004
-‌Azerbaijan,AZ,,AsDB- sov,46004
-‌Bangladesh,BD,,AsDB- sov,46004
-‌Bhutan,BT,,AsDB- sov,46004
-‌Cambodia,KH,,AsDB- sov,46004
-Cook Islands,CK,,AsDB- sov,46004
-Federated States of Micronesia,FM,,AsDB- sov,46004
-Fiji,FJ,,AsDB- sov,46004
-‌Georgia,FJ,,AsDB- sov,46004
-‌India,IN,,AsDB- sov,46004
-‌Indonesia,ID,,AsDB- sov,46004
-‌Kazakhstan,KZ,,AsDB- sov,46004
-Kiribati,KI,1,AsDB- sov,46004
-‌Kyrgyz Republic,KR,,AsDB- sov,46004
-‌Lao People's Democratic Republic,LA,,AsDB- sov,46004
-Maldives,MV,,AsDB- sov,46004
-Marshall Islands,MH,1,AsDB- sov,46004
-‌Mongolia,MN,,AsDB- sov,46004
-‌Myanmar,MM,,AsDB- sov,46004
-Nauru,NR,,AsDB- sov,46004
-‌Nepal,NP,,AsDB- sov,46004
-Niue,NU,,AsDB- sov,46004
-‌Pakistan,PK,,AsDB- sov,46004
-Palau,PW,,AsDB- sov,46004
-‌Papua New Guinea,PG,,AsDB- sov,46004
-‌People's Republic of China,CN,,AsDB- sov,46004
-‌Philippines,PH,,AsDB- sov,46004
-Samoa,WS,,AsDB- sov,46004
-Solomon Islands,SB,1,AsDB- sov,46004
-‌Sri Lanka,LK,,AsDB- sov,46004
-‌Tajikistan,TJ,,AsDB- sov,46004
-‌Thailand,TH,,AsDB- sov,46004
-‌Timor-Leste,TL,,AsDB- sov,46004
-Tonga,TO,,AsDB- sov,46004
-‌Turkmenistan,TM,,AsDB- sov,46004
-Tuvalu,TV,,AsDB- sov,46004
-‌Uzbekistan,UZ,,AsDB- sov,46004
-Vanuatu,VU,,AsDB- sov,46004
-‌Viet Nam,VN,,AsDB- sov,46004
-Afghanistan,AF,,Australia,AU-5
-Bangladesh,BD,,Australia,AU-5
-Bhutan,BT,,Australia,AU-5
-Cambodia,KH,,Australia,AU-5
-Fiji,FJ,,Australia,AU-5
-Indonesia,ID,,Australia,AU-5
-Iraq humanitarian response,IQ,,Australia,AU-5
-Kiribati,KI,,Australia,AU-5
-Laos,LA,,Australia,AU-5
-Maldives,MV,,Australia,AU-5
-Mongolia,MN,,Australia,AU-5
-Myanmar,MM,,Australia,AU-5
-Nauru,NR,,Australia,AU-5
-Nepal,NP,,Australia,AU-5
-Niue,NU,,Australia,AU-5
-Pakistan,PK,,Australia,AU-5
-Palestinian Territories,PS,,Australia,AU-5
-Papua New Guinea,PG,,Australia,AU-5
-Philippines,PH,,Australia,AU-5
-Republic of Palau,PW,,Australia,AU-5
-Republic of the Marshall Islands,MH,,Australia,AU-5
-Samoa,WS,,Australia,AU-5
-Solomon Islands,SB,,Australia,AU-5
-Sri Lanka,LK,,Australia,AU-5
-Syria humanitarian response,SY,,Australia,AU-5
-Timor-Leste,TL,,Australia,AU-5
-Tokelau,TK,,Australia,AU-5
-Tonga,TO,,Australia,AU-5
-Tuvalu,TV,,Australia,AU-5
-Vanuatu,VU,,Australia,AU-5
-Vietnam,VN,,Australia,AU-5
-Afghanistan,AF,,Belgium DGD,XM-DAC-2-10
-Bangladesh,BD,,Belgium DGD,XM-DAC-2-10
-Benin,BJ,,Belgium DGD,XM-DAC-2-10
-Bolivia,BO,,Belgium DGD,XM-DAC-2-10
-Brazil,BR,,Belgium DGD,XM-DAC-2-10
-Burkina Faso,BF,,Belgium DGD,XM-DAC-2-10
-Burundi,BI,,Belgium DGD,XM-DAC-2-10
-Cabo Verde,CV,,Belgium DGD,XM-DAC-2-10
-Cambodia,KH,,Belgium DGD,XM-DAC-2-10
-Cameroon,CM,,Belgium DGD,XM-DAC-2-10
-China (People's Republic of),CN,,Belgium DGD,XM-DAC-2-10
-Colombia,CO,,Belgium DGD,XM-DAC-2-10
-Congo,CG,,Belgium DGD,XM-DAC-2-10
-Costa Rica,CR,,Belgium DGD,XM-DAC-2-10
-Côte d'Ivoire,CI,,Belgium DGD,XM-DAC-2-10
-Cuba,CU,,Belgium DGD,XM-DAC-2-10
-Democratic Republic of the Congo,CD,,Belgium DGD,XM-DAC-2-10
-Dominican Republic,DO,,Belgium DGD,XM-DAC-2-10
-Ecuador,EC,,Belgium DGD,XM-DAC-2-10
-El Salvador,SV,,Belgium DGD,XM-DAC-2-10
-Ethiopia,ET,,Belgium DGD,XM-DAC-2-10
-Ghana,GH,,Belgium DGD,XM-DAC-2-10
-Guatemala,GT,,Belgium DGD,XM-DAC-2-10
-Guinea,GN,,Belgium DGD,XM-DAC-2-10
-Haiti,HT,,Belgium DGD,XM-DAC-2-10
-Honduras,HN,,Belgium DGD,XM-DAC-2-10
-India,IN,,Belgium DGD,XM-DAC-2-10
-Indonesia,ID,,Belgium DGD,XM-DAC-2-10
-Iraq,IQ,,Belgium DGD,XM-DAC-2-10
-Jordan,JO,,Belgium DGD,XM-DAC-2-10
-Kenya,KE,,Belgium DGD,XM-DAC-2-10
-Lebanon,LB,,Belgium DGD,XM-DAC-2-10
-Madagascar,MG,,Belgium DGD,XM-DAC-2-10
-Malawi,MW,,Belgium DGD,XM-DAC-2-10
-Mali,ML,,Belgium DGD,XM-DAC-2-10
-Mauritania,MR,,Belgium DGD,XM-DAC-2-10
-Mauritius,MU,,Belgium DGD,XM-DAC-2-10
-Mexico,MX,,Belgium DGD,XM-DAC-2-10
-Morocco,MA,,Belgium DGD,XM-DAC-2-10
-Mozambique,MZ,,Belgium DGD,XM-DAC-2-10
-Nicaragua,NI,,Belgium DGD,XM-DAC-2-10
-Niger,NE,,Belgium DGD,XM-DAC-2-10
-Nigeria,NG,,Belgium DGD,XM-DAC-2-10
-Panama,PA,,Belgium DGD,XM-DAC-2-10
-Paraguay,PY,,Belgium DGD,XM-DAC-2-10
-Peru,PE,,Belgium DGD,XM-DAC-2-10
-Philippines,PH,,Belgium DGD,XM-DAC-2-10
-Rwanda,RW,,Belgium DGD,XM-DAC-2-10
-Senegal,SN,,Belgium DGD,XM-DAC-2-10
-Sierra Leone,SL,,Belgium DGD,XM-DAC-2-10
-South Africa,ZA,,Belgium DGD,XM-DAC-2-10
-Sri Lanka,LK,,Belgium DGD,XM-DAC-2-10
-Syrian Arab Republic,SY,,Belgium DGD,XM-DAC-2-10
-Tanzania,TZ,,Belgium DGD,XM-DAC-2-10
-Togo,TG,,Belgium DGD,XM-DAC-2-10
-Tunisia,TN,,Belgium DGD,XM-DAC-2-10
-Türkiye,TR,,Belgium DGD,XM-DAC-2-10
-Uganda,UG,,Belgium DGD,XM-DAC-2-10
-Viet Nam,VN,,Belgium DGD,XM-DAC-2-10
-West Bank and Gaza Strip,PS,,Belgium DGD,XM-DAC-2-10
-Yemen,YE,,Belgium DGD,XM-DAC-2-10
-Zambia,ZM,,Belgium DGD,XM-DAC-2-10
-Zimbabwe,ZW,,Belgium DGD,XM-DAC-2-10
-Afghanistan,AF,,Canada GAC,CA-3
-Algeria,DZ,,Canada GAC,CA-3
-Angola,AO,,Canada GAC,CA-3
-Antigua and Barbuda,AG,,Canada GAC,CA-3
-Argentina,AR,,Canada GAC,CA-3
-Armenia,AM,,Canada GAC,CA-3
-Azerbaijan,AZ,,Canada GAC,CA-3
-Bahamas,BS,,Canada GAC,CA-3
-Bangladesh,BD,1,Canada GAC,CA-3
-Barbados,BB,,Canada GAC,CA-3
-Belarus,BY,,Canada GAC,CA-3
-Belize,BZ,,Canada GAC,CA-3
-Benin,BJ,,Canada GAC,CA-3
-Bhutan,BT,,Canada GAC,CA-3
-Bolivia,BO,,Canada GAC,CA-3
-Bosnia and Herzegovina,BA,,Canada GAC,CA-3
-Botswana,BW,,Canada GAC,CA-3
-Brazil,BR,,Canada GAC,CA-3
-Burkina Faso,BF,1,Canada GAC,CA-3
-Burundi,BI,,Canada GAC,CA-3
-Cabo Verde,CV,,Canada GAC,CA-3
-Cambodia,KH,,Canada GAC,CA-3
-Cameroon,CM,,Canada GAC,CA-3
-Central African Republic,CF,,Canada GAC,CA-3
-Chad,TD,,Canada GAC,CA-3
-Chile,CL,,Canada GAC,CA-3
-China,CN,,Canada GAC,CA-3
-Colombia,CO,,Canada GAC,CA-3
-Comoros,km,,Canada GAC,CA-3
-Congo,CG,,Canada GAC,CA-3
-Costa Rica,CR,,Canada GAC,CA-3
-Côte d'Ivoire,CI,,Canada GAC,CA-3
-Cuba,CU,,Canada GAC,CA-3
-Democratic Republic of Congo,CD,,Canada GAC,CA-3
-Djibouti,DJ,,Canada GAC,CA-3
-Dominica,DM,,Canada GAC,CA-3
-Dominican Republic,DO,,Canada GAC,CA-3
-Ecuador,EC,,Canada GAC,CA-3
-Egypt,EG,,Canada GAC,CA-3
-El Salvador,SV,,Canada GAC,CA-3
-Equatorial Guinea,GQ,,Canada GAC,CA-3
-Eritrea,ER,,Canada GAC,CA-3
-Eswatini,SZ,,Canada GAC,CA-3
-Ethiopia,ET,1,Canada GAC,CA-3
-Fiji,FJ,,Canada GAC,CA-3
-Gabon,GA,,Canada GAC,CA-3
-Gambia,gm,,Canada GAC,CA-3
-Georgia,GE,,Canada GAC,CA-3
-Ghana,GH,1,Canada GAC,CA-3
-Grenada,GD,,Canada GAC,CA-3
-Guatemala,GT,,Canada GAC,CA-3
-Guinea,GN,,Canada GAC,CA-3
-Guinea-Bissau,GW,,Canada GAC,CA-3
-Guyana,GY,,Canada GAC,CA-3
-Haiti,HT,1,Canada GAC,CA-3
-Honduras,HN,,Canada GAC,CA-3
-India,IN,,Canada GAC,CA-3
-Indonesia,ID,,Canada GAC,CA-3
-Iraq,IQ,,Canada GAC,CA-3
-Jamaica,JM,,Canada GAC,CA-3
-Jordan,JO,1,Canada GAC,CA-3
-Kazakhstan,KZ,,Canada GAC,CA-3
-Kenya,KE,,Canada GAC,CA-3
-Kiribati,KI,,Canada GAC,CA-3
-Kosovo,XK,,Canada GAC,CA-3
-Kyrgyzstan,KG,,Canada GAC,CA-3
-Laos,LA,,Canada GAC,CA-3
-Lebanon,LB,,Canada GAC,CA-3
-Lesotho,LS,,Canada GAC,CA-3
-Liberia,LR,,Canada GAC,CA-3
-Libya,LY,,Canada GAC,CA-3
-Madagascar,MG,,Canada GAC,CA-3
-Malawi,MW,,Canada GAC,CA-3
-Malaysia,MY,,Canada GAC,CA-3
-Maldives,MV,,Canada GAC,CA-3
-Mali,ML,1,Canada GAC,CA-3
-Marshall Islands,MH,,Canada GAC,CA-3
-Mauritania,MR,,Canada GAC,CA-3
-Mauritius,MU,,Canada GAC,CA-3
-Mexico,MX,,Canada GAC,CA-3
-Micronesia,FM,,Canada GAC,CA-3
-Moldova,MD,,Canada GAC,CA-3
-Mongolia,MN,,Canada GAC,CA-3
-Montenegro,ME,,Canada GAC,CA-3
-Montserrat,MS,,Canada GAC,CA-3
-Morocco,MA,,Canada GAC,CA-3
-Mozambique,MZ,1,Canada GAC,CA-3
-Myanmar,MM,1,Canada GAC,CA-3
-Namibia,NA,,Canada GAC,CA-3
-Nauru,NR,,Canada GAC,CA-3
-Nepal,NP,,Canada GAC,CA-3
-Nicaragua,NI,,Canada GAC,CA-3
-Niger,NE,,Canada GAC,CA-3
-Nigeria,NG,,Canada GAC,CA-3
-North Macedonia,MK,,Canada GAC,CA-3
-Pakistan,PK,,Canada GAC,CA-3
-Palau,PW,,Canada GAC,CA-3
-Panama,PA,,Canada GAC,CA-3
-Papua New Guinea,PG,,Canada GAC,CA-3
-Paraguay,PY,,Canada GAC,CA-3
-Peru,PE,1,Canada GAC,CA-3
-Philippines,PH,,Canada GAC,CA-3
-Rwanda,RW,,Canada GAC,CA-3
-Saint Kitts and Nevis,KN,,Canada GAC,CA-3
-Saint Lucia,LC,,Canada GAC,CA-3
-Saint Vincent and the Grenadines,VC,,Canada GAC,CA-3
-Samoa,WS,,Canada GAC,CA-3
-Sao Tome and Principe,ST,,Canada GAC,CA-3
-Senegal,SN,1,Canada GAC,CA-3
-Serbia,RS,,Canada GAC,CA-3
-Sierra Leone,SL,,Canada GAC,CA-3
-Solomon Islands,SB,,Canada GAC,CA-3
-Somalia,SO,,Canada GAC,CA-3
-South Africa,ZA,,Canada GAC,CA-3
-South Sudan,SS,1,Canada GAC,CA-3
-Sri Lanka,LK,,Canada GAC,CA-3
-Sudan,SD,,Canada GAC,CA-3
-Suriname,SR,,Canada GAC,CA-3
-Syria,SY,,Canada GAC,CA-3
-Tajikistan,TJ,,Canada GAC,CA-3
-Tanzania,TZ,1,Canada GAC,CA-3
-Thailand,TH,,Canada GAC,CA-3
-Timor-Leste,TL,,Canada GAC,CA-3
-Togo,TG,,Canada GAC,CA-3
-Tonga,TO,,Canada GAC,CA-3
-Trinidad and Tobago,TT,,Canada GAC,CA-3
-Tunisia,TN,,Canada GAC,CA-3
-Türkiye,TR,,Canada GAC,CA-3
-Turkmenistan,TM,,Canada GAC,CA-3
-Tuvalu,TV,,Canada GAC,CA-3
-Uganda,UG,,Canada GAC,CA-3
-Ukraine,UA,1,Canada GAC,CA-3
-Uzbekistan,UZ,,Canada GAC,CA-3
-Vanuatu,VU,,Canada GAC,CA-3
-Venezuela,VE,,Canada GAC,CA-3
-Vietnam,VN,,Canada GAC,CA-3
-West Bank and Gaza,PS,1,Canada GAC,CA-3
-Zambia,ZM,,Canada GAC,CA-3
-Zimbabwe,ZW,,Canada GAC,CA-3
-Afghanistan,AF,,DE BMZ-GIZ,DE-1
-Albania,AL,,DE BMZ-GIZ,DE-1
-Algeria,DZ,,DE BMZ-GIZ,DE-1
-Armenia,AM,,DE BMZ-GIZ,DE-1
-Bangladesh,BD,,DE BMZ-GIZ,DE-1
-Benin,BJ,,DE BMZ-GIZ,DE-1
-Bolivia,BO,,DE BMZ-GIZ,DE-1
-Bosnia and Herzegovina,BA,,DE BMZ-GIZ,DE-1
-Brazil,BR,,DE BMZ-GIZ,DE-1
-Burkina Faso,BF,,DE BMZ-GIZ,DE-1
-Cambodia,KH,,DE BMZ-GIZ,DE-1
-Cameroon,CM,,DE BMZ-GIZ,DE-1
-Chad,TD,,DE BMZ-GIZ,DE-1
-China,CN,,DE BMZ-GIZ,DE-1
-Colombia,CO,,DE BMZ-GIZ,DE-1
-Côte d'Ivoire,CI,,DE BMZ-GIZ,DE-1
-Democratic Republic of Congo,CD,1,DE BMZ-GIZ,DE-1
-Ecuador,EC,,DE BMZ-GIZ,DE-1
-Egypt,EG,,DE BMZ-GIZ,DE-1
-Ethiopia,ET,,DE BMZ-GIZ,DE-1
-Georgia,GE,,DE BMZ-GIZ,DE-1
-Ghana,GH,,DE BMZ-GIZ,DE-1
-India,IN,,DE BMZ-GIZ,DE-1
-Indonesia,ID,,DE BMZ-GIZ,DE-1
-Iraq,IQ,,DE BMZ-GIZ,DE-1
-Jordan,JO,,DE BMZ-GIZ,DE-1
-Kenya,KE,,DE BMZ-GIZ,DE-1
-Kosovo,XK,,DE BMZ-GIZ,DE-1
-Laos,LA,,DE BMZ-GIZ,DE-1
-Lebanon,LB,,DE BMZ-GIZ,DE-1
-Libya,LY,,DE BMZ-GIZ,DE-1
-Madagascar,MG,,DE BMZ-GIZ,DE-1
-Malawi,MW,,DE BMZ-GIZ,DE-1
-Mali,ML,,DE BMZ-GIZ,DE-1
-Mauritania,MR,,DE BMZ-GIZ,DE-1
-Mexico,MX,,DE BMZ-GIZ,DE-1
-Moldova,MD,,DE BMZ-GIZ,DE-1
-Mongolia,MN,,DE BMZ-GIZ,DE-1
-Morocco,MA,,DE BMZ-GIZ,DE-1
-Mozambique,MZ,,DE BMZ-GIZ,DE-1
-Namibia,NA,,DE BMZ-GIZ,DE-1
-Nepal,NP,,DE BMZ-GIZ,DE-1
-Niger,NE,,DE BMZ-GIZ,DE-1
-Nigeria,NG,,DE BMZ-GIZ,DE-1
-Pakistan,PK,,DE BMZ-GIZ,DE-1
-Palestinian territories,PS,,DE BMZ-GIZ,DE-1
-Peru,PE,,DE BMZ-GIZ,DE-1
-Rwanda,RW,,DE BMZ-GIZ,DE-1
-Senegal,SN,,DE BMZ-GIZ,DE-1
-Serbia,RS,,DE BMZ-GIZ,DE-1
-Sierra Leone,SL,,DE BMZ-GIZ,DE-1
-Somalia,SO,,DE BMZ-GIZ,DE-1
-South Africa,ZA,,DE BMZ-GIZ,DE-1
-South Sudan,SS,,DE BMZ-GIZ,DE-1
-Sudan,SD,,DE BMZ-GIZ,DE-1
-Syria,SY,,DE BMZ-GIZ,DE-1
-Tanzania,TZ,,DE BMZ-GIZ,DE-1
-Togo,TG,,DE BMZ-GIZ,DE-1
-Tunisia,TN,,DE BMZ-GIZ,DE-1
-Türkiye,TR,,DE BMZ-GIZ,DE-1
-Uganda,UG,,DE BMZ-GIZ,DE-1
-Ukraine,UA,,DE BMZ-GIZ,DE-1
-Uzbekistan,UZ,,DE BMZ-GIZ,DE-1
-Vietnam,VN,,DE BMZ-GIZ,DE-1
-Yemen,YE,,DE BMZ-GIZ,DE-1
-Zambia,ZM,,DE BMZ-GIZ,DE-1
-Afghanistan,AF,,Denmark MFA,XM-DAC-3-1
-Bangladesh,BD,,Denmark MFA,XM-DAC-3-1
-Belarus,BY,,Denmark MFA,XM-DAC-3-1
-Benin,BJ,,Denmark MFA,XM-DAC-3-1
-Bolivia (Plurinational State of),BO,,Denmark MFA,XM-DAC-3-1
-Bosnia and Herzegovina,BA,,Denmark MFA,XM-DAC-3-1
-Brazil,BR,,Denmark MFA,XM-DAC-3-1
-Burkina Faso,BF,,Denmark MFA,XM-DAC-3-1
-Burundi,BI,,Denmark MFA,XM-DAC-3-1
-Cambodia,KH,,Denmark MFA,XM-DAC-3-1
-Cameroon,CM,,Denmark MFA,XM-DAC-3-1
-Central African Republic,CF,,Denmark MFA,XM-DAC-3-1
-Chad,TD,,Denmark MFA,XM-DAC-3-1
-China (People's Republic of),CN,,Denmark MFA,XM-DAC-3-1
-Colombia,CO,,Denmark MFA,XM-DAC-3-1
-Côte d’Ivoire,CI,,Denmark MFA,XM-DAC-3-1
-Democratic Republic of the Congo,CD,,Denmark MFA,XM-DAC-3-1
-Djibouti,DJ,,Denmark MFA,XM-DAC-3-1
-Egypt,EG,,Denmark MFA,XM-DAC-3-1
-El Salvador,SV,,Denmark MFA,XM-DAC-3-1
-Eritrea,ER,,Denmark MFA,XM-DAC-3-1
-Ethiopia,ET,,Denmark MFA,XM-DAC-3-1
-Georgia,GE,,Denmark MFA,XM-DAC-3-1
-Ghana,GH,,Denmark MFA,XM-DAC-3-1
-Guatemala,GT,,Denmark MFA,XM-DAC-3-1
-Guinea,GN,,Denmark MFA,XM-DAC-3-1
-Honduras,HN,,Denmark MFA,XM-DAC-3-1
-India,IN,,Denmark MFA,XM-DAC-3-1
-Indonesia,ID,,Denmark MFA,XM-DAC-3-1
-Iran (Islamic Republic of),IR,,Denmark MFA,XM-DAC-3-1
-Iraq,IQ,,Denmark MFA,XM-DAC-3-1
-Jordan,JO,,Denmark MFA,XM-DAC-3-1
-Kenya,KE,,Denmark MFA,XM-DAC-3-1
-Kyrgyzstan,KG,,Denmark MFA,XM-DAC-3-1
-Lao People's Democratic Republic,LA,,Denmark MFA,XM-DAC-3-1
-Lebanon,LB,,Denmark MFA,XM-DAC-3-1
-Liberia,LR,,Denmark MFA,XM-DAC-3-1
-Libya,LY,,Denmark MFA,XM-DAC-3-1
-Madagascar,MG,,Denmark MFA,XM-DAC-3-1
-Malawi,MW,,Denmark MFA,XM-DAC-3-1
-Mali,ML,,Denmark MFA,XM-DAC-3-1
-Mexico,MX,,Denmark MFA,XM-DAC-3-1
-Morocco,MA,,Denmark MFA,XM-DAC-3-1
-Mozambique,MZ,,Denmark MFA,XM-DAC-3-1
-Myanmar,MM,,Denmark MFA,XM-DAC-3-1
-Nepal,NP,,Denmark MFA,XM-DAC-3-1
-Nicaragua,NI,,Denmark MFA,XM-DAC-3-1
-Niger,NE,,Denmark MFA,XM-DAC-3-1
-Nigeria,NG,,Denmark MFA,XM-DAC-3-1
-North Macedonia,MK,,Denmark MFA,XM-DAC-3-1
-Pakistan,PK,,Denmark MFA,XM-DAC-3-1
-Panama,PA,,Denmark MFA,XM-DAC-3-1
-Philippines,PH,,Denmark MFA,XM-DAC-3-1
-Republic of Moldova,MD,,Denmark MFA,XM-DAC-3-1
-Rwanda,RW,,Denmark MFA,XM-DAC-3-1
-Serbia,RS,1,Denmark MFA,XM-DAC-3-1
-Sierra Leone,SL,,Denmark MFA,XM-DAC-3-1
-Somalia,SO,,Denmark MFA,XM-DAC-3-1
-South Africa,ZA,,Denmark MFA,XM-DAC-3-1
-South Sudan,SS,,Denmark MFA,XM-DAC-3-1
-Sri Lanka,LK,,Denmark MFA,XM-DAC-3-1
-State of Palestine,PS,,Denmark MFA,XM-DAC-3-1
-Sudan,SD,,Denmark MFA,XM-DAC-3-1
-Syrian Arab Republic,SY,,Denmark MFA,XM-DAC-3-1
-Tajikistan,TJ,,Denmark MFA,XM-DAC-3-1
-Togo,TG,,Denmark MFA,XM-DAC-3-1
-Tunisia,TN,,Denmark MFA,XM-DAC-3-1
-Türkiye,TR,,Denmark MFA,XM-DAC-3-1
-Uganda,UG,,Denmark MFA,XM-DAC-3-1
-Ukraine,UA,,Denmark MFA,XM-DAC-3-1
-United Republic of Tanzania,TZ,,Denmark MFA,XM-DAC-3-1
-Viet Nam,VN,,Denmark MFA,XM-DAC-3-1
-Yemen,YE,,Denmark MFA,XM-DAC-3-1
-Zambia,ZM,,Denmark MFA,XM-DAC-3-1
-Zimbabwe,ZW,,Denmark MFA,XM-DAC-3-1
-Albania,AL,,EBRD,46015
-Armenia,AM,,EBRD,46015
-Azerbaijan,AZ,,EBRD,46015
-Bosnia and Herzegovina,BA,,EBRD,46015
-Bulgaria,BG,,EBRD,46015
-Croatia,HR,,EBRD,46015
-Czech Republic,CZ,,EBRD,46015
-Egypt,EG,,EBRD,46015
-Estonia,EE,,EBRD,46015
-Georgia,GE,,EBRD,46015
-Greece,GR,,EBRD,46015
-Hungary,HU,,EBRD,46015
-Jordan,JO,,EBRD,46015
-Kazakhstan,KZ,,EBRD,46015
-Kosovo,XK,,EBRD,46015
-Kyrgyz Republic,KG,,EBRD,46015
-Latvia,LV,,EBRD,46015
-Lebanon,LB,1,EBRD,46015
-Lithuania,LT,,EBRD,46015
-Moldova,MD,,EBRD,46015
-Mongolia,MN,,EBRD,46015
-Montenegro,ME,,EBRD,46015
-Morocco,MA,,EBRD,46015
-North Macedonia,MK,,EBRD,46015
-Poland,PL,,EBRD,46015
-Romania,RO,,EBRD,46015
-Serbia,RS,,EBRD,46015
-Slovak Republic,SK,,EBRD,46015
-Slovenia,SI,,EBRD,46015
-Tajikistan,TJ,,EBRD,46015
-Tunisia,TN,,EBRD,46015
-Türkiye,TR,,EBRD,46015
-Turkmenistan,TM,1,EBRD,46015
-Ukraine,UA,,EBRD,46015
-Uzbekistan,UZ,,EBRD,46015
-West Bank and Gaza,PS,,EBRD,46015
-AFGHANISTAN,AF,,EC ECHO,XI-IATI-EC_ECHO
-ALBANIA,AL,1,EC ECHO,XI-IATI-EC_ECHO
-ALGERIA,DZ,,EC ECHO,XI-IATI-EC_ECHO
-ANGOLA,AO,,EC ECHO,XI-IATI-EC_ECHO
-ANTIGUA AND BARBUDA,AG,1,EC ECHO,XI-IATI-EC_ECHO
-ARMENIA,AM,,EC ECHO,XI-IATI-EC_ECHO
-AZERBAIJAN,AZ,,EC ECHO,XI-IATI-EC_ECHO
-BANGLADESH,BD,,EC ECHO,XI-IATI-EC_ECHO
-BELIZE,BZ,,EC ECHO,XI-IATI-EC_ECHO
-BENIN,BJ,1,EC ECHO,XI-IATI-EC_ECHO
-BOSNIA-HERZEGOVINA,BA,,EC ECHO,XI-IATI-EC_ECHO
-BRAZIL,BR,,EC ECHO,XI-IATI-EC_ECHO
-BURKINA FASO,BF,,EC ECHO,XI-IATI-EC_ECHO
-BURUNDI,BI,,EC ECHO,XI-IATI-EC_ECHO
-CAMBODIA,KH,,EC ECHO,XI-IATI-EC_ECHO
-CAMEROON,CM,,EC ECHO,XI-IATI-EC_ECHO
-CAPE VERDE,CV,,EC ECHO,XI-IATI-EC_ECHO
-CENTRAL AFRICAN REPUBLIC,CF,,EC ECHO,XI-IATI-EC_ECHO
-CHAD,TD,,EC ECHO,XI-IATI-EC_ECHO
-CHILE,CL,,EC ECHO,XI-IATI-EC_ECHO
-COLOMBIA,CO,,EC ECHO,XI-IATI-EC_ECHO
-CONGO,CG,,EC ECHO,XI-IATI-EC_ECHO
-"CONGO, DEMOCRATIC REPUBLIC OF",CD,,EC ECHO,XI-IATI-EC_ECHO
-COSTA RICA,CR,,EC ECHO,XI-IATI-EC_ECHO
-COTE D'IVOIRE,CI,,EC ECHO,XI-IATI-EC_ECHO
-CUBA,CU,,EC ECHO,XI-IATI-EC_ECHO
-DJIBOUTI,DJ,,EC ECHO,XI-IATI-EC_ECHO
-DOMINICAN REPUBLIC,DO,,EC ECHO,XI-IATI-EC_ECHO
-ECUADOR,EC,,EC ECHO,XI-IATI-EC_ECHO
-EGYPT,EG,,EC ECHO,XI-IATI-EC_ECHO
-EL SALVADOR,SV,,EC ECHO,XI-IATI-EC_ECHO
-EQUATORIAL GUINEA,GQ,1,EC ECHO,XI-IATI-EC_ECHO
-ERITREA,ER,,EC ECHO,XI-IATI-EC_ECHO
-ESWATINI,SZ,,EC ECHO,XI-IATI-EC_ECHO
-ETHIOPIA,ET,,EC ECHO,XI-IATI-EC_ECHO
-FRANCE,FR,1,EC ECHO,XI-IATI-EC_ECHO
-GAMBIA,GM,,EC ECHO,XI-IATI-EC_ECHO
-GEORGIA,GE,,EC ECHO,XI-IATI-EC_ECHO
-GHANA,GH,1,EC ECHO,XI-IATI-EC_ECHO
-GUATEMALA,GT,,EC ECHO,XI-IATI-EC_ECHO
-GUINEA,GN,,EC ECHO,XI-IATI-EC_ECHO
-GUINEA-BISSAU,GW,1,EC ECHO,XI-IATI-EC_ECHO
-HAITI,HT,,EC ECHO,XI-IATI-EC_ECHO
-HONDURAS,HN,,EC ECHO,XI-IATI-EC_ECHO
-INDIA,IN,,EC ECHO,XI-IATI-EC_ECHO
-IRAN,IR,,EC ECHO,XI-IATI-EC_ECHO
-IRAQ,IQ,,EC ECHO,XI-IATI-EC_ECHO
-IRELAND,IE,,EC ECHO,XI-IATI-EC_ECHO
-ISRAEL,IL,,EC ECHO,XI-IATI-EC_ECHO
-JORDAN,JO,,EC ECHO,XI-IATI-EC_ECHO
-KENYA,KE,,EC ECHO,XI-IATI-EC_ECHO
-KIRIBATI,KI,1,EC ECHO,XI-IATI-EC_ECHO
-"KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF",KR,,EC ECHO,XI-IATI-EC_ECHO
-KYRGYSTAN,KG,,EC ECHO,XI-IATI-EC_ECHO
-LAOS,LA,,EC ECHO,XI-IATI-EC_ECHO
-LEBANON,LB,,EC ECHO,XI-IATI-EC_ECHO
-LESOTHO,LS,,EC ECHO,XI-IATI-EC_ECHO
-LIBERIA,LR,,EC ECHO,XI-IATI-EC_ECHO
-LIBYA,LY,,EC ECHO,XI-IATI-EC_ECHO
-MADAGASCAR,MG,,EC ECHO,XI-IATI-EC_ECHO
-MALAWI,MW,,EC ECHO,XI-IATI-EC_ECHO
-MALI,ML,,EC ECHO,XI-IATI-EC_ECHO
-MAURITANIA,MR,,EC ECHO,XI-IATI-EC_ECHO
-MAURITIUS,MU,,EC ECHO,XI-IATI-EC_ECHO
-MEXICO,MX,,EC ECHO,XI-IATI-EC_ECHO
-MOLDOVA,MD,,EC ECHO,XI-IATI-EC_ECHO
-MOROCCO,MA,,EC ECHO,XI-IATI-EC_ECHO
-MOZAMBIQUE,MZ,,EC ECHO,XI-IATI-EC_ECHO
-MYANMAR,MM,,EC ECHO,XI-IATI-EC_ECHO
-NEPAL,NP,,EC ECHO,XI-IATI-EC_ECHO
-NICARAGUA,NI,,EC ECHO,XI-IATI-EC_ECHO
-NIGER,NE,,EC ECHO,XI-IATI-EC_ECHO
-NIGERIA,NG,,EC ECHO,XI-IATI-EC_ECHO
-OMAN,OM,,EC ECHO,XI-IATI-EC_ECHO
-PAKISTAN,PK,,EC ECHO,XI-IATI-EC_ECHO
-"PALESTINIAN TERRITORY, OCCUPIED",PS,,EC ECHO,XI-IATI-EC_ECHO
-PANAMA,PA,,EC ECHO,XI-IATI-EC_ECHO
-PERU,PE,,EC ECHO,XI-IATI-EC_ECHO
-PHILIPPINES,PH,,EC ECHO,XI-IATI-EC_ECHO
-POLAND,PL,,EC ECHO,XI-IATI-EC_ECHO
-ROMANIA,RO,,EC ECHO,XI-IATI-EC_ECHO
-RUSSIA,RU,,EC ECHO,XI-IATI-EC_ECHO
-RWANDA,RW,,EC ECHO,XI-IATI-EC_ECHO
-SAINT KITTS AND NEVIS,KN,1,EC ECHO,XI-IATI-EC_ECHO
-SAO TOME AND PRINCIPE,ST,,EC ECHO,XI-IATI-EC_ECHO
-SENEGAL,SN,,EC ECHO,XI-IATI-EC_ECHO
-SIERRA LEONE,SL,,EC ECHO,XI-IATI-EC_ECHO
-SLOVAKIA,SK,,EC ECHO,XI-IATI-EC_ECHO
-SOLOMON ISLANDS,SB,1,EC ECHO,XI-IATI-EC_ECHO
-SOMALIA,SO,,EC ECHO,XI-IATI-EC_ECHO
-SOUTH AFRICA,ZA,,EC ECHO,XI-IATI-EC_ECHO
-SOUTH SUDAN REPUBLIC,SS,,EC ECHO,XI-IATI-EC_ECHO
-SRI LANKA,LK,,EC ECHO,XI-IATI-EC_ECHO
-SUDAN,SD,,EC ECHO,XI-IATI-EC_ECHO
-SURINAME,SR,,EC ECHO,XI-IATI-EC_ECHO
-SWITZERLAND,CH,1,EC ECHO,XI-IATI-EC_ECHO
-SYRIAN ARAB REPUBLIC,SY,,EC ECHO,XI-IATI-EC_ECHO
-TAJIKISTAN,TJ,,EC ECHO,XI-IATI-EC_ECHO
-TANZANIA,TZ,,EC ECHO,XI-IATI-EC_ECHO
-THAILAND,TH,,EC ECHO,XI-IATI-EC_ECHO
-TOGO,TG,,EC ECHO,XI-IATI-EC_ECHO
-TONGA,TO,,EC ECHO,XI-IATI-EC_ECHO
-TUNISIA,TN,,EC ECHO,XI-IATI-EC_ECHO
-TÜRKIYE,TR,,EC ECHO,XI-IATI-EC_ECHO
-UGANDA,UG,,EC ECHO,XI-IATI-EC_ECHO
-UKRAINE,UA,,EC ECHO,XI-IATI-EC_ECHO
-VENEZUELA,VE,,EC ECHO,XI-IATI-EC_ECHO
-WESTERN SAHARA,EH,,EC ECHO,XI-IATI-EC_ECHO
-YEMEN,YE,,EC ECHO,XI-IATI-EC_ECHO
-ZAMBIA,ZM,,EC ECHO,XI-IATI-EC_ECHO
-ZIMBABWE,ZW,,EC ECHO,XI-IATI-EC_ECHO
-Afghanistan,AF,,EC INTPA,XI-IATI-EC_INTPA
-Angola,AO,,EC INTPA,XI-IATI-EC_INTPA
-Antigua and Barbuda,AG,,EC INTPA,XI-IATI-EC_INTPA
-Aruba,AW,,EC INTPA,XI-IATI-EC_INTPA
-Bangladesh,BD,,EC INTPA,XI-IATI-EC_INTPA
-Barbados,BB,,EC INTPA,XI-IATI-EC_INTPA
-Belize,BZ,,EC INTPA,XI-IATI-EC_INTPA
-Benin,BJ,,EC INTPA,XI-IATI-EC_INTPA
-Bhutan,BT,,EC INTPA,XI-IATI-EC_INTPA
-Bolivia,BO,,EC INTPA,XI-IATI-EC_INTPA
-Bonaire,BQ,,EC INTPA,XI-IATI-EC_INTPA
-Botswana,BW,,EC INTPA,XI-IATI-EC_INTPA
-Burkina Faso,BF,,EC INTPA,XI-IATI-EC_INTPA
-Burundi,BI,,EC INTPA,XI-IATI-EC_INTPA
-Cabo Verde,CV,,EC INTPA,XI-IATI-EC_INTPA
-Cambodia,KH,,EC INTPA,XI-IATI-EC_INTPA
-Cameroon,CM,,EC INTPA,XI-IATI-EC_INTPA
-Central African Republic,CF,,EC INTPA,XI-IATI-EC_INTPA
-Chad,TD,,EC INTPA,XI-IATI-EC_INTPA
-China,CN,,EC INTPA,XI-IATI-EC_INTPA
-Colombia,CO,,EC INTPA,XI-IATI-EC_INTPA
-Comoros,KM,,EC INTPA,XI-IATI-EC_INTPA
-Congo (Republic),CG,,EC INTPA,XI-IATI-EC_INTPA
-Costa Rica,CR,,EC INTPA,XI-IATI-EC_INTPA
-Côte d'Ivoire,CI,,EC INTPA,XI-IATI-EC_INTPA
-Cuba,CU,,EC INTPA,XI-IATI-EC_INTPA
-Curaçao,CW,,EC INTPA,XI-IATI-EC_INTPA
-Democratic Republic of Congo,CD,,EC INTPA,XI-IATI-EC_INTPA
-Djibouti,DJ,,EC INTPA,XI-IATI-EC_INTPA
-Dominica,DM,,EC INTPA,XI-IATI-EC_INTPA
-Dominican Republic,DO,,EC INTPA,XI-IATI-EC_INTPA
-Ecuador,EC,,EC INTPA,XI-IATI-EC_INTPA
-El Salvador,SV,,EC INTPA,XI-IATI-EC_INTPA
-Equatorial Guinea,GQ,,EC INTPA,XI-IATI-EC_INTPA
-Eritrea,ER,,EC INTPA,XI-IATI-EC_INTPA
-Eswatini,SZ,,EC INTPA,XI-IATI-EC_INTPA
-Ethiopia,ET,,EC INTPA,XI-IATI-EC_INTPA
-Fiji,FJ,,EC INTPA,XI-IATI-EC_INTPA
-French Polynesia,PF,,EC INTPA,XI-IATI-EC_INTPA
-Gabon,GA,,EC INTPA,XI-IATI-EC_INTPA
-Ghana,GH,,EC INTPA,XI-IATI-EC_INTPA
-Greenland,GL,,EC INTPA,XI-IATI-EC_INTPA
-Grenada,GD,,EC INTPA,XI-IATI-EC_INTPA
-Guatemala,GT,,EC INTPA,XI-IATI-EC_INTPA
-Guinea,GN,,EC INTPA,XI-IATI-EC_INTPA
-Guinea-Bissau,GW,,EC INTPA,XI-IATI-EC_INTPA
-Guyana,GY,,EC INTPA,XI-IATI-EC_INTPA
-Haiti,HT,,EC INTPA,XI-IATI-EC_INTPA
-Honduras,HN,,EC INTPA,XI-IATI-EC_INTPA
-India,IN,,EC INTPA,XI-IATI-EC_INTPA
-Indonesia,ID,,EC INTPA,XI-IATI-EC_INTPA
-Iran,IR,,EC INTPA,XI-IATI-EC_INTPA
-Iraq,IQ,,EC INTPA,XI-IATI-EC_INTPA
-Jamaica,JM,,EC INTPA,XI-IATI-EC_INTPA
-Kazakhstan,KZ,,EC INTPA,XI-IATI-EC_INTPA
-Kenya,KE,,EC INTPA,XI-IATI-EC_INTPA
-Kyrgyzstan,KG,,EC INTPA,XI-IATI-EC_INTPA
-Lao People's Democratic Republic,LA,,EC INTPA,XI-IATI-EC_INTPA
-Lesotho,LS,,EC INTPA,XI-IATI-EC_INTPA
-Liberia,LR,,EC INTPA,XI-IATI-EC_INTPA
-Madagascar,MG,,EC INTPA,XI-IATI-EC_INTPA
-Maldives,MV,,EC INTPA,XI-IATI-EC_INTPA
-Mali,ML,,EC INTPA,XI-IATI-EC_INTPA
-Mauritania,MR,,EC INTPA,XI-IATI-EC_INTPA
-Mauritius,MU,,EC INTPA,XI-IATI-EC_INTPA
-Mexico,MX,,EC INTPA,XI-IATI-EC_INTPA
-Mongolia,MN,,EC INTPA,XI-IATI-EC_INTPA
-Mozambique,MZ,,EC INTPA,XI-IATI-EC_INTPA
-Myanmar,MM,,EC INTPA,XI-IATI-EC_INTPA
-Namibia,NA,,EC INTPA,XI-IATI-EC_INTPA
-Nepal,NP,,EC INTPA,XI-IATI-EC_INTPA
-New Caledonia,NC,,EC INTPA,XI-IATI-EC_INTPA
-Nicaragua,NI,,EC INTPA,XI-IATI-EC_INTPA
-Niger,NE,,EC INTPA,XI-IATI-EC_INTPA
-Nigeria,NG,,EC INTPA,XI-IATI-EC_INTPA
-Pakistan,PK,,EC INTPA,XI-IATI-EC_INTPA
-Papua New Guinea,PG,,EC INTPA,XI-IATI-EC_INTPA
-Paraguay,PY,,EC INTPA,XI-IATI-EC_INTPA
-Peru,PE,,EC INTPA,XI-IATI-EC_INTPA
-Philippines,PH,,EC INTPA,XI-IATI-EC_INTPA
-Republic of Malawi,MW,,EC INTPA,XI-IATI-EC_INTPA
-Republic of Rwanda,RW,,EC INTPA,XI-IATI-EC_INTPA
-Saba,BQ,,EC INTPA,XI-IATI-EC_INTPA
-Saint Barthélemy,BL,,EC INTPA,XI-IATI-EC_INTPA
-Saint Kitts and Nevis,KN,,EC INTPA,XI-IATI-EC_INTPA
-Saint Lucia,LC,,EC INTPA,XI-IATI-EC_INTPA
-Saint Pierre and Miquelon,PM,,EC INTPA,XI-IATI-EC_INTPA
-Saint Vincent and the Grenadines,VC,,EC INTPA,XI-IATI-EC_INTPA
-São Tomé and Príncipe,ST,,EC INTPA,XI-IATI-EC_INTPA
-Senegal,SN,,EC INTPA,XI-IATI-EC_INTPA
-Seychelles,SC,,EC INTPA,XI-IATI-EC_INTPA
-Sierra Leone,SL,,EC INTPA,XI-IATI-EC_INTPA
-Sint Eustatius,BQ,,EC INTPA,XI-IATI-EC_INTPA
-Sint Maarten,MF,,EC INTPA,XI-IATI-EC_INTPA
-Somalia,SO,,EC INTPA,XI-IATI-EC_INTPA
-South Africa,ZA,,EC INTPA,XI-IATI-EC_INTPA
-South Sudan,SS,,EC INTPA,XI-IATI-EC_INTPA
-Sri Lanka,LK,,EC INTPA,XI-IATI-EC_INTPA
-Sudan,SD,,EC INTPA,XI-IATI-EC_INTPA
-Suriname,SR,,EC INTPA,XI-IATI-EC_INTPA
-Tajikistan,TJ,,EC INTPA,XI-IATI-EC_INTPA
-Tanzania,TZ,,EC INTPA,XI-IATI-EC_INTPA
-Thailand,TH,,EC INTPA,XI-IATI-EC_INTPA
-The Gambia,GM,,EC INTPA,XI-IATI-EC_INTPA
-Timor-Leste,TL,,EC INTPA,XI-IATI-EC_INTPA
-Togo,TG,,EC INTPA,XI-IATI-EC_INTPA
-Trinidad and Tobago,TT,,EC INTPA,XI-IATI-EC_INTPA
-Turkmenistan,TM,,EC INTPA,XI-IATI-EC_INTPA
-Uganda,UG,,EC INTPA,XI-IATI-EC_INTPA
-Uzbekistan,UZ,,EC INTPA,XI-IATI-EC_INTPA
-Vietnam,VN,,EC INTPA,XI-IATI-EC_INTPA
-Wallis and Futuna,WF,,EC INTPA,XI-IATI-EC_INTPA
-Yemen,YE,,EC INTPA,XI-IATI-EC_INTPA
-Zambia,ZM,,EC INTPA,XI-IATI-EC_INTPA
-Zimbabwe,ZW,,EC INTPA,XI-IATI-EC_INTPA
-Albania,AL,,EC NEAR,XI-IATI-EC_NEAR
-Algeria,DZ,,EC NEAR,XI-IATI-EC_NEAR
-Armenia,AM,,EC NEAR,XI-IATI-EC_NEAR
-Azerbaijan,AZ,,EC NEAR,XI-IATI-EC_NEAR
-Belarus,BY,,EC NEAR,XI-IATI-EC_NEAR
-Bosnia and Herzegovina,BA,,EC NEAR,XI-IATI-EC_NEAR
-Egypt,EG,,EC NEAR,XI-IATI-EC_NEAR
-Georgia,GE,,EC NEAR,XI-IATI-EC_NEAR
-Israel,IL,,EC NEAR,XI-IATI-EC_NEAR
-Jordan,JO,,EC NEAR,XI-IATI-EC_NEAR
-Kosovo,XK,,EC NEAR,XI-IATI-EC_NEAR
-Lebanon,LB,,EC NEAR,XI-IATI-EC_NEAR
-Libya,LY,,EC NEAR,XI-IATI-EC_NEAR
-Moldova,MD,,EC NEAR,XI-IATI-EC_NEAR
-Montenegro,ME,,EC NEAR,XI-IATI-EC_NEAR
-Morocco,MA,,EC NEAR,XI-IATI-EC_NEAR
-North Macedonia,MK,,EC NEAR,XI-IATI-EC_NEAR
-Palestine*,PS,,EC NEAR,XI-IATI-EC_NEAR
-Serbia,RS,,EC NEAR,XI-IATI-EC_NEAR
-Syria,SY,,EC NEAR,XI-IATI-EC_NEAR
-Tunisia,TN,,EC NEAR,XI-IATI-EC_NEAR
-Türkiye,TR,,EC NEAR,XI-IATI-EC_NEAR
-Ukraine,UA,,EC NEAR,XI-IATI-EC_NEAR
-Western Balkans and Türkiye,TR,,EC NEAR,XI-IATI-EC_NEAR
-Albania,AL,,EIB,XM-DAC-918-3
-Argentina,AR,,EIB,XM-DAC-918-3
-Armenia,AM,,EIB,XM-DAC-918-3
-Bangladesh,BD,,EIB,XM-DAC-918-3
-Benin,BJ,,EIB,XM-DAC-918-3
-Bolivia,BO,,EIB,XM-DAC-918-3
-Bosnia and Herzegovina,BA,,EIB,XM-DAC-918-3
-Brazil,BR,,EIB,XM-DAC-918-3
-Cambodia,KH,,EIB,XM-DAC-918-3
-Cameroon,CM,,EIB,XM-DAC-918-3
-China (People's Republic of),CN,,EIB,XM-DAC-918-3
-Côte d'Ivoire,CI,,EIB,XM-DAC-918-3
-Ecuador,EC,,EIB,XM-DAC-918-3
-Egypt,EG,,EIB,XM-DAC-918-3
-Eswatini,SZ,,EIB,XM-DAC-918-3
-Ethiopia,ET,,EIB,XM-DAC-918-3
-Georgia,GE,,EIB,XM-DAC-918-3
-Guinea,GN,,EIB,XM-DAC-918-3
-India,IN,,EIB,XM-DAC-918-3
-Jordan,JO,,EIB,XM-DAC-918-3
-Kenya,KE,,EIB,XM-DAC-918-3
-Kyrgyzstan,KG,,EIB,XM-DAC-918-3
-Lao People's Democratic Republic,LA,,EIB,XM-DAC-918-3
-Madagascar,MG,,EIB,XM-DAC-918-3
-Malawi,MW,,EIB,XM-DAC-918-3
-Moldova,MD,,EIB,XM-DAC-918-3
-Montenegro,ME,,EIB,XM-DAC-918-3
-Morocco,MA,,EIB,XM-DAC-918-3
-Nepal,NP,,EIB,XM-DAC-918-3
-Nicaragua,NI,,EIB,XM-DAC-918-3
-Nigeria,NG,,EIB,XM-DAC-918-3
-North Macedonia,MK,,EIB,XM-DAC-918-3
-Panama,PA,,EIB,XM-DAC-918-3
-Papua New Guinea,PG,,EIB,XM-DAC-918-3
-Senegal,SN,,EIB,XM-DAC-918-3
-Serbia,RS,,EIB,XM-DAC-918-3
-Tajikistan,TJ,,EIB,XM-DAC-918-3
-Tunisia,TN,,EIB,XM-DAC-918-3
-Türkiye,TR,,EIB,XM-DAC-918-3
-Ukraine,UA,,EIB,XM-DAC-918-3
-Uzbekistan,UZ,,EIB,XM-DAC-918-3
-West Bank and Gaza Strip,PS,,EIB,XM-DAC-918-3
-Zambia,ZM,,EIB,XM-DAC-918-3
-Zimbabwe,ZW,,EIB,XM-DAC-918-3
-Eritrea,ER,1,Finland MFA,FI-3
-Georgia,GE,1,Finland MFA,FI-3
-Kazakhstan,KZ,1,Finland MFA,FI-3
-Malaysia,MY,1,Finland MFA,FI-3
-Sudan,SD,1,Finland MFA,FI-3
-Syria,SY,,Finland MFA,FI-3
-Tajikistan,TJ,,Finland MFA,FI-3
-Tanzania,TZ,,Finland MFA,FI-3
-Thailand,TH,,Finland MFA,FI-3
-Tunisia,TN,1,Finland MFA,FI-3
-Turkey,TR,,Finland MFA,FI-3
-Uganda,UG,,Finland MFA,FI-3
-Ukraine,UA,,Finland MFA,FI-3
-Uzbekistan,UZ,,Finland MFA,FI-3
-Vietnam,VN,,Finland MFA,FI-3
-Yemen,YE,,Finland MFA,FI-3
-Zambia,ZM,,Finland MFA,FI-3
-Afghanistan,AF,,"France, AFD",FR-3
-Albania,AL,1,"France, AFD",FR-3
-Algeria,DZ,,"France, AFD",FR-3
-Angola,AO,,"France, AFD",FR-3
-Argentina,AR,,"France, AFD",FR-3
-Armenia,AM,,"France, AFD",FR-3
-Azerbaijan,AZ,,"France, AFD",FR-3
-Bangladesh,BD,,"France, AFD",FR-3
-Benin,BJ,,"France, AFD",FR-3
-Bolivia,BO,,"France, AFD",FR-3
-Brazil,BR,,"France, AFD",FR-3
-Burkina Faso,BF,,"France, AFD",FR-3
-Burundi,BI,,"France, AFD",FR-3
-Cabo Verde,CV,,"France, AFD",FR-3
-Cambodia,KH,,"France, AFD",FR-3
-Cameroon,CM,,"France, AFD",FR-3
-Central African Republic,CF,,"France, AFD",FR-3
-Chad,TD,,"France, AFD",FR-3
-China (People's Republic of),CN,,"France, AFD",FR-3
-Colombia,CO,,"France, AFD",FR-3
-Comoros,KM,,"France, AFD",FR-3
-Congo,CG,,"France, AFD",FR-3
-Costa Rica,CR,,"France, AFD",FR-3
-Côte d'Ivoire,CI,,"France, AFD",FR-3
-Cuba,CU,,"France, AFD",FR-3
-Democratic Republic of the Congo,CD,,"France, AFD",FR-3
-Djibouti,DJ,,"France, AFD",FR-3
-Dominican Republic,DO,,"France, AFD",FR-3
-Ecuador,EC,,"France, AFD",FR-3
-Egypt,EG,,"France, AFD",FR-3
-El Salvador,SV,1,"France, AFD",FR-3
-Ethiopia,ET,,"France, AFD",FR-3
-Gabon,GA,,"France, AFD",FR-3
-Gambia,GM,1,"France, AFD",FR-3
-Georgia,GE,,"France, AFD",FR-3
-Ghana,GH,,"France, AFD",FR-3
-Guatemala,GT,1,"France, AFD",FR-3
-Guinea,GN,,"France, AFD",FR-3
-Guinea-Bissau,GW,,"France, AFD",FR-3
-Haiti,HT,,"France, AFD",FR-3
-India,IN,,"France, AFD",FR-3
-Indonesia,ID,,"France, AFD",FR-3
-Iraq,IQ,,"France, AFD",FR-3
-Jordan,JO,,"France, AFD",FR-3
-Kenya,KE,,"France, AFD",FR-3
-Lao People's Democratic Republic,LA,,"France, AFD",FR-3
-Lebanon,LB,,"France, AFD",FR-3
-Liberia,LR,,"France, AFD",FR-3
-Madagascar,MG,,"France, AFD",FR-3
-Mali,ML,,"France, AFD",FR-3
-Mauritania,MR,,"France, AFD",FR-3
-Mauritius,MU,,"France, AFD",FR-3
-Mexico,MX,,"France, AFD",FR-3
-Mongolia,MN,,"France, AFD",FR-3
-Morocco,MA,,"France, AFD",FR-3
-Mozambique,MZ,,"France, AFD",FR-3
-Myanmar,MM,,"France, AFD",FR-3
-Namibia,NA,,"France, AFD",FR-3
-Niger,NE,,"France, AFD",FR-3
-Nigeria,NG,,"France, AFD",FR-3
-Pakistan,PK,,"France, AFD",FR-3
-Panama,PA,,"France, AFD",FR-3
-Papua New Guinea,PG,1,"France, AFD",FR-3
-Peru,PE,,"France, AFD",FR-3
-Philippines,PH,,"France, AFD",FR-3
-Rwanda,RW,,"France, AFD",FR-3
-Sao Tome and Principe,ST,1,"France, AFD",FR-3
-Senegal,SN,,"France, AFD",FR-3
-Serbia,RS,,"France, AFD",FR-3
-South Africa,ZA,,"France, AFD",FR-3
-Sri Lanka,LK,,"France, AFD",FR-3
-Sudan,SD,,"France, AFD",FR-3
-Suriname,SR,1,"France, AFD",FR-3
-Tanzania,TZ,,"France, AFD",FR-3
-Thailand,TH,1,"France, AFD",FR-3
-Togo,TG,,"France, AFD",FR-3
-Tunisia,TN,,"France, AFD",FR-3
-Türkiye,TR,,"France, AFD",FR-3
-Uganda,UG,,"France, AFD",FR-3
-Uzbekistan,UZ,,"France, AFD",FR-3
-Vanuatu,VU,,"France, AFD",FR-3
-Viet Nam,VN,,"France, AFD",FR-3
-Wallis and Futuna,WF,,"France, AFD",FR-3
-West Bank and Gaza Strip,PS,,"France, AFD",FR-3
-Yemen,YE,1,"France, AFD",FR-3
-Zambia,ZM,,"France, AFD",FR-3
-Zimbabwe,ZW,,"France, AFD",FR-3
-Afghanistan,AF,,Gates,DAC-1601
-Angola,AO,,Gates,DAC-1601
-Argentina,AR,,Gates,DAC-1601
-Bangladesh,BD,,Gates,DAC-1601
-Benin,BJ,,Gates,DAC-1601
-Bhutan,BT,,Gates,DAC-1601
-Botswana,BW,,Gates,DAC-1601
-Brazil,BR,,Gates,DAC-1601
-Burkina Faso,BF,,Gates,DAC-1601
-Cabo Verde,CV,,Gates,DAC-1601
-Cambodia,KH,,Gates,DAC-1601
-Cameroon,CM,,Gates,DAC-1601
-Central African Republic,CF,,Gates,DAC-1601
-Chad,TD,,Gates,DAC-1601
-China (People's Republic of),CN,,Gates,DAC-1601
-Colombia,CO,,Gates,DAC-1601
-Congo,CG,,Gates,DAC-1601
-Côte d'Ivoire,CI,,Gates,DAC-1601
-Democratic People's Republic of Korea,KR,1,Gates,DAC-1601
-Democratic Republic of the Congo,CD,,Gates,DAC-1601
-Djibouti,DJ,1,Gates,DAC-1601
-Dominican Republic,DO,1,Gates,DAC-1601
-Egypt,EG,,Gates,DAC-1601
-El Salvador,SV,,Gates,DAC-1601
-Eswatini,SZ,,Gates,DAC-1601
-Ethiopia,ET,,Gates,DAC-1601
-Fiji,FJ,,Gates,DAC-1601
-Gabon,GA,,Gates,DAC-1601
-Gambia,GM,,Gates,DAC-1601
-Ghana,GH,,Gates,DAC-1601
-Guatemala,GT,,Gates,DAC-1601
-Guinea,GN,,Gates,DAC-1601
-Guyana,GY,,Gates,DAC-1601
-Haiti,HT,,Gates,DAC-1601
-Honduras,HN,,Gates,DAC-1601
-India,IN,,Gates,DAC-1601
-Indonesia,ID,,Gates,DAC-1601
-Iran,IR,1,Gates,DAC-1601
-Iraq,IQ,,Gates,DAC-1601
-Jordan,JO,,Gates,DAC-1601
-Kenya,KE,,Gates,DAC-1601
-Lao People's Democratic Republic,LA,,Gates,DAC-1601
-Lebanon,LB,1,Gates,DAC-1601
-Lesotho,LS,,Gates,DAC-1601
-Liberia,LR,,Gates,DAC-1601
-Madagascar,MG,,Gates,DAC-1601
-Malawi,MW,,Gates,DAC-1601
-Mali,ML,,Gates,DAC-1601
-Mauritania,MR,,Gates,DAC-1601
-Mexico,MX,1,Gates,DAC-1601
-Mongolia,MN,,Gates,DAC-1601
-Morocco,MA,,Gates,DAC-1601
-Mozambique,MZ,,Gates,DAC-1601
-Myanmar,MM,,Gates,DAC-1601
-Namibia,NA,,Gates,DAC-1601
-Nepal,NP,,Gates,DAC-1601
-Nicaragua,NI,,Gates,DAC-1601
-Niger,NE,,Gates,DAC-1601
-Nigeria,NG,,Gates,DAC-1601
-Pakistan,PK,,Gates,DAC-1601
-Panama,PA,1,Gates,DAC-1601
-Papua New Guinea,PG,,Gates,DAC-1601
-Peru,PE,1,Gates,DAC-1601
-Philippines,PH,,Gates,DAC-1601
-Rwanda,RW,,Gates,DAC-1601
-Samoa,WS,,Gates,DAC-1601
-Sao Tome and Principe,ST,,Gates,DAC-1601
-Senegal,SN,,Gates,DAC-1601
-Sierra Leone,SL,,Gates,DAC-1601
-Somalia,SO,,Gates,DAC-1601
-South Africa,ZA,,Gates,DAC-1601
-South Sudan,SS,,Gates,DAC-1601
-Sri Lanka,LK,,Gates,DAC-1601
-Sudan,SD,,Gates,DAC-1601
-Syrian Arab Republic,SY,,Gates,DAC-1601
-Tanzania,TZ,,Gates,DAC-1601
-Thailand,TH,,Gates,DAC-1601
-Togo,TG,,Gates,DAC-1601
-Türkiye,TR,1,Gates,DAC-1601
-Uganda,UG,,Gates,DAC-1601
-Ukraine,UA,,Gates,DAC-1601
-Viet Nam,VN,,Gates,DAC-1601
-West Bank and Gaza Strip,PS,,Gates,DAC-1601
-Yemen,YE,,Gates,DAC-1601
-Zambia,ZM,,Gates,DAC-1601
-Zimbabwe,ZW,,Gates,DAC-1601
-Afghanistan,AF,,GAVI,47122
-Angola,AO,,GAVI,47122
-Azerbaijan,AZ,,GAVI,47122
-Bangladesh,BD,,GAVI,47122
-Benin,BJ,,GAVI,47122
-Bhutan,BT,1,GAVI,47122
-Bolivia,BO,,GAVI,47122
-Burkina Faso,BF,,GAVI,47122
-Burundi,BI,,GAVI,47122
-Cambodia,KH,,GAVI,47122
-Cameroon,CM,,GAVI,47122
-Central African Republic,CF,,GAVI,47122
-Chad,TD,,GAVI,47122
-Comoros,KM,,GAVI,47122
-Congo,CG,,GAVI,47122
-Côte d'Ivoire,CI,,GAVI,47122
-Democratic People's Republic of Korea,KR,,GAVI,47122
-Democratic Republic of the Congo,CD,,GAVI,47122
-Djibouti,DJ,,GAVI,47122
-Eritrea,ER,,GAVI,47122
-Ethiopia,ET,,GAVI,47122
-Gambia,GM,,GAVI,47122
-Ghana,GH,,GAVI,47122
-Guinea,GN,,GAVI,47122
-Guinea-Bissau,GW,,GAVI,47122
-Haiti,HT,,GAVI,47122
-India,IN,,GAVI,47122
-Indonesia,ID,,GAVI,47122
-Kenya,KE,,GAVI,47122
-Kiribati,KI,1,GAVI,47122
-Kyrgyzstan,KG,,GAVI,47122
-Lao People's Democratic Republic,LA,,GAVI,47122
-Lesotho,LS,,GAVI,47122
-Liberia,LR,,GAVI,47122
-Madagascar,MG,,GAVI,47122
-Malawi,MW,,GAVI,47122
-Mali,ML,,GAVI,47122
-Mauritania,MR,,GAVI,47122
-Moldova,MD,1,GAVI,47122
-Mongolia,MN,1,GAVI,47122
-Mozambique,MZ,,GAVI,47122
-Myanmar,MM,,GAVI,47122
-Nepal,NP,,GAVI,47122
-Nicaragua,NI,,GAVI,47122
-Niger,NE,,GAVI,47122
-Nigeria,NG,,GAVI,47122
-Pakistan,PK,,GAVI,47122
-Papua New Guinea,PG,,GAVI,47122
-Rwanda,RW,,GAVI,47122
-Sao Tome and Principe,ST,1,GAVI,47122
-Senegal,SN,,GAVI,47122
-Sierra Leone,SL,,GAVI,47122
-Solomon Islands,SB,,GAVI,47122
-Somalia,SO,,GAVI,47122
-South Sudan,SS,,GAVI,47122
-Sri Lanka,LK,1,GAVI,47122
-Sudan,SD,,GAVI,47122
-Syrian Arab Republic,SY,,GAVI,47122
-Tajikistan,TJ,,GAVI,47122
-Tanzania,TZ,,GAVI,47122
-Timor-Leste,TL,1,GAVI,47122
-Togo,TG,,GAVI,47122
-Uganda,UG,,GAVI,47122
-Uzbekistan,UZ,,GAVI,47122
-Viet Nam,VN,,GAVI,47122
-Yemen,YE,,GAVI,47122
-Zambia,ZM,,GAVI,47122
-Zimbabwe,ZW,,GAVI,47122
-Afghanistan,AF,,Global Fund,47045
-Albania,AL,1,Global Fund,47045
-Algeria,DZ,,Global Fund,47045
-Angola,AO,,Global Fund,47045
-Armenia,AM,,Global Fund,47045
-Azerbaijan,AZ,,Global Fund,47045
-Bangladesh,BD,,Global Fund,47045
-Belarus,BY,,Global Fund,47045
-Belize,BZ,1,Global Fund,47045
-Benin,BJ,,Global Fund,47045
-Bhutan,BT,1,Global Fund,47045
-Bolivia,BO,,Global Fund,47045
-Botswana,BW,,Global Fund,47045
-Burkina Faso,BF,,Global Fund,47045
-Burundi,BI,,Global Fund,47045
-Cabo Verde,CV,,Global Fund,47045
-Cambodia,KH,,Global Fund,47045
-Cameroon,CM,,Global Fund,47045
-Central African Republic,CF,,Global Fund,47045
-Chad,TD,,Global Fund,47045
-Colombia,CO,,Global Fund,47045
-Comoros,KM,,Global Fund,47045
-Congo,CG,,Global Fund,47045
-Costa Rica,CR,,Global Fund,47045
-Côte d'Ivoire,CI,,Global Fund,47045
-Cuba,CU,,Global Fund,47045
-Democratic Republic of the Congo,CD,,Global Fund,47045
-Djibouti,DJ,,Global Fund,47045
-Dominican Republic,DO,,Global Fund,47045
-Ecuador,EC,,Global Fund,47045
-Egypt,EG,,Global Fund,47045
-El Salvador,SV,,Global Fund,47045
-Eritrea,ER,,Global Fund,47045
-Eswatini,SZ,,Global Fund,47045
-Ethiopia,ET,,Global Fund,47045
-Gabon,GA,1,Global Fund,47045
-Gambia,GM,,Global Fund,47045
-Georgia,GE,,Global Fund,47045
-Ghana,GH,,Global Fund,47045
-Guatemala,GT,,Global Fund,47045
-Guinea,GN,,Global Fund,47045
-Guinea-Bissau,GW,,Global Fund,47045
-Guyana,GY,,Global Fund,47045
-Haiti,HT,,Global Fund,47045
-Honduras,HN,,Global Fund,47045
-India,IN,,Global Fund,47045
-Indonesia,ID,,Global Fund,47045
-Iran,IR,,Global Fund,47045
-Jamaica,JM,1,Global Fund,47045
-Kazakhstan,KZ,,Global Fund,47045
-Kenya,KE,,Global Fund,47045
-Kosovo,XK,1,Global Fund,47045
-Kyrgyzstan,KG,,Global Fund,47045
-Lao People's Democratic Republic,LA,,Global Fund,47045
-Lesotho,LS,,Global Fund,47045
-Liberia,LR,,Global Fund,47045
-Madagascar,MG,,Global Fund,47045
-Malawi,MW,,Global Fund,47045
-Malaysia,MY,1,Global Fund,47045
-Mali,ML,,Global Fund,47045
-Mauritania,MR,,Global Fund,47045
-Mauritius,MU,1,Global Fund,47045
-Moldova,MD,,Global Fund,47045
-Mongolia,MN,,Global Fund,47045
-Montenegro,ME,1,Global Fund,47045
-Morocco,MA,,Global Fund,47045
-Mozambique,MZ,,Global Fund,47045
-Myanmar,MM,,Global Fund,47045
-Namibia,NA,,Global Fund,47045
-Nepal,NP,,Global Fund,47045
-Nicaragua,NI,,Global Fund,47045
-Niger,NE,,Global Fund,47045
-Nigeria,NG,,Global Fund,47045
-Pakistan,PK,,Global Fund,47045
-Panama,PA,1,Global Fund,47045
-Papua New Guinea,PG,,Global Fund,47045
-Paraguay,PY,,Global Fund,47045
-Peru,PE,,Global Fund,47045
-Philippines,PH,,Global Fund,47045
-Rwanda,RW,,Global Fund,47045
-Sao Tome and Principe,ST,,Global Fund,47045
-Senegal,SN,,Global Fund,47045
-Serbia,RS,1,Global Fund,47045
-Sierra Leone,SL,,Global Fund,47045
-Solomon Islands,SB,,Global Fund,47045
-Somalia,SO,,Global Fund,47045
-South Africa,ZA,,Global Fund,47045
-South Sudan,SS,,Global Fund,47045
-Sri Lanka,LK,,Global Fund,47045
-Sudan,SD,,Global Fund,47045
-Suriname,SR,,Global Fund,47045
-Tajikistan,TJ,,Global Fund,47045
-Tanzania,TZ,,Global Fund,47045
-Thailand,TH,,Global Fund,47045
-Timor-Leste,TL,,Global Fund,47045
-Togo,TG,,Global Fund,47045
-Tunisia,TN,,Global Fund,47045
-Turkmenistan,TM,,Global Fund,47045
-Uganda,UG,,Global Fund,47045
-Ukraine,UA,,Global Fund,47045
-Uzbekistan,UZ,,Global Fund,47045
-Venezuela,VE,,Global Fund,47045
-Viet Nam,VN,,Global Fund,47045
-Zambia,ZM,,Global Fund,47045
-Zimbabwe,ZW,,Global Fund,47045
-Argentina,AR,,IADB,XI-IATI-IADB
-Bahamas,BS,,IADB,XI-IATI-IADB
-Barbados,BB,,IADB,XI-IATI-IADB
-Belize,BZ,1,IADB,XI-IATI-IADB
-Bolivia,BO,,IADB,XI-IATI-IADB
-Brazil,BR,,IADB,XI-IATI-IADB
-Chile,CL,,IADB,XI-IATI-IADB
-Colombia,CO,,IADB,XI-IATI-IADB
-Costa Rica,CR,,IADB,XI-IATI-IADB
-Ecuador,EC,,IADB,XI-IATI-IADB
-El Salvador,SV,,IADB,XI-IATI-IADB
-Guatemala,GT,1,IADB,XI-IATI-IADB
-Guyana,GY,,IADB,XI-IATI-IADB
-Haiti,HT,,IADB,XI-IATI-IADB
-Honduras,HN,,IADB,XI-IATI-IADB
-Jamaica,JM,,IADB,XI-IATI-IADB
-Mexico,MX,,IADB,XI-IATI-IADB
-Nicaragua,NI,,IADB,XI-IATI-IADB
-Panama,PA,,IADB,XI-IATI-IADB
-Paraguay,PY,,IADB,XI-IATI-IADB
-Peru,PE,,IADB,XI-IATI-IADB
-Suriname,SR,1,IADB,XI-IATI-IADB
-the Dominican Republic,DO,,IADB,XI-IATI-IADB
-Trinidad and Tobago,TT,,IADB,XI-IATI-IADB
-Uruguay,UY,,IADB,XI-IATI-IADB
-Venezuela.,VE,1,IADB,XI-IATI-IADB
-ARGENTINA,AR,,IBD Invest,XM-DAC-46012
-BAHAMAS,BS,,IBD Invest,XM-DAC-46012
-BARBADOS,BB,,IBD Invest,XM-DAC-46012
-BELIZE,BZ,,IBD Invest,XM-DAC-46012
-BOLIVIA,BO,,IBD Invest,XM-DAC-46012
-BRAZIL,BR,,IBD Invest,XM-DAC-46012
-CHILE,CL,,IBD Invest,XM-DAC-46012
-COLOMBIA,CO,,IBD Invest,XM-DAC-46012
-COSTA RICA,CR,,IBD Invest,XM-DAC-46012
-DOMINICAN REPUBLIC,DO,,IBD Invest,XM-DAC-46012
-ECUADOR,EC,,IBD Invest,XM-DAC-46012
-EL SALVADOR,SV,,IBD Invest,XM-DAC-46012
-GUATEMALA,GT,,IBD Invest,XM-DAC-46012
-GUYANA,GY,,IBD Invest,XM-DAC-46012
-HAITI,HT,,IBD Invest,XM-DAC-46012
-HONDURAS,HN,,IBD Invest,XM-DAC-46012
-JAMAICA,JM,,IBD Invest,XM-DAC-46012
-MEXICO,MX,,IBD Invest,XM-DAC-46012
-NICARAGUA,NI,,IBD Invest,XM-DAC-46012
-PANAMA,PA,,IBD Invest,XM-DAC-46012
-PARAGUAY,PY,,IBD Invest,XM-DAC-46012
-PERU,PE,,IBD Invest,XM-DAC-46012
-SURINAME,SR,,IBD Invest,XM-DAC-46012
-TRINIDAD AND TOBAGO,TT,,IBD Invest,XM-DAC-46012
-URUGUAY,UY,,IBD Invest,XM-DAC-46012
-VENEZUELA,VE,,IBD Invest,XM-DAC-46012
-Ethiopia,ET,,Irishaid,XM-DAC-21-1
-Kenya,KE,,Irishaid,XM-DAC-21-1
-Liberia,LR,,Irishaid,XM-DAC-21-1
-Malawi,MW,,Irishaid,XM-DAC-21-1
-Mozambique,MZ,,Irishaid,XM-DAC-21-1
-Palestine,PS,,Irishaid,XM-DAC-21-1
-Sierra Leone,SL,,Irishaid,XM-DAC-21-1
-South Africa,ZA,,Irishaid,XM-DAC-21-1
-Tanzania,TZ,,Irishaid,XM-DAC-21-1
-Uganda,UG,,Irishaid,XM-DAC-21-1
-Vietnam,VN,,Irishaid,XM-DAC-21-1
-Zambia,ZM,,Irishaid,XM-DAC-21-1
-Zimbabwe,ZW,,Irishaid,XM-DAC-21-1
-Albania ,AL,,Italy AICS,XM-DAC-6-4
-Algeria ,DZ,,Italy AICS,XM-DAC-6-4
-Bangladesh ,BD,,Italy AICS,XM-DAC-6-4
-Bolivia ,BO,,Italy AICS,XM-DAC-6-4
-Bosnia-Herzegovina ,BA,,Italy AICS,XM-DAC-6-4
-Brazil ,BR,,Italy AICS,XM-DAC-6-4
-Burkina Faso ,BF,,Italy AICS,XM-DAC-6-4
-Burundi ,BI,,Italy AICS,XM-DAC-6-4
-Cameroon ,CM,,Italy AICS,XM-DAC-6-4
-Cape Verde ,CV,,Italy AICS,XM-DAC-6-4
-Central African Rep. ,CF,,Italy AICS,XM-DAC-6-4
-Chad ,TD,,Italy AICS,XM-DAC-6-4
-Colombia ,CO,,Italy AICS,XM-DAC-6-4
-"Congo, Dem. Rep. ",CD,,Italy AICS,XM-DAC-6-4
-Costa Rica ,CR,,Italy AICS,XM-DAC-6-4
-Cote d'Ivoire ,CI,,Italy AICS,XM-DAC-6-4
-Cuba ,CU,,Italy AICS,XM-DAC-6-4
-Djibouti ,DJ,,Italy AICS,XM-DAC-6-4
-Ecuador ,EC,,Italy AICS,XM-DAC-6-4
-Egypt ,EG,,Italy AICS,XM-DAC-6-4
-El Salvador ,SV,,Italy AICS,XM-DAC-6-4
-Eritrea ,ER,,Italy AICS,XM-DAC-6-4
-Ethiopia ,ET,,Italy AICS,XM-DAC-6-4
-Guinea ,GW,,Italy AICS,XM-DAC-6-4
-Guinea-Bissau ,GW,,Italy AICS,XM-DAC-6-4
-Haiti ,HT,1,Italy AICS,XM-DAC-6-4
-Iraq ,IQ,,Italy AICS,XM-DAC-6-4
-Jordan ,JO,,Italy AICS,XM-DAC-6-4
-Kenya ,KE,,Italy AICS,XM-DAC-6-4
-Kosovo ,XK,,Italy AICS,XM-DAC-6-4
-Lebanon ,LB,,Italy AICS,XM-DAC-6-4
-Liberia ,LR,,Italy AICS,XM-DAC-6-4
-Libya ,LY,,Italy AICS,XM-DAC-6-4
-Malawi ,MW,,Italy AICS,XM-DAC-6-4
-Mali ,ML,,Italy AICS,XM-DAC-6-4
-Mauritania ,MR,,Italy AICS,XM-DAC-6-4
-Morocco ,MA,,Italy AICS,XM-DAC-6-4
-Mozambique ,MZ,,Italy AICS,XM-DAC-6-4
-Myanmar ,MM,,Italy AICS,XM-DAC-6-4
-Niger ,NE,,Italy AICS,XM-DAC-6-4
-Pakistan ,PK,,Italy AICS,XM-DAC-6-4
-Palestine ,PS,,Italy AICS,XM-DAC-6-4
-Peru ,PE,,Italy AICS,XM-DAC-6-4
-Rwanda ,RW,,Italy AICS,XM-DAC-6-4
-Senegal ,SN,,Italy AICS,XM-DAC-6-4
-Serbia ,RS,,Italy AICS,XM-DAC-6-4
-Sierra Leone ,SL,,Italy AICS,XM-DAC-6-4
-Somalia ,SO,,Italy AICS,XM-DAC-6-4
-South Africa ,ZA,1,Italy AICS,XM-DAC-6-4
-South Sudan ,SS,,Italy AICS,XM-DAC-6-4
-Sudan ,SD,,Italy AICS,XM-DAC-6-4
-Syria ,SY,,Italy AICS,XM-DAC-6-4
-Tanzania ,TZ,,Italy AICS,XM-DAC-6-4
-Tunisia ,TN,,Italy AICS,XM-DAC-6-4
-Uganda ,UG,,Italy AICS,XM-DAC-6-4
-Ukraine ,UA,,Italy AICS,XM-DAC-6-4
-Venezuela ,VE,,Italy AICS,XM-DAC-6-4
-Vietnam ,VN,,Italy AICS,XM-DAC-6-4
-Zimbabwe ,ZW,,Italy AICS,XM-DAC-6-4
-Afghanistan,AF,,JICA,XM-DAC-701-8
-Albania,AL,,JICA,XM-DAC-701-8
-Algeria,DZ,,JICA,XM-DAC-701-8
-Angola,AO,,JICA,XM-DAC-701-8
-Argentina,AR,,JICA,XM-DAC-701-8
-Armenia,AM,,JICA,XM-DAC-701-8
-Azerbaijan,AZ,,JICA,XM-DAC-701-8
-Bangladesh,BD,,JICA,XM-DAC-701-8
-Belize,BZ,,JICA,XM-DAC-701-8
-Benin,BJ,,JICA,XM-DAC-701-8
-Bhutan,BT,,JICA,XM-DAC-701-8
-Bolivia,BO,,JICA,XM-DAC-701-8
-Bosnia and Herzegovina,BA,,JICA,XM-DAC-701-8
-Botswana,BW,,JICA,XM-DAC-701-8
-Brazil,BR,,JICA,XM-DAC-701-8
-Burkina Faso,BF,,JICA,XM-DAC-701-8
-Burundi,BI,,JICA,XM-DAC-701-8
-Cambodia,KH,,JICA,XM-DAC-701-8
-Cameroon,CM,,JICA,XM-DAC-701-8
-Chile,CL,,JICA,XM-DAC-701-8
-China,CN,,JICA,XM-DAC-701-8
-Colombia,CO,,JICA,XM-DAC-701-8
-Comoros,KM,1,JICA,XM-DAC-701-8
-Costa Rica,CR,,JICA,XM-DAC-701-8
-Côte d'Ivoire,CI,,JICA,XM-DAC-701-8
-Democratic Republic of the Congo,CD,,JICA,XM-DAC-701-8
-Djibouti,DJ,,JICA,XM-DAC-701-8
-Dominican Republic,DO,,JICA,XM-DAC-701-8
-Ecuador,EC,,JICA,XM-DAC-701-8
-Egypt,EG,,JICA,XM-DAC-701-8
-El Salvador,SV,,JICA,XM-DAC-701-8
-Eritrea,ER,,JICA,XM-DAC-701-8
-Ethiopia,ET,,JICA,XM-DAC-701-8
-Federated States of Micronesia,FM,,JICA,XM-DAC-701-8
-Fiji,FJ,,JICA,XM-DAC-701-8
-Gabon,GA,,JICA,XM-DAC-701-8
-Georgia,GE,,JICA,XM-DAC-701-8
-Ghana,GH,,JICA,XM-DAC-701-8
-Guatemala,GT,,JICA,XM-DAC-701-8
-Haiti,HT,,JICA,XM-DAC-701-8
-Honduras,HN,,JICA,XM-DAC-701-8
-India,IN,,JICA,XM-DAC-701-8
-Indonesia,ID,,JICA,XM-DAC-701-8
-Iran,IR,,JICA,XM-DAC-701-8
-Iraq,IQ,,JICA,XM-DAC-701-8
-Jamaica,JM,,JICA,XM-DAC-701-8
-Jordan,JO,,JICA,XM-DAC-701-8
-Kenya,KE,,JICA,XM-DAC-701-8
-Kosovo,XK,,JICA,XM-DAC-701-8
-Kyrgyz Republic,KG,,JICA,XM-DAC-701-8
-Laos,LA,,JICA,XM-DAC-701-8
-Liberia,LR,,JICA,XM-DAC-701-8
-Madagascar,MG,,JICA,XM-DAC-701-8
-Malawi,MW,,JICA,XM-DAC-701-8
-Malaysia,MY,,JICA,XM-DAC-701-8
-Maldives,MV,,JICA,XM-DAC-701-8
-Marshall Islands,MH,,JICA,XM-DAC-701-8
-Mauritius,MU,,JICA,XM-DAC-701-8
-Mexico,MX,,JICA,XM-DAC-701-8
-Moldova,MD,,JICA,XM-DAC-701-8
-Mongolia,MN,,JICA,XM-DAC-701-8
-Montenegro,ME,,JICA,XM-DAC-701-8
-Morocco,MA,,JICA,XM-DAC-701-8
-Mozambique,MZ,,JICA,XM-DAC-701-8
-Myanmar,MM,,JICA,XM-DAC-701-8
-Namibia,NA,,JICA,XM-DAC-701-8
-Nepal,NP,,JICA,XM-DAC-701-8
-Nicaragua,NI,,JICA,XM-DAC-701-8
-Niger,NE,,JICA,XM-DAC-701-8
-Nigeria,NG,,JICA,XM-DAC-701-8
-Pakistan,PK,,JICA,XM-DAC-701-8
-Palau,PW,,JICA,XM-DAC-701-8
-Palestine,PS,,JICA,XM-DAC-701-8
-Panama,PA,,JICA,XM-DAC-701-8
-Papua New Guinea,PG,,JICA,XM-DAC-701-8
-Paraguay,PY,,JICA,XM-DAC-701-8
-Peru,PE,,JICA,XM-DAC-701-8
-Philippines,PH,,JICA,XM-DAC-701-8
-Republic of Cuba,CU,,JICA,XM-DAC-701-8
-Republic of North Macedonia,MK,,JICA,XM-DAC-701-8
-Rwanda,RW,,JICA,XM-DAC-701-8
-Saint Lucia,LC,,JICA,XM-DAC-701-8
-Samoa,WS,,JICA,XM-DAC-701-8
-Senegal,SN,,JICA,XM-DAC-701-8
-Serbia,RS,,JICA,XM-DAC-701-8
-Seychelles,SC,,JICA,XM-DAC-701-8
-Sierra Leone,SL,,JICA,XM-DAC-701-8
-Solomon Islands,SB,,JICA,XM-DAC-701-8
-Somalia,SO,,JICA,XM-DAC-701-8
-South Africa,ZA,,JICA,XM-DAC-701-8
-South Sudan,SS,,JICA,XM-DAC-701-8
-Sri Lanka,LK,,JICA,XM-DAC-701-8
-Sudan,SD,,JICA,XM-DAC-701-8
-Syria,SY,,JICA,XM-DAC-701-8
-Tajikistan,TJ,,JICA,XM-DAC-701-8
-Tanzania,TZ,,JICA,XM-DAC-701-8
-Thailand,TH,,JICA,XM-DAC-701-8
-Timor-Leste,TL,,JICA,XM-DAC-701-8
-Tonga,TO,,JICA,XM-DAC-701-8
-Tunisia,TN,,JICA,XM-DAC-701-8
-Turkey,TR,,JICA,XM-DAC-701-8
-Uganda,UG,,JICA,XM-DAC-701-8
-Ukraine,UA,,JICA,XM-DAC-701-8
-Uruguay,UY,,JICA,XM-DAC-701-8
-Uzbekistan,UZ,,JICA,XM-DAC-701-8
-Vanuatu,VU,,JICA,XM-DAC-701-8
-Venezuela,VE,,JICA,XM-DAC-701-8
-Viet Nam,VN,,JICA,XM-DAC-701-8
-Yemen,YE,,JICA,XM-DAC-701-8
-Zambia,ZM,,JICA,XM-DAC-701-8
-Zimbabwe,ZW,,JICA,XM-DAC-701-8
-Bangladesh,BD,,KOREA,KR-GOV-051
-Bolivia,BO,,KOREA,KR-GOV-051
-Cambodia,KH,,KOREA,KR-GOV-051
-Colombia,CO,,KOREA,KR-GOV-051
-Egypt,EG,,KOREA,KR-GOV-051
-Ethiopia,ET,,KOREA,KR-GOV-051
-Ghana,GH,,KOREA,KR-GOV-051
-India,IN,,KOREA,KR-GOV-051
-Indonesia,ID,,KOREA,KR-GOV-051
-Kyrgyzstan,KG,,KOREA,KR-GOV-051
-Lao PDR,LA,,KOREA,KR-GOV-051
-Mongolia,MN,,KOREA,KR-GOV-051
-Myanmar,MM,,KOREA,KR-GOV-051
-Nepal,NP,,KOREA,KR-GOV-051
-Pakistan,PK,,KOREA,KR-GOV-051
-Paraguay,PY,,KOREA,KR-GOV-051
-Peru,PE,,KOREA,KR-GOV-051
-Philippines,PH,,KOREA,KR-GOV-051
-Rwanda,RW,,KOREA,KR-GOV-051
-Senegal,SN,,KOREA,KR-GOV-051
-Sri Lanka,LK,,KOREA,KR-GOV-051
-Tajikistan,TJ,,KOREA,KR-GOV-051
-Tanzania,TZ,,KOREA,KR-GOV-051
-Uganda,UG,,KOREA,KR-GOV-051
-Ukraine,UA,,KOREA,KR-GOV-051
-Uzbekistan,UZ,,KOREA,KR-GOV-051
-Vietnam,VN,,KOREA,KR-GOV-051
-Afghanistan,AF,,KSRelief,XM-OCHA-HPC6770
-Albania,AL,,KSRelief,XM-OCHA-HPC6770
-Algeria,DZ,,KSRelief,XM-OCHA-HPC6770
-Australia,AU,1,KSRelief,XM-OCHA-HPC6770
-Azerbaijan,AZ,,KSRelief,XM-OCHA-HPC6770
-Bangladesh,BD,,KSRelief,XM-OCHA-HPC6770
-Benin,BJ,,KSRelief,XM-OCHA-HPC6770
-Bosnia and Herzegovina,BA,,KSRelief,XM-OCHA-HPC6770
-Bulgaria,BG,,KSRelief,XM-OCHA-HPC6770
-Burkina Faso,BF,,KSRelief,XM-OCHA-HPC6770
-Burundi,BI,,KSRelief,XM-OCHA-HPC6770
-Cameroon,CM,,KSRelief,XM-OCHA-HPC6770
-Central African Republic Capital,CF,,KSRelief,XM-OCHA-HPC6770
-Chad,TD,,KSRelief,XM-OCHA-HPC6770
-China,CN,,KSRelief,XM-OCHA-HPC6770
-Congo,CG,,KSRelief,XM-OCHA-HPC6770
-Costa Rica,CR,,KSRelief,XM-OCHA-HPC6770
-Djibouti,DJ,,KSRelief,XM-OCHA-HPC6770
-Dominican Republic,DO,1,KSRelief,XM-OCHA-HPC6770
-Egypt,EG,,KSRelief,XM-OCHA-HPC6770
-Equatorial Guinea,GQ,1,KSRelief,XM-OCHA-HPC6770
-Eritrea,ER,,KSRelief,XM-OCHA-HPC6770
-Ethiopie,ET,,KSRelief,XM-OCHA-HPC6770
-Gabon,GA,1,KSRelief,XM-OCHA-HPC6770
-Gambia,GM,,KSRelief,XM-OCHA-HPC6770
-Ghana,GH,,KSRelief,XM-OCHA-HPC6770
-Guinea,GN,,KSRelief,XM-OCHA-HPC6770
-Guinea-Bissau,GW,,KSRelief,XM-OCHA-HPC6770
-Haiti,HT,1,KSRelief,XM-OCHA-HPC6770
-Honduras,HN,,KSRelief,XM-OCHA-HPC6770
-India,IN,,KSRelief,XM-OCHA-HPC6770
-Indonesia,ID,,KSRelief,XM-OCHA-HPC6770
-Iraq,IQ,,KSRelief,XM-OCHA-HPC6770
-Ivory Coast,CI,,KSRelief,XM-OCHA-HPC6770
-Jamaica,JM,,KSRelief,XM-OCHA-HPC6770
-Japan,JP,,KSRelief,XM-OCHA-HPC6770
-Jordan,JO,,KSRelief,XM-OCHA-HPC6770
-Kazakhstan,KZ,,KSRelief,XM-OCHA-HPC6770
-Kenya,KE,,KSRelief,XM-OCHA-HPC6770
-Kosovo,XK,,KSRelief,XM-OCHA-HPC6770
-Kyrgyzstan,KG,,KSRelief,XM-OCHA-HPC6770
-Lebanon,LB,,KSRelief,XM-OCHA-HPC6770
-Liberia,LR,,KSRelief,XM-OCHA-HPC6770
-Libya,LY,1,KSRelief,XM-OCHA-HPC6770
-Madagascar,MG,,KSRelief,XM-OCHA-HPC6770
-Malawi,MW,,KSRelief,XM-OCHA-HPC6770
-Malaysia,MY,,KSRelief,XM-OCHA-HPC6770
-Maldives,MV,,KSRelief,XM-OCHA-HPC6770
-Mali,ML,,KSRelief,XM-OCHA-HPC6770
-Mauritania,MR,,KSRelief,XM-OCHA-HPC6770
-Mauritius,MU,,KSRelief,XM-OCHA-HPC6770
-Montenegro,ME,1,KSRelief,XM-OCHA-HPC6770
-Morocco,MA,,KSRelief,XM-OCHA-HPC6770
-Mozambique,MZ,,KSRelief,XM-OCHA-HPC6770
-Myanmar,MM,,KSRelief,XM-OCHA-HPC6770
-Namibia,NA,,KSRelief,XM-OCHA-HPC6770
-Nepal,NP,1,KSRelief,XM-OCHA-HPC6770
-Nicaragua,NI,,KSRelief,XM-OCHA-HPC6770
-Niger,NE,,KSRelief,XM-OCHA-HPC6770
-Nigeria,NG,,KSRelief,XM-OCHA-HPC6770
-North Macedonia,MK,,KSRelief,XM-OCHA-HPC6770
-Pakistan,PK,,KSRelief,XM-OCHA-HPC6770
-Palestine,PS,,KSRelief,XM-OCHA-HPC6770
-Philippines,PH,,KSRelief,XM-OCHA-HPC6770
-Poland,PL,,KSRelief,XM-OCHA-HPC6770
-Republic of South Africa,ZA,,KSRelief,XM-OCHA-HPC6770
-Republique Democratique du Congo,CD,,KSRelief,XM-OCHA-HPC6770
-Russia,RU,,KSRelief,XM-OCHA-HPC6770
-Saint Vincent and the Grenadines,VC,,KSRelief,XM-OCHA-HPC6770
-Senegal,SN,,KSRelief,XM-OCHA-HPC6770
-Sierra Leone,SL,,KSRelief,XM-OCHA-HPC6770
-Singapore,SG,,KSRelief,XM-OCHA-HPC6770
-Somalia,SO,,KSRelief,XM-OCHA-HPC6770
-South Sudan,SS,,KSRelief,XM-OCHA-HPC6770
-Sri Lanka,LK,,KSRelief,XM-OCHA-HPC6770
-Sudan,SD,,KSRelief,XM-OCHA-HPC6770
-Syria,SY,,KSRelief,XM-OCHA-HPC6770
-Taajikistan,TJ,,KSRelief,XM-OCHA-HPC6770
-Tanzania,TZ,,KSRelief,XM-OCHA-HPC6770
-Thailand,TH,,KSRelief,XM-OCHA-HPC6770
-Togo,TG,,KSRelief,XM-OCHA-HPC6770
-Tonga,TO,,KSRelief,XM-OCHA-HPC6770
-Tunisia,TN,,KSRelief,XM-OCHA-HPC6770
-Turkey,TR,,KSRelief,XM-OCHA-HPC6770
-Turkmenistan,TM,,KSRelief,XM-OCHA-HPC6770
-Uganda,UG,1,KSRelief,XM-OCHA-HPC6770
-Ukraine,UA,,KSRelief,XM-OCHA-HPC6770
-Union of the Comoros,KM,,KSRelief,XM-OCHA-HPC6770
-Uruguay,UY,,KSRelief,XM-OCHA-HPC6770
-Uzbekistan,UZ,,KSRelief,XM-OCHA-HPC6770
-Vietnam,VN,,KSRelief,XM-OCHA-HPC6770
-Yemen,YE,,KSRelief,XM-OCHA-HPC6770
-Zambia,ZM,,KSRelief,XM-OCHA-HPC6770
-Afghanistan,AF,,Netherlands,XM-DAC-7
-Bangladesh,BD,,Netherlands,XM-DAC-7
-Benin,BJ,,Netherlands,XM-DAC-7
-Burkina Faso,BF,,Netherlands,XM-DAC-7
-Burundi,BI,,Netherlands,XM-DAC-7
-Chad,TD,,Netherlands,XM-DAC-7
-DR Congo,CD,,Netherlands,XM-DAC-7
-Egypt,EG,,Netherlands,XM-DAC-7
-Ethiopia,ET,,Netherlands,XM-DAC-7
-Iraq,IQ,,Netherlands,XM-DAC-7
-Jordan,JO,,Netherlands,XM-DAC-7
-Kenya,KE,,Netherlands,XM-DAC-7
-Lebanon,LB,,Netherlands,XM-DAC-7
-Mali,ML,,Netherlands,XM-DAC-7
-Mozambique,MZ,,Netherlands,XM-DAC-7
-Niger,NE,,Netherlands,XM-DAC-7
-Palestinian Territories,PS,,Netherlands,XM-DAC-7
-Somalia,SO,,Netherlands,XM-DAC-7
-South-Sudan,SS,,Netherlands,XM-DAC-7
-Tunisia,TN,,Netherlands,XM-DAC-7
-Yemen,YE,,Netherlands,XM-DAC-7
-American Samoa,AS,,New Zealand,NZ-1
-Cook Islands,CK,,New Zealand,NZ-1
-Federated States of Micronesia,FM,,New Zealand,NZ-1
-Fiji,FJ,,New Zealand,NZ-1
-French Polynesia,PF,,New Zealand,NZ-1
-Indonesia,ID,,New Zealand,NZ-1
-Kiribati,KI,,New Zealand,NZ-1
-Marshall Islands,MH,,New Zealand,NZ-1
-Myanmar,MM,,New Zealand,NZ-1
-Nauru,NR,,New Zealand,NZ-1
-New Caledonia,NC,,New Zealand,NZ-1
-Niue,NU,,New Zealand,NZ-1
-Palau,PW,,New Zealand,NZ-1
-Papua New Guinea,PG,,New Zealand,NZ-1
-Samoa,WS,,New Zealand,NZ-1
-Solomon Islands,SB,,New Zealand,NZ-1
-Timor-Leste,TL,,New Zealand,NZ-1
-Tokelau,TK,,New Zealand,NZ-1
-Tonga,TO,,New Zealand,NZ-1
-Tuvalu,TV,,New Zealand,NZ-1
-Vanuatu,VU,,New Zealand,NZ-1
-Wallis and Futuna,WF,,New Zealand,NZ-1
-Afghanistan,AF,,Norway,NO-BRC-971277882
-Albania,AL,1,Norway,NO-BRC-971277882
-Algeria,DZ,,Norway,NO-BRC-971277882
-Angola,AO,,Norway,NO-BRC-971277882
-Argentina,AR,1,Norway,NO-BRC-971277882
-Bangladesh,BD,,Norway,NO-BRC-971277882
-Belarus,BY,,Norway,NO-BRC-971277882
-Belize,BZ,1,Norway,NO-BRC-971277882
-Benin,BJ,,Norway,NO-BRC-971277882
-Bolivia,BO,,Norway,NO-BRC-971277882
-Bosnia-Herzegovina,BA,,Norway,NO-BRC-971277882
-Botswana,BW,1,Norway,NO-BRC-971277882
-Brazil,BR,,Norway,NO-BRC-971277882
-Burkina Faso,BF,,Norway,NO-BRC-971277882
-Burundi,BI,,Norway,NO-BRC-971277882
-Cambodia,KH,,Norway,NO-BRC-971277882
-Cameroon,CM,,Norway,NO-BRC-971277882
-Central African Rep.,CF,,Norway,NO-BRC-971277882
-China,CN,,Norway,NO-BRC-971277882
-Colombia,CO,,Norway,NO-BRC-971277882
-"Congo, Dem. Rep.",CD,,Norway,NO-BRC-971277882
-"Congo, Rep.",CD,,Norway,NO-BRC-971277882
-Cote D'Ivoire,CI,,Norway,NO-BRC-971277882
-Cuba,CU,,Norway,NO-BRC-971277882
-Djibouti,DJ,1,Norway,NO-BRC-971277882
-Ecuador,EC,,Norway,NO-BRC-971277882
-Egypt,EG,,Norway,NO-BRC-971277882
-El Salvador,SV,,Norway,NO-BRC-971277882
-Eswatini,SZ,,Norway,NO-BRC-971277882
-Ethiopia,ET,,Norway,NO-BRC-971277882
-Gabon,GA,,Norway,NO-BRC-971277882
-Gambia,GM,,Norway,NO-BRC-971277882
-Georgia,GE,,Norway,NO-BRC-971277882
-Ghana,GH,,Norway,NO-BRC-971277882
-Guatemala,GT,,Norway,NO-BRC-971277882
-Guinea,GN,1,Norway,NO-BRC-971277882
-Guinea-Bissau,GW,1,Norway,NO-BRC-971277882
-Guyana,GY,,Norway,NO-BRC-971277882
-Haiti,HT,,Norway,NO-BRC-971277882
-Honduras,HN,,Norway,NO-BRC-971277882
-India,IN,,Norway,NO-BRC-971277882
-Indonesia,ID,,Norway,NO-BRC-971277882
-Iran,IR,,Norway,NO-BRC-971277882
-Iraq,IQ,,Norway,NO-BRC-971277882
-Jordan,JO,,Norway,NO-BRC-971277882
-Kenya,KE,,Norway,NO-BRC-971277882
-Kosovo,XK,,Norway,NO-BRC-971277882
-Kyrgyz Rep.,KG,,Norway,NO-BRC-971277882
-Laos,LA,,Norway,NO-BRC-971277882
-Lebanon,LB,,Norway,NO-BRC-971277882
-Lesotho,LS,,Norway,NO-BRC-971277882
-Liberia,LR,,Norway,NO-BRC-971277882
-Libya,LY,,Norway,NO-BRC-971277882
-Madagascar,MG,,Norway,NO-BRC-971277882
-Malawi,MW,,Norway,NO-BRC-971277882
-Mali,ML,,Norway,NO-BRC-971277882
-Mexico,MX,,Norway,NO-BRC-971277882
-Moldova,MD,,Norway,NO-BRC-971277882
-Mongolia,MN,,Norway,NO-BRC-971277882
-Montenegro,ME,1,Norway,NO-BRC-971277882
-Morocco,MA,,Norway,NO-BRC-971277882
-Mozambique,MZ,,Norway,NO-BRC-971277882
-Myanmar,MM,,Norway,NO-BRC-971277882
-Namibia,NA,1,Norway,NO-BRC-971277882
-Nepal,NP,,Norway,NO-BRC-971277882
-Nicaragua,NI,,Norway,NO-BRC-971277882
-Niger,NE,,Norway,NO-BRC-971277882
-Nigeria,NG,,Norway,NO-BRC-971277882
-North Korea,KR,,Norway,NO-BRC-971277882
-North Macedonia,MK,,Norway,NO-BRC-971277882
-Pakistan,PK,,Norway,NO-BRC-971277882
-Palestine,PS,,Norway,NO-BRC-971277882
-Papua New Guinea,PG,,Norway,NO-BRC-971277882
-Peru,PE,,Norway,NO-BRC-971277882
-Philippines,PH,,Norway,NO-BRC-971277882
-Rwanda,RW,,Norway,NO-BRC-971277882
-Senegal,SN,,Norway,NO-BRC-971277882
-Serbia,RS,,Norway,NO-BRC-971277882
-Sierra Leone,SL,,Norway,NO-BRC-971277882
-Somalia,SO,,Norway,NO-BRC-971277882
-South Africa,ZA,,Norway,NO-BRC-971277882
-South Sudan,SS,,Norway,NO-BRC-971277882
-Sri Lanka,LK,,Norway,NO-BRC-971277882
-Sudan,SD,,Norway,NO-BRC-971277882
-Syria,SY,,Norway,NO-BRC-971277882
-Tajikistan,TJ,,Norway,NO-BRC-971277882
-Tanzania,TZ,,Norway,NO-BRC-971277882
-Thailand,TH,,Norway,NO-BRC-971277882
-Timor-Leste,TL,,Norway,NO-BRC-971277882
-Togo,TG,,Norway,NO-BRC-971277882
-Tunisia,TN,,Norway,NO-BRC-971277882
-Turkey,TR,,Norway,NO-BRC-971277882
-Uganda,UG,,Norway,NO-BRC-971277882
-Ukraine,UA,,Norway,NO-BRC-971277882
-Uzbekistan,UZ,1,Norway,NO-BRC-971277882
-Venezuela,VE,,Norway,NO-BRC-971277882
-Viet Nam,VN,,Norway,NO-BRC-971277882
-Yemen,YE,,Norway,NO-BRC-971277882
-Zambia,ZM,,Norway,NO-BRC-971277882
-Zimbabwe,ZW,,Norway,NO-BRC-971277882
-Afghanistan,AF,,SIDA,SE-0
-Albania,AL,,SIDA,SE-0
-Algeria,DZ,,SIDA,SE-0
-Angola,AO,,SIDA,SE-0
-Argentina,AR,,SIDA,SE-0
-Armenia,AM,,SIDA,SE-0
-Azerbaijan,AZ,1,SIDA,SE-0
-Bangladesh,BD,,SIDA,SE-0
-Belarus,BY,,SIDA,SE-0
-Belize,BZ,1,SIDA,SE-0
-Benin,BJ,,SIDA,SE-0
-Bhutan,BT,,SIDA,SE-0
-Bolivia (plurinational state of),BO,,SIDA,SE-0
-Bosnia and herzegovina,BA,,SIDA,SE-0
-Botswana,BW,,SIDA,SE-0
-Brazil,BR,,SIDA,SE-0
-Burkina faso,BF,,SIDA,SE-0
-Burundi,BI,,SIDA,SE-0
-Cabo verde,CV,1,SIDA,SE-0
-Cambodia,KH,,SIDA,SE-0
-Cameroon,CM,,SIDA,SE-0
-Central african republic (the),CF,,SIDA,SE-0
-Chad,TD,,SIDA,SE-0
-China,CN,,SIDA,SE-0
-Colombia,CO,,SIDA,SE-0
-Comoros (the),KM,1,SIDA,SE-0
-Congo (the democratic republic of the),CD,,SIDA,SE-0
-Congo (the),CG,,SIDA,SE-0
-Costa rica,CR,,SIDA,SE-0
-Côte d'ivoire,CI,,SIDA,SE-0
-Cuba,CU,,SIDA,SE-0
-Djibouti,DJ,,SIDA,SE-0
-Dominican republic (the),DO,,SIDA,SE-0
-Ecuador,EC,,SIDA,SE-0
-Egypt,EG,,SIDA,SE-0
-El salvador,SV,,SIDA,SE-0
-Eritrea,ER,,SIDA,SE-0
-Eswatini,SZ,,SIDA,SE-0
-Ethiopia,ET,,SIDA,SE-0
-Fiji,FJ,,SIDA,SE-0
-Gabon,GA,,SIDA,SE-0
-Gambia (the),GM,,SIDA,SE-0
-Georgia,GE,,SIDA,SE-0
-Ghana,GH,,SIDA,SE-0
-Guatemala,GT,,SIDA,SE-0
-Guinea,GN,,SIDA,SE-0
-Guinea-bissau,GW,,SIDA,SE-0
-Guyana,GY,1,SIDA,SE-0
-Haiti,HT,,SIDA,SE-0
-Honduras,HN,,SIDA,SE-0
-India,IN,,SIDA,SE-0
-Indonesia,ID,,SIDA,SE-0
-Iran (islamic republic of),IR,1,SIDA,SE-0
-Iraq,IQ,,SIDA,SE-0
-Jamaica,JM,1,SIDA,SE-0
-Jordan,JO,,SIDA,SE-0
-Kazakhstan,KZ,,SIDA,SE-0
-Kenya,KE,,SIDA,SE-0
-Korea (the democratic people's republic of),KP,,SIDA,SE-0
-Kosovo,XK,,SIDA,SE-0
-Kyrgyzstan,KG,,SIDA,SE-0
-Lao people's democratic republic (the),LA,,SIDA,SE-0
-Lebanon,LB,,SIDA,SE-0
-Lesotho,LS,1,SIDA,SE-0
-Liberia,LR,,SIDA,SE-0
-Libya,LY,,SIDA,SE-0
-Madagascar,MG,,SIDA,SE-0
-Malawi,MW,,SIDA,SE-0
-Malaysia,MY,,SIDA,SE-0
-Mali,ML,,SIDA,SE-0
-Mauritania,MR,,SIDA,SE-0
-Mexico,MX,,SIDA,SE-0
-Moldova (the republic of),MD,,SIDA,SE-0
-Mongolia,MN,1,SIDA,SE-0
-Montenegro,ME,,SIDA,SE-0
-Morocco,MA,,SIDA,SE-0
-Mozambique,MZ,,SIDA,SE-0
-Myanmar,MM,,SIDA,SE-0
-Namibia,NA,,SIDA,SE-0
-Nepal,NP,,SIDA,SE-0
-Nicaragua,NI,,SIDA,SE-0
-Niger (the),NE,,SIDA,SE-0
-Nigeria,NG,,SIDA,SE-0
-North macedonia,MK,,SIDA,SE-0
-Pakistan,PK,,SIDA,SE-0
-"Palestine, state of",PS,,SIDA,SE-0
-Panama,PA,,SIDA,SE-0
-Papua new guinea,PG,1,SIDA,SE-0
-Paraguay,PY,,SIDA,SE-0
-Peru,PE,,SIDA,SE-0
-Philippines (the),PH,,SIDA,SE-0
-Rwanda,RW,,SIDA,SE-0
-Samoa,WS,1,SIDA,SE-0
-Sao tome and principe,ST,1,SIDA,SE-0
-Senegal,SN,,SIDA,SE-0
-Serbia,RS,,SIDA,SE-0
-Sierra leone,SL,,SIDA,SE-0
-Somalia,SO,,SIDA,SE-0
-South africa,ZA,,SIDA,SE-0
-South sudan,SS,,SIDA,SE-0
-Sri lanka,LK,,SIDA,SE-0
-Sudan (the),SD,,SIDA,SE-0
-Syrian arab republic,SY,,SIDA,SE-0
-Tajikistan,TJ,,SIDA,SE-0
-"Tanzania, united republic of",TZ,,SIDA,SE-0
-Thailand,TH,,SIDA,SE-0
-Timor-leste,TL,,SIDA,SE-0
-Togo,TG,,SIDA,SE-0
-Tunisia,TN,,SIDA,SE-0
-Turkey,TR,,SIDA,SE-0
-Uganda,UG,,SIDA,SE-0
-Ukraine,UA,,SIDA,SE-0
-Uzbekistan,UZ,,SIDA,SE-0
-Vanuatu,VU,,SIDA,SE-0
-Venezuela (bolivarian republic of),VE,,SIDA,SE-0
-Viet nam,VN,,SIDA,SE-0
-Yemen,YE,,SIDA,SE-0
-Zambia,ZM,,SIDA,SE-0
-Zimbabwe,ZW,,SIDA,SE-0
-Argentina ,AR,,Spain AECID,ES-DIR3-E04585801
-Bolivia  ,BO,,Spain AECID,ES-DIR3-E04585801
-Brazil  ,BR,,Spain AECID,ES-DIR3-E04585801
-Cape Verde  ,CV,,Spain AECID,ES-DIR3-E04585801
-Chile ,CL,,Spain AECID,ES-DIR3-E04585801
-Colombia ,CO,,Spain AECID,ES-DIR3-E04585801
-Costa Rica ,CR,,Spain AECID,ES-DIR3-E04585801
-Cuba  ,CU,,Spain AECID,ES-DIR3-E04585801
-Dominican Rep. ,DO,,Spain AECID,ES-DIR3-E04585801
-Ecuador ,EC,,Spain AECID,ES-DIR3-E04585801
-Egypt ,EG,,Spain AECID,ES-DIR3-E04585801
-Equatorial Guinea ,GQ,,Spain AECID,ES-DIR3-E04585801
-Ethiopia ,ET,,Spain AECID,ES-DIR3-E04585801
-Guatemala ,GT,,Spain AECID,ES-DIR3-E04585801
-Haiti ,HT,,Spain AECID,ES-DIR3-E04585801
-Honduras ,HN,,Spain AECID,ES-DIR3-E04585801
-Jordan ,JO,,Spain AECID,ES-DIR3-E04585801
-Mali ,ML,,Spain AECID,ES-DIR3-E04585801
-Mauritania ,MR,,Spain AECID,ES-DIR3-E04585801
-Mexico ,MX,,Spain AECID,ES-DIR3-E04585801
-Morocco ,MA,,Spain AECID,ES-DIR3-E04585801
-Mozambique,MZ,,Spain AECID,ES-DIR3-E04585801
-Nicaragua ,NI,,Spain AECID,ES-DIR3-E04585801
-Niger ,NE,,Spain AECID,ES-DIR3-E04585801
-Nigeria-ECOWAS,NG,,Spain AECID,ES-DIR3-E04585801
-Palestine ,PS,,Spain AECID,ES-DIR3-E04585801
-Panama ,PA,,Spain AECID,ES-DIR3-E04585801
-Paraguay ,PY,,Spain AECID,ES-DIR3-E04585801
-Peru ,PE,,Spain AECID,ES-DIR3-E04585801
-Philippines ,PH,,Spain AECID,ES-DIR3-E04585801
-Senegal  ,SN,,Spain AECID,ES-DIR3-E04585801
-Tunisia,TN,,Spain AECID,ES-DIR3-E04585801
-Uruguay  ,UY,,Spain AECID,ES-DIR3-E04585801
-Venezuela,VE,,Spain AECID,ES-DIR3-E04585801
-Afghanistan,AF,,Swiss SDC,CH-4
-Albania,AL,,Swiss SDC,CH-4
-Bangladesh,BD,,Swiss SDC,CH-4
-Benin,BJ,,Swiss SDC,CH-4
-Bolivia,BO,,Swiss SDC,CH-4
-Bosnia and Herzegovina,BA,,Swiss SDC,CH-4
-Burkina Faso,BF,,Swiss SDC,CH-4
-Central African Republic,CF,,Swiss SDC,CH-4
-Chad,TD,,Swiss SDC,CH-4
-Colombia,CO,,Swiss SDC,CH-4
-Cuba,CU,,Swiss SDC,CH-4
-Haiti,HT,,Swiss SDC,CH-4
-Kosovo,XK,,Swiss SDC,CH-4
-Mali,ML,,Swiss SDC,CH-4
-Moldova,MD,,Swiss SDC,CH-4
-Mongolia,MN,,Swiss SDC,CH-4
-Mozambique,MZ,,Swiss SDC,CH-4
-Myanmar,MM,,Swiss SDC,CH-4
-Nepal,NP,,Swiss SDC,CH-4
-Niger,NE,,Swiss SDC,CH-4
-North Korea,KR,,Swiss SDC,CH-4
-North Macedonia,MK,,Swiss SDC,CH-4
-Serbia,RS,,Swiss SDC,CH-4
-South Sudan,SS,,Swiss SDC,CH-4
-"Southern Africa (Zimbabwe, Zambia)",ZA,,Swiss SDC,CH-4
-Sudan / Eritrea,SD,,Swiss SDC,CH-4
-Tanzania,TZ,,Swiss SDC,CH-4
-Ukraine,UA,,Swiss SDC,CH-4
-Yemen,YE,,Swiss SDC,CH-4
-Afghanistan,AF,,"UK, FCDO",GB-GOV-3
-Bangladesh,BD,,"UK, FCDO",GB-GOV-19
-Democratic Republic of the Congo,CD,,"UK, FCDO",GB-GOV-9
-Egypt,EG,1,"UK, FCDO",GB-GOV-35
-Ethiopia,ET,,"UK, FCDO",GB-GOV-1
-Ghana,GH,,"UK, FCDO",GB-GOV-31
-India,IN,,"UK, FCDO",GB-GOV-16
-Indonesia,ID,,"UK, FCDO",GB-GOV-27
-Jordan,JO,,"UK, FCDO",GB-GOV-17
-Kenya,KE,,"UK, FCDO",GB-GOV-12
-Lebanon,LB,1,"UK, FCDO",GB-GOV-34
-Liberia,LR,,"UK, FCDO",GB-GOV-30
-Malawi,MW,,"UK, FCDO",GB-GOV-18
-Mozambique,MZ,,"UK, FCDO",GB-GOV-20
-Myanmar,MM,,"UK, FCDO",GB-GOV-22
-Nepal,NP,,"UK, FCDO",GB-GOV-13
-Nigeria,NG,,"UK, FCDO",GB-GOV-7
-Occupied Palestinian Territories,PS,,"UK, FCDO",GB-GOV-26
-Pakistan,PK,,"UK, FCDO",GB-GOV-6
-Rwanda,RW,,"UK, FCDO",GB-GOV-24
-Sahel,,,"UK, FCDO",GB-GOV-21
-Sierra Leone,SL,,"UK, FCDO",GB-GOV-23
-Somalia,SO,,"UK, FCDO",GB-GOV-5
-South Africa,ZA,,"UK, FCDO",GB-GOV-32
-South Sudan,SS,,"UK, FCDO",GB-GOV-8
-Sudan,SD,,"UK, FCDO",GB-GOV-11
-Syria,SY,,"UK, FCDO",GB-GOV-10
-Tanzania,TZ,,"UK, FCDO",GB-GOV-14
-Turkey,TR,,"UK, FCDO",GB-GOV-29
-Uganda,UG,,"UK, FCDO",GB-GOV-15
-Ukraine,UA,,"UK, FCDO",GB-GOV-2
-Western Balkans,,1,"UK, FCDO",GB-GOV-33
-Yemen,YE,,"UK, FCDO",GB-GOV-4
-Zambia,ZM,,"UK, FCDO",GB-GOV-28
-Zimbabwe,ZW,,"UK, FCDO",GB-GOV-25
-Afghanistan,AF,,UNDP,XM-DAC-41114
-Albania,AL,,UNDP,XM-DAC-41114
-Algeria,DZ,,UNDP,XM-DAC-41114
-Angola,AO,,UNDP,XM-DAC-41114
-Antigua and Barbuda,AG,,UNDP,XM-DAC-41114
-Argentina,AR,,UNDP,XM-DAC-41114
-Armenia,AM,,UNDP,XM-DAC-41114
-Aruba,AW,,UNDP,XM-DAC-41114
-Azerbaijan,AZ,,UNDP,XM-DAC-41114
-Bahrain,BH,,UNDP,XM-DAC-41114
-Bangladesh,BD,,UNDP,XM-DAC-41114
-Barbados,BB,,UNDP,XM-DAC-41114
-Belarus,BY,1,UNDP,XM-DAC-41114
-Belize,BZ,,UNDP,XM-DAC-41114
-Benin,BJ,,UNDP,XM-DAC-41114
-Bhutan,BT,,UNDP,XM-DAC-41114
-Bolivia (Plurinational State of),BO,,UNDP,XM-DAC-41114
-Bosnia and Herzegovina,BA,,UNDP,XM-DAC-41114
-Botswana,BW,,UNDP,XM-DAC-41114
-Brazil,BR,,UNDP,XM-DAC-41114
-Burkina Faso,BF,,UNDP,XM-DAC-41114
-Burundi,BI,,UNDP,XM-DAC-41114
-CÃ´te d'Ivoire,CI,,UNDP,XM-DAC-41114
-Cabo Verde,CV,,UNDP,XM-DAC-41114
-Cambodia,KH,,UNDP,XM-DAC-41114
-Cameroon,CM,,UNDP,XM-DAC-41114
-Central African Republic (the),CF,,UNDP,XM-DAC-41114
-Chad,TD,,UNDP,XM-DAC-41114
-Chile,CL,,UNDP,XM-DAC-41114
-China,CN,,UNDP,XM-DAC-41114
-Colombia,CO,,UNDP,XM-DAC-41114
-Comoros (the),KM,,UNDP,XM-DAC-41114
-Congo (the Democratic Republic of the),CD,,UNDP,XM-DAC-41114
-Congo (the),CG,,UNDP,XM-DAC-41114
-Cook Islands (the),CK,,UNDP,XM-DAC-41114
-Costa Rica,CR,,UNDP,XM-DAC-41114
-Cuba,CU,,UNDP,XM-DAC-41114
-CuraÃ§ao,CW,,UNDP,XM-DAC-41114
-Cyprus,CY,,UNDP,XM-DAC-41114
-Djibouti,DJ,,UNDP,XM-DAC-41114
-Dominica,DM,1,UNDP,XM-DAC-41114
-Dominican Republic (the),DO,,UNDP,XM-DAC-41114
-Ecuador,EC,,UNDP,XM-DAC-41114
-Egypt,EG,,UNDP,XM-DAC-41114
-El Salvador,SV,,UNDP,XM-DAC-41114
-Equatorial Guinea,GQ,,UNDP,XM-DAC-41114
-Eritrea,ER,,UNDP,XM-DAC-41114
-Eswatini,SZ,,UNDP,XM-DAC-41114
-Ethiopia,ET,,UNDP,XM-DAC-41114
-Fiji,FJ,,UNDP,XM-DAC-41114
-Gabon,GA,,UNDP,XM-DAC-41114
-Gambia (the),GM,,UNDP,XM-DAC-41114
-Georgia,GE,,UNDP,XM-DAC-41114
-Ghana,GH,,UNDP,XM-DAC-41114
-Grenada,GD,1,UNDP,XM-DAC-41114
-Guatemala,GT,,UNDP,XM-DAC-41114
-Guinea,GN,,UNDP,XM-DAC-41114
-Guinea-Bissau,GW,,UNDP,XM-DAC-41114
-Guyana,GY,,UNDP,XM-DAC-41114
-Haiti,HT,,UNDP,XM-DAC-41114
-Honduras,HN,,UNDP,XM-DAC-41114
-India,IN,,UNDP,XM-DAC-41114
-Indonesia,ID,,UNDP,XM-DAC-41114
-Iran (Islamic Republic of),IR,,UNDP,XM-DAC-41114
-Iraq,IQ,,UNDP,XM-DAC-41114
-Jamaica,JM,,UNDP,XM-DAC-41114
-Jordan,JO,,UNDP,XM-DAC-41114
-Kazakhstan,KZ,,UNDP,XM-DAC-41114
-Kenya,KE,,UNDP,XM-DAC-41114
-Kiribati,KI,,UNDP,XM-DAC-41114
-Kosovo,XK,,UNDP,XM-DAC-41114
-Kuwait,KW,,UNDP,XM-DAC-41114
-Kyrgyzstan,KG,,UNDP,XM-DAC-41114
-Lao People's Democratic Republic (the),LA,,UNDP,XM-DAC-41114
-Lebanon,LB,,UNDP,XM-DAC-41114
-Lesotho,LS,,UNDP,XM-DAC-41114
-Liberia,LR,,UNDP,XM-DAC-41114
-Libya,LY,,UNDP,XM-DAC-41114
-Madagascar,MG,,UNDP,XM-DAC-41114
-Malawi,MW,,UNDP,XM-DAC-41114
-Malaysia,MY,,UNDP,XM-DAC-41114
-Maldives,MV,,UNDP,XM-DAC-41114
-Mali,ML,,UNDP,XM-DAC-41114
-Marshall Islands (the),MH,,UNDP,XM-DAC-41114
-Mauritania,MR,,UNDP,XM-DAC-41114
-Mauritius,MU,,UNDP,XM-DAC-41114
-Mexico,MX,,UNDP,XM-DAC-41114
-Micronesia (Federated States of),FM,,UNDP,XM-DAC-41114
-Moldova (the Republic of),MD,,UNDP,XM-DAC-41114
-Mongolia,MN,,UNDP,XM-DAC-41114
-Montenegro,ME,,UNDP,XM-DAC-41114
-Morocco,MA,,UNDP,XM-DAC-41114
-Mozambique,MZ,,UNDP,XM-DAC-41114
-Myanmar,MM,,UNDP,XM-DAC-41114
-Namibia,NA,,UNDP,XM-DAC-41114
-Nauru,NR,,UNDP,XM-DAC-41114
-Nepal,NP,,UNDP,XM-DAC-41114
-Niger (the),NE,,UNDP,XM-DAC-41114
-Nigeria,NG,,UNDP,XM-DAC-41114
-Niue,NU,1,UNDP,XM-DAC-41114
-North Macedonia,MK,,UNDP,XM-DAC-41114
-Pakistan,PK,,UNDP,XM-DAC-41114
-Palau,PW,,UNDP,XM-DAC-41114
-"Palestine, State of",PS,,UNDP,XM-DAC-41114
-Panama,PA,1,UNDP,XM-DAC-41114
-Papua New Guinea,PG,,UNDP,XM-DAC-41114
-Paraguay,PY,,UNDP,XM-DAC-41114
-Peru,PE,,UNDP,XM-DAC-41114
-Philippines (the),PH,,UNDP,XM-DAC-41114
-Rwanda,RW,,UNDP,XM-DAC-41114
-Saint Kitts and Nevis,KN,,UNDP,XM-DAC-41114
-Saint Vincent and the Grenadines,VC,1,UNDP,XM-DAC-41114
-Samoa,WS,,UNDP,XM-DAC-41114
-Sao Tome and Principe,ST,,UNDP,XM-DAC-41114
-Saudi Arabia,SA,,UNDP,XM-DAC-41114
-Senegal,SN,,UNDP,XM-DAC-41114
-Serbia,RS,,UNDP,XM-DAC-41114
-Seychelles,SC,,UNDP,XM-DAC-41114
-Sierra Leone,SL,,UNDP,XM-DAC-41114
-Solomon Islands,SB,,UNDP,XM-DAC-41114
-Somalia,SO,,UNDP,XM-DAC-41114
-South Africa,ZA,,UNDP,XM-DAC-41114
-South Sudan,SS,,UNDP,XM-DAC-41114
-Sri Lanka,LK,,UNDP,XM-DAC-41114
-Sudan (the),SD,,UNDP,XM-DAC-41114
-Suriname,SR,1,UNDP,XM-DAC-41114
-Syrian Arab Republic (the),SY,,UNDP,XM-DAC-41114
-TÃ¼rkiye,TR,,UNDP,XM-DAC-41114
-Tajikistan,TJ,,UNDP,XM-DAC-41114
-"Tanzania, the United Republic of",TZ,,UNDP,XM-DAC-41114
-Thailand,TH,,UNDP,XM-DAC-41114
-Timor-Leste,TL,,UNDP,XM-DAC-41114
-Togo,TG,,UNDP,XM-DAC-41114
-Tokelau,TK,1,UNDP,XM-DAC-41114
-Tonga,TO,,UNDP,XM-DAC-41114
-Trinidad and Tobago,TT,,UNDP,XM-DAC-41114
-Tunisia,TN,,UNDP,XM-DAC-41114
-Turkmenistan,TM,1,UNDP,XM-DAC-41114
-Tuvalu,TV,,UNDP,XM-DAC-41114
-Uganda,UG,,UNDP,XM-DAC-41114
-Ukraine,UA,,UNDP,XM-DAC-41114
-Uruguay,UY,,UNDP,XM-DAC-41114
-Uzbekistan,UZ,,UNDP,XM-DAC-41114
-Vanuatu,VU,,UNDP,XM-DAC-41114
-Venezuela (Bolivarian Republic of),VE,,UNDP,XM-DAC-41114
-Viet Nam,VN,,UNDP,XM-DAC-41114
-Yemen,YE,,UNDP,XM-DAC-41114
-Zambia,ZM,,UNDP,XM-DAC-41114
-Zimbabwe,ZW,,UNDP,XM-DAC-41114
-Albania,AL,1,UNHCR,XM-DAC-41121
-Algeria,DZ,,UNHCR,XM-DAC-41121
-Angola,AO,,UNHCR,XM-DAC-41121
-Argentina,AR,,UNHCR,XM-DAC-41121
-Armenia,AM,1,UNHCR,XM-DAC-41121
-Belarus,BY,,UNHCR,XM-DAC-41121
-Bosnia and Herzegovina,BA,,UNHCR,XM-DAC-41121
-Brazil,BR,,UNHCR,XM-DAC-41121
-Burkina Faso,BF,,UNHCR,XM-DAC-41121
-Burundi,BI,,UNHCR,XM-DAC-41121
-Cameroon,CM,,UNHCR,XM-DAC-41121
-Central African Republic,CF,,UNHCR,XM-DAC-41121
-Chad,TD,,UNHCR,XM-DAC-41121
-China (People's Republic of),CN,,UNHCR,XM-DAC-41121
-Colombia,CO,,UNHCR,XM-DAC-41121
-Congo,CG,,UNHCR,XM-DAC-41121
-Costa Rica,CR,,UNHCR,XM-DAC-41121
-Côte d'Ivoire,CI,,UNHCR,XM-DAC-41121
-Democratic Republic of the Congo,CD,,UNHCR,XM-DAC-41121
-Djibouti,DJ,,UNHCR,XM-DAC-41121
-Ecuador,EC,,UNHCR,XM-DAC-41121
-Egypt,EG,,UNHCR,XM-DAC-41121
-Ethiopia,ET,,UNHCR,XM-DAC-41121
-Georgia,GE,,UNHCR,XM-DAC-41121
-Ghana,GH,,UNHCR,XM-DAC-41121
-Guatemala,GT,,UNHCR,XM-DAC-41121
-Honduras,HN,,UNHCR,XM-DAC-41121
-India,IN,,UNHCR,XM-DAC-41121
-Indonesia,ID,,UNHCR,XM-DAC-41121
-Iraq,IQ,,UNHCR,XM-DAC-41121
-Jordan,JO,,UNHCR,XM-DAC-41121
-Kazakhstan,KZ,1,UNHCR,XM-DAC-41121
-Kenya,KE,,UNHCR,XM-DAC-41121
-Kosovo,XK,,UNHCR,XM-DAC-41121
-Kyrgyzstan,KG,1,UNHCR,XM-DAC-41121
-Liberia,LR,,UNHCR,XM-DAC-41121
-Libya,LY,1,UNHCR,XM-DAC-41121
-Malawi,MW,,UNHCR,XM-DAC-41121
-Malaysia,MY,,UNHCR,XM-DAC-41121
-Mali,ML,,UNHCR,XM-DAC-41121
-Mauritania,MR,,UNHCR,XM-DAC-41121
-Mexico,MX,,UNHCR,XM-DAC-41121
-Montenegro,ME,1,UNHCR,XM-DAC-41121
-Morocco,MA,,UNHCR,XM-DAC-41121
-Mozambique,MZ,,UNHCR,XM-DAC-41121
-Nepal,NP,,UNHCR,XM-DAC-41121
-Niger,NE,,UNHCR,XM-DAC-41121
-Nigeria,NG,,UNHCR,XM-DAC-41121
-North Macedonia,MK,,UNHCR,XM-DAC-41121
-Panama,PA,,UNHCR,XM-DAC-41121
-Philippines,PH,,UNHCR,XM-DAC-41121
-Rwanda,RW,,UNHCR,XM-DAC-41121
-Senegal,SN,,UNHCR,XM-DAC-41121
-Serbia,RS,,UNHCR,XM-DAC-41121
-Somalia,SO,,UNHCR,XM-DAC-41121
-South Africa,ZA,,UNHCR,XM-DAC-41121
-South Sudan,SS,,UNHCR,XM-DAC-41121
-Sri Lanka,LK,,UNHCR,XM-DAC-41121
-Tajikistan,TJ,1,UNHCR,XM-DAC-41121
-Tanzania,TZ,,UNHCR,XM-DAC-41121
-Thailand,TH,,UNHCR,XM-DAC-41121
-Tunisia,TN,,UNHCR,XM-DAC-41121
-Uganda,UG,,UNHCR,XM-DAC-41121
-Ukraine,UA,,UNHCR,XM-DAC-41121
-Yemen,YE,,UNHCR,XM-DAC-41121
-Zambia,ZM,,UNHCR,XM-DAC-41121
-Zimbabwe,ZW,,UNHCR,XM-DAC-41121
-Afghanistan,AF,,UNICEF,XM-DAC-41122
-Albania,AL,1,UNICEF,XM-DAC-41122
-Algeria,DZ,,UNICEF,XM-DAC-41122
-Angola,AO,,UNICEF,XM-DAC-41122
-Argentina,AR,,UNICEF,XM-DAC-41122
-Armenia,AM,,UNICEF,XM-DAC-41122
-Azerbaijan,AZ,,UNICEF,XM-DAC-41122
-Bangladesh,BD,,UNICEF,XM-DAC-41122
-Barbados,BB,,UNICEF,XM-DAC-41122
-Belarus,BY,,UNICEF,XM-DAC-41122
-Belize,BZ,,UNICEF,XM-DAC-41122
-Benin,BJ,,UNICEF,XM-DAC-41122
-Bhutan,BT,,UNICEF,XM-DAC-41122
-Bolivia (Plurinational State of),BO,,UNICEF,XM-DAC-41122
-Bosnia and Herzegovina,BA,1,UNICEF,XM-DAC-41122
-Botswana,BW,,UNICEF,XM-DAC-41122
-Brazil,BR,,UNICEF,XM-DAC-41122
-Bulgaria,BG,,UNICEF,XM-DAC-41122
-Burkina Faso,BF,,UNICEF,XM-DAC-41122
-Burundi,BI,,UNICEF,XM-DAC-41122
-Cabo Verdo,CV,1,UNICEF,XM-DAC-41122
-Cambodia,KH,,UNICEF,XM-DAC-41122
-Cameroon,CM,,UNICEF,XM-DAC-41122
-Central African Republic,CF,,UNICEF,XM-DAC-41122
-Chad,TD,,UNICEF,XM-DAC-41122
-Chile,CL,,UNICEF,XM-DAC-41122
-China,CN,,UNICEF,XM-DAC-41122
-Colombia,CO,,UNICEF,XM-DAC-41122
-Comoros,KM,,UNICEF,XM-DAC-41122
-Congo,CG,,UNICEF,XM-DAC-41122
-"Congo, Democratic Republic of the",CD,,UNICEF,XM-DAC-41122
-Costa Rica,CR,,UNICEF,XM-DAC-41122
-Côte d'Ivoire,CI,,UNICEF,XM-DAC-41122
-Croatia,HR,,UNICEF,XM-DAC-41122
-Cuba,CU,1,UNICEF,XM-DAC-41122
-Djibouti,DJ,,UNICEF,XM-DAC-41122
-Dominican Republic,DO,1,UNICEF,XM-DAC-41122
-Ecuador,EC,,UNICEF,XM-DAC-41122
-Egypt,EG,,UNICEF,XM-DAC-41122
-El Salvador,SV,,UNICEF,XM-DAC-41122
-Equatorial Guinea,GQ,1,UNICEF,XM-DAC-41122
-Eritrea,ER,,UNICEF,XM-DAC-41122
-Eswatini,SZ,,UNICEF,XM-DAC-41122
-Ethiopia,ET,,UNICEF,XM-DAC-41122
-Fiji,FJ,,UNICEF,XM-DAC-41122
-Gabon,GA,,UNICEF,XM-DAC-41122
-Gambia,GM,,UNICEF,XM-DAC-41122
-Georgia,GE,1,UNICEF,XM-DAC-41122
-Ghana,GH,,UNICEF,XM-DAC-41122
-Guatemala,GT,,UNICEF,XM-DAC-41122
-Guinea,GN,,UNICEF,XM-DAC-41122
-Guinea-Bissau,GW,,UNICEF,XM-DAC-41122
-Guyana,GY,,UNICEF,XM-DAC-41122
-Haiti,HT,,UNICEF,XM-DAC-41122
-Honduras,HN,,UNICEF,XM-DAC-41122
-India,IN,,UNICEF,XM-DAC-41122
-Indonesia,ID,,UNICEF,XM-DAC-41122
-Iran (Islamic Republic of),IR,,UNICEF,XM-DAC-41122
-Iraq,IQ,,UNICEF,XM-DAC-41122
-Jamaica,JM,1,UNICEF,XM-DAC-41122
-Jordan,JO,,UNICEF,XM-DAC-41122
-Kazakhstan,KZ,,UNICEF,XM-DAC-41122
-Kenya,KE,,UNICEF,XM-DAC-41122
-Korea (Democratic People's Republic of),KR,,UNICEF,XM-DAC-41122
-Kosovo,XK,,UNICEF,XM-DAC-41122
-Kyrgyzstan,KG,,UNICEF,XM-DAC-41122
-Lao People's Democratic Republic,LA,,UNICEF,XM-DAC-41122
-Lebanon,LB,,UNICEF,XM-DAC-41122
-Lesotho,LS,,UNICEF,XM-DAC-41122
-Liberia,LR,,UNICEF,XM-DAC-41122
-Libya,LY,,UNICEF,XM-DAC-41122
-Madagascar,MG,,UNICEF,XM-DAC-41122
-Malawi,MW,,UNICEF,XM-DAC-41122
-Malaysia,MY,,UNICEF,XM-DAC-41122
-Maldives,MV,,UNICEF,XM-DAC-41122
-Mali,ML,,UNICEF,XM-DAC-41122
-Mauritania,MR,,UNICEF,XM-DAC-41122
-Mexico,MX,,UNICEF,XM-DAC-41122
-"Moldova, Republic of",MD,,UNICEF,XM-DAC-41122
-Mongolia,MN,,UNICEF,XM-DAC-41122
-Montenegro,ME,1,UNICEF,XM-DAC-41122
-Morocco,MA,,UNICEF,XM-DAC-41122
-Mozambique,MZ,,UNICEF,XM-DAC-41122
-Myanmar,MM,,UNICEF,XM-DAC-41122
-Namibia,NA,,UNICEF,XM-DAC-41122
-Nepal,NP,,UNICEF,XM-DAC-41122
-Nicaragua,NI,,UNICEF,XM-DAC-41122
-Niger,NE,,UNICEF,XM-DAC-41122
-Nigeria,NG,,UNICEF,XM-DAC-41122
-North Macedonia,MK,1,UNICEF,XM-DAC-41122
-Oman,OM,,UNICEF,XM-DAC-41122
-Pakistan,PK,,UNICEF,XM-DAC-41122
-"Palestine, State of",PS,,UNICEF,XM-DAC-41122
-Panama,PA,1,UNICEF,XM-DAC-41122
-Papua New Guinea,PG,,UNICEF,XM-DAC-41122
-Paraguay,PY,,UNICEF,XM-DAC-41122
-Peru,PE,,UNICEF,XM-DAC-41122
-Philippines,PH,,UNICEF,XM-DAC-41122
-Romania,RO,,UNICEF,XM-DAC-41122
-Rwanda,RW,,UNICEF,XM-DAC-41122
-Sao Tome and Principe,ST,,UNICEF,XM-DAC-41122
-Saudi Arabia,SA,,UNICEF,XM-DAC-41122
-Senegal,SN,,UNICEF,XM-DAC-41122
-Serbia,RS,,UNICEF,XM-DAC-41122
-Sierra Leone,SL,,UNICEF,XM-DAC-41122
-Somalia,SO,,UNICEF,XM-DAC-41122
-South Africa,ZA,,UNICEF,XM-DAC-41122
-South Sudan,SS,,UNICEF,XM-DAC-41122
-Sri Lanka,LK,,UNICEF,XM-DAC-41122
-Sudan,SD,,UNICEF,XM-DAC-41122
-Syrian Arab Republic,SY,,UNICEF,XM-DAC-41122
-Tajikistan,TJ,,UNICEF,XM-DAC-41122
-"Tanzania, United Republic of",TZ,,UNICEF,XM-DAC-41122
-Thailand,TH,,UNICEF,XM-DAC-41122
-Timor-Leste,TL,,UNICEF,XM-DAC-41122
-Togo,TG,,UNICEF,XM-DAC-41122
-Tunisia,TN,,UNICEF,XM-DAC-41122
-Turkey,TR,,UNICEF,XM-DAC-41122
-Turkmenistan,TM,1,UNICEF,XM-DAC-41122
-Uganda,UG,,UNICEF,XM-DAC-41122
-Ukraine,UA,,UNICEF,XM-DAC-41122
-Uruguay,UY,,UNICEF,XM-DAC-41122
-Uzbekistan,UZ,,UNICEF,XM-DAC-41122
-Venezuela,VE,,UNICEF,XM-DAC-41122
-Viet Nam,VN,,UNICEF,XM-DAC-41122
-Yemen,YE,,UNICEF,XM-DAC-41122
-Zambia,ZM,,UNICEF,XM-DAC-41122
-Zimbabwe,ZW,,UNICEF,XM-DAC-41122
-Afghanistan,AF,,UNOCHA,XM-DAC-41127
-Angola,AO,,UNOCHA,XM-DAC-41127
-Armenia,AM,,UNOCHA,XM-DAC-41127
-Azerbaijan,AZ,,UNOCHA,XM-DAC-41127
-Bangladesh,BD,,UNOCHA,XM-DAC-41127
-Burkina,BF,,UNOCHA,XM-DAC-41127
-Burundi,BI,,UNOCHA,XM-DAC-41127
-Cameroon,CM,,UNOCHA,XM-DAC-41127
-CAR,CF,,UNOCHA,XM-DAC-41127
-Chad,TD,,UNOCHA,XM-DAC-41127
-Colombia,CO,,UNOCHA,XM-DAC-41127
-Côte d'Ivoire,CI,,UNOCHA,XM-DAC-41127
-DRCongo,CD,,UNOCHA,XM-DAC-41127
-Equatorial Guinea,GQ,,UNOCHA,XM-DAC-41127
-Eritrea,ER,,UNOCHA,XM-DAC-41127
-Ethiopia,ET,,UNOCHA,XM-DAC-41127
-Faso,BF,,UNOCHA,XM-DAC-41127
-Fiji,FJ,,UNOCHA,XM-DAC-41127
-Guinea,GN,,UNOCHA,XM-DAC-41127
-Guinea Bissau ,GW,,UNOCHA,XM-DAC-41127
-Haiti,HT,,UNOCHA,XM-DAC-41127
-Iraq,IQ,,UNOCHA,XM-DAC-41127
-Jordan,JO,,UNOCHA,XM-DAC-41127
-Kenya,KE,,UNOCHA,XM-DAC-41127
-Lebanon,LB,,UNOCHA,XM-DAC-41127
-Liberia,LR,,UNOCHA,XM-DAC-41127
-Libya,LY,,UNOCHA,XM-DAC-41127
-Madagascar,MG,,UNOCHA,XM-DAC-41127
-Mali,ML,,UNOCHA,XM-DAC-41127
-Mozambique,MZ,,UNOCHA,XM-DAC-41127
-Myanmar,MM,,UNOCHA,XM-DAC-41127
-Nepal,NP,,UNOCHA,XM-DAC-41127
-Niger,NE,,UNOCHA,XM-DAC-41127
-Nigeria,NG,,UNOCHA,XM-DAC-41127
-Occupied Palestinian Territory,PS,,UNOCHA,XM-DAC-41127
-Pakistan,PK,,UNOCHA,XM-DAC-41127
-Republic of Sudan,SD,,UNOCHA,XM-DAC-41127
-Saint Vincent,VC,,UNOCHA,XM-DAC-41127
-Senegal,SN,,UNOCHA,XM-DAC-41127
-Sierra Leone,SL,,UNOCHA,XM-DAC-41127
-Somalia,SO,,UNOCHA,XM-DAC-41127
-South Sudan,SS,,UNOCHA,XM-DAC-41127
-Sudan,SD,,UNOCHA,XM-DAC-41127
-Syria,SY,,UNOCHA,XM-DAC-41127
-Syria,SY,,UNOCHA,XM-DAC-41127
-Ukraine,UA,,UNOCHA,XM-DAC-41127
-Venezuela,VE,,UNOCHA,XM-DAC-41127
-Yemen,YE,,UNOCHA,XM-DAC-41127
-Angola,AO,,US HHS,US-GOV-14
-Bangladesh,BD,,US HHS,US-GOV-14
-Barbados,BB,,US HHS,US-GOV-14
-Benin,BJ,,US HHS,US-GOV-14
-Botswana,BW,,US HHS,US-GOV-14
-Brazil,BR,,US HHS,US-GOV-14
-Burkina Faso,BF,,US HHS,US-GOV-14
-Burma (Myanmar),MM,,US HHS,US-GOV-14
-Burundi,BI,,US HHS,US-GOV-14
-Cambodia,KH,,US HHS,US-GOV-14
-Cameroon,CM,,US HHS,US-GOV-14
-China (P.R.C.),CN,1,US HHS,US-GOV-14
-Colombia,CO,,US HHS,US-GOV-14
-Congo (Kinshasa),CG,,US HHS,US-GOV-14
-Cote d'Ivoire,CI,,US HHS,US-GOV-14
-Dominican Republic,DO,,US HHS,US-GOV-14
-Eswatini,SZ,,US HHS,US-GOV-14
-Ethiopia,ET,,US HHS,US-GOV-14
-Ghana,GH,,US HHS,US-GOV-14
-Guatemala,GT,,US HHS,US-GOV-14
-Guinea,GN,,US HHS,US-GOV-14
-Guinea-Bissau,GW,,US HHS,US-GOV-14
-Guyana,GY,,US HHS,US-GOV-14
-Haiti,HT,,US HHS,US-GOV-14
-Honduras,HN,,US HHS,US-GOV-14
-India,IN,,US HHS,US-GOV-14
-Jamaica,JM,,US HHS,US-GOV-14
-Kazakhstan,KZ,,US HHS,US-GOV-14
-Kenya,KE,,US HHS,US-GOV-14
-Kyrgyzstan,KG,,US HHS,US-GOV-14
-Laos,LA,,US HHS,US-GOV-14
-Lesotho,LS,,US HHS,US-GOV-14
-Liberia,LR,,US HHS,US-GOV-14
-Madagascar,MG,,US HHS,US-GOV-14
-Malawi,MW,,US HHS,US-GOV-14
-Mali,ML,,US HHS,US-GOV-14
-Mozambique,MZ,,US HHS,US-GOV-14
-Namibia,NA,,US HHS,US-GOV-14
-Nicaragua,NI,,US HHS,US-GOV-14
-Niger,NE,,US HHS,US-GOV-14
-Nigeria,NG,,US HHS,US-GOV-14
-Panama,PA,,US HHS,US-GOV-14
-Papua New Guinea,PG,1,US HHS,US-GOV-14
-Philippines,PH,,US HHS,US-GOV-14
-Rwanda,RW,,US HHS,US-GOV-14
-Senegal,SN,,US HHS,US-GOV-14
-Sierra Leone,SL,,US HHS,US-GOV-14
-South Africa,ZA,,US HHS,US-GOV-14
-South Sudan,SS,,US HHS,US-GOV-14
-Tajikistan,TJ,,US HHS,US-GOV-14
-Tanzania,TZ,,US HHS,US-GOV-14
-Thailand,TH,,US HHS,US-GOV-14
-Trinidad and Tobago,TT,,US HHS,US-GOV-14
-Uganda,UG,,US HHS,US-GOV-14
-Ukraine,UA,,US HHS,US-GOV-14
-Uzbekistan,UZ,1,US HHS,US-GOV-14
-Vietnam,VN,,US HHS,US-GOV-14
-Yemen,YE,,US HHS,US-GOV-14
-Zambia,ZM,,US HHS,US-GOV-14
-Zimbabwe,ZW,,US HHS,US-GOV-14
-Afghanistan,AF,,US State,US-GOV-11
-Albania,AL,,US State,US-GOV-11
-Algeria,DZ,,US State,US-GOV-11
-Angola,AO,,US State,US-GOV-11
-Argentina,AR,,US State,US-GOV-11
-Armenia,AM,,US State,US-GOV-11
-Azerbaijan,AZ,,US State,US-GOV-11
-Bangladesh,BD,,US State,US-GOV-11
-Belarus,BY,,US State,US-GOV-11
-Belize,BZ,,US State,US-GOV-11
-Benin,BJ,,US State,US-GOV-11
-Bhutan,BT,,US State,US-GOV-11
-Bolivia,BO,,US State,US-GOV-11
-Bosnia and Herzegovina,BA,,US State,US-GOV-11
-Botswana,BW,,US State,US-GOV-11
-Brazil,BR,,US State,US-GOV-11
-Burkina Faso,BF,,US State,US-GOV-11
-Burundi,BI,,US State,US-GOV-11
-Cabo Verde,CV,,US State,US-GOV-11
-Cambodia,KH,,US State,US-GOV-11
-Cameroon,CM,,US State,US-GOV-11
-Central African Republic,CF,,US State,US-GOV-11
-Chad,TD,,US State,US-GOV-11
-China (People's Republic of),CN,,US State,US-GOV-11
-Colombia,CO,,US State,US-GOV-11
-Comoros,KM,1,US State,US-GOV-11
-Congo,CG,,US State,US-GOV-11
-Costa Rica,CR,,US State,US-GOV-11
-Côte d'Ivoire,CI,,US State,US-GOV-11
-Cuba,CU,1,US State,US-GOV-11
-Democratic People's Republic of Korea,KR,1,US State,US-GOV-11
-Democratic Republic of the Congo,CD,,US State,US-GOV-11
-Djibouti,DJ,1,US State,US-GOV-11
-Dominica,DM,1,US State,US-GOV-11
-Dominican Republic,DO,,US State,US-GOV-11
-Ecuador,EC,,US State,US-GOV-11
-Egypt,EG,,US State,US-GOV-11
-El Salvador,SV,,US State,US-GOV-11
-Equatorial Guinea,GQ,1,US State,US-GOV-11
-Eswatini,SZ,,US State,US-GOV-11
-Ethiopia,ET,,US State,US-GOV-11
-Fiji,FJ,1,US State,US-GOV-11
-Gabon,GA,,US State,US-GOV-11
-Gambia,GM,,US State,US-GOV-11
-Georgia,GE,,US State,US-GOV-11
-Ghana,GH,,US State,US-GOV-11
-Guatemala,GT,,US State,US-GOV-11
-Guinea,GN,,US State,US-GOV-11
-Guinea-Bissau,GW,,US State,US-GOV-11
-Guyana,GY,,US State,US-GOV-11
-Haiti,HT,,US State,US-GOV-11
-Honduras,HN,,US State,US-GOV-11
-India,IN,,US State,US-GOV-11
-Indonesia,ID,,US State,US-GOV-11
-Iraq,IQ,,US State,US-GOV-11
-Jamaica,JM,,US State,US-GOV-11
-Jordan,JO,,US State,US-GOV-11
-Kazakhstan,KZ,,US State,US-GOV-11
-Kenya,KE,,US State,US-GOV-11
-Kosovo,XK,,US State,US-GOV-11
-Kyrgyzstan,KG,,US State,US-GOV-11
-Lao People's Democratic Republic,LA,,US State,US-GOV-11
-Lebanon,LB,,US State,US-GOV-11
-Lesotho,LS,,US State,US-GOV-11
-Liberia,LR,,US State,US-GOV-11
-Libya,LY,,US State,US-GOV-11
-Madagascar,MG,,US State,US-GOV-11
-Malawi,MW,,US State,US-GOV-11
-Malaysia,MY,,US State,US-GOV-11
-Maldives,MV,1,US State,US-GOV-11
-Mali,ML,,US State,US-GOV-11
-Marshall Islands,MH,,US State,US-GOV-11
-Mauritania,MR,,US State,US-GOV-11
-Mauritius,MU,1,US State,US-GOV-11
-Mexico,MX,,US State,US-GOV-11
-Micronesia,FM,1,US State,US-GOV-11
-Moldova,MD,,US State,US-GOV-11
-Mongolia,MN,,US State,US-GOV-11
-Montenegro,ME,,US State,US-GOV-11
-Morocco,MA,,US State,US-GOV-11
-Mozambique,MZ,,US State,US-GOV-11
-Myanmar,MM,,US State,US-GOV-11
-Namibia,NA,,US State,US-GOV-11
-Nepal,NP,,US State,US-GOV-11
-Nicaragua,NI,,US State,US-GOV-11
-Niger,NE,,US State,US-GOV-11
-Nigeria,NG,,US State,US-GOV-11
-North Macedonia,MK,,US State,US-GOV-11
-Pakistan,PK,,US State,US-GOV-11
-Palau,PW,,US State,US-GOV-11
-Panama,PA,,US State,US-GOV-11
-Papua New Guinea,PG,,US State,US-GOV-11
-Paraguay,PY,,US State,US-GOV-11
-Peru,PE,,US State,US-GOV-11
-Philippines,PH,,US State,US-GOV-11
-Rwanda,RW,,US State,US-GOV-11
-Senegal,SN,,US State,US-GOV-11
-Serbia,RS,,US State,US-GOV-11
-Sierra Leone,SL,,US State,US-GOV-11
-Solomon Islands,SB,,US State,US-GOV-11
-Somalia,SO,,US State,US-GOV-11
-South Africa,ZA,,US State,US-GOV-11
-South Sudan,SS,,US State,US-GOV-11
-Sri Lanka,LK,,US State,US-GOV-11
-Sudan,SD,,US State,US-GOV-11
-Suriname,SR,1,US State,US-GOV-11
-Syrian Arab Republic,SY,,US State,US-GOV-11
-Tajikistan,TJ,,US State,US-GOV-11
-Tanzania,TZ,,US State,US-GOV-11
-Thailand,TH,,US State,US-GOV-11
-Timor-Leste,TL,,US State,US-GOV-11
-Togo,TG,1,US State,US-GOV-11
-Tunisia,TN,,US State,US-GOV-11
-Türkiye,TR,,US State,US-GOV-11
-Turkmenistan,TM,,US State,US-GOV-11
-Uganda,UG,,US State,US-GOV-11
-Ukraine,UA,,US State,US-GOV-11
-Uzbekistan,UZ,,US State,US-GOV-11
-Venezuela,VE,1,US State,US-GOV-11
-Viet Nam,VN,,US State,US-GOV-11
-West Bank and Gaza Strip,PS,,US State,US-GOV-11
-Yemen,YE,,US State,US-GOV-11
-Zambia,ZM,,US State,US-GOV-11
-Zimbabwe,ZW,,US State,US-GOV-11
-Benin,BJ,,"US, MCC",US-GOV-18
-Cote d’Ivoire ,CI,,"US, MCC",US-GOV-18
-Lesotho,LS,,"US, MCC",US-GOV-18
-Malawi,MW,,"US, MCC",US-GOV-18
-Mongolia,MN,,"US, MCC",US-GOV-18
-Nepal,NP,,"US, MCC",US-GOV-18
-Niger,NE,,"US, MCC",US-GOV-18
-SenegaL,SN,,"US, MCC",US-GOV-18
-Indonesia,ID,,"US, MCC",US-GOV-18
-Togo,TG,,"US, MCC",US-GOV-18
-The Gambia,GM,,"US, MCC",US-GOV-18
-Solomon Islands,SB,,"US, MCC",US-GOV-18
-Kenya,KE,,"US, MCC",US-GOV-18
-Kiribati ,KI,,"US, MCC",US-GOV-18
-Afghanistan,AF,,USAID,US-GOV-1
-Albania,AL,,USAID,US-GOV-1
-Angola,AO,,USAID,US-GOV-1
-Armenia,AM,,USAID,US-GOV-1
-Azerbaijan,AZ,,USAID,US-GOV-1
-Bangladesh,BD,,USAID,US-GOV-1
-Belarus,BY,,USAID,US-GOV-1
-Benin,BJ,,USAID,US-GOV-1
-Bolivia,BO,,USAID,US-GOV-1
-Bosnia and Herzegovina,BA,,USAID,US-GOV-1
-Botswana,BW,,USAID,US-GOV-1
-Brazil,BR,,USAID,US-GOV-1
-Burkina Faso,BF,,USAID,US-GOV-1
-Burma,MM,,USAID,US-GOV-1
-Burundi,BI,,USAID,US-GOV-1
-Cambodia,KH,,USAID,US-GOV-1
-Cameroon,CM,,USAID,US-GOV-1
-Central African Republic,CF,,USAID,US-GOV-1
-Chad,TD,,USAID,US-GOV-1
-China,CN,,USAID,US-GOV-1
-Colombia,CO,,USAID,US-GOV-1
-Côte d’Ivoire,CI,,USAID,US-GOV-1
-Cuba,CU,,USAID,US-GOV-1
-Democratic Republic of the Congo,CD,,USAID,US-GOV-1
-Djibouti,DJ,,USAID,US-GOV-1
-Dominican Republic,DO,,USAID,US-GOV-1
-Ecuador,EC,,USAID,US-GOV-1
-Egypt,EG,,USAID,US-GOV-1
-El Salvador,SV,,USAID,US-GOV-1
-Eswatini,SZ,,USAID,US-GOV-1
-Ethiopia,ET,,USAID,US-GOV-1
-Georgia,GE,,USAID,US-GOV-1
-Ghana,GH,,USAID,US-GOV-1
-Greenland,GL,,USAID,US-GOV-1
-Guatemala,GT,,USAID,US-GOV-1
-Guinea,GN,,USAID,US-GOV-1
-Haiti,HT,,USAID,US-GOV-1
-Honduras,HN,,USAID,US-GOV-1
-India,IN,,USAID,US-GOV-1
-Indonesia,ID,,USAID,US-GOV-1
-Iraq,IQ,,USAID,US-GOV-1
-Jamaica,JM,,USAID,US-GOV-1
-Jordan,JO,,USAID,US-GOV-1
-Kazakhstan,KZ,,USAID,US-GOV-1
-Kenya,KE,,USAID,US-GOV-1
-Kosovo,XK,,USAID,US-GOV-1
-Kyrgyz Republic,KG,,USAID,US-GOV-1
-Laos,LA,,USAID,US-GOV-1
-Lebanon,LB,,USAID,US-GOV-1
-Lesotho,LS,,USAID,US-GOV-1
-Liberia,LR,,USAID,US-GOV-1
-Libya,LY,,USAID,US-GOV-1
-Madagascar,MG,,USAID,US-GOV-1
-Malawi,MW,,USAID,US-GOV-1
-Maldives,MV,,USAID,US-GOV-1
-Mali,ML,,USAID,US-GOV-1
-Mauritania,MR,,USAID,US-GOV-1
-Mexico,MX,,USAID,US-GOV-1
-Moldova,MD,,USAID,US-GOV-1
-Mongolia,MN,,USAID,US-GOV-1
-Morocco,MA,,USAID,US-GOV-1
-Mozambique,MZ,,USAID,US-GOV-1
-Namibia,NA,,USAID,US-GOV-1
-Nepal,NP,,USAID,US-GOV-1
-Nicaragua,NI,,USAID,US-GOV-1
-Niger,NE,,USAID,US-GOV-1
-Nigeria,NG,,USAID,US-GOV-1
-North Macedonia,MK,,USAID,US-GOV-1
-Pakistan,PK,,USAID,US-GOV-1
-Panama,PA,,USAID,US-GOV-1
-Paraguay,PY,,USAID,US-GOV-1
-Peru,PE,,USAID,US-GOV-1
-Philippines,PH,,USAID,US-GOV-1
-Republic of the Congo,CD,,USAID,US-GOV-1
-Rwanda,RW,,USAID,US-GOV-1
-Senegal,SN,,USAID,US-GOV-1
-Serbia,RS,,USAID,US-GOV-1
-Sierra Leone,SL,,USAID,US-GOV-1
-Somalia,SO,,USAID,US-GOV-1
-South Africa,ZA,,USAID,US-GOV-1
-South Sudan,SS,,USAID,US-GOV-1
-Sri Lanka,LK,,USAID,US-GOV-1
-Sudan,SD,,USAID,US-GOV-1
-Syria,SY,,USAID,US-GOV-1
-Tajikistan,TJ,,USAID,US-GOV-1
-Tanzania,TZ,,USAID,US-GOV-1
-Thailand,TH,,USAID,US-GOV-1
-The Gambia,GM,,USAID,US-GOV-1
-Timor-Leste,TL,,USAID,US-GOV-1
-Tunisia,TN,,USAID,US-GOV-1
-Turkmenistan,TM,,USAID,US-GOV-1
-Uganda,UG,,USAID,US-GOV-1
-Ukraine,UA,,USAID,US-GOV-1
-Uzbekistan,UZ,,USAID,US-GOV-1
-Venezuela,VE,,USAID,US-GOV-1
-Vietnam,VN,,USAID,US-GOV-1
-Yemen,YE,,USAID,US-GOV-1
-Zambia,ZM,,USAID,US-GOV-1
-Zimbabwe,ZW,,USAID,US-GOV-1
-Afghanistan,AF,,WB IDA,44002
-Bangladesh,BD,,WB IDA,44002
-Benin,BJ,,WB IDA,44002
-Bhutan,BT,,WB IDA,44002
-Burkina Faso,BF,,WB IDA,44002
-Burundi,BI,,WB IDA,44002
-Cabo Verde,CV,,WB IDA,44002
-Cambodia,KH,,WB IDA,44002
-Cameroon,CM,,WB IDA,44002
-Central African Republic,CF,,WB IDA,44002
-Chad,TD,,WB IDA,44002
-Comoros,KM,,WB IDA,44002
-"Congo, Democratic Republic of",CD,,WB IDA,44002
-"Congo, Republic of",CD,,WB IDA,44002
-Cote d'Ivoire 4,CI,,WB IDA,44002
-Djibouti ,DJ,,WB IDA,44002
-Dominica,DM,,WB IDA,44002
-Eritrea,ER,,WB IDA,44002
-Ethiopia,ET,,WB IDA,44002
-Fiji,FJ,,WB IDA,44002
-"Gambia, The",GM,,WB IDA,44002
-Ghana,GH,,WB IDA,44002
-Grenada,GD,,WB IDA,44002
-Guinea,GN,,WB IDA,44002
-Guinea-Bissau,GW,,WB IDA,44002
-Guyana,GY,1,WB IDA,44002
-Haiti,HT,,WB IDA,44002
-Honduras,HN,,WB IDA,44002
-Kenya,KE,,WB IDA,44002
-Kiribati,KI,1,WB IDA,44002
-Kosovo,XK,,WB IDA,44002
-Kyrgyz Republic,KG,,WB IDA,44002
-Lao People's Democratic Republic,LA,,WB IDA,44002
-Lesotho,LS,,WB IDA,44002
-Liberia,LR,,WB IDA,44002
-Madagascar,MG,,WB IDA,44002
-Malawi,MW,,WB IDA,44002
-Maldives,MV,,WB IDA,44002
-Mali,ML,,WB IDA,44002
-Marshall Islands,MH,,WB IDA,44002
-Mauritania,MR,,WB IDA,44002
-"Micronesia, Federated States of",FM,,WB IDA,44002
-Mozambique,MZ,,WB IDA,44002
-Myanmar,MM,,WB IDA,44002
-Nepal,NP,,WB IDA,44002
-Nicaragua,NI,,WB IDA,44002
-Niger,NE,,WB IDA,44002
-Nigeria,NG,,WB IDA,44002
-Pakistan,PK,,WB IDA,44002
-Papua New Guinea,PG,,WB IDA,44002
-Rwanda,RW,,WB IDA,44002
-Samoa,WS,1,WB IDA,44002
-Sao Tome and Principe,ST,,WB IDA,44002
-Senegal,SN,,WB IDA,44002
-Sierra Leone,SL,,WB IDA,44002
-Solomon Islands,SB,,WB IDA,44002
-Somalia ,SO,,WB IDA,44002
-South Sudan,SS,,WB IDA,44002
-St. Lucia,LC,,WB IDA,44002
-St. Vincent,VC,,WB IDA,44002
-Sudan ,SD,,WB IDA,44002
-Syrian Arab Republic,SY,,WB IDA,44002
-Tajikistan,TJ,,WB IDA,44002
-Tanzania,TZ,,WB IDA,44002
-Timor-Leste ,TL,1,WB IDA,44002
-Togo,TG,,WB IDA,44002
-Tonga,TO,,WB IDA,44002
-Tuvalu,TV,1,WB IDA,44002
-Uganda,UG,,WB IDA,44002
-Uzbekistan,UZ,,WB IDA,44002
-Vanuatu,VU,,WB IDA,44002
-"Yemen, Republic of",YE,,WB IDA,44002
-Zambia,ZM,,WB IDA,44002
-Zimbabwe,ZW,,WB IDA,44002
-Argentina,AR,,WB IFC,44004
-Armenia,AM,,WB IFC,44004
-Bangladesh,BD,,WB IFC,44004
-Belarus,BY,,WB IFC,44004
-Brazil,BR,,WB IFC,44004
-Burkina Faso,BF,,WB IFC,44004
-Cambodia,KH,,WB IFC,44004
-China (People's Republic of),CN,,WB IFC,44004
-Colombia,CO,,WB IFC,44004
-Costa Rica,CR,,WB IFC,44004
-Ecuador,EC,,WB IFC,44004
-Egypt,EG,,WB IFC,44004
-Ethiopia,ET,,WB IFC,44004
-Gabon,GA,,WB IFC,44004
-Ghana,GH,1,WB IFC,44004
-Guatemala,GT,,WB IFC,44004
-India,IN,,WB IFC,44004
-Indonesia,ID,,WB IFC,44004
-Iraq,IQ,,WB IFC,44004
-Jamaica,JM,,WB IFC,44004
-Jordan,JO,,WB IFC,44004
-Kazakhstan,KZ,,WB IFC,44004
-Kenya,KE,,WB IFC,44004
-Kosovo,XK,,WB IFC,44004
-Lao People's Democratic Republic,LA,,WB IFC,44004
-Mexico,MX,,WB IFC,44004
-Mongolia,MN,,WB IFC,44004
-Morocco,MA,,WB IFC,44004
-Mozambique,MZ,,WB IFC,44004
-Myanmar,MM,1,WB IFC,44004
-Namibia,NA,,WB IFC,44004
-Nepal,NP,1,WB IFC,44004
-Nicaragua,NI,,WB IFC,44004
-Nigeria,NG,,WB IFC,44004
-Paraguay,PY,,WB IFC,44004
-Peru,PE,,WB IFC,44004
-Philippines,PH,,WB IFC,44004
-Senegal,SN,,WB IFC,44004
-South Africa,ZA,,WB IFC,44004
-Sri Lanka,LK,,WB IFC,44004
-Tanzania,TZ,,WB IFC,44004
-Thailand,TH,,WB IFC,44004
-Timor-Leste,TL,1,WB IFC,44004
-Tunisia,TN,,WB IFC,44004
-Türkiye,TR,,WB IFC,44004
-Uganda,UG,,WB IFC,44004
-Ukraine,UA,,WB IFC,44004
-Uzbekistan,UZ,,WB IFC,44004
-Viet Nam,VN,,WB IFC,44004
-West Bank and Gaza Strip,PS,1,WB IFC,44004
-Afghanistan,AF,,WFP,XM-DAC-41140
-Algeria,DZ,,WFP,XM-DAC-41140
-Angola,AO,,WFP,XM-DAC-41140
-Armenia,AM,,WFP,XM-DAC-41140
-Bangladesh,BD,,WFP,XM-DAC-41140
-Benin,BJ,,WFP,XM-DAC-41140
-Bhutan,BT,1,WFP,XM-DAC-41140
-Bolivia,BO,,WFP,XM-DAC-41140
-Burkina Faso,BF,,WFP,XM-DAC-41140
-Burundi,BI,,WFP,XM-DAC-41140
-Cambodia,KH,1,WFP,XM-DAC-41140
-Cameroon,CM,,WFP,XM-DAC-41140
-Central African Republic,CF,,WFP,XM-DAC-41140
-Chad,TD,,WFP,XM-DAC-41140
-China,CN,,WFP,XM-DAC-41140
-Colombia,CO,,WFP,XM-DAC-41140
-Congo,CG,,WFP,XM-DAC-41140
-Côte d'Ivoire,CI,,WFP,XM-DAC-41140
-Cuba,CU,,WFP,XM-DAC-41140
-Democratic Republic of the Congo,CD,,WFP,XM-DAC-41140
-Djibouti,DJ,,WFP,XM-DAC-41140
-Dominican Republic,DO,1,WFP,XM-DAC-41140
-DPR Korea,KR,,WFP,XM-DAC-41140
-Ecuador,EC,,WFP,XM-DAC-41140
-Egypt,EG,,WFP,XM-DAC-41140
-El Salvador,SV,,WFP,XM-DAC-41140
-Eswatini,SZ,,WFP,XM-DAC-41140
-Ethiopia,ET,,WFP,XM-DAC-41140
-Gambia,GM,,WFP,XM-DAC-41140
-Ghana,GH,,WFP,XM-DAC-41140
-Guatemala,GT,,WFP,XM-DAC-41140
-Guinea,GN,,WFP,XM-DAC-41140
-Guinea-Bissau,GW,,WFP,XM-DAC-41140
-Haiti,HT,,WFP,XM-DAC-41140
-Honduras,HN,,WFP,XM-DAC-41140
-India,IN,1,WFP,XM-DAC-41140
-Indonesia,ID,,WFP,XM-DAC-41140
-Iran,IR,1,WFP,XM-DAC-41140
-Iraq,IQ,,WFP,XM-DAC-41140
-Jordan,JO,,WFP,XM-DAC-41140
-Kenya,KE,,WFP,XM-DAC-41140
-Kyrgyz Republic,KG,,WFP,XM-DAC-41140
-Laos,LA,,WFP,XM-DAC-41140
-Lebanon,LB,,WFP,XM-DAC-41140
-Lesotho,LS,,WFP,XM-DAC-41140
-Liberia,LR,,WFP,XM-DAC-41140
-Libya,LY,,WFP,XM-DAC-41140
-Madagascar,MG,,WFP,XM-DAC-41140
-Malawi,MW,,WFP,XM-DAC-41140
-Mali,ML,,WFP,XM-DAC-41140
-Mauritania,MR,,WFP,XM-DAC-41140
-Moldova,MD,,WFP,XM-DAC-41140
-Mozambique,MZ,,WFP,XM-DAC-41140
-Myanmar,MM,,WFP,XM-DAC-41140
-Namibia,NA,,WFP,XM-DAC-41140
-Nepal,NP,,WFP,XM-DAC-41140
-Nicaragua,NI,,WFP,XM-DAC-41140
-Niger,NE,,WFP,XM-DAC-41140
-Nigeria,NG,,WFP,XM-DAC-41140
-Pakistan,PK,,WFP,XM-DAC-41140
-Palestine,PS,,WFP,XM-DAC-41140
-Peru,PE,,WFP,XM-DAC-41140
-Philippines,PH,,WFP,XM-DAC-41140
-Rwanda,RW,,WFP,XM-DAC-41140
-Sao Tome and Principe,ST,,WFP,XM-DAC-41140
-Senegal,SN,,WFP,XM-DAC-41140
-Sierra Leone,SL,,WFP,XM-DAC-41140
-Somalia,SO,,WFP,XM-DAC-41140
-South Sudan,SS,,WFP,XM-DAC-41140
-Sri Lanka,LK,,WFP,XM-DAC-41140
-Sudan,SD,,WFP,XM-DAC-41140
-Syria,SY,,WFP,XM-DAC-41140
-Tajikistan,TJ,,WFP,XM-DAC-41140
-Tanzania,TZ,,WFP,XM-DAC-41140
-Timor-Leste,TL,,WFP,XM-DAC-41140
-Togo,TG,,WFP,XM-DAC-41140
-Tunisia,TN,1,WFP,XM-DAC-41140
-Türkiye,TR,,WFP,XM-DAC-41140
-Uganda,UG,,WFP,XM-DAC-41140
-Ukraine,UA,,WFP,XM-DAC-41140
-Venezuela,VE,,WFP,XM-DAC-41140
-Yemen,YE,,WFP,XM-DAC-41140
-Zambia,ZM,,WFP,XM-DAC-41140
-Zimbabwe,ZW,,WFP,XM-DAC-41140
-AFGHANISTAN,AF,,WHO,XM-DAC-928
-ALBANIA,AL,,WHO,XM-DAC-928
-ALGERIA,DZ,,WHO,XM-DAC-928
-AMERICAN SAMOA,AS,,WHO,XM-DAC-928
-ANGOLA,AO,,WHO,XM-DAC-928
-ANTIGUA AND BARBUDA,AG,1,WHO,XM-DAC-928
-ARGENTINA,AR,1,WHO,XM-DAC-928
-ARMENIA,AM,,WHO,XM-DAC-928
-AZERBAIJAN,AZ,,WHO,XM-DAC-928
-BAHAMAS,BS,,WHO,XM-DAC-928
-BAHRAIN,BH,,WHO,XM-DAC-928
-BANGLADESH,BD,,WHO,XM-DAC-928
-BARBADOS,BB,,WHO,XM-DAC-928
-BELARUS,BY,1,WHO,XM-DAC-928
-BELIZE,BZ,1,WHO,XM-DAC-928
-BENIN,BJ,,WHO,XM-DAC-928
-BHUTAN,BT,,WHO,XM-DAC-928
-BOLIVIA (PLURINATIONAL STATE OF),BO,1,WHO,XM-DAC-928
-BOSNIA AND HERZEGOVINA,BA,1,WHO,XM-DAC-928
-BOTSWANA,BW,,WHO,XM-DAC-928
-BRAZIL,BR,,WHO,XM-DAC-928
-BRUNEI DARUSSALAM,BN,,WHO,XM-DAC-928
-BULGARIA,BG,,WHO,XM-DAC-928
-BURKINA FASO,BF,,WHO,XM-DAC-928
-BURUNDI,BI,,WHO,XM-DAC-928
-CABO VERDE,CV,,WHO,XM-DAC-928
-CAMBODIA,KH,,WHO,XM-DAC-928
-CAMEROON,CM,,WHO,XM-DAC-928
-CENTRAL AFRICAN REPUBLIC,CF,,WHO,XM-DAC-928
-CHAD,TD,,WHO,XM-DAC-928
-CHILE,CL,,WHO,XM-DAC-928
-CHINA,CN,,WHO,XM-DAC-928
-COLOMBIA,CO,,WHO,XM-DAC-928
-COMOROS,KM,,WHO,XM-DAC-928
-CONGO,CG,,WHO,XM-DAC-928
-COOK ISLANDS,CK,,WHO,XM-DAC-928
-COSTA RICA,CR,1,WHO,XM-DAC-928
-CÔTE D'IVOIRE,CI,,WHO,XM-DAC-928
-CROATIA,HR,,WHO,XM-DAC-928
-CUBA,CU,1,WHO,XM-DAC-928
-CZECHIA,CZ,,WHO,XM-DAC-928
-DEMOCRATIC PEOPLE'S REPUBLIC OF KOREA,KR,1,WHO,XM-DAC-928
-DEMOCRATIC REPUBLIC OF THE CONGO,CD,,WHO,XM-DAC-928
-DJIBOUTI,DJ,1,WHO,XM-DAC-928
-DOMINICA,DM,1,WHO,XM-DAC-928
-DOMINICAN REPUBLIC,DO,1,WHO,XM-DAC-928
-ECUADOR,EC,1,WHO,XM-DAC-928
-EGYPT,EG,,WHO,XM-DAC-928
-EL SALVADOR,SV,1,WHO,XM-DAC-928
-EQUATORIAL GUINEA,GQ,,WHO,XM-DAC-928
-ERITREAE,ER,,WHO,XM-DAC-928
-ESTONIA,EE,,WHO,XM-DAC-928
-ETHIOPIA,ET,,WHO,XM-DAC-928
-FIJI,FJ,1,WHO,XM-DAC-928
-FRENCH POLYNESIA,PF,,WHO,XM-DAC-928
-GABON,GA,,WHO,XM-DAC-928
-GAMBIA,GM,,WHO,XM-DAC-928
-GEORGIA,GE,,WHO,XM-DAC-928
-GHANA,GH,,WHO,XM-DAC-928
-GREECE,GR,,WHO,XM-DAC-928
-GRENADA,GD,1,WHO,XM-DAC-928
-GUAM,GU,,WHO,XM-DAC-928
-GUATEMALA,GT,,WHO,XM-DAC-928
-GUINEA,GN,,WHO,XM-DAC-928
-GUINEA-BISSAU,GW,,WHO,XM-DAC-928
-GUYANA,GY,1,WHO,XM-DAC-928
-HAITI,HT,,WHO,XM-DAC-928
-HONDURAS,HN,,WHO,XM-DAC-928
-HUNGARY,HU,,WHO,XM-DAC-928
-INDIA,IN,,WHO,XM-DAC-928
-INDONESIA,ID,,WHO,XM-DAC-928
-IRAN (ISLAMIC REPUBLIC OF),IR,,WHO,XM-DAC-928
-IRAQ,IQ,,WHO,XM-DAC-928
-ISRAEL,IL,,WHO,XM-DAC-928
-ITALY,IT,,WHO,XM-DAC-928
-JAMAICA,JM,1,WHO,XM-DAC-928
-JORDAN,JO,,WHO,XM-DAC-928
-KAZAKHSTAN,KZ,,WHO,XM-DAC-928
-KENYA,KE,,WHO,XM-DAC-928
-KIRIBATI,KI,1,WHO,XM-DAC-928
-KUWAIT,KW,,WHO,XM-DAC-928
-KYRGYZSTAN,KG,,WHO,XM-DAC-928
-LAO PEOPLE'S DEMOCRATIC REPUBLIC,LA,,WHO,XM-DAC-928
-LATVIA,LV,,WHO,XM-DAC-928
-LEBANON,LB,,WHO,XM-DAC-928
-LESOTHO,LS,,WHO,XM-DAC-928
-LIBERIA,LR,,WHO,XM-DAC-928
-LIBYA,LY,,WHO,XM-DAC-928
-LITHUANIA,LT,,WHO,XM-DAC-928
-MADAGASCAR,MG,,WHO,XM-DAC-928
-MALAWI,MW,,WHO,XM-DAC-928
-MALAYSIA,MY,,WHO,XM-DAC-928
-MALDIVES,MV,,WHO,XM-DAC-928
-MALI,ML,,WHO,XM-DAC-928
-MALTA,MT,,WHO,XM-DAC-928
-MARSHALL ISLANDS,MH,1,WHO,XM-DAC-928
-MAURITANIA,MR,,WHO,XM-DAC-928
-MAURITIUS,MU,,WHO,XM-DAC-928
-MEXICO,MX,,WHO,XM-DAC-928
-MICRONESIA,FM,,WHO,XM-DAC-928
-MONGOLIA,MN,,WHO,XM-DAC-928
-MONTENEGRO,ME,1,WHO,XM-DAC-928
-MOROCCO,MA,,WHO,XM-DAC-928
-MOZAMBIQUE,MZ,,WHO,XM-DAC-928
-MYANMAR,MM,,WHO,XM-DAC-928
-NAMIBIA,NA,,WHO,XM-DAC-928
-NAURU,NR,1,WHO,XM-DAC-928
-NEPAL,NP,,WHO,XM-DAC-928
-NICARAGUA,NI,,WHO,XM-DAC-928
-NIGER,NE,,WHO,XM-DAC-928
-NIGERIA,NG,,WHO,XM-DAC-928
-NIUE,NU,1,WHO,XM-DAC-928
-NORTH MACEDONIA,MK,,WHO,XM-DAC-928
-NORTHERN MARIANA ISLANDS,MP,,WHO,XM-DAC-928
-OCCUPIED PALESTINIAN TERRITORY,PS,,WHO,XM-DAC-928
-OMAN,OM,,WHO,XM-DAC-928
-PAKISTAN,PK,,WHO,XM-DAC-928
-PALAU,PW,1,WHO,XM-DAC-928
-PANAMA,PA,,WHO,XM-DAC-928
-PAPUA NEW GUINEA,PG,,WHO,XM-DAC-928
-PARAGUAY,PY,,WHO,XM-DAC-928
-PERU,PE,1,WHO,XM-DAC-928
-PHILIPPINES,PH,,WHO,XM-DAC-928
-POLAND,PL,,WHO,XM-DAC-928
-QATAR,QA,,WHO,XM-DAC-928
-REPUBLIC OF MOLDOVA,MD,,WHO,XM-DAC-928
-ROMANIA,RO,,WHO,XM-DAC-928
-RUSSIAN FEDERATION,RU,,WHO,XM-DAC-928
-RWANDA,RW,,WHO,XM-DAC-928
-SAINT KITTS AND NEVIS,KN,,WHO,XM-DAC-928
-SAINT LUCIA,LC,1,WHO,XM-DAC-928
-SAINT VINCENT AND THE GRENADINES,VC,1,WHO,XM-DAC-928
-SAMOA,WS,,WHO,XM-DAC-928
-SAO TOME AND PRINCIPE,ST,,WHO,XM-DAC-928
-SAUDI ARABIA,SA,,WHO,XM-DAC-928
-SENEGAL,SN,,WHO,XM-DAC-928
-SERBIA,RS,,WHO,XM-DAC-928
-SEYCHELLES,SC,,WHO,XM-DAC-928
-SIERRA LEONE,SL,,WHO,XM-DAC-928
-SINGAPORE,SG,,WHO,XM-DAC-928
-SLOVAKIA,SK,,WHO,XM-DAC-928
-SLOVENIA,SI,,WHO,XM-DAC-928
-SOLOMON ISLANDS,SB,,WHO,XM-DAC-928
-SOMALIA,SO,,WHO,XM-DAC-928
-SOUTH AFRICA,ZA,,WHO,XM-DAC-928
-SOUTH SUDAN,SS,,WHO,XM-DAC-928
-SRI LANKA,LK,,WHO,XM-DAC-928
-SUDAN,SD,,WHO,XM-DAC-928
-SURINAME,SR,1,WHO,XM-DAC-928
-SYRIAN ARAB REPUBLIC,SY,,WHO,XM-DAC-928
-TAJIKISTAN,TJ,,WHO,XM-DAC-928
-THAILAND,TH,,WHO,XM-DAC-928
-TIMOR-LESTE,TL,,WHO,XM-DAC-928
-TOGO,TG,,WHO,XM-DAC-928
-TOKELAU,TK,1,WHO,XM-DAC-928
-TONGA,TO,1,WHO,XM-DAC-928
-TRINIDAD AND TOBAGO,TT,,WHO,XM-DAC-928
-TUNISIA,TN,,WHO,XM-DAC-928
-TURKEY,TR,,WHO,XM-DAC-928
-TURKMENISTAN,TM,1,WHO,XM-DAC-928
-TUVALU,TV,1,WHO,XM-DAC-928
-UGANDA,UG,,WHO,XM-DAC-928
-UKRAINE,UA,,WHO,XM-DAC-928
-UNITED ARAB EMIRATES,AE,,WHO,XM-DAC-928
-UNITED REPUBLIC OF TANZANIA,TZ,,WHO,XM-DAC-928
-URUGUAY,UY,,WHO,XM-DAC-928
-UZBEKISTAN,UZ,,WHO,XM-DAC-928
-VANUATU,VU,,WHO,XM-DAC-928
-VENEZUELA (BOLIVARIAN REPUBLIC OF),VE,,WHO,XM-DAC-928
-VIET NAM,VN,,WHO,XM-DAC-928
-YEMEN,YE,,WHO,XM-DAC-928
-ZAMBIA,ZM,,WHO,XM-DAC-928
-ZIMBABWE,ZW,,WHO,XM-DAC-928
+﻿Country List,country_code,Agency,country_strategy_exclusion,organisation_code
+Algeria,DZ,AfDB,,XM-DAC-46002
+Angola,AO,AfDB,,XM-DAC-46002
+Benin,BJ,AfDB,,XM-DAC-46002
+Botswana,BW,AfDB,,XM-DAC-46002
+Burkina Faso,BF,AfDB,,XM-DAC-46002
+Burundi,BI,AfDB,,XM-DAC-46002
+Cabo Verde,CV,AfDB,,XM-DAC-46002
+Cameroon,CM,AfDB,,XM-DAC-46002
+Central African Republic,CF,AfDB,,XM-DAC-46002
+Chad,TD,AfDB,,XM-DAC-46002
+Comoros,KM,AfDB,,XM-DAC-46002
+Congo,CG,AfDB,,XM-DAC-46002
+Côte d'Ivoire,CI,AfDB,,XM-DAC-46002
+Democratic Republic of the Congo,CD,AfDB,,XM-DAC-46002
+Djibouti,DJ,AfDB,,XM-DAC-46002
+Egypt,EG,AfDB,,XM-DAC-46002
+Equatorial Guinea,GQ,AfDB,,XM-DAC-46002
+Eritrea,ER,AfDB,,XM-DAC-46002
+Eswatini,SZ,AfDB,,XM-DAC-46002
+Ethiopia,ET,AfDB,,XM-DAC-46002
+Gabon,GA,AfDB,,XM-DAC-46002
+Gambia,GM,AfDB,,XM-DAC-46002
+Ghana,GH,AfDB,,XM-DAC-46002
+Guinea,GN,AfDB,,XM-DAC-46002
+Guinea-Bissau,GW,AfDB,,XM-DAC-46002
+Kenya,KE,AfDB,,XM-DAC-46002
+Lesotho,LS,AfDB,,XM-DAC-46002
+Liberia,LR,AfDB,,XM-DAC-46002
+Libya,LY,AfDB,,XM-DAC-46002
+Madagascar,MG,AfDB,,XM-DAC-46002
+Malawi,MW,AfDB,,XM-DAC-46002
+Mali,ML,AfDB,,XM-DAC-46002
+Mauritania,MR,AfDB,,XM-DAC-46002
+Mauritius,MU,AfDB,,XM-DAC-46002
+Morocco,MA,AfDB,,XM-DAC-46002
+Mozambique,MZ,AfDB,,XM-DAC-46002
+Namibia,NA,AfDB,,XM-DAC-46002
+Niger,NE,AfDB,,XM-DAC-46002
+Nigeria,NG,AfDB,,XM-DAC-46002
+Rwanda,RW,AfDB,,XM-DAC-46002
+São Tomé and Príncipe,ST,AfDB,,XM-DAC-46002
+Senegal,SN,AfDB,,XM-DAC-46002
+Seychelles,SC,AfDB,,XM-DAC-46002
+Sierra Leone,SL,AfDB,,XM-DAC-46002
+Somalia,SO,AfDB,,XM-DAC-46002
+South Africa,ZA,AfDB,,XM-DAC-46002
+South Sudan,SS,AfDB,,XM-DAC-46002
+Sudan,SD,AfDB,,XM-DAC-46002
+Tanzania,TZ,AfDB,,XM-DAC-46002
+Uganda,UG,AfDB,,XM-DAC-46002
+Zambia,ZM,AfDB,,XM-DAC-46002
+Zimbabwe,ZW,AfDB,,XM-DAC-46002
+Afghanistan,AF,Australia,,AU-5
+Bangladesh,BD,Australia,,AU-5
+Bhutan,BT,Australia,,AU-5
+Cambodia,KH,Australia,,AU-5
+Federated States of Micronesia,FM,Australia,,AU-5
+Fiji,FJ,Australia,,AU-5
+Indonesia,ID,Australia,,AU-5
+Kiribati,KI,Australia,,AU-5
+Lao People's Democratic Republic,LA,Australia,,AU-5
+Maldives,MV,Australia,,AU-5
+Marshall Islands,MH,Australia,,AU-5
+Mongolia,MN,Australia,,AU-5
+Myanmar,MM,Australia,,AU-5
+Nauru,NR,Australia,,AU-5
+Nepal,NP,Australia,,AU-5
+Niue,NU,Australia,,AU-5
+Pakistan,PK,Australia,,AU-5
+Palau,PW,Australia,,AU-5
+Palestinian Territories,PS,Australia,,AU-5
+Papua New Guinea,PG,Australia,,AU-5
+Philippines,PH,Australia,,AU-5
+Samoa,WS,Australia,,AU-5
+Solomon Islands,SB,Australia,,AU-5
+Sri Lanka,LK,Australia,,AU-5
+Timor-Leste,TL,Australia,,AU-5
+Tokelau,TK,Australia,,AU-5
+Tonga,TO,Australia,,AU-5
+Tuvalu,TV,Australia,,AU-5
+Vanuatu,VU,Australia,,AU-5
+Vietnam,VN,Australia,,AU-5
+Afghanistan,AF,Belgium DGD,,XM-DAC-2-10
+Algeria ,DZ,Belgium DGD,,XM-DAC-2-10
+Angola,AO,Belgium DGD,,XM-DAC-2-10
+Argentina,AR,Belgium DGD,,XM-DAC-2-10
+Bangladesh,BD,Belgium DGD,,XM-DAC-2-10
+Benin,BJ,Belgium DGD,,XM-DAC-2-10
+Bolivia ,BO,Belgium DGD,,XM-DAC-2-10
+Brazil ,BR,Belgium DGD,,XM-DAC-2-10
+Burkina Faso ,BF,Belgium DGD,,XM-DAC-2-10
+Burundi ,BI,Belgium DGD,,XM-DAC-2-10
+Cambodia,KH,Belgium DGD,,XM-DAC-2-10
+Cameroon ,CM,Belgium DGD,,XM-DAC-2-10
+Cape Verde ,CV,Belgium DGD,,XM-DAC-2-10
+Central African Republic,CF,Belgium DGD,,XM-DAC-2-10
+Chad ,TD,Belgium DGD,,XM-DAC-2-10
+China,CN,Belgium DGD,,XM-DAC-2-10
+Colombia ,CO,Belgium DGD,,XM-DAC-2-10
+Congo,CG,Belgium DGD,,XM-DAC-2-10
+Costa Rica ,CR,Belgium DGD,,XM-DAC-2-10
+Cuba ,CU,Belgium DGD,,XM-DAC-2-10
+Democratic Republic of the Congo,CD,Belgium DGD,,XM-DAC-2-10
+Dominican Republic,DO,Belgium DGD,,XM-DAC-2-10
+Ecuador ,EC,Belgium DGD,,XM-DAC-2-10
+El Salvador ,SV,Belgium DGD,,XM-DAC-2-10
+Ethiopia ,ET,Belgium DGD,,XM-DAC-2-10
+Gambia,GM,Belgium DGD,,XM-DAC-2-10
+Ghana,GH,Belgium DGD,,XM-DAC-2-10
+Guatemala,GT,Belgium DGD,,XM-DAC-2-10
+Guinea,GN,Belgium DGD,,XM-DAC-2-10
+Guinea-Bissau,GW,Belgium DGD,,XM-DAC-2-10
+Haiti ,HT,Belgium DGD,,XM-DAC-2-10
+Honduras,HN,Belgium DGD,,XM-DAC-2-10
+India,IN,Belgium DGD,,XM-DAC-2-10
+Indonesia,ID,Belgium DGD,,XM-DAC-2-10
+Iraq ,IQ,Belgium DGD,,XM-DAC-2-10
+Ivory Coast,CI,Belgium DGD,,XM-DAC-2-10
+Jordan,JO,Belgium DGD,,XM-DAC-2-10
+Kenya,KE,Belgium DGD,,XM-DAC-2-10
+Lao People's Democratic Republic,LA,Belgium DGD,,XM-DAC-2-10
+Lebanon,LB,Belgium DGD,,XM-DAC-2-10
+Madagascar,MG,Belgium DGD,,XM-DAC-2-10
+Malawi,MW,Belgium DGD,,XM-DAC-2-10
+Mali,ML,Belgium DGD,,XM-DAC-2-10
+Mauritania,MR,Belgium DGD,,XM-DAC-2-10
+Moldova,MD,Belgium DGD,,XM-DAC-2-10
+Mongolia,MN,Belgium DGD,,XM-DAC-2-10
+Morocco,MA,Belgium DGD,,XM-DAC-2-10
+Mozambique,MZ,Belgium DGD,,XM-DAC-2-10
+Nepal,NP,Belgium DGD,,XM-DAC-2-10
+Nicaragua,NI,Belgium DGD,,XM-DAC-2-10
+Niger,NE,Belgium DGD,,XM-DAC-2-10
+Nigeria,NG,Belgium DGD,,XM-DAC-2-10
+Pakistan,PK,Belgium DGD,,XM-DAC-2-10
+Palestinian Territories,PS,Belgium DGD,,XM-DAC-2-10
+Peru,PE,Belgium DGD,,XM-DAC-2-10
+Philippines,PH,Belgium DGD,,XM-DAC-2-10
+Rwanda,RW,Belgium DGD,,XM-DAC-2-10
+São Tomé and Príncipe,ST,Belgium DGD,,XM-DAC-2-10
+Senegal,SN,Belgium DGD,,XM-DAC-2-10
+Sierra Leone,SL,Belgium DGD,,XM-DAC-2-10
+South Africa,ZA,Belgium DGD,,XM-DAC-2-10
+South Sudan,SS,Belgium DGD,,XM-DAC-2-10
+Sri Lanka,LK,Belgium DGD,,XM-DAC-2-10
+Sudan,SD,Belgium DGD,,XM-DAC-2-10
+Suriname,SR,Belgium DGD,,XM-DAC-2-10
+Syria,SY,Belgium DGD,,XM-DAC-2-10
+Tanzania ,TZ,Belgium DGD,,XM-DAC-2-10
+Togo,TG,Belgium DGD,,XM-DAC-2-10
+Tunisia,TN,Belgium DGD,,XM-DAC-2-10
+Turkey,TR,Belgium DGD,,XM-DAC-2-10
+Uganda ,UG,Belgium DGD,,XM-DAC-2-10
+Ukraine ,UA,Belgium DGD,,XM-DAC-2-10
+Vietnam,VN,Belgium DGD,,XM-DAC-2-10
+Yemen,YE,Belgium DGD,,XM-DAC-2-10
+Zambia,ZM,Belgium DGD,,XM-DAC-2-10
+Afghanistan,AF,Canada GAC,,CA-3
+Albania,AL,Canada GAC,,CA-3
+Algeria,DZ,Canada GAC,,CA-3
+Angola,AO,Canada GAC,,CA-3
+Antigua and Barbuda,AG,Canada GAC,,CA-3
+Argentina,AR,Canada GAC,,CA-3
+Armenia,AM,Canada GAC,,CA-3
+Azerbaijan,AZ,Canada GAC,,CA-3
+Bahamas,BS,Canada GAC,,CA-3
+Bangladesh,BD,Canada GAC,,CA-3
+Barbados,BB,Canada GAC,,CA-3
+Belarus,BY,Canada GAC,,CA-3
+Belize,BZ,Canada GAC,,CA-3
+Benin,BJ,Canada GAC,,CA-3
+Bhutan,BT,Canada GAC,,CA-3
+Bolivia,BO,Canada GAC,,CA-3
+Bosnia and Herzegovina,BA,Canada GAC,,CA-3
+Botswana,BW,Canada GAC,,CA-3
+Brazil,BR,Canada GAC,,CA-3
+Burkina Faso,BF,Canada GAC,,CA-3
+Burundi,BI,Canada GAC,,CA-3
+Cabo Verde,CV,Canada GAC,,CA-3
+Cambodia,KH,Canada GAC,,CA-3
+Cameroon,CM,Canada GAC,,CA-3
+Central African Republic,CF,Canada GAC,,CA-3
+Chad,TD,Canada GAC,,CA-3
+Chile,CL,Canada GAC,,CA-3
+China,CN,Canada GAC,,CA-3
+Colombia,CO,Canada GAC,,CA-3
+Comoros,KM,Canada GAC,,CA-3
+Congo,CG,Canada GAC,,CA-3
+Costa Rica,CR,Canada GAC,,CA-3
+Côte d'Ivoire,CI,Canada GAC,,CA-3
+Cuba,CU,Canada GAC,,CA-3
+Democratic People's Republic of Korea,KR,Canada GAC,,CA-3
+Democratic Republic of the Congo,CD,Canada GAC,,CA-3
+Djibouti,DJ,Canada GAC,,CA-3
+Dominica,DM,Canada GAC,,CA-3
+Dominican Republic,DO,Canada GAC,,CA-3
+Ecuador,EC,Canada GAC,,CA-3
+Egypt,EG,Canada GAC,,CA-3
+El Salvador,SV,Canada GAC,,CA-3
+Equatorial Guinea,GQ,Canada GAC,,CA-3
+Eritrea,ER,Canada GAC,,CA-3
+Estonia,EE,Canada GAC,,CA-3
+Eswatini,SZ,Canada GAC,,CA-3
+Ethiopia,ET,Canada GAC,,CA-3
+Fiji,FJ,Canada GAC,,CA-3
+Gabon,GA,Canada GAC,,CA-3
+Gambia,GM,Canada GAC,,CA-3
+Georgia,GE,Canada GAC,,CA-3
+Ghana,GH,Canada GAC,,CA-3
+Grenada,GD,Canada GAC,,CA-3
+Guatemala,GT,Canada GAC,,CA-3
+Guinea,GN,Canada GAC,,CA-3
+Guinea-Bissau,GW,Canada GAC,,CA-3
+Guyana,GY,Canada GAC,,CA-3
+Haiti,HT,Canada GAC,,CA-3
+Honduras,HN,Canada GAC,,CA-3
+India,IN,Canada GAC,,CA-3
+Indonesia,ID,Canada GAC,,CA-3
+Iran (Islamic Republic of),IR,Canada GAC,,CA-3
+Iraq,IQ,Canada GAC,,CA-3
+Jamaica,JM,Canada GAC,,CA-3
+Jordan,JO,Canada GAC,,CA-3
+Kazakhstan,KZ,Canada GAC,,CA-3
+Kenya,KE,Canada GAC,,CA-3
+Kiribati,KI,Canada GAC,,CA-3
+Kosovo,XK,Canada GAC,,CA-3
+Kyrgyzstan,KG,Canada GAC,,CA-3
+Lao People's Democratic Republic,LA,Canada GAC,,CA-3
+Latvia,LV,Canada GAC,,CA-3
+Lebanon,LB,Canada GAC,,CA-3
+Lesotho,LS,Canada GAC,,CA-3
+Liberia,LR,Canada GAC,,CA-3
+Libya,LY,Canada GAC,,CA-3
+Lithuania,LT,Canada GAC,,CA-3
+Madagascar,MG,Canada GAC,,CA-3
+Malawi,MW,Canada GAC,,CA-3
+Malaysia,MY,Canada GAC,,CA-3
+Maldives,MV,Canada GAC,,CA-3
+Mali,ML,Canada GAC,,CA-3
+Marshall Islands,MH,Canada GAC,,CA-3
+Mauritania,MR,Canada GAC,,CA-3
+Mauritius,MU,Canada GAC,,CA-3
+Mexico,MX,Canada GAC,,CA-3
+Micronesia (Federated States of),FM,Canada GAC,,CA-3
+Moldova,MD,Canada GAC,,CA-3
+Mongolia,MN,Canada GAC,,CA-3
+Montenegro,ME,Canada GAC,,CA-3
+Montserrat,MS,Canada GAC,,CA-3
+Morocco,MA,Canada GAC,,CA-3
+Mozambique,MZ,Canada GAC,,CA-3
+Myanmar,MM,Canada GAC,,CA-3
+Namibia,NA,Canada GAC,,CA-3
+Nauru,NR,Canada GAC,,CA-3
+Nepal,NP,Canada GAC,,CA-3
+Nicaragua,NI,Canada GAC,,CA-3
+Niger,NE,Canada GAC,,CA-3
+Nigeria,NG,Canada GAC,,CA-3
+Niue,NU,Canada GAC,,CA-3
+North Macedonia,MK,Canada GAC,,CA-3
+Pakistan,PK,Canada GAC,,CA-3
+Palau,PW,Canada GAC,,CA-3
+Panama,PA,Canada GAC,,CA-3
+Papua New Guinea,PG,Canada GAC,,CA-3
+Paraguay,PY,Canada GAC,,CA-3
+Peru,PE,Canada GAC,,CA-3
+Philippines,PH,Canada GAC,,CA-3
+Rwanda,RW,Canada GAC,,CA-3
+Saint Kitts and Nevis,KN,Canada GAC,,CA-3
+Saint Lucia,LC,Canada GAC,,CA-3
+Saint Vincent and the Grenadines,VC,Canada GAC,,CA-3
+Samoa,WS,Canada GAC,,CA-3
+São Tomé and Príncipe,ST,Canada GAC,,CA-3
+Saudi Arabia,SA,Canada GAC,,CA-3
+Senegal,SN,Canada GAC,,CA-3
+Serbia,RS,Canada GAC,,CA-3
+Seychelles,SC,Canada GAC,,CA-3
+Sierra Leone,SL,Canada GAC,,CA-3
+Singapore,SG,Canada GAC,,CA-3
+Solomon Islands,SB,Canada GAC,,CA-3
+Somalia,SO,Canada GAC,,CA-3
+South Africa,ZA,Canada GAC,,CA-3
+South Sudan,SS,Canada GAC,,CA-3
+Sri Lanka,LK,Canada GAC,,CA-3
+Sudan,SD,Canada GAC,,CA-3
+Suriname,SR,Canada GAC,,CA-3
+Syria,SY,Canada GAC,,CA-3
+Tajikistan,TJ,Canada GAC,,CA-3
+Tanzania,TZ,Canada GAC,,CA-3
+Thailand,TH,Canada GAC,,CA-3
+Timor-Leste,TL,Canada GAC,,CA-3
+Togo,TG,Canada GAC,,CA-3
+Tonga,TO,Canada GAC,,CA-3
+Trinidad and Tobago,TT,Canada GAC,,CA-3
+Tunisia,TN,Canada GAC,,CA-3
+Turkey,TR,Canada GAC,,CA-3
+Turkmenistan,TM,Canada GAC,,CA-3
+Tuvalu,TV,Canada GAC,,CA-3
+Uganda,UG,Canada GAC,,CA-3
+Ukraine,UA,Canada GAC,,CA-3
+Uruguay,UY,Canada GAC,,CA-3
+Uzbekistan,UZ,Canada GAC,,CA-3
+Vanuatu,VU,Canada GAC,,CA-3
+Venezuela,VE,Canada GAC,,CA-3
+Vietnam,VN,Canada GAC,,CA-3
+West Bank and Gaza,PS,Canada GAC,,CA-3
+Western Sahara,EH,Canada GAC,,CA-3
+Yemen,YE,Canada GAC,,CA-3
+Zambia,ZM,Canada GAC,,CA-3
+Zimbabwe,ZW,Canada GAC,,CA-3
+Afghanistan,AF,Denmark MFA,,XM-DAC-3-1
+Algeria,DZ,Denmark MFA,,XM-DAC-3-1
+Angola,AO,Denmark MFA,,XM-DAC-3-1
+Argentina,AR,Denmark MFA,,XM-DAC-3-1
+Armenia,AM,Denmark MFA,,XM-DAC-3-1
+Bangladesh,BD,Denmark MFA,,XM-DAC-3-1
+Belarus,BY,Denmark MFA,,XM-DAC-3-1
+Benin,BJ,Denmark MFA,,XM-DAC-3-1
+Bolivia,BO,Denmark MFA,,XM-DAC-3-1
+Brazil,BR,Denmark MFA,,XM-DAC-3-1
+Burkina Faso,BF,Denmark MFA,,XM-DAC-3-1
+Burundi,BI,Denmark MFA,,XM-DAC-3-1
+Cambodia,KH,Denmark MFA,,XM-DAC-3-1
+Cameroon,CM,Denmark MFA,,XM-DAC-3-1
+Central African Republic,CF,Denmark MFA,,XM-DAC-3-1
+Chad,TD,Denmark MFA,,XM-DAC-3-1
+Colombia,CO,Denmark MFA,,XM-DAC-3-1
+Congo,CG,Denmark MFA,,XM-DAC-3-1
+Côte d'Ivoire,CI,Denmark MFA,,XM-DAC-3-1
+Democratic Republic of the Congo,CD,Denmark MFA,,XM-DAC-3-1
+Djibouti,DJ,Denmark MFA,,XM-DAC-3-1
+Dominican Republic,DO,Denmark MFA,,XM-DAC-3-1
+Ecuador,EC,Denmark MFA,,XM-DAC-3-1
+Egypt,EG,Denmark MFA,,XM-DAC-3-1
+El Salvador,SV,Denmark MFA,,XM-DAC-3-1
+Ethiopia,ET,Denmark MFA,,XM-DAC-3-1
+Gambia,GM,Denmark MFA,,XM-DAC-3-1
+Georgia,GE,Denmark MFA,,XM-DAC-3-1
+Ghana,GH,Denmark MFA,,XM-DAC-3-1
+Guatemala,GT,Denmark MFA,,XM-DAC-3-1
+Honduras,HN,Denmark MFA,,XM-DAC-3-1
+India,IN,Denmark MFA,,XM-DAC-3-1
+Indonesia,ID,Denmark MFA,,XM-DAC-3-1
+Iran (Islamic Republic of),IR,Denmark MFA,,XM-DAC-3-1
+Iraq,IQ,Denmark MFA,,XM-DAC-3-1
+Jordan,JO,Denmark MFA,,XM-DAC-3-1
+Kenya,KE,Denmark MFA,,XM-DAC-3-1
+Lao People's Democratic Republic,LA,Denmark MFA,,XM-DAC-3-1
+Lebanon,LB,Denmark MFA,,XM-DAC-3-1
+Lesotho,LS,Denmark MFA,,XM-DAC-3-1
+Liberia,LR,Denmark MFA,,XM-DAC-3-1
+Libya,LY,Denmark MFA,,XM-DAC-3-1
+Madagascar,MG,Denmark MFA,,XM-DAC-3-1
+Malawi,MW,Denmark MFA,,XM-DAC-3-1
+Mali,ML,Denmark MFA,,XM-DAC-3-1
+Mexico,MX,Denmark MFA,,XM-DAC-3-1
+Moldova,MD,Denmark MFA,,XM-DAC-3-1
+Morocco,MA,Denmark MFA,,XM-DAC-3-1
+Mozambique,MZ,Denmark MFA,,XM-DAC-3-1
+Myanmar,MM,Denmark MFA,,XM-DAC-3-1
+Nepal,NP,Denmark MFA,,XM-DAC-3-1
+Nicaragua,NI,Denmark MFA,,XM-DAC-3-1
+Niger,NE,Denmark MFA,,XM-DAC-3-1
+Nigeria,NG,Denmark MFA,,XM-DAC-3-1
+Pakistan,PK,Denmark MFA,,XM-DAC-3-1
+Palestinian Territories,PS,Denmark MFA,,XM-DAC-3-1
+Panama,PA,Denmark MFA,,XM-DAC-3-1
+Philippines,PH,Denmark MFA,,XM-DAC-3-1
+Rwanda,RW,Denmark MFA,,XM-DAC-3-1
+Senegal,SN,Denmark MFA,,XM-DAC-3-1
+Serbia,RS,Denmark MFA,,XM-DAC-3-1
+Sierra Leone,SL,Denmark MFA,,XM-DAC-3-1
+Somalia,SO,Denmark MFA,,XM-DAC-3-1
+South Africa,ZA,Denmark MFA,,XM-DAC-3-1
+South Sudan,SS,Denmark MFA,,XM-DAC-3-1
+Sri Lanka,LK,Denmark MFA,,XM-DAC-3-1
+Sudan,SD,Denmark MFA,,XM-DAC-3-1
+Syrian Arab Republic,SY,Denmark MFA,,XM-DAC-3-1
+Tajikistan,TJ,Denmark MFA,,XM-DAC-3-1
+Tanzania,TZ,Denmark MFA,,XM-DAC-3-1
+Thailand,TH,Denmark MFA,,XM-DAC-3-1
+Togo,TG,Denmark MFA,,XM-DAC-3-1
+Tunisia,TN,Denmark MFA,,XM-DAC-3-1
+Turkey,TR,Denmark MFA,,XM-DAC-3-1
+Uganda,UG,Denmark MFA,,XM-DAC-3-1
+Ukraine,UA,Denmark MFA,,XM-DAC-3-1
+Venezuela,VE,Denmark MFA,,XM-DAC-3-1
+Vietnam,VN,Denmark MFA,,XM-DAC-3-1
+Yemen,YE,Denmark MFA,,XM-DAC-3-1
+Zambia,ZM,Denmark MFA,,XM-DAC-3-1
+Zimbabwe,ZW,Denmark MFA,,XM-DAC-3-1
+Albania,AL,EBRD,,XI-IATI-EBRD
+Armenia,AM,EBRD,,XI-IATI-EBRD
+Azerbaijan,AZ,EBRD,,XI-IATI-EBRD
+Benin,BJ,EBRD,,XI-IATI-EBRD
+Bosnia and Herzegovina,BA,EBRD,,XI-IATI-EBRD
+Bulgaria,BG,EBRD,,XI-IATI-EBRD
+Côte d'Ivoire,CI,EBRD,,XI-IATI-EBRD
+Croatia,HR,EBRD,,XI-IATI-EBRD
+Cyprus,CY,EBRD,,XI-IATI-EBRD
+Czechia,CZ,EBRD,,XI-IATI-EBRD
+Egypt,EG,EBRD,,XI-IATI-EBRD
+Estonia,EE,EBRD,,XI-IATI-EBRD
+Georgia,GE,EBRD,,XI-IATI-EBRD
+Greece,GR,EBRD,,XI-IATI-EBRD
+Hungary,HU,EBRD,,XI-IATI-EBRD
+Iraq,IQ,EBRD,,XI-IATI-EBRD
+Jordan,JO,EBRD,,XI-IATI-EBRD
+Kazakhstan,KZ,EBRD,,XI-IATI-EBRD
+Kenya,KE,EBRD,,XI-IATI-EBRD
+Kosovo,XK,EBRD,,XI-IATI-EBRD
+Kyrgyz Republic,KG,EBRD,,XI-IATI-EBRD
+Latvia,LV,EBRD,,XI-IATI-EBRD
+Lebanon,LB,EBRD,,XI-IATI-EBRD
+Lithuania,LT,EBRD,,XI-IATI-EBRD
+Moldova,MD,EBRD,,XI-IATI-EBRD
+Mongolia,MN,EBRD,,XI-IATI-EBRD
+Montenegro,ME,EBRD,,XI-IATI-EBRD
+Morocco,MA,EBRD,,XI-IATI-EBRD
+Nigeria,NG,EBRD,,XI-IATI-EBRD
+North Macedonia,MK,EBRD,,XI-IATI-EBRD
+Poland,PL,EBRD,,XI-IATI-EBRD
+Romania,RO,EBRD,,XI-IATI-EBRD
+Senegal,SN,EBRD,,XI-IATI-EBRD
+Serbia,RS,EBRD,,XI-IATI-EBRD
+Slovak Republic,SK,EBRD,,XI-IATI-EBRD
+Slovenia,SI,EBRD,,XI-IATI-EBRD
+Tajikistan,TJ,EBRD,,XI-IATI-EBRD
+Tunisia,TN,EBRD,,XI-IATI-EBRD
+Turkey,TR,EBRD,,XI-IATI-EBRD
+Turkmenistan,TM,EBRD,,XI-IATI-EBRD
+Ukraine,UA,EBRD,,XI-IATI-EBRD
+Uzbekistan,UZ,EBRD,,XI-IATI-EBRD
+West Bank and Gaza,PS,EBRD,,XI-IATI-EBRD
+Afghanistan,AF,EC INTPA,,XI-IATI-EC_INTPA
+Angola,AO,EC INTPA,,XI-IATI-EC_INTPA
+Antigua and Barbuda,AG,EC INTPA,,XI-IATI-EC_INTPA
+Argentina,AR,EC INTPA,,XI-IATI-EC_INTPA
+Aruba,AW,EC INTPA,,XI-IATI-EC_INTPA
+Bahamas,BS,EC INTPA,,XI-IATI-EC_INTPA
+Bangladesh,BD,EC INTPA,,XI-IATI-EC_INTPA
+Barbados,BB,EC INTPA,,XI-IATI-EC_INTPA
+Belize,BZ,EC INTPA,,XI-IATI-EC_INTPA
+Benin,BJ,EC INTPA,,XI-IATI-EC_INTPA
+Bhutan,BT,EC INTPA,,XI-IATI-EC_INTPA
+Bolivia,BO,EC INTPA,,XI-IATI-EC_INTPA
+Bonaire,BQ,EC INTPA,,XI-IATI-EC_INTPA
+Botswana,BW,EC INTPA,,XI-IATI-EC_INTPA
+Brazil,BR,EC INTPA,,XI-IATI-EC_INTPA
+Burkina Faso,BF,EC INTPA,,XI-IATI-EC_INTPA
+Burundi,BI,EC INTPA,,XI-IATI-EC_INTPA
+Cabo Verde,CV,EC INTPA,,XI-IATI-EC_INTPA
+Cambodia,KH,EC INTPA,,XI-IATI-EC_INTPA
+Cameroon,CM,EC INTPA,,XI-IATI-EC_INTPA
+Central African Republic,CF,EC INTPA,,XI-IATI-EC_INTPA
+Chad,TD,EC INTPA,,XI-IATI-EC_INTPA
+Chile,CL,EC INTPA,,XI-IATI-EC_INTPA
+China,CN,EC INTPA,,XI-IATI-EC_INTPA
+Colombia,CO,EC INTPA,,XI-IATI-EC_INTPA
+Comoros,KM,EC INTPA,,XI-IATI-EC_INTPA
+Congo,CG,EC INTPA,,XI-IATI-EC_INTPA
+Costa Rica,CR,EC INTPA,,XI-IATI-EC_INTPA
+Côte d'Ivoire,CI,EC INTPA,,XI-IATI-EC_INTPA
+Cuba,CU,EC INTPA,,XI-IATI-EC_INTPA
+Curaçao,CW,EC INTPA,,XI-IATI-EC_INTPA
+Democratic Republic of the Congo,CD,EC INTPA,,XI-IATI-EC_INTPA
+Djibouti,DJ,EC INTPA,,XI-IATI-EC_INTPA
+Dominica,DM,EC INTPA,,XI-IATI-EC_INTPA
+Dominican Republic,DO,EC INTPA,,XI-IATI-EC_INTPA
+Ecuador,EC,EC INTPA,,XI-IATI-EC_INTPA
+El Salvador,SV,EC INTPA,,XI-IATI-EC_INTPA
+Equatorial Guinea,GQ,EC INTPA,,XI-IATI-EC_INTPA
+Eritrea,ER,EC INTPA,,XI-IATI-EC_INTPA
+Eswatini,SZ,EC INTPA,,XI-IATI-EC_INTPA
+Ethiopia,ET,EC INTPA,,XI-IATI-EC_INTPA
+French Polynesia,PF,EC INTPA,,XI-IATI-EC_INTPA
+French Southern and Antarctic Territories,TF,EC INTPA,,XI-IATI-EC_INTPA
+Gabon,GA,EC INTPA,,XI-IATI-EC_INTPA
+Gambia,GM,EC INTPA,,XI-IATI-EC_INTPA
+Ghana,GH,EC INTPA,,XI-IATI-EC_INTPA
+Greenland,GL,EC INTPA,,XI-IATI-EC_INTPA
+Grenada,GD,EC INTPA,,XI-IATI-EC_INTPA
+Guatemala,GT,EC INTPA,,XI-IATI-EC_INTPA
+Guinea,GN,EC INTPA,,XI-IATI-EC_INTPA
+Guinea-Bissau,GW,EC INTPA,,XI-IATI-EC_INTPA
+Guyana,GY,EC INTPA,,XI-IATI-EC_INTPA
+Haiti,HT,EC INTPA,,XI-IATI-EC_INTPA
+Honduras,HN,EC INTPA,,XI-IATI-EC_INTPA
+India,IN,EC INTPA,,XI-IATI-EC_INTPA
+Indonesia,ID,EC INTPA,,XI-IATI-EC_INTPA
+Jamaica,JM,EC INTPA,,XI-IATI-EC_INTPA
+Kazakhstan,KZ,EC INTPA,,XI-IATI-EC_INTPA
+Kenya,KE,EC INTPA,,XI-IATI-EC_INTPA
+Kyrgyzstan,KG,EC INTPA,,XI-IATI-EC_INTPA
+Lao People's Democratic Republic,LA,EC INTPA,,XI-IATI-EC_INTPA
+Lesotho,LS,EC INTPA,,XI-IATI-EC_INTPA
+Liberia,LR,EC INTPA,,XI-IATI-EC_INTPA
+Madagascar,MG,EC INTPA,,XI-IATI-EC_INTPA
+Malawi,MW,EC INTPA,,XI-IATI-EC_INTPA
+Malaysia,MY,EC INTPA,,XI-IATI-EC_INTPA
+Maldives,MV,EC INTPA,,XI-IATI-EC_INTPA
+Mali,ML,EC INTPA,,XI-IATI-EC_INTPA
+Mauritania,MR,EC INTPA,,XI-IATI-EC_INTPA
+Mauritius,MU,EC INTPA,,XI-IATI-EC_INTPA
+Mexico,MX,EC INTPA,,XI-IATI-EC_INTPA
+Mongolia,MN,EC INTPA,,XI-IATI-EC_INTPA
+Mozambique,MZ,EC INTPA,,XI-IATI-EC_INTPA
+Myanmar,MM,EC INTPA,,XI-IATI-EC_INTPA
+Namibia,NA,EC INTPA,,XI-IATI-EC_INTPA
+Nepal,NP,EC INTPA,,XI-IATI-EC_INTPA
+New Caledonia,NC,EC INTPA,,XI-IATI-EC_INTPA
+Nicaragua,NI,EC INTPA,,XI-IATI-EC_INTPA
+Niger,NE,EC INTPA,,XI-IATI-EC_INTPA
+Nigeria,NG,EC INTPA,,XI-IATI-EC_INTPA
+Pakistan,PK,EC INTPA,,XI-IATI-EC_INTPA
+Panama,PA,EC INTPA,,XI-IATI-EC_INTPA
+Papua New Guinea,PG,EC INTPA,,XI-IATI-EC_INTPA
+Paraguay,PY,EC INTPA,,XI-IATI-EC_INTPA
+Peru,PE,EC INTPA,,XI-IATI-EC_INTPA
+Philippines,PH,EC INTPA,,XI-IATI-EC_INTPA
+Rwanda,RW,EC INTPA,,XI-IATI-EC_INTPA
+Saba,BQ,EC INTPA,,XI-IATI-EC_INTPA
+Saint Barthélemy,BL,EC INTPA,,XI-IATI-EC_INTPA
+Saint Eustatius,BQ,EC INTPA,,XI-IATI-EC_INTPA
+Saint Kitts and Nevis,KN,EC INTPA,,XI-IATI-EC_INTPA
+Saint Lucia,LC,EC INTPA,,XI-IATI-EC_INTPA
+Saint Maarten,SX,EC INTPA,,XI-IATI-EC_INTPA
+Saint Pierre and Miquelon,PM,EC INTPA,,XI-IATI-EC_INTPA
+Saint Vincent and the Grenadines,VC,EC INTPA,,XI-IATI-EC_INTPA
+São Tomé and Príncipe,ST,EC INTPA,,XI-IATI-EC_INTPA
+Senegal,SN,EC INTPA,,XI-IATI-EC_INTPA
+Seychelles,SC,EC INTPA,,XI-IATI-EC_INTPA
+Sierra Leone,SL,EC INTPA,,XI-IATI-EC_INTPA
+Somalia,SO,EC INTPA,,XI-IATI-EC_INTPA
+South Africa,ZA,EC INTPA,,XI-IATI-EC_INTPA
+South Sudan,SS,EC INTPA,,XI-IATI-EC_INTPA
+Sri Lanka,LK,EC INTPA,,XI-IATI-EC_INTPA
+Sudan,SD,EC INTPA,,XI-IATI-EC_INTPA
+Suriname,SR,EC INTPA,,XI-IATI-EC_INTPA
+Tajikistan,TJ,EC INTPA,,XI-IATI-EC_INTPA
+Tanzania,TZ,EC INTPA,,XI-IATI-EC_INTPA
+Thailand,TH,EC INTPA,,XI-IATI-EC_INTPA
+Timor-Leste,TL,EC INTPA,,XI-IATI-EC_INTPA
+Togo,TG,EC INTPA,,XI-IATI-EC_INTPA
+Trinidad and Tobago,TT,EC INTPA,,XI-IATI-EC_INTPA
+Turkmenistan,TM,EC INTPA,,XI-IATI-EC_INTPA
+Uganda,UG,EC INTPA,,XI-IATI-EC_INTPA
+Uruguay,UY,EC INTPA,,XI-IATI-EC_INTPA
+Uzbekistan,UZ,EC INTPA,,XI-IATI-EC_INTPA
+Vietnam,VN,EC INTPA,,XI-IATI-EC_INTPA
+Wallis and Futuna,WF,EC INTPA,,XI-IATI-EC_INTPA
+Zambia,ZM,EC INTPA,,XI-IATI-EC_INTPA
+Zimbabwe,ZW,EC INTPA,,XI-IATI-EC_INTPA
+Afghanistan,AF,Finland MFA,,FI-3
+Ethiopia,ET,Finland MFA,,FI-3
+Kenya,KE,Finland MFA,,FI-3
+Mozambique,MZ,Finland MFA,,FI-3
+Myanmar,MM,Finland MFA,,FI-3
+Nepal,NP,Finland MFA,,FI-3
+Palestinian Territories,PS,Finland MFA,,FI-3
+Somalia,SO,Finland MFA,,FI-3
+Syria,SY,Finland MFA,,FI-3
+Tanzania,TZ,Finland MFA,,FI-3
+Ukraine,UA,Finland MFA,,FI-3
+Algeria,DZ,"France, AFD",,FR-3
+Angola,AO,"France, AFD",,FR-3
+Argentina,AR,"France, AFD",,FR-3
+Bangladesh,BD,"France, AFD",,FR-3
+Benin,BJ,"France, AFD",,FR-3
+Bolivia,BO,"France, AFD",,FR-3
+Brazil,BR,"France, AFD",,FR-3
+Burkina Faso,BF,"France, AFD",,FR-3
+Cambodia,KH,"France, AFD",,FR-3
+Cameroon,CM,"France, AFD",,FR-3
+Central African Republic,CF,"France, AFD",,FR-3
+Chad,TD,"France, AFD",,FR-3
+China,CN,"France, AFD",,FR-3
+Colombia,CO,"France, AFD",,FR-3
+Comoros,KM,"France, AFD",,FR-3
+Congo,CG,"France, AFD",,FR-3
+Costa Rica,CR,"France, AFD",,FR-3
+Cuba,CU,"France, AFD",,FR-3
+Democratic Republic of the Congo,CD,"France, AFD",,FR-3
+Djibouti,DJ,"France, AFD",,FR-3
+Dominican Republic,DO,"France, AFD",,FR-3
+Ecuador,EC,"France, AFD",,FR-3
+Egypt,EG,"France, AFD",,FR-3
+Ethiopia,ET,"France, AFD",,FR-3
+French Guiana,GF,"France, AFD",,FR-3
+French Polynesia,PF,"France, AFD",,FR-3
+French Southern and Antarctic Territories,TF,"France, AFD",,FR-3
+Gabon,GA,"France, AFD",,FR-3
+Georgia,GE,"France, AFD",,FR-3
+Ghana,GH,"France, AFD",,FR-3
+Guadeloupe,GP,"France, AFD",,FR-3
+Guinea,GN,"France, AFD",,FR-3
+Haiti,HT,"France, AFD",,FR-3
+India,IN,"France, AFD",,FR-3
+Indonesia,ID,"France, AFD",,FR-3
+Jordan,JO,"France, AFD",,FR-3
+Kazakhstan,KZ,"France, AFD",,FR-3
+Kenya,KE,"France, AFD",,FR-3
+Lao People's Democratic Republic,LA,"France, AFD",,FR-3
+Lebanon,LB,"France, AFD",,FR-3
+Madagascar,MG,"France, AFD",,FR-3
+Mali,ML,"France, AFD",,FR-3
+Martinique,MQ,"France, AFD",,FR-3
+Mauritania,MR,"France, AFD",,FR-3
+Mauritius,MU,"France, AFD",,FR-3
+Mayotte,YT,"France, AFD",,FR-3
+Mexico,MX,"France, AFD",,FR-3
+Moldova,MD,"France, AFD",,FR-3
+Mongolia,MN,"France, AFD",,FR-3
+Morocco,MA,"France, AFD",,FR-3
+Mozambique,MZ,"France, AFD",,FR-3
+Namibia,NA,"France, AFD",,FR-3
+New Caledonia,NC,"France, AFD",,FR-3
+Niger,NE,"France, AFD",,FR-3
+Nigeria,NG,"France, AFD",,FR-3
+Pakistan,PK,"France, AFD",,FR-3
+Palestinian Territories,PS,"France, AFD",,FR-3
+Papua New Guinea,PG,"France, AFD",,FR-3
+Peru,PE,"France, AFD",,FR-3
+Philippines,PH,"France, AFD",,FR-3
+Reunion,RE,"France, AFD",,FR-3
+Rwanda,RW,"France, AFD",,FR-3
+Saint-Pierre and Miquelon,PM,"France, AFD",,FR-3
+Senegal,SN,"France, AFD",,FR-3
+Serbia,RS,"France, AFD",,FR-3
+South Africa,ZA,"France, AFD",,FR-3
+Sri Lanka,LK,"France, AFD",,FR-3
+Suriname,SR,"France, AFD",,FR-3
+Tanzania,TZ,"France, AFD",,FR-3
+Thailand,TH,"France, AFD",,FR-3
+Togo,TG,"France, AFD",,FR-3
+Tunisia,TN,"France, AFD",,FR-3
+Turkey,TR,"France, AFD",,FR-3
+Uganda,UG,"France, AFD",,FR-3
+Ukraine,UA,"France, AFD",,FR-3
+Uzbekistan,UZ,"France, AFD",,FR-3
+Vanuatu,VU,"France, AFD",,FR-3
+Vietnam,VN,"France, AFD",,FR-3
+Wallis and Futuna,WF,"France, AFD",,FR-3
+Zambia,ZM,"France, AFD",,FR-3
+Afghanistan,AF,Gates,,DAC-1601
+Angola,AO,Gates,,DAC-1601
+Argentina,AR,Gates,,DAC-1601
+Bangladesh,BD,Gates,,DAC-1601
+Benin,BJ,Gates,,DAC-1601
+Bhutan,BT,Gates,,DAC-1601
+Botswana,BW,Gates,,DAC-1601
+Brazil,BR,Gates,,DAC-1601
+Burkina Faso,BF,Gates,,DAC-1601
+Burundi,BI,Gates,,DAC-1601
+Cabo Verde,CV,Gates,,DAC-1601
+Cambodia,KH,Gates,,DAC-1601
+Cameroon,CM,Gates,,DAC-1601
+Central African Republic,CF,Gates,,DAC-1601
+Chad,TD,Gates,,DAC-1601
+China,CN,Gates,,DAC-1601
+Colombia,CO,Gates,,DAC-1601
+Comoros,KM,Gates,,DAC-1601
+Congo,CG,Gates,,DAC-1601
+Côte d'Ivoire,CI,Gates,,DAC-1601
+Democratic Republic of the Congo,CD,Gates,,DAC-1601
+Djibouti,DJ,Gates,,DAC-1601
+Dominican Republic,DO,Gates,,DAC-1601
+Egypt,EG,Gates,,DAC-1601
+Eswatini,SZ,Gates,,DAC-1601
+Ethiopia,ET,Gates,,DAC-1601
+Gabon,GA,Gates,,DAC-1601
+Gambia,GM,Gates,,DAC-1601
+Georgia,GE,Gates,,DAC-1601
+Ghana,GH,Gates,,DAC-1601
+Guatemala,GT,Gates,,DAC-1601
+Guinea,GN,Gates,,DAC-1601
+Guinea-Bissau,GW,Gates,,DAC-1601
+Haiti,HT,Gates,,DAC-1601
+Honduras,HN,Gates,,DAC-1601
+India,IN,Gates,,DAC-1601
+Indonesia,ID,Gates,,DAC-1601
+Iran (Islamic Republic of),IR,Gates,,DAC-1601
+Iraq,IQ,Gates,,DAC-1601
+Jamaica,JM,Gates,,DAC-1601
+Jordan,JO,Gates,,DAC-1601
+Kenya,KE,Gates,,DAC-1601
+Lao People's Democratic Republic,LA,Gates,,DAC-1601
+Lebanon,LB,Gates,,DAC-1601
+Lesotho,LS,Gates,,DAC-1601
+Liberia,LR,Gates,,DAC-1601
+Madagascar,MG,Gates,,DAC-1601
+Malawi,MW,Gates,,DAC-1601
+Malaysia,MY,Gates,,DAC-1601
+Maldives,MV,Gates,,DAC-1601
+Mali,ML,Gates,,DAC-1601
+Mauritania,MR,Gates,,DAC-1601
+Mexico,MX,Gates,,DAC-1601
+Morocco,MA,Gates,,DAC-1601
+Mozambique,MZ,Gates,,DAC-1601
+Myanmar,MM,Gates,,DAC-1601
+Namibia,NA,Gates,,DAC-1601
+Nepal,NP,Gates,,DAC-1601
+Nicaragua,NI,Gates,,DAC-1601
+Niger,NE,Gates,,DAC-1601
+Nigeria,NG,Gates,,DAC-1601
+Pakistan,PK,Gates,,DAC-1601
+Palestinian Territories,PS,Gates,,DAC-1601
+Panama,PA,Gates,,DAC-1601
+Papua New Guinea,PG,Gates,,DAC-1601
+Paraguay,PY,Gates,,DAC-1601
+peru,PE,Gates,,DAC-1601
+Philippines,PH,Gates,,DAC-1601
+Rwanda,RW,Gates,,DAC-1601
+São Tomé and Príncipe,ST,Gates,,DAC-1601
+Senegal,SN,Gates,,DAC-1601
+Sierra Leone,SL,Gates,,DAC-1601
+Somalia,SO,Gates,,DAC-1601
+South Africa,ZA,Gates,,DAC-1601
+South Sudan,SS,Gates,,DAC-1601
+Sri Lanka,LK,Gates,,DAC-1601
+Sudan,SD,Gates,,DAC-1601
+Syrian Arab Republic,SY,Gates,,DAC-1601
+Tajikistan,TJ,Gates,,DAC-1601
+Tanzania,TZ,Gates,,DAC-1601
+Thailand,TH,Gates,,DAC-1601
+Togo,TG,Gates,,DAC-1601
+Tunisia,TN,Gates,,DAC-1601
+Uganda,UG,Gates,,DAC-1601
+Ukraine,UA,Gates,,DAC-1601
+Vietnam,VN,Gates,,DAC-1601
+Yemen,YE,Gates,,DAC-1601
+Zambia,ZM,Gates,,DAC-1601
+Zimbabwe,ZW,Gates,,DAC-1601
+Afghanistan,AF,GAVI,,47122
+Albania,AL,GAVI,,47122
+Angola,AO,GAVI,,47122
+Armenia,AM,GAVI,,47122
+Azerbaijan,AZ,GAVI,,47122
+Bangladesh,BD,GAVI,,47122
+Benin,BJ,GAVI,,47122
+Bhutan,BT,GAVI,,47122
+Bolivia,BO,GAVI,,47122
+Bosnia and Herzegovina,BA,GAVI,,47122
+Burkina Faso,BF,GAVI,,47122
+Burundi,BI,GAVI,,47122
+Cambodia,KH,GAVI,,47122
+Cameroon,CM,GAVI,,47122
+Central African Republic,CF,GAVI,,47122
+Chad,TD,GAVI,,47122
+China,CN,GAVI,,47122
+Comoros,KM,GAVI,,47122
+Congo,CG,GAVI,,47122
+Côte d'Ivoire,CI,GAVI,,47122
+Cuba,CU,GAVI,,47122
+Democratic People's Republic of Korea,KR,GAVI,,47122
+Democratic Republic of the Congo,CD,GAVI,,47122
+Djibouti,DJ,GAVI,,47122
+Eritrea,ER,GAVI,,47122
+Ethiopia,ET,GAVI,,47122
+Gambia,GM,GAVI,,47122
+Georgia,GE,GAVI,,47122
+Ghana,GH,GAVI,,47122
+Guinea,GN,GAVI,,47122
+Guinea-Bissau,GW,GAVI,,47122
+Guyana,GY,GAVI,,47122
+Haiti,HT,GAVI,,47122
+Honduras,HN,GAVI,,47122
+India,IN,GAVI,,47122
+Indonesia,ID,GAVI,,47122
+Kenya,KE,GAVI,,47122
+Kiribati,KI,GAVI,,47122
+Kyrgyzstan,KG,GAVI,,47122
+Lao People's Democratic Republic,LA,GAVI,,47122
+Lesotho,LS,GAVI,,47122
+Liberia,LR,GAVI,,47122
+Madagascar,MG,GAVI,,47122
+Malawi,MW,GAVI,,47122
+Mali,ML,GAVI,,47122
+Mauritania,MR,GAVI,,47122
+Moldova,MD,GAVI,,47122
+Mongolia,MN,GAVI,,47122
+Mozambique,MZ,GAVI,,47122
+Myanmar,MM,GAVI,,47122
+Nepal,NP,GAVI,,47122
+Nicaragua,NI,GAVI,,47122
+Niger,NE,GAVI,,47122
+Nigeria,NG,GAVI,,47122
+Pakistan,PK,GAVI,,47122
+Papua New Guinea,PG,GAVI,,47122
+Rwanda,RW,GAVI,,47122
+São Tomé and Príncipe,ST,GAVI,,47122
+Senegal,SN,GAVI,,47122
+Sierra Leone,SL,GAVI,,47122
+Solomon Islands,SB,GAVI,,47122
+Somalia,SO,GAVI,,47122
+South Sudan,SS,GAVI,,47122
+Sri Lanka,LK,GAVI,,47122
+Sudan,SD,GAVI,,47122
+Tajikistan,TJ,GAVI,,47122
+Tanzania,TZ,GAVI,,47122
+Timor-Leste,TL,GAVI,,47122
+Togo,TG,GAVI,,47122
+Turkmenistan,TM,GAVI,,47122
+Uganda,UG,GAVI,,47122
+Ukraine,UA,GAVI,,47122
+Uzbekistan,UZ,GAVI,,47122
+Vietnam,VN,GAVI,,47122
+Yemen,YE,GAVI,,47122
+Zambia,ZM,GAVI,,47122
+Zimbabwe,ZW,GAVI,,47122
+Afghanistan,AF,Germany BMZ,,DE-1
+Albania,AL,Germany BMZ,,DE-1
+Algeria,DZ,Germany BMZ,,DE-1
+Armenia,AM,Germany BMZ,,DE-1
+Bangladesh,BD,Germany BMZ,,DE-1
+Benin,BJ,Germany BMZ,,DE-1
+Bolivia,BO,Germany BMZ,,DE-1
+Bosnia and Herzegovina,BA,Germany BMZ,,DE-1
+Brazil,BR,Germany BMZ,,DE-1
+Burkina Faso,BF,Germany BMZ,,DE-1
+Cambodia,KH,Germany BMZ,,DE-1
+Cameroon,CM,Germany BMZ,,DE-1
+Chad,TD,Germany BMZ,,DE-1
+China,CN,Germany BMZ,,DE-1
+Colombia,CO,Germany BMZ,,DE-1
+Côte d'Ivoire,CI,Germany BMZ,,DE-1
+Democratic Republic of the Congo,CD,Germany BMZ,,DE-1
+Ecuador,EC,Germany BMZ,,DE-1
+Egypt,EG,Germany BMZ,,DE-1
+Ethiopia,ET,Germany BMZ,,DE-1
+Georgia,GE,Germany BMZ,,DE-1
+Ghana,GH,Germany BMZ,,DE-1
+India,IN,Germany BMZ,,DE-1
+Indonesia,ID,Germany BMZ,,DE-1
+Iraq,IQ,Germany BMZ,,DE-1
+Jordan,JO,Germany BMZ,,DE-1
+Kenya,KE,Germany BMZ,,DE-1
+Kosovo,XK,Germany BMZ,,DE-1
+Lao People's Democratic Republic,LA,Germany BMZ,,DE-1
+Lebanon,LB,Germany BMZ,,DE-1
+Libya,LY,Germany BMZ,,DE-1
+Madagascar,MG,Germany BMZ,,DE-1
+Malawi,MW,Germany BMZ,,DE-1
+Mali,ML,Germany BMZ,,DE-1
+Mauritania,MR,Germany BMZ,,DE-1
+Mexico,MX,Germany BMZ,,DE-1
+Moldova,MD,Germany BMZ,,DE-1
+Mongolia,MN,Germany BMZ,,DE-1
+Morocco,MA,Germany BMZ,,DE-1
+Mozambique,MZ,Germany BMZ,,DE-1
+Namibia,NA,Germany BMZ,,DE-1
+Nepal,NP,Germany BMZ,,DE-1
+Niger,NE,Germany BMZ,,DE-1
+Nigeria,NG,Germany BMZ,,DE-1
+Pakistan,PK,Germany BMZ,,DE-1
+Palestinian Territories,PS,Germany BMZ,,DE-1
+Peru,PE,Germany BMZ,,DE-1
+Rwanda,RW,Germany BMZ,,DE-1
+Senegal,SN,Germany BMZ,,DE-1
+Serbia,RS,Germany BMZ,,DE-1
+Sierra Leone,SL,Germany BMZ,,DE-1
+Somalia,SO,Germany BMZ,,DE-1
+South Africa,ZA,Germany BMZ,,DE-1
+South Sudan,SS,Germany BMZ,,DE-1
+Sudan,SD,Germany BMZ,,DE-1
+Syria,SY,Germany BMZ,,DE-1
+Tanzania,TZ,Germany BMZ,,DE-1
+Togo,TG,Germany BMZ,,DE-1
+Tunisia,TN,Germany BMZ,,DE-1
+Turkey,TR,Germany BMZ,,DE-1
+Uganda,UG,Germany BMZ,,DE-1
+Ukraine,UA,Germany BMZ,,DE-1
+Uzbekistan,UZ,Germany BMZ,,DE-1
+Vietnam,VN,Germany BMZ,,DE-1
+Yemen,YE,Germany BMZ,,DE-1
+Zambia,ZM,Germany BMZ,,DE-1
+Afghanistan,AF,Global Fund,,47045
+Angola,AO,Global Fund,,47045
+Armenia,AM,Global Fund,,47045
+Azerbaijan,AZ,Global Fund,,47045
+Bangladesh,BD,Global Fund,,47045
+Belarus,BY,Global Fund,,47045
+Belize,BZ,Global Fund,,47045
+Benin,BJ,Global Fund,,47045
+Bhutan,BT,Global Fund,,47045
+Bolivia,BO,Global Fund,,47045
+Botswana,BW,Global Fund,,47045
+Burkina Faso,BF,Global Fund,,47045
+Burundi,BI,Global Fund,,47045
+Cabo Verde,CV,Global Fund,,47045
+Cambodia,KH,Global Fund,,47045
+Cameroon,CM,Global Fund,,47045
+Central African Republic,CF,Global Fund,,47045
+Chad,TD,Global Fund,,47045
+Colombia,CO,Global Fund,,47045
+Comoros,KM,Global Fund,,47045
+Congo,CG,Global Fund,,47045
+Costa Rica,CR,Global Fund,,47045
+Côte d'Ivoire,CI,Global Fund,,47045
+Cuba,CU,Global Fund,,47045
+Democratic People's Republic of Korea,KR,Global Fund,,47045
+Democratic Republic of the Congo,CD,Global Fund,,47045
+Djibouti,DJ,Global Fund,,47045
+Dominican Republic,DO,Global Fund,,47045
+Ecuador,EC,Global Fund,,47045
+Egypt,EG,Global Fund,,47045
+El Salvador,SV,Global Fund,,47045
+Equatorial Guinea,GQ,Global Fund,,47045
+Eritrea,ER,Global Fund,,47045
+Eswatini,SZ,Global Fund,,47045
+Ethiopia,ET,Global Fund,,47045
+Gabon,GA,Global Fund,,47045
+Gambia,GM,Global Fund,,47045
+Georgia,GE,Global Fund,,47045
+Ghana,GH,Global Fund,,47045
+Guatemala,GT,Global Fund,,47045
+Guinea,GN,Global Fund,,47045
+Guinea-Bissau,GW,Global Fund,,47045
+Guyana,GY,Global Fund,,47045
+Haiti,HT,Global Fund,,47045
+Honduras,HN,Global Fund,,47045
+India,IN,Global Fund,,47045
+Indonesia,ID,Global Fund,,47045
+Iran (Islamic Republic of),IR,Global Fund,,47045
+Jamaica,JM,Global Fund,,47045
+Kazakhstan,KZ,Global Fund,,47045
+Kosovo,XK,Global Fund,,47045
+Kyrgyzstan,KG,Global Fund,,47045
+Lao People's Democratic Republic,LA,Global Fund,,47045
+Lesotho,LS,Global Fund,,47045
+Liberia,LR,Global Fund,,47045
+Madagascar,MG,Global Fund,,47045
+Malawi,MW,Global Fund,,47045
+Malaysia,MY,Global Fund,,47045
+Mali,ML,Global Fund,,47045
+Mauritania,MR,Global Fund,,47045
+Mauritius,MU,Global Fund,,47045
+Moldova,MD,Global Fund,,47045
+Mongolia,MN,Global Fund,,47045
+Montenegro,ME,Global Fund,,47045
+Morocco,MA,Global Fund,,47045
+Mozambique,MZ,Global Fund,,47045
+Myanmar,MM,Global Fund,,47045
+Namibia,NA,Global Fund,,47045
+Nepal,NP,Global Fund,,47045
+Nicaragua,NI,Global Fund,,47045
+Niger,NE,Global Fund,,47045
+Nigeria,NG,Global Fund,,47045
+Pakistan,PK,Global Fund,,47045
+Papua New Guinea,PG,Global Fund,,47045
+Paraguay,PY,Global Fund,,47045
+Philippines,PH,Global Fund,,47045
+Russian Federation,RU,Global Fund,,47045
+Rwanda,RW,Global Fund,,47045
+São Tomé and Príncipe,ST,Global Fund,,47045
+Senegal,SN,Global Fund,,47045
+Serbia,RS,Global Fund,,47045
+Sierra Leone,SL,Global Fund,,47045
+Solomon Islands,SB,Global Fund,,47045
+Somalia,SO,Global Fund,,47045
+South Africa,ZA,Global Fund,,47045
+South Sudan,SS,Global Fund,,47045
+Sri Lanka,LK,Global Fund,,47045
+Sudan,SD,Global Fund,,47045
+Suriname,SR,Global Fund,,47045
+Tajikistan,TJ,Global Fund,,47045
+Tanzania,TZ,Global Fund,,47045
+Thailand,TH,Global Fund,,47045
+Timor-Leste,TL,Global Fund,,47045
+Togo,TG,Global Fund,,47045
+Turkmenistan,TM,Global Fund,,47045
+Uganda,UG,Global Fund,,47045
+Ukraine,UA,Global Fund,,47045
+Uzbekistan,UZ,Global Fund,,47045
+Venezuela,VE,Global Fund,,47045
+Vietnam,VN,Global Fund,,47045
+Zambia,ZM,Global Fund,,47045
+Zimbabwe,ZW,Global Fund,,47045
+Afghanistan,AF,Green Climate Fund,,
+Albania,AL,Green Climate Fund,,
+Algeria,DZ,Green Climate Fund,,
+Angola,AO,Green Climate Fund,,
+Antigua and Barbuda,AG,Green Climate Fund,,
+Argentina,AR,Green Climate Fund,,
+Armenia,AM,Green Climate Fund,,
+Azerbaijan,AZ,Green Climate Fund,,
+Bahamas,BS,Green Climate Fund,,
+Bahrain,BH,Green Climate Fund,,
+Bangladesh,BD,Green Climate Fund,,
+Barbados,BB,Green Climate Fund,,
+Belize,BZ,Green Climate Fund,,
+Benin,BJ,Green Climate Fund,,
+Bhutan,BT,Green Climate Fund,,
+Bolivia,BO,Green Climate Fund,,
+Bosnia and Herzegovina,BA,Green Climate Fund,,
+Botswana,BW,Green Climate Fund,,
+Brazil,BR,Green Climate Fund,,
+Burkina Faso,BF,Green Climate Fund,,
+Burundi,BI,Green Climate Fund,,
+Cabo Verde,CV,Green Climate Fund,,
+Cambodia,KH,Green Climate Fund,,
+Cameroon,CM,Green Climate Fund,,
+Central African Republic,CF,Green Climate Fund,,
+Chad,TD,Green Climate Fund,,
+Chile,CL,Green Climate Fund,,
+China,CN,Green Climate Fund,,
+Colombia,CO,Green Climate Fund,,
+Comoros,KM,Green Climate Fund,,
+Congo,CG,Green Climate Fund,,
+Cook Islands,CK,Green Climate Fund,,
+Costa Rica,CR,Green Climate Fund,,
+Côte d'Ivoire,CI,Green Climate Fund,,
+Cuba,CU,Green Climate Fund,,
+Democratic People's Republic of Korea,KR,Green Climate Fund,,
+Democratic Republic of the Congo,CD,Green Climate Fund,,
+Djibouti,DJ,Green Climate Fund,,
+Dominica,DM,Green Climate Fund,,
+Dominican Republic,DO,Green Climate Fund,,
+Ecuador,EC,Green Climate Fund,,
+Egypt,EG,Green Climate Fund,,
+El Salvador,SV,Green Climate Fund,,
+Equatorial Guinea,GQ,Green Climate Fund,,
+Eritrea,ER,Green Climate Fund,,
+Eswatini,SZ,Green Climate Fund,,
+Ethiopia,ET,Green Climate Fund,,
+Fiji,FJ,Green Climate Fund,,
+Gabon,GA,Green Climate Fund,,
+Gambia,GM,Green Climate Fund,,
+Georgia,GE,Green Climate Fund,,
+Ghana,GH,Green Climate Fund,,
+Grenada,GD,Green Climate Fund,,
+Guatemala,GT,Green Climate Fund,,
+Guinea,GN,Green Climate Fund,,
+Guinea-Bissau,GW,Green Climate Fund,,
+Guyana,GY,Green Climate Fund,,
+Haiti,HT,Green Climate Fund,,
+Honduras,HN,Green Climate Fund,,
+India,IN,Green Climate Fund,,
+Indonesia,ID,Green Climate Fund,,
+Iran (Islamic Republic of),IR,Green Climate Fund,,
+Iraq,IQ,Green Climate Fund,,
+Jamaica,JM,Green Climate Fund,,
+Jordan,JO,Green Climate Fund,,
+Kazakhstan,KZ,Green Climate Fund,,
+Kenya,KE,Green Climate Fund,,
+Kiribati,KI,Green Climate Fund,,
+Kuwait,KW,Green Climate Fund,,
+Kyrgyzstan,KG,Green Climate Fund,,
+Lao People's Democratic Republic,LA,Green Climate Fund,,
+Lebanon,LB,Green Climate Fund,,
+Lesotho,LS,Green Climate Fund,,
+Liberia,LR,Green Climate Fund,,
+Libya,LY,Green Climate Fund,,
+Madagascar,MG,Green Climate Fund,,
+Malawi,MW,Green Climate Fund,,
+Malaysia,MY,Green Climate Fund,,
+Maldives,MV,Green Climate Fund,,
+Mali,ML,Green Climate Fund,,
+Marshall Islands,MH,Green Climate Fund,,
+Mauritania,MR,Green Climate Fund,,
+Mauritius,MU,Green Climate Fund,,
+Mexico,MX,Green Climate Fund,,
+Micronesia (Federated States of),FM,Green Climate Fund,,
+Moldova,MD,Green Climate Fund,,
+Mongolia,MN,Green Climate Fund,,
+Montenegro,ME,Green Climate Fund,,
+Morocco,MA,Green Climate Fund,,
+Mozambique,MZ,Green Climate Fund,,
+Myanmar,MM,Green Climate Fund,,
+Namibia,NA,Green Climate Fund,,
+Nauru,NR,Green Climate Fund,,
+Nepal,NP,Green Climate Fund,,
+Nicaragua,NI,Green Climate Fund,,
+Niger,NE,Green Climate Fund,,
+Nigeria,NG,Green Climate Fund,,
+Niue,NU,Green Climate Fund,,
+North Macedonia,MK,Green Climate Fund,,
+Oman,OM,Green Climate Fund,,
+Pakistan,PK,Green Climate Fund,,
+Palau,PW,Green Climate Fund,,
+Panama,PA,Green Climate Fund,,
+Papua New Guinea,PG,Green Climate Fund,,
+Paraguay,PY,Green Climate Fund,,
+Peru,PE,Green Climate Fund,,
+Philippines,PH,Green Climate Fund,,
+Rwanda,RW,Green Climate Fund,,
+Saint Kitts and Nevis,KN,Green Climate Fund,,
+Saint Lucia,LC,Green Climate Fund,,
+Saint Vincent and the Grenadines,VC,Green Climate Fund,,
+Samoa,WS,Green Climate Fund,,
+São Tomé and Príncipe,ST,Green Climate Fund,,
+Saudi Arabia,SA,Green Climate Fund,,
+Senegal,SN,Green Climate Fund,,
+Serbia,RS,Green Climate Fund,,
+Seychelles,SC,Green Climate Fund,,
+Sierra Leone,SL,Green Climate Fund,,
+Singapore,SG,Green Climate Fund,,
+Solomon Islands,SB,Green Climate Fund,,
+Somalia,SO,Green Climate Fund,,
+South Africa,ZA,Green Climate Fund,,
+South Sudan,SS,Green Climate Fund,,
+Sri Lanka,LK,Green Climate Fund,,
+State of Palestine,PS,Green Climate Fund,,
+Sudan,SD,Green Climate Fund,,
+Suriname,SR,Green Climate Fund,,
+Syrian Arab Republic,SY,Green Climate Fund,,
+Tajikistan,TJ,Green Climate Fund,,
+Tanzania,TZ,Green Climate Fund,,
+Thailand,TH,Green Climate Fund,,
+Timor-Leste,TL,Green Climate Fund,,
+Togo,TG,Green Climate Fund,,
+Tonga,TO,Green Climate Fund,,
+Trinidad and Tobago,TT,Green Climate Fund,,
+Tunisia,TN,Green Climate Fund,,
+Turkmenistan,TM,Green Climate Fund,,
+Tuvalu,TV,Green Climate Fund,,
+Uganda,UG,Green Climate Fund,,
+Uruguay,UY,Green Climate Fund,,
+Uzbekistan,UZ,Green Climate Fund,,
+Vanuatu,VU,Green Climate Fund,,
+Venezuela,VE,Green Climate Fund,,
+Vietnam,VN,Green Climate Fund,,
+Yemen,YE,Green Climate Fund,,
+Zambia,ZM,Green Climate Fund,,
+Zimbabwe,ZW,Green Climate Fund,,
+Argentina,AR,IADB,,XI-IATI-IADB
+Bahamas,BS,IADB,,XI-IATI-IADB
+Barbados,BB,IADB,,XI-IATI-IADB
+Belize,BZ,IADB,,XI-IATI-IADB
+Bolivia,BO,IADB,,XI-IATI-IADB
+Brazil,BR,IADB,,XI-IATI-IADB
+Chile,CL,IADB,,XI-IATI-IADB
+Colombia,CO,IADB,,XI-IATI-IADB
+Costa Rica,CR,IADB,,XI-IATI-IADB
+Dominican Republic,DO,IADB,,XI-IATI-IADB
+Ecuador,EC,IADB,,XI-IATI-IADB
+El Salvador,SV,IADB,,XI-IATI-IADB
+Guatemala,GT,IADB,,XI-IATI-IADB
+Guyana,GY,IADB,,XI-IATI-IADB
+Haiti,HT,IADB,,XI-IATI-IADB
+Honduras,HN,IADB,,XI-IATI-IADB
+Jamaica,JM,IADB,,XI-IATI-IADB
+Mexico,MX,IADB,,XI-IATI-IADB
+Nicaragua,NI,IADB,,XI-IATI-IADB
+Panama,PA,IADB,,XI-IATI-IADB
+Paraguay,PY,IADB,,XI-IATI-IADB
+Peru,PE,IADB,,XI-IATI-IADB
+Suriname,SR,IADB,,XI-IATI-IADB
+Trinidad and Tobago,TT,IADB,,XI-IATI-IADB
+Uruguay,UY,IADB,,XI-IATI-IADB
+Venezuela,VE,IADB,,XI-IATI-IADB
+Ethiopia,ET,Irishaid,,XM-DAC-21-1
+Kenya,KE,Irishaid,,XM-DAC-21-1
+Liberia,LR,Irishaid,,XM-DAC-21-1
+Malawi,MW,Irishaid,,XM-DAC-21-1
+Mozambique,MZ,Irishaid,,XM-DAC-21-1
+Palestinian Territories,PS,Irishaid,,XM-DAC-21-1
+Sierra Leone,SL,Irishaid,,XM-DAC-21-1
+South Africa,ZA,Irishaid,,XM-DAC-21-1
+Tanzania,TZ,Irishaid,,XM-DAC-21-1
+Uganda,UG,Irishaid,,XM-DAC-21-1
+Vietnam,VN,Irishaid,,XM-DAC-21-1
+Zambia,ZM,Irishaid,,XM-DAC-21-1
+Zimbabwe,ZW,Irishaid,,XM-DAC-21-1
+Albania,AL,Italy AICS,,XM-DAC-6-4
+Armenia,AM,Italy AICS,,XM-DAC-6-4
+Burkina Faso,BF,Italy AICS,,XM-DAC-6-4
+Chad,TD,Italy AICS,,XM-DAC-6-4
+Colombia,CO,Italy AICS,,XM-DAC-6-4
+Congo,CG,Italy AICS,,XM-DAC-6-4
+Côte d'Ivoire,CI,Italy AICS,,XM-DAC-6-4
+Cuba,CU,Italy AICS,,XM-DAC-6-4
+Egypt,EG,Italy AICS,,XM-DAC-6-4
+El Salvador,SV,Italy AICS,,XM-DAC-6-4
+Eritrea,ER,Italy AICS,,XM-DAC-6-4
+Ethiopia,ET,Italy AICS,,XM-DAC-6-4
+Ghana,GH,Italy AICS,,XM-DAC-6-4
+Guinea,GN,Italy AICS,,XM-DAC-6-4
+Iraq,IQ,Italy AICS,,XM-DAC-6-4
+Jordan,JO,Italy AICS,,XM-DAC-6-4
+Kenya,KE,Italy AICS,,XM-DAC-6-4
+Kyrgyzstan,KG,Italy AICS,,XM-DAC-6-4
+Lebanon,LB,Italy AICS,,XM-DAC-6-4
+Libya,LY,Italy AICS,,XM-DAC-6-4
+Malawi,MW,Italy AICS,,XM-DAC-6-4
+Mali,ML,Italy AICS,,XM-DAC-6-4
+Mauritania,MR,Italy AICS,,XM-DAC-6-4
+Moldova,MD,Italy AICS,,XM-DAC-6-4
+Mozambique,MZ,Italy AICS,,XM-DAC-6-4
+Niger,NE,Italy AICS,,XM-DAC-6-4
+Pakistan,PK,Italy AICS,,XM-DAC-6-4
+Palestinian Territories,PS,Italy AICS,,XM-DAC-6-4
+Senegal,SN,Italy AICS,,XM-DAC-6-4
+Somalia,SO,Italy AICS,,XM-DAC-6-4
+Sudan,SD,Italy AICS,,XM-DAC-6-4
+Syria,SY,Italy AICS,,XM-DAC-6-4
+Tajikistan,TJ,Italy AICS,,XM-DAC-6-4
+Tanzania,TZ,Italy AICS,,XM-DAC-6-4
+Tunisia,TN,Italy AICS,,XM-DAC-6-4
+Uganda,UG,Italy AICS,,XM-DAC-6-4
+Ukraine,UA,Italy AICS,,XM-DAC-6-4
+Zambia,ZM,Italy AICS,,XM-DAC-6-4
+Afghanistan,AF,JICA,,XM-DAC-701-8
+Albania,AL,JICA,,XM-DAC-701-8
+Algeria,DZ,JICA,,XM-DAC-701-8
+Angola,AO,JICA,,XM-DAC-701-8
+Argentina,AR,JICA,,XM-DAC-701-8
+Armenia,AM,JICA,,XM-DAC-701-8
+Azerbaijan,AZ,JICA,,XM-DAC-701-8
+Bangladesh,BD,JICA,,XM-DAC-701-8
+Belize,BZ,JICA,,XM-DAC-701-8
+Benin,BJ,JICA,,XM-DAC-701-8
+Bhutan,BT,JICA,,XM-DAC-701-8
+Bolivia,BO,JICA,,XM-DAC-701-8
+Bosnia and Herzegovina,BA,JICA,,XM-DAC-701-8
+Botswana,BW,JICA,,XM-DAC-701-8
+Brazil,BR,JICA,,XM-DAC-701-8
+Burkina Faso,BF,JICA,,XM-DAC-701-8
+Burundi,BI,JICA,,XM-DAC-701-8
+Cambodia,KH,JICA,,XM-DAC-701-8
+Cameroon,CM,JICA,,XM-DAC-701-8
+Chile,CL,JICA,,XM-DAC-701-8
+China,CN,JICA,,XM-DAC-701-8
+Colombia,CO,JICA,,XM-DAC-701-8
+Comoros,KM,JICA,,XM-DAC-701-8
+Costa Rica,CR,JICA,,XM-DAC-701-8
+Côte d'Ivoire,CI,JICA,,XM-DAC-701-8
+Cuba,CU,JICA,,XM-DAC-701-8
+Democratic Republic of the Congo,CD,JICA,,XM-DAC-701-8
+Djibouti,DJ,JICA,,XM-DAC-701-8
+Dominican Republic,DO,JICA,,XM-DAC-701-8
+Ecuador,EC,JICA,,XM-DAC-701-8
+Egypt,EG,JICA,,XM-DAC-701-8
+El Salvador,SV,JICA,,XM-DAC-701-8
+Eritrea,ER,JICA,,XM-DAC-701-8
+Ethiopia,ET,JICA,,XM-DAC-701-8
+Federated States of Micronesia,FM,JICA,,XM-DAC-701-8
+Fiji,FJ,JICA,,XM-DAC-701-8
+Gabon,GA,JICA,,XM-DAC-701-8
+Georgia,GE,JICA,,XM-DAC-701-8
+Ghana,GH,JICA,,XM-DAC-701-8
+Guatemala,GT,JICA,,XM-DAC-701-8
+Guinea,GN,JICA,,XM-DAC-701-8
+Haiti,HT,JICA,,XM-DAC-701-8
+Honduras,HN,JICA,,XM-DAC-701-8
+India,IN,JICA,,XM-DAC-701-8
+Indonesia,ID,JICA,,XM-DAC-701-8
+Iran (Islamic Republic of),IR,JICA,,XM-DAC-701-8
+Iraq,IQ,JICA,,XM-DAC-701-8
+Jamaica,JM,JICA,,XM-DAC-701-8
+Jordan,JO,JICA,,XM-DAC-701-8
+Kazakhstan,KZ,JICA,,XM-DAC-701-8
+Kenya,KE,JICA,,XM-DAC-701-8
+Kosovo,XK,JICA,,XM-DAC-701-8
+Kyrgyz Republic,KG,JICA,,XM-DAC-701-8
+Lao People's Democratic Republic,LA,JICA,,XM-DAC-701-8
+Liberia,LR,JICA,,XM-DAC-701-8
+Madagascar,MG,JICA,,XM-DAC-701-8
+Malaysia,MY,JICA,,XM-DAC-701-8
+Maldives,MV,JICA,,XM-DAC-701-8
+Marshall Islands,MH,JICA,,XM-DAC-701-8
+Mexico,MX,JICA,,XM-DAC-701-8
+Moldova,MD,JICA,,XM-DAC-701-8
+Mongolia,MN,JICA,,XM-DAC-701-8
+Montenegro,ME,JICA,,XM-DAC-701-8
+Morocco,MA,JICA,,XM-DAC-701-8
+Myanmar,MM,JICA,,XM-DAC-701-8
+Namibia,NA,JICA,,XM-DAC-701-8
+Nepal,NP,JICA,,XM-DAC-701-8
+Nicaragua,NI,JICA,,XM-DAC-701-8
+Niger,NE,JICA,,XM-DAC-701-8
+Nigeria,NG,JICA,,XM-DAC-701-8
+North Macedonia,MK,JICA,,XM-DAC-701-8
+Pakistan,PK,JICA,,XM-DAC-701-8
+Palau,PW,JICA,,XM-DAC-701-8
+Palestinian Territories,PS,JICA,,XM-DAC-701-8
+Panama,PA,JICA,,XM-DAC-701-8
+Papua New Guinea,PG,JICA,,XM-DAC-701-8
+Paraguay,PY,JICA,,XM-DAC-701-8
+Peru,PE,JICA,,XM-DAC-701-8
+Philippines,PH,JICA,,XM-DAC-701-8
+Rwanda,RW,JICA,,XM-DAC-701-8
+Saint Lucia,LC,JICA,,XM-DAC-701-8
+Samoa,WS,JICA,,XM-DAC-701-8
+Senegal,SN,JICA,,XM-DAC-701-8
+Serbia,RS,JICA,,XM-DAC-701-8
+Seychelles,SC,JICA,,XM-DAC-701-8
+Sierra Leone,SL,JICA,,XM-DAC-701-8
+Solomon Islands,SB,JICA,,XM-DAC-701-8
+Somalia,SO,JICA,,XM-DAC-701-8
+South Africa,ZA,JICA,,XM-DAC-701-8
+South Sudan,SS,JICA,,XM-DAC-701-8
+Sri Lanka,LK,JICA,,XM-DAC-701-8
+Sudan,SD,JICA,,XM-DAC-701-8
+Syria,SY,JICA,,XM-DAC-701-8
+Tajikistan,TJ,JICA,,XM-DAC-701-8
+Tanzania,TZ,JICA,,XM-DAC-701-8
+Thailand,TH,JICA,,XM-DAC-701-8
+Timor-Leste,TL,JICA,,XM-DAC-701-8
+Tonga,TO,JICA,,XM-DAC-701-8
+Tunisia,TN,JICA,,XM-DAC-701-8
+Turkey,TR,JICA,,XM-DAC-701-8
+Uganda,UG,JICA,,XM-DAC-701-8
+Ukraine,UA,JICA,,XM-DAC-701-8
+Uruguay,UY,JICA,,XM-DAC-701-8
+Uzbekistan,UZ,JICA,,XM-DAC-701-8
+Vanuatu,VU,JICA,,XM-DAC-701-8
+Venezuela,VE,JICA,,XM-DAC-701-8
+Vietnam,VN,JICA,,XM-DAC-701-8
+Yemen,YE,JICA,,XM-DAC-701-8
+Zambia,ZM,JICA,,XM-DAC-701-8
+Zimbabwe,ZW,JICA,,XM-DAC-701-8
+Bangladesh,BD,KOREA,,KR-GOV-010
+Bolivia,BO,KOREA,,KR-GOV-010
+Cambodia,KH,KOREA,,KR-GOV-010
+Colombia,CO,KOREA,,KR-GOV-010
+Egypt,EG,KOREA,,KR-GOV-010
+Ethiopia,ET,KOREA,,KR-GOV-010
+Ghana,GH,KOREA,,KR-GOV-010
+India,IN,KOREA,,KR-GOV-010
+Indonesia,ID,KOREA,,KR-GOV-010
+Kyrgyzstan,KG,KOREA,,KR-GOV-010
+Lao People's Democratic Republic,LA,KOREA,,KR-GOV-010
+Mongolia,MN,KOREA,,KR-GOV-010
+Myanmar,MM,KOREA,,KR-GOV-010
+Nepal,NP,KOREA,,KR-GOV-010
+Pakistan,PK,KOREA,,KR-GOV-010
+Paraguay,PY,KOREA,,KR-GOV-010
+Peru,PE,KOREA,,KR-GOV-010
+Philippines,PH,KOREA,,KR-GOV-010
+Rwanda,RW,KOREA,,KR-GOV-010
+Senegal,SN,KOREA,,KR-GOV-010
+Sri Lanka,LK,KOREA,,KR-GOV-010
+Tajikistan,TJ,KOREA,,KR-GOV-010
+Tanzania,TZ,KOREA,,KR-GOV-010
+Uganda,UG,KOREA,,KR-GOV-010
+Ukraine,UA,KOREA,,KR-GOV-010
+Uzbekistan,UZ,KOREA,,KR-GOV-010
+Vietnam,VN,KOREA,,KR-GOV-010
+Afghanistan,AF,KSRelief,,XM-OCHA-HPC6770
+Albania,AL,KSRelief,,XM-OCHA-HPC6770
+Azerbaijan,AZ,KSRelief,,XM-OCHA-HPC6770
+Bangladesh,BD,KSRelief,,XM-OCHA-HPC6770
+Benin,BJ,KSRelief,,XM-OCHA-HPC6770
+Bosnia and Herzegovina,BA,KSRelief,,XM-OCHA-HPC6770
+Brazil,BR,KSRelief,,XM-OCHA-HPC6770
+Bulgaria,BG,KSRelief,,XM-OCHA-HPC6770
+Burkina Faso,BF,KSRelief,,XM-OCHA-HPC6770
+Burundi,BI,KSRelief,,XM-OCHA-HPC6770
+Cambodia,KH,KSRelief,,XM-OCHA-HPC6770
+Cameroon,CM,KSRelief,,XM-OCHA-HPC6770
+Chad,TD,KSRelief,,XM-OCHA-HPC6770
+Comoros,KM,KSRelief,,XM-OCHA-HPC6770
+Congo,CG,KSRelief,,XM-OCHA-HPC6770
+Côte d'Ivoire,CI,KSRelief,,XM-OCHA-HPC6770
+Cyprus,CY,KSRelief,,XM-OCHA-HPC6770
+Democratic Republic of the Congo,CD,KSRelief,,XM-OCHA-HPC6770
+Djibouti,DJ,KSRelief,,XM-OCHA-HPC6770
+El Salvador,SV,KSRelief,,XM-OCHA-HPC6770
+Equatorial Guinea,GQ,KSRelief,,XM-OCHA-HPC6770
+Eritrea,ER,KSRelief,,XM-OCHA-HPC6770
+Ethiopia,ET,KSRelief,,XM-OCHA-HPC6770
+Gabon,GA,KSRelief,,XM-OCHA-HPC6770
+Gambia,GM,KSRelief,,XM-OCHA-HPC6770
+Ghana,GH,KSRelief,,XM-OCHA-HPC6770
+Greece,GR,KSRelief,,XM-OCHA-HPC6770
+Guinea,GN,KSRelief,,XM-OCHA-HPC6770
+Indonesia,ID,KSRelief,,XM-OCHA-HPC6770
+Iraq,IQ,KSRelief,,XM-OCHA-HPC6770
+Japan,JP,KSRelief,,XM-OCHA-HPC6770
+Jordan,JO,KSRelief,,XM-OCHA-HPC6770
+Kazakhstan,KZ,KSRelief,,XM-OCHA-HPC6770
+Kenya,KE,KSRelief,,XM-OCHA-HPC6770
+Kosovo,XK,KSRelief,,XM-OCHA-HPC6770
+Kyrgyzstan,KG,KSRelief,,XM-OCHA-HPC6770
+Lebanon,LB,KSRelief,,XM-OCHA-HPC6770
+Libya,LY,KSRelief,,XM-OCHA-HPC6770
+Malaysia,MY,KSRelief,,XM-OCHA-HPC6770
+Maldives,MV,KSRelief,,XM-OCHA-HPC6770
+Mali,ML,KSRelief,,XM-OCHA-HPC6770
+Mauritania,MR,KSRelief,,XM-OCHA-HPC6770
+Mauritius,MU,KSRelief,,XM-OCHA-HPC6770
+Montenegro,ME,KSRelief,,XM-OCHA-HPC6770
+Morocco,MA,KSRelief,,XM-OCHA-HPC6770
+Nicaragua,NI,KSRelief,,XM-OCHA-HPC6770
+Niger,NE,KSRelief,,XM-OCHA-HPC6770
+Nigeria,NG,KSRelief,,XM-OCHA-HPC6770
+North Macedonia,MK,KSRelief,,XM-OCHA-HPC6770
+Oman,OM,KSRelief,,XM-OCHA-HPC6770
+Pakistan,PK,KSRelief,,XM-OCHA-HPC6770
+Palestinian Territories,PS,KSRelief,,XM-OCHA-HPC6770
+Philippines,PH,KSRelief,,XM-OCHA-HPC6770
+Poland,PL,KSRelief,,XM-OCHA-HPC6770
+Romania,RO,KSRelief,,XM-OCHA-HPC6770
+Russian Federation,RU,KSRelief,,XM-OCHA-HPC6770
+Senegal,SN,KSRelief,,XM-OCHA-HPC6770
+Sierra Leone,SL,KSRelief,,XM-OCHA-HPC6770
+Singapore,SG,KSRelief,,XM-OCHA-HPC6770
+Somalia,SO,KSRelief,,XM-OCHA-HPC6770
+South Africa,ZA,KSRelief,,XM-OCHA-HPC6770
+South Sudan,SS,KSRelief,,XM-OCHA-HPC6770
+Sri Lanka,LK,KSRelief,,XM-OCHA-HPC6770
+Sudan,SD,KSRelief,,XM-OCHA-HPC6770
+Syrian Arab Republic,SY,KSRelief,,XM-OCHA-HPC6770
+Tajikistan,TJ,KSRelief,,XM-OCHA-HPC6770
+Tanzania,TZ,KSRelief,,XM-OCHA-HPC6770
+Thailand,TH,KSRelief,,XM-OCHA-HPC6770
+Togo,TG,KSRelief,,XM-OCHA-HPC6770
+Tunisia,TN,KSRelief,,XM-OCHA-HPC6770
+Turkmenistan,TM,KSRelief,,XM-OCHA-HPC6770
+Uganda,UG,KSRelief,,XM-OCHA-HPC6770
+Ukraine,UA,KSRelief,,XM-OCHA-HPC6770
+Uzbekistan,UZ,KSRelief,,XM-OCHA-HPC6770
+Zambia,ZM,KSRelief,,XM-OCHA-HPC6770
+Afghanistan,AF,Netherlands,,XM-DAC-7
+Bangladesh,BD,Netherlands,,XM-DAC-7
+Benin,BJ,Netherlands,,XM-DAC-7
+Burundi,BI,Netherlands,,XM-DAC-7
+Colombia,CO,Netherlands,,XM-DAC-7
+Ethiopia,ET,Netherlands,,XM-DAC-7
+Ghana,GH,Netherlands,,XM-DAC-7
+Indonesia,ID,Netherlands,,XM-DAC-7
+Kenya,KE,Netherlands,,XM-DAC-7
+Mali,ML,Netherlands,,XM-DAC-7
+Mozambique,MZ,Netherlands,,XM-DAC-7
+Palestinian Territories,PS,Netherlands,,XM-DAC-7
+Rwanda,RW,Netherlands,,XM-DAC-7
+South Africa,ZA,Netherlands,,XM-DAC-7
+South Sudan,SS,Netherlands,,XM-DAC-7
+Uganda,UG,Netherlands,,XM-DAC-7
+Vietnam,VN,Netherlands,,XM-DAC-7
+Yemen,YE,Netherlands,,XM-DAC-7
+Afghanistan,AF,New Zealand,,NZ-1
+Algeria,DZ,New Zealand,,NZ-1
+Angola,AO,New Zealand,,NZ-1
+Argentina,AR,New Zealand,,NZ-1
+Bangladesh,BD,New Zealand,,NZ-1
+Barbados,BB,New Zealand,,NZ-1
+Belize,BZ,New Zealand,,NZ-1
+Benin,BJ,New Zealand,,NZ-1
+Bolivia,BO,New Zealand,,NZ-1
+Botswana,BW,New Zealand,,NZ-1
+Brazil,BR,New Zealand,,NZ-1
+Burundi,BI,New Zealand,,NZ-1
+Cabo Verde,CV,New Zealand,,NZ-1
+Cambodia,KH,New Zealand,,NZ-1
+Cameroon,CM,New Zealand,,NZ-1
+Central African Republic,CF,New Zealand,,NZ-1
+Chad,TD,New Zealand,,NZ-1
+Chile,CL,New Zealand,,NZ-1
+China,CN,New Zealand,,NZ-1
+Colombia,CO,New Zealand,,NZ-1
+Comoros,KM,New Zealand,,NZ-1
+Congo,CG,New Zealand,,NZ-1
+Cook Islands,CK,New Zealand,,NZ-1
+Costa Rica,CR,New Zealand,,NZ-1
+Djibouti,DJ,New Zealand,,NZ-1
+Dominica,DM,New Zealand,,NZ-1
+Dominican Republic,DO,New Zealand,,NZ-1
+Ecuador,EC,New Zealand,,NZ-1
+Egypt,EG,New Zealand,,NZ-1
+El Salvador,SV,New Zealand,,NZ-1
+Eswatini,SZ,New Zealand,,NZ-1
+Ethiopia,ET,New Zealand,,NZ-1
+Federated States of Micronesia,FM,New Zealand,,NZ-1
+Fiji,FJ,New Zealand,,NZ-1
+French Polynesia,PF,New Zealand,,NZ-1
+Ghana,GH,New Zealand,,NZ-1
+Grenada,GD,New Zealand,,NZ-1
+Guinea,GN,New Zealand,,NZ-1
+Guinea-Bissau,GW,New Zealand,,NZ-1
+Guyana,GY,New Zealand,,NZ-1
+Haiti,HT,New Zealand,,NZ-1
+India,IN,New Zealand,,NZ-1
+Indonesia,ID,New Zealand,,NZ-1
+Iraq,IQ,New Zealand,,NZ-1
+Jamaica,JM,New Zealand,,NZ-1
+Jordan,JO,New Zealand,,NZ-1
+Jordan,JO,New Zealand,,NZ-1
+Kenya,KE,New Zealand,,NZ-1
+Kiribati,KI,New Zealand,,NZ-1
+Kyrgyzstan,KG,New Zealand,,NZ-1
+Lao People's Democratic Republic,LA,New Zealand,,NZ-1
+Lebanon,LB,New Zealand,,NZ-1
+Lesotho,LS,New Zealand,,NZ-1
+Libya,LY,New Zealand,,NZ-1
+Madagascar,MG,New Zealand,,NZ-1
+Malawi,MW,New Zealand,,NZ-1
+Malaysia,MY,New Zealand,,NZ-1
+Mali,ML,New Zealand,,NZ-1
+Marshall Islands,MH,New Zealand,,NZ-1
+Mauritius,MU,New Zealand,,NZ-1
+Mexico,MX,New Zealand,,NZ-1
+Mongolia,MN,New Zealand,,NZ-1
+Morocco,MA,New Zealand,,NZ-1
+Mozambique,MZ,New Zealand,,NZ-1
+Myanmar,MM,New Zealand,,NZ-1
+Namibia,NA,New Zealand,,NZ-1
+Nauru,NR,New Zealand,,NZ-1
+Nepal,NP,New Zealand,,NZ-1
+New Caledonia,NC,New Zealand,,NZ-1
+Nigeria,NG,New Zealand,,NZ-1
+Niue,NU,New Zealand,,NZ-1
+Pakistan,PK,New Zealand,,NZ-1
+Palau,PW,New Zealand,,NZ-1
+Palestinian Territories,PS,New Zealand,,NZ-1
+Panama,PA,New Zealand,,NZ-1
+Papua New Guinea,PG,New Zealand,,NZ-1
+Paraguay,PY,New Zealand,,NZ-1
+Peru,PE,New Zealand,,NZ-1
+Philippines,PH,New Zealand,,NZ-1
+Rwanda,RW,New Zealand,,NZ-1
+Saint Lucia,LC,New Zealand,,NZ-1
+Saint Vincent and the Grenadines,VC,New Zealand,,NZ-1
+Samoa,WS,New Zealand,,NZ-1
+Senegal,SN,New Zealand,,NZ-1
+Seychelles,SC,New Zealand,,NZ-1
+Sierra Leone,SL,New Zealand,,NZ-1
+Singapore,SG,New Zealand,,NZ-1
+Solomon Islands,SB,New Zealand,,NZ-1
+Somalia,SO,New Zealand,,NZ-1
+South Africa,ZA,New Zealand,,NZ-1
+South Sudan,SS,New Zealand,,NZ-1
+Sri Lanka,LK,New Zealand,,NZ-1
+Sudan,SD,New Zealand,,NZ-1
+Suriname,SR,New Zealand,,NZ-1
+Syria,SY,New Zealand,,NZ-1
+Tanzania,TZ,New Zealand,,NZ-1
+Thailand,TH,New Zealand,,NZ-1
+Timor-Leste,TL,New Zealand,,NZ-1
+Togo,TG,New Zealand,,NZ-1
+Tokelau,TK,New Zealand,,NZ-1
+Tonga,TO,New Zealand,,NZ-1
+Trinidad and Tobago,TT,New Zealand,,NZ-1
+Tunisia,TN,New Zealand,,NZ-1
+Turkey,TR,New Zealand,,NZ-1
+Tuvalu,TV,New Zealand,,NZ-1
+Uganda,UG,New Zealand,,NZ-1
+Ukraine,UA,New Zealand,,NZ-1
+Uruguay,UY,New Zealand,,NZ-1
+Uzbekistan,UZ,New Zealand,,NZ-1
+Vanuatu,VU,New Zealand,,NZ-1
+Venezuela,VE,New Zealand,,NZ-1
+Vietnam,VN,New Zealand,,NZ-1
+Wallis and Futuna,WF,New Zealand,,NZ-1
+Yemen,YE,New Zealand,,NZ-1
+Zambia,ZM,New Zealand,,NZ-1
+Zimbabwe,ZW,New Zealand,,NZ-1
+Afghanistan,AF,Norway,,NO-BRC-971277882
+Albania,AL,Norway,,NO-BRC-971277882
+Algeria,DZ,Norway,,NO-BRC-971277882
+Angola,AO,Norway,,NO-BRC-971277882
+Argentina,AR,Norway,,NO-BRC-971277882
+Armenia,AM,Norway,,NO-BRC-971277882
+Azerbaijan,AZ,Norway,,NO-BRC-971277882
+Bangladesh,BD,Norway,,NO-BRC-971277882
+Belarus,BY,Norway,,NO-BRC-971277882
+Belize,BZ,Norway,,NO-BRC-971277882
+Benin,BJ,Norway,,NO-BRC-971277882
+Bolivia,BO,Norway,,NO-BRC-971277882
+Bosnia and Herzegovina,BA,Norway,,NO-BRC-971277882
+Botswana,BW,Norway,,NO-BRC-971277882
+Brazil,BR,Norway,,NO-BRC-971277882
+Burkina Faso,BF,Norway,,NO-BRC-971277882
+Burundi,BI,Norway,,NO-BRC-971277882
+Cambodia,KH,Norway,,NO-BRC-971277882
+Cameroon,CM,Norway,,NO-BRC-971277882
+Central African Republic,CF,Norway,,NO-BRC-971277882
+Chad,TD,Norway,,NO-BRC-971277882
+China,CN,Norway,,NO-BRC-971277882
+Colombia,CO,Norway,,NO-BRC-971277882
+Congo,CG,Norway,,NO-BRC-971277882
+Côte d'Ivoire,CI,Norway,,NO-BRC-971277882
+Cuba,CU,Norway,,NO-BRC-971277882
+Democratic Republic of the Congo,CD,Norway,,NO-BRC-971277882
+Djibouti,DJ,Norway,,NO-BRC-971277882
+Ecuador,EC,Norway,,NO-BRC-971277882
+Egypt,EG,Norway,,NO-BRC-971277882
+El Salvador,SV,Norway,,NO-BRC-971277882
+Eswatini,SZ,Norway,,NO-BRC-971277882
+Ethiopia,ET,Norway,,NO-BRC-971277882
+Gabon,GA,Norway,,NO-BRC-971277882
+Georgia,GE,Norway,,NO-BRC-971277882
+Ghana,GH,Norway,,NO-BRC-971277882
+Guatemala,GT,Norway,,NO-BRC-971277882
+Guyana,GY,Norway,,NO-BRC-971277882
+Haiti,HT,Norway,,NO-BRC-971277882
+Honduras,HN,Norway,,NO-BRC-971277882
+India,IN,Norway,,NO-BRC-971277882
+Indonesia,ID,Norway,,NO-BRC-971277882
+Iran (Islamic Republic of),IR,Norway,,NO-BRC-971277882
+Iraq,IQ,Norway,,NO-BRC-971277882
+Jordan,JO,Norway,,NO-BRC-971277882
+Kenya,KE,Norway,,NO-BRC-971277882
+Kosovo,XK,Norway,,NO-BRC-971277882
+Kyrgyz Republic,KG,Norway,,NO-BRC-971277882
+Lao People's Democratic Republic,LA,Norway,,NO-BRC-971277882
+Lebanon,LB,Norway,,NO-BRC-971277882
+Lesotho,LS,Norway,,NO-BRC-971277882
+Liberia,LR,Norway,,NO-BRC-971277882
+Libya,LY,Norway,,NO-BRC-971277882
+Madagascar,MG,Norway,,NO-BRC-971277882
+Malawi,MW,Norway,,NO-BRC-971277882
+Mali,ML,Norway,,NO-BRC-971277882
+Mexico,MX,Norway,,NO-BRC-971277882
+Moldova,MD,Norway,,NO-BRC-971277882
+Mongolia,MN,Norway,,NO-BRC-971277882
+Morocco,MA,Norway,,NO-BRC-971277882
+Mozambique,MZ,Norway,,NO-BRC-971277882
+Myanmar,MM,Norway,,NO-BRC-971277882
+Namibia,NA,Norway,,NO-BRC-971277882
+Nepal,NP,Norway,,NO-BRC-971277882
+Nicaragua,NI,Norway,,NO-BRC-971277882
+Niger,NE,Norway,,NO-BRC-971277882
+Nigeria,NG,Norway,,NO-BRC-971277882
+North Macedonia,MK,Norway,,NO-BRC-971277882
+Pakistan,PK,Norway,,NO-BRC-971277882
+Palestinian Territories,PS,Norway,,NO-BRC-971277882
+Papua New Guinea,PG,Norway,,NO-BRC-971277882
+Peru,PE,Norway,,NO-BRC-971277882
+Philippines,PH,Norway,,NO-BRC-971277882
+Rwanda,RW,Norway,,NO-BRC-971277882
+Senegal,SN,Norway,,NO-BRC-971277882
+Serbia,RS,Norway,,NO-BRC-971277882
+Sierra Leone,SL,Norway,,NO-BRC-971277882
+Somalia,SO,Norway,,NO-BRC-971277882
+South Africa,ZA,Norway,,NO-BRC-971277882
+South Sudan,SS,Norway,,NO-BRC-971277882
+Sri Lanka,LK,Norway,,NO-BRC-971277882
+Sudan,SD,Norway,,NO-BRC-971277882
+Syria,SY,Norway,,NO-BRC-971277882
+Tajikistan,TJ,Norway,,NO-BRC-971277882
+Tanzania,TZ,Norway,,NO-BRC-971277882
+Thailand,TH,Norway,,NO-BRC-971277882
+Timor-Leste,TL,Norway,,NO-BRC-971277882
+Togo,TG,Norway,,NO-BRC-971277882
+Tunisia,TN,Norway,,NO-BRC-971277882
+Turkey,TR,Norway,,NO-BRC-971277882
+Uganda,UG,Norway,,NO-BRC-971277882
+Ukraine,UA,Norway,,NO-BRC-971277882
+Venezuela,VE,Norway,,NO-BRC-971277882
+Vietnam,VN,Norway,,NO-BRC-971277882
+Yemen,YE,Norway,,NO-BRC-971277882
+Zambia,ZM,Norway,,NO-BRC-971277882
+Zimbabwe,ZW,Norway,,NO-BRC-971277882
+Afghanistan,AF,SIDA,,SE-0
+Albania,AL,SIDA,,SE-0
+Angola,AO,SIDA,,SE-0
+Argentina,AR,SIDA,,SE-0
+Armenia,AM,SIDA,,SE-0
+Azerbaijan,AZ,SIDA,,SE-0
+Bangladesh,BD,SIDA,,SE-0
+Belarus,BY,SIDA,,SE-0
+Belize,BZ,SIDA,,SE-0
+Bhutan,BT,SIDA,,SE-0
+Bolivia,BO,SIDA,,SE-0
+Bosnia and Herzegovina,BA,SIDA,,SE-0
+Botswana,BW,SIDA,,SE-0
+Brazil,BR,SIDA,,SE-0
+Burundi,BI,SIDA,,SE-0
+Cambodia,KH,SIDA,,SE-0
+Cameroon,CM,SIDA,,SE-0
+Central African Republic,CF,SIDA,,SE-0
+Chad,TD,SIDA,,SE-0
+China,CN,SIDA,,SE-0
+Colombia,CO,SIDA,,SE-0
+Comoros,KM,SIDA,,SE-0
+Congo,CG,SIDA,,SE-0
+Costa Rica,CR,SIDA,,SE-0
+Cuba,CU,SIDA,,SE-0
+Democratic People's Republic of Korea,KR,SIDA,,SE-0
+Democratic Republic of the Congo,CD,SIDA,,SE-0
+Djibouti,DJ,SIDA,,SE-0
+Dominican Republic,DO,SIDA,,SE-0
+Ecuador,EC,SIDA,,SE-0
+El Salvador,SV,SIDA,,SE-0
+Eritrea,ER,SIDA,,SE-0
+Eswatini,SZ,SIDA,,SE-0
+Ethiopia,ET,SIDA,,SE-0
+Gabon,GA,SIDA,,SE-0
+Georgia,GE,SIDA,,SE-0
+Guatemala,GT,SIDA,,SE-0
+Guyana,GY,SIDA,,SE-0
+Haiti,HT,SIDA,,SE-0
+Honduras,HN,SIDA,,SE-0
+India,IN,SIDA,,SE-0
+Indonesia,ID,SIDA,,SE-0
+Iran (Islamic Republic of),IR,SIDA,,SE-0
+Iraq,IQ,SIDA,,SE-0
+Jamaica,JM,SIDA,,SE-0
+Jordan,JO,SIDA,,SE-0
+Kazakhstan,KZ,SIDA,,SE-0
+Kenya,KE,SIDA,,SE-0
+Kosovo,XK,SIDA,,SE-0
+Kyrgyzstan,KG,SIDA,,SE-0
+Lao People's Democratic Republic,LA,SIDA,,SE-0
+Lebanon,LB,SIDA,,SE-0
+Lesotho,LS,SIDA,,SE-0
+Madagascar,MG,SIDA,,SE-0
+Malawi,MW,SIDA,,SE-0
+Malaysia,MY,SIDA,,SE-0
+Maldives,MV,SIDA,,SE-0
+Mauritius,MU,SIDA,,SE-0
+Mexico,MX,SIDA,,SE-0
+Moldova,MD,SIDA,,SE-0
+Mongolia,MN,SIDA,,SE-0
+Montenegro,ME,SIDA,,SE-0
+Mozambique,MZ,SIDA,,SE-0
+Myanmar,MM,SIDA,,SE-0
+Namibia,NA,SIDA,,SE-0
+Nepal,NP,SIDA,,SE-0
+Nicaragua,NI,SIDA,,SE-0
+North Macedonia,MK,SIDA,,SE-0
+Pakistan,PK,SIDA,,SE-0
+Palestinian Territories,PS,SIDA,,SE-0
+Panama,PA,SIDA,,SE-0
+Papua New Guinea,PG,SIDA,,SE-0
+Paraguay,PY,SIDA,,SE-0
+Peru,PE,SIDA,,SE-0
+Philippines,PH,SIDA,,SE-0
+Rwanda,RW,SIDA,,SE-0
+Samoa,WS,SIDA,,SE-0
+São Tomé and Príncipe,ST,SIDA,,SE-0
+Serbia,RS,SIDA,,SE-0
+Solomon Islands,SB,SIDA,,SE-0
+Somalia,SO,SIDA,,SE-0
+South Africa,ZA,SIDA,,SE-0
+South Sudan,SS,SIDA,,SE-0
+Sri Lanka,LK,SIDA,,SE-0
+Sudan,SD,SIDA,,SE-0
+Suriname,SR,SIDA,,SE-0
+Syrian Arab Republic,SY,SIDA,,SE-0
+Tajikistan,TJ,SIDA,,SE-0
+Tanzania,TZ,SIDA,,SE-0
+Thailand,TH,SIDA,,SE-0
+Timor-Leste,TL,SIDA,,SE-0
+Tonga,TO,SIDA,,SE-0
+Turkey,TR,SIDA,,SE-0
+Tuvalu,TV,SIDA,,SE-0
+Uganda,UG,SIDA,,SE-0
+Ukraine,UA,SIDA,,SE-0
+Uzbekistan,UZ,SIDA,,SE-0
+Vanuatu,VU,SIDA,,SE-0
+Venezuela,VE,SIDA,,SE-0
+Vietnam,VN,SIDA,,SE-0
+Yemen,YE,SIDA,,SE-0
+Zambia,ZM,SIDA,,SE-0
+Zimbabwe,ZW,SIDA,,SE-0
+Afghanistan,AF,Spain AECID,,XM-DAC-50-21
+Argentina,AR,Spain AECID,,XM-DAC-50-21
+Bolivia,BO,Spain AECID,,XM-DAC-50-21
+Brazil,BR,Spain AECID,,XM-DAC-50-21
+Burkina Faso,BF,Spain AECID,,XM-DAC-50-21
+Cabo Verde,CV,Spain AECID,,XM-DAC-50-21
+Chile,CL,Spain AECID,,XM-DAC-50-21
+Colombia,CO,Spain AECID,,XM-DAC-50-21
+Costa Rica,CR,Spain AECID,,XM-DAC-50-21
+Cuba,CU,Spain AECID,,XM-DAC-50-21
+Dominican Republic,DO,Spain AECID,,XM-DAC-50-21
+Ecuador,EC,Spain AECID,,XM-DAC-50-21
+Egypt,EG,Spain AECID,,XM-DAC-50-21
+El Salvador,SV,Spain AECID,,XM-DAC-50-21
+Equatorial Guinea,GQ,Spain AECID,,XM-DAC-50-21
+Ethiopia,ET,Spain AECID,,XM-DAC-50-21
+Guatemala,GT,Spain AECID,,XM-DAC-50-21
+Haiti,HT,Spain AECID,,XM-DAC-50-21
+Honduras,HN,Spain AECID,,XM-DAC-50-21
+Jordan,JO,Spain AECID,,XM-DAC-50-21
+Lebanon,LB,Spain AECID,,XM-DAC-50-21
+Mali,ML,Spain AECID,,XM-DAC-50-21
+Mauritania,MR,Spain AECID,,XM-DAC-50-21
+Mexico,MX,Spain AECID,,XM-DAC-50-21
+Morocco,MA,Spain AECID,,XM-DAC-50-21
+Mozambique,MZ,Spain AECID,,XM-DAC-50-21
+Nicaragua,NI,Spain AECID,,XM-DAC-50-21
+Niger,NE,Spain AECID,,XM-DAC-50-21
+Nigeria,NG,Spain AECID,,XM-DAC-50-21
+Palestinian Territories,PS,Spain AECID,,XM-DAC-50-21
+Panama,PA,Spain AECID,,XM-DAC-50-21
+Paraguay,PY,Spain AECID,,XM-DAC-50-21
+Peru,PE,Spain AECID,,XM-DAC-50-21
+Philippines,PH,Spain AECID,,XM-DAC-50-21
+Senegal,SN,Spain AECID,,XM-DAC-50-21
+Syria,SY,Spain AECID,,XM-DAC-50-21
+Tunisia,TN,Spain AECID,,XM-DAC-50-21
+Ukraine,UA,Spain AECID,,XM-DAC-50-21
+Uruguay,UY,Spain AECID,,XM-DAC-50-21
+Venezuela,VE,Spain AECID,,XM-DAC-50-21
+Afghanistan,AF,Swiss SDC,,CH-4
+Albania,AL,Swiss SDC,,CH-4
+Armenia,AM,Swiss SDC,,CH-4
+Bangladesh,BD,Swiss SDC,,CH-4
+Benin,BJ,Swiss SDC,,CH-4
+Bosnia and Herzegovina,BA,Swiss SDC,,CH-4
+Burkina Faso,BF,Swiss SDC,,CH-4
+Cambodia,KH,Swiss SDC,,CH-4
+Central African Republic,CF,Swiss SDC,,CH-4
+Chad,TD,Swiss SDC,,CH-4
+Colombia,CO,Swiss SDC,,CH-4
+Egypt,EG,Swiss SDC,,CH-4
+Ethiopia,ET,Swiss SDC,,CH-4
+Georgia,GE,Swiss SDC,,CH-4
+Haiti,HT,Swiss SDC,,CH-4
+Iraq,IQ,Swiss SDC,,CH-4
+Jordan,JO,Swiss SDC,,CH-4
+Kenya,KE,Swiss SDC,,CH-4
+Kosovo,XK,Swiss SDC,,CH-4
+Kyrgyzstan,KG,Swiss SDC,,CH-4
+Lao People's Democratic Republic,LA,Swiss SDC,,CH-4
+Lebanon,LB,Swiss SDC,,CH-4
+Mali,ML,Swiss SDC,,CH-4
+Moldova,MD,Swiss SDC,,CH-4
+Mozambique,MZ,Swiss SDC,,CH-4
+Myanmar,MM,Swiss SDC,,CH-4
+Nepal,NP,Swiss SDC,,CH-4
+Niger,NE,Swiss SDC,,CH-4
+North Macedonia,MK,Swiss SDC,,CH-4
+Palestinian Territories,PS,Swiss SDC,,CH-4
+Serbia,RS,Swiss SDC,,CH-4
+Somalia,SO,Swiss SDC,,CH-4
+South Sudan,SS,Swiss SDC,,CH-4
+Sudan,SD,Swiss SDC,,CH-4
+Tajikistan,TJ,Swiss SDC,,CH-4
+Tanzania,TZ,Swiss SDC,,CH-4
+Tunisia,TN,Swiss SDC,,CH-4
+Turkey,TR,Swiss SDC,,CH-4
+Ukraine,UA,Swiss SDC,,CH-4
+Uzbekistan,UZ,Swiss SDC,,CH-4
+Venezuela,VE,Swiss SDC,,CH-4
+Yemen,YE,Swiss SDC,,CH-4
+Zambia,ZM,Swiss SDC,,CH-4
+Zimbabwe,ZW,Swiss SDC,,CH-4
+Brazil,BR,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Burkina Faso,BF,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Cameroon,CM,The William and Flora Hewlett Foundation,,US-EIN-941655673
+China,CN,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Côte d'Ivoire,CI,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Ghana,GH,The William and Flora Hewlett Foundation,,US-EIN-941655673
+India,IN,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Kenya,KE,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Liberia,LR,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Mali,ML,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Mexico,MX,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Rwanda,RW,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Senegal,SN,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Sierra Leone,SL,The William and Flora Hewlett Foundation,,US-EIN-941655673
+South Africa,ZA,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Tanzania,TZ,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Uganda,UG,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Zambia,ZM,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Zimbabwe,ZW,The William and Flora Hewlett Foundation,,US-EIN-941655673
+Afghanistan,AF,UAE MoFA,,XM-DAC-576
+Albania,AL,UAE MoFA,,XM-DAC-576
+Argentina,AR,UAE MoFA,,XM-DAC-576
+Azerbaijan,AZ,UAE MoFA,,XM-DAC-576
+Bangladesh,BD,UAE MoFA,,XM-DAC-576
+Benin,BJ,UAE MoFA,,XM-DAC-576
+Bhutan,BT,UAE MoFA,,XM-DAC-576
+Bolivia,BO,UAE MoFA,,XM-DAC-576
+Botswana,BW,UAE MoFA,,XM-DAC-576
+Brazil,BR,UAE MoFA,,XM-DAC-576
+Burkina Faso,BF,UAE MoFA,,XM-DAC-576
+Burundi,BI,UAE MoFA,,XM-DAC-576
+Cambodia,KH,UAE MoFA,,XM-DAC-576
+Cameroon,CM,UAE MoFA,,XM-DAC-576
+Central African Republic,CF,UAE MoFA,,XM-DAC-576
+Chad,TD,UAE MoFA,,XM-DAC-576
+Colombia,CO,UAE MoFA,,XM-DAC-576
+Comoros,KM,UAE MoFA,,XM-DAC-576
+Congo,CG,UAE MoFA,,XM-DAC-576
+Costa Rica,CR,UAE MoFA,,XM-DAC-576
+Côte d'Ivoire,CI,UAE MoFA,,XM-DAC-576
+Cuba,CU,UAE MoFA,,XM-DAC-576
+Democratic Republic of the Congo,CD,UAE MoFA,,XM-DAC-576
+Dominican Republic,DO,UAE MoFA,,XM-DAC-576
+Ecuador,EC,UAE MoFA,,XM-DAC-576
+Egypt,EG,UAE MoFA,,XM-DAC-576
+El Salvador,SV,UAE MoFA,,XM-DAC-576
+Eritrea,ER,UAE MoFA,,XM-DAC-576
+Eswatini,SZ,UAE MoFA,,XM-DAC-576
+Ethiopia,ET,UAE MoFA,,XM-DAC-576
+French Polynesia,PF,UAE MoFA,,XM-DAC-576
+Gambia,GM,UAE MoFA,,XM-DAC-576
+Georgia,GE,UAE MoFA,,XM-DAC-576
+Ghana,GH,UAE MoFA,,XM-DAC-576
+Grenada,GD,UAE MoFA,,XM-DAC-576
+Guatemala,GT,UAE MoFA,,XM-DAC-576
+Guinea,GN,UAE MoFA,,XM-DAC-576
+Guinea-Bissau,GW,UAE MoFA,,XM-DAC-576
+Haiti,HT,UAE MoFA,,XM-DAC-576
+Honduras,HN,UAE MoFA,,XM-DAC-576
+India,IN,UAE MoFA,,XM-DAC-576
+Indonesia,ID,UAE MoFA,,XM-DAC-576
+Iraq,IQ,UAE MoFA,,XM-DAC-576
+Jamaica,JM,UAE MoFA,,XM-DAC-576
+Jordan,JO,UAE MoFA,,XM-DAC-576
+Kazakhstan,KZ,UAE MoFA,,XM-DAC-576
+Kenya,KE,UAE MoFA,,XM-DAC-576
+Kosovo,XK,UAE MoFA,,XM-DAC-576
+Kyrgyzstan,KG,UAE MoFA,,XM-DAC-576
+Lebanon,LB,UAE MoFA,,XM-DAC-576
+Liberia,LR,UAE MoFA,,XM-DAC-576
+Libya,LY,UAE MoFA,,XM-DAC-576
+Madagascar,MG,UAE MoFA,,XM-DAC-576
+Malawi,MW,UAE MoFA,,XM-DAC-576
+Malaysia,MY,UAE MoFA,,XM-DAC-576
+Maldives,MV,UAE MoFA,,XM-DAC-576
+Mauritania,MR,UAE MoFA,,XM-DAC-576
+Mauritius,MU,UAE MoFA,,XM-DAC-576
+Mexico,MX,UAE MoFA,,XM-DAC-576
+Mongolia,MN,UAE MoFA,,XM-DAC-576
+Montenegro,ME,UAE MoFA,,XM-DAC-576
+Morocco,MA,UAE MoFA,,XM-DAC-576
+Mozambique,MZ,UAE MoFA,,XM-DAC-576
+Myanmar,MM,UAE MoFA,,XM-DAC-576
+Nepal,NP,UAE MoFA,,XM-DAC-576
+Niger,NE,UAE MoFA,,XM-DAC-576
+Nigeria,NG,UAE MoFA,,XM-DAC-576
+Niue,NU,UAE MoFA,,XM-DAC-576
+Pakistan,PK,UAE MoFA,,XM-DAC-576
+Palestinian Territories,PS,UAE MoFA,,XM-DAC-576
+Panama,PA,UAE MoFA,,XM-DAC-576
+Paraguay,PY,UAE MoFA,,XM-DAC-576
+Peru,PE,UAE MoFA,,XM-DAC-576
+Philippines,PH,UAE MoFA,,XM-DAC-576
+Rwanda,RW,UAE MoFA,,XM-DAC-576
+Saint Lucia,LC,UAE MoFA,,XM-DAC-576
+Saint Vincent and the Grenadines,VC,UAE MoFA,,XM-DAC-576
+Senegal,SN,UAE MoFA,,XM-DAC-576
+Serbia,RS,UAE MoFA,,XM-DAC-576
+Sierra Leone,SL,UAE MoFA,,XM-DAC-576
+Somalia,SO,UAE MoFA,,XM-DAC-576
+South Africa,ZA,UAE MoFA,,XM-DAC-576
+South Sudan,SS,UAE MoFA,,XM-DAC-576
+Sri Lanka,LK,UAE MoFA,,XM-DAC-576
+Sudan,SD,UAE MoFA,,XM-DAC-576
+Suriname,SR,UAE MoFA,,XM-DAC-576
+Syrian Arab Republic,SY,UAE MoFA,,XM-DAC-576
+Tanzania,TZ,UAE MoFA,,XM-DAC-576
+Thailand,TH,UAE MoFA,,XM-DAC-576
+Togo,TG,UAE MoFA,,XM-DAC-576
+Turkmenistan,TM,UAE MoFA,,XM-DAC-576
+Uganda,UG,UAE MoFA,,XM-DAC-576
+Ukraine,UA,UAE MoFA,,XM-DAC-576
+Uzbekistan,UZ,UAE MoFA,,XM-DAC-576
+Vietnam,VN,UAE MoFA,,XM-DAC-576
+Yemen,YE,UAE MoFA,,XM-DAC-576
+Zambia,ZM,UAE MoFA,,XM-DAC-576
+Zimbabwe,ZW,UAE MoFA,,XM-DAC-576
+Afghanistan,AF,"UK, FCDO",,GB-GOV-1
+Albania,AL,"UK, FCDO",,GB-GOV-1
+Angola,AO,"UK, FCDO",,GB-GOV-1
+Antigua and Barbuda,AG,"UK, FCDO",,GB-GOV-1
+Argentina,AR,"UK, FCDO",,GB-GOV-1
+Armenia,AM,"UK, FCDO",,GB-GOV-1
+Azerbaijan,AZ,"UK, FCDO",,GB-GOV-1
+Bahamas,BS,"UK, FCDO",,GB-GOV-1
+Bangladesh,BD,"UK, FCDO",,GB-GOV-1
+Barbados,BB,"UK, FCDO",,GB-GOV-1
+Belize,BZ,"UK, FCDO",,GB-GOV-1
+Bolivia,BO,"UK, FCDO",,GB-GOV-1
+Bosnia and Herzegovina,BA,"UK, FCDO",,GB-GOV-1
+Botswana,BW,"UK, FCDO",,GB-GOV-1
+Brazil,BR,"UK, FCDO",,GB-GOV-1
+Burundi,BI,"UK, FCDO",,GB-GOV-1
+Cambodia,KH,"UK, FCDO",,GB-GOV-1
+Cameroon,CM,"UK, FCDO",,GB-GOV-1
+Chad,TD,"UK, FCDO",,GB-GOV-1
+Chile,CL,"UK, FCDO",,GB-GOV-1
+Colombia,CO,"UK, FCDO",,GB-GOV-1
+Costa Rica,CR,"UK, FCDO",,GB-GOV-1
+Côte d'Ivoire,CI,"UK, FCDO",,GB-GOV-1
+Cuba,CU,"UK, FCDO",,GB-GOV-1
+Democratic People's Republic of Korea,KR,"UK, FCDO",,GB-GOV-1
+Democratic Republic of the Congo,CD,"UK, FCDO",,GB-GOV-1
+Djibouti,DJ,"UK, FCDO",,GB-GOV-1
+Dominican Republic,DO,"UK, FCDO",,GB-GOV-1
+Ecuador,EC,"UK, FCDO",,GB-GOV-1
+El Salvador,SV,"UK, FCDO",,GB-GOV-1
+Eritrea,ER,"UK, FCDO",,GB-GOV-1
+Eswatini,SZ,"UK, FCDO",,GB-GOV-1
+Ethiopia,ET,"UK, FCDO",,GB-GOV-1
+Gambia,GM,"UK, FCDO",,GB-GOV-1
+Georgia,GE,"UK, FCDO",,GB-GOV-1
+Ghana,GH,"UK, FCDO",,GB-GOV-1
+Grenada,GD,"UK, FCDO",,GB-GOV-1
+Guatemala,GT,"UK, FCDO",,GB-GOV-1
+Guinea,GN,"UK, FCDO",,GB-GOV-1
+Guyana,GY,"UK, FCDO",,GB-GOV-1
+India,IN,"UK, FCDO",,GB-GOV-1
+Indonesia,ID,"UK, FCDO",,GB-GOV-1
+Iraq,IQ,"UK, FCDO",,GB-GOV-1
+Jordan,JO,"UK, FCDO",,GB-GOV-1
+Kazakhstan,KZ,"UK, FCDO",,GB-GOV-1
+Kenya,KE,"UK, FCDO",,GB-GOV-1
+Kosovo,XK,"UK, FCDO",,GB-GOV-1
+Kuwait,KW,"UK, FCDO",,GB-GOV-1
+Kyrgyzstan,KG,"UK, FCDO",,GB-GOV-1
+Lao People's Democratic Republic,LA,"UK, FCDO",,GB-GOV-1
+Lebanon,LB,"UK, FCDO",,GB-GOV-1
+Lesotho,LS,"UK, FCDO",,GB-GOV-1
+Liberia,LR,"UK, FCDO",,GB-GOV-1
+Libya,LY,"UK, FCDO",,GB-GOV-1
+Madagascar,MG,"UK, FCDO",,GB-GOV-1
+Malawi,MW,"UK, FCDO",,GB-GOV-1
+Malaysia,MY,"UK, FCDO",,GB-GOV-1
+Maldives,MV,"UK, FCDO",,GB-GOV-1
+Mali,ML,"UK, FCDO",,GB-GOV-1
+Mauritania,MR,"UK, FCDO",,GB-GOV-1
+Mauritius,MU,"UK, FCDO",,GB-GOV-1
+Moldova,MD,"UK, FCDO",,GB-GOV-1
+Mongolia,MN,"UK, FCDO",,GB-GOV-1
+Montenegro,ME,"UK, FCDO",,GB-GOV-1
+Morocco,MA,"UK, FCDO",,GB-GOV-1
+Mozambique,MZ,"UK, FCDO",,GB-GOV-1
+Myanmar,MM,"UK, FCDO",,GB-GOV-1
+Namibia,NA,"UK, FCDO",,GB-GOV-1
+Nepal,NP,"UK, FCDO",,GB-GOV-1
+Niger,NE,"UK, FCDO",,GB-GOV-1
+Nigeria,NG,"UK, FCDO",,GB-GOV-1
+North Macedonia,MK,"UK, FCDO",,GB-GOV-1
+Pakistan,PK,"UK, FCDO",,GB-GOV-1
+Palestinian Territories,PS,"UK, FCDO",,GB-GOV-1
+Panama,PA,"UK, FCDO",,GB-GOV-1
+Paraguay,PY,"UK, FCDO",,GB-GOV-1
+Peru,PE,"UK, FCDO",,GB-GOV-1
+Philippines,PH,"UK, FCDO",,GB-GOV-1
+Rwanda,RW,"UK, FCDO",,GB-GOV-1
+Saint Lucia,LC,"UK, FCDO",,GB-GOV-1
+Senegal,SN,"UK, FCDO",,GB-GOV-1
+Serbia,RS,"UK, FCDO",,GB-GOV-1
+Seychelles,SC,"UK, FCDO",,GB-GOV-1
+Sierra Leone,SL,"UK, FCDO",,GB-GOV-1
+Somalia,SO,"UK, FCDO",,GB-GOV-1
+South Africa,ZA,"UK, FCDO",,GB-GOV-1
+South Sudan,SS,"UK, FCDO",,GB-GOV-1
+Sri Lanka,LK,"UK, FCDO",,GB-GOV-1
+Sudan,SD,"UK, FCDO",,GB-GOV-1
+Syria,SY,"UK, FCDO",,GB-GOV-1
+Tajikistan,TJ,"UK, FCDO",,GB-GOV-1
+Tanzania,TZ,"UK, FCDO",,GB-GOV-1
+Thailand,TH,"UK, FCDO",,GB-GOV-1
+Trinidad and Tobago,TT,"UK, FCDO",,GB-GOV-1
+Turkey,TR,"UK, FCDO",,GB-GOV-1
+Turkmenistan,TM,"UK, FCDO",,GB-GOV-1
+Uganda,UG,"UK, FCDO",,GB-GOV-1
+Ukraine,UA,"UK, FCDO",,GB-GOV-1
+Uruguay,UY,"UK, FCDO",,GB-GOV-1
+Uzbekistan,UZ,"UK, FCDO",,GB-GOV-1
+Vanuatu,VU,"UK, FCDO",,GB-GOV-1
+Venezuela,VE,"UK, FCDO",,GB-GOV-1
+Vietnam,VN,"UK, FCDO",,GB-GOV-1
+Yemen,YE,"UK, FCDO",,GB-GOV-1
+Zambia,ZM,"UK, FCDO",,GB-GOV-1
+Zimbabwe,ZW,"UK, FCDO",,GB-GOV-1
+Afghanistan,AF,UNDP,,XM-DAC-41114
+Albania,AL,UNDP,,XM-DAC-41114
+Algeria,DZ,UNDP,,XM-DAC-41114
+Angola,AO,UNDP,,XM-DAC-41114
+Antigua and Barbuda,AG,UNDP,,XM-DAC-41114
+Argentina,AR,UNDP,,XM-DAC-41114
+Armenia,AM,UNDP,,XM-DAC-41114
+Aruba,AW,UNDP,,XM-DAC-41114
+Azerbaijan,AZ,UNDP,,XM-DAC-41114
+Bahamas,BS,UNDP,,XM-DAC-41114
+Bahrain,BH,UNDP,,XM-DAC-41114
+Bangladesh,BD,UNDP,,XM-DAC-41114
+Barbados,BB,UNDP,,XM-DAC-41114
+Belarus,BY,UNDP,,XM-DAC-41114
+Belize,BZ,UNDP,,XM-DAC-41114
+Benin,BJ,UNDP,,XM-DAC-41114
+Bhutan,BT,UNDP,,XM-DAC-41114
+Bolivia,BO,UNDP,,XM-DAC-41114
+Bosnia and Herzegovina,BA,UNDP,,XM-DAC-41114
+Botswana,BW,UNDP,,XM-DAC-41114
+Brazil,BR,UNDP,,XM-DAC-41114
+Bulgaria,BG,UNDP,,XM-DAC-41114
+Burkina Faso,BF,UNDP,,XM-DAC-41114
+Burundi,BI,UNDP,,XM-DAC-41114
+Cabo Verde,CV,UNDP,,XM-DAC-41114
+Cambodia,KH,UNDP,,XM-DAC-41114
+Cameroon,CM,UNDP,,XM-DAC-41114
+Central African Republic,CF,UNDP,,XM-DAC-41114
+Chad,TD,UNDP,,XM-DAC-41114
+Chile,CL,UNDP,,XM-DAC-41114
+China,CN,UNDP,,XM-DAC-41114
+Colombia,CO,UNDP,,XM-DAC-41114
+Comoros,KM,UNDP,,XM-DAC-41114
+Congo,CG,UNDP,,XM-DAC-41114
+Costa Rica,CR,UNDP,,XM-DAC-41114
+Côte d'Ivoire,CI,UNDP,,XM-DAC-41114
+Cuba,CU,UNDP,,XM-DAC-41114
+Curaçao,CW,UNDP,,XM-DAC-41114
+Cyprus,CY,UNDP,,XM-DAC-41114
+Democratic Republic of the Congo,CD,UNDP,,XM-DAC-41114
+Djibouti,DJ,UNDP,,XM-DAC-41114
+Dominica,DM,UNDP,,XM-DAC-41114
+Dominican Republic,DO,UNDP,,XM-DAC-41114
+Ecuador,EC,UNDP,,XM-DAC-41114
+Egypt,EG,UNDP,,XM-DAC-41114
+El Salvador,SV,UNDP,,XM-DAC-41114
+Equatorial Guinea,GQ,UNDP,,XM-DAC-41114
+Eritrea,ER,UNDP,,XM-DAC-41114
+Estonia,EE,UNDP,,XM-DAC-41114
+Eswatini,SZ,UNDP,,XM-DAC-41114
+Ethiopia,ET,UNDP,,XM-DAC-41114
+Fiji,FJ,UNDP,,XM-DAC-41114
+Gabon,GA,UNDP,,XM-DAC-41114
+Gambia,GM,UNDP,,XM-DAC-41114
+Georgia,GE,UNDP,,XM-DAC-41114
+Ghana,GH,UNDP,,XM-DAC-41114
+Greece,GR,UNDP,,XM-DAC-41114
+Grenada,GD,UNDP,,XM-DAC-41114
+Guatemala,GT,UNDP,,XM-DAC-41114
+Guinea,GN,UNDP,,XM-DAC-41114
+Guinea-Bissau,GW,UNDP,,XM-DAC-41114
+Guyana,GY,UNDP,,XM-DAC-41114
+Haiti,HT,UNDP,,XM-DAC-41114
+Honduras,HN,UNDP,,XM-DAC-41114
+Hungary,HU,UNDP,,XM-DAC-41114
+India,IN,UNDP,,XM-DAC-41114
+Indonesia,ID,UNDP,,XM-DAC-41114
+Iran (Islamic Republic of),IR,UNDP,,XM-DAC-41114
+Iraq,IQ,UNDP,,XM-DAC-41114
+Jamaica,JM,UNDP,,XM-DAC-41114
+Jordan,JO,UNDP,,XM-DAC-41114
+Kazakhstan,KZ,UNDP,,XM-DAC-41114
+Kenya,KE,UNDP,,XM-DAC-41114
+Kiribati,KI,UNDP,,XM-DAC-41114
+Kuwait,KW,UNDP,,XM-DAC-41114
+Kyrgyzstan,KG,UNDP,,XM-DAC-41114
+Lao People's Democratic Republic,LA,UNDP,,XM-DAC-41114
+Latvia,LV,UNDP,,XM-DAC-41114
+Lebanon,LB,UNDP,,XM-DAC-41114
+Lesotho,LS,UNDP,,XM-DAC-41114
+Liberia,LR,UNDP,,XM-DAC-41114
+Libya,LY,UNDP,,XM-DAC-41114
+Lithuania,LT,UNDP,,XM-DAC-41114
+Madagascar,MG,UNDP,,XM-DAC-41114
+Malawi,MW,UNDP,,XM-DAC-41114
+Malaysia,MY,UNDP,,XM-DAC-41114
+Maldives,MV,UNDP,,XM-DAC-41114
+Mali,ML,UNDP,,XM-DAC-41114
+Marshall Islands,MH,UNDP,,XM-DAC-41114
+Mauritania,MR,UNDP,,XM-DAC-41114
+Mauritius,MU,UNDP,,XM-DAC-41114
+Mexico,MX,UNDP,,XM-DAC-41114
+Micronesia (Federated States of),FM,UNDP,,XM-DAC-41114
+Moldova,MD,UNDP,,XM-DAC-41114
+Mongolia,MN,UNDP,,XM-DAC-41114
+Montenegro,ME,UNDP,,XM-DAC-41114
+Morocco,MA,UNDP,,XM-DAC-41114
+Mozambique,MZ,UNDP,,XM-DAC-41114
+Myanmar,MM,UNDP,,XM-DAC-41114
+Namibia,NA,UNDP,,XM-DAC-41114
+Nauru,NR,UNDP,,XM-DAC-41114
+Nepal,NP,UNDP,,XM-DAC-41114
+Nicaragua,NI,UNDP,,XM-DAC-41114
+Niger,NE,UNDP,,XM-DAC-41114
+Nigeria,NG,UNDP,,XM-DAC-41114
+North Macedonia,MK,UNDP,,XM-DAC-41114
+Oman,OM,UNDP,,XM-DAC-41114
+Pakistan,PK,UNDP,,XM-DAC-41114
+Palau,PW,UNDP,,XM-DAC-41114
+Panama,PA,UNDP,,XM-DAC-41114
+Papua New Guinea,PG,UNDP,,XM-DAC-41114
+Paraguay,PY,UNDP,,XM-DAC-41114
+Peru,PE,UNDP,,XM-DAC-41114
+Philippines,PH,UNDP,,XM-DAC-41114
+Romania,RO,UNDP,,XM-DAC-41114
+Rwanda,RW,UNDP,,XM-DAC-41114
+Saint Kitts and Nevis,KN,UNDP,,XM-DAC-41114
+Saint Lucia,LC,UNDP,,XM-DAC-41114
+Saint Vincent and the Grenadines,VC,UNDP,,XM-DAC-41114
+Samoa,WS,UNDP,,XM-DAC-41114
+São Tomé and Príncipe,ST,UNDP,,XM-DAC-41114
+Senegal,SN,UNDP,,XM-DAC-41114
+Serbia,RS,UNDP,,XM-DAC-41114
+Seychelles,SC,UNDP,,XM-DAC-41114
+Sierra Leone,SL,UNDP,,XM-DAC-41114
+Slovak Republic,SK,UNDP,,XM-DAC-41114
+Slovenia,SI,UNDP,,XM-DAC-41114
+Solomon Islands,SB,UNDP,,XM-DAC-41114
+Somalia,SO,UNDP,,XM-DAC-41114
+South Africa,ZA,UNDP,,XM-DAC-41114
+South Sudan,SS,UNDP,,XM-DAC-41114
+Sri Lanka,LK,UNDP,,XM-DAC-41114
+Sudan,SD,UNDP,,XM-DAC-41114
+Suriname,SR,UNDP,,XM-DAC-41114
+Syrian Arab Republic,SY,UNDP,,XM-DAC-41114
+Tajikistan,TJ,UNDP,,XM-DAC-41114
+Tanzania,TZ,UNDP,,XM-DAC-41114
+Thailand,TH,UNDP,,XM-DAC-41114
+Timor-Leste,TL,UNDP,,XM-DAC-41114
+Togo,TG,UNDP,,XM-DAC-41114
+Tonga,TO,UNDP,,XM-DAC-41114
+Trinidad and Tobago,TT,UNDP,,XM-DAC-41114
+Tunisia,TN,UNDP,,XM-DAC-41114
+Turkey,TR,UNDP,,XM-DAC-41114
+Turkmenistan,TM,UNDP,,XM-DAC-41114
+Tuvalu,TV,UNDP,,XM-DAC-41114
+Uganda,UG,UNDP,,XM-DAC-41114
+Ukraine,UA,UNDP,,XM-DAC-41114
+Uruguay,UY,UNDP,,XM-DAC-41114
+Uzbekistan,UZ,UNDP,,XM-DAC-41114
+Vanuatu,VU,UNDP,,XM-DAC-41114
+Venezuela,VE,UNDP,,XM-DAC-41114
+Vietnam,VN,UNDP,,XM-DAC-41114
+Yemen,YE,UNDP,,XM-DAC-41114
+Zambia,ZM,UNDP,,XM-DAC-41114
+Zimbabwe,ZW,UNDP,,XM-DAC-41114
+Afghanistan,AF,UNICEF,,XM-DAC-41122
+Albania,AL,UNICEF,,XM-DAC-41122
+Algeria,DZ,UNICEF,,XM-DAC-41122
+Angola,AO,UNICEF,,XM-DAC-41122
+Argentina,AR,UNICEF,,XM-DAC-41122
+Armenia,AM,UNICEF,,XM-DAC-41122
+Azerbaijan,AZ,UNICEF,,XM-DAC-41122
+Bangladesh,BD,UNICEF,,XM-DAC-41122
+Belarus,BY,UNICEF,,XM-DAC-41122
+Belize,BZ,UNICEF,,XM-DAC-41122
+Benin,BJ,UNICEF,,XM-DAC-41122
+Bhutan,BT,UNICEF,,XM-DAC-41122
+Bolivia,BO,UNICEF,,XM-DAC-41122
+Bosnia and Herzegovina,BA,UNICEF,,XM-DAC-41122
+Botswana,BW,UNICEF,,XM-DAC-41122
+Brazil,BR,UNICEF,,XM-DAC-41122
+Bulgaria,BG,UNICEF,,XM-DAC-41122
+Burkina Faso,BF,UNICEF,,XM-DAC-41122
+Burundi,BI,UNICEF,,XM-DAC-41122
+Cambodia,KH,UNICEF,,XM-DAC-41122
+Cameroon,CM,UNICEF,,XM-DAC-41122
+Central African Republic,CF,UNICEF,,XM-DAC-41122
+Chad,TD,UNICEF,,XM-DAC-41122
+Chile,CL,UNICEF,,XM-DAC-41122
+China,CN,UNICEF,,XM-DAC-41122
+Colombia,CO,UNICEF,,XM-DAC-41122
+Comoros,KM,UNICEF,,XM-DAC-41122
+Congo,CG,UNICEF,,XM-DAC-41122
+Costa Rica,CR,UNICEF,,XM-DAC-41122
+Côte d'Ivoire,CI,UNICEF,,XM-DAC-41122
+Croatia,HR,UNICEF,,XM-DAC-41122
+Cuba,CU,UNICEF,,XM-DAC-41122
+Democratic People's Republic of Korea,KR,UNICEF,,XM-DAC-41122
+Democratic Republic of the Congo,CD,UNICEF,,XM-DAC-41122
+Djibouti,DJ,UNICEF,,XM-DAC-41122
+Dominican Republic,DO,UNICEF,,XM-DAC-41122
+Ecuador,EC,UNICEF,,XM-DAC-41122
+Egypt,EG,UNICEF,,XM-DAC-41122
+El Salvador,SV,UNICEF,,XM-DAC-41122
+Equatorial Guinea,GQ,UNICEF,,XM-DAC-41122
+Eritrea,ER,UNICEF,,XM-DAC-41122
+Eswatini,SZ,UNICEF,,XM-DAC-41122
+Ethiopia,ET,UNICEF,,XM-DAC-41122
+Gabon,GA,UNICEF,,XM-DAC-41122
+Gambia,GM,UNICEF,,XM-DAC-41122
+Georgia,GE,UNICEF,,XM-DAC-41122
+Ghana,GH,UNICEF,,XM-DAC-41122
+Greece,GR,UNICEF,,XM-DAC-41122
+Guatemala,GT,UNICEF,,XM-DAC-41122
+Guinea,GN,UNICEF,,XM-DAC-41122
+Guinea-Bissau,GW,UNICEF,,XM-DAC-41122
+Guyana,GY,UNICEF,,XM-DAC-41122
+Haiti,HT,UNICEF,,XM-DAC-41122
+Honduras,HN,UNICEF,,XM-DAC-41122
+India,IN,UNICEF,,XM-DAC-41122
+Indonesia,ID,UNICEF,,XM-DAC-41122
+Iran (Islamic Republic of),IR,UNICEF,,XM-DAC-41122
+Iraq,IQ,UNICEF,,XM-DAC-41122
+Jamaica,JM,UNICEF,,XM-DAC-41122
+Jordan,JO,UNICEF,,XM-DAC-41122
+Kazakhstan,KZ,UNICEF,,XM-DAC-41122
+Kenya,KE,UNICEF,,XM-DAC-41122
+Kyrgyzstan,KG,UNICEF,,XM-DAC-41122
+Lao People's Democratic Republic,LA,UNICEF,,XM-DAC-41122
+Lebanon,LB,UNICEF,,XM-DAC-41122
+Lesotho,LS,UNICEF,,XM-DAC-41122
+Liberia,LR,UNICEF,,XM-DAC-41122
+Libya,LY,UNICEF,,XM-DAC-41122
+Madagascar,MG,UNICEF,,XM-DAC-41122
+Malawi,MW,UNICEF,,XM-DAC-41122
+Malaysia,MY,UNICEF,,XM-DAC-41122
+Maldives,MV,UNICEF,,XM-DAC-41122
+Mali,ML,UNICEF,,XM-DAC-41122
+Mauritania,MR,UNICEF,,XM-DAC-41122
+Mexico,MX,UNICEF,,XM-DAC-41122
+Moldova,MD,UNICEF,,XM-DAC-41122
+Mongolia,MN,UNICEF,,XM-DAC-41122
+Montenegro,ME,UNICEF,,XM-DAC-41122
+Morocco,MA,UNICEF,,XM-DAC-41122
+Mozambique,MZ,UNICEF,,XM-DAC-41122
+Myanmar,MM,UNICEF,,XM-DAC-41122
+Nepal,NP,UNICEF,,XM-DAC-41122
+Nicaragua,NI,UNICEF,,XM-DAC-41122
+Niger,NE,UNICEF,,XM-DAC-41122
+Nigeria,NG,UNICEF,,XM-DAC-41122
+North Macedonia,MK,UNICEF,,XM-DAC-41122
+Oman,OM,UNICEF,,XM-DAC-41122
+Pakistan,PK,UNICEF,,XM-DAC-41122
+Panama,PA,UNICEF,,XM-DAC-41122
+Papua New Guinea,PG,UNICEF,,XM-DAC-41122
+Paraguay,PY,UNICEF,,XM-DAC-41122
+Peru,PE,UNICEF,,XM-DAC-41122
+Philippines,PH,UNICEF,,XM-DAC-41122
+Romania,RO,UNICEF,,XM-DAC-41122
+Rwanda,RW,UNICEF,,XM-DAC-41122
+São Tomé and Príncipe,ST,UNICEF,,XM-DAC-41122
+Senegal,SN,UNICEF,,XM-DAC-41122
+Serbia,RS,UNICEF,,XM-DAC-41122
+Sierra Leone,SL,UNICEF,,XM-DAC-41122
+Somalia,SO,UNICEF,,XM-DAC-41122
+South Africa,ZA,UNICEF,,XM-DAC-41122
+South Sudan,SS,UNICEF,,XM-DAC-41122
+Sri Lanka,LK,UNICEF,,XM-DAC-41122
+Suriname,SR,UNICEF,,XM-DAC-41122
+Syrian Arab Republic,SY,UNICEF,,XM-DAC-41122
+Tajikistan,TJ,UNICEF,,XM-DAC-41122
+Tanzania,TZ,UNICEF,,XM-DAC-41122
+Thailand,TH,UNICEF,,XM-DAC-41122
+Timor-Leste,TL,UNICEF,,XM-DAC-41122
+Togo,TG,UNICEF,,XM-DAC-41122
+Tunisia,TN,UNICEF,,XM-DAC-41122
+Turkey,TR,UNICEF,,XM-DAC-41122
+Turkmenistan,TM,UNICEF,,XM-DAC-41122
+Uganda,UG,UNICEF,,XM-DAC-41122
+Ukraine,UA,UNICEF,,XM-DAC-41122
+Uruguay,UY,UNICEF,,XM-DAC-41122
+Uzbekistan,UZ,UNICEF,,XM-DAC-41122
+Venezuela,VE,UNICEF,,XM-DAC-41122
+Vietnam,VN,UNICEF,,XM-DAC-41122
+Yemen,YE,UNICEF,,XM-DAC-41122
+Zambia,ZM,UNICEF,,XM-DAC-41122
+Zimbabwe,ZW,UNICEF,,XM-DAC-41122
+Afghanistan,AF,US State,,US-GOV-11
+Albania,AL,US State,,US-GOV-11
+Algeria,DZ,US State,,US-GOV-11
+Andorra,AD,US State,,US-GOV-11
+Angola,AO,US State,,US-GOV-11
+Antigua and Barbuda,AG,US State,,US-GOV-11
+Argentina,AR,US State,,US-GOV-11
+Armenia,AM,US State,,US-GOV-11
+Azerbaijan,AZ,US State,,US-GOV-11
+Bahamas,BS,US State,,US-GOV-11
+Bangladesh,BD,US State,,US-GOV-11
+Barbados,BB,US State,,US-GOV-11
+Belarus,BY,US State,,US-GOV-11
+Belize,BZ,US State,,US-GOV-11
+Benin,BJ,US State,,US-GOV-11
+Bhutan,BT,US State,,US-GOV-11
+Bolivia,BO,US State,,US-GOV-11
+Bosnia and Herzegovina,BA,US State,,US-GOV-11
+Botswana,BW,US State,,US-GOV-11
+Brazil,BR,US State,,US-GOV-11
+Bulgaria,BG,US State,,US-GOV-11
+Burkina Faso,BF,US State,,US-GOV-11
+Burma,MM,US State,,US-GOV-11
+Burundi,BI,US State,,US-GOV-11
+Cabo Verde,CV,US State,,US-GOV-11
+Cambodia,KH,US State,,US-GOV-11
+Cameroon,CM,US State,,US-GOV-11
+Central African Republic,CF,US State,,US-GOV-11
+Chad,TD,US State,,US-GOV-11
+Chile,CL,US State,,US-GOV-11
+China,CN,US State,,US-GOV-11
+Colombia,CO,US State,,US-GOV-11
+Comoros,KM,US State,,US-GOV-11
+Congo,CG,US State,,US-GOV-11
+Cook Islands,CK,US State,,US-GOV-11
+Costa Rica,CR,US State,,US-GOV-11
+Côte d'Ivoire,CI,US State,,US-GOV-11
+Croatia,HR,US State,,US-GOV-11
+Cuba,CU,US State,,US-GOV-11
+Cyprus,CY,US State,,US-GOV-11
+Czechia,CZ,US State,,US-GOV-11
+Democratic People's Republic of Korea,KR,US State,,US-GOV-11
+Democratic Republic of the Congo,CD,US State,,US-GOV-11
+Djibouti,DJ,US State,,US-GOV-11
+Dominica,DM,US State,,US-GOV-11
+Dominican Republic,DO,US State,,US-GOV-11
+Ecuador,EC,US State,,US-GOV-11
+Egypt,EG,US State,,US-GOV-11
+El Salvador,SV,US State,,US-GOV-11
+Equatorial Guinea,GQ,US State,,US-GOV-11
+Eritrea,ER,US State,,US-GOV-11
+Estonia,EE,US State,,US-GOV-11
+Eswatini,SZ,US State,,US-GOV-11
+Ethiopia,ET,US State,,US-GOV-11
+Fiji,FJ,US State,,US-GOV-11
+Gabon,GA,US State,,US-GOV-11
+Gambia,GM,US State,,US-GOV-11
+Georgia,GE,US State,,US-GOV-11
+Ghana,GH,US State,,US-GOV-11
+Greece,GR,US State,,US-GOV-11
+Grenada,GD,US State,,US-GOV-11
+Guatemala,GT,US State,,US-GOV-11
+Guinea,GN,US State,,US-GOV-11
+Guinea-Bissau,GW,US State,,US-GOV-11
+Guyana,GY,US State,,US-GOV-11
+Haiti,HT,US State,,US-GOV-11
+Honduras,HN,US State,,US-GOV-11
+India,IN,US State,,US-GOV-11
+Indonesia,ID,US State,,US-GOV-11
+Iran (Islamic Republic of),IR,US State,,US-GOV-11
+Iraq,IQ,US State,,US-GOV-11
+Jamaica,JM,US State,,US-GOV-11
+Jordan,JO,US State,,US-GOV-11
+Kazakhstan,KZ,US State,,US-GOV-11
+Kenya,KE,US State,,US-GOV-11
+Kiribati,KI,US State,,US-GOV-11
+Kosovo,XK,US State,,US-GOV-11
+Kuwait,KW,US State,,US-GOV-11
+Kyrgyzstan,KG,US State,,US-GOV-11
+Lao People's Democratic Republic,LA,US State,,US-GOV-11
+Latvia,LV,US State,,US-GOV-11
+Lebanon,LB,US State,,US-GOV-11
+Lesotho,LS,US State,,US-GOV-11
+Liberia,LR,US State,,US-GOV-11
+Libya,LY,US State,,US-GOV-11
+Lithuania,LT,US State,,US-GOV-11
+Madagascar,MG,US State,,US-GOV-11
+Malawi,MW,US State,,US-GOV-11
+Malaysia,MY,US State,,US-GOV-11
+Maldives,MV,US State,,US-GOV-11
+Mali,ML,US State,,US-GOV-11
+Marshall Islands,MH,US State,,US-GOV-11
+Mauritania,MR,US State,,US-GOV-11
+Mauritius,MU,US State,,US-GOV-11
+Mexico,MX,US State,,US-GOV-11
+Micronesia (Federated States of),FM,US State,,US-GOV-11
+Moldova,MD,US State,,US-GOV-11
+Mongolia,MN,US State,,US-GOV-11
+Montenegro,ME,US State,,US-GOV-11
+Morocco,MA,US State,,US-GOV-11
+Mozambique,MZ,US State,,US-GOV-11
+Namibia,NA,US State,,US-GOV-11
+Nauru,NR,US State,,US-GOV-11
+Nepal,NP,US State,,US-GOV-11
+Nicaragua,NI,US State,,US-GOV-11
+Niger,NE,US State,,US-GOV-11
+Nigeria,NG,US State,,US-GOV-11
+Niue,NU,US State,,US-GOV-11
+North Macedonia,MK,US State,,US-GOV-11
+Oman,OM,US State,,US-GOV-11
+Pakistan,PK,US State,,US-GOV-11
+Palau,PW,US State,,US-GOV-11
+Palestinian Territories,PS,US State,,US-GOV-11
+Panama,PA,US State,,US-GOV-11
+Papua New Guinea,PG,US State,,US-GOV-11
+Paraguay,PY,US State,,US-GOV-11
+Peru,PE,US State,,US-GOV-11
+Philippines,PH,US State,,US-GOV-11
+Romania,RO,US State,,US-GOV-11
+Rwanda,RW,US State,,US-GOV-11
+Saint Kitts and Nevis,KN,US State,,US-GOV-11
+Saint Lucia,LC,US State,,US-GOV-11
+Saint Vincent and the Grenadines,VC,US State,,US-GOV-11
+Samoa,WS,US State,,US-GOV-11
+São Tomé and Príncipe,ST,US State,,US-GOV-11
+Senegal,SN,US State,,US-GOV-11
+Serbia,RS,US State,,US-GOV-11
+Seychelles,SC,US State,,US-GOV-11
+Sierra Leone,SL,US State,,US-GOV-11
+Slovak Republic,SK,US State,,US-GOV-11
+Slovenia,SI,US State,,US-GOV-11
+Solomon Islands,SB,US State,,US-GOV-11
+Somalia,SO,US State,,US-GOV-11
+South Africa,ZA,US State,,US-GOV-11
+South Sudan,SS,US State,,US-GOV-11
+Sri Lanka,LK,US State,,US-GOV-11
+Sudan,SD,US State,,US-GOV-11
+Suriname,SR,US State,,US-GOV-11
+Syria,SY,US State,,US-GOV-11
+Tajikistan,TJ,US State,,US-GOV-11
+Tanzania,TZ,US State,,US-GOV-11
+Thailand,TH,US State,,US-GOV-11
+Timor-Leste,TL,US State,,US-GOV-11
+Togo,TG,US State,,US-GOV-11
+Tonga,TO,US State,,US-GOV-11
+Trinidad and Tobago,TT,US State,,US-GOV-11
+Tunisia,TN,US State,,US-GOV-11
+Turkey,TR,US State,,US-GOV-11
+Turkmenistan,TM,US State,,US-GOV-11
+Tuvalu,TV,US State,,US-GOV-11
+Uganda,UG,US State,,US-GOV-11
+Ukraine,UA,US State,,US-GOV-11
+Uruguay,UY,US State,,US-GOV-11
+Uzbekistan,UZ,US State,,US-GOV-11
+Vanuatu,VU,US State,,US-GOV-11
+Venezuela,VE,US State,,US-GOV-11
+Vietnam,VN,US State,,US-GOV-11
+Yemen,YE,US State,,US-GOV-11
+Zambia,ZM,US State,,US-GOV-11
+Zimbabwe,ZW,US State,,US-GOV-11
+Afghanistan,AF,WB IDA,,44002
+Bangladesh,BD,WB IDA,,44002
+Belize,BZ,WB IDA,,44002
+Benin,BJ,WB IDA,,44002
+Bhutan,BT,WB IDA,,44002
+Burkina Faso,BF,WB IDA,,44002
+Burundi,BI,WB IDA,,44002
+Cabo Verde,CV,WB IDA,,44002
+Cambodia,KH,WB IDA,,44002
+Cameroon,CM,WB IDA,,44002
+Central African Republic,CF,WB IDA,,44002
+Chad,TD,WB IDA,,44002
+Comoros,KM,WB IDA,,44002
+Congo,CG,WB IDA,,44002
+Côte d'Ivoire,CI,WB IDA,,44002
+Democratic Republic of the Congo,CD,WB IDA,,44002
+Djibouti,DJ,WB IDA,,44002
+Dominica,DM,WB IDA,,44002
+Eswatini,SZ,WB IDA,,44002
+Ethiopia,ET,WB IDA,,44002
+Federated States of Micronesia,FM,WB IDA,,44002
+Fiji,FJ,WB IDA,,44002
+Gambia,GM,WB IDA,,44002
+Ghana,GH,WB IDA,,44002
+Guinea,GN,WB IDA,,44002
+Guinea-Bissau,GW,WB IDA,,44002
+Guyana,GY,WB IDA,,44002
+Haiti,HT,WB IDA,,44002
+Honduras,HN,WB IDA,,44002
+India,IN,WB IDA,,44002
+Kenya,KE,WB IDA,,44002
+Kiribati,KI,WB IDA,,44002
+Kosovo,XK,WB IDA,,44002
+Kyrgyz Republic,KG,WB IDA,,44002
+Lao People's Democratic Republic,LA,WB IDA,,44002
+Lesotho,LS,WB IDA,,44002
+Liberia,LR,WB IDA,,44002
+Madagascar,MG,WB IDA,,44002
+Malawi,MW,WB IDA,,44002
+Mali,ML,WB IDA,,44002
+Marshall Islands,MH,WB IDA,,44002
+Mauritania,MR,WB IDA,,44002
+Moldova,MD,WB IDA,,44002
+Mozambique,MZ,WB IDA,,44002
+Myanmar,MM,WB IDA,,44002
+Nepal,NP,WB IDA,,44002
+Niger,NE,WB IDA,,44002
+Nigeria,NG,WB IDA,,44002
+Pakistan,PK,WB IDA,,44002
+Papua New Guinea,PG,WB IDA,,44002
+Rwanda,RW,WB IDA,,44002
+Saint Vincent and the Grenadines,VC,WB IDA,,44002
+Samoa,WS,WB IDA,,44002
+São Tomé and Príncipe,ST,WB IDA,,44002
+Senegal,SN,WB IDA,,44002
+Sierra Leone,SL,WB IDA,,44002
+Solomon Islands,SB,WB IDA,,44002
+Somalia,SO,WB IDA,,44002
+South Sudan,SS,WB IDA,,44002
+Sri Lanka,LK,WB IDA,,44002
+St. Lucia,LC,WB IDA,,44002
+Sudan,SD,WB IDA,,44002
+Suriname,SR,WB IDA,,44002
+Syrian Arab Republic,SY,WB IDA,,44002
+Tajikistan,TJ,WB IDA,,44002
+Tanzania,TZ,WB IDA,,44002
+Togo,TG,WB IDA,,44002
+Tonga,TO,WB IDA,,44002
+Tuvalu,TV,WB IDA,,44002
+Uganda,UG,WB IDA,,44002
+Ukraine,UA,WB IDA,,44002
+Uzbekistan,UZ,WB IDA,,44002
+Vanuatu,VU,WB IDA,,44002
+Yemen,YE,WB IDA,,44002
+Zambia,ZM,WB IDA,,44002
