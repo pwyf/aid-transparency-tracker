@@ -40,7 +40,7 @@ jobs:
       - name: Init database
         run: flask init_db
       - run: cp tests/organisations_with_identifiers.csv tests/organisations_with_identifiers.csv.full
-      - run: cat tests/organisations_with_identifiers.csv.full | grep -E '(country|Belgium)' > tests/organisations_with_identifiers.csv
+      - run: cat tests/organisations_with_identifiers.csv.full | grep -E '(country|Africa)' > tests/organisations_with_identifiers.csv
       - run: flask setup --force --admin-from-config
       - run: flask download_data
       - run: flask import_data
