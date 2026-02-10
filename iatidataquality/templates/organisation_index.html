@@ -9,23 +9,23 @@
         <div class="pull-right">
             {% if admin %}
             <a class="btn btn-default"
-			   href="{{url_for('organisation_edit',
-					 organisation_code=organisation.organisation_code)}}">
-			  <i class="glyphicon glyphicon-wrench"></i> Manage organisation</a>
+               href="{{url_for('organisation_edit',
+                     organisation_code=organisation.organisation_code)}}">
+              <i class="glyphicon glyphicon-wrench"></i> Manage organisation</a>
             {% endif %}
 
             {% if allowed_to_view_survey %}
             <a class="btn btn-default"
-			   href="{{url_for('organisation_survey',
-					 organisation_code=organisation.organisation_code)}}">
-			  <i class="glyphicon glyphicon-info-sign"></i> View survey</a>
+               href="{{url_for('organisation_survey',
+                     organisation_code=organisation.organisation_code)}}">
+              <i class="glyphicon glyphicon-info-sign"></i> View survey</a>
             {% endif %}
 
             {% if show_researcher_button %}
             <a class="btn btn-default" href="{{url_for('organisation_survey_edit',
                                             organisation_code=organisation.organisation_code,
                                             workflow_name=survey_workflow)}}">
-			  <i class="glyphicon glyphicon-star"></i> Start survey</a>
+              <i class="glyphicon glyphicon-star"></i> Start survey</a>
             {% endif %}
         </div>
     </div>
@@ -40,50 +40,57 @@
     <div class="row">
         <div class="col-md-12 publication">
             <h1>Publication</h1>
-			{% include "publication_box.html" %}
+            {% include "publication_box.html" %}
         </div>
     </div>
     <hr />
+    <h2>Timeline</h2>
     <div class="row">
-        <div class="col-md-8">
-        <h3>Timeline</h3>
-        <table class="table">
-        <tbody>
-        <tr>
-            <td><strong>13 November 2023</strong></td>
-			<td>Data collection begins</td>
-        </tr>
-        <tr class="success">
-            <td><strong>6 December 2023</strong></td>
-			<td>Initial assessments shared with organisations</td>
-        </tr>
-        <tr>
-            <td><strong>12 January 2024</strong></td>
-            <td>Results of sampling shared with organisations</td>
-        </tr>
-        <tr class="success">
-            <td><strong>23 February 2024</strong></td>
-            <td>Interim results shared with organisations</td>
-        </tr>
-        <tr>
-            <td><strong>8 April 2024</strong></td>
-			<td>Final IATI data pull</td>
-        </tr>
-        <tr class="success">
-            <td><strong>End of May 2024</strong></td>
-            <td>Final assessments shared with organisations</td>
-        </tr>
-           </tbody>
-        </table>
+        <div class="col-md-6">
+            <h3>Accredited organisations</h3>
+            <table class="table">
+            <tbody>
+            <tr>
+                <td><strong>16 February 2026</strong></td>
+                <td>Data collection begins</td>
+            </tr>
+            <tr class="success">
+                <td><strong>9 March 2026</strong></td>
+                <td>Initial assessments shared with organisations</td>
+            </tr>
+            <tr>
+                <td><strong>23 March 2026</strong></td>
+                <td>Results of sampling shared with organisations</td>
+            </tr>
+            <tr>
+                <td><strong>3 July 2026</strong></td>
+                <td>Final IATI data pull</td>
+            </tr>
+            <tr class="success">
+                <td><strong>24 August 2026</strong></td>
+                <td>Final assessments shared with organisations</td>
+            </tr>
+               </tbody>
+            </table>
         </div>
-
-        <div class="col-md-4">
-            <h3>Scoring approach</h3>
-            <p>Information published in more accessible formats is
-            scored more highly. IATI is the only international
-            standard for publishing comprehensive, comparable, timely
-            and accessible data, which are critical components of aid
-            transparency.</p>
+        <div class="col-md-6">
+            <h3>Non-accredited organisations</h3>
+            <table class="table">
+            <tbody>
+            <tr>
+                <td><strong>16 February 2026</strong></td>
+                <td>Data collection begins</td>
+            </tr>
+            <tr class="success">
+                <td><strong>9 March 2026</strong></td>
+                <td>Manual survey shared with organisations</td>
+            </tr>
+            <tr>
+                <td><strong>3 July 2026</strong></td>
+                <td>Final IATI data pull</td>
+            </tr>
+               </tbody>
+            </table>
         </div>
     </div>
 

@@ -42,6 +42,8 @@ def internal_server_error(e):
 @app.route('/about/')
 def about():
     return render_template("about.html",
+                           ati_year=app.config['ATI_YEAR'],
+                           technical_paper_url=app.config['TECHNICAL_PAPER_URL'],
                            loggedinuser=current_user,
                            admin=usermanagement.check_perms('admin'))
 

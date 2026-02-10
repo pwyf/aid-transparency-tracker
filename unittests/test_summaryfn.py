@@ -41,4 +41,4 @@ def test_summary_fn():
         ] # used to test "package", None
 
     for cfg in configs:
-        yield (check_summary, cfg)
+        (check_summary, cfg)

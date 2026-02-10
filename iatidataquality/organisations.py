@@ -406,6 +406,7 @@ def organisation_publication(organisation_code, aggregation_type):
                            organisation=organisation,
                            admin=usermanagement.check_perms('admin'),
                            loggedinuser=current_user,
+                           technical_paper_url=app.config['TECHNICAL_PAPER_URL'],
                            **payload)
 
 
@@ -528,6 +529,7 @@ def update_organisation(organisation_code):
     data = {
         'organisation_code': request.form['organisation_code'],
         'organisation_name': request.form['organisation_name'],
+        'accreditation': request.form.get('accreditation', "0"),
         'no_independent_reviewer': irev,
         'organisation_responded': orgresp
         }

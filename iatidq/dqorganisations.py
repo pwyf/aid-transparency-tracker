@@ -211,6 +211,7 @@ def addOrganisation(data):
             organisation_currency_conversion=1,
             condition=data.get('packagegroup_condition'),
             self_ref=data.get('self_ref'),
+            accreditation=data.get('Accredited / Non-accredited') == "Accredited"
         )
         db.session.add(newP)
     return newP
@@ -225,6 +226,7 @@ def updateOrganisation(organisation_code, data):
     with db.session.begin():
         checkP.organisation_code = data["organisation_code"]
         checkP.organisation_name = data["organisation_name"]
+        checkP.accreditation = True if data.get("accreditation") == "1" else False
         checkP.no_independent_reviewer = data["no_independent_reviewer"]
         checkP.organisation_responded = data["organisation_responded"]
         db.session.add(checkP)

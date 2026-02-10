@@ -86,6 +86,15 @@
         </td>
     </tr>
     <tr>
+        <td>Accredited:</td>
+        <td><input type="checkbox" name="accreditation"
+                   value="1"
+                   {% if organisation.accreditation %}
+                   checked
+                   {% endif %}/>
+        </td>
+    </tr>
+    <tr>
         <td>No independent reviewer:</td>
         <td><input type="checkbox" name="no_independent_reviewer"
 				   value="1"

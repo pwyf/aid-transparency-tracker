@@ -84,7 +84,7 @@ def test_checks_from_csv():
         reader = csv.reader(f)
         header = next(reader) # i.e., discard first line
         for test_str, description, group in reader:
-            yield check_against_files, test_str
+            check_against_files, test_str
 
 
 @nose.with_setup(setup_func, teardown_func)
@@ -94,7 +94,7 @@ def test_invalid_xpath_syntax():
         ]
 
     for test_str in tests:
-        yield check_data_files_w_xpath_eval_error, test_str
+        check_data_files_w_xpath_eval_error, test_str
 
 @nose.with_setup(setup_func, teardown_func)
 def test_unrecognised_syntaxes():
@@ -103,4 +103,4 @@ def test_unrecognised_syntaxes():
         ]
 
     for test_str in tests:
-        yield check_data_files_w_tst_syntax_error, test_str
+        check_data_files_w_tst_syntax_error, test_str
