@@ -98,9 +98,9 @@
   </p>
 
   {% if timeliness_alert %}
-  <div class="alert alert-info">
+  <div class="alert alert-info" style="padding-bottom: 3rem;">
     <h3>Timeliness of publication</h3>
-    <p class="lead">{{ timeliness_alert }} For more information see <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/#page=21">Section 3.4 (page 20) of the Technical Paper</a>.</p>
+    <p class="lead">{{ timeliness_alert }} For more information see the <a href="{{ technical_paper_url }}">Technical Paper</a>.</p>
   </div>
   {% endif %}
   <table class="table" id="results_iati">
@@ -492,7 +492,7 @@
                     </tr>
                 </tbody>
             </table>
-        <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/"
+        <a href="{{ technical_paper_url }}"
            class="btn btn-default">More details &raquo;</a>
         </div>
         <div class="col-md-6">
