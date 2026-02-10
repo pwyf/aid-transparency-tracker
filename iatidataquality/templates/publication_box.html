@@ -3,6 +3,11 @@
             {% else %}
             <p><i class="glyphicon glyphicon-remove"></i> No IATI data found</p>
             {% endif %}
+            {% if organisation.accreditation %}
+            <p><i class="glyphicon glyphicon-ok"></i> Accreditation Process</p>
+            {% else %}
+            <p><i class="glyphicon glyphicon-remove"></i> Not Part of the Accreditation Process</p>
+            {% endif %}
 
             {% if surveydata %}
             <p><i class="glyphicon glyphicon-info-sign"></i>
@@ -31,11 +36,13 @@
 					   organisation_code=organisation.organisation_code)}}">
 				Review Publication »
 			  </a>
+			  {% if organisation.accreditation %}
 			  <a class="btn btn-default btn-xs"
 				 href="{{url_for('organisation_publication_csv',
 					   organisation_code=organisation.organisation_code)}}">
 				<i class="glyphicon glyphicon-download"></i> Data (CSV)
 			  </a>
+			  {% endif %}
             </p>
 			{% else %}
 

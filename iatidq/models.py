@@ -456,6 +456,7 @@ class Organisation(BaseModel):
     timelag = db.Column(db.UnicodeText)
     tmelag_comment = db.Column(db.UnicodeText)
     no_independent_reviewer=db.Column(db.Boolean)
+    accreditation=db.Column(db.Boolean)
     organisation_responded=db.Column(db.Integer)
     condition = db.Column(db.UnicodeText)
     self_ref = db.Column(db.UnicodeText)
@@ -477,7 +478,8 @@ class Organisation(BaseModel):
                  organisation_largest_recipient_source=None,
                  condition=None,
                  self_ref=None,
-                 id=None):
+                 id=None,
+                 accreditation=True):
         self.organisation_name = organisation_name
         self.registry_slug = registry_slug,
         self.organisation_code = organisation_code
@@ -488,6 +490,7 @@ class Organisation(BaseModel):
         self.organisation_largest_recipient = organisation_largest_recipient
         self.condition = condition
         self.self_ref = self_ref
+        self.accreditation = accreditation
         if id is not None:
             self.id = id
 

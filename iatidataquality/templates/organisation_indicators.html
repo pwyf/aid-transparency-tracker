@@ -68,6 +68,7 @@
 
 <hr />
 <fieldset>
+  {% if organisation.accreditation %}
   <div class="pull-right">
     <form action="" method="GET" id="aggregation_type_form"
           class="form-inline">
@@ -89,7 +90,6 @@
   </div>
 
   <h3>Published to the IATI Registry</h3>
-
   <p class="lead">Information published to the IATI Registry can
     score up to 100 points based on the quality and timeliness of
     publication. This is determined by running a series of tests
@@ -307,6 +307,12 @@
         </div>
     </div>
     </fieldset>
+    {% else %}
+    <h3>Published to the IATI Registry</h3>
+    <div class="alert alert-info" style="padding-bottom: 2rem;">
+      <p class="lead">A detailed assessment of information published in the IATI format is only available to those organisations participating in the Aid Transparency Index accreditation process.</p>
+    </div>
+    {% endif %}
     <a id="noniati"></a>
     <hr />
     <fieldset>
