@@ -1,51 +1,44 @@
-country,donor,organisation_name,organisation_code,2022_organisation_code,self_ref,packagegroup_name,packagegroup_condition
-Africa,AfDB - non-sovereign,AfDB - non-sovereign,46002-non-sovereign,,"46002,XM-DAC-46002,XM-DAC-46003",afdb,DATASET=afdb-nonsovereign|
-Africa,AfDB - sovereign,AfDB - sovereign,46002-sovereign,,"46002,XM-DAC-46002,XM-DAC-46003",afdb,DATASET!=afdb-nonsovereign|
-Asia,AsDB - non-sovereign,AsDB - non-sovereign,46004-non-sovereign,,"46004,XM-DAC-46004",asdb,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-Asia,AsDB - sovereign,AsDB - sovereign,46004-sovereign,,"46004,XM-DAC-46004",asdb,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
-Australia,DFAT,"Australia, DFAT",AU-5,,AU-5,ausgov,
-Belgium,DGD,"Belgium, DGD",XM-DAC-2-10,,XM-DAC-2-10,be-dgd,
-Canada,Global Affairs,"Canada, Global Affairs",CA-3,,"CA-3,CA-1,CA-4",gac-amc,
-China,"China International Development Cooperation Agency","China International Development Cooperation Agency",CN-1,,CN-1,,
-Denmark,MFA,"Denmark, MFA",XM-DAC-3-1,,"DK-1,XM-DAC-3-1",danida,
-EU,EBRD - non-sovereign,EBRD - non-sovereign,46015-non-sovereign,,XI-IATI-EBRD,ebrd,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-EU,EBRD - sovereign,EBRD - sovereign,46015-sovereign,,XI-IATI-EBRD,ebrd,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
-EU,INTPA,"EC, INTPA",XI-IATI-EC_INTPA,,XI-IATI-EC_INTPA,ec-intpa,
-EU,ECHO,"EC, ECHO",XI-IATI-EC_ECHO,,XI-IATI-EC_ECHO,ec-echo,
-EU,NEAR,"EC, NEAR",XI-IATI-EC_NEAR,,"XI-IATI-EC_NEAR,EC_NEAR",ec-near,
-EU,EIB - non-sovereign,EIB - non-Sovereign,XM-DAC-918-3-non-sovereign,,XM-DAC-918-3,eib,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|
-EU,EIB - sovereign,EIB - sovereign,XM-DAC-918-3-sovereign,,XM-DAC-918-3,eib,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|
-Finland,MFA,"Finland, MFA",FI-3,,"FI-3,FI-1,FI-2",finland_mfa,
-France,AFD,"France, AFD",FR-3,,FR-3,afd,
-U.S.A,Gates Foundation,Gates Foundation,DAC-1601,,DAC-1601,bmgf,
-(blank),GAVI,GAVI,47122,,47122,gavi,
-"Germany,",BMZ-GIZ,"Germany, BMZ-GIZ",DE-1,,"DE-1,XM-DAC-5-52,XM-DAC-5-2",bmz,participating-org[@role='2'][@ref='XM-DAC-5-52']|
-(blank),Global Fund,Global Fund,47045,,47045,theglobalfund,
-U.S.A,IDB Invest,Inter-American Investment Corporation,XM-DAC-46012,,XM-DAC-46012,idbinvest,
-U.S.A,IADB,IADB,XI-IATI-IADB,,XI-IATI-IADB,iadb,
-Ireland,Irish Aid,"Ireland, Irish Aid",XM-DAC-21-1,,XM-DAC-21-1,irishaid,
-Italy,AICS,"Italy, AICS",XM-DAC-6-4,,XM-DAC-6-4,aics,
-Japan,JICA,"Japan, JICA",XM-DAC-701-8,,"XM-DAC-701-8,XM-DAC-701-2,XM-DAC-701",jica,
-South Korea,KOICA,"Korea, KOICA",KR-GOV-051,,"KR-GOV-010,KR-GOV-020,KR-GOV-021,KR-GOV-030,KR-GOV-040,KR-GOV-050,KR-GOV-051,KR-GOV-060,KR-GOV-070,KR-GOV-080,KR-GOV-090,KR-GOV-100,KR-GOV-110,KR-GOV-111,KR-GOV-120,KR-GOV-130,KR-GOV-140,KR-GOV-150,KR-GOV-160,KR-GOV-170,KR-GOV-180,KR-GOV-200,KR-GOV-210,KR-GOV-220,KR-GOV-230,KR-GOV-240,KR-GOV-250,KR-GOV-270,KR-GOV-280,KR-GOV-300,KR-GOV-310,KR-GOV-320,KR-GOV-330,KR-GOV-340,KR-GOV-350,KR-GOV-360,KR-GOV-370,KR-GOV-380,KR-GOV-390,KR-GOV-400,KR-GOV-410,KR-GOV-420,KR-GOV-430,KR-GOV-480,KR-GOV-500,KR-GOV-520,KR-GOV-530,KR-GOV-540",odakorea,participating-org[@role='3'][@ref='KR-GOV-051']|organisation-identifier/text()='KR-GOV-051'
-Netherlands,MFA,"Netherlands, MFA",XM-DAC-7,,XM-DAC-7,minbuza_nl,
-New Zealand,MFAT,"New Zealand, MFAT",NZ-1,,NZ-1,mfat,
-Norway,MFA,"Norway, MFA",NO-BRC-971277882,,"NO-BRC-971277882,NO-BRC-972417920",norad,
-Spain,AECID,"Spain, AECID",ES-DIR3-E04585801,,ES-DIR3-E04585801,aecid,
-Sweden,Sida,"Sweden, Sida",SE-0,,"SE-0,SE-6,SE-2",sida,
-Switzerland,SDC,"Switzerland, SDC",CH-4,,CH-4,sdc_ch,
-United Arab Emirates,MOFAIC,"UAE, MOFAIC",XM-DAC-576,,"AE-2,XM-DAC-576",mofaic_uae,
-United Kingdom,FCDO,"UK, FCDO",GB-GOV-1,,GB-GOV-1,fcdo,
-US/ Switzerland,UN OCHA,UN OCHA,XM-DAC-41127,,XM-DAC-41127,unocha,
-U.S.A,UNDP,UNDP,XM-DAC-41114,,XM-DAC-41114,undp,
-Switzerland,UNHCR,UNHCR,XM-DAC-41121,,XM-DAC-41121,unhcr,
-U.S.A,UNICEF,UNICEF,XM-DAC-41122,,XM-DAC-41122,unicef,
-U.S.A,MCC,"US, MCC",US-GOV-18,,US-GOV-18,millenniumchallenge,
-U.S.A,"US, HHS","US, HHS",US-GOV-14,,US-GOV-14,hhs,
-U.S.A,State,"US, State",US-GOV-11,,US-GOV-11,state,
-U.S.A,USAID,"US, USAID",US-GOV-1,,"US-GOV-1,US-GOV-11",usaid,
-U.S.A,IDA,"World Bank, IDA",44002,,,worldbank,participating-org[@role='1'][@ref='44002']|
-U.S.A,IFC,"World Bank, IFC",44004,,,ifcwbg,
-Saudi Arabia,King Salman Relief fund,King Salman Relief fund,XM-OCHA-HPC6770,,XM-OCHA-HPC6770,ksrelief291,
-(blank),World Health Organisation,World Health Organisation,XM-DAC-928,,XM-DAC-928,who,
-Italy,WFP,World Food Programme,XM-DAC-41140,,XM-DAC-41140,wfp,
-Germany,German Federal Foreign Office,"Germany, Foreign Office",XM-DAC-5-7,,XM-DAC-5-7,fo_germany,
+﻿country,IATI Reporting org. ID,organisation-name-code (for website),organisation name - long,organisation name - short,Accredited / Non-accredited,organisation_name,organisation_code,2024_organisation_code,self_ref,packagegroup_name,packagegroup_condition,2-year frequency2
+Ireland,XM-DAC-21-1,XM-DAC-21-1,"Ireland, Irish Aid",Ireland-Irish Aid,Non-accredited,"Ireland, Irish Aid",XM-DAC-21-1,XM-DAC-21-1,XM-DAC-21-1,irishaid,,Annual
+Norway,NO-BRC-971277882,NO-BRC-971277882,"Norway, Ministry of Foreign Affairs",Norway-MFA,Non-accredited,"Norway, MFA",NO-BRC-971277882,NO-BRC-971277882,"NO-BRC-971277882,
+NO-BRC-972417920",norad,,Annual
+Africa,XM-DAC-46002,46002-sovereign,African Development Bank – Sovereign Portfolio,AfDB - Sovereign,Accredited,AfDB - Sovereign,46002-sovereign,46002-sovereign,"46002,XM-DAC-46002",afdb,DATASET!=afdb-nonsovereign|,Monthly
+France,FR-3,FR-3,"France, French Development Agency ",France-AFD,Accredited,"France, AFD",FR-3,FR-3,FR-3,afd,,Monthly
+U.S.A,DAC-1601,DAC-1601,Gates Foundation,Gates Foundation,Accredited,Gates Foundation,DAC-1601,DAC-1601,DAC-1601,bmgf,,Monthly
+U.S.A,XI-IATI-IADB,XI-IATI-IADB,Inter-American Development Bank,IDB,Accredited,IADB,XI-IATI-IADB,XI-IATI-IADB,XI-IATI-IADB,iadb,,Monthly
+New Zealand,NZ-1,NZ-1,"New Zealand, Ministry of Foreign Affairs and Trade",New Zealand-MFAT,Accredited,"New Zealand, MFAT",NZ-1,NZ-1,NZ-1,mfat,,Monthly
+Sweden,SE-0,SE-0,Swedish International Development Cooperation Agency,Sweden-Sida,Accredited,Sweden-Sida,SE-0,SE-0,"SE-0,SE-6, SE-2",sida,,Monthly
+U.S.A,US-EIN-941655673,,The William and Flora Hewlett Foundation,Hewlett Foundation ,Accredited,Hewlett Foundation ,US-EIN-941655673,US-EIN-941655673,US-EIN-941655673,,,Monthly
+U.S.A,44000,44002,The World Bank International Development Association ,World Bank-IDA,Accredited,"World Bank, IDA",44002,44002,44002,worldbank,participating-org[@role='1'][@ref='44002']|,Monthly
+Italy,XM-DAC-41122,XM-DAC-41122,United Nations Children's Fund (UNICEF),UNICEF,Accredited,UNICEF,XM-DAC-41122,XM-DAC-41122,XM-DAC-41122,unicef,,Monthly
+,XM-DAC-41114,XM-DAC-41114,United Nations Development Programme,UNDP,Accredited,UNDP,XM-DAC-41114,XM-DAC-41114,XM-DAC-41114,undp,,Monthly
+Belgium,XM-DAC-2-10,XM-DAC-2-10,"Belgium, The Directorate-General for Development Cooperation",Belgium-DGD,Non-accredited,"Belgium, DGD",XM-DAC-2-10,XM-DAC-2-10,XM-DAC-2-10,be-dgd,,Monthly
+EU,XI-IATI-EC_INTPA,XI-IATI-EC_INTPA,"European Commission, Directorate-General for International Partnerships",EC-INTPA,Non-accredited,"EC, INTPA",XI-IATI-EC_INTPA,XI-IATI-EC_INTPA,XI-IATI-EC_INTPA,ec-intpa,,Monthly
+"Germany,",DE-1,DE-1,"Germany, Federal Ministry for Economic Cooperation and Development (BMZ-GIZ) ",Germany-BMZ-GIZ,Non-accredited,"Germany, BMZ-GIZ",DE-1,DE-1,"DE-1,XM-DAC-5-52,XM-DAC-5-2",bmz,participating-org[@role='2'][@ref='XM-DAC-5-52']|,Monthly
+Canada,CA-3,CA-3,Global Affairs Canada,Canada-GAC,Non-accredited,"Canada, GAC",CA-3,CA-3,"CA-3,CA-1,CA-4",gac-amc,,Monthly
+Italy,XM-DAC-6-4,XM-DAC-6-4,"Italy, Agency for Development Cooperation",Italy-AICS,Non-accredited,"Italy, AICS",XM-DAC-6-4,XM-DAC-6-4,XM-DAC-6-4,aics,,Monthly
+Netherlands,XM-DAC-7,XM-DAC-7,"Netherlands, Ministry of Foreign Affairs",Netherlands-MFA,Non-accredited,"Netherlands, MFA",XM-DAC-7,XM-DAC-7,XM-DAC-7,minbuza_nl,,Monthly
+United Kingdom,GB-GOV-1,GB-GOV-1,"United Kingdom, Foreign, Commonwealth & Development Office",UK-FCDO,Non-accredited,"UK, FCDO",GB-GOV-1,GB-GOV-1,GB-GOV-1,fcdo,,Monthly
+Denmark,XM-DAC-3-1,XM-DAC-3-1,"Denmark, Ministry of Foreign Affairs",Denmark-MFA,Non-accredited,"Denmark, MFA",XM-DAC-3-1,XM-DAC-3-1,"DK-1,XM-DAC-3-1",danida,,"Monthly (note, looks like Denmark have removed their IATI data so they will automatically be scored in the manual survey)"
+South Korea,0,,Green Climate Fund,GCF,Accredited,GCF,XM-DAC-41317,XM-DAC-41317,XM-DAC-41317,,,No IATI data
+China,0,CN-1,China International Development Cooperation Agency ,China-CIDCA,Non-accredited,"China, MOFCOM",CN-1,CN-1,CN-1,,,No IATI data
+Spain,XM-DAC-50-21,ES-DIR3-E04585801,Spanish Agency for International Development Cooperation,Spain-AECID,Accredited,"Spain, AECID",ES-DIR3-E04585801,ES-DIR3-E04585801,ES-DIR3-E04585801,aecid,,"Push all indicators into manual survey 
+Less than annual
+Spain have told us they will update their IATI data in time for the July deadline"
+Australia,AU-5,AU-5,"Australia, Department of Foreign Affairs and Trade",Australia-DFAT,Accredited,"Australia, DFAT",AU-5,AU-5,AU-5,ausgov,,"Push all indicators to manual survey 
+Annual - however, Australia have no 2025 transactions"
+United Arab Emirates,XM-DAC-576,XM-DAC-576,"United Arab Emirates, Ministry of Foreign Affairs and International Cooperation",UAE-MOFAIC,Non-accredited,"UAE, MOFAIC",XM-DAC-576,XM-DAC-576,"AE-2, XM-DAC-576",,,"Push all indicators to the manual survey
+Annual - however, UAE have no 2025 transactions and few activities in implementation. "
+Finland,FI-3,FI-3,"Finland, Ministry of Foreign Affairs",Finland-MFA,Non-accredited,"Finland, MFA",FI-3,FI-3,"FI-3,FI-1,FI-2",finland_mfa,,"Push into manual survey
+
+Less than annual
+Finland have no 2025 transactions and 25,000 active activities however, most these activity end dates passed over a year ago (many from 2020/21/22) so we will be scoring some 'old' IATI data."
+EU,XI-IATI-EBRD,46015-non-sovereign,European Bank for Reconstruction and Development – Non-Sovereign Portfolio,EBRD - Non-Sov.,Accredited,EBRD - Non-Sov.,46015-non-sovereign,46015-non-sovereign,XI-IATI-EBRD,ebrd,participating-org[(@type='70' or @type='71' or @type='72' or @type='73')]|,Quarterly
+EU,XI-IATI-EBRD,46015-sovereign,European Bank for Reconstruction and Development – Sovereign Portfolio,EBRD - Sovereign,Accredited,EBRD - Sovereign,46015-sovereign,46015-sovereign,XI-IATI-EBRD,ebrd,not(participating-org[(@type='70' or @type='71' or @type='72' or @type='73')])|,Quarterly
+(blank),47122,47122,"Gavi, The Vaccine Alliance",GAVI,Accredited,GAVI,47122,47122,47122,gavi,,Quarterly
+Japan,XM-DAC-701-8,XM-DAC-701-8,"Japan, International Cooperation Agency",Japan-JICA,Non-accredited,"Japan, JICA",XM-DAC-701-8,XM-DAC-701-8,"XM-DAC-701-8,XM-DAC-701-2,XM-DAC-701",jica,,Quarterly
+Saudi Arabia,XM-OCHA-HPC6770,XM-OCHA-HPC6770,"Saudi Arabia, King Salman Humanitarian Aid and Relief Centre",Saudi Arabia-KSRelief,Non-accredited,"Saudi Arabia, KSRelief",XM-OCHA-HPC6770,XM-OCHA-HPC6770,XM-OCHA-HPC6770,ksrelief291,,Quarterly
+South Korea,KR-GOV-010,KR-GOV-051,"South Korea, International Cooperation Agency ",Korea-KOICA,Non-accredited,"Korea, KOICA",KR-GOV-051,KR-GOV-051,"KR-GOV-010,KR-GOV-020,KR-GOV-021,KR-GOV-030,KR-GOV-040,KR-GOV-050,KR-GOV-051,KR-GOV-060,KR-GOV-070,KR-GOV-080,KR-GOV-090,KR-GOV-100,KR-GOV-110,KR-GOV-111,KR-GOV-120,KR-GOV-130,KR-GOV-140,KR-GOV-150,KR-GOV-160,KR-GOV-170,KR-GOV-180,KR-GOV-200,KR-GOV-210,KR-GOV-220,KR-GOV-230,KR-GOV-240,KR-GOV-250,KR-GOV-270,KR-GOV-280,KR-GOV-300,KR-GOV-310,KR-GOV-320,KR-GOV-330,KR-GOV-340,KR-GOV-350,KR-GOV-360,KR-GOV-370,KR-GOV-380,KR-GOV-390,KR-GOV-400,KR-GOV-410,KR-GOV-420,KR-GOV-430,KR-GOV-480,KR-GOV-500,KR-GOV-520,KR-GOV-530,KR-GOV-540",odakorea,participating-org[@role='3'][@ref='KR-GOV-051']|organisation-identifier/text()='KR-GOV-051',Quarterly
+(blank),47045,47045,"The Global Fund to Fight AIDS, Tuberculosis and Malaria",The Global Fund,Accredited,Global Fund,47045,47045,47045,theglobalfund,,Six-monthly
+Switzerland,CH-4,CH-4,Swiss Agency for Development and Cooperation,Switzerland-SDC,Non-accredited,"Switzerland, SDC",CH-4,CH-4,CH-4,sdc_ch,,Six-monthly
+U.S.A,US-GOV-11,US-GOV-11,"United States, Department of State",US-State,Non-accredited,"US, State",US-GOV-11,US-GOV-11,US-GOV-11,state,,Six-monthly
