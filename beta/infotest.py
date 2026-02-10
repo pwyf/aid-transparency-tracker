@@ -177,7 +177,7 @@ def process_publishers():
         publishers_json = json.load(f)
     for publisher in publishers_json:
         publisher['ident'] = publisher['IATI Organisation Identifier']
-        publisher['prefix'] = publisher['Datasets Link'].split('/')[-1]
+        publisher['prefix'] = publisher['short_name']
         publishers_by_ident[publisher['ident']] = publisher
         publishers_by_prefix[publisher['prefix']] = publisher
 

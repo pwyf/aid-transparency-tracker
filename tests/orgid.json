@@ -1020,10 +1020,10 @@
     },
     {
       "links": {
-        "wikipedia": null,
-        "opencorporates": null
+        "wikipedia": "",
+        "opencorporates": ""
       },
-      "sector": null,
+      "sector": [],
       "url": "http://moec.gov.af/en",
       "name": {
         "en": "Ministry of Economy NGO Department ",
@@ -1033,24 +1033,23 @@
         "AF"
       ],
       "code": "AF-MOE",
-      "formerPrefixes": null,
+      "formerPrefixes": [],
       "confirmed": true,
       "data": {
         "features": [
           "date_of_registration",
           "e-mail_address",
           "registration_number",
-          "phone_number",
-          "organisation_name"
+          "phone_number"
         ],
-        "dataAccessDetails": "http://ngos.moec.gov.af/Public/Default.aspx - button for Excel download, but not found to be working",
-        "licenseDetails": null,
+        "dataAccessDetails": "",
+        "licenseDetails": "",
         "licenseStatus": "no_license",
         "availability": [
-          "available:_stated_as_available,_but_unable_to_access"
+          "data_not_available"
         ]
       },
-      "deprecated": null,
+      "deprecated": false,
       "structure": [
         "charity"
       ],
@@ -1058,7 +1057,7 @@
         "en": "NGOs wishing to operate in Afghanistan must register with the NGOs Department of the Ministry of Economy. The register contains government departments, national NGOs and international NGOs."
       },
       "meta": {
-        "lastUpdated": "2016-11-18",
+        "lastUpdated": "2026-02-06",
         "source": "Desk research"
       },
       "access": {
@@ -1067,11 +1066,11 @@
         ],
         "exampleIdentifiers": "89, 176, 2620",
         "onlineAccessDetails": "The system provides an online interface to browse a list of organisations. An 'Export to Excel' option is presented, but does not appear to work. ",
-        "publicDatabase": "http://ngos.moec.gov.af/Public/Default.aspx",
+        "publicDatabase": "https://ngo.gov.af/publication/Home/National_ngos/2200",
         "availableOnline": false,
-        "guidanceOnLocatingIds": null
+        "guidanceOnLocatingIds": ""
       },
-      "subnationalCoverage": null,
+      "subnationalCoverage": [],
       "listType": "secondary",
       "quality_explained": {
         "License: No License": 5,
@@ -1697,7 +1696,7 @@
       },
       "url": "",
       "description": {
-        "en": "Any citizen or company starting an economic activity in Argentina must register with the AFIP (Federal Administration of Public Revenues) and receive a Unique Tax Identification Code (CUIT). \n\nThis is an 11 digit number, consisting two digits, hyphen, nine digits, and a one digit checksum. \n"
+        "en": "Any citizen or company starting an economic activity in Argentina must register with the AFIP (Federal Administration of Public Revenues) and receive a Unique Tax Identification Code (CUIT). \n\nThis is an 11 digit number, consisting two digits, hyphen, eight digits, and a one digit checksum. \n"
       },
       "coverage": [
         "AR"
@@ -2017,117 +2016,122 @@
       "quality": 86
     },
     {
-      "links": {
-        "wikipedia": null,
-        "opencorporates": null
-      },
-      "sector": null,
-      "url": "http://abr.business.gov.au/",
       "name": {
         "en": "Australian Business Register",
         "local": ""
       },
+      "url": "https://abr.business.gov.au/",
+      "description": {
+        "en": "\"The Australian Business Number (ABN) enables businesses in Australia to deal with a range of government departments and agencies using a single identification number. The ABN is a public number which does not replace an organisations tax file number.\"\n\n\"ABN registration details become part of the Australian Business Register (ABR)\"\n\nEach ABN should equate to a single 'business structure', although that structure may be used to carry out a range of business activities.  A range of kinds of entity are issued ABNs, including individuals, corporations, partnerships, unincorporated associations, trusts and superannuation funds. Entities must be carrying on a business in or connection to Australia to receive an ABN.\n\nCharities are issued ABNs when they are formed. See: https://www.acnc.gov.au/charity/charities."
+      },
       "coverage": [
         "AU"
       ],
-      "code": "AU-ABN",
-      "formerPrefixes": null,
-      "confirmed": true,
-      "data": {
-        "features": [
-          "akas",
-          "date_of_registration"
-        ],
-        "dataAccessDetails": "Bulk downloads are provided at http://data.gov.au/dataset/abn-bulk-extract in XML format, and an API is provided at http://abr.business.gov.au/Webservices.aspx",
-        "licenseDetails": "https://creativecommons.org/licenses/by/3.0/au/",
-        "licenseStatus": "open_license",
-        "availability": [
-          "bulk_download",
-          "api"
-        ]
-      },
-      "deprecated": null,
+      "subnationalCoverage": [],
       "structure": [
         "unincorporated_body",
         "trust",
         "company",
         "charity"
       ],
-      "description": {
-        "en": "\"The Australian Business Number (ABN) enables businesses in Australia to deal with a range of government departments and agencies using a single identification number. The ABN is a public number which does not replace an organisations tax file number.\"\n\n\"ABN registration details become part of the Australian Business Register (ABR)\"\n\nEach ABN should equate to a single 'business structure', although that structure may be used to carry out a range of business activities.  A range of kinds of entity are issued ABNs, including individuals, corporations, partnerships, unincorporated associations, trusts and superannuation funds. Entities must be carrying on a business in or connection to Australia to receive an ABN."
-      },
-      "meta": {
-        "lastUpdated": "2016-09-02",
-        "source": "IATI + Additional Reseach"
-      },
+      "sector": [],
+      "code": "AU-ABN",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
       "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://abr.business.gov.au/",
+        "guidanceOnLocatingIds": "It is possible to search for identifiers at http://abr.business.gov.au/\n\nThe Australian Business Number (ABN) is a unique 11 digit identifier issued to all entities registered in the Australian Business Register (ABR). The 11 digit ABN is structured as a 9 digit identifier with two leading check digits.\n\nThe identifiers are displayed on the website with spaces in the number. All the spaces should be removed when making use of the number within an identifier.",
+        "exampleIdentifiers": "52093617380",
         "languages": [
           "en"
-        ],
-        "exampleIdentifiers": "52093617380",
-        "onlineAccessDetails": null,
-        "publicDatabase": null,
-        "availableOnline": false,
-        "guidanceOnLocatingIds": "It is possible to search for identifiers at http://abr.business.gov.au/\n\nThe Australian Business Number (ABN) is a unique 11 digit identifier issued to all entities registered in the Australian Business Register (ABR). The 11 digit ABN is structured as a 9 digit identifier with two \nleading check digits.\n\nThe identifiers are displayed on the website with spaces in the number. All the spaces should be removed when making use of the number within an identifier."
+        ]
       },
-      "subnationalCoverage": null,
-      "listType": "secondary",
+      "data": {
+        "availability": [
+          "api",
+          "bulk"
+        ],
+        "dataAccessDetails": "Bulk downloads are provided at http://data.gov.au/dataset/abn-bulk-extract in XML format, and an API is provided at http://abr.business.gov.au/Webservices.aspx",
+        "features": [
+          "akas",
+          "date_of_registration"
+        ],
+        "licenseStatus": "open_license",
+        "licenseDetails": "https://creativecommons.org/licenses/by/3.0/au/"
+      },
+      "meta": {
+        "source": "IATI + Additional Reseach",
+        "lastUpdated": "2024-11-13"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [
+        ""
+      ],
       "quality_explained": {
         "Availability: API": 2,
+        "Availability: Bulk download": 2,
         "License: Open License": 10,
-        "List type: Secondary": 50
+        "List type: Primary": 75
       },
-      "quality": 62
+      "quality": 89
     },
     {
-      "links": {
-        "wikipedia": null,
-        "opencorporates": null
-      },
-      "sector": null,
-      "url": "http://www.acnc.gov.au/ACNC/",
       "name": {
         "en": "Australian Charities and Not-for-profits Commission",
         "local": ""
       },
+      "url": "https://www.acnc.gov.au/charity/charities",
+      "description": {
+        "en": "This list and prefix is deprecated in favour of https://org-id.guide/list/AU-ABN, since all charities are registered under their ABN.\n\nDeprecated description:\n\n\"In Australia, charities must register with the Australian Charities and Not-for-profits Commission (ACNC) before they can receive charity tax concessions from the Australian Taxation Office (ATO).\"\n\nCharity Status can be applied to organisations that have an Australian Business Number (ABN) and that take a range of legal forms [1] including Australian Private Company, Australian Public Company, State level registered 'Other Incorporated Entity', Discretionary Investment Trust, Fixed Trusts, Co-operatives and Other Unincorporated Identities. \n\n[1]: http://www.acnc.gov.au/ACNC/Register_my_charity/Who_can_register/Legal_structure/ACNC/Reg/Legal_structure.aspx"
+      },
       "coverage": [
         "AU"
       ],
-      "code": "AU-ACNC",
-      "formerPrefixes": null,
-      "confirmed": true,
-      "data": {
-        "features": null,
-        "dataAccessDetails": null,
-        "licenseDetails": null,
-        "licenseStatus": null,
-        "availability": null
-      },
-      "deprecated": null,
       "structure": [
         "charity"
       ],
-      "description": {
-        "en": "\"In Australia, charities must register with the Australian Charities and Not-for-profits Commission (ACNC) before they can receive charity tax concessions from the Australian Taxation Office (ATO).\"\n\nCharity Status can be applied to organisations that have an Australian Business Number (ABN) and that take a range of legal forms [1] including Australian Private Company, Australian Public Company, State level registered 'Other Incorporated Entity', Discretionary Investment Trust, Fixed Trusts, Co-operatives and Other Unincorporated Identities. \n\n[1]: http://www.acnc.gov.au/ACNC/Register_my_charity/Who_can_register/Legal_structure/ACNC/Reg/Legal_structure.aspx"
+      "code": "AU-ACNC",
+      "confirmed": true,
+      "deprecated": true,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": "https://www.acnc.gov.au/charity/charities",
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "",
+        "languages": [
+          "en"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "open_license",
+        "licenseDetails": ""
       },
       "meta": {
-        "lastUpdated": "2016-09-06",
-        "source": "Primary research"
+        "source": "Primary research",
+        "lastUpdated": "2024-11-13"
       },
-      "access": {
-        "languages": null,
-        "exampleIdentifiers": null,
-        "onlineAccessDetails": null,
-        "publicDatabase": null,
-        "availableOnline": false,
-        "guidanceOnLocatingIds": null
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
       },
-      "subnationalCoverage": null,
-      "listType": "secondary",
+      "formerPrefixes": [
+        ""
+      ],
       "quality_explained": {
-        "List type: Secondary": 50
+        "Deprecated": 0
       },
-      "quality": 50
+      "quality": 0
     },
     {
       "name": {
@@ -2568,10 +2572,10 @@
       "deprecated": false,
       "listType": "secondary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Of the two websites, http://103.234.24.210/ is better built. ",
-        "publicDatabase": "A list of all NGOs registered with the NGO Affairs Bureau, and thus all NGOs who have projects in Bangladesh, is available on the website",
-        "guidanceOnLocatingIds": "Registration numbers are contained in a PDF published by the Bureau. The latest version of this list can be found at http://ngoab.portal.gov.bd/sites/default/files/files/ngoab.portal.gov.bd/page/a86a0782_47b2_4756_b226_58e2fd6a97b4/NGO_LIST%20(19).pdf",
+        "availableOnline": true,
+        "onlineAccessDetails": "A list of all NGOs registered with the NGO Affairs Bureau, and thus all NGOs who have projects in Bangladesh, is available on the website",
+        "publicDatabase": "https://ngoab.gov.bd/site/page/3de95510-5309-4400-97f5-0a362fd0f4e6/",
+        "guidanceOnLocatingIds": "Registration numbers are contained in a PDF published by the Bureau. The latest version of this list can be found at: https://ngoab.gov.bd/site/page/3de95510-5309-4400-97f5-0a362fd0f4e6/",
         "exampleIdentifiers": "2330, 2830, 2427",
         "languages": [
           "en",
@@ -2582,7 +2586,7 @@
         "availability": [
           "pdf"
         ],
-        "dataAccessDetails": "http://ngoab.portal.gov.bd/sites/default/files/files/ngoab.portal.gov.bd/page/a86a0782_47b2_4756_b226_58e2fd6a97b4/NGO_LIST%20(19).pdf",
+        "dataAccessDetails": "https://ngoab.gov.bd/site/page/3de95510-5309-4400-97f5-0a362fd0f4e6/",
         "features": [
           "registered_address",
           "date_of_registration",
@@ -2594,7 +2598,7 @@
       },
       "meta": {
         "source": "",
-        "lastUpdated": "2016-11-18"
+        "lastUpdated": "2024-10-29"
       },
       "links": {
         "opencorporates": "",
@@ -2610,12 +2614,70 @@
     },
     {
       "name": {
-        "en": "Bangladesh Office of the Register of Joint Stock Companies and Firms ",
+        "en": "National Board of Revenue",
+        "local": "\u099c\u09be\u09a4\u09c0\u09af\u09bc \u09b0\u09be\u099c\u09b8\u09cd\u09ac \u09ac\u09cb\u09b0\u09cd\u09a1"
+      },
+      "url": "https://nbr.gov.bd/",
+      "description": {
+        "en": "The National Board of Revenue is the authority for tax administration in Bangladesh, including customs excise, VAT, and income tax. Organisations and companies registered with the NBR will be issued with a Value Added Tax Registration Certificate containing their BIN registration number. "
+      },
+      "coverage": [
+        "BD"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "charity",
+        "trust"
+      ],
+      "sector": [],
+      "code": "BD-NBR",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://nbr.gov.bd/",
+        "guidanceOnLocatingIds": "A BIN search is available on the NBR homepage. Organisations can also provide their Value Added Tax Registration Certificate which contains their BIN. ",
+        "exampleIdentifiers": "000697679-0101",
+        "languages": [
+          "BN",
+          "EN"
+        ]
+      },
+      "data": {
+        "availability": [
+          "data_not_available"
+        ],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": "No open dataset is available"
+      },
+      "meta": {
+        "source": "Original research",
+        "lastUpdated": "2024-09-24"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/National_Board_of_Revenue"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
+    },
+    {
+      "name": {
+        "en": "Bangladesh Office of the Registrar of Joint Stock Companies and Firms ",
         "local": ""
       },
-      "url": "http://www.roc.gov.bd/",
+      "url": "https://roc.gov.bd/",
       "description": {
-        "en": "The Register of Joint Stock Companies is the institution responsible for registering and preserving documentation of the following types of organizations:\n\n(A) Public companies\n(B) Private companies\n(C) Foreign companies\n(D) Trade Organization (Trade Organization)\n(E) Society (association), and\n(F) Partnership firm (partnership business)\n\nRJSC registers various organizations and ensures that they operate according to the rules of applicable law. Applicable laws include:\n\n(A) Company and Trade Organization: Company Act, 1994 (Amendment to Company Law, 1913)\n(B) Societies : Societies Registration Act, 1860\n(C) Partnership Deed: Partnership Act, 1932."
+        "en": "The Registrar of Joint Stock Companies and Firms (RJSC) is the institution responsible for registering and preserving documentation of the following types of organizations:\n\n(A) Public companies\n(B) Private companies\n(C) Foreign companies\n(D) Trade Organizations\n(E) Societies, and\n(F) Partnership firms\n\nRJSC registers various organizations and ensures that they operate according to the rules of applicable law. Applicable laws include:\n\n(A) Company and Trade Organization: Company Act, 1994 (Amendment to Company Law, 1913)\n(B) Societies : Societies Registration Act, 1860\n(C) Partnership Deed: Partnership Act, 1932."
       },
       "coverage": [
         "BD"
@@ -2632,8 +2694,8 @@
       "listType": "primary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "A search is available at http://app.roc.gov.bd:7781/psp/rjschome accessed from the 'Search entity names' option.\n\nThe result includes a registration number.",
-        "publicDatabase": "http://app.roc.gov.bd:7781/psp/rjschome",
+        "onlineAccessDetails": "A search is available at https://app.roc.gov.bd/psp/nc_search.\n\nThe result includes a registration number.",
+        "publicDatabase": "https://app.roc.gov.bd/psp/nc_search",
         "guidanceOnLocatingIds": "Organisations can be searched by name following completion of a CAPTCHA. ",
         "exampleIdentifiers": "3-S123, C-69103, CH-5884, 66885",
         "languages": [
@@ -2651,7 +2713,7 @@
       },
       "meta": {
         "source": "Desk research",
-        "lastUpdated": "2018-07-24"
+        "lastUpdated": "2024-05-28"
       },
       "links": {
         "opencorporates": "https://opencorporates.com/companies/bd",
@@ -2666,48 +2728,50 @@
     },
     {
       "links": {
-        "wikipedia": null,
+        "wikipedia": "",
         "opencorporates": "http://opencorporates.com/companies/be"
       },
-      "sector": null,
+      "sector": [],
       "url": "http://economie.fgov.be/fr/entreprises/BCE ",
       "name": {
-        "en": "Crossroads Bank for Enterprises ",
-        "local": " Banque Carrefour des entreprises "
+        "en": "Crossroads Bank for Enterprises (Belgium)",
+        "local": "Banque Carrefour des entreprises"
       },
       "coverage": [
         "BE"
       ],
       "code": "BE-BCE_KBO",
-      "formerPrefixes": null,
+      "formerPrefixes": [],
       "confirmed": true,
       "data": {
         "features": [
           "registered_address",
           "date_of_registration",
-          "organisation_name",
           "registration_number",
           "phone_number",
-          "status"
+          "status",
+          "e-mail_address",
+          "website"
         ],
-        "dataAccessDetails": "Data can be search using a number of terms. Lists of results can be downloaded as a PDF. Information on individual enterprises can be viewed, but no download feature seems to be available",
-        "licenseDetails": null,
-        "licenseStatus": "closed_license",
+        "dataAccessDetails": "Company data can be searched using a number of terms. Lists of results can be downloaded in CSV files. Information on individual enterprises can be viewed online, but no download feature seems to be available.",
+        "licenseDetails": "A non-standard open licence can be found here (FR): https://economie.fgov.be/sites/default/files/Files/Entreprises/BCE/Licence-BCE-Open-Data-Conditions-d-utilisation.pdf",
+        "licenseStatus": "open_license",
         "availability": [
-          "pdf"
+          "bulk",
+          "csv"
         ]
       },
-      "deprecated": null,
+      "deprecated": false,
       "structure": [
         "unincorporated_body",
         "company",
         "charity"
       ],
       "description": {
-        "en": "The Crossroads Bank for Enterprises (BCE, ECB, CBE) is the registration office for companies in Belgium. The ECB compiles a list of business identification numbers, maintains the database and provides the list in an available format.\n\n\"The following companies must register with the ECB:\n\n1. legal persons under Belgian law\n2. institutions, organizations and Belgian law services which perform tasks of general interest or related to public order and that have a distinct financial and accounting autonomy from that of the legal person under Belgian public law governing them;\n3. legal persons of foreign or international law which have a seat in Belgium or who are required to register pursuant to an obligation imposed by Belgian law;\n4. to any individual as an autonomous entity: \na) carries on an economic and professional activity in Belgium, as usual, the main or supplementary basis; \nb) or must register in fulfillment of an obligation imposed by legislation Belgium other than that covered by this Act;\n5. associations without legal personality must be registered pursuant to an obligation imposed by Belgian legislation other than that covered by this Act;\n6. the establishment of units of the above mentioned companies.\" [3]\n\n\"The Crossroads Bank for Enterprises (BCE) is a register of the Ministry of Economy which includes all the companies basic identification data and their business units. The ECB's management department is responsible for recording, backup, manage and make available data from the ECB. The ECB is one of the authority for initiatives, application of the principle of single data collection, to simplify administrative procedures for businesses and improve the efficiency of public services.\" [1]\n\n\"It centralises the basic identification data of enterprises and establishment units and communicate them to the various authorities. The ECB gives each company and business unit a unique identification number that allows the authorities to exchange information about them.\" [2]\n\n[1][2] http://economie.fgov.be/fr/entreprises/BCE/#.WC9BdqIrL8o\n[3] http://economie.fgov.be/fr/entreprises/BCE/inscription/#.WC9BAqIrL8o"
+        "en": "The Crossroads Bank for Enterprises (BCE, ECB, CBE) is the registration office for companies in Belgium. The ECB compiles a list of business identification numbers, maintains the database and provides the list in an available format.\n\n\"The following companies must register with the ECB:\n\n1. legal persons under Belgian law\n2. institutions, organizations and Belgian law services which perform tasks of general interest or related to public order and that have a distinct financial and accounting autonomy from that of the legal person under Belgian public law governing them;\n3. legal persons of foreign or international law which have a seat in Belgium or who are required to register pursuant to an obligation imposed by Belgian law;\n4. to any individual as an autonomous entity: \na) carries on an economic and professional activity in Belgium, as usual, the main or supplementary basis; \nb) or must register in fulfillment of an obligation imposed by legislation Belgium other than that covered by this Act;\n5. associations without legal personality must be registered pursuant to an obligation imposed by Belgian legislation other than that covered by this Act;\n6. the establishment of units of the above mentioned companies.\" [1]\n\n\"The Crossroads Bank for Enterprises (CBE) is a database owned by the FPS Economy containing all the basic data concerning companies and their business units. The purpose of the CBE is twofold: 1) increasing the efficiency of public services; and 2) simplifying administrative procedures for companies.\" [2]\n\n\"The CBE centralises the basic data of companies and business unit and disseminates it to several competent authorities. The CBE assigns a unique identification number to each company and business unit. This identification number allows authorities to exchange information.\" [3]\n\n[1] https://economie.fgov.be/en/themes/enterprises/crossroads-bank-enterprises/registration-crossroads-bank \n[2][3] https://economie.fgov.be/en/themes/enterprises/crossroads-bank-enterprises"
       },
       "meta": {
-        "lastUpdated": "2016-11-18",
+        "lastUpdated": "2025-03-31",
         "source": "Desk research"
       },
       "access": {
@@ -2718,19 +2782,20 @@
           "nl"
         ],
         "exampleIdentifiers": "0521.749.439, 0518.884.078, 0505.665.156",
-        "onlineAccessDetails": "Bulk access is only available for a fee http://economie.fgov.be/fr/entreprises/BCE/pub/reutilisation/",
-        "publicDatabase": "http://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?lang=en&nummer=&actionLu=Research",
-        "availableOnline": false,
-        "guidanceOnLocatingIds": "Company information is available in various search methods - by number, by name, by activity, by license or by address -  http://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?lang=en&nummer=&actionLu=Research"
+        "onlineAccessDetails": "Information on individual companies can be found by searching for company number, name, activity, licence or address on the following page: https://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?lang=en \n\nBulk data can be downloaded for free in CSV format from: https://economie.fgov.be/en/themes/enterprises/crossroads-bank-enterprises/services-everyone/cbe-open-data \nA simple registration and email address verification is required for this. New files are available every first Sunday of the month.",
+        "publicDatabase": "https://kbopub.economie.fgov.be/kbopub/zoeknummerform.html?lang=en",
+        "availableOnline": true,
+        "guidanceOnLocatingIds": "The 10 digit registration number is displayed under the heading 'Enterprise number' ('Num\u00e9ro d'entreprise' in French) in the search results table."
       },
-      "subnationalCoverage": null,
+      "subnationalCoverage": [],
       "listType": "primary",
       "quality_explained": {
-        "Availability: PDF format": 1,
-        "License: Closed License": 0,
+        "Availability: Bulk download": 2,
+        "Availability: CSV format": 1,
+        "License: Open License": 10,
         "List type: Primary": 75
       },
-      "quality": 76
+      "quality": 88
     },
     {
       "name": {
@@ -2826,7 +2891,9 @@
       },
       "subnationalCoverage": null,
       "listType": "deprecated",
-      "quality_explained": {},
+      "quality_explained": {
+        "Deprecated": 0
+      },
       "quality": 0
     },
     {
@@ -3697,12 +3764,12 @@
     },
     {
       "name": {
-        "en": "National Registry of Legal Entities",
+        "en": "National Registry of Legal Entities (Brazil)",
         "local": "Cadastro Nacional da Pessoa Jur\u00eddica"
       },
-      "url": "http://cnpj.info/",
+      "url": "https://www.gov.br/pt-br/servicos/consultar-cadastro-nacional-de-pessoas-juridicas",
       "description": {
-        "en": "The CNPJ is the national registry that administers identification numbers issued by the Minist\u00e9rio da Fazenda, for all non-personal legal entities in Brazil.\nOrganizations register exclusively on the Federal Revenue website. After filling in the necessary data online, relevant documents are sent by mail or presented in person.\nThe CNPJ Registration Number is a fourteen digit number that must be included on all receipts and invoices. Tax authorities assign an eight-digit company registration number that makes up the first part of the CNPJ. The following four digits refer to the business place or branch. Company headquarters are usually assigned the number 0001 for this section of the identification number, with other branches receiving different numbers. The final two numbers are check digits."
+        "en": "The CNPJ is the national registry that administers identification numbers issued by the Minist\u00e9rio da Fazenda, for all non-personal legal entities in Brazil.\n\nOrganizations register exclusively on the Federal Revenue website. After filling in the necessary data online, relevant documents are sent by mail or presented in person.\n\nThe CNPJ Registration Number is a fourteen digit number that must be included on all receipts and invoices. Tax authorities assign an eight-digit company registration number that makes up the first part of the CNPJ. The following four digits refer to the business place or branch. Company headquarters are usually assigned the number 0001 for this section of the identification number, with other branches receiving different numbers. The final two numbers are check digits."
       },
       "coverage": [
         "BR"
@@ -3721,17 +3788,18 @@
       "listType": "primary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": null,
-        "publicDatabase": "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/cadastros/consultas/dados-publicos-cnpj",
-        "guidanceOnLocatingIds": "Download all zip files that contains tables in csv format. Load them in a database or other tool capable of browsing large datasets. Make a query on the table EMPRESAS, search for the field CNPJ BASICO (the first one), which is the org id.",
+        "onlineAccessDetails": "An online search, by organisation name or CNPJ number, is available on third-party website: http://cnpj.info \n\nPublic search on the official website is free for citizens, but appears to require a log in to access: https://www.gov.br/pt-br/servicos/consultar-cadastro-nacional-de-pessoas-juridicas \n\nOther third-party sites, such as Brasil.io (https://brasil.io/dataset/socios-brasil/empresas/) and Brasil API (https://brasilapi.com.br/docs#tag/CNPJ) may offer search and bulk download functionality.",
+        "publicDatabase": "http://cnpj.info/consulta",
+        "guidanceOnLocatingIds": "The CNPJ number is 14 digits long.",
         "exampleIdentifiers": "02326629-0001-51, 24367342-0001-02, 02881697-0001-82",
-        "languages": []
+        "languages": [
+          "en",
+          "pt"
+        ]
       },
       "data": {
-        "availability": [
-          "bulk"
-        ],
-        "dataAccessDetails": "There are several (currently 30) files to be downloaded in zipped csv format. They take a long time to download and also to load and process in database tools (the data volume is too large for spreadsheet software). Several third party sites exist, which do provide faster downloads, api, end-user queries and are generally easier to use.",
+        "availability": [],
+        "dataAccessDetails": "Several third party sites exist, which provide downloads, api, and end-user queries.",
         "features": [
           "directors_trustees_governors",
           "registered_address",
@@ -3758,15 +3826,14 @@
       },
       "formerPrefixes": [],
       "meta": {
-        "source": "Original research",
-        "lastUpdated": "2020-06-08"
+        "source": "Desk research",
+        "lastUpdated": "2025-04-01"
       },
       "quality_explained": {
-        "Availability: Bulk download": 2,
         "License: No License": 5,
         "List type: Primary": 75
       },
-      "quality": 82
+      "quality": 80
     },
     {
       "name": {
@@ -4824,10 +4891,10 @@
     },
     {
       "links": {
-        "wikipedia": null,
-        "opencorporates": null
+        "wikipedia": "",
+        "opencorporates": ""
       },
-      "sector": null,
+      "sector": [],
       "url": "http://novascotia.ca/sns/access/business/registry-joint-stock-companies.asp",
       "name": {
         "en": "Nova Scotia Registry of Joint Stock Companies ",
@@ -4837,26 +4904,25 @@
         "CA"
       ],
       "code": "CA_NS-NVS_NVE",
-      "formerPrefixes": null,
+      "formerPrefixes": [],
       "confirmed": true,
       "data": {
-        "features": null,
-        "dataAccessDetails": null,
-        "licenseDetails": null,
+        "features": [],
+        "dataAccessDetails": "",
+        "licenseDetails": "",
         "licenseStatus": "closed_license",
-        "availability": [
-          "html"
-        ]
+        "availability": []
       },
-      "deprecated": null,
+      "deprecated": false,
       "structure": [
-        "company"
+        "company",
+        "charity"
       ],
       "description": {
-        "en": "This entry was imported from the Open Corporates Jurisdiction List."
+        "en": "Find business or non-profit information on file for the province of Nova Scotia with the Registry of Joint Stock Companies. This includes official names, addresses, registration dates, names and addresses of recognized agents, and names of partners, directors and officers.\n\nThis list entry was originally imported from the Open Corporates Jurisdiction List."
       },
       "meta": {
-        "lastUpdated": "2016-09-07",
+        "lastUpdated": "2025-02-04",
         "source": "Desk research"
       },
       "access": {
@@ -4864,11 +4930,11 @@
           "en",
           "fr"
         ],
-        "exampleIdentifiers": null,
-        "onlineAccessDetails": null,
-        "publicDatabase": "https://rjsc.gov.ns.ca/rjsc/search/doSearch.do",
-        "availableOnline": false,
-        "guidanceOnLocatingIds": null
+        "exampleIdentifiers": "1542067, 3276546",
+        "onlineAccessDetails": "Organisations can be searched by name on this webpage: https://rjsc.novascotia.ca/ \n\n The registration number is given in the search results, in the column headed 'Number'.",
+        "publicDatabase": "https://rjsc.novascotia.ca/",
+        "availableOnline": true,
+        "guidanceOnLocatingIds": ""
       },
       "subnationalCoverage": [
         "CA-NS"
@@ -5812,10 +5878,10 @@
       "listType": "primary",
       "access": {
         "availableOnline": false,
-        "onlineAccessDetails": null,
+        "onlineAccessDetails": "",
         "publicDatabase": "http://interieur.gouv.ci/",
-        "guidanceOnLocatingIds": "The Ministry website is currently undergoing changes, so is it not available for any searches. Where identifiers are found on registration certificates, forward slashes should be replaced with dashes.",
-        "exampleIdentifiers": "474-MIS-DGAT-DAG-SDVA",
+        "guidanceOnLocatingIds": "Where identifiers are found on registration certificates, forward slashes should be replaced with dashes.",
+        "exampleIdentifiers": "474-MIS-DGAT-DAG-SDVA, 395-INT-DGAT-DAG-SDVA",
         "languages": [
           "fr"
         ]
@@ -5835,8 +5901,8 @@
       },
       "formerPrefixes": [],
       "meta": {
-        "source": "Original research",
-        "lastUpdated": "2022-03-25"
+        "source": "Desk research",
+        "lastUpdated": "2025-04-15"
       },
       "quality_explained": {
         "License: No License": 5,
@@ -6982,12 +7048,12 @@
     },
     {
       "name": {
-        "en": "Tax ID (DI\u010c) Czech Republic",
+        "en": "Tax ID (DI\u010c) - Ministry of Finance of the Czech Republic",
         "local": "Da\u0148ov\u00e9 identifika\u010dn\u00ed \u010d\u00edslo"
       },
-      "url": "http://www.kurzy.cz/dic/",
+      "url": "https://mfcr.cz/en/regulation-and-taxes/taxes",
       "description": {
-        "en": "A VAT registration number (DI\u010c) is a unique and unambiguous identification of each tax entity, a legal or natural person who is a taxpayer (taxpayer). The tax identification number is assigned only after the entity, natural or legal person, obtains its I\u010cO - its unique identification number. Note that the list [CZ-ICO](/list/CZ-ICO) might therefore provide a better set of identifiers for legal entities.\n\nYou can search by VAT (DI\u010c) number for a of the VAT payer registered in the Czech Republic. You can also use your company ID or company name or your business name and surname if you want to verify your VAT payer details."
+        "en": "A VAT registration number (DI\u010c) is a unique and unambiguous identification of each entity or individual that is a taxpayer. The tax identification number is assigned only after the entity, natural, or legal person obtains its I\u010cO (unique identification number). Note that the list CZ-ICO (https://org-id.guide/list/CZ-ICO) might therefore provide a better set of identifiers for legal entities.\n\nYou can search by VAT (DI\u010c) number of the VAT payer registered in the Czech Republic. You can also use your company ID, company name or your business name and surname if you want to verify your VAT payer details."
       },
       "coverage": [
         "CZ"
@@ -7000,12 +7066,12 @@
       "code": "CZ-DIC",
       "confirmed": true,
       "deprecated": false,
-      "listType": "third_party",
+      "listType": "secondary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "DI\u010c number can be validated by entering it in the `Vyhled\u00e1v\u00e1n\u00ed v registru pl\u00e1tc\u016f DPH` section and then clicking `Vyhledat registraci`. Search results will provide company details",
-        "publicDatabase": "http://www.kurzy.cz/dic/",
-        "guidanceOnLocatingIds": "DI\u010c number will be under `DI\u010c` header",
+        "onlineAccessDetails": "A DI\u010c number can be validated by entering it in the search box on this page: https://adisspr.mfcr.cz/dpr/DphReg.\n\n A third-party site (https://www.kurzy.cz/dic/) also allows searches on a company or individual's name. Enter your search terms in the `Vyhled\u00e1v\u00e1n\u00ed v registru pl\u00e1tc\u016f DPH` section and click `Vyhledat registraci`.",
+        "publicDatabase": "https://adisspr.mfcr.cz/dpr/DphReg",
+        "guidanceOnLocatingIds": "",
         "exampleIdentifiers": "CZ25111299",
         "languages": [
           "cs"
@@ -7022,7 +7088,7 @@
       },
       "meta": {
         "source": "ProZorro Business Register Research",
-        "lastUpdated": "2017-11-08"
+        "lastUpdated": "2025-03-20"
       },
       "links": {
         "opencorporates": "",
@@ -7031,9 +7097,9 @@
       "formerPrefixes": [],
       "quality_explained": {
         "License: No License": 5,
-        "List type: Third Party": 25
+        "List type: Secondary": 50
       },
-      "quality": 30
+      "quality": 55
     },
     {
       "links": {
@@ -7156,9 +7222,9 @@
         "en": "Common Register Portal of the German Federal States (CRP)",
         "local": "Gemeinsames Registerportal der L\u00e4nder"
       },
-      "url": "https://www.handelsregister.de/rp_web/welcome.do",
+      "url": "https://www.handelsregister.de/rp_web/welcome.xhtml",
       "description": {
-        "en": "Companies, partnerships and co-operatives are registered in Germany at the level of local courts. Each court issues it's own registration numbers, so registration number 0001 from one court is not the same organisation as registration number 0001 from a different court.\n\nThe Common Register Portal of the German Federal States allows a search across all the court records. \n\nTo distinguish between the identifiers from different courts, the individual 'Registration Agency' identifier from each court, from the Global Legal Entity Identifier Foundation's [Registration Authorities list](https://www.gleif.org/en/about-lei/code-lists/gleif-registration-authorities-list) should be used, giving identifiers of the form:\n\n> DE-CR-[COURT IDENTIFIER]-[COMPANY IDENTIFIER]\n\nCourt identifiers\n\n* RA000197 - Aachen\n* RA000198 - Ahlen\n* RA000199 - Altenburg\n* RA000200 - Amberg\n* RA000201 - Ansbach\n* RA000202 - Apolda\n* RA000203 - Arnsberg\n* RA000204 - Arnstadt\n* RA000205 - Aschaffenburg\n* RA000206 - Augsburg\n* RA000207 - Aurich\n* RA000208 - Bad Hersfeld\n* RA000209 - Bad Homburg v. d. H\u00f6he\n* RA000210 - Bad Kreuznach\n* RA000211 - Bad Langensalza\n* RA000212 - Bad Lobenstein\n* RA000213 - Bad Oeynhausen\n* RA000214 - Bad Salzungen\n* RA000215 - Bamberg\n* RA000216 - Bayreuth\n* RA000217 - Berlin-Charlottenburg\n* RA000218 - Bielefeld\n* RA000219 - Bochum\n* RA000220 - Bonn\n* RA000221 - Braunschweig\n* RA000222 - Bremen\n* RA000223 - B\u00fcnde\n* RA000224 - Chemnitz\n* RA000225 - Coburg\n* RA000226 - Coesfeld\n* RA000227 - Cottbus\n* RA000228 - Darmstadt\n* RA000229 - Deggendorf\n* RA000230 - Dortmund\n* RA000231 - Dresden\n* RA000232 - Duisburg\n* RA000233 - D\u00fcren\n* RA000234 - D\u00fcsseldorf\n* RA000235 - Eisenach\n* RA000236 - Erfurt\n* RA000237 - Erkelenz\n* RA000238 - Eschwege\n* RA000239 - Essen\n* RA000240 - Flensburg\n* RA000241 - Frankfurt (Oder)\n* RA000242 - Frankfurt am Main\n* RA000243 - Freiburg\n* RA000244 - Friedberg (Hessen)\n* RA000245 - Fritzlar\n* RA000246 - Fulda\n* RA000247 - F\u00fcrth\n* RA000248 - Geldern\n* RA000249 - Gelsenkirchen\n* RA000250 - Gera\n* RA000251 - Gie\u00dfen\n* RA000252 - Gotha\n* RA000253 - G\u00f6ttingen\n* RA000254 - Greifswald\n* RA000255 - Greiz\n* RA000256 - G\u00fcstrow\n* RA000257 - G\u00fctersloh\n* RA000258 - Hagen\n* RA000259 - Hamburg\n* RA000260 - Hamm\n* RA000261 - Hanau\n* RA000262 - Hannover\n* RA000263 - Heilbad Heiligenstadt\n* RA000264 - Herford\n* RA000265 - Herne\n* RA000266 - Hildburghausen\n* RA000267 - Hildesheim\n* RA000268 - Hof\n* RA000269 - Homburg\n* RA000270 - Ilmenau\n* RA000271 - Ingolstadt\n* RA000272 - Iserlohn\n* RA000273 - Jena\n* RA000274 - Kaiserslautern\n* RA000275 - Kassel\n* RA000276 - Kempten\n* RA000277 - Kiel\n* RA000278 - Kleve\n* RA000279 - Koblenz\n* RA000280 - K\u00f6ln\n* RA000281 - K\u00f6nigstein im Taunus\n* RA000282 - Korbach\n* RA000283 - Krefeld\n* RA000284 - Landau in der Pfalz\n* RA000285 - Landshut\n* RA000286 - Lebach\n* RA000287 - Leipzig\n* RA000288 - Lemgo\n* RA000289 - Limburg a. d. Lahn\n* RA000290 - L\u00fcbeck\n* RA000291 - Ludwigshafen am Rhein\n* RA000292 - Ludwigslust\n* RA000293 - L\u00fcneburg\n* RA000294 - L\u00fcnen\n* RA000295 - Mainz\n* RA000296 - Mannheim\n* RA000297 - Marburg\n* RA000298 - Meiningen\n* RA000299 - Memmingen\n* RA000300 - Merzig\n* RA000301 - M\u00f6nchengladbach\n* RA000302 - Montabaur\n* RA000303 - M\u00fchlhausen\n* RA000304 - M\u00fcnchen\n* RA000305 - M\u00fcnster\n* RA000306 - Neubrandenburg\n* RA000307 - Neunkirchen\n* RA000308 - Neuruppin\n* RA000309 - Neuss\n* RA000310 - Nordhausen\n* RA000311 - N\u00fcrnberg\n* RA000312 - Oberhausen\n* RA000313 - Offenbach am Main\n* RA000314 - Oldenburg\n* RA000315 - Osnabr\u00fcck\n* RA000316 - Ottweiler\n* RA000317 - Paderborn\n* RA000318 - Pasewalk\n* RA000319 - Passau\n* RA000320 - Pinneberg\n* RA000321 - P\u00f6\u00dfneck\n* RA000322 - Potsdam\n* RA000323 - Ratingen\n* RA000324 - Recklinghausen\n* RA000325 - Regensburg\n* RA000326 - Remscheid\n* RA000327 - Ribnitz\n* RA000328 - Rostock\n* RA000329 - Rudolstadt\n* RA000330 - Saalfeld\n* RA000331 - Saarbr\u00fccken\n* RA000332 - Saarlouis\n* RA000333 - Sankt Ingbert\n* RA000334 - Sankt Wendel\n* RA000335 - Schleiden\n* RA000336 - Schweinfurt\n* RA000337 - Schwerin\n* RA000338 - Siegburg\n* RA000339 - Siegen\n* RA000340 - Soest\n* RA000341 - Solingen\n* RA000342 - S\u00f6mmerda\n* RA000343 - Sondershausen\n* RA000344 - Sonneberg\n* RA000345 - Stadthagen\n* RA000346 - Stadtroda\n* RA000347 - Steinfurt\n* RA000348 - Stendal\n* RA000349 - Stralsund\n* RA000350 - Straubing\n* RA000351 - Stuttgart\n* RA000352 - Suhl\n* RA000353 - Tostedt\n* RA000354 - Traunstein\n* RA000355 - Ulm\n* RA000356 - V\u00f6lklingen\n* RA000357 - Wadern\n* RA000358 - Walsrode\n* RA000359 - Warburg\n* RA000360 - Waren\n* RA000361 - Warstein\n* RA000362 - Weiden i.d. OPf.\n* RA000363 - Weimar\n* RA000364 - Wetzlar\n* RA000365 - Wiesbaden\n* RA000366 - Wismar\n* RA000367 - Witten\n* RA000368 - Wittlich\n* RA000369 - Wuppertal\n* RA000370 - W\u00fcrzburg\n* RA000371 - Zweibr\u00fccken"
+        "en": "Companies, partnerships and co-operatives are registered in Germany at the level of local courts. Each court issues it's own registration numbers, so registration number 0001 from one court is not the same organisation as registration number 0001 from a different court.\n\nThe Common Register Portal of the German Federal States allows a search across all the court records. \n\nTo distinguish between the identifiers from different courts, the individual 'Registration Agency' identifier from each court, from the Global Legal Entity Identifier Foundation's Registration Authorities list (https://www.gleif.org/en/about-lei/code-lists/gleif-registration-authorities-list) should be used, giving identifiers of the form:\n\n> DE-CR-[COURT IDENTIFIER]-[COMPANY IDENTIFIER]\n\nCourt identifiers\n\n* RA000197 - Aachen\n* RA000198 - Ahlen\n* RA000199 - Altenburg\n* RA000200 - Amberg\n* RA000201 - Ansbach\n* RA000202 - Apolda\n* RA000203 - Arnsberg\n* RA000204 - Arnstadt\n* RA000205 - Aschaffenburg\n* RA000206 - Augsburg\n* RA000207 - Aurich\n* RA000208 - Bad Hersfeld\n* RA000209 - Bad Homburg v. d. H\u00f6he\n* RA000210 - Bad Kreuznach\n* RA000211 - Bad Langensalza\n* RA000212 - Bad Lobenstein\n* RA000213 - Bad Oeynhausen\n* RA000214 - Bad Salzungen\n* RA000215 - Bamberg\n* RA000216 - Bayreuth\n* RA000217 - Berlin-Charlottenburg\n* RA000218 - Bielefeld\n* RA000219 - Bochum\n* RA000220 - Bonn\n* RA000221 - Braunschweig\n* RA000222 - Bremen\n* RA000223 - B\u00fcnde\n* RA000224 - Chemnitz\n* RA000225 - Coburg\n* RA000226 - Coesfeld\n* RA000227 - Cottbus\n* RA000228 - Darmstadt\n* RA000229 - Deggendorf\n* RA000230 - Dortmund\n* RA000231 - Dresden\n* RA000232 - Duisburg\n* RA000233 - D\u00fcren\n* RA000234 - D\u00fcsseldorf\n* RA000235 - Eisenach\n* RA000236 - Erfurt\n* RA000237 - Erkelenz\n* RA000238 - Eschwege\n* RA000239 - Essen\n* RA000240 - Flensburg\n* RA000241 - Frankfurt (Oder)\n* RA000242 - Frankfurt am Main\n* RA000243 - Freiburg\n* RA000244 - Friedberg (Hessen)\n* RA000245 - Fritzlar\n* RA000246 - Fulda\n* RA000247 - F\u00fcrth\n* RA000248 - Geldern\n* RA000249 - Gelsenkirchen\n* RA000250 - Gera\n* RA000251 - Gie\u00dfen\n* RA000252 - Gotha\n* RA000253 - G\u00f6ttingen\n* RA000254 - Greifswald\n* RA000255 - Greiz\n* RA000256 - G\u00fcstrow\n* RA000257 - G\u00fctersloh\n* RA000258 - Hagen\n* RA000259 - Hamburg\n* RA000260 - Hamm\n* RA000261 - Hanau\n* RA000262 - Hannover\n* RA000263 - Heilbad Heiligenstadt\n* RA000264 - Herford\n* RA000265 - Herne\n* RA000266 - Hildburghausen\n* RA000267 - Hildesheim\n* RA000268 - Hof\n* RA000269 - Homburg\n* RA000270 - Ilmenau\n* RA000271 - Ingolstadt\n* RA000272 - Iserlohn\n* RA000273 - Jena\n* RA000274 - Kaiserslautern\n* RA000275 - Kassel\n* RA000276 - Kempten\n* RA000277 - Kiel\n* RA000278 - Kleve\n* RA000279 - Koblenz\n* RA000280 - K\u00f6ln\n* RA000281 - K\u00f6nigstein im Taunus\n* RA000282 - Korbach\n* RA000283 - Krefeld\n* RA000284 - Landau in der Pfalz\n* RA000285 - Landshut\n* RA000286 - Lebach\n* RA000287 - Leipzig\n* RA000288 - Lemgo\n* RA000289 - Limburg a. d. Lahn\n* RA000290 - L\u00fcbeck\n* RA000291 - Ludwigshafen am Rhein\n* RA000292 - Ludwigslust\n* RA000293 - L\u00fcneburg\n* RA000294 - L\u00fcnen\n* RA000295 - Mainz\n* RA000296 - Mannheim\n* RA000297 - Marburg\n* RA000298 - Meiningen\n* RA000299 - Memmingen\n* RA000300 - Merzig\n* RA000301 - M\u00f6nchengladbach\n* RA000302 - Montabaur\n* RA000303 - M\u00fchlhausen\n* RA000304 - M\u00fcnchen\n* RA000305 - M\u00fcnster\n* RA000306 - Neubrandenburg\n* RA000307 - Neunkirchen\n* RA000308 - Neuruppin\n* RA000309 - Neuss\n* RA000310 - Nordhausen\n* RA000311 - N\u00fcrnberg\n* RA000312 - Oberhausen\n* RA000313 - Offenbach am Main\n* RA000314 - Oldenburg\n* RA000315 - Osnabr\u00fcck\n* RA000316 - Ottweiler\n* RA000317 - Paderborn\n* RA000318 - Pasewalk\n* RA000319 - Passau\n* RA000320 - Pinneberg\n* RA000321 - P\u00f6\u00dfneck\n* RA000322 - Potsdam\n* RA000323 - Ratingen\n* RA000324 - Recklinghausen\n* RA000325 - Regensburg\n* RA000326 - Remscheid\n* RA000327 - Ribnitz\n* RA000328 - Rostock\n* RA000329 - Rudolstadt\n* RA000330 - Saalfeld\n* RA000331 - Saarbr\u00fccken\n* RA000332 - Saarlouis\n* RA000333 - Sankt Ingbert\n* RA000334 - Sankt Wendel\n* RA000335 - Schleiden\n* RA000336 - Schweinfurt\n* RA000337 - Schwerin\n* RA000338 - Siegburg\n* RA000339 - Siegen\n* RA000340 - Soest\n* RA000341 - Solingen\n* RA000342 - S\u00f6mmerda\n* RA000343 - Sondershausen\n* RA000344 - Sonneberg\n* RA000345 - Stadthagen\n* RA000346 - Stadtroda\n* RA000347 - Steinfurt\n* RA000348 - Stendal\n* RA000349 - Stralsund\n* RA000350 - Straubing\n* RA000351 - Stuttgart\n* RA000352 - Suhl\n* RA000353 - Tostedt\n* RA000354 - Traunstein\n* RA000355 - Ulm\n* RA000356 - V\u00f6lklingen\n* RA000357 - Wadern\n* RA000358 - Walsrode\n* RA000359 - Warburg\n* RA000360 - Waren\n* RA000361 - Warstein\n* RA000362 - Weiden i.d. OPf.\n* RA000363 - Weimar\n* RA000364 - Wetzlar\n* RA000365 - Wiesbaden\n* RA000366 - Wismar\n* RA000367 - Witten\n* RA000368 - Wittlich\n* RA000369 - Wuppertal\n* RA000370 - W\u00fcrzburg\n* RA000371 - Zweibr\u00fccken"
       },
       "coverage": [
         "DE"
@@ -7175,8 +7241,8 @@
       "access": {
         "availableOnline": true,
         "onlineAccessDetails": "Without registration, one may find out about the company's legal name, registered office, and status. Any further information can be obtained upon registration. Retrieving published information is free of charge, any other is subject to a fee. There is English, French, Italian, and Spanish interface.",
-        "publicDatabase": "",
-        "guidanceOnLocatingIds": "To construct an identifier you need to (a) lookup the identifier for the court from the [GLEIF Registration Authority list](https://www.gleif.org/en/about-lei/code-lists/gleif-registration-authorities-list) and then combine this with the identifier from the search results. Remove all spaces from the identifier.",
+        "publicDatabase": "https://www.handelsregister.de/rp_web/welcome.xhtml",
+        "guidanceOnLocatingIds": "To construct an identifier you need to (a) lookup the identifier for the court from the GLEIF Registration Authority list (https://www.gleif.org/en/about-lei/code-lists/gleif-registration-authorities-list) and then combine this with the identifier from the search results (https://www.handelsregister.de/rp_web/welcome.xhtml). Remove all spaces from the identifier.",
         "exampleIdentifiers": "RA000220-VR8726, RA000351-HRB758147, RA000290-HRA7672HL",
         "languages": [
           "en",
@@ -7194,7 +7260,7 @@
       },
       "meta": {
         "source": "ProZorro Business Register Research / https://github.com/org-id/register/issues/256",
-        "lastUpdated": "2018-08-23"
+        "lastUpdated": "2025-02-12"
       },
       "links": {
         "opencorporates": "",
@@ -8445,12 +8511,12 @@
     },
     {
       "name": {
-        "en": "Charities and Societies Agency (Ethiopia)",
-        "local": "\u12e8\u1260\u130e \u12a0\u12f5\u122b\u130e\u1275 \u12f5\u122d\u1305\u1276\u127d\u1293 \u121b\u1205\u1260\u122b\u1275 \u12a4\u1300\u1295\u1232"
+        "en": "Authority for Civil Society Organizations (ACSO) - Ethiopia",
+        "local": ""
       },
-      "url": "http://www.chsa.gov.et/",
+      "url": "https://acso.gov.et/",
       "description": {
-        "en": "Most Charities and Societies which operate in Ethiopia are required to register with the Charities and Societies Agency, an institution of the Federal Government, which issues certificates of legal personality to those registered."
+        "en": "The Authority for Civil Society Organizations, previously known as the Charities and Societies Agency (CSA), is a governmental body in Ethiopia responsible for registering, supporting, and monitoring civil society organizations (CSOs).\n\nMost charities and societies that operate in Ethiopia are required to register."
       },
       "coverage": [
         "ET"
@@ -8468,7 +8534,7 @@
         "onlineAccessDetails": "",
         "publicDatabase": "",
         "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "",
+        "exampleIdentifiers": "1327, 0444",
         "languages": [
           "EN"
         ]
@@ -8482,8 +8548,8 @@
         "licenseDetails": ""
       },
       "meta": {
-        "source": "original research",
-        "lastUpdated": "2017-10-17T10:00:00Z"
+        "source": "Desk research",
+        "lastUpdated": "2025-07-25"
       },
       "links": {
         "opencorporates": "",
@@ -9082,15 +9148,17 @@
       },
       "subnationalCoverage": null,
       "listType": "deprecated",
-      "quality_explained": {},
+      "quality_explained": {
+        "Deprecated": 0
+      },
       "quality": 0
     },
     {
       "links": {
         "wikipedia": "https://en.wikipedia.org/wiki/SIREN_code",
-        "opencorporates": null
+        "opencorporates": ""
       },
-      "sector": null,
+      "sector": [],
       "url": "http://www.infogreffe.fr",
       "name": {
         "en": "Trade and Companies Register ",
@@ -9100,30 +9168,27 @@
         "FR"
       ],
       "code": "FR-RCS",
-      "formerPrefixes": null,
+      "formerPrefixes": [],
       "confirmed": true,
       "data": {
         "features": [
           "registered_address",
           "date_of_registration",
           "registration_number",
-          "organisation_name",
-          "activities/sector_code",
-          "financial_turnover/details",
-          "organisation_type"
+          "activities_sector_code",
+          "financial_turnover_details"
         ],
-        "dataAccessDetails": "Basic company informaiton is available using the home page search bar, but for more detailed information, users should go to the datainfogreffe portal, or pay for bulk download",
+        "dataAccessDetails": "Basic company information is available using the home page search bar, but for more detailed information, users should go to the datainfogreffe portal, or pay for bulk download.",
         "licenseDetails": "https://www.etalab.gouv.fr/licence-ouverte-open-licence",
         "licenseStatus": "open_license",
         "availability": [
-          "bulk_download",
+          "bulk",
           "csv",
           "excel",
           "json",
           "geojson",
           "kml",
           "shapefile",
-          "html",
           "api"
         ]
       },
@@ -9132,10 +9197,10 @@
         "company"
       ],
       "description": {
-        "en": "In France, companies register through a number of institutions, predominantly the local centres de formalit\u00e9s des entreprises, but all companies must eventually be registered with the Trade and Companies Register. Once registered, companies receive a SIREN or SIRET number, which is a unique business identifier.\n\nThis information is maintained by Infogreffe. Infogreffe provide a basic overview of company information for free, and bulk download of data for a fee.\n\nA note on identifiers: \n\n- A SIRET number is constituted by the SIREN number, plus the NIC code. \n\n- The SIREN number relates to a business, whereas a SIRET number relates to a specific geographically located establishment which will be owned by a business.\n\n- \"A SIREN number is your unique French business identification number. This 9 digit number will be requested by all French administration when dealing with you.. It is a proof that you are a fully registered French business\" [1]\n\n\"The SIRET code/number is an INSEE code which allows the geographic identification of any French establishment or business.\n\nThe 14-digit number consists of three parts:\n\n- first, the SIREN code of the business (or legal unit or person) that owns the unit represented by the SIRET code,\n- second, the NIC (French: Num\u00e9ro interne de classement), is a sequential four-digit number unique to the establishment,\n- and finally, a check digit that verifies the entire SIRET number.\n\nFor example, 732 829 320 00074 would refer to the seventh establishment of the business with SIREN number 732 829 320.\" [2]\n\n\"Registration is administered by local centres de formalit\u00e9s des entreprises ( CFE), which checks your application and submits details to the relevant agencies (for a small fee). The CFE will provide you with a form M0, which is for the creation of a company.\" [3] \n\n\"Creating a company requires that it is registered with the Trade and Companies Register (RCS).\" [4] \n\n\"WHAT SOURCE IS USED FOR INFORMATION AVAILABLE ON THE INFOGREFFE WEBSITE?\n\nInformation concerning companies entered on the Trade and Companies Register with Registries of the Commercial Courts is taken directly from public registers held by said registries. \n\nInformation concerning companies entered on the Trade and Companies Register with other jurisdictions (district courts with commercial jurisdiction, mixed commercial courts in the overseas departments and territories) is provided by the National Industrial Property Institute (INPI).\n\nInformation concerning companies not entered on the Trade and Companies Register is taken from data on the SIRENE listing held by INSEE.\" [5]\n\n\"WHAT DOCUMENTS ARE AVAILABLE ON THE INFOGREFFE WEBSITE?\nInfogreffe makes the following information available to the general public:\n\nFree information\n\u2022    Company search and information form\n\u2022    Key figures concerning a company\n\u2022    Implementing tracking (free alert, paid consultation).\n\u2022    Lists of articles of association and company deeds available.\n\u2022    Your formalities with online help to be incorporated on the Trade and Companies Register.\n\nPaid information\nView, download, order\" [6]\n\n[1] http://www.startbusinessinfrance.com/blog/post/tip-what-is-a-siren-or-siret-number\n[2] https://en.wikipedia.org/wiki/SIRET_code\n[3] https://www.justlanded.com/english/France/France-Guide/Business/Paperwork\n[4][5] https://www.infogreffe.com/societes/formalites-entreprise/immatriculation-entreprise.html\n[6] https://www.infogreffe.com/societes/informations-et-dossiers-entreprises/aide-faq.html#1"
+        "en": "In France, companies register through a number of institutions, predominantly the local centres de formalit\u00e9s des entreprises, but all companies must eventually be registered with the Trade and Companies Register. Once registered, companies receive a SIREN or SIRET number, which is a unique business identifier.\n\nThis information is maintained by Infogreffe. Infogreffe provide a basic overview of company information for free, and bulk download of data for a fee.\n\nA note on identifiers: \n\n- A SIRET number is constituted by the SIREN number, plus the NIC code. \n\n- The SIREN number relates to a business, whereas a SIRET number relates to a specific geographically located establishment which will be owned by a business.\n\n- \"A SIREN number is your unique French business identification number. This 9 digit number will be requested by all French administration when dealing with you.. It is a proof that you are a fully registered French business\" [1]\n\n\"The SIRET code/number is an INSEE code which allows the geographic identification of any French establishment or business.\n\nThe 14-digit number consists of three parts:\n\n- first, the SIREN code of the business (or legal unit or person) that owns the unit represented by the SIRET code,\n- second, the NIC (French: Num\u00e9ro interne de classement), is a sequential four-digit number unique to the establishment,\n- and finally, a check digit that verifies the entire SIRET number.\n\nFor example, 732 829 320 00074 would refer to the seventh establishment of the business with SIREN number 732 829 320.\" [2]\n\n\"Registration is administered by local centres de formalit\u00e9s des entreprises ( CFE), which checks your application and submits details to the relevant agencies (for a small fee). The CFE will provide you with a form M0, which is for the creation of a company.\" [3] \n\n\"Creating a company requires that it is registered with the Trade and Companies Register (RCS).\" [4] \n\n\"WHAT SOURCE IS USED FOR INFORMATION AVAILABLE ON THE INFOGREFFE WEBSITE?\n\nInformation concerning companies entered on the Trade and Companies Register with Registries of the Commercial Courts is taken directly from public registers held by said registries. \n\nInformation concerning companies entered on the Trade and Companies Register with other jurisdictions (district courts with commercial jurisdiction, mixed commercial courts in the overseas departments and territories) is provided by the National Industrial Property Institute (INPI).\n\nInformation concerning companies not entered on the Trade and Companies Register is taken from data on the SIRENE listing held by INSEE.\" [5]\n\n\"WHAT DOCUMENTS ARE AVAILABLE ON THE INFOGREFFE WEBSITE?\nInfogreffe makes the following information available to the general public.\n\nFree information:\n\u2022    Company search and information form\n\u2022    Key figures concerning a company\n\u2022    Implementing tracking (free alert, paid consultation).\n\u2022    Lists of articles of association and company deeds available. [6]\n\n[1] http://www.startbusinessinfrance.com/blog/post/tip-what-is-a-siren-or-siret-number\n[2] https://en.wikipedia.org/wiki/SIRET_code\n[3] https://www.justlanded.com/english/France/France-Guide/Business/Paperwork\n[4][5] https://www.infogreffe.com/societes/formalites-entreprise/immatriculation-entreprise.html\n[6] https://www.infogreffe.com/societes/informations-et-dossiers-entreprises/aide-faq.html#1"
       },
       "meta": {
-        "lastUpdated": "2016-11-25",
+        "lastUpdated": "2025-02-05",
         "source": "Desk research"
       },
       "access": {
@@ -9144,14 +9209,15 @@
           "fr"
         ],
         "exampleIdentifiers": "799 640 131, 512 788 308 00025, 798 620 860",
-        "onlineAccessDetails": "Data is available through a simple search for free, a bulk download of more detailed documentation for a fee, and also through an open data portal",
+        "onlineAccessDetails": "Basic data is available through a simple search for free, and more detailed data through a bulk download for a fee. There is also an open data portal.",
         "publicDatabase": "https://www.infogreffe.com/societes/ , https://datainfogreffe.fr/explore/?sort=modified&q=",
-        "availableOnline": false,
-        "guidanceOnLocatingIds": "Users can find identifiers using the simple, search bar present near the top of every webpage on the Infogreffe website - https://www.infogreffe.com/societes/\n\nAfter searching for a company, address, director or number, the identifier is under the column header 'SIREN / SIRET' \n\nPlease note : users may have to click on the record in order to see the full SIREN / SIRET identifier number\n\nUsers can also analyse datasets on the Infogreffe Open Data portal - https://datainfogreffe.fr/explore/?sort=modified&q=\n\nThe Identifier is under the column header 'SIREN'.\n\nThe SIREN directory is available as zipped csv files in daily updates published to https://www.data.gouv.fr/en/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/. An (unofficial) API for access data from this directly is accessible from https://public.opendatasoft.com/explore/dataset/sirene/api/, which also allows searching with a geofilter."
+        "availableOnline": true,
+        "guidanceOnLocatingIds": "Users can find identifiers using the simple, search bar present near the top of every webpage on the Infogreffe website: https://www.infogreffe.com/societes/\n\nAfter searching for a company, address, director or number, the identifier is under the column header 'SIREN / SIRET' \n\nPlease note : users may have to click on the record in order to see the full SIREN / SIRET identifier number.\n\nUsers can also analyse datasets on the Infogreffe Open Data portal: https://datainfogreffe.fr/explore/?sort=modified&q=\n\nThe Identifier is under the column header 'SIREN'.\n\nThe SIREN directory is available as zipped csv files in daily updates published to https://www.data.gouv.fr/en/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/. An (unofficial) API for access data from this directly is accessible from https://public.opendatasoft.com/explore/dataset/sirene/api/, which also allows searching with a geofilter."
       },
-      "subnationalCoverage": null,
+      "subnationalCoverage": [],
       "listType": "secondary",
       "quality_explained": {
+        "Availability: Bulk download": 2,
         "Availability: CSV format": 1,
         "Availability: Excel format": 1,
         "Availability: JSON format": 1,
@@ -9159,7 +9225,7 @@
         "License: Open License": 10,
         "List type: Secondary": 50
       },
-      "quality": 65
+      "quality": 67
     },
     {
       "name": {
@@ -9755,9 +9821,9 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "List type: Secondary": 50
+        "Deprecated": 0
       },
-      "quality": 50
+      "quality": 0
     },
     {
       "name": {
@@ -11148,8 +11214,8 @@
       "access": {
         "availableOnline": false,
         "onlineAccessDetails": "Data for companies available in a free, simple search. Further details and documents can be requested at a fee. Users can search for a charity or NPO and then download a PDF of the charity/NPO statement",
-        "publicDatabase": "Companies - https://www.greg.gg/webCompSearch.aspx Charities - http://www.guernseyregistry.com/article/112909/Charities-Register NPOs - http://www.guernseyregistry.com/article/112771/NPO-Register",
-        "guidanceOnLocatingIds": "For Companies:\n\nUsers can find identifiers using the simple, searchable database - https://www.greg.gg/webCompSearch.aspx\n\nThe identifier will be under the column heading 'Entity Reg Number' on the results returned, and if the user clicks on document icon to the left, more details will be shown. The identifier will be shown next to 'Company Reg Number'\n\nFor Charities and NPOs:\n\nUsers can scroll down the two public lists to search for an organisation, or they can use 'Ctrl-F' to search for a name. The identifier can be found in the left hand column under the header 'Number'",
+        "publicDatabase": "https://portal.guernseyregistry.com/",
+        "guidanceOnLocatingIds": "Users can find identifiers using the simple, searchable database: https://portal.guernseyregistry.com/\n\nThe identifier will be under the column heading 'Number' in the results returned. More information will be shown about the organisation if the user clicks 'View' on the right of the record.",
         "exampleIdentifiers": "56234, CH441, NP3, 14392, 28419, CH1, CH545, NP126, NP219",
         "languages": [
           "en"
@@ -11172,7 +11238,7 @@
       },
       "meta": {
         "source": "Desk research",
-        "lastUpdated": "2017-10-25"
+        "lastUpdated": "2025-02-05"
       },
       "links": {
         "opencorporates": "http://opencorporates.com/companies/gg",
@@ -11355,6 +11421,61 @@
         "List type: Primary": 75
       },
       "quality": 80
+    },
+    {
+      "name": {
+        "en": "Ghana Tax Identification Number (TIN)",
+        "local": ""
+      },
+      "url": "https://gra.gov.gh/tin/",
+      "description": {
+        "en": "The Tax Identification Number (TIN) in Ghana is issued by the Ghana Revenue Authority (GRA) under the Tax Identification Number Act, 2002 (Act 632). All legal entities, including companies, public institutions, NGOs, charities, and other organisations with legal personality, are required to register for a TIN for tax and administrative purposes. These identifiers are therefore suitable for use as reliable organisation identifiers in open data publications. TINs are typically alphanumeric and are assigned upon registration with the GRA."
+      },
+      "coverage": [
+        "GH"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "government_agency",
+        "charity"
+      ],
+      "sector": [],
+      "code": "GH-TIN",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": null,
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "Organisations can find their TIN on their Ghana Revenue Authority Certificate of Registration, tax documents, or official correspondence from the GRA.",
+        "exampleIdentifiers": "V0004162595",
+        "languages": [
+          "en"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "TINs are assigned by the Ghana Revenue Authority upon registration and are displayed on certificates of registration and other official tax documents.",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Desk research",
+        "lastUpdated": "2026-01-09"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/Ghana_Revenue_Authority"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
     },
     {
       "name": {
@@ -12812,10 +12933,10 @@
     },
     {
       "name": {
-        "en": "Director General of Taxes",
-        "local": "Direktur Jenderal Pajak"
+        "en": "Indonesian Directorate General of Taxes",
+        "local": "Direktorat Jenderal Pajak"
       },
-      "url": "http://ceknpwp.com/",
+      "url": "https://pajak.go.id/en/overview",
       "description": {
         "en": "The Directorate General of Taxes is Indonesia's tax office.\n\nThe Tax Identification Number (TIN) is known in Indonesia as Nomor Pokok Wajib Pajak (NPWP) and is issued by the Directorate General of Taxes to individuals and entities. "
       },
@@ -12832,10 +12953,10 @@
       "deprecated": false,
       "listType": "primary",
       "access": {
-        "availableOnline": true,
-        "onlineAccessDetails": "A Tax Identifier Lookup is available at http://ceknpwp.com/\n\nIt is necessary to know an organisation's NPWP in order to perform the lookup. All non-numeric characters must be removed from the NPWP. The lookup may require one or more captchas to be completed before showing the result. There is no sign up. Upon successfully completing the lookup only the organisation's name is shown.",
-        "publicDatabase": "http://ceknpwp.com/",
-        "guidanceOnLocatingIds": "You need to know the identifier in advance. Lookups are from identifier to company only.",
+        "availableOnline": false,
+        "onlineAccessDetails": "No searchable database of Tax identification Numbers (TINs) has been found.",
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "",
         "exampleIdentifiers": "010117771077000, 312666837412000",
         "languages": [
           "ID"
@@ -12851,7 +12972,7 @@
       },
       "meta": {
         "source": "Desk research",
-        "lastUpdated": "2019-06-18"
+        "lastUpdated": "2024-05-28"
       },
       "links": {
         "opencorporates": "",
@@ -12911,9 +13032,9 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: No License": 5
+        "Deprecated": 0
       },
-      "quality": 5
+      "quality": 0
     },
     {
       "name": {
@@ -13068,7 +13189,7 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: Closed License": 0
+        "Deprecated": 0
       },
       "quality": 0
     },
@@ -13731,10 +13852,10 @@
       "listType": "primary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "An online search is available which requires the user to select which kind of entity they are looking for (Company, LLP), and to search on full or partial name. \n\nBulk data is also available from Data.gov.in.",
-        "publicDatabase": "https://www.mca.gov.in/mcafoportal/findCIN.do",
-        "guidanceOnLocatingIds": "The online search at https://www.mca.gov.in/mcafoportal/findCIN.do requires you to choose whether you are searching for an LLP or Company, and to select that you are searching on name. Searches also require completion of a CAPTCHA. \n\nThe identification number is given in the results table under the heading 'CIN / LLPIN'\n\nTo access bulk data, users can also go to https://data.gov.in/search website and apply the filter for the Ministry of Corporate Affairs. Company data is then represented in a number of datasets. Users can click on the 'Company Master Data' box and will be presented with datasets for each Registrar of Companies.\n\nThese datasets can either be accessed through the API or downloaded as a CSV. If downloaded as a CSV, the identifier will be under the column header 'CORPORATE_IDENTIFICATION_NUMBER'",
-        "exampleIdentifiers": "L24111UR1986PLC015895, U01111UR1995PLC017979, AAE-8458",
+        "onlineAccessDetails": "An online search is available at https://www.mca.gov.in/content/mca/global/en/mca/fo-llp-services/findCinFinalSingleCom.html. This is based on company or LLP name, local registration number, or CIN. \n\nBulk data is also available from Data.gov.in.",
+        "publicDatabase": "https://www.mca.gov.in/content/mca/global/en/mca/fo-llp-services/findCinFinalSingleCom.html",
+        "guidanceOnLocatingIds": "The online search requires you to choose what you are searching on (registration number; current or old Company/LLP name; inactive CIN). Searches also require completion of a CAPTCHA. \n\nThe identification number is given in the results table under the heading 'CIN / LLPIN'\n\nTo access bulk data, users can also go to https://data.gov.in/search website and apply the filter for the Ministry of Corporate Affairs. Company data is then represented in a number of datasets. Users can click on the 'Company Master Data' box and will be presented with datasets for each Registrar of Companies.\n\nThese datasets can either be accessed through the API or downloaded as a CSV. If downloaded as a CSV, the identifier will be under the column header 'CORPORATE_IDENTIFICATION_NUMBER'",
+        "exampleIdentifiers": "L24111UR1986PLC015895, U01111UR1995PLC017979",
         "languages": [
           "en",
           "hi"
@@ -13756,7 +13877,7 @@
       },
       "meta": {
         "source": "Desk research",
-        "lastUpdated": "2023-08-24"
+        "lastUpdated": "2025-03-06"
       },
       "links": {
         "opencorporates": "http://opencorporates.com/companies/in",
@@ -13778,7 +13899,7 @@
       },
       "url": "https://fcraonline.nic.in/",
       "description": {
-        "en": "The Foreign Contributions (Regulation) Act required NGOs in receipt of foreign funding in India to register with the government. They are assigned an FRCA Registration Number.\n\n"
+        "en": "The Foreign Contributions (Regulation) Act required NGOs in receipt of foreign funding in India to register with the government. They are assigned an FRCA Registration Number.\n\nLists of registered organisations can be found online by state and year: https://fcraonline.nic.in/fc8_statewise.aspx"
       },
       "coverage": [
         "IN"
@@ -13792,7 +13913,7 @@
       "confirmed": true,
       "deprecated": false,
       "access": {
-        "onlineAccessDetails": "A full search service for identifiers does not appear to be available. However, a service is available from the website to verify identifiers, which will return information on the address and validity of an FRCA certificate when an identifier is supplied.",
+        "onlineAccessDetails": "A full search service for identifiers does not appear to be available. However, a service is available from the website to verify identifiers: https://fcraonline.nic.in/fc_reg_certificate_details_verification1.aspx. This will return information on the address and validity of an FRCA certificate when an identifier is supplied.",
         "publicDatabase": "https://fcraonline.nic.in/fc_reg_certificate_details_verification1.aspx",
         "guidanceOnLocatingIds": "Some states appear to publish lists of local FRCA numbers, and a web search for an organisation name and 'FRCA' may identify it's number, which can be verified through the FRCA Online website. \n\nOrganisations may also be able to provide their own identifiers. ",
         "exampleIdentifiers": "104860017, 147040594",
@@ -13815,7 +13936,7 @@
       },
       "meta": {
         "source": "IATI",
-        "lastUpdated": "2017-06-25"
+        "lastUpdated": "2025-02-04"
       },
       "links": {
         "opencorporates": "",
@@ -14391,10 +14512,9 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "License: Closed License": 0,
-        "List type: Primary": 75
+        "Deprecated": 0
       },
-      "quality": 75
+      "quality": 0
     },
     {
       "name": {
@@ -14623,9 +14743,9 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: No License": 5
+        "Deprecated": 0
       },
-      "quality": 5
+      "quality": 0
     },
     {
       "name": {
@@ -15252,9 +15372,9 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: No License": 5
+        "Deprecated": 0
       },
-      "quality": 5
+      "quality": 0
     },
     {
       "name": {
@@ -15604,7 +15724,7 @@
         "charity"
       ],
       "sector": [
-        "humantiarian_relief"
+        "humanitarian_relief"
       ],
       "code": "KH-INGO",
       "confirmed": true,
@@ -16880,6 +17000,62 @@
       "quality": 57
     },
     {
+      "name": {
+        "en": "Lesotho Higher Education Institution Registration Number (HEI)",
+        "local": "HEI Registration Number"
+      },
+      "url": "https://www.education.gov.ls/",
+      "description": {
+        "en": "Higher Education Institution (HEI) Registration Numbers are issued by the Ministry of Education and Training of the Kingdom of Lesotho. These identifiers are assigned to institutions registered under the Higher Education Act, 2004, as confirmed in official registration certificates issued by the Ministry. HEI numbers are used for accreditation, compliance, and regulatory oversight of institutions offering higher education programmes in Lesotho."
+      },
+      "coverage": [
+        "LS"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "charity"
+      ],
+      "sector": [
+        "education"
+      ],
+      "code": "LS-HEI",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": null,
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "The HEI registration number appears on official registration certificates issued by the Ministry of Education and Training under the Higher Education Act, 2004. For use as an identifier, replace any forward slashes, '/', in the registration number with dashes, '-'. See the example.",
+        "exampleIdentifiers": "HEI-CRL-2025CNT-3182004",
+        "languages": [
+          "en"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "HEI registration numbers are issued and maintained by the Ministry of Education and Training and recorded on institutional registration certificates.",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Registration certificate issued by the Ministry of Education and Training, Kingdom of Lesotho",
+        "lastUpdated": "2025-11-26"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/Education_in_Lesotho"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
+    },
+    {
       "links": {
         "wikipedia": null,
         "opencorporates": null
@@ -16929,7 +17105,7 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: Closed License": 0
+        "Deprecated": 0
       },
       "quality": 0
     },
@@ -18729,52 +18905,56 @@
       "quality": 55
     },
     {
-      "links": {
-        "wikipedia": null,
-        "opencorporates": null
-      },
-      "sector": null,
-      "url": "http://companies.govmu.org/",
       "name": {
         "en": "Companies and Businesses Registration Integrated System, Mauritius",
         "local": ""
       },
-      "coverage": [
-        "MU"
-      ],
-      "code": "MU-CR",
-      "formerPrefixes": null,
-      "confirmed": true,
-      "data": {
-        "features": null,
-        "dataAccessDetails": null,
-        "licenseDetails": null,
-        "licenseStatus": "no_license",
-        "availability": null
-      },
-      "deprecated": false,
-      "structure": [
-        "company"
-      ],
+      "url": "http://companies.govmu.org/",
       "description": {
         "en": "The Corporate and Business Registration Department has the following main functions:\n- The incorporation, registration and striking-off of companies\n- The registration of documents that must be filed under the Companies Act 2001\n- The provision of company information to the  public\n- The enforcement of compliance with the legal requirements\n- Registration of Businesses\n- The Insolvency Service\n- Registration of Limited Partnerships and Foundations"
       },
-      "meta": {
-        "lastUpdated": "2018-01-22",
-        "source": "Desk research"
-      },
+      "coverage": [
+        "MU"
+      ],
+      "subnationalCoverage": [
+        "AF-BDS"
+      ],
+      "structure": [
+        "company"
+      ],
+      "sector": [],
+      "code": "MU-CR",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
       "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": "Visit https://onlinesearch.mns.mu",
+        "publicDatabase": "https://onlinesearch.mns.mu/",
+        "guidanceOnLocatingIds": "For companies, use the \"Company/Partnership No\" that appears in search results and company information pages.\n\nUsers should be aware that a \"business registration number\" is also in use for some companies, which differs from the Company No/File No.\n\nFor business other than companies/partnerships (e.g. societies), use the Business Registration Number.",
+        "exampleIdentifiers": "C136127, I06004428, C078008",
         "languages": [
           "en"
-        ],
-        "exampleIdentifiers": "C136127, I06004428, C078008",
-        "onlineAccessDetails": "Visit https://portalmns.mu/cbris-name-search/MASTActionServlet?do=acceptlic",
-        "publicDatabase": "https://portalmns.mu/cbris-name-search/MASTActionServlet?do=acceptlic",
-        "availableOnline": true,
-        "guidanceOnLocatingIds": "For companies, use the \"Company/Partnership No\" that appears in search results and company information pages.\n\nUsers should be aware that a \"business registration number\" is also in use for some companies, which differs from the Company No/File No.\n\nFor business other than companies/partnerships (e.g. societies), use the Business Registration Number."
+        ]
       },
-      "subnationalCoverage": null,
-      "listType": "primary",
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Desk research",
+        "lastUpdated": "2024-08-28"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [
+        ""
+      ],
       "quality_explained": {
         "License: No License": 5,
         "List type: Primary": 75
@@ -18882,9 +19062,9 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: No License": 5
+        "Deprecated": 0
       },
-      "quality": 5
+      "quality": 0
     },
     {
       "name": {
@@ -18994,9 +19174,9 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: No License": 5
+        "Deprecated": 0
       },
-      "quality": 5
+      "quality": 0
     },
     {
       "links": {
@@ -19663,6 +19843,58 @@
     },
     {
       "name": {
+        "en": "Business and Intellectual Property Authority, Republic of Namibia",
+        "local": ""
+      },
+      "url": "https://www.bipa.na/business-registration/",
+      "description": {
+        "en": "Namibia's Business and Intellectual Property Authority (BIPA) is the focal point for the registration of business and industrial property, and is responsible for the administration and protection of business and intellectual property. It registers domestic enterprises, non-governmental organisations, and foreign companies, issuing Business Registration Numbers and - in the case of foreign enterprises -  Foreign Registration Numbers. BIPA is established as a juristic person in terms of section 3 of the BIPA Act, 2016 (Act No.8 of 2016) and is a Public Enterprise as defined in the Public Enterprises Governance Act, 2019 (Act No.1 of 2019) of Republic of Namibia."
+      },
+      "coverage": [
+        "NA"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "charity"
+      ],
+      "sector": [],
+      "code": "NA-BIPA",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://www.bipa.na/search/",
+        "guidanceOnLocatingIds": "Forward slashes in the registration number should be replaced by hyphens.",
+        "exampleIdentifiers": "CC-2017-11330",
+        "languages": []
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Information supplied by BIPA officer",
+        "lastUpdated": "2024-09-24"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
+    },
+    {
+      "name": {
         "en": "Namibia Chart of Accounts",
         "local": ""
       },
@@ -19726,7 +19958,7 @@
       },
       "url": "https://www.namra.org.na/",
       "description": {
-        "en": "The Namibia Revenue Agency maintains the details of all businesses, non-profits and individuals who are required to submit income tax returns. All legal entities must be registered with the Revenue Agency upon incorporation. Information regarding an entity can be requested from the Revenue Agency by the registered representative of the entity, accountants or auditors.\n"
+        "en": "The Namibia Revenue Agency maintains the details of all businesses, non-profits and individuals who are required to submit income tax returns. \n\nAll legal entities must be registered with the Revenue Agency upon incorporation. Information regarding an entity can be requested from the Revenue Agency by the registered representative of the entity, accountants or auditors.\n"
       },
       "coverage": [
         "NA"
@@ -19745,8 +19977,8 @@
         "availableOnline": false,
         "onlineAccessDetails": null,
         "publicDatabase": "",
-        "guidanceOnLocatingIds": "No. details must be requested through appropriate channels from the Namibia Revenue Agency",
-        "exampleIdentifiers": "",
+        "guidanceOnLocatingIds": "An online search of organisations is not available. Request a registration certificate from an organisation based in Namibia, or through appropriate channels from the Namibia Revenue Agency",
+        "exampleIdentifiers": "04822224, 04413362",
         "languages": []
       },
       "data": {
@@ -19757,8 +19989,8 @@
         "licenseDetails": ""
       },
       "meta": {
-        "source": "orginal research",
-        "lastUpdated": "2022-10-07"
+        "source": "desk research",
+        "lastUpdated": "2025-02-04"
       },
       "links": {
         "opencorporates": "",
@@ -20325,11 +20557,11 @@
     {
       "name": {
         "en": "Chamber of Commerce (Netherlands)",
-        "local": " Kamer van Koophandel (KvK)"
+        "local": "Kamer van Koophandel (KVK)"
       },
-      "url": "https://www.kvk.nl/zoeken/handelsregister/",
+      "url": "https://www.kvk.nl/zoeken/",
       "description": {
-        "en": "All companies and entities (including most NGOs) in the Netherlands must enrol with the Commercial Register, which is hosted by the Dutch Chamber of Commerce. Each entity receives a Chamber of Commerce number upon registration, which is the appropriate identifier Dutch companies and NPOs.\n\nBasic company information is available for free, detailed info can be downloaded for a fee.\n\n\"All companies and entities in the Netherlands must enroll in the Commercial Register. By law, you have a business if you provide common goods or services to others with the intent to make a profit.\" [1] \n\n\"Recipient companies can consult www.kvk.nl/waadi to check if agencies are registered on the Chamber of Commerce website. They can do this simply by entering their Chamber or Commerce number, which is assigned to all companies and legal entities upon registration in the Business Register.\" [2] \n\n\"The major forms of Dutch non-profit organization are the associations, the foundations and the churches... Associations registered in The Netherlands are unions between two or more individuals, physical persons or corporate bodies that pursue certain goals stated in the Articles of Association and that cannot divide profit among its members... There are two types of associations that can be set up in the Netherlands: with complete authority under the law (in this case the articles of associations are drawn by a civil notary and it\u2019s mandatory in this case that the association is registered at the Dutch Chamber of Commerce trade register) and with limited authority under the law (when the articles are not drawn up by a notary and the registration is not mandatory).\" [3] \n\n[1] https://www.kvk.nl/inschrijven-en-wijzigen/inschrijven/?block=420250\n[2] https://www.kvk.nl/english/how-to-register-deregister-and-report-changes/registering-with-the-chamber-of-commerce/hiring-or-provision-of-workers-in-the-netherlands/\n[3] http://www.bridgewest.eu/article/register-non-profit-organization-netherlands"
+        "en": "All companies and entities (including most NGOs) in the Netherlands must enrol with the Commercial Register, which is hosted by the Dutch Chamber of Commerce. Each entity receives a Chamber of Commerce (KVK) number upon registration.\n\nBasic company information is available for free and more detailed information, such as a Business Register extract or financial statements, can be downloaded for a fee. [1]\n\nAccording to the Chamber of Commerce, you have a business when you supply goods or services, you demand more than symbolic payment for these, and you take part in regular commercial transactions [2]. NGOs must register as a foundation [3].\n\n[1] https://www.kvk.nl/en/about-the-business-register/what-information-does-the-dutch-business-register-contain\n[2] https://www.kvk.nl/en/starting/when-do-you-have-a-business\n[3] https://business.gov.nl/starting-your-business/choosing-a-business-structure/what-is-an-ngo-and-how-do-you-start-one"
       },
       "coverage": [
         "NL"
@@ -20346,10 +20578,10 @@
       "deprecated": false,
       "listType": "primary",
       "access": {
-        "availableOnline": false,
-        "onlineAccessDetails": "Basic company data is available on the KvK website for free. More detailed information is available for download for a fee.",
-        "publicDatabase": "https://www.kvk.nl/zoeken/handelsregister/",
-        "guidanceOnLocatingIds": "Users can find the identifiers by using the publicly searchable database on the Chamber of Commerce website. The identifier will be next to 'KvK', or 'Chamber of Commerce' in English.",
+        "availableOnline": true,
+        "onlineAccessDetails": "Basic company data is available on the Chamber of Commerce (KVK) website for free. More detailed information is available for download for a fee.",
+        "publicDatabase": "https://www.kvk.nl/zoeken/",
+        "guidanceOnLocatingIds": "Users can search the online database on the Chamber of Commerce website by company name, Chamber of Commerce (KVK) number or keyword. The identifier for this register is the KVK number ('Chamber of Commerce' number in English).",
         "exampleIdentifiers": "41202535, 54416485, 66140285",
         "languages": [
           "nl",
@@ -20370,8 +20602,8 @@
         "licenseDetails": "https://opencorporates.com/registers/175"
       },
       "meta": {
-        "source": "Desk research, review as part of ProZorro Business Register Research",
-        "lastUpdated": "2017-11-08"
+        "source": "Desk research (including review as part of ProZorro Business Register Research)",
+        "lastUpdated": "2024-10-29"
       },
       "links": {
         "opencorporates": "http://opencorporates.com/companies/nl",
@@ -20626,31 +20858,29 @@
     },
     {
       "links": {
-        "wikipedia": null,
-        "opencorporates": null
+        "wikipedia": "",
+        "opencorporates": ""
       },
-      "sector": null,
-      "url": "http://www.cro.gov.np/",
+      "sector": [],
+      "url": "https://www.ocr.gov.np/",
       "name": {
-        "en": "Company Registrar Office",
+        "en": "Nepal Company Registrar Office",
         "local": ""
       },
       "coverage": [
         "NP"
       ],
       "code": "NP-CRO",
-      "formerPrefixes": null,
+      "formerPrefixes": [],
       "confirmed": true,
       "data": {
-        "features": null,
-        "dataAccessDetails": null,
+        "features": [],
+        "dataAccessDetails": "",
         "licenseDetails": "http://index.okfn.org/place/nepal/companies/",
         "licenseStatus": "closed_license",
-        "availability": [
-          "html"
-        ]
+        "availability": []
       },
-      "deprecated": null,
+      "deprecated": false,
       "structure": [
         "company"
       ],
@@ -20658,7 +20888,7 @@
         "en": "All companies operating in Nepal must register with the Office of the Company Registrar Office. This database is available for search on the Office homepage.\n\n\"To register a company, the promoter must submit an application as prescribed by the Ministry of Industry, Commerce, and Supplies. Online filing of the required documents has been introduced and made mandatory. After the online filing, entrepreneurs are required to visit the Office of Company Registrar and submit all the original documents for further verification.\" [1]\n\n[1] http://www.doingbusiness.org/data/exploreeconomies/nepal#starting-a-business"
       },
       "meta": {
-        "lastUpdated": "2016-12-02",
+        "lastUpdated": "2025-02-04",
         "source": "Desk research"
       },
       "access": {
@@ -20667,12 +20897,12 @@
           "ne"
         ],
         "exampleIdentifiers": "45995, 34774, 105299",
-        "onlineAccessDetails": "Data available for free from search on Office website homepage",
-        "publicDatabase": "http://www.ocr.gov.np/index.php/en/",
-        "availableOnline": false,
-        "guidanceOnLocatingIds": "Users can search for identifiers using the simple, searchable database on the Office website. Identifiers will be under the column heading 'Registration No' on the search results.\n\nCompany numbers are sometimes reported in the format: 45995-063-064\n\nThis is made up of two parts. A CRO number and a registration year.\n\nFor example:\n\nSearching for 45995 in the Registrar database returns Young Innovations. This is their CRO number.\n\n063-064 refers to the financial year that Young Innovations was registered. When included within the identifier, this could be reported with a dash-separator, and not slash. "
+        "onlineAccessDetails": "There is a searchable database on the Office website.\n\n A search by company registration number is available here: https://application.ocr.gov.np/faces/CompanyDetails.jsp \n\nA search by company name may be partially available here: https://nepal.gov.np:8443/NationalPortal/ocrService",
+        "publicDatabase": "https://application.ocr.gov.np/faces/CompanyDetails.jsp",
+        "availableOnline": true,
+        "guidanceOnLocatingIds": "Identifiers will be under the column heading 'Registration No.' in the search results.\n\nCompany numbers are sometimes reported in the format: 45995-063-064\n\nThis is made up of two parts - a CRO number and a registration year.\n\nFor example:\n\nSearching for 45995 in the Registrar database returns Young Innovations. This is their CRO number.\n\n063-064 refers to the financial year that Young Innovations was registered. When included within the identifier, this should be reported with a dash-separator, and not slash."
       },
-      "subnationalCoverage": null,
+      "subnationalCoverage": [],
       "listType": "primary",
       "quality_explained": {
         "License: Closed License": 0,
@@ -20687,7 +20917,7 @@
       },
       "url": "https://ird.gov.np/",
       "description": {
-        "en": "The Inland Revenue Department is responsible for the administration of Value Added Tax, Income Tax, and Excise Duty. In the performance of these duties it maintains a register of Permanent Account Numbers (PANs) the unique taxpayer identification number for Nepal.\n\nThis register covers individuals as well as legal entities. Org-id does not recommend using the PAN of an individual person as a unique identifier.\n\nThe PAN is described as follows[1]:\n\nPAN is a unique identification number, which is issued to all the taxpayers and Tax Deducted at Source (TDS) withholding agents throughout the kingdom. PAN identifies each taxpayer or TDS withholding agent uniquely countrywide.\nPAN is necessary to process taxpayers or TDS withholding agents using computer systems.\nPAN is allotted only once in the lifetime of a taxpayer or TDS withholding agent. It never changes.\n\n[1] https://ird.gov.np/Content/ContentAttachment/1020/IndividualRegistration(English)1172014102329AM.pdf"
+        "en": "The Inland Revenue Department is responsible for the administration of Value Added Tax, Income Tax, and Excise Duty. In the performance of these duties it maintains a register of Permanent Account Numbers (PANs) the unique taxpayer identification number for Nepal.\n\nThis register covers individuals as well as legal entities. Org-id does not recommend using the PAN of an individual person as a unique identifier.\n\nThe PAN is described as follows [1]:\n\n- A unique identification number, which is issued to all the taxpayers and Tax Deducted at Source (TDS) withholding agents throughout the kingdom. \n- It identifies each taxpayer or TDS withholding agent uniquely countrywide.\n- It is necessary to process taxpayers or TDS withholding agents using computer systems.\n- It is allotted only once in the lifetime of a taxpayer or TDS withholding agent. It never changes.\n\n[1] https://nepaltradeportal.gov.np/resources/docs/IndividualRegistration(English)1172014102329AM.pdf"
       },
       "coverage": [
         "NP"
@@ -20704,8 +20934,8 @@
       "listType": "secondary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "A Tax Identifier Lookup is available at https://ird.gov.np/PanSearch\n\nIt is necessary to know an organisation's PAN in order to perform the lookup. The lookup requires a captcha to be completed before showing the result. There is no sign up. Upon successfully completing the lookup the organisation's details are shown in a mix of English and Nepali.",
-        "publicDatabase": "https://ird.gov.np/PanSearch",
+        "onlineAccessDetails": "A Tax Identifier Lookup is available at https://ird.gov.np/pan-search\n\nIt is necessary to know an organisation's PAN in order to perform the lookup. The lookup requires a captcha to be completed before showing the result. There is no sign up. Upon successfully completing the lookup the organisation's details are shown in a mix of English and Nepali.",
+        "publicDatabase": "https://ird.gov.np/pan-search",
         "guidanceOnLocatingIds": "You need to know the identifier in advance. Lookups are from identifier to company only.",
         "exampleIdentifiers": "302274734",
         "languages": [
@@ -20722,8 +20952,8 @@
         "licenseDetails": ""
       },
       "meta": {
-        "source": "desk research based on enquiry made to org-id contact address",
-        "lastUpdated": "2019-06-18"
+        "source": "Desk research based on enquiry made to org-id contact address",
+        "lastUpdated": "2025-02-04"
       },
       "links": {
         "opencorporates": "",
@@ -21396,6 +21626,69 @@
       "quality": 57
     },
     {
+      "links": {
+        "wikipedia": "",
+        "opencorporates": ""
+      },
+      "sector": [],
+      "url": "http://www.ipa.gov.pg/",
+      "name": {
+        "en": "Investment Promotion Authority - Papua New Guinea",
+        "local": ""
+      },
+      "coverage": [
+        "PG"
+      ],
+      "code": "PG-IPA",
+      "formerPrefixes": [],
+      "confirmed": true,
+      "data": {
+        "features": [
+          "registered_address",
+          "contact_address",
+          "date_of_registration",
+          "registration_number",
+          "phone_number",
+          "status"
+        ],
+        "dataAccessDetails": "",
+        "licenseDetails": "",
+        "licenseStatus": "no_license",
+        "availability": [
+          "data_not_available"
+        ]
+      },
+      "deprecated": false,
+      "structure": [
+        "charity",
+        "company"
+      ],
+      "description": {
+        "en": "The Papua New Guinea Investment Promotion Authority (IPA) is a government agency responsible for promoting and facilitating both foreign and domestic investment in the country. It was established by the Investment Promotion Act of 1992.\n\nThe IPA houses several key offices, including the Companies Office of PNG, the Securities Commission of PNG, and the Intellectual Property Office of PNG.\n\nThe IPA also maintains a registry for various organizations: \n* Associations \n* Business groups \n* Business names \n* Companies \n* Foreign enterprises"
+      },
+      "meta": {
+        "lastUpdated": "2025-07-31",
+        "source": "Desk research"
+      },
+      "access": {
+        "languages": [
+          "en"
+        ],
+        "exampleIdentifiers": "6-321352, 1-103585, 6-123136632",
+        "onlineAccessDetails": "A business entity search is available at https://www.ipa.gov.pg/corp/search.aspx. It is possible to search by entity name or registration number.",
+        "publicDatabase": "https://www.ipa.gov.pg/corp/search.aspx",
+        "availableOnline": true,
+        "guidanceOnLocatingIds": "The entity's registration number is available in search results. These are formed of digits in the format x-xxxxxx, where the number of digits after the hyphen varies."
+      },
+      "subnationalCoverage": [],
+      "listType": "primary",
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
+    },
+    {
       "name": {
         "en": "Philippines (the) Chart of Accounts",
         "local": ""
@@ -21683,7 +21976,7 @@
       "subnationalCoverage": null,
       "listType": "third-party",
       "quality_explained": {
-        "License: Closed License": 0
+        "Deprecated": 0
       },
       "quality": 0
     },
@@ -21711,9 +22004,9 @@
       "listType": "primary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "A search of company names is provided on the Securities and Exchange Commission website. ",
-        "publicDatabase": "https://www.secp.gov.pk/company-name-search/",
-        "guidanceOnLocatingIds": "Search at https://www.secp.gov.pk/company-name-search/ and look for the Incorporation Number (CUIN)",
+        "onlineAccessDetails": "A search of company names is provided on the Securities and Exchange Commission website.",
+        "publicDatabase": "https://eservices.secp.gov.pk/eServices/NameSearch.jsp",
+        "guidanceOnLocatingIds": "The online search performs a lookup on keyword in the entity name. In the results table, the Incorporation Number (CUIN) is shown in the column 'Registration No.'",
         "exampleIdentifiers": "0086650, 0081550,  0078867",
         "languages": [
           "en"
@@ -21725,14 +22018,16 @@
         ],
         "dataAccessDetails": "",
         "features": [
-          "date_of_registration"
+          "date_of_registration",
+          "registration_number",
+          "status"
         ],
         "licenseStatus": "no_license",
         "licenseDetails": ""
       },
       "meta": {
         "source": "User request & desk research",
-        "lastUpdated": "2018-05-31"
+        "lastUpdated": "2026-02-06"
       },
       "links": {
         "opencorporates": "https://opencorporates.com/companies/pk/",
@@ -23335,9 +23630,9 @@
         "en": "Rwanda Revenue Authority",
         "local": ""
       },
-      "url": "https://www.rra.gov.rw/index.php?id=45&L=1%27A%3D0",
+      "url": "https://www.rra.gov.rw/en/home",
       "description": {
-        "en": "The Rwanda Revenue Authority issues Taxpayer Identification Numbers (TIN) for all physical and moral persons (people and companies/legal entities) undertaking taxable activities:\n\n\"This is a unique number which is issued to a taxpayer by the tax Administration. It is obligatory for every taxpayer to have this unique number. Taxpayers have the obligation to indicate this number on all correspondences they do with RRA. This number has to be indicated on all documents which the taxpayer provides to the tax administration as proof.\"\n\nA TIN is issued after the person or entity submits the required papers to the Revenue Authority. Note that from Feb 2015, no RRA TIN certificate is issued to newly registered companies. Instead, a TIN is issued at the point of company registration with the Rwanda Development Board (https://org.rdb.rw/busregonline) and the registration certificate contains the TIN. See: https://www.rra.gov.rw/typo3conf/ext/complete/Resources/Public/download/pdf/itangazo_tin_17_feb.pdf"
+        "en": "The Rwanda Revenue Authority issues Taxpayer Identification Numbers (TIN) for all physical and moral persons (people and companies/legal entities) undertaking taxable activities:\n\n\"This is a unique number which is issued to a taxpayer by the tax Administration. It is obligatory for every taxpayer to have this unique number. Taxpayers have the obligation to indicate this number on all correspondences they do with RRA. This number has to be indicated on all documents which the taxpayer provides to the tax administration as proof.\"\n\nA TIN is issued after the person or entity submits the required papers to the Revenue Authority. Note that from Feb 2015, no RRA TIN certificate is issued to newly registered companies. Instead, a TIN is issued at the point of company registration with the Rwanda Development Board (https://org.rdb.rw/) and the registration certificate contains the TIN."
       },
       "coverage": [
         "RW"
@@ -23356,9 +23651,9 @@
         "onlineAccessDetails": "",
         "publicDatabase": "",
         "guidanceOnLocatingIds": "",
-        "exampleIdentifiers": "RW-RRA-103197639",
+        "exampleIdentifiers": "103197639, 103380232",
         "languages": [
-          ""
+          "en"
         ]
       },
       "data": {
@@ -23370,7 +23665,7 @@
       },
       "meta": {
         "source": "",
-        "lastUpdated": ""
+        "lastUpdated": "2025-03-20"
       },
       "links": {
         "opencorporates": "",
@@ -23433,6 +23728,72 @@
         "List type: Secondary": 50
       },
       "quality": 55
+    },
+    {
+      "name": {
+        "en": "Solomon Islands Business Registry",
+        "local": "Company Haus"
+      },
+      "url": "https://www.solomonbusinessregistry.gov.sb/",
+      "description": {
+        "en": "The Solomon Islands Business Registry is an electronic register for all companies, business names, and foreign investments within the country. It is managed by the Solomon Islands Government.\n\nThe registry provides various online services, allowing users to search for details on companies, their directors, shareholders, and registered business names. It also offers information regarding foreign investment policies, available incentives, and the registration process for foreign investors. The platform facilitates the registration, modification, and removal of companies and business names, with information on associated fees and relevant legislation."
+      },
+      "coverage": [
+        "SB"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company"
+      ],
+      "sector": [],
+      "code": "SB-BR",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": "To search businesses by name, click on 'Online Services' in the homepage header, select 'Business Names', then 'Search for Business Name'.\n\nEnter the 'Entity name or number' on the search page, and select 'Companies' from the dropdown menu of which register to search.",
+        "publicDatabase": "https://www.solomonbusinessregistry.gov.sb/",
+        "guidanceOnLocatingIds": "Registration numbers are 8 digits long and displayed beneath the business's name in the results returned after a search.",
+        "exampleIdentifiers": "20242661, 20115645",
+        "languages": [
+          "en"
+        ]
+      },
+      "data": {
+        "availability": [
+          "data_not_available"
+        ],
+        "dataAccessDetails": "",
+        "features": [
+          "directors_trustees_governors",
+          "shareholders",
+          "registered_address",
+          "contact_address",
+          "e-mail_address",
+          "date_of_registration",
+          "registration_number",
+          "phone_number",
+          "activities_sector_code",
+          "status"
+        ],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Desk research",
+        "lastUpdated": "2025-07-23"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
     },
     {
       "name": {
@@ -23595,65 +23956,62 @@
       "quality": 55
     },
     {
-      "links": {
-        "wikipedia": null,
-        "opencorporates": "http://opencorporates.com/companies/se"
-      },
-      "sector": null,
-      "url": "http://www.bolagsverket.se/",
       "name": {
         "en": "Bolagsverket ",
         "local": " Swedish Companies Registration Office"
       },
+      "url": "http://www.bolagsverket.se/",
+      "description": {
+        "en": "This code was previously used for the Swedish Companies Registration Office's (Bolagsverket) organisation references. It has been deprecated in favour of https://org-id.guide/list/SE-ON and should no longer be used."
+      },
       "coverage": [
         "SE"
       ],
-      "code": "SE-BLV",
-      "formerPrefixes": null,
-      "confirmed": true,
-      "data": {
-        "features": [
-          "registration_number",
-          "organisation_name",
-          "objectives/purpose",
-          "status",
-          "organisation_type"
-        ],
-        "dataAccessDetails": null,
-        "licenseDetails": "https://opencorporates.com/registers/249",
-        "licenseStatus": "open_license",
-        "availability": [
-          "html"
-        ]
-      },
-      "deprecated": true,
       "structure": [
         "company"
       ],
-      "description": {
-        "en": "The Swedish Companies Registration Office (Bolagsverket) registers all business operating in Sweden, except for sole traders. This registry is available to search online. All entities are given an organisation number that can be used as an identifer.\n\n\"All forms of business enterprise except for sole traders have to be registered with the Swedish Companies Registration Office before starting to operate.\" [1]\n\n[1] https://www.verksamt.se/en/web/international/starting/get-started-business-registration-and-tax"
-      },
-      "meta": {
-        "lastUpdated": "2016-12-07",
-        "source": "Desk research"
-      },
+      "sector": [
+        "education"
+      ],
+      "code": "SE-BLV",
+      "confirmed": true,
+      "deprecated": true,
+      "listType": "primary",
       "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": "",
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "556698-6849, 769611-2163, 969698-3833",
         "languages": [
           "sv"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "",
+        "features": [
+          "registration_number",
+          "status"
         ],
-        "exampleIdentifiers": "556698-6849, 769611-2163, 969698-3833",
-        "onlineAccessDetails": "Data available in online database. Default language is Swedish",
-        "publicDatabase": "https://www.verksamt.se/sok-foretagsnamn",
-        "availableOnline": false,
-        "guidanceOnLocatingIds": "Users can find identifiers by using the simple, searchable database. This database is presented in Swedish.\n\nIn the search results, the identifiers can be found under the column heading 'Organisations-nummer' or 'Corporate registration number' in English.\n\n"
+        "licenseStatus": "open_license",
+        "licenseDetails": "https://opencorporates.com/registers/249"
       },
-      "subnationalCoverage": null,
-      "listType": "primary",
+      "meta": {
+        "source": "Desk research",
+        "lastUpdated": "2025-01-31"
+      },
+      "links": {
+        "opencorporates": "http://opencorporates.com/companies/se",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [
+        ""
+      ],
       "quality_explained": {
-        "License: Open License": 10,
-        "List type: Primary": 75
+        "Deprecated": 0
       },
-      "quality": 85
+      "quality": 0
     },
     {
       "name": {
@@ -23713,7 +24071,7 @@
       },
       "url": "https://www.kammarkollegiet.se/",
       "description": {
-        "en": "A Swedish administrative authority under the Ministry of Finance, which is responsible for the registration of religious communities and organisational units of religious communities. "
+        "en": "This code was previously used for the Swedish Legal, Financial and Administrative Services Agency's organisation references. It has been deprecated in favour of https://org-id.guide/list/SE-ON and should no longer be used."
       },
       "coverage": [
         "SE"
@@ -23732,7 +24090,7 @@
         "availableOnline": false,
         "onlineAccessDetails": "",
         "publicDatabase": "",
-        "guidanceOnLocatingIds": "Ask an organisation for it's registration number as issued by Kammarkollegiet. ",
+        "guidanceOnLocatingIds": "",
         "exampleIdentifiers": "",
         "languages": [
           "se"
@@ -23749,7 +24107,7 @@
       },
       "meta": {
         "source": "IATI",
-        "lastUpdated": "2017-08-05"
+        "lastUpdated": "2025-01-31"
       },
       "links": {
         "opencorporates": "",
@@ -23757,19 +24115,18 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "License: No License": 5,
-        "List type: Secondary": 50
+        "Deprecated": 0
       },
-      "quality": 55
+      "quality": 0
     },
     {
       "name": {
         "en": "Business Registration Number (Organisationsnummer), Sweden",
         "local": "Organisationsnummer, Sverige"
       },
-      "url": "http://www.bolagsverket.se/ff/foretagsformer/organisationsnummer-1.7902",
+      "url": "https://bolagsverket.se/foretag/organisationsnummer.1207.html",
       "description": {
-        "en": "\"The organization number is a unique identifier assigned to legal entities, such as companies and associations. \n\nThe authority that registers the company or association when it is to be started assigns the organizational number. Most companies and associations have their organization number from the Swedish Companies Registration Office [Bolagsverket](http://www.bolagsverket.se). But also, for example, the Swedish Tax Agency and Land Survey allocate organizational numbers.\n\nFrom the Swedish Companies Registration Office, the company or association has its organization number when we have decided to register. The organization number is on the registration certificate that we send out.\"[1]\n\n\"The first digit of the organization number is called \"Group Number\" and specifies the company form or other legal form to which the legal entity is grouped. The following group numbers may occur.\n\n1 - Death certificate\n2 - State, county council, municipalities, parishes\n3 - Foreign companies engaged in business activities or own real estate in Sweden\n5 - Aktiebolag\n6 - Single company\n7 - Economic associations , tenant-owner associations\n8 - Ideal associations and foundations\n9 - Trading companies , limited companies and simple companies\"[2]\n\nNon-commerical organsiation are searchable through other third-party applications, e.g. https://www.allabolag.se/\n\n[1] http://www.bolagsverket.se/ff/foretagsformer/organisationsnummer-1.7902\n[2] https://sv.wikipedia.org/wiki/Organisationsnummer#Organisationsnummer"
+        "en": "The organization number is a unique identifier assigned to legal entities, such as companies and associations. \n\n\"The authority that registers the company or association when it is to be started assigns the organization number. Most companies and associations receive their organization number from the Swedish Companies Registration Office (Bolagsverket). \n\n Some other examples of authorities that assign organization numbers are:\n * the Swedish Tax Agency \n * Kammarkollegiet (registered religious communities) \n  * Land Survey (community associations)\" [1]\n\n\"The first digit of the organization number is called \"Group Number\" and specifies the company form or other legal form to which the legal entity is grouped. The following group numbers may occur:\n\n1 - Death certificate\n2 - State, county council, municipalities, parishes\n3 - Foreign companies engaged in business activities or own real estate in Sweden\n5 - Aktiebolag\n6 - Single company\n7 - Economic associations , tenant-owner associations\n8 - Ideal associations and foundations\n9 - Trading companies , limited companies and simple companies\" [2]\n\n[1] https://bolagsverket.se/foretag/organisationsnummer.1207.html\n[2] https://sv.wikipedia.org/wiki/Organisationsnummer#Organisationsnummer"
       },
       "coverage": [
         "SE"
@@ -23777,7 +24134,8 @@
       "subnationalCoverage": [],
       "structure": [
         "company",
-        "trust"
+        "trust",
+        "charity"
       ],
       "sector": [],
       "code": "SE-ON",
@@ -23786,25 +24144,26 @@
       "listType": "primary",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "The business register can be accessed for free through the Bolagsverket search interface https://snr4.bolagsverket.se/snrgate/startIn.do or http://www.bolagsverket.se/en/us/about/e-services/foretagsfakta. Users can search for a organisation by name, or by their organisationsnummer and find basic information without registering.\n\nAn alternative free-online name checker can be found at https://www.verksamt.se/sok-foretagsnamn\n\nThe Swedish Tax Agency (Skatteverket) searches in the reverse manner: an organisationsnummer can be confirmed to be that of a particular organisation.\n\nNon-business organsations are included in the https://www.allabolag.se/ search interface and also use the SE-ON prefix code.",
-        "publicDatabase": "https://snr4.bolagsverket.se/snrgate/startIn.do",
-        "guidanceOnLocatingIds": "Look for an organisationsnummer (or registration number) which is a 10-digit number in the format 000000-0000",
+        "onlineAccessDetails": "Organisations can be searched by name or registration number at the third-party site: https://www.allabolag.se/.\n\n Some parts of the business register may be searchable through the Bolagsverket search interface: https://foretagsinfo.bolagsverket.se/sok-foretagsinformation-web/.",
+        "publicDatabase": "https://www.allabolag.se/",
+        "guidanceOnLocatingIds": "Look for a registration number (organisationsnummer) that is a 10-digit number in the format 000000-0000.",
         "exampleIdentifiers": "556091-2148, 556012-5790",
         "languages": [
-          "SE"
+          "SE",
+          "EN"
         ]
       },
       "data": {
         "availability": [
-          "data_not_available"
+          "api"
         ],
-        "dataAccessDetails": "",
+        "dataAccessDetails": "https://bolagsverket.se//apierochoppnadata/apiforatthamtaforetagsinformation.3988.html",
         "features": [],
         "licenseDetails": ""
       },
       "meta": {
         "source": "Desk research",
-        "lastUpdated": "2017-11-08"
+        "lastUpdated": "2025-11-24"
       },
       "links": {
         "opencorporates": "",
@@ -23815,9 +24174,10 @@
         "SE-BLV"
       ],
       "quality_explained": {
+        "Availability: API": 2,
         "List type: Primary": 75
       },
-      "quality": 75
+      "quality": 77
     },
     {
       "links": {
@@ -24504,7 +24864,7 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: Closed License": 0
+        "Deprecated": 0
       },
       "quality": 0
     },
@@ -25224,9 +25584,9 @@
         "en": "Tax Identification Number (El Salvador)",
         "local": "Numero de Identificacion Tributaria (El Salvador)"
       },
-      "url": "https://www.transparencia.gob.sv/institutions/dgii/services/7180",
+      "url": "https://www.mh.gob.sv/",
       "description": {
-        "en": "The NIT is required for all organisations, including businesses and NGOs. First step is online pre-registration at https://miempresa.gob.sv/ then in person with the Direcci\u00f3n General de Impuestos Internos (DGII) del Ministerio de Hacienda. Structure (all numerical): xxxx-xxxxxx-xxx-x digit (like 0614-241287-102-5). The first section (4 digits) is a municipality code, the second section of 6 digits is the date the organisation was established (or date of birth in case of a natural person). The third 3-digit section is a running number. The last digit is a verification digit."
+        "en": "The NIT is required for all organisations, including businesses and NGOs.\n\nThe first step is online pre-registration (likely via the portal: https://creaempresa.cnr.gob.sv), then in person with the Direcci\u00f3n General de Impuestos Internos (DGII) del Ministerio de Hacienda.\n\nNIT numbers are 14 digits long (all numerical - e.g. 0614-241287-102-5). The first section (4 digits) is a municipality code, the second section of 6 digits is the date the organisation was established (or date of birth in case of a natural person). The third 3-digit section is a running number. The last digit is a verification digit."
       },
       "coverage": [
         "SV"
@@ -25243,9 +25603,9 @@
       "listType": "secondary",
       "access": {
         "availableOnline": false,
-        "onlineAccessDetails": null,
+        "onlineAccessDetails": "",
         "publicDatabase": "",
-        "guidanceOnLocatingIds": "Ask the organisation for their NIT. ",
+        "guidanceOnLocatingIds": "Ask the organisation for their NIT.",
         "exampleIdentifiers": "0614-030915-112-5",
         "languages": []
       },
@@ -25260,7 +25620,7 @@
       },
       "meta": {
         "source": "Government website, original research",
-        "lastUpdated": "2020-08-21"
+        "lastUpdated": "2025-07-25"
       },
       "links": {
         "opencorporates": "",
@@ -26401,6 +26761,60 @@
     },
     {
       "name": {
+        "en": "Tax Identification Number (VKN), T\u00fcrkiye",
+        "local": "Vergi Kimlik Numaras\u0131"
+      },
+      "url": "https://www.gib.gov.tr/",
+      "description": {
+        "en": "The Tax Identification Number (Vergi Kimlik Numaras\u0131, VKN) is issued by the Turkish Revenue Administration (Gelir \u0130daresi Ba\u015fkanl\u0131\u011f\u0131, G\u0130B) under the Ministry of Treasury and Finance. All legal entities, including companies, associations, foundations, and other organisations with legal personality, are required to obtain a VKN. These numbers can therefore be reliably used as identifiers in open data publications. Identifiers are numeric, 10 digits."
+      },
+      "coverage": [
+        "TR"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "charity"
+      ],
+      "sector": [],
+      "code": "TR-VKN",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": null,
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "Find the VKN on the organisation\u2019s tax registration certificate or official tax correspondence from the Gelir \u0130daresi Ba\u015fkanl\u0131\u011f\u0131.",
+        "exampleIdentifiers": "4940457659",
+        "languages": [
+          "tr"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "VKNs are issued and maintained by the Gelir \u0130daresi Ba\u015fkanl\u0131\u011f\u0131 (G\u0130B) and appear on tax registration and compliance documents.",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Desk research",
+        "lastUpdated": "2025-10-13"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/Taxation_in_Turkey"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
+    },
+    {
+      "name": {
         "en": "Trinidad and Tobago Chart of Accounts",
         "local": ""
       },
@@ -27005,7 +27419,7 @@
       },
       "url": "http://www.mia.go.ug/?page_id=62",
       "description": {
-        "en": "All NGOs wishing to operate in Uganda must register with the NGO Board of the Ministry of Internal Affairs. \n\n\"The National NGO Board under the Ministry of Internal Affairs, which is the lead Ministry, is legally mandated to register, regulate, coordinate and monitor NGOs in Uganda.\""
+        "en": "This list is deprecated and should no longer be used. Refer to https://org-id.guide/list/UG-NGO instead. \n\n All NGOs wishing to operate in Uganda now register with the Ugandan National Bureau for NGOs (NGO Bureau), which is a semi-autonomous body under the Ministry of Internal Affairs. \n\n Previously, this registration was with the National 'NGO Board'."
       },
       "coverage": [
         "UG"
@@ -27021,10 +27435,10 @@
       "listType": "secondary",
       "access": {
         "availableOnline": false,
-        "onlineAccessDetails": null,
-        "publicDatabase": "http://brs.ursb.go.ug/brs/pro/bnr/searchname#SearchNamePub",
-        "guidanceOnLocatingIds": "Users can search for NGO identifiers on the Uganda Registration Services Bureau database.\n\nUsers should note that current research has not found this database to work when selecting 'NGO' on the 'Business type' drop-down menu. It is possible to search for NGO names and find results.\n\nUsers should be aware that identifiers are not formed in a uniform manner, and use slashes and hyphens.",
-        "exampleIdentifiers": "80010001803086/BN-55471 , R1000000336259 , 80010003208981/101303A",
+        "onlineAccessDetails": "",
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "",
+        "exampleIdentifiers": "5914-252, 63360",
         "languages": [
           "en"
         ]
@@ -27043,7 +27457,7 @@
       },
       "meta": {
         "source": "",
-        "lastUpdated": "2016-12-19"
+        "lastUpdated": "2025-03-10"
       },
       "links": {
         "opencorporates": "http://opencorporates.com/companies/ug",
@@ -27051,10 +27465,9 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "License: Closed License": 0,
-        "List type: Secondary": 50
+        "Deprecated": 0
       },
-      "quality": 50
+      "quality": 0
     },
     {
       "name": {
@@ -27113,43 +27526,40 @@
     },
     {
       "links": {
-        "wikipedia": null,
-        "opencorporates": null
+        "wikipedia": "",
+        "opencorporates": ""
       },
-      "sector": null,
-      "url": "http://www.ursb.go.ug/",
+      "sector": [],
+      "url": "https://ursb.go.ug/",
       "name": {
-        "en": "Registration Services Bureau",
+        "en": "Uganda Registration Services Bureau (URSB)",
         "local": ""
       },
       "coverage": [
         "UG"
       ],
       "code": "UG-RSB",
-      "formerPrefixes": null,
+      "formerPrefixes": [],
       "confirmed": true,
       "data": {
         "features": [
           "date_of_registration",
           "registration_number",
-          "organisation_name",
           "status",
           "expiry_date"
         ],
         "dataAccessDetails": "Users must complete Captcha puzzle in order to search",
-        "licenseDetails": null,
-        "licenseStatus": null,
-        "availability": [
-          "html"
-        ]
+        "licenseDetails": "",
+        "licenseStatus": "no_license",
+        "availability": []
       },
-      "deprecated": null,
-      "structure": null,
+      "deprecated": false,
+      "structure": [],
       "description": {
-        "en": "Businesses and NGOs register with the Registration Services Bureau and receive an identification number. This number can be used as an identifier. A publicly available database can be search on the Bureau website."
+        "en": "Businesses and NGOs in Uganda register with the Registration Services Bureau and receive an identification number. This number can be used as an identifier. A publicly available database can be searched on the Bureau website."
       },
       "meta": {
-        "lastUpdated": "2016-12-16",
+        "lastUpdated": "2025-01-31",
         "source": "Desk research"
       },
       "access": {
@@ -27157,17 +27567,18 @@
           "en"
         ],
         "exampleIdentifiers": "80010001803086 / BN-55471 , R1000000336259 , 80010003208981 / 101303A",
-        "onlineAccessDetails": null,
-        "publicDatabase": "http://brs.ursb.go.ug/brs/pro/bnr/searchname#SearchNamePub",
-        "availableOnline": false,
-        "guidanceOnLocatingIds": "Users can find identifiers by using the database on the bureau website. Users must complete a Captcha puzzle in order to search. The identifiers will be under the column header 'Nr'.\n\nUsers should be aware that identifiers are not formed in a uniform manner, and use slashes and hyphens."
+        "onlineAccessDetails": "",
+        "publicDatabase": "https://brs.ursb.go.ug/brs/pro/bnr/searchname",
+        "availableOnline": true,
+        "guidanceOnLocatingIds": "Users can search organisations by name to find their identifier on the bureau website: https://brs.ursb.go.ug/brs/pro/bnr/searchname \n\nUsers must complete a Captcha puzzle in order to search. The identifiers will be under the column header 'Nr'.\n\nUsers should be aware that identifiers are not formed in a uniform manner, and use slashes and hyphens."
       },
-      "subnationalCoverage": null,
+      "subnationalCoverage": [],
       "listType": "primary",
       "quality_explained": {
+        "License: No License": 5,
         "List type: Primary": 75
       },
-      "quality": 75
+      "quality": 80
     },
     {
       "name": {
@@ -27312,7 +27723,9 @@
         "wikipedia": ""
       },
       "formerPrefixes": [],
-      "quality_explained": {},
+      "quality_explained": {
+        "Deprecated": 0
+      },
       "quality": 0
     },
     {
@@ -27372,6 +27785,60 @@
         "List type: Secondary": 50
       },
       "quality": 52
+    },
+    {
+      "name": {
+        "en": "System for Award Management (SAM) Unique Entity ID, USA",
+        "local": ""
+      },
+      "url": "https://sam.gov/content/entity-registration",
+      "description": {
+        "en": "The System for Award Management (SAM) of U.S. General Services Administration (GSA). The System for Award Management website (SAM.gov) is an official website of the U.S. Government that allows users to register to do business with the U.S. Government.\nSAM.gov issues entities with a Unique Entity ID (UEI) which is used across the federal government when they apply for federal awards as a prime awardee. Previously a D-U-N-S Number was used.\nEntities must re-register annually. If registration lapses it is still possible to re-register. In all cases the UEI is persistent and is retained by the entity. \nTo apply for federal funds, and to use other functionality such as full search, requires a login through the US government's Login.gov service. https://www.login.gov/policy/rules-of-use/ states that The Login.gov service is operated within the United States, but is accessible globally for public use."
+      },
+      "coverage": [
+        "US"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "charity"
+      ],
+      "sector": [],
+      "code": "US-SAM",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": true,
+        "onlineAccessDetails": null,
+        "publicDatabase": "https://sam.gov/search/",
+        "guidanceOnLocatingIds": "To fully search the UEI database requires a login to the US government's Login.gov service. Alternatively, there are open data aggregation sites that replicate the data, for example https://opengovus.com/sam-entity/. The identifier is a 12-digit alphanumeric code that should be used unedited.",
+        "exampleIdentifiers": "YNDUZMUZF8H8, T53MCMLTWK59, UYDJJ1S8DR85",
+        "languages": []
+      },
+      "data": {
+        "availability": [
+          "data_not_available"
+        ],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "original research",
+        "lastUpdated": "2024-07-23"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/System_for_Award_Management"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
     },
     {
       "links": {
@@ -27959,6 +28426,60 @@
     },
     {
       "name": {
+        "en": "Viet Nam Tax Identification Number (TIN)",
+        "local": ""
+      },
+      "url": "https://vbpl.vn/TW/Pages/vbpqen-toanvan.aspx?ItemID=5946",
+      "description": {
+        "en": "The Tax Identification Number (TIN) is issued by the General Department of Taxation under the Ministry of Finance in Viet Nam. All legal entities, including companies, vocational colleges, NGOs, and other organisations with legal personality, are required to obtain a TIN. These numbers can therefore be reliably used as identifiers in open data publications. Identifiers are numeric, typically 10 digits, with 13 digits used for branches or dependent units."
+      },
+      "coverage": [
+        "VN"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "company",
+        "charity"
+      ],
+      "sector": [],
+      "code": "VN-TIN",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "primary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": null,
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "Organisations can find their TIN on their tax registration certificate or official business license.",
+        "exampleIdentifiers": "0100109106",
+        "languages": [
+          "vi"
+        ]
+      },
+      "data": {
+        "availability": [],
+        "dataAccessDetails": "TINs are assigned upon registration with the General Department of Taxation. They are displayed on business registration certificates and other legal documents.",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": ""
+      },
+      "meta": {
+        "source": "Desk research",
+        "lastUpdated": "2025-09-16"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": "https://en.wikipedia.org/wiki/Taxation_in_Vietnam"
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Primary": 75
+      },
+      "quality": 80
+    },
+    {
+      "name": {
         "en": "Vanuatu Chart of Accounts",
         "local": ""
       },
@@ -28212,12 +28733,9 @@
       },
       "formerPrefixes": [],
       "quality_explained": {
-        "Availability: Bulk download": 2,
-        "Availability: CSV format": 1,
-        "License: Open License": 10,
-        "List type: Third Party": 25
+        "Deprecated": 0
       },
-      "quality": 38
+      "quality": 0
     },
     {
       "name": {
@@ -28331,8 +28849,8 @@
     },
     {
       "links": {
-        "wikipedia": null,
-        "opencorporates": null
+        "wikipedia": "",
+        "opencorporates": ""
       },
       "sector": [
         "education",
@@ -28343,33 +28861,33 @@
         "en": "Global Research Identifiers Database",
         "local": ""
       },
-      "coverage": null,
+      "coverage": [
+        "XI"
+      ],
       "code": "XI-GRID",
-      "formerPrefixes": null,
+      "formerPrefixes": [],
       "confirmed": true,
       "data": {
         "features": [
           "contact_address",
           "website",
-          "organisation_type",
-          "date_of_foundation",
           "akas"
         ],
-        "dataAccessDetails": null,
+        "dataAccessDetails": "",
         "licenseDetails": "The dataset is accessible under Creative Commons Attribution 4.0 International licence. API access is a premium service.",
         "licenseStatus": "open_license",
         "availability": [
-          "bulk_download",
+          "bulk",
           "api"
         ]
       },
-      "deprecated": null,
-      "structure": null,
+      "deprecated": true,
+      "structure": [],
       "description": {
-        "en": "The Global Research Identifiers Database collects information on research institutions and assigns them a unique identifier.\n\nIt draws on information from funding datasets, and claims over 90% coverage of institutions. \n\nIt records information on the nature of the research organisation, covering companies, education establishments, healthcare, non-profits, government and other entity types. \n\nGRID also records parent-child relationships between entities, and 'related relationships' for cross-linkages. \n\nIt includes cross-linkages to a range of other identifier sources. "
+        "en": "The Global Research Identifiers Database previously assigned unique identifiers to research institutions. It has been deprecated in favour of https://org-id.guide/list/XI-ROR and should no longer be used.\n\nIt recorded information on the nature of the research organisation, covering companies, education establishments, healthcare, non-profits, government and other entity types. \n\nGRID also recorded parent-child relationships between entities, related relationships and cross-linkages to a range of other identifier sources."
       },
       "meta": {
-        "lastUpdated": "2016-12-30",
+        "lastUpdated": "2025-01-15",
         "source": "Desk research"
       },
       "access": {
@@ -28377,18 +28895,17 @@
           "en"
         ],
         "exampleIdentifiers": "grid.17063.33, grid.419696.5, grid.1957.a",
-        "onlineAccessDetails": "An online search and database download are both available. ",
-        "publicDatabase": "https://www.grid.ac/downloads",
-        "availableOnline": false,
-        "guidanceOnLocatingIds": "A search of identifiers is available at https://www.grid.ac/institutes\n\nIdentifier numbers should be presented in their full form:\n\nE.g. XI-GRID-grid.17063.33"
+        "onlineAccessDetails": "Previous releases of the GRID database are available to download up until September 2021.",
+        "publicDatabase": "https://www.grid.ac",
+        "availableOnline": true,
+        "guidanceOnLocatingIds": ""
       },
-      "subnationalCoverage": null,
-      "listType": "third-party",
+      "subnationalCoverage": [],
+      "listType": "third_party",
       "quality_explained": {
-        "Availability: API": 2,
-        "License: Open License": 10
+        "Deprecated": 0
       },
-      "quality": 12
+      "quality": 0
     },
     {
       "links": {
@@ -28668,9 +29185,9 @@
         "en": "Research Organization Registry",
         "local": ""
       },
-      "url": "https://ror.community/",
+      "url": "https://ror.org/",
       "description": {
-        "en": "The Research Organization Registry (ROR) is a community-led project to develop an open, sustainable, usable, and unique identifier for every research organization in the world. The definition ROR use for a \"research organization\" is \"any organization that conducts, produces, manages, or touches research\".\n\nThe list is seeded from GRID, but with a long-term intention to diverge from this."
+        "en": "The Research Organization Registry (ROR) is a community-led project to develop an open, sustainable, usable, and unique identifier for every research organization in the world. The definition ROR use for a \"research organization\" is \"any organization that conducts, produces, manages, or touches research\".\n\nThe ROR list became independent from the Global Research Identifier Database (GRID) in 2021 and should be used in preference as GRID identifiers are no longer being maintained.[1]\n\n[1] https://www.grid.ac/"
       },
       "coverage": [
         "XI"
@@ -28699,9 +29216,9 @@
       "listType": "third_party",
       "access": {
         "availableOnline": true,
-        "onlineAccessDetails": "Using the URL, there is a search interface which allows you to find research organizations and identifiers",
+        "onlineAccessDetails": "Go to https://ror.org/ and use the 'search the registry' box to search research organizations by name or ROR identifier.",
         "publicDatabase": "https://ror.org/",
-        "guidanceOnLocatingIds": "Using the URL, there is a search interface which allows you to find research organizations and identifiers",
+        "guidanceOnLocatingIds": "",
         "exampleIdentifiers": "05asf4e91, 01kj2bm70, 049e6bc10",
         "languages": [
           "en"
@@ -28725,8 +29242,8 @@
         "licenseDetails": "https://creativecommons.org/publicdomain/zero/1.0//"
       },
       "meta": {
-        "source": "Original Research",
-        "lastUpdated": "2020-05-05"
+        "source": "Desk Research",
+        "lastUpdated": "2025-01-06"
       },
       "links": {
         "opencorporates": "",
@@ -29312,7 +29829,7 @@
         "en": "OECD Development Assistance Committee",
         "local": ""
       },
-      "url": "http://www.oecd.org/dac/stats/dacandcrscodelists.htm",
+      "url": "https://development-finance-codelists.oecd.org/CodesList.aspx",
       "description": {
         "en": "The Organisation for Economic Co-operation and Development (OECD) Development Assistance Committee (DAC) maintain a list of organisations whom are involved in the transfer of 'Official Development Assistance' (ODA) financial flows. This list provides a useful fall-back source of identification for government agencies and multilateral organisations involved in aid, and in some cases, for international NGOs. \n\nThe list is updated perioidically in response to demand for new entries from DAC members. \n\nUsers should note that this list is designed to identify both organisations *and* funds or programmes, and so not all entries in this list equate to legally registered organisations. \n\nThe list is available as a spreadsheet containing multiple codelists. Two can be used to construct organisation identifiers.\n\n* The **Agency** list is used to construct identifiers for aid donor and recipient government agencies. This is constructed by combining the **donorcode** and **AgencyCode**, separated with a dash. For example, XM-DAC-1-8 identifies the Austrian (1) Development Agency (8).\n \n* The **Channel codes** list is used to construct identifiers for multilateral organisations, and international NGOs for whom no other identifier is available. The 'Channel ID' should be used. For example, XM-DAC-41301 is the identifier for the UN Food and Agriculture Organisation (FAO). \n\n* The **Donor** list contains donor code values referring to the donor country as a whole. To maximise consistency, donor codes should not be used unless a specific agency, government department or fund is not identified for the reporting. In all other cases codes should be published in their 'Agency' form (e.g. XM-DAC-1-8 for Austrian Development Agency, rather than XM-DAC-1). \n\nUsers should also note that some organisations exist in both the 'Channel Codes' and 'Agency' lists. As the Channel Codes list provides a cross-walk, use of the Channel Codes is preferred in these cases."
       },
@@ -29331,7 +29848,7 @@
       "access": {
         "availableOnline": true,
         "onlineAccessDetails": "",
-        "publicDatabase": "http://www.oecd.org/dac/stats/dacandcrscodelists.htm",
+        "publicDatabase": "https://development-finance-codelists.oecd.org/Codeslist.aspx",
         "guidanceOnLocatingIds": "Users can download an Excel file of the DAC and CRS codes from the OECD website.\n\nIf you are searching for a multilateral organisation or international NGO, search the 'Channel codes' list. If you find the organisation you are looking for, use the value of the 'Channel ID' column.\n\nIf you are searching for government agency, search the 'Agency' list, and when you find the row you want, combine the 'donorcode' and 'AgencyCode' columns, separated by '-'. \n",
         "exampleIdentifiers": "963-1, 1-8, 41301",
         "languages": [
@@ -29350,7 +29867,7 @@
       },
       "meta": {
         "source": "Desk research",
-        "lastUpdated": "2018-08-07"
+        "lastUpdated": "2025-02-14"
       },
       "links": {
         "opencorporates": "",
@@ -29366,8 +29883,8 @@
     },
     {
       "links": {
-        "wikipedia": null,
-        "opencorporates": null
+        "wikipedia": "",
+        "opencorporates": ""
       },
       "sector": [
         "humanitarian_relief"
@@ -29377,7 +29894,7 @@
         "en": "United Nations Office for the Coordination of Humanitarian Affairs - Humanitarian Programme Cycle Identifiers",
         "local": ""
       },
-      "coverage": null,
+      "coverage": [],
       "code": "XM-OCHA",
       "formerPrefixes": [
         "XM-OCHA-FTS"
@@ -29385,8 +29902,7 @@
       "confirmed": true,
       "data": {
         "features": [
-          "akas",
-          "organisation_name"
+          "akas"
         ],
         "dataAccessDetails": "A list of identifiers is available via an API, which provides data in JSON or XML formats. ",
         "licenseDetails": "No explicit license is given. Note that the data may contain contributions from multiple sources.",
@@ -29396,26 +29912,26 @@
           "api"
         ]
       },
-      "deprecated": null,
-      "structure": null,
+      "deprecated": false,
+      "structure": [],
       "description": {
-        "en": "OCHA (Office for the Coordination of Humanitarian Affairs) is the part of the United Nations Secretariat responsible for bringing together humanitarian actors to ensure a coherent response to emergencies. \n\nOCHA assigns it's own organisation identifiers to parties involved in funding or delivery of humanitarian work, which are used in UN OCHA data, and may be used by some third-parties.\n\nPreviously OCHA used identifiers from its Financial Tracking System (FTS) list. It has now changed and uses identifiers from its Humanitarian Programme Cycle (HPC) list. \n\nOrganisations may have different identifiers on the two lists. For example, if an organisation has a legacy code of XM-OCHA-FTS3524 then it does NOT automatically have a new code of XM-OCHA-HPC3524.The deprecated list may be found at http://fts.unocha.org/api/v1/organization.xml although this should only be used for checking historic data and there is no guarantee that it will remain accessible in the future."
+        "en": "OCHA (Office for the Coordination of Humanitarian Affairs) is the part of the United Nations Secretariat responsible for bringing together humanitarian actors to ensure a coherent response to emergencies. \n\nOCHA assigns it's own organisation identifiers to parties involved in funding or delivery of humanitarian work, which are used in UN OCHA data, and may be used by some third-parties.\n\nPreviously OCHA used identifiers from its Financial Tracking System (FTS) list. It has now changed and uses identifiers from its Humanitarian Programme Cycle (HPC) list. \n\nOrganisations may have different identifiers on the two lists. For example, if an organisation has a legacy code of XM-OCHA-FTS3524 then it does NOT automatically have a new code of XM-OCHA-HPC3524. The deprecated FTS identifier list is no longer available online."
       },
       "meta": {
-        "lastUpdated": "2019-03-27",
+        "lastUpdated": "2025-02-25",
         "source": "Desk research"
       },
       "access": {
         "languages": [
           "en"
         ],
-        "exampleIdentifiers": "HPC8597. HPC9324",
+        "exampleIdentifiers": "HPC8597, HPC9324",
         "onlineAccessDetails": "A list of identifiers is available via an API, which provides data in JSON or XML formats.  ",
         "publicDatabase": "https://api.hpc.tools/docs/v1/",
         "availableOnline": true,
         "guidanceOnLocatingIds": "A list of identifiers is available in XML and JSON form from the UN OCHA Humanitarian Programme Cycle API [1] at 'https://api.hpc.tools/v1/public/organization'\n\nThe identifier, following the UNOCHA pattern of usage, is made up of the id field from the XML or JSON, prefixed with 'HPC' to give identifiers of the form:\n\n> 'XM-OCHA-HPC8908\n\n[1]: https://api.hpc.tools/docs/v1/"
       },
-      "subnationalCoverage": null,
+      "subnationalCoverage": [],
       "listType": "local",
       "quality_explained": {
         "Availability: XML format": 1,
@@ -29694,6 +30210,61 @@
     },
     {
       "name": {
+        "en": "Yemen Ministry of Planning and International Cooperation",
+        "local": "\u0648\u0632\u0627\u0631\u0629 \u0627\u0644\u062a\u062e\u0637\u064a\u0637 \u0648\u0627\u0644\u062a\u0639\u0627\u0648\u0646 \u0627\u0644\u062f\u0648\u0644\u064a "
+      },
+      "url": "https://mopic-yemen.org/",
+      "description": {
+        "en": "The Ministry of Planning and International Cooperation registers foreign non-profit and non-governmental organisations with a physical location and address in Yemen.\n\nOrganisations are granted a registration number that is provided on a certificate granting or renewing the license. \n\nThis registration is renewed every two years but the number does not change. Registered organisations must re-register upon changing their name, logo, or nature of their activities. "
+      },
+      "coverage": [
+        "YE"
+      ],
+      "subnationalCoverage": [],
+      "structure": [
+        "charity",
+        "company",
+        "trust"
+      ],
+      "sector": [],
+      "code": "YE-MOPIC",
+      "confirmed": true,
+      "deprecated": false,
+      "listType": "secondary",
+      "access": {
+        "availableOnline": false,
+        "onlineAccessDetails": null,
+        "publicDatabase": "",
+        "guidanceOnLocatingIds": "Ask the organisation to provide their 'Principal Cooperation Agreement'. The identifier will be provided as the Registration Number.",
+        "exampleIdentifiers": "0036",
+        "languages": []
+      },
+      "data": {
+        "availability": [
+          "data_not_available"
+        ],
+        "dataAccessDetails": "",
+        "features": [],
+        "licenseStatus": "no_license",
+        "licenseDetails": "No open dataset is available, no license on the Principal Cooperation Agreement"
+      },
+      "meta": {
+        "source": "Original research",
+        "lastUpdated": "2024-04-12"
+      },
+      "links": {
+        "opencorporates": "",
+        "wikipedia": ""
+      },
+      "formerPrefixes": [],
+      "quality_explained": {
+        "License: No License": 5,
+        "List type: Secondary": 50
+      },
+      "quality": 55
+    },
+    {
+      "name": {
         "en": "Ministry of Social Affairs and Labour",
         "local": ""
       },
@@ -29801,11 +30372,11 @@
     },
     {
       "links": {
-        "wikipedia": null,
+        "wikipedia": "",
         "opencorporates": "http://opencorporates.com/companies/za"
       },
-      "sector": null,
-      "url": "http://www.cipro.gov.za/",
+      "sector": [],
+      "url": "https://www.cipc.co.za/",
       "name": {
         "en": "Companies and Intellectual Property Commission (CIPC)",
         "local": ""
@@ -29814,29 +30385,26 @@
         "ZA"
       ],
       "code": "ZA-CIP",
-      "formerPrefixes": null,
+      "formerPrefixes": [],
       "confirmed": true,
       "data": {
         "features": [
-          "organisation_name",
           "registration_number"
         ],
-        "dataAccessDetails": "Data available is very basic, and searches can only be completed when the exact name of the corporate entity is known",
+        "dataAccessDetails": "",
         "licenseDetails": "https://opencorporates.com/registers/237",
         "licenseStatus": "closed_license",
-        "availability": [
-          "html"
-        ]
+        "availability": []
       },
-      "deprecated": null,
+      "deprecated": false,
       "structure": [
         "company"
       ],
       "description": {
-        "en": "The Companies and Intellectual Property Commission (CIPC) is responsible for company registration in South Africa. There is a basic free database search, or users can subscribe to the CIPC website.\n\n\"Functions of the Commission\n\nRegistration of Companies, Co-operatives and Intellectual Property Rights (trade marks, patents, designs and copyright) and maintenance thereof\nDisclosure of Information on its business registers\" [1] \n\n[1] http://www.cipc.co.za/index.php/about/our-functions/"
+        "en": "The Companies and Intellectual Property Commission (CIPC) is responsible for company registration in South Africa. Users need to log in to https://bizportal.gov.za/ to perform a business search.\n\n\"Functions of the Commission:\n\n- The CIPC does registration of companies, co-operatives and intellectual property rights (trade marks, patents, designs and copyright) and maintenance thereof.\n- Disclosure of Information on its business registers\" [1] \n\n[1] https://www.cipc.co.za/?page_id=685"
       },
       "meta": {
-        "lastUpdated": "2016-12-21",
+        "lastUpdated": "2025-03-26",
         "source": "Desk research"
       },
       "access": {
@@ -29844,12 +30412,12 @@
           "en"
         ],
         "exampleIdentifiers": "6713-713839-07, 2007-031592-07 , 1994-010680-07",
-        "onlineAccessDetails": null,
-        "publicDatabase": "http://www.cipro.co.za/products_services/name_search.asp, https://eservices.cipc.co.za/ , https://opencorporates.com/companies/za?page=1",
+        "onlineAccessDetails": "",
+        "publicDatabase": "https://eservices.cipc.co.za/Search.aspx",
         "availableOnline": false,
-        "guidanceOnLocatingIds": "Users can search for identifiers using the Cipro name. Identifiers will be under the Column header 'Enterprise number'.\n\nUsers should note that this is a very basic search function, and current research finds that only Search Option 1 works, thus users must have the exact name of the corporate entity to find an identifier number. The resulting data is very basic.\n\nUsers can also search the OpenCorporates database."
+        "guidanceOnLocatingIds": "According to the CIPC eservices site, users need to log in to perform a company search.\n\nThe OpenCorporates database can also be searched for South African organisations: https://opencorporates.com/companies/za?page=1."
       },
-      "subnationalCoverage": null,
+      "subnationalCoverage": [],
       "listType": "primary",
       "quality_explained": {
         "License: Closed License": 0,
@@ -30087,9 +30655,9 @@
       "subnationalCoverage": null,
       "listType": "deprecated",
       "quality_explained": {
-        "License: No License": 5
+        "Deprecated": 0
       },
-      "quality": 5
+      "quality": 0
     },
     {
       "name": {
