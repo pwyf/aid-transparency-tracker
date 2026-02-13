@@ -383,7 +383,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
     # make sure indicators are complete
     indicators = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], "publication")
     for indc in indicators:
-        if indc.id in data:
+        if (indc.id in data) and (organisation.frequency != 'insufficient'):
             continue
         data[indc.id] = {
             'results_num': 0,

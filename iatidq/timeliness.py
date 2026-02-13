@@ -16,6 +16,11 @@ TIMELINESS_SCORE_LOOKUP = {
         "a quarter": 0.775,
         "more than a quarter": 0.625
     },
+    "insufficient": {
+        "one month": 0,
+        "a quarter": 0,
+        "more than a quarter": 0
+    },
 }
 
 def get_timeliness_score(frequency, timelag):

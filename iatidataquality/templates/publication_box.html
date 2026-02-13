@@ -1,5 +1,7 @@
             {% if summary_data and summary_data[0] > 0 %}
             <p><i class="glyphicon glyphicon-ok"></i> IATI data found</p>
+            {% elif organisation.frequency == 'insufficient' %}
+            <p><i class="glyphicon glyphicon-remove"></i> No or very limited IATI data found</p>
             {% else %}
             <p><i class="glyphicon glyphicon-remove"></i> No IATI data found</p>
             {% endif %}
