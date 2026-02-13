@@ -226,6 +226,8 @@ def updateOrganisation(organisation_code, data):
     with db.session.begin():
         checkP.organisation_code = data["organisation_code"]
         checkP.organisation_name = data["organisation_name"]
+        checkP.timeliness = data["timeliness"]
+        checkP.frequency = data["frequency"]
         checkP.accreditation = True if data.get("accreditation") == "1" else False
         checkP.no_independent_reviewer = data["no_independent_reviewer"]
         checkP.organisation_responded = data["organisation_responded"]
@@ -381,7 +383,7 @@ def _organisation_indicators(organisation, aggregation_type=2):
     # make sure indicators are complete
     indicators = dqindicators.indicators_subset(app.config["INDICATOR_GROUP"], "publication")
     for indc in indicators:
-        if indc.id in data:
+        if (indc.id in data) and (organisation.frequency != 'insufficient'):
             continue
         data[indc.id] = {
             'results_num': 0,

@@ -285,7 +285,10 @@ def organisation_publication(organisation_code, aggregation_type):
     agg_type = [agg_detail(agt) for agt in all_aggregation_types]
 
     timeliness_score = get_timeliness_score(organisation.frequency, organisation.timelag)
-    if timeliness_score is None:
+    if organisation.frequency == 'insufficient':
+        max_points = 0
+        timeliness_alert = 'There is no or very limited IATI data for your organisation for the previous year. As a result, you will be scored under the manual survey.'
+    elif timeliness_score is None:
         timeliness_alert = None
     else:
         max_points = round(100.0 * timeliness_score / 1.5 + 100.0/3, 1)
@@ -530,6 +533,8 @@ def update_organisation(organisation_code):
         'organisation_code': request.form['organisation_code'],
         'organisation_name': request.form['organisation_name'],
         'accreditation': request.form.get('accreditation', "0"),
+        'frequency': request.form['frequency'],
+        'timeliness': request.form['timeliness'],
         'no_independent_reviewer': irev,
         'organisation_responded': orgresp
         }
