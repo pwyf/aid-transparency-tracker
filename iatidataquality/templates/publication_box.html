@@ -38,7 +38,7 @@
 					   organisation_code=organisation.organisation_code)}}">
 				Review Publication »
 			  </a>
-			  {% if organisation.accreditation %}
+			  {% if organisation.accreditation or admin %}
 			  <a class="btn btn-default btn-xs"
 				 href="{{url_for('organisation_publication_csv',
 					   organisation_code=organisation.organisation_code)}}">
