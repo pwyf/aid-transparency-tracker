@@ -197,7 +197,7 @@ urllib3[socks]==2.6.3
     #   selenium
 websocket-client==1.9.0
     # via selenium
-werkzeug==3.1.5
+werkzeug==3.1.6
     # via
     #   -r requirements.txt
     #   flask
