@@ -534,7 +534,7 @@ def update_organisation(organisation_code):
         'organisation_name': request.form['organisation_name'],
         'accreditation': request.form.get('accreditation', "0"),
         'frequency': request.form['frequency'],
-        'timeliness': request.form['timeliness'],
+        'timelag': request.form['timelag'],
         'no_independent_reviewer': irev,
         'organisation_responded': orgresp
         }
