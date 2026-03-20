@@ -73,6 +73,14 @@
 			   value="{{organisation.organisation_code}}"/></td>
     </tr>
     <tr>
+      <td>Self ref:</td>
+      <td>
+        <input class="form-control" type="text" name="self_ref"
+               value="{{organisation.self_ref}}"/>
+               <small class="text-muted">Multiple self-refs must be separated with a <code>,</code> - with no spaces! E.g. <code>46002,XM-DAC-46002</code> will capture both <code>46002</code> and <code>XM-DAC-46002</code>.</small>
+    </td>
+    </tr>
+    <tr>
         <td>Organisation responded:</td>
         <td>
             <select class="form-control" name="organisation_responded">
@@ -123,10 +131,10 @@
     <tr>
         <td>Timeliness:</td>
         <td>
-            <select class="form-control" name="timeliness">
+            <select class="form-control" name="timelag">
             {% for fr in timeliness %}
             <option value="{{fr}}"
-          {% if fr == organisation.timeliness %}
+          {% if fr == organisation.timelag %}
           selected
           {% endif %}>
         {{fr|title}}
