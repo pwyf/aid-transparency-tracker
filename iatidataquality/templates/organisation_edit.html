@@ -74,8 +74,11 @@
     </tr>
     <tr>
       <td>Self ref:</td>
-      <td><input class="form-control" type="text" name="self_ref"
-               value="{{organisation.self_ref}}"/></td>
+      <td>
+        <input class="form-control" type="text" name="self_ref"
+               value="{{organisation.self_ref}}"/>
+               <small class="text-muted">Multiple self-refs must be separated with a <code>,</code> - with no spaces! E.g. <code>46002,XM-DAC-46002</code> will capture both <code>46002</code> and <code>XM-DAC-46002</code>.</small>
+    </td>
     </tr>
     <tr>
         <td>Organisation responded:</td>
