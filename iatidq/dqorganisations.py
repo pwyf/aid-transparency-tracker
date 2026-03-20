@@ -226,6 +226,7 @@ def updateOrganisation(organisation_code, data):
     with db.session.begin():
         checkP.organisation_code = data["organisation_code"]
         checkP.organisation_name = data["organisation_name"]
+        checkP.self_ref = data['self_ref']
         checkP.timelag = data["timelag"]
         checkP.frequency = data["frequency"]
         checkP.accreditation = True if data.get("accreditation") == "1" else False
