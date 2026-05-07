@@ -23,8 +23,13 @@ code {
     <tr id="indicator-{{ i.id }}">
         <td>{{i.indicator_order | optional_decimal}}</td>
         <td>{{i.indicator_subcategory_name}}</td>
-        <td>{{i.description}}</td>
-
+        <td>
+            {% if admin %}
+            <a href="/indicators/{{indicatorgroup.name}}/{{i.name}}">{{i.description}}</a>
+            {% else %}
+            {{i.description}}
+            {% endif %}
+        </td>
         <td><a href="#" class="showTests"
                id="showindicator-{{ i.id }}">
             <i class="glyphicon glyphicon-chevron-down align-right"></i></a>

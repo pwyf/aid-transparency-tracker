@@ -17,7 +17,7 @@
     <tbody>
     <tr>
 	<td>Name:</td>
-	<td><input class="form-control" type="text" name="name" value="{{ indicator.name }}"/></td>
+	<td><input class="form-control" type="hidden" name="name" value="{{ indicator.name }}"/><label>{{indicator.name}}</td>
     </tr>
     <tr>
     <td>Description:</td>
@@ -43,9 +43,7 @@
     <tr>
         <td>Long description:</td>
 		<td>
-		  <textarea class="form-control" name="longdescription">
-			{{indicator.longdescription}}
-		  </textarea>
+		  <textarea class="form-control" name="longdescription">{{indicator.longdescription}}</textarea>
 		</td>
     </tr>
     <tr>
@@ -68,7 +66,7 @@
     </tr>
     <tr>
         <td>Ordinal:</td>
-		<td><input class="form-control" type="checkbox" name="indicator_ordinal" value="1"
+		<td><input type="checkbox" name="indicator_ordinal" value="1"
 				   {% if indicator.indicator_ordinal %}checked{% endif %} />
 		</td>
     </tr>
