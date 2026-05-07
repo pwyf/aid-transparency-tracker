@@ -11,11 +11,9 @@
     });
     </script>
 
-	<h1>Indicator {{indicator.description}}
+	<h1>Indicator <b>{{indicator.description}}</b>
 	  <code>
-		<a href="{{url_for('get_indicators', indicatorgroup=indicatorgroup.name)}}">
-		  {{indicatorgroup.name}}
-		</a>/{{indicator.name}}</code>
+		<a href="{{url_for('get_indicators', indicatorgroup=indicatorgroup.name)}}">{{indicatorgroup.name}}</a>/{{indicator.name}}</code>
 	</h1>
 
     <div class="pull-right">
