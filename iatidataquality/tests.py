@@ -40,7 +40,7 @@ def tests_editor(id=None):
                 "name": request.form['name'],
                 "description": request.form['description'],
                 "test_level": request.form['test_level'],
-                "active": request.form.get('active', None)
+                "active": bool(request.form.get('active', None))
             }
         if dqtests.updateTest(data):
             flash('Updated', "success")
