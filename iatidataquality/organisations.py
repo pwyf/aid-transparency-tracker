@@ -352,8 +352,9 @@ def organisation_publication(organisation_code, aggregation_type):
 
                 def status_class_and_text():
                     if tmp["indicator"]["indicator_ordinal"]:
-                        return (years[osd["ordinal_value"]]["class"],
-                                years[osd["ordinal_value"]]["text"])
+                        ordinal = osd["ordinal_value"] if osd["ordinal_value"] is not None else -1
+                        return (years[ordinal]["class"],
+                                years[ordinal]["text"])
                     else:
                         return (published_status_by_id[osd["published_status_id"]]["publishedstatus_class"],
                                 published_status_by_id[osd["published_status_id"]]["title"])
