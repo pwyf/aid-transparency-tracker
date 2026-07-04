@@ -1,16 +1,13 @@
 {% set active_page='sampling'%}{% extends "layout.html" %}
 {% block title %}Sampling{% endblock %}
 {% block content %}
-    <link href="https://pwyf.github.io/philippines/static/css/leaflet/leaflet.css" media="all" rel="stylesheet" type="text/css" />
-    <!--[if lte IE 8]>
-      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-    <![endif]-->
-    <script src="https://pwyf.github.io/philippines/static/js/leaflet/leaflet.js"></script>
-    <link href="https://pwyf.github.io/philippines/static/css/leaflet/MarkerCluster.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="https://pwyf.github.io/philippines/static/css/leaflet/MarkerCluster.Default.css" media="all" rel="stylesheet" type="text/css" />
-    <script src="https://pwyf.github.io/philippines/static/js/leaflet/leaflet.markercluster-src.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?autorun=false&amp;skin=sons-of-obsidian"></script>
-    <script src="https://cdn.jsdelivr.net/gh/vkiryukhin/vkBeautify@master/vkbeautify.js"></script>
+    <link href="{{url_for('static', filename='vendor/leaflet/1.9.4/leaflet.min.css')}}" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{url_for('static', filename='vendor/leaflet.markercluster/1.5.3/MarkerCluster.css')}}" media="all" rel="stylesheet" type="text/css" />
+    <link href="{{url_for('static', filename='vendor/leaflet.markercluster/1.5.3/MarkerCluster.Default.css')}}" media="all" rel="stylesheet" type="text/css" />
+    <script src="{{url_for('static', filename='vendor/leaflet/1.9.4/leaflet.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/code-prettify@0.1.0/loader/run_prettify.js?autorun=false&amp;skin=sons-of-obsidian"></script>
+    <script src="{{url_for('static', filename='vendor/vkbeautify.js')}}"></script>
     <style>
     .projectMap {
         height: 350px;
