@@ -131,7 +131,22 @@ $(document).on("click", ".advance", function(e) {
     $.post(url, $("form").serialize(),
         function(returndata){
             if (returndata.success){
-              window.location.assign(returndata.next_url);
+                if (api_sampling_queue_url) {
+                    $.getJSON(api_sampling_queue_url, function(data) {
+                        if (data.error) {
+                            window.location.assign(sampling_summary_url);
+                        } else {
+                            setupNewSurveyForm(data);
+                            var newUrl = '/sample/' + data.sample.sampling_id +
+                                '/?org=' + queue_org +
+                                '&test=' + queue_test +
+                                '&round=' + queue_round;
+                            history.pushState(null, '', newUrl);
+                        }
+                    });
+                } else {
+                    window.location.assign(returndata.next_url);
+                }
             } else {
                 alert("There was an error submitting that sample response.");
             }

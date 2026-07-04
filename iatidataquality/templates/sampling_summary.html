@@ -48,6 +48,7 @@
             <th>Remaining</th>
             <th>Result</th>
             <th>Tracker</th>
+            <th>Sample all</th>
         </thead>
         <tbody>
         {% for ot in orgtests %}
@@ -92,6 +93,14 @@
                         /
                         <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, round_id=round_id, status='pass')}}">Mark passing</a>
                     </div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% set remaining = ot.total - ot.total_fail - ot.total_pass %}
+                    {% if remaining > 0 %}
+                    <a href="{{ url_for('sampling_next', org=ot.organisation_id, test=ot.test_id, round=round_id) }}" class="btn btn-xs btn-primary">Sample all</a>
+                    {% else %}
+                    <span class="text-muted">Sampling completed</span>
                     {% endif %}
                 </td>
             </tr>

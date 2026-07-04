@@ -286,21 +286,33 @@ def api_sampling_process():
 def api_sampling(uuid=None):
     if not uuid:
         try:
-            work_items = sample_db.work_item_generator()
+            org_id = request.args.get('org', type=int)
+            test_id = request.args.get('test', type=int)
+            round_id = request.args.get('round', type=int)
+            work_items = sample_db.work_item_generator(
+                round_id=round_id, org_id=org_id, test_id=test_id)
             results = make_sample_json(work_items)
         except sample_db.NoMoreSamplingWork:
-            results = {
-                "error": "Finished"
-                }
-        #except:
-        #    results = {
-        #        "error": "Unknown"
-        #        }
+            results = {"error": "Finished"}
     else:
         def make_wi(uuid):
             return sample_db.read_db_response(uuid=uuid)[0]
         results = make_sample_json(make_wi(uuid))
     return jsonify(results)
+
+
+def sampling_next():
+    org_id = request.args.get('org', type=int)
+    test_id = request.args.get('test', type=int)
+    round_id = request.args.get('round', type=int)
+    try:
+        wi = sample_db.work_item_generator(
+            round_id=round_id, org_id=org_id, test_id=test_id)
+        return redirect(url_for('sampling_sample', uuid=wi['uuid'],
+                                org=org_id, test=test_id, round=round_id))
+    except sample_db.NoMoreSamplingWork:
+        flash('All samples reviewed for this indicator.', 'success')
+        return redirect(url_for('sampling_summary', round=round_id))
 
 
 def resolve_round_id(all_rounds):
@@ -434,12 +446,19 @@ def sampling_summary():
 def sampling(uuid):
     api_sampling_url = url_for('api_sampling', uuid=uuid)
 
+    queue_org = request.args.get('org', type=int)
+    queue_test = request.args.get('test', type=int)
+    queue_round = request.args.get('round', type=int)
+
     return render_template(
         "sampling.html",
         admin=usermanagement.check_perms('admin'),
         loggedinuser=current_user,
         api_process_url=url_for('api_sampling_process'),
-        api_sampling_url=api_sampling_url)
+        api_sampling_url=api_sampling_url,
+        queue_org=queue_org,
+        queue_test=queue_test,
+        queue_round=queue_round)
 
 
 def change_status(organisation_id, test_id, round_id, status):

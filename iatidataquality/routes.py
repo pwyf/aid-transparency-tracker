@@ -124,6 +124,12 @@ def sampling_list():
     return sampling.sampling_list()
 
 
+@app.route("/samples/next/")
+@usermanagement.perms_required()
+def sampling_next():
+    return sampling.sampling_next()
+
+
 @app.route("/samples/summary/")
 @usermanagement.perms_required()
 def sampling_summary():

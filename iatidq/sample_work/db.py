@@ -258,7 +258,7 @@ def read_db_response(uuid=None, org_id=None, test_id=None, round_id=None, offset
     return [dict(list(zip(keys_response, wi))) for wi in c.fetchall()]
 
 
-def work_item_generator(round_id=None):
+def work_item_generator(round_id=None, org_id=None, test_id=None):
     filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
@@ -269,13 +269,24 @@ def work_item_generator(round_id=None):
     if round_id is None:
         raise NoMoreSamplingWork
 
-    c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
-                         "package_id", "xml_data", "xml_parent_data",
-                         "test_kind", "result", "sampling_round_id"
-                 from sample_full
-                 where response is null
-                 and sampling_round_id = ?
-                 limit 1;""", (round_id,))
+    where_parts = ["response is null", "sampling_round_id = ?"]
+    params = [round_id]
+    if org_id is not None:
+        where_parts.append("organisation_id = ?")
+        params.append(org_id)
+    if test_id is not None:
+        where_parts.append("test_id = ?")
+        params.append(test_id)
+
+    c.execute(
+        """select "uuid", "organisation_id", "test_id", "activity_id",
+                     "package_id", "xml_data", "xml_parent_data",
+                     "test_kind", "result", "sampling_round_id"
+             from sample_full
+             where {}
+             limit 1;""".format(" and ".join(where_parts)),
+        params,
+    )
 
     wis = c.fetchall()
     if 0 == len(wis):
