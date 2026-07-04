@@ -87,10 +87,11 @@ var setupNewSurveyForm = function(survey_data) {
 	var rendered = Mustache.render(template, survey_data.sample, partials);
 	$('#sample-insert').html(rendered);
 
-	// pretty print xml
-	var $pp = $('.prettyprint');
-	$pp.text(vkbeautify.xml($pp.text()));
-	PR.prettyPrint();
+	$(document).one('show.bs.collapse', '#collapseXML', function() {
+		var $pp = $('.prettyprint');
+		$pp.text(vkbeautify.xml($pp.text()));
+		PR.prettyPrint();
+	});
 
 	header_data = survey_data.headers;
 
