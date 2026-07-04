@@ -10,7 +10,7 @@
     <link href="https://pwyf.github.io/philippines/static/css/leaflet/MarkerCluster.Default.css" media="all" rel="stylesheet" type="text/css" />
     <script src="https://pwyf.github.io/philippines/static/js/leaflet/leaflet.markercluster-src.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?autorun=false&amp;skin=sons-of-obsidian"></script>
-    <script src="//cdn.rawgit.com/vkiryukhin/vkBeautify/master/vkbeautify.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/vkiryukhin/vkBeautify@master/vkbeautify.js"></script>
     <style>
     .projectMap {
         height: 350px;
@@ -40,7 +40,8 @@
 <script id="header-template" type="x-tmpl-mustache">
     <ul class="breadcrumb">
         <li><a href="{% endraw %}{{url_for('sampling_summary')}}{% raw %}">Summary</a></li>
-        <li><a href="{% endraw %}{{url_for('sampling_list')}}{% raw %}">Samples</a></li>
+        <li><a href="{{ sampling_list_url }}">Samples</a></li>
+        <li>{{ round_name }}</li>
         <li>{{ organisation_name }}</li>
         <li>{{ test_description }}</li>
     </ul>
@@ -468,6 +469,17 @@
 <script type="text/javascript">
 var api_sampling_url = "{{ api_sampling_url }}";
 var api_sampling_process_url = "{{ api_process_url }}";
+var queue_org = {{ queue_org or 'null' }};
+var queue_test = {{ queue_test or 'null' }};
+var queue_round = {{ queue_round or 'null' }};
+var api_sampling_next_base_url = "{{ url_for('api_sampling') }}";
+var sampling_summary_base_url = "{{ url_for('sampling_summary') }}";
+var api_sampling_queue_url = (queue_org && queue_test && queue_round)
+    ? api_sampling_next_base_url + "?org=" + queue_org + "&test=" + queue_test + "&round=" + queue_round
+    : null;
+var sampling_summary_url = queue_round
+    ? sampling_summary_base_url + "?round=" + queue_round
+    : sampling_summary_base_url;
 </script>
 
 <script src="{{url_for('static', filename='js/mustache.js')}}"

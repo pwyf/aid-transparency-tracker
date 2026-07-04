@@ -70,6 +70,8 @@ def setup_common():
     dqimporttests.importTestsFromFile(
         default_tests_filename,
         test_level.ACTIVITY)
+    print("Importing codelists")
+    dqcodelists.importCodelists()
 
 def setup_organisations():
     print("Adding organisations")

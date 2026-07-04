@@ -12,20 +12,27 @@
 
     <div class="row" style="margin-bottom: 20px">
       <form method="GET">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
           <select class="form-control sampling-filter" id="org-filter" name="org">
             {% for org in all_orgs %}
               <option {% if org.id == org_id %}selected="selected"{% endif %} value="{{ org.id }}">{{ org.organisation_name }}</option>
             {% endfor %}
           </select>
-        </div><!-- /.col-lg-6 -->
-        <div class="col-lg-6">
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
           <select class="form-control sampling-filter" id="test-filter" name="test">
             {% for test in all_tests %}
               <option {% if test.id == test_id %}selected="selected"{% endif %} value="{{ test.id }}">{{ test.description }}</option>
             {% endfor %}
           </select>
-        </div><!-- /.col-lg-6 -->
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <select class="form-control sampling-filter" id="round-filter" name="round">
+            {% for round in all_rounds %}
+              <option {% if round.id == round_id %}selected="selected"{% endif %} value="{{ round.id }}">{{ round.name }}{% if round.snapshot_date %} ({{ round.snapshot_date }}){% endif %}</option>
+            {% endfor %}
+          </select>
+        </div><!-- /.col-lg-4 -->
       </form>
     </div>
 

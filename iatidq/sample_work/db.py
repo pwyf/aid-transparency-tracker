@@ -12,16 +12,27 @@ class NoMoreSamplingWork(Exception):
 
 
 keys = ["uuid", "organisation_id", "test_id", "activity_id", "package_id",
-        "xml_data", "xml_parent_data", "test_kind", "result"]
+        "xml_data", "xml_parent_data", "test_kind", "result", "sampling_round_id"]
 
 keys_response = ["uuid", "organisation_id", "test_id", "activity_id",
                  "package_id", "xml_data", "xml_parent_data", "test_kind", "result",
+                 "sampling_round_id",
                  "response", "comment", "user_id", "unsure"]
 
 total_results_response = ["organisation_id", "test_id", "response", "count"]
 
 
 def create_db(c):
+    stmt = """
+        create table sampling_round (
+            id integer primary key,
+            name text not null,
+            snapshot_date text,
+            created_at timestamp not null default current_timestamp
+        );
+    """
+    c.execute(stmt)
+
     stmt = """
         create table sample_work_item (
             uuid char(36) unique not null,
@@ -32,7 +43,8 @@ def create_db(c):
             xml_data text not null,
             xml_parent_data text,
             test_kind varchar(20) not null,
-            result NUMERIC not null
+            result NUMERIC not null,
+            sampling_round_id integer not null references sampling_round(id)
         );
     """
     c.execute(stmt)
@@ -56,41 +68,139 @@ def create_db(c):
     c.execute(stmt)
 
 
-def make_db(filename, orgs, tests, snapshot_path):
+def ensure_schema(c):
+    """Create the sampling database schema if it doesn't exist yet, or
+    migrate a legacy (pre-sampling-round) database in place."""
+    c.execute("""select name from sqlite_master
+                  where type='table' and name='sample_work_item';""")
+    if not c.fetchall():
+        create_db(c)
+        return
+
+    c.execute("""select name from sqlite_master
+                  where type='table' and name='sampling_round';""")
+    if c.fetchall():
+        return
+
+    # Legacy database: add the sampling_round table and column, and put
+    # all existing sample work items into "Round 1".
+    c.execute("""
+        create table sampling_round (
+            id integer primary key,
+            name text not null,
+            snapshot_date text,
+            created_at timestamp not null default current_timestamp
+        );
+    """)
+    c.execute("""alter table sample_work_item
+                  add column sampling_round_id integer;""")
+    c.execute("""insert into sampling_round (name, snapshot_date)
+                  values ('Round 1', NULL);""")
+    round1_id = c.lastrowid
+    c.execute("""update sample_work_item set sampling_round_id = ?
+                  where sampling_round_id is null;""", (round1_id,))
+
+
+def latest_round_id():
+    filename = app.config['SAMPLING_DB_FILENAME']
+
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    c.execute('select max(id) from sampling_round;')
+    return c.fetchone()[0]
+
+
+def all_rounds():
+    filename = app.config['SAMPLING_DB_FILENAME']
+
+    database = sqlite.connect(filename)
+    c = database.cursor()
+
+    c.execute("""select id, name, snapshot_date, created_at
+                  from sampling_round order by id;""")
+    keys_round = ["id", "name", "snapshot_date", "created_at"]
+    return [dict(list(zip(keys_round, row))) for row in c.fetchall()]
+
+
+def create_round(c, name=None, snapshot_date=None, replace_latest=False):
+    c.execute('select max(id) from sampling_round;')
+    current_latest = c.fetchone()[0]
+
+    if replace_latest:
+        if current_latest is None:
+            raise ValueError("No existing sampling round to replace")
+
+        c.execute("""select uuid from sample_work_item
+                      where sampling_round_id = ?;""", (current_latest,))
+        uuids = [row[0] for row in c.fetchall()]
+        if uuids:
+            placeholders = ",".join("?" * len(uuids))
+            c.execute("""delete from sample_result
+                          where uuid in ({});""".format(placeholders), uuids)
+        c.execute("""delete from sample_work_item
+                      where sampling_round_id = ?;""", (current_latest,))
+        c.execute('delete from sampling_round where id = ?;', (current_latest,))
+
+        round_id = current_latest
+        name = name or "Round {}".format(round_id)
+        c.execute("""insert into sampling_round (id, name, snapshot_date)
+                      values (?, ?, ?);""", (round_id, name, snapshot_date))
+        return round_id
+
+    round_id = (current_latest or 0) + 1
+    name = name or "Round {}".format(round_id)
+    c.execute("""insert into sampling_round (id, name, snapshot_date)
+                  values (?, ?, ?);""", (round_id, name, snapshot_date))
+    return round_id
+
+
+def make_db(filename, orgs, tests, snapshot_path, round_name=None, replace_latest=False):
     from .sample_work import WorkItems
 
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    create_db(c)
+    ensure_schema(c)
+    database.commit()
+
+    round_id = create_round(c, name=round_name, snapshot_date=snapshot_path,
+                             replace_latest=replace_latest)
+    database.commit()
 
     # populate db
+    work_item_keys = keys[:-1]  # exclude sampling_round_id, set separately
     work_items = WorkItems(orgs, tests, snapshot_path)
     for wi in work_items:
-        wi_info = tuple([wi[k] for k in keys])
+        wi_info = tuple([wi[k] for k in work_item_keys]) + (round_id,)
 
         c.execute("""insert into sample_work_item
                         ("uuid", "organisation_id", "test_id", "activity_id",
                          "package_id", "xml_data",
-                         "xml_parent_data", "test_kind", "result")
-                        values (?,?,?,?,?,?,?,?, ?);
+                         "xml_parent_data", "test_kind", "result",
+                         "sampling_round_id")
+                        values (?,?,?,?,?,?,?,?,?,?);
                   """, wi_info)
 
         database.commit()
 
+    return round_id
 
-def all_sample_orgs():
+
+def all_sample_orgs(round_id=None):
     filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
     c = database.cursor()
 
     query = 'select distinct organisation_id from sample_full'
+    if round_id is not None:
+        query += ' where sampling_round_id = "{}"'.format(round_id)
     c.execute(query)
     return c.fetchall()
 
 
-def count_samples(org_id=None, test_id=None):
+def count_samples(org_id=None, test_id=None, round_id=None):
     filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
@@ -103,7 +213,9 @@ def count_samples(org_id=None, test_id=None):
         where_arr.append('organisation_id = "{}"'.format(org_id))
     if test_id:
         where_arr.append('test_id = "{}"'.format(test_id))
-    if org_id or test_id:
+    if round_id is not None:
+        where_arr.append('sampling_round_id = "{}"'.format(round_id))
+    if where_arr:
         query += ' where '
         query += ' and '.join(where_arr)
 
@@ -111,7 +223,7 @@ def count_samples(org_id=None, test_id=None):
     return c.fetchone()[0]
 
 
-def read_db_response(uuid=None, org_id=None, test_id=None, offset=0, limit=-1):
+def read_db_response(uuid=None, org_id=None, test_id=None, round_id=None, offset=0, limit=-1):
     filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
@@ -121,21 +233,19 @@ def read_db_response(uuid=None, org_id=None, test_id=None, offset=0, limit=-1):
                 {where_clause}
                 limit {limit} offset {offset}"""
 
-    whereclause = ''
-    if uuid or org_id or test_id:
-        whereclause = ' where '
-        where_arr = []
-        if uuid:
-            # Ensure uuid var is really a uuid
-            UUID(uuid)
-            where_arr.append('uuid="{}"'.format(uuid))
-        if org_id:
-            where_arr.append('organisation_id="{}"'.format(org_id))
-        if org_id:
-            where_arr.append('test_id="{}"'.format(test_id))
-        whereclause += ' and '.join(where_arr)
-    else:
-        whereclause = ""
+    where_arr = []
+    if uuid:
+        # Ensure uuid var is really a uuid
+        UUID(uuid)
+        where_arr.append('uuid="{}"'.format(uuid))
+    if org_id:
+        where_arr.append('organisation_id="{}"'.format(org_id))
+    if test_id:
+        where_arr.append('test_id="{}"'.format(test_id))
+    if round_id is not None:
+        where_arr.append('sampling_round_id="{}"'.format(round_id))
+
+    whereclause = ' where ' + ' and '.join(where_arr) if where_arr else ""
 
     stmt = query.format(
         where_clause=whereclause,
@@ -148,18 +258,35 @@ def read_db_response(uuid=None, org_id=None, test_id=None, offset=0, limit=-1):
     return [dict(list(zip(keys_response, wi))) for wi in c.fetchall()]
 
 
-def work_item_generator():
+def work_item_generator(round_id=None, org_id=None, test_id=None):
     filename = app.config['SAMPLING_DB_FILENAME']
 
     database = sqlite.connect(filename)
     c = database.cursor()
 
-    c.execute("""select "uuid", "organisation_id", "test_id", "activity_id",
-                         "package_id", "xml_data", "xml_parent_data",
-                         "test_kind", "result"
-                 from sample_full
-                 where response is null
-                 limit 1;""")
+    if round_id is None:
+        round_id = latest_round_id()
+    if round_id is None:
+        raise NoMoreSamplingWork
+
+    where_parts = ["response is null", "sampling_round_id = ?"]
+    params = [round_id]
+    if org_id is not None:
+        where_parts.append("organisation_id = ?")
+        params.append(org_id)
+    if test_id is not None:
+        where_parts.append("test_id = ?")
+        params.append(test_id)
+
+    c.execute(
+        """select "uuid", "organisation_id", "test_id", "activity_id",
+                     "package_id", "xml_data", "xml_parent_data",
+                     "test_kind", "result", "sampling_round_id"
+             from sample_full
+             where {}
+             limit 1;""".format(" and ".join(where_parts)),
+        params,
+    )
 
     wis = c.fetchall()
     if 0 == len(wis):
@@ -207,11 +334,14 @@ def save_response(work_item_uuid, response, comment, user_id, unsure=False):
     return "create"
 
 
-def get_total_results():
+def get_total_results(round_id=None):
 
     filename = app.config['SAMPLING_DB_FILENAME']
     database = sqlite.connect(filename)
     c = database.cursor()
+
+    if round_id is None:
+        round_id = latest_round_id()
 
     c.execute("""
     select organisation_id,
@@ -219,10 +349,11 @@ def get_total_results():
            response,
            count(uuid) as count
     from sample_full
+    where sampling_round_id = ?
     group by organisation_id,
              test_id,
              response;
-    """)
+    """, (round_id,))
 
     out = []
     for wi in c.fetchall():

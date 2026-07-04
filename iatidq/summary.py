@@ -298,8 +298,15 @@ class PublisherSummary(object):
                                       summary_f)
 
     def get_sampling_data(self, organisation_id):
-        sql = '''SELECT test_id FROM sampling_failure
-                   WHERE organisation_id = %s;'''
+        sql = '''SELECT sf.test_id FROM sampling_failure sf
+                   WHERE sf.organisation_id = %s
+                     AND sf.failed = true
+                     AND sf.sampling_round = (
+                           SELECT MAX(sf2.sampling_round)
+                           FROM sampling_failure sf2
+                           WHERE sf2.organisation_id = sf.organisation_id
+                             AND sf2.test_id = sf.test_id
+                         );'''
         failed_test_ids = [ row[0] for row in
                             db.engine.execute(sql, (organisation_id,)) ]
 

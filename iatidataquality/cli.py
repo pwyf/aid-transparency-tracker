@@ -1,5 +1,6 @@
 from os.path import exists, join, isdir
-from os import listdir, makedirs, unlink
+from os import listdir, makedirs
+from sqlite3 import dbapi2 as sample_work_sqlite
 import shutil
 
 import click
@@ -7,7 +8,7 @@ import iatikit
 import csv
 
 from . import app, db
-from iatidq import dqimporttests, dqindicators, dqorganisations, dqusers
+from iatidq import dqcodelists, dqimporttests, dqindicators, dqorganisations, dqusers
 from iatidq import setup as dqsetup
 from iatidq.models import Organisation, Test, OrganisationCondition
 from iatidq.sample_work import sample_work, db as sample_work_db
@@ -57,6 +58,12 @@ def setup(force, admin_from_config):
 def create_admin(username, password):
     """Create an admin user."""
     dqsetup.setup_admin_user(username, password)
+
+
+@app.cli.command("import_codelists")
+def import_codelists():
+    """Import IATI codelists from the IATI reference API."""
+    dqcodelists.importCodelists()
 
 
 @app.cli.command("update_frequency")
@@ -114,9 +121,15 @@ def import_users(filename):
 @click.option("--filename")
 @click.option("--org-ids")
 @click.option("--test-ids")
+@click.option("--round-name", default=None,
+              help='Name for the new sampling round (defaults to "Round N")')
+@click.option('--replace-latest', is_flag=True, default=False,
+              help='Delete and recreate the most recent sampling round ' +
+                   '(including its reviewer responses) instead of ' +
+                   'creating a new one')
 @click.option('--force', is_flag=True, default=False,
               help='Skip the "This is potentially destructive" confirmation prompt')
-def setup_sampling(date, filename, org_ids, test_ids, force):
+def setup_sampling(date, filename, org_ids, test_ids, round_name, replace_latest, force):
     """Generate the sampling database (Environment variable PWYF_SAMPLE_SIZE can be used to set the number of samples per test)"""
     iati_result_path = app.config.get('IATI_RESULT_PATH')
     try:
@@ -142,11 +155,13 @@ def setup_sampling(date, filename, org_ids, test_ids, force):
 
     if not filename:
         filename = app.config['SAMPLING_DB_FILENAME']
-    if exists(filename):
-        click.secho('Warning: Sample database exists.', fg='red')
+
+    if replace_latest:
+        click.secho('Warning: This will delete and recreate the most ' +
+                    'recent sampling round, including any reviewer ' +
+                    'responses recorded for it.', fg='red')
         if not force:
-            click.confirm('Delete and continue?', abort=True)
-        unlink(filename)
+            click.confirm('Continue?', abort=True)
 
     if org_ids:
         org_ids = list(map(int, org_ids.split(",")))
@@ -160,7 +175,64 @@ def setup_sampling(date, filename, org_ids, test_ids, force):
     else:
         tests = sample_work.all_tests()
 
-    sample_work_db.make_db(filename, orgs, tests, snapshot_date)
+    try:
+        round_id = sample_work_db.make_db(filename, orgs, tests, snapshot_date,
+                                           round_name=round_name,
+                                           replace_latest=replace_latest)
+    except ValueError as e:
+        click.secho('Error: {}'.format(e), fg='red', err=True)
+        raise click.Abort()
+
+    database = sample_work_sqlite.connect(filename)
+    c = database.cursor()
+    c.execute('select name from sampling_round where id = ?;', (round_id,))
+    round_name = c.fetchone()[0]
+    click.echo('Created sampling round {} ("{}").'.format(round_id, round_name))
+
+
+@app.cli.command("migrate_sampling_rounds")
+def migrate_sampling_rounds():
+    """One-off migration: add sampling round support to the sampling_failure table."""
+
+    with db.session.begin():
+        db.session.execute('''
+            ALTER TABLE sampling_failure
+            ADD COLUMN IF NOT EXISTS sampling_round INTEGER NOT NULL DEFAULT 1;
+        ''')
+        db.session.execute('''
+            ALTER TABLE sampling_failure
+            ADD COLUMN IF NOT EXISTS failed BOOLEAN NOT NULL DEFAULT TRUE;
+        ''')
+        db.session.execute('''
+            UPDATE sampling_failure SET sampling_round = 1
+            WHERE sampling_round IS NULL;
+        ''')
+        db.session.execute('''
+            UPDATE sampling_failure SET failed = TRUE
+            WHERE failed IS NULL;
+        ''')
+
+        pk_info = db.session.execute('''
+            SELECT tc.constraint_name, kcu.column_name
+            FROM information_schema.table_constraints tc
+            JOIN information_schema.key_column_usage kcu
+              ON tc.constraint_name = kcu.constraint_name
+             AND tc.table_schema = kcu.table_schema
+            WHERE tc.table_name = 'sampling_failure'
+              AND tc.constraint_type = 'PRIMARY KEY';
+        ''').fetchall()
+        pk_columns = set(row[1] for row in pk_info)
+
+        if pk_columns != {'organisation_id', 'test_id', 'sampling_round'}:
+            constraint_name = pk_info[0][0]
+            db.session.execute(
+                'ALTER TABLE sampling_failure DROP CONSTRAINT "{}";'.format(constraint_name))
+            db.session.execute('''
+                ALTER TABLE sampling_failure
+                ADD PRIMARY KEY (organisation_id, test_id, sampling_round);
+            ''')
+
+    click.echo('sampling_failure table migrated for sampling rounds.')
 
 
 @app.cli.command("download_data")

@@ -1,3 +1,5 @@
+.DS_Store
+
 # sample_work sqlite database and data folders
 sample_work.db
 iatikit.ini
