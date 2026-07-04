@@ -287,11 +287,14 @@ def organisation_publication(organisation_code, aggregation_type):
     if organisation.frequency == 'insufficient':
         max_points = 0
         timeliness_alert = 'There is no or very limited IATI data for your organisation for the previous year. As a result, you will be scored under the manual survey.'
-    elif timeliness_score is None and aggregate_results["non_zero"]:
-        flash('No frequency or time lag data is available for this organisation. '
-              'Please add the frequency and timelag assessment to this organisation.', 'danger')
-        return redirect(url_for('get_organisations',
-                                organisation_code=organisation.organisation_code))
+    elif timeliness_score is None:
+        if aggregate_results["non_zero"]:
+            flash('No frequency or time lag data is available for this organisation. '
+                  'Please add the frequency and timelag assessment to this organisation.', 'danger')
+            return redirect(url_for('get_organisations',
+                                    organisation_code=organisation.organisation_code))
+        else:
+            timeliness_alert = None
     else:
         max_points = round(100.0 * timeliness_score / 1.5 + 100.0/3, 1)
         timeliness_alert = 'It looks like you publish {} with a time lag of {}, so the maximum you can score for IATI data is {} points. The total points for the relevant indicators have been adjusted accordingly.'.format(organisation.frequency, organisation.timelag, max_points)
