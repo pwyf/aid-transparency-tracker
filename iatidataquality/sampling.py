@@ -157,6 +157,17 @@ def make_sample_json(work_item):
     work_item_indicator = get_test_indicator_info(work_item["test_id"])
     work_item_org = get_org_info(work_item["organisation_id"])
 
+    round_id = work_item.get("sampling_round_id")
+    rounds = {r['id']: r for r in sample_db.all_rounds()}
+    round_info = rounds.get(round_id, {})
+    round_name = round_info.get('name', '')
+    if round_info.get('snapshot_date'):
+        round_name = '{} ({})'.format(round_name, round_info['snapshot_date'])
+    sampling_list_url = url_for('sampling_list',
+        org=work_item["organisation_id"],
+        test=work_item["test_id"],
+        round=round_id)
+
     xml = work_item['xml_data']
 
     data = { "sample": {
@@ -168,6 +179,7 @@ def make_sample_json(work_item):
                 "conditions": conditions,
                 "pos": pos,
                 "receiver_orgs": receiver_orgs,
+                "sampling_round_id": work_item["sampling_round_id"],
                 "sampling_id": work_item["uuid"],
                 "test_id": work_item["test_id"],
                 "organisation_id": work_item["organisation_id"],
@@ -190,6 +202,8 @@ def make_sample_json(work_item):
                 "organisation_name": work_item_org.organisation_name,
                 "organisation_code": work_item_org.organisation_code,
                 "sample_comment": work_item.get("comment"),
+                "round_name": round_name,
+                "sampling_list_url": sampling_list_url,
             },
             "buttons": kind_to_list(work_item["test_kind"]),
             "unsure": work_item.get("unsure"),
@@ -289,10 +303,41 @@ def api_sampling(uuid=None):
     return jsonify(results)
 
 
+def resolve_round_id(all_rounds):
+    """Validate ?round= against the known rounds, defaulting to the latest."""
+    round_ids = [r['id'] for r in all_rounds]
+    try:
+        round_id = int(request.args.get('round'))
+        if round_id not in round_ids:
+            raise ValueError
+        return round_id, False
+    except (ValueError, TypeError):
+        return sample_db.latest_round_id(), True
+
+
+def get_carryforward_failures(round_id):
+    """For (organisation_id, test_id) pairs with no explicit verdict in
+    `round_id`, return the most recent verdict from an earlier round, as
+    {(organisation_id, test_id): (sampling_round, failed)}."""
+    sql = '''SELECT sf.organisation_id, sf.test_id, sf.sampling_round, sf.failed
+               FROM sampling_failure sf
+              WHERE sf.sampling_round < %s
+                AND sf.sampling_round = (
+                        SELECT MAX(sf2.sampling_round)
+                          FROM sampling_failure sf2
+                         WHERE sf2.organisation_id = sf.organisation_id
+                           AND sf2.test_id = sf.test_id
+                           AND sf2.sampling_round < %s
+                    );'''
+    rows = db.engine.execute(sql, (round_id, round_id))
+    return {(row[0], row[1]): (row[2], row[3]) for row in rows}
+
+
 def sampling_list():
     do_redirect = False
     all_orgs = sample_work.all_orgs()
     all_tests = sample_work.all_tests()
+    all_rounds = sample_db.all_rounds()
 
     try:
         org_id = int(request.args.get('org'))
@@ -308,13 +353,16 @@ def sampling_list():
         test_id = all_tests[0].id
         do_redirect = True
 
-    if do_redirect:
-        return redirect(url_for('sampling_list', org=org_id, test=test_id))
+    round_id, round_redirect = resolve_round_id(all_rounds)
+    do_redirect = do_redirect or round_redirect
 
-    # total_samples = sample_db.count_samples(org_id=org_id, test_id=test_id)
+    if do_redirect:
+        return redirect(url_for('sampling_list', org=org_id, test=test_id, round=round_id))
+
+    # total_samples = sample_db.count_samples(org_id=org_id, test_id=test_id, round_id=round_id)
 
     samples = []
-    for wi in sample_db.read_db_response(org_id=org_id, test_id=test_id):
+    for wi in sample_db.read_db_response(org_id=org_id, test_id=test_id, round_id=round_id):
         samples.append(make_simple_sample_json(wi))
 
     return render_template(
@@ -322,38 +370,64 @@ def sampling_list():
         admin=usermanagement.check_perms('admin'),
         all_orgs=all_orgs,
         all_tests=all_tests,
+        all_rounds=all_rounds,
         loggedinuser=current_user,
         samples=samples,
         org_id=org_id,
         test_id=test_id,
+        round_id=round_id,
     )
 
 
 def sampling_summary():
-    orgtests = sample_db.get_total_results()
-    data = sample_db.get_summary_org_test(orgtests)
-    failures = models.SamplingFailure.all()
-    failures_dict = {}
-    for x in failures:
-        if x.organisation_id not in failures_dict:
-            failures_dict[x.organisation_id] = {}
-        if x.test_id not in failures_dict[x.organisation_id]:
-            failures_dict[x.organisation_id][x.test_id] = True
-    data = [
-        dict(
-            list(x.items()) + [
-                ('failed', failures_dict.get(x['organisation_id'], {}).get(x['test_id'], False))])
-        for x in data]
+    all_rounds = sample_db.all_rounds()
+    round_id, do_redirect = resolve_round_id(all_rounds)
 
-    total_samples = sum([x['total'] for x in data])
-    total_done = sum([x['total_pass'] + x['total_fail'] for x in data])
-    pct_complete = 100. * total_done / total_samples
+    if do_redirect:
+        return redirect(url_for('sampling_summary', round=round_id))
+
+    orgtests = sample_db.get_total_results(round_id=round_id)
+    data = sample_db.get_summary_org_test(orgtests)
+
+    failures_dict = {}
+    for x in models.SamplingFailure.where(sampling_round=round_id).all():
+        failures_dict.setdefault(x.organisation_id, {})[x.test_id] = x.failed
+
+    carryforward = get_carryforward_failures(round_id)
+    rounds_by_id = {r['id']: r for r in all_rounds}
+
+    out = []
+    for x in data:
+        entry = dict(x)
+        org_id, test_id = x['organisation_id'], x['test_id']
+
+        if test_id in failures_dict.get(org_id, {}):
+            entry['status'] = 'failed' if failures_dict[org_id][test_id] else 'passing'
+            entry['carryforward'] = None
+            entry['carryforward_round_name'] = None
+        else:
+            entry['status'] = 'not_reviewed'
+            cf = carryforward.get((org_id, test_id))
+            if cf is None:
+                entry['carryforward'] = None
+                entry['carryforward_round_name'] = None
+            else:
+                cf_round_id, cf_failed = cf
+                entry['carryforward'] = 'failed' if cf_failed else 'passing'
+                entry['carryforward_round_name'] = rounds_by_id[cf_round_id]['name']
+        out.append(entry)
+
+    total_samples = sum([x['total'] for x in out])
+    total_done = sum([x['total_pass'] + x['total_fail'] for x in out])
+    pct_complete = 100. * total_done / total_samples if total_samples else 0
 
     return render_template(
         "sampling_summary.html",
         admin=usermanagement.check_perms('admin'),
         loggedinuser=current_user,
-        orgtests=data,
+        orgtests=out,
+        all_rounds=all_rounds,
+        round_id=round_id,
         pct_complete=pct_complete)
 
 
@@ -368,23 +442,24 @@ def sampling(uuid):
         api_sampling_url=api_sampling_url)
 
 
-def change_status(organisation_id, test_id, status):
-    if status == 'pass':
-        existing = models.SamplingFailure.where(
-            organisation_id=organisation_id, test_id=test_id).first()
+def change_status(organisation_id, test_id, round_id, status):
+    failed = (status == 'fail')
+
+    existing = models.SamplingFailure.where(
+        organisation_id=organisation_id, test_id=test_id,
+        sampling_round=round_id).first()
+
+    with db.session.begin():
         if existing:
-            with db.session.begin():
-                db.session.delete(existing)
-            flash('Marked as passing', 'success')
-    elif status == 'fail':
-        existing = models.SamplingFailure.where(
-            organisation_id=organisation_id, test_id=test_id).first()
-        if not existing:
-            failure = models.SamplingFailure(
+            existing.failed = failed
+            db.session.add(existing)
+        else:
+            db.session.add(models.SamplingFailure(
                 organisation_id=organisation_id,
                 test_id=test_id,
-            )
-            with db.session.begin():
-                db.session.add(failure)
-            flash('Marked as failing', 'success')
-    return redirect(url_for('sampling_summary'))
+                sampling_round=round_id,
+                failed=failed,
+            ))
+
+    flash('Marked as {}'.format('failing' if failed else 'passing'), 'success')
+    return redirect(url_for('sampling_summary', round=round_id))

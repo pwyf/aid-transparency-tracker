@@ -829,3 +829,5 @@ class SamplingFailure(BaseModel):
                              primary_key=True)
     test_id = db.Column(db.Integer, db.ForeignKey('test.id', ondelete='CASCADE'),
                      primary_key=True)
+    sampling_round = db.Column(db.Integer, primary_key=True, server_default='1')
+    failed = db.Column(db.Boolean, nullable=False, server_default='true')

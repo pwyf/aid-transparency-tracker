@@ -136,10 +136,10 @@ def sampling_sample(uuid):
     return sampling.sampling(uuid)
 
 
-@app.route("/sample/<organisation_id>/<test_id>/<status>")
+@app.route("/sample/<organisation_id>/<test_id>/<int:round_id>/<status>")
 @usermanagement.perms_required()
-def sampling_change_status(organisation_id, test_id, status):
-    return sampling.change_status(organisation_id, test_id, status)
+def sampling_change_status(organisation_id, test_id, round_id, status):
+    return sampling.change_status(organisation_id, test_id, round_id, status)
 
 
 @app.route("/organisations/<organisation_code>/feedback/", methods=['POST', 'GET'])

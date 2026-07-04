@@ -7,12 +7,28 @@
     <script>
     $(function() {
         $("table#samples").tablesorter({ sortList: [[0,0], [1, 0]] });
+
+        $('.sampling-filter').on('change', function() {
+          $(this).closest('form').submit();
+        });
     });
     </script>
 
     <ul class="breadcrumb">
       <li>Summary</li>
     </ul>
+
+    <div class="row" style="margin-bottom: 20px">
+      <form method="GET">
+        <div class="col-lg-4">
+          <select class="form-control sampling-filter" id="round-filter" name="round">
+            {% for round in all_rounds %}
+              <option {% if round.id == round_id %}selected="selected"{% endif %} value="{{ round.id }}">{{ round.name }}{% if round.snapshot_date %} ({{ round.snapshot_date }}){% endif %}</option>
+            {% endfor %}
+          </select>
+        </div><!-- /.col-lg-4 -->
+      </form>
+    </div>
 
     <div class="progress">
       <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{ pct_complete }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pct_complete }}%;">
@@ -37,7 +53,7 @@
         {% for ot in orgtests %}
             <tr>
                 <td>{{ ot.organisation.organisation_name }}</td>
-                <td><a href="{{ url_for('sampling_list', org=ot.organisation_id, test=ot.test_id) }}">{{ ot.test.description }}</a></td>
+                <td><a href="{{ url_for('sampling_list', org=ot.organisation_id, test=ot.test_id, round=round_id) }}">{{ ot.test.description }}</a></td>
                 <td>{{ ot.total }}</td>
                 <td>{{ ot.total_pass }}</td>
                 <td>{{ ot.total_fail }}</td>
@@ -55,14 +71,27 @@
                     </span>
                 </td>
                 <td>
-                    {% if ot.failed %}
-                    <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, status='pass')}}">
+                    {% if ot.status == 'failed' %}
+                    <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, round_id=round_id, status='pass')}}">
                         <span class="label label-danger">Failed</span>
                     </a>
-                    {% else %}
-                    <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, status='fail')}}">
+                    {% elif ot.status == 'passing' %}
+                    <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, round_id=round_id, status='fail')}}">
                         <span class="label label-success">Passed</span>
                     </a>
+                    {% else %}
+                    {% if ot.carryforward == 'failed' %}
+                    <span class="label label-danger" title="Not yet reviewed in this round &mdash; carried forward from {{ ot.carryforward_round_name }}">Failing (carried forward)</span>
+                    {% elif ot.carryforward == 'passing' %}
+                    <span class="label label-success" title="Not yet reviewed in this round &mdash; carried forward from {{ ot.carryforward_round_name }}">Passing (carried forward)</span>
+                    {% else %}
+                    <span class="label label-default">Not yet reviewed</span>
+                    {% endif %}
+                    <div>
+                        <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, round_id=round_id, status='fail')}}">Mark failing</a>
+                        /
+                        <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, round_id=round_id, status='pass')}}">Mark passing</a>
+                    </div>
                     {% endif %}
                 </td>
             </tr>
