@@ -1,56 +1,56 @@
 ﻿Country List,country_code,Agency,country_strategy_exclusion,organisation_code
-Algeria,DZ,AfDB,,XM-DAC-46002
-Angola,AO,AfDB,,XM-DAC-46002
-Benin,BJ,AfDB,,XM-DAC-46002
-Botswana,BW,AfDB,,XM-DAC-46002
-Burkina Faso,BF,AfDB,,XM-DAC-46002
-Burundi,BI,AfDB,,XM-DAC-46002
-Cabo Verde,CV,AfDB,,XM-DAC-46002
-Cameroon,CM,AfDB,,XM-DAC-46002
-Central African Republic,CF,AfDB,,XM-DAC-46002
-Chad,TD,AfDB,,XM-DAC-46002
-Comoros,KM,AfDB,,XM-DAC-46002
-Congo,CG,AfDB,,XM-DAC-46002
-Côte d'Ivoire,CI,AfDB,,XM-DAC-46002
-Democratic Republic of the Congo,CD,AfDB,,XM-DAC-46002
-Djibouti,DJ,AfDB,,XM-DAC-46002
-Egypt,EG,AfDB,,XM-DAC-46002
-Equatorial Guinea,GQ,AfDB,,XM-DAC-46002
-Eritrea,ER,AfDB,,XM-DAC-46002
-Eswatini,SZ,AfDB,,XM-DAC-46002
-Ethiopia,ET,AfDB,,XM-DAC-46002
-Gabon,GA,AfDB,,XM-DAC-46002
-Gambia,GM,AfDB,,XM-DAC-46002
-Ghana,GH,AfDB,,XM-DAC-46002
-Guinea,GN,AfDB,,XM-DAC-46002
-Guinea-Bissau,GW,AfDB,,XM-DAC-46002
-Kenya,KE,AfDB,,XM-DAC-46002
-Lesotho,LS,AfDB,,XM-DAC-46002
-Liberia,LR,AfDB,,XM-DAC-46002
-Libya,LY,AfDB,,XM-DAC-46002
-Madagascar,MG,AfDB,,XM-DAC-46002
-Malawi,MW,AfDB,,XM-DAC-46002
-Mali,ML,AfDB,,XM-DAC-46002
-Mauritania,MR,AfDB,,XM-DAC-46002
-Mauritius,MU,AfDB,,XM-DAC-46002
-Morocco,MA,AfDB,,XM-DAC-46002
-Mozambique,MZ,AfDB,,XM-DAC-46002
-Namibia,NA,AfDB,,XM-DAC-46002
-Niger,NE,AfDB,,XM-DAC-46002
-Nigeria,NG,AfDB,,XM-DAC-46002
-Rwanda,RW,AfDB,,XM-DAC-46002
-São Tomé and Príncipe,ST,AfDB,,XM-DAC-46002
-Senegal,SN,AfDB,,XM-DAC-46002
-Seychelles,SC,AfDB,,XM-DAC-46002
-Sierra Leone,SL,AfDB,,XM-DAC-46002
-Somalia,SO,AfDB,,XM-DAC-46002
-South Africa,ZA,AfDB,,XM-DAC-46002
-South Sudan,SS,AfDB,,XM-DAC-46002
-Sudan,SD,AfDB,,XM-DAC-46002
-Tanzania,TZ,AfDB,,XM-DAC-46002
-Uganda,UG,AfDB,,XM-DAC-46002
-Zambia,ZM,AfDB,,XM-DAC-46002
-Zimbabwe,ZW,AfDB,,XM-DAC-46002
+Algeria,DZ,AfDB,,46002
+Angola,AO,AfDB,,46002
+Benin,BJ,AfDB,,46002
+Botswana,BW,AfDB,,46002
+Burkina Faso,BF,AfDB,,46002
+Burundi,BI,AfDB,,46002
+Cabo Verde,CV,AfDB,,46002
+Cameroon,CM,AfDB,,46002
+Central African Republic,CF,AfDB,,46002
+Chad,TD,AfDB,,46002
+Comoros,KM,AfDB,,46002
+Congo,CG,AfDB,,46002
+Côte d'Ivoire,CI,AfDB,,46002
+Democratic Republic of the Congo,CD,AfDB,,46002
+Djibouti,DJ,AfDB,,46002
+Egypt,EG,AfDB,,46002
+Equatorial Guinea,GQ,AfDB,,46002
+Eritrea,ER,AfDB,,46002
+Eswatini,SZ,AfDB,,46002
+Ethiopia,ET,AfDB,,46002
+Gabon,GA,AfDB,,46002
+Gambia,GM,AfDB,,46002
+Ghana,GH,AfDB,,46002
+Guinea,GN,AfDB,,46002
+Guinea-Bissau,GW,AfDB,,46002
+Kenya,KE,AfDB,,46002
+Lesotho,LS,AfDB,,46002
+Liberia,LR,AfDB,,46002
+Libya,LY,AfDB,,46002
+Madagascar,MG,AfDB,,46002
+Malawi,MW,AfDB,,46002
+Mali,ML,AfDB,,46002
+Mauritania,MR,AfDB,,46002
+Mauritius,MU,AfDB,,46002
+Morocco,MA,AfDB,,46002
+Mozambique,MZ,AfDB,,46002
+Namibia,NA,AfDB,,46002
+Niger,NE,AfDB,,46002
+Nigeria,NG,AfDB,,46002
+Rwanda,RW,AfDB,,46002
+São Tomé and Príncipe,ST,AfDB,,46002
+Senegal,SN,AfDB,,46002
+Seychelles,SC,AfDB,,46002
+Sierra Leone,SL,AfDB,,46002
+Somalia,SO,AfDB,,46002
+South Africa,ZA,AfDB,,46002
+South Sudan,SS,AfDB,,46002
+Sudan,SD,AfDB,,46002
+Tanzania,TZ,AfDB,,46002
+Uganda,UG,AfDB,,46002
+Zambia,ZM,AfDB,,46002
+Zimbabwe,ZW,AfDB,,46002
 Afghanistan,AF,Australia,,AU-5
 Bangladesh,BD,Australia,,AU-5
 Bhutan,BT,Australia,,AU-5
@@ -389,49 +389,49 @@ Vietnam,VN,Denmark MFA,,XM-DAC-3-1
 Yemen,YE,Denmark MFA,,XM-DAC-3-1
 Zambia,ZM,Denmark MFA,,XM-DAC-3-1
 Zimbabwe,ZW,Denmark MFA,,XM-DAC-3-1
-Albania,AL,EBRD,,XI-IATI-EBRD
-Armenia,AM,EBRD,,XI-IATI-EBRD
-Azerbaijan,AZ,EBRD,,XI-IATI-EBRD
-Benin,BJ,EBRD,,XI-IATI-EBRD
-Bosnia and Herzegovina,BA,EBRD,,XI-IATI-EBRD
-Bulgaria,BG,EBRD,,XI-IATI-EBRD
-Côte d'Ivoire,CI,EBRD,,XI-IATI-EBRD
-Croatia,HR,EBRD,,XI-IATI-EBRD
-Cyprus,CY,EBRD,,XI-IATI-EBRD
-Czechia,CZ,EBRD,,XI-IATI-EBRD
-Egypt,EG,EBRD,,XI-IATI-EBRD
-Estonia,EE,EBRD,,XI-IATI-EBRD
-Georgia,GE,EBRD,,XI-IATI-EBRD
-Greece,GR,EBRD,,XI-IATI-EBRD
-Hungary,HU,EBRD,,XI-IATI-EBRD
-Iraq,IQ,EBRD,,XI-IATI-EBRD
-Jordan,JO,EBRD,,XI-IATI-EBRD
-Kazakhstan,KZ,EBRD,,XI-IATI-EBRD
-Kenya,KE,EBRD,,XI-IATI-EBRD
-Kosovo,XK,EBRD,,XI-IATI-EBRD
-Kyrgyz Republic,KG,EBRD,,XI-IATI-EBRD
-Latvia,LV,EBRD,,XI-IATI-EBRD
-Lebanon,LB,EBRD,,XI-IATI-EBRD
-Lithuania,LT,EBRD,,XI-IATI-EBRD
-Moldova,MD,EBRD,,XI-IATI-EBRD
-Mongolia,MN,EBRD,,XI-IATI-EBRD
-Montenegro,ME,EBRD,,XI-IATI-EBRD
-Morocco,MA,EBRD,,XI-IATI-EBRD
-Nigeria,NG,EBRD,,XI-IATI-EBRD
-North Macedonia,MK,EBRD,,XI-IATI-EBRD
-Poland,PL,EBRD,,XI-IATI-EBRD
-Romania,RO,EBRD,,XI-IATI-EBRD
-Senegal,SN,EBRD,,XI-IATI-EBRD
-Serbia,RS,EBRD,,XI-IATI-EBRD
-Slovak Republic,SK,EBRD,,XI-IATI-EBRD
-Slovenia,SI,EBRD,,XI-IATI-EBRD
-Tajikistan,TJ,EBRD,,XI-IATI-EBRD
-Tunisia,TN,EBRD,,XI-IATI-EBRD
-Turkey,TR,EBRD,,XI-IATI-EBRD
-Turkmenistan,TM,EBRD,,XI-IATI-EBRD
-Ukraine,UA,EBRD,,XI-IATI-EBRD
-Uzbekistan,UZ,EBRD,,XI-IATI-EBRD
-West Bank and Gaza,PS,EBRD,,XI-IATI-EBRD
+Albania,AL,EBRD,,46015
+Armenia,AM,EBRD,,46015
+Azerbaijan,AZ,EBRD,,46015
+Benin,BJ,EBRD,,46015
+Bosnia and Herzegovina,BA,EBRD,,46015
+Bulgaria,BG,EBRD,,46015
+Côte d'Ivoire,CI,EBRD,,46015
+Croatia,HR,EBRD,,46015
+Cyprus,CY,EBRD,,46015
+Czechia,CZ,EBRD,,46015
+Egypt,EG,EBRD,,46015
+Estonia,EE,EBRD,,46015
+Georgia,GE,EBRD,,46015
+Greece,GR,EBRD,,46015
+Hungary,HU,EBRD,,46015
+Iraq,IQ,EBRD,,46015
+Jordan,JO,EBRD,,46015
+Kazakhstan,KZ,EBRD,,46015
+Kenya,KE,EBRD,,46015
+Kosovo,XK,EBRD,,46015
+Kyrgyz Republic,KG,EBRD,,46015
+Latvia,LV,EBRD,,46015
+Lebanon,LB,EBRD,,46015
+Lithuania,LT,EBRD,,46015
+Moldova,MD,EBRD,,46015
+Mongolia,MN,EBRD,,46015
+Montenegro,ME,EBRD,,46015
+Morocco,MA,EBRD,,46015
+Nigeria,NG,EBRD,,46015
+North Macedonia,MK,EBRD,,46015
+Poland,PL,EBRD,,46015
+Romania,RO,EBRD,,46015
+Senegal,SN,EBRD,,46015
+Serbia,RS,EBRD,,46015
+Slovak Republic,SK,EBRD,,46015
+Slovenia,SI,EBRD,,46015
+Tajikistan,TJ,EBRD,,46015
+Tunisia,TN,EBRD,,46015
+Turkey,TR,EBRD,,46015
+Turkmenistan,TM,EBRD,,46015
+Ukraine,UA,EBRD,,46015
+Uzbekistan,UZ,EBRD,,46015
+West Bank and Gaza,PS,EBRD,,46015
 Afghanistan,AF,EC INTPA,,XI-IATI-EC_INTPA
 Angola,AO,EC INTPA,,XI-IATI-EC_INTPA
 Antigua and Barbuda,AG,EC INTPA,,XI-IATI-EC_INTPA
@@ -976,153 +976,153 @@ Venezuela,VE,Global Fund,,47045
 Vietnam,VN,Global Fund,,47045
 Zambia,ZM,Global Fund,,47045
 Zimbabwe,ZW,Global Fund,,47045
-Afghanistan,AF,Green Climate Fund,,
-Albania,AL,Green Climate Fund,,
-Algeria,DZ,Green Climate Fund,,
-Angola,AO,Green Climate Fund,,
-Antigua and Barbuda,AG,Green Climate Fund,,
-Argentina,AR,Green Climate Fund,,
-Armenia,AM,Green Climate Fund,,
-Azerbaijan,AZ,Green Climate Fund,,
-Bahamas,BS,Green Climate Fund,,
-Bahrain,BH,Green Climate Fund,,
-Bangladesh,BD,Green Climate Fund,,
-Barbados,BB,Green Climate Fund,,
-Belize,BZ,Green Climate Fund,,
-Benin,BJ,Green Climate Fund,,
-Bhutan,BT,Green Climate Fund,,
-Bolivia,BO,Green Climate Fund,,
-Bosnia and Herzegovina,BA,Green Climate Fund,,
-Botswana,BW,Green Climate Fund,,
-Brazil,BR,Green Climate Fund,,
-Burkina Faso,BF,Green Climate Fund,,
-Burundi,BI,Green Climate Fund,,
-Cabo Verde,CV,Green Climate Fund,,
-Cambodia,KH,Green Climate Fund,,
-Cameroon,CM,Green Climate Fund,,
-Central African Republic,CF,Green Climate Fund,,
-Chad,TD,Green Climate Fund,,
-Chile,CL,Green Climate Fund,,
-China,CN,Green Climate Fund,,
-Colombia,CO,Green Climate Fund,,
-Comoros,KM,Green Climate Fund,,
-Congo,CG,Green Climate Fund,,
-Cook Islands,CK,Green Climate Fund,,
-Costa Rica,CR,Green Climate Fund,,
-Côte d'Ivoire,CI,Green Climate Fund,,
-Cuba,CU,Green Climate Fund,,
-Democratic People's Republic of Korea,KR,Green Climate Fund,,
-Democratic Republic of the Congo,CD,Green Climate Fund,,
-Djibouti,DJ,Green Climate Fund,,
-Dominica,DM,Green Climate Fund,,
-Dominican Republic,DO,Green Climate Fund,,
-Ecuador,EC,Green Climate Fund,,
-Egypt,EG,Green Climate Fund,,
-El Salvador,SV,Green Climate Fund,,
-Equatorial Guinea,GQ,Green Climate Fund,,
-Eritrea,ER,Green Climate Fund,,
-Eswatini,SZ,Green Climate Fund,,
-Ethiopia,ET,Green Climate Fund,,
-Fiji,FJ,Green Climate Fund,,
-Gabon,GA,Green Climate Fund,,
-Gambia,GM,Green Climate Fund,,
-Georgia,GE,Green Climate Fund,,
-Ghana,GH,Green Climate Fund,,
-Grenada,GD,Green Climate Fund,,
-Guatemala,GT,Green Climate Fund,,
-Guinea,GN,Green Climate Fund,,
-Guinea-Bissau,GW,Green Climate Fund,,
-Guyana,GY,Green Climate Fund,,
-Haiti,HT,Green Climate Fund,,
-Honduras,HN,Green Climate Fund,,
-India,IN,Green Climate Fund,,
-Indonesia,ID,Green Climate Fund,,
-Iran (Islamic Republic of),IR,Green Climate Fund,,
-Iraq,IQ,Green Climate Fund,,
-Jamaica,JM,Green Climate Fund,,
-Jordan,JO,Green Climate Fund,,
-Kazakhstan,KZ,Green Climate Fund,,
-Kenya,KE,Green Climate Fund,,
-Kiribati,KI,Green Climate Fund,,
-Kuwait,KW,Green Climate Fund,,
-Kyrgyzstan,KG,Green Climate Fund,,
-Lao People's Democratic Republic,LA,Green Climate Fund,,
-Lebanon,LB,Green Climate Fund,,
-Lesotho,LS,Green Climate Fund,,
-Liberia,LR,Green Climate Fund,,
-Libya,LY,Green Climate Fund,,
-Madagascar,MG,Green Climate Fund,,
-Malawi,MW,Green Climate Fund,,
-Malaysia,MY,Green Climate Fund,,
-Maldives,MV,Green Climate Fund,,
-Mali,ML,Green Climate Fund,,
-Marshall Islands,MH,Green Climate Fund,,
-Mauritania,MR,Green Climate Fund,,
-Mauritius,MU,Green Climate Fund,,
-Mexico,MX,Green Climate Fund,,
-Micronesia (Federated States of),FM,Green Climate Fund,,
-Moldova,MD,Green Climate Fund,,
-Mongolia,MN,Green Climate Fund,,
-Montenegro,ME,Green Climate Fund,,
-Morocco,MA,Green Climate Fund,,
-Mozambique,MZ,Green Climate Fund,,
-Myanmar,MM,Green Climate Fund,,
-Namibia,NA,Green Climate Fund,,
-Nauru,NR,Green Climate Fund,,
-Nepal,NP,Green Climate Fund,,
-Nicaragua,NI,Green Climate Fund,,
-Niger,NE,Green Climate Fund,,
-Nigeria,NG,Green Climate Fund,,
-Niue,NU,Green Climate Fund,,
-North Macedonia,MK,Green Climate Fund,,
-Oman,OM,Green Climate Fund,,
-Pakistan,PK,Green Climate Fund,,
-Palau,PW,Green Climate Fund,,
-Panama,PA,Green Climate Fund,,
-Papua New Guinea,PG,Green Climate Fund,,
-Paraguay,PY,Green Climate Fund,,
-Peru,PE,Green Climate Fund,,
-Philippines,PH,Green Climate Fund,,
-Rwanda,RW,Green Climate Fund,,
-Saint Kitts and Nevis,KN,Green Climate Fund,,
-Saint Lucia,LC,Green Climate Fund,,
-Saint Vincent and the Grenadines,VC,Green Climate Fund,,
-Samoa,WS,Green Climate Fund,,
-São Tomé and Príncipe,ST,Green Climate Fund,,
-Saudi Arabia,SA,Green Climate Fund,,
-Senegal,SN,Green Climate Fund,,
-Serbia,RS,Green Climate Fund,,
-Seychelles,SC,Green Climate Fund,,
-Sierra Leone,SL,Green Climate Fund,,
-Singapore,SG,Green Climate Fund,,
-Solomon Islands,SB,Green Climate Fund,,
-Somalia,SO,Green Climate Fund,,
-South Africa,ZA,Green Climate Fund,,
-South Sudan,SS,Green Climate Fund,,
-Sri Lanka,LK,Green Climate Fund,,
-State of Palestine,PS,Green Climate Fund,,
-Sudan,SD,Green Climate Fund,,
-Suriname,SR,Green Climate Fund,,
-Syrian Arab Republic,SY,Green Climate Fund,,
-Tajikistan,TJ,Green Climate Fund,,
-Tanzania,TZ,Green Climate Fund,,
-Thailand,TH,Green Climate Fund,,
-Timor-Leste,TL,Green Climate Fund,,
-Togo,TG,Green Climate Fund,,
-Tonga,TO,Green Climate Fund,,
-Trinidad and Tobago,TT,Green Climate Fund,,
-Tunisia,TN,Green Climate Fund,,
-Turkmenistan,TM,Green Climate Fund,,
-Tuvalu,TV,Green Climate Fund,,
-Uganda,UG,Green Climate Fund,,
-Uruguay,UY,Green Climate Fund,,
-Uzbekistan,UZ,Green Climate Fund,,
-Vanuatu,VU,Green Climate Fund,,
-Venezuela,VE,Green Climate Fund,,
-Vietnam,VN,Green Climate Fund,,
-Yemen,YE,Green Climate Fund,,
-Zambia,ZM,Green Climate Fund,,
-Zimbabwe,ZW,Green Climate Fund,,
+Afghanistan,AF,Green Climate Fund,,XM-DAC-41317
+Albania,AL,Green Climate Fund,,XM-DAC-41317
+Algeria,DZ,Green Climate Fund,,XM-DAC-41317
+Angola,AO,Green Climate Fund,,XM-DAC-41317
+Antigua and Barbuda,AG,Green Climate Fund,,XM-DAC-41317
+Argentina,AR,Green Climate Fund,,XM-DAC-41317
+Armenia,AM,Green Climate Fund,,XM-DAC-41317
+Azerbaijan,AZ,Green Climate Fund,,XM-DAC-41317
+Bahamas,BS,Green Climate Fund,,XM-DAC-41317
+Bahrain,BH,Green Climate Fund,,XM-DAC-41317
+Bangladesh,BD,Green Climate Fund,,XM-DAC-41317
+Barbados,BB,Green Climate Fund,,XM-DAC-41317
+Belize,BZ,Green Climate Fund,,XM-DAC-41317
+Benin,BJ,Green Climate Fund,,XM-DAC-41317
+Bhutan,BT,Green Climate Fund,,XM-DAC-41317
+Bolivia,BO,Green Climate Fund,,XM-DAC-41317
+Bosnia and Herzegovina,BA,Green Climate Fund,,XM-DAC-41317
+Botswana,BW,Green Climate Fund,,XM-DAC-41317
+Brazil,BR,Green Climate Fund,,XM-DAC-41317
+Burkina Faso,BF,Green Climate Fund,,XM-DAC-41317
+Burundi,BI,Green Climate Fund,,XM-DAC-41317
+Cabo Verde,CV,Green Climate Fund,,XM-DAC-41317
+Cambodia,KH,Green Climate Fund,,XM-DAC-41317
+Cameroon,CM,Green Climate Fund,,XM-DAC-41317
+Central African Republic,CF,Green Climate Fund,,XM-DAC-41317
+Chad,TD,Green Climate Fund,,XM-DAC-41317
+Chile,CL,Green Climate Fund,,XM-DAC-41317
+China,CN,Green Climate Fund,,XM-DAC-41317
+Colombia,CO,Green Climate Fund,,XM-DAC-41317
+Comoros,KM,Green Climate Fund,,XM-DAC-41317
+Congo,CG,Green Climate Fund,,XM-DAC-41317
+Cook Islands,CK,Green Climate Fund,,XM-DAC-41317
+Costa Rica,CR,Green Climate Fund,,XM-DAC-41317
+Côte d'Ivoire,CI,Green Climate Fund,,XM-DAC-41317
+Cuba,CU,Green Climate Fund,,XM-DAC-41317
+Democratic People's Republic of Korea,KR,Green Climate Fund,,XM-DAC-41317
+Democratic Republic of the Congo,CD,Green Climate Fund,,XM-DAC-41317
+Djibouti,DJ,Green Climate Fund,,XM-DAC-41317
+Dominica,DM,Green Climate Fund,,XM-DAC-41317
+Dominican Republic,DO,Green Climate Fund,,XM-DAC-41317
+Ecuador,EC,Green Climate Fund,,XM-DAC-41317
+Egypt,EG,Green Climate Fund,,XM-DAC-41317
+El Salvador,SV,Green Climate Fund,,XM-DAC-41317
+Equatorial Guinea,GQ,Green Climate Fund,,XM-DAC-41317
+Eritrea,ER,Green Climate Fund,,XM-DAC-41317
+Eswatini,SZ,Green Climate Fund,,XM-DAC-41317
+Ethiopia,ET,Green Climate Fund,,XM-DAC-41317
+Fiji,FJ,Green Climate Fund,,XM-DAC-41317
+Gabon,GA,Green Climate Fund,,XM-DAC-41317
+Gambia,GM,Green Climate Fund,,XM-DAC-41317
+Georgia,GE,Green Climate Fund,,XM-DAC-41317
+Ghana,GH,Green Climate Fund,,XM-DAC-41317
+Grenada,GD,Green Climate Fund,,XM-DAC-41317
+Guatemala,GT,Green Climate Fund,,XM-DAC-41317
+Guinea,GN,Green Climate Fund,,XM-DAC-41317
+Guinea-Bissau,GW,Green Climate Fund,,XM-DAC-41317
+Guyana,GY,Green Climate Fund,,XM-DAC-41317
+Haiti,HT,Green Climate Fund,,XM-DAC-41317
+Honduras,HN,Green Climate Fund,,XM-DAC-41317
+India,IN,Green Climate Fund,,XM-DAC-41317
+Indonesia,ID,Green Climate Fund,,XM-DAC-41317
+Iran (Islamic Republic of),IR,Green Climate Fund,,XM-DAC-41317
+Iraq,IQ,Green Climate Fund,,XM-DAC-41317
+Jamaica,JM,Green Climate Fund,,XM-DAC-41317
+Jordan,JO,Green Climate Fund,,XM-DAC-41317
+Kazakhstan,KZ,Green Climate Fund,,XM-DAC-41317
+Kenya,KE,Green Climate Fund,,XM-DAC-41317
+Kiribati,KI,Green Climate Fund,,XM-DAC-41317
+Kuwait,KW,Green Climate Fund,,XM-DAC-41317
+Kyrgyzstan,KG,Green Climate Fund,,XM-DAC-41317
+Lao People's Democratic Republic,LA,Green Climate Fund,,XM-DAC-41317
+Lebanon,LB,Green Climate Fund,,XM-DAC-41317
+Lesotho,LS,Green Climate Fund,,XM-DAC-41317
+Liberia,LR,Green Climate Fund,,XM-DAC-41317
+Libya,LY,Green Climate Fund,,XM-DAC-41317
+Madagascar,MG,Green Climate Fund,,XM-DAC-41317
+Malawi,MW,Green Climate Fund,,XM-DAC-41317
+Malaysia,MY,Green Climate Fund,,XM-DAC-41317
+Maldives,MV,Green Climate Fund,,XM-DAC-41317
+Mali,ML,Green Climate Fund,,XM-DAC-41317
+Marshall Islands,MH,Green Climate Fund,,XM-DAC-41317
+Mauritania,MR,Green Climate Fund,,XM-DAC-41317
+Mauritius,MU,Green Climate Fund,,XM-DAC-41317
+Mexico,MX,Green Climate Fund,,XM-DAC-41317
+Micronesia (Federated States of),FM,Green Climate Fund,,XM-DAC-41317
+Moldova,MD,Green Climate Fund,,XM-DAC-41317
+Mongolia,MN,Green Climate Fund,,XM-DAC-41317
+Montenegro,ME,Green Climate Fund,,XM-DAC-41317
+Morocco,MA,Green Climate Fund,,XM-DAC-41317
+Mozambique,MZ,Green Climate Fund,,XM-DAC-41317
+Myanmar,MM,Green Climate Fund,,XM-DAC-41317
+Namibia,NA,Green Climate Fund,,XM-DAC-41317
+Nauru,NR,Green Climate Fund,,XM-DAC-41317
+Nepal,NP,Green Climate Fund,,XM-DAC-41317
+Nicaragua,NI,Green Climate Fund,,XM-DAC-41317
+Niger,NE,Green Climate Fund,,XM-DAC-41317
+Nigeria,NG,Green Climate Fund,,XM-DAC-41317
+Niue,NU,Green Climate Fund,,XM-DAC-41317
+North Macedonia,MK,Green Climate Fund,,XM-DAC-41317
+Oman,OM,Green Climate Fund,,XM-DAC-41317
+Pakistan,PK,Green Climate Fund,,XM-DAC-41317
+Palau,PW,Green Climate Fund,,XM-DAC-41317
+Panama,PA,Green Climate Fund,,XM-DAC-41317
+Papua New Guinea,PG,Green Climate Fund,,XM-DAC-41317
+Paraguay,PY,Green Climate Fund,,XM-DAC-41317
+Peru,PE,Green Climate Fund,,XM-DAC-41317
+Philippines,PH,Green Climate Fund,,XM-DAC-41317
+Rwanda,RW,Green Climate Fund,,XM-DAC-41317
+Saint Kitts and Nevis,KN,Green Climate Fund,,XM-DAC-41317
+Saint Lucia,LC,Green Climate Fund,,XM-DAC-41317
+Saint Vincent and the Grenadines,VC,Green Climate Fund,,XM-DAC-41317
+Samoa,WS,Green Climate Fund,,XM-DAC-41317
+São Tomé and Príncipe,ST,Green Climate Fund,,XM-DAC-41317
+Saudi Arabia,SA,Green Climate Fund,,XM-DAC-41317
+Senegal,SN,Green Climate Fund,,XM-DAC-41317
+Serbia,RS,Green Climate Fund,,XM-DAC-41317
+Seychelles,SC,Green Climate Fund,,XM-DAC-41317
+Sierra Leone,SL,Green Climate Fund,,XM-DAC-41317
+Singapore,SG,Green Climate Fund,,XM-DAC-41317
+Solomon Islands,SB,Green Climate Fund,,XM-DAC-41317
+Somalia,SO,Green Climate Fund,,XM-DAC-41317
+South Africa,ZA,Green Climate Fund,,XM-DAC-41317
+South Sudan,SS,Green Climate Fund,,XM-DAC-41317
+Sri Lanka,LK,Green Climate Fund,,XM-DAC-41317
+State of Palestine,PS,Green Climate Fund,,XM-DAC-41317
+Sudan,SD,Green Climate Fund,,XM-DAC-41317
+Suriname,SR,Green Climate Fund,,XM-DAC-41317
+Syrian Arab Republic,SY,Green Climate Fund,,XM-DAC-41317
+Tajikistan,TJ,Green Climate Fund,,XM-DAC-41317
+Tanzania,TZ,Green Climate Fund,,XM-DAC-41317
+Thailand,TH,Green Climate Fund,,XM-DAC-41317
+Timor-Leste,TL,Green Climate Fund,,XM-DAC-41317
+Togo,TG,Green Climate Fund,,XM-DAC-41317
+Tonga,TO,Green Climate Fund,,XM-DAC-41317
+Trinidad and Tobago,TT,Green Climate Fund,,XM-DAC-41317
+Tunisia,TN,Green Climate Fund,,XM-DAC-41317
+Turkmenistan,TM,Green Climate Fund,,XM-DAC-41317
+Tuvalu,TV,Green Climate Fund,,XM-DAC-41317
+Uganda,UG,Green Climate Fund,,XM-DAC-41317
+Uruguay,UY,Green Climate Fund,,XM-DAC-41317
+Uzbekistan,UZ,Green Climate Fund,,XM-DAC-41317
+Vanuatu,VU,Green Climate Fund,,XM-DAC-41317
+Venezuela,VE,Green Climate Fund,,XM-DAC-41317
+Vietnam,VN,Green Climate Fund,,XM-DAC-41317
+Yemen,YE,Green Climate Fund,,XM-DAC-41317
+Zambia,ZM,Green Climate Fund,,XM-DAC-41317
+Zimbabwe,ZW,Green Climate Fund,,XM-DAC-41317
 Argentina,AR,IADB,,XI-IATI-IADB
 Bahamas,BS,IADB,,XI-IATI-IADB
 Barbados,BB,IADB,,XI-IATI-IADB
@@ -1310,33 +1310,33 @@ Vietnam,VN,JICA,,XM-DAC-701-8
 Yemen,YE,JICA,,XM-DAC-701-8
 Zambia,ZM,JICA,,XM-DAC-701-8
 Zimbabwe,ZW,JICA,,XM-DAC-701-8
-Bangladesh,BD,KOREA,,KR-GOV-010
-Bolivia,BO,KOREA,,KR-GOV-010
-Cambodia,KH,KOREA,,KR-GOV-010
-Colombia,CO,KOREA,,KR-GOV-010
-Egypt,EG,KOREA,,KR-GOV-010
-Ethiopia,ET,KOREA,,KR-GOV-010
-Ghana,GH,KOREA,,KR-GOV-010
-India,IN,KOREA,,KR-GOV-010
-Indonesia,ID,KOREA,,KR-GOV-010
-Kyrgyzstan,KG,KOREA,,KR-GOV-010
-Lao People's Democratic Republic,LA,KOREA,,KR-GOV-010
-Mongolia,MN,KOREA,,KR-GOV-010
-Myanmar,MM,KOREA,,KR-GOV-010
-Nepal,NP,KOREA,,KR-GOV-010
-Pakistan,PK,KOREA,,KR-GOV-010
-Paraguay,PY,KOREA,,KR-GOV-010
-Peru,PE,KOREA,,KR-GOV-010
-Philippines,PH,KOREA,,KR-GOV-010
-Rwanda,RW,KOREA,,KR-GOV-010
-Senegal,SN,KOREA,,KR-GOV-010
-Sri Lanka,LK,KOREA,,KR-GOV-010
-Tajikistan,TJ,KOREA,,KR-GOV-010
-Tanzania,TZ,KOREA,,KR-GOV-010
-Uganda,UG,KOREA,,KR-GOV-010
-Ukraine,UA,KOREA,,KR-GOV-010
-Uzbekistan,UZ,KOREA,,KR-GOV-010
-Vietnam,VN,KOREA,,KR-GOV-010
+Bangladesh,BD,KOREA,,KR-GOV-051
+Bolivia,BO,KOREA,,KR-GOV-051
+Cambodia,KH,KOREA,,KR-GOV-051
+Colombia,CO,KOREA,,KR-GOV-051
+Egypt,EG,KOREA,,KR-GOV-051
+Ethiopia,ET,KOREA,,KR-GOV-051
+Ghana,GH,KOREA,,KR-GOV-051
+India,IN,KOREA,,KR-GOV-051
+Indonesia,ID,KOREA,,KR-GOV-051
+Kyrgyzstan,KG,KOREA,,KR-GOV-051
+Lao People's Democratic Republic,LA,KOREA,,KR-GOV-051
+Mongolia,MN,KOREA,,KR-GOV-051
+Myanmar,MM,KOREA,,KR-GOV-051
+Nepal,NP,KOREA,,KR-GOV-051
+Pakistan,PK,KOREA,,KR-GOV-051
+Paraguay,PY,KOREA,,KR-GOV-051
+Peru,PE,KOREA,,KR-GOV-051
+Philippines,PH,KOREA,,KR-GOV-051
+Rwanda,RW,KOREA,,KR-GOV-051
+Senegal,SN,KOREA,,KR-GOV-051
+Sri Lanka,LK,KOREA,,KR-GOV-051
+Tajikistan,TJ,KOREA,,KR-GOV-051
+Tanzania,TZ,KOREA,,KR-GOV-051
+Uganda,UG,KOREA,,KR-GOV-051
+Ukraine,UA,KOREA,,KR-GOV-051
+Uzbekistan,UZ,KOREA,,KR-GOV-051
+Vietnam,VN,KOREA,,KR-GOV-051
 Afghanistan,AF,KSRelief,,XM-OCHA-HPC6770
 Albania,AL,KSRelief,,XM-OCHA-HPC6770
 Azerbaijan,AZ,KSRelief,,XM-OCHA-HPC6770
@@ -1746,46 +1746,46 @@ Vietnam,VN,SIDA,,SE-0
 Yemen,YE,SIDA,,SE-0
 Zambia,ZM,SIDA,,SE-0
 Zimbabwe,ZW,SIDA,,SE-0
-Afghanistan,AF,Spain AECID,,XM-DAC-50-21
-Argentina,AR,Spain AECID,,XM-DAC-50-21
-Bolivia,BO,Spain AECID,,XM-DAC-50-21
-Brazil,BR,Spain AECID,,XM-DAC-50-21
-Burkina Faso,BF,Spain AECID,,XM-DAC-50-21
-Cabo Verde,CV,Spain AECID,,XM-DAC-50-21
-Chile,CL,Spain AECID,,XM-DAC-50-21
-Colombia,CO,Spain AECID,,XM-DAC-50-21
-Costa Rica,CR,Spain AECID,,XM-DAC-50-21
-Cuba,CU,Spain AECID,,XM-DAC-50-21
-Dominican Republic,DO,Spain AECID,,XM-DAC-50-21
-Ecuador,EC,Spain AECID,,XM-DAC-50-21
-Egypt,EG,Spain AECID,,XM-DAC-50-21
-El Salvador,SV,Spain AECID,,XM-DAC-50-21
-Equatorial Guinea,GQ,Spain AECID,,XM-DAC-50-21
-Ethiopia,ET,Spain AECID,,XM-DAC-50-21
-Guatemala,GT,Spain AECID,,XM-DAC-50-21
-Haiti,HT,Spain AECID,,XM-DAC-50-21
-Honduras,HN,Spain AECID,,XM-DAC-50-21
-Jordan,JO,Spain AECID,,XM-DAC-50-21
-Lebanon,LB,Spain AECID,,XM-DAC-50-21
-Mali,ML,Spain AECID,,XM-DAC-50-21
-Mauritania,MR,Spain AECID,,XM-DAC-50-21
-Mexico,MX,Spain AECID,,XM-DAC-50-21
-Morocco,MA,Spain AECID,,XM-DAC-50-21
-Mozambique,MZ,Spain AECID,,XM-DAC-50-21
-Nicaragua,NI,Spain AECID,,XM-DAC-50-21
-Niger,NE,Spain AECID,,XM-DAC-50-21
-Nigeria,NG,Spain AECID,,XM-DAC-50-21
-Palestinian Territories,PS,Spain AECID,,XM-DAC-50-21
-Panama,PA,Spain AECID,,XM-DAC-50-21
-Paraguay,PY,Spain AECID,,XM-DAC-50-21
-Peru,PE,Spain AECID,,XM-DAC-50-21
-Philippines,PH,Spain AECID,,XM-DAC-50-21
-Senegal,SN,Spain AECID,,XM-DAC-50-21
-Syria,SY,Spain AECID,,XM-DAC-50-21
-Tunisia,TN,Spain AECID,,XM-DAC-50-21
-Ukraine,UA,Spain AECID,,XM-DAC-50-21
-Uruguay,UY,Spain AECID,,XM-DAC-50-21
-Venezuela,VE,Spain AECID,,XM-DAC-50-21
+Afghanistan,AF,Spain AECID,,ES-DIR3-E04585801
+Argentina,AR,Spain AECID,,ES-DIR3-E04585801
+Bolivia,BO,Spain AECID,,ES-DIR3-E04585801
+Brazil,BR,Spain AECID,,ES-DIR3-E04585801
+Burkina Faso,BF,Spain AECID,,ES-DIR3-E04585801
+Cabo Verde,CV,Spain AECID,,ES-DIR3-E04585801
+Chile,CL,Spain AECID,,ES-DIR3-E04585801
+Colombia,CO,Spain AECID,,ES-DIR3-E04585801
+Costa Rica,CR,Spain AECID,,ES-DIR3-E04585801
+Cuba,CU,Spain AECID,,ES-DIR3-E04585801
+Dominican Republic,DO,Spain AECID,,ES-DIR3-E04585801
+Ecuador,EC,Spain AECID,,ES-DIR3-E04585801
+Egypt,EG,Spain AECID,,ES-DIR3-E04585801
+El Salvador,SV,Spain AECID,,ES-DIR3-E04585801
+Equatorial Guinea,GQ,Spain AECID,,ES-DIR3-E04585801
+Ethiopia,ET,Spain AECID,,ES-DIR3-E04585801
+Guatemala,GT,Spain AECID,,ES-DIR3-E04585801
+Haiti,HT,Spain AECID,,ES-DIR3-E04585801
+Honduras,HN,Spain AECID,,ES-DIR3-E04585801
+Jordan,JO,Spain AECID,,ES-DIR3-E04585801
+Lebanon,LB,Spain AECID,,ES-DIR3-E04585801
+Mali,ML,Spain AECID,,ES-DIR3-E04585801
+Mauritania,MR,Spain AECID,,ES-DIR3-E04585801
+Mexico,MX,Spain AECID,,ES-DIR3-E04585801
+Morocco,MA,Spain AECID,,ES-DIR3-E04585801
+Mozambique,MZ,Spain AECID,,ES-DIR3-E04585801
+Nicaragua,NI,Spain AECID,,ES-DIR3-E04585801
+Niger,NE,Spain AECID,,ES-DIR3-E04585801
+Nigeria,NG,Spain AECID,,ES-DIR3-E04585801
+Palestinian Territories,PS,Spain AECID,,ES-DIR3-E04585801
+Panama,PA,Spain AECID,,ES-DIR3-E04585801
+Paraguay,PY,Spain AECID,,ES-DIR3-E04585801
+Peru,PE,Spain AECID,,ES-DIR3-E04585801
+Philippines,PH,Spain AECID,,ES-DIR3-E04585801
+Senegal,SN,Spain AECID,,ES-DIR3-E04585801
+Syria,SY,Spain AECID,,ES-DIR3-E04585801
+Tunisia,TN,Spain AECID,,ES-DIR3-E04585801
+Ukraine,UA,Spain AECID,,ES-DIR3-E04585801
+Uruguay,UY,Spain AECID,,ES-DIR3-E04585801
+Venezuela,VE,Spain AECID,,ES-DIR3-E04585801
 Afghanistan,AF,Swiss SDC,,CH-4
 Albania,AL,Swiss SDC,,CH-4
 Armenia,AM,Swiss SDC,,CH-4
