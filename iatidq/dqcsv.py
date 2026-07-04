@@ -164,8 +164,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
         else:
             frequency_multiplier = 1
 
-        iati_data_quality_total_points = (float(result['results_pct']) * frequency_multiplier) / 2.0
-        iati_data_quality_points = (float(result['results_pct']) / 2.0)
+        iati_data_quality_total_points = (float(result['results_pct']) * frequency_multiplier) / 1.5
+        iati_data_quality_points = (float(result['results_pct']) / 1.5)
         iati_data_quality_passed = float(result["results_pct"])
 
         survey_publication_status = ""
@@ -176,8 +176,8 @@ def write_agg_csv_result_index(out, organisation, freq, result, iati_manual,
         survey_total_points = 0
 
         publication_format = "iati"
-        publication_format_points = 50
-        total_points = iati_data_quality_total_points + 50.0
+        publication_format_points = 33.33
+        total_points = iati_data_quality_total_points + 33.33
     else:
         frequency_multiplier=1
         if iati_manual == "commitment":
