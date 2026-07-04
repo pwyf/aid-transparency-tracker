@@ -34342,5 +34342,23 @@
     "region": "",
     "reporting_source_type": "primary_source",
     "website": "https://sites.google.com/veritassua.com/veritasukraine/%D1%85%D1%82%D0%BE-%D0%BC%D0%B8?authuser=0"
+  },
+  {
+    "id": "",
+    "short_name": "gcf",
+    "Publisher": "Green Climate Fund",
+    "dataset_count": 1,
+    "created_date": "",
+    "data_portal_url": "",
+    "default_licence_id": "",
+    "description": "",
+    "exclusions_policy_url": "",
+    "first_publication_date": "",
+    "hq_country": "KR",
+    "IATI Organisation Identifier": "XM-DAC-41317",
+    "organisation_type": "40",
+    "region": "",
+    "reporting_source_type": "primary_source",
+    "website": "https://www.greenclimate.fund/"
   }
 ]
