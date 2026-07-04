@@ -7,7 +7,7 @@ import iatikit
 import csv
 
 from . import app, db
-from iatidq import dqimporttests, dqindicators, dqorganisations, dqusers
+from iatidq import dqcodelists, dqimporttests, dqindicators, dqorganisations, dqusers
 from iatidq import setup as dqsetup
 from iatidq.models import Organisation, Test, OrganisationCondition
 from iatidq.sample_work import sample_work, db as sample_work_db
@@ -57,6 +57,12 @@ def setup(force, admin_from_config):
 def create_admin(username, password):
     """Create an admin user."""
     dqsetup.setup_admin_user(username, password)
+
+
+@app.cli.command("import_codelists")
+def import_codelists():
+    """Import IATI codelists from the IATI reference API."""
+    dqcodelists.importCodelists()
 
 
 @app.cli.command("update_frequency")
