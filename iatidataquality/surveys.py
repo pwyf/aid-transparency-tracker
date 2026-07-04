@@ -195,7 +195,7 @@ def get_old_publication_status():
         ('4', 'Always published', 'success'),
         ('3', 'Sometimes published', 'warning'),
         ('2', 'Collected', 'danger'),
-        ('1', 'Not collected', 'inverse'),
+        ('1', 'Not collected', 'secondary'),
         ('',  'Unknown', ''),
         ('iati', 'Published to IATI', 'success'),
         ('always', 'Always published', 'success'),
