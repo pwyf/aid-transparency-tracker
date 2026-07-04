@@ -176,7 +176,7 @@ def process_publishers():
     with open(join(test_data_path,'publishers.json')) as f:
         publishers_json = json.load(f)
     for publisher in publishers_json:
-        publisher['ident'] = publisher['IATI Organisation Identifier']
+        publisher['ident'] = publisher.get('organisation_identifier') or publisher.get('IATI Organisation Identifier', '')
         publisher['prefix'] = publisher['short_name']
         publishers_by_ident[publisher['ident']] = publisher
         publishers_by_prefix[publisher['prefix']] = publisher
