@@ -31,9 +31,9 @@
       <p class="lead">{{ intro_html|safe }}</p>
     {% endif %}
 	</div>
-    <div class="row">
+    <div class="row gy-4">
             {% if loggedinuser.username %}
-            <div class="col-md-6 offset-3">
+            <div class="col-md-6 offset-md-3">
             {% else %}
             <div class="col-md-6">
             {% endif %}
@@ -49,13 +49,14 @@
                 <h1>Data verification</h1>
                 <p class="lead">Donors and independent reviewers can
                 log in to check the data</p>
-                <form class="d-flex align-items-center gap-2"
-					  action="{{url_for('login')}}" method="post">
+                <form action="{{url_for('login')}}" method="post">
+                <div class="d-flex flex-column flex-sm-row gap-2">
                 <input name="username" type="text"
-					   class="form-control flex-grow-1" placeholder="Username">
+					   class="form-control" placeholder="Username">
                 <input name="password" type="password"
-					   class="form-control flex-grow-1" placeholder="Password">
+					   class="form-control" placeholder="Password">
                 <button type="submit" class="btn btn-primary flex-shrink-0">Sign in</button>
+                </div>
                 </form>
             </div>
             {% endif %}
