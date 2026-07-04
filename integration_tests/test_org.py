@@ -30,6 +30,7 @@ def browser(request):
         browser = BROWSER
         options = None
     browser = getattr(webdriver, browser)(options=options)
+    browser.set_window_size(1280, 1024)
     browser.implicitly_wait(3)
     request.addfinalizer(lambda: browser.quit())
     return browser

@@ -35,7 +35,7 @@
     </tr>
     <tr>
     <td>Test:</td>
-	<td><select class="form-control" name="test_id" disabled><option value=""></option>
+	<td><select class="form-select" name="test_id" disabled><option value=""></option>
 	{% for test in tests %}
         <option value="{{test.id}}"
           {% if test.id==aggregationtype.test_id %}
@@ -46,7 +46,7 @@
     </tr>
     <tr>
     <td>Expected result:</td><td>
-    <select class="form-control" name="test_result" disabled>
+    <select class="form-select" name="test_result" disabled>
         <option value="0"
 		{% if aggregationtype.test_result==0 %} selected{% endif %}
 				>0</option>
@@ -57,7 +57,7 @@
     </select></td>
     </tr>
     <tr>
-    <td colspan="2"><input type="submit" value="Update" class="btn btn-default"/></td>
+    <td colspan="2"><input type="submit" value="Update" class="btn btn-outline-secondary btn-sm"/></td>
     </tr>
     </tbody>
     </table>

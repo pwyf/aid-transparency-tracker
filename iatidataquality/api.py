@@ -29,7 +29,7 @@ class JSONEncoder(json.JSONEncoder):
 
 def jsonify(*args, **kwargs):
     return current_app.response_class(json.dumps(dict(*args, **kwargs),
-            indent=None if request.is_xhr else 2, cls=JSONEncoder),
+            indent=None if request.headers.get('X-Requested-With') == 'XMLHttpRequest' else 2, cls=JSONEncoder),
         mimetype='application/json')
 
 

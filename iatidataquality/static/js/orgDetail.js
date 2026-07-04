@@ -34,13 +34,12 @@ $('#aggregation_type').focus(function(){
             '   <div class="modal-dialog" role="document">' +
             '     <div class="modal-content">' +
             '       <div class="modal-header">' +
-            '         <button type="button" class="close" data-dismiss="modal" ' +
-            '             aria-hidden="true">×</button>' +
-            '         <h3 id="dataConfirmLabel">Switch data source</h3>' +
+            '         <h3 class="modal-title" id="dataConfirmLabel">Switch data source</h3>' +
+            '         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
             '       </div>' +
             '       <div class="modal-body"></div>' +
             '       <div class="modal-footer">' +
-            '         <button class="btn" data-dismiss="modal" ' +
+            '         <button class="btn" data-bs-dismiss="modal" ' +
             '             aria-hidden="true">Cancel</button>' +
             '         <a class="btn btn-primary" id="dataConfirmOK">OK</a>' +
             '       </div>' +
@@ -50,14 +49,14 @@ $('#aggregation_type').focus(function(){
     }
     $('#dataConfirmModal').find('.modal-body').text(warning_text);
     $('#dataConfirmOK').addClass('confirmswitch');
-    $('#dataConfirmModal').modal({show:true});
+    new bootstrap.Modal(document.querySelector('#dataConfirmModal')).show();
     chosen_aggregation_type = $(this).val();
     $(this).val(previous_aggregation_type);
     return false;
 });
 
 $(document).on("click", ".confirmswitch", function(e){
-    $("#dataConfirmModal").modal('hide');
+    var _m = bootstrap.Modal.getInstance(document.querySelector('#dataConfirmModal')); if (_m) { _m.hide(); }
     e.preventDefault();
     $('#aggregation_type').val(chosen_aggregation_type);
     $('#aggregation_type_form').submit();

@@ -15,19 +15,19 @@
 
 <form action="" method="post">
 
-  <div class="pull-right">
+  <div class="float-end">
 
 	<p>
-      <input type="submit" name="refresh" class="btn btn-default btn-xs"
+      <input type="submit" name="refresh" class="btn btn-secondary btn-sm"
 			 value="Refresh list from Registry"/>
-	  <a class="btn btn-default btn-xs" href="{{url_for('registry_deleted')}}">
+	  <a class="btn btn-secondary btn-sm" href="{{url_for('registry_deleted')}}">
 		Check deleted packages
 	  </a>
 	</p>
 
 	<p>
 	  <a href="{{url_for('packages_edit')}}" class="btn btn-success">
-		<i class="glyphicon glyphicon-plus"></i>
+		<i class="bi bi-plus-lg"></i>
 		Add manual package
 	  </a>
 	</p>
@@ -43,8 +43,8 @@
 		   value="Activate selected packages" />
   </p>
   <p>
-	<a id="markall" class="btn btn-default pull-right btn-xs">Mark all active</a>
-	<a id="unmarkall" class="btn btn-default pull-right btn-xs">Mark all inactive</a>
+	<a id="markall" class="btn btn-secondary float-end btn-sm">Mark all active</a>
+	<a id="unmarkall" class="btn btn-secondary float-end btn-sm">Mark all inactive</a>
   </p>
 
   <table class="table" id="packages">
@@ -72,7 +72,7 @@
 		<td>
 		  {% if pk.man_auto=='man' %}
 		  <a href="{{url_for('packages_edit', package_name=pk.package_name)}}">
-			<i class="glyphicon glyphicon-pencil"></i> Manual
+			<i class="bi bi-pencil"></i> Manual
 		  </a>
 		  {% endif %}
 		</td>
@@ -85,7 +85,7 @@
 
 		<td>
 		  {% if pk.deleted %}
-          <i class="glyphicon glyphicon-remove" title="This package has been deleted"></i>
+          <i class="bi bi-x-lg" title="This package has been deleted"></i>
 		  <span class="hidden-text">Deleted</span>
           {% endif %}
 		</td>

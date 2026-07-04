@@ -28,7 +28,7 @@
     </tr>
     <tr>
     <td>Parent indicator group:</td>
-        <td><select class="form-control" name="indicatorgroup_id">
+        <td><select class="form-select" name="indicatorgroup_id">
             {% for indicatorgroup in indicatorgroups %}
             <option value="{{indicatorgroup.id}}"
 					{% if indicator.indicatorgroupid==indicatorgroup.id %}
@@ -89,7 +89,7 @@
 		</td>
     </tr>
     <tr>
-    <td colspan="2"><input type="submit" value="Update" class="btn btn-default"/></td>
+    <td colspan="2"><input type="submit" value="Update" class="btn btn-outline-secondary btn-sm"/></td>
     </tr>
     </tbody>
     </table>

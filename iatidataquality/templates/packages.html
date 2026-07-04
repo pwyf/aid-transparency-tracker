@@ -11,7 +11,7 @@
     </script>
 
     <a href="{{url_for('packages_manage')}}"
-	   class="btn btn-default pull-right">Manage packages</a>
+	   class="btn btn-outline-secondary btn-sm float-end">Manage packages</a>
 
 	<h1>Select a package</h1>
 
@@ -35,7 +35,7 @@
 			  {% if package.man_auto=='man' %}
 			  <a href="{{url_for('packages_edit',
 					   package_name=package.package_name)}}">
-				<i class="glyphicon glyphicon-pencil"></i>
+				<i class="bi bi-pencil"></i>
 			  </a>
 			  {% endif %}
 			</td>

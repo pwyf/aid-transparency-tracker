@@ -13,10 +13,10 @@
     });
 
     </script>
-    <div class="pull-right">
-        <button type="button" class="btn btn-default"
-				data-toggle="collapse" data-target="#packages_div">
-        <i class="glyphicon glyphicon-file"></i> <strong>Packages</strong>
+    <div class="float-end">
+        <button type="button" class="btn btn-outline-secondary btn-sm"
+				data-bs-toggle="collapse" data-bs-target="#packages_div">
+        <i class="bi bi-file-text"></i> <strong>Packages</strong>
         </button>
     </div>
 	<h1>
@@ -52,13 +52,13 @@
     </div>
 
     {% if results %}
-    <div class="pull-right testruns">
+    <div class="float-end testruns">
         <form action="" method="GET"
-			  id="aggregation_type_form" class="form-inline">
+			  id="aggregation_type_form" class="d-flex align-items-center gap-2">
 
-            <a id="showAllTests" class="btn btn-default" href="#">Show all tests</a>
+            <a id="showAllTests" class="btn btn-outline-secondary btn-sm" href="#">Show all tests</a>
 
-            <select class="form-control" name="aggregation_type" id="aggregation_type">
+            <select class="form-select" name="aggregation_type" id="aggregation_type">
 
                 {% for agt in all_aggregation_types %}
 
@@ -93,7 +93,7 @@
 			  class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{% endif %}{% if result.condition %} condition-hidden alert alert-warning{% endif %}">
 
 			<td><a href="#test{{result.test.id}}" role="button"
-				   data-toggle="modal">{{result.test.description}}</a>
+				   data-bs-toggle="modal" data-bs-target="#test{{result.test.id}}">{{result.test.description}}</a>
 
                 <div id="test{{result.test.id}}" class="modal fade"
 					 tabindex="-1" role="dialog" aria-labelledby="testHeader"
@@ -103,13 +103,10 @@
                     <div class="modal-content">
 
                         <div class="modal-header">
-                            <button type="button" class="close"
-    								data-dismiss="modal"
-    								aria-hidden="true">×</button>
-
-                            <h3 id="testHeader">
+                    <h3 class="modal-title" id="testHeader">
     						  Test: {{result.test.description}}
     						</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
                         <div class="modal-body">
@@ -141,14 +138,14 @@
                             <pre>{{result.test.name}}</pre>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-default" data-dismiss="modal"
+                            <button class="btn btn-secondary" data-bs-dismiss="modal"
     								aria-hidden="true">Close</button>
                         </div>
                     </div>
                   </div>
                 </div>
 				{% if result.condition %}
-				<i class="glyphicon glyphicon-info-sign" title="{{result.condition[1]}}"></i>
+				<i class="bi bi-info-circle" title="{{result.condition[1]}}"></i>
 				{% endif %}
 			</td>
         <td class="pct">{{result.results_pct|round(2)}}</td>
