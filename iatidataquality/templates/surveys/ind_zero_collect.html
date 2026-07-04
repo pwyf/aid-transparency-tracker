@@ -38,13 +38,13 @@
                 <span class="badge bg-secondary">No previous data</span>
             {% else %}
                 {% if not indicator.indicator.indicator_ordinal %}
-                <span class="label label-{{old_publication_status.get(old_survey_data.get(indicator.indicator.name).publication_status).class}}" title="Researcher's initial assessment">{{ old_publication_status.get(old_survey_data.get(indicator.indicator.name).publication_status).text }}</span>
+                <span class="badge text-bg-{{old_publication_status.get(old_survey_data.get(indicator.indicator.name).publication_status).class}}" title="Researcher's initial assessment">{{ old_publication_status.get(old_survey_data.get(indicator.indicator.name).publication_status).text }}</span>
 
                   {% if old_survey_data.get(indicator.indicator.name).publication_status != 'not published' %}
                   <span class="badge bg-secondary" title="Researcher's initial assessment">{{ old_survey_data.get(indicator.indicator.name).publication_format }}</span>
                   {% endif %}
                 {% else %}
-                <span class="label label-{{year_data[old_survey_data.get(indicator.indicator.name).survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[old_survey_data.get(indicator.indicator.name).survey_ordinal_value|int].text }}</span>
+                <span class="badge text-bg-{{year_data[old_survey_data.get(indicator.indicator.name).survey_ordinal_value|int].class}}" title="Researcher's initial assessment">{{ year_data[old_survey_data.get(indicator.indicator.name).survey_ordinal_value|int].text }}</span>
 
                   {% if old_survey_data.get(indicator.indicator.name).survey_ordinal_value|int != 0 %}
                   <span class="badge bg-secondary" title="Researcher's initial assessment">{{ old_survey_data.get(indicator.indicator.name).publication_format }}</span>
