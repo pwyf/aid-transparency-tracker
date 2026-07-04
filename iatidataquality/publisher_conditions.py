@@ -127,14 +127,29 @@ def ipc_step2():
     if request.method != 'POST':
         return
 
-    def get_results():
-        if request.form.get('local'):
-            return dqimportpublisherconditions.importPCsFromFile()
-        else:
-            url = request.form['url']
-            return dqimportpublisherconditions.importPCsFromUrl(url)
+    import urllib.error
+    results = None
+    error_flashed = False
 
-    results = get_results()
+    if request.form.get('local'):
+        results = dqimportpublisherconditions.importPCsFromFile()
+    else:
+        url = request.form['url']
+        try:
+            results = dqimportpublisherconditions.importPCsFromUrl(url)
+        except urllib.error.HTTPError as e:
+            if e.code == 403:
+                flash(f'Could not retrieve the URL: HTTP {e.code} {e.reason}. '
+                      'You cannot directly import the conditions export URL, as it is '
+                      'password-protected. Instead, you should export the conditions file, '
+                      'then upload it to somewhere like gist.github.com — you can then '
+                      'import that URL.', 'danger')
+            else:
+                flash(f'Could not retrieve the URL: HTTP {e.code} {e.reason}.', 'danger')
+            error_flashed = True
+        except urllib.error.URLError as e:
+            flash(f'Could not retrieve the URL: {e.reason}.', 'danger')
+            error_flashed = True
 
     # FIXME: duplicate code?
     if results:
@@ -146,7 +161,8 @@ def ipc_step2():
             admin=usermanagement.check_perms('admin'),
             loggedinuser=current_user)
     else:
-        flash('There was an error importing your conditions', "danger")
+        if not error_flashed:
+            flash('There was an error importing your conditions', "danger")
         return redirect(url_for('import_organisation_conditions'))
 
 
