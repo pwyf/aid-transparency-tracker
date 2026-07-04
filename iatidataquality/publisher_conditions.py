@@ -7,6 +7,7 @@
 #  This programme is free software; you may redistribute and/or modify
 #  it under the terms of the GNU Affero General Public License v3.0
 
+import re
 from io import StringIO, BytesIO
 
 from flask import render_template, flash, request, redirect, url_for, send_file
@@ -198,14 +199,40 @@ def import_organisation_conditions(step=None):
             loggedinuser=current_user)
 
 
+def _element_from_test_name(test_name):
+    if not test_name:
+        return None
+    m = re.search(r"Then (?:every )?`([^/`@\[\s]+)", test_name)
+    return m.group(1) if m else None
+
+
+def _condition_line(org_code, element, condition, condition_value):
+    if condition == 'activity level':
+        return f"{org_code} does not use {element} at activity level"
+    if condition == 'activity hierarchy':
+        return f"{org_code} does not use {element} at activity hierarchy {condition_value}"
+    return None
+
+
 def export_organisation_conditions():
-    conditions = db.session.query(
-        OrganisationCondition.description).distinct().all()
-    conditionstext = ""
-    for i, condition in enumerate(conditions):
-        if (i != 0):
-            conditionstext = conditionstext + "\n"
-        conditionstext = conditionstext + condition.description
+    rows = db.session.query(
+        OrganisationCondition, Organisation, Test
+    ).join(
+        Organisation, OrganisationCondition.organisation_id == Organisation.id
+    ).join(
+        Test, OrganisationCondition.test_id == Test.id
+    ).all()
+
+    lines = set()
+    for oc, org, test in rows:
+        element = _element_from_test_name(test.name)
+        if element is None:
+            continue
+        line = _condition_line(org.organisation_code, element, oc.condition, oc.condition_value)
+        if line:
+            lines.add(line)
+
+    conditionstext = "\n".join(sorted(lines))
 
     strIO = StringIO()
     strIO.write(str(conditionstext))

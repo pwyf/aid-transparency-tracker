@@ -46,7 +46,7 @@ def parsePC(organisation_structures):
         # after the 'then'
         print((groups[1]))
         like = re.compile(r'\sThen .*?{}'.format(groups[1]))
-        tests = [test for test in tests if like.search(test[1]) is not None]
+        tests = [test for test in tests if test[1] and like.search(test[1]) is not None]
         return organisation, tests
 
     @add_partial('(\S*) does not use (\S*) at activity level')

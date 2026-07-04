@@ -5,6 +5,8 @@ $(document).on("click", ".deletefeedback", function(e){
 });
 var countfeedback = 0;
 $("#addfeedbackbtn").click(function(){
+    $("#no-conditions-row").remove();
+    $("#submitstructure").show();
     countfeedback ++;
     var uses = $("#uses").val();
     var element = $("#element option:selected").val();

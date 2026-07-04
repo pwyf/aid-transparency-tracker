@@ -316,6 +316,7 @@ def deleteOrganisationPackage(organisation_code, package_name,
 
 def addFeedback(data):
     checkF = models.OrganisationConditionFeedback.query.filter_by(
+        organisation_id=data["organisation_id"],
         uses=data["uses"], element=data["element"], where=data["where"]
         ).first()
 
@@ -331,6 +332,15 @@ def addFeedback(data):
         db.session.add(feedback)
 
     return feedback
+
+
+def deleteFeedback(feedback_id):
+    feedback = models.OrganisationConditionFeedback.query.filter_by(id=feedback_id).first()
+    if feedback is None:
+        return False
+    with db.session.begin():
+        db.session.delete(feedback)
+    return True
 
 
 def make_publisher_summary(organisation, aggregation_type):

@@ -154,6 +154,12 @@ def organisation_feedback(organisation_code=None):
     return organisations_feedback.organisation_feedback(organisation_code)
 
 
+@app.route("/organisations/<organisation_code>/feedback/<int:feedback_id>/delete/", methods=['POST'])
+@usermanagement.perms_required('organisation_feedback', 'create')
+def delete_org_feedback(organisation_code, feedback_id):
+    return organisations_feedback.delete_org_feedback(organisation_code, feedback_id)
+
+
 @app.route("/registry/refresh/")
 @usermanagement.perms_required()
 def registry_refresh():

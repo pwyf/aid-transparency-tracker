@@ -19,6 +19,7 @@
         <th>Import?</th>
 		<th>Organisation</th>
 		<th>Test</th>
+		<th>Test description</th>
 		<th>Operation</th>
 		<th>Condition</th>
 		<th>Condition value</th>
@@ -44,6 +45,8 @@
 					   value="{{test.id}}"/>
 			  <a href="{{url_for('get_tests', id=test.id)}}">{{test.name}}</a>
 			</td>
+
+			<td>{{test.description}}</td>
 
             <td><input type="hidden"
 					   name="pc[{{num}}{{loop.index}}][operation]"

@@ -29,23 +29,63 @@
     (<code>hierarchy 2</code>).</p>
 
 
-    <p>
-	  <a class="btn btn-success" href="#addFeedback"
-		 role="button" data-bs-toggle="modal" data-bs-target="#addFeedback">
-		<i class="bi bi-plus-lg"></i>
-		<strong>Add conditions</strong></a>
-	</p>
+    {% if applied_conditions %}
+    <h4>Applied conditions</h4>
+    <p class="text-muted">These conditions have already been formally applied to this organisation's scoring.</p>
+    <ul class="list-group mb-3">
+      {% for line in applied_conditions %}
+      <li class="list-group-item font-monospace">{{line}}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
 
+    <hr>
+
+    {% if existing_feedback %}
+    <h4>Submitted conditions</h4>
+    <table class="table" id="saved-conditions">
+    <thead>
+    <tr><th>Condition</th><th></th></tr>
+    </thead>
+    <tbody>
+    {% for fb in existing_feedback %}
+    <tr>
+      <td>{{organisation.organisation_code}} {{fb.uses}} {{fb.element}} at {{fb.where}}</td>
+      <td>
+        <form method="post" action="{{url_for('delete_org_feedback', organisation_code=organisation.organisation_code, feedback_id=fb.id)}}" style="display:inline">
+          <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this condition?')">
+            <i class="bi bi-trash"></i>
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    {% endif %}
+
+    <div class="d-flex align-items-center gap-3 mb-2">
+      <h4 class="mb-0">Add new conditions</h4>
+      <a class="btn btn-success btn-sm" href="#addFeedback"
+         role="button" data-bs-toggle="modal" data-bs-target="#addFeedback">
+        <i class="bi bi-plus-lg"></i> Add conditions
+      </a>
+    </div>
     <form name="organisationfeedback" method="post" action="">
     <table class="table" id="conditions">
     <thead>
-    <th>Conditions</th><th></th>
+    <tr><th>Conditions</th><th></th></tr>
     </thead>
     <tbody>
+      <tr id="no-conditions-row">
+        <td colspan="2" class="text-muted">You have not yet added any conditions.
+          <a href="#addFeedback" data-bs-toggle="modal" data-bs-target="#addFeedback">Add a new condition</a>.</td>
+      </tr>
     </tbody>
     </table>
-    <input type="submit" value="Submit structure"
-		   class="btn btn-outline-secondary btn-sm" name="submitstructure"/>
+    <input type="submit" value="Submit conditions"
+		   class="btn btn-outline-secondary btn-sm" name="submitstructure"
+		   id="submitstructure" style="display:none"/>
     </form>
 
     <div id="addFeedback" class="modal fade"
