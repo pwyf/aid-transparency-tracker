@@ -1,20 +1,22 @@
+import csv
+import json
 import os
 import sys
-import csv
-
-import iatidataquality
-import iatidq.summary
 
 import nose
 import nose.tools
 
-import json
+import iatidataquality
+import iatidq.summary
+
 
 def setup_func():
     pass
 
+
 def teardown_func():
     pass
+
 
 def check_summary(config):
     # FIXME
@@ -23,10 +25,10 @@ def check_summary(config):
     return True
     suffix, cls = config
 
-    with open('unittests/artefacts/json/input-%s.json' % suffix) as f:
+    with open("unittests/artefacts/json/input-%s.json" % suffix) as f:
         data = json.load(f)
 
-    with open('unittests/artefacts/json/output-%s.json' % suffix) as f:
+    with open("unittests/artefacts/json/output-%s.json" % suffix) as f:
         expected = f.read()
 
     s = cls(data, conditions=None, manual=True)
@@ -34,11 +36,12 @@ def check_summary(config):
 
     assert json.dumps(observed, indent=2) == expected
 
+
 @nose.with_setup(setup_func, teardown_func)
 def test_summary_fn():
     configs = [
         ("publisher", iatidq.summary.PublisherSummary)
-        ] # used to test "package", None
+    ]  # used to test "package", None
 
     for cfg in configs:
         (check_summary, cfg)
