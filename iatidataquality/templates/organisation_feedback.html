@@ -36,10 +36,34 @@
 		<strong>Add conditions</strong></a>
 	</p>
 
+    {% if existing_feedback %}
+    <h4>Submitted conditions</h4>
+    <table class="table" id="saved-conditions">
+    <thead>
+    <tr><th>Condition</th><th></th></tr>
+    </thead>
+    <tbody>
+    {% for fb in existing_feedback %}
+    <tr>
+      <td>{{organisation.organisation_code}} {{fb.uses}} {{fb.element}} at {{fb.where}}</td>
+      <td>
+        <form method="post" action="{{url_for('delete_org_feedback', organisation_code=organisation.organisation_code, feedback_id=fb.id)}}" style="display:inline">
+          <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this condition?')">
+            <i class="bi bi-trash"></i>
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    {% endif %}
+
+    <h4>Add new conditions</h4>
     <form name="organisationfeedback" method="post" action="">
     <table class="table" id="conditions">
     <thead>
-    <th>Conditions</th><th></th>
+    <tr><th>Conditions</th><th></th></tr>
     </thead>
     <tbody>
     </tbody>

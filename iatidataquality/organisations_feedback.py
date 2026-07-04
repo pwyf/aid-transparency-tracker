@@ -25,16 +25,37 @@ def organisation_feedback(organisation_code=None):
                         'element': request.form['element'+condition],
                         'where': request.form['where'+condition]
                 }
-                if dqorganisations.addFeedback(data):
+                result = dqorganisations.addFeedback(data)
+                if result:
                     flash('Successfully added condition.', 'success')
                 else:
-                    flash("Couldn't add condition.", 'danger')
+                    flash("This condition has already been added.", 'warning')
 
+        existing_feedback = models.OrganisationConditionFeedback.query.filter_by(
+            organisation_id=organisation.id
+        ).all()
         return render_template(
             "organisation_feedback.html",
             organisation=organisation,
+            existing_feedback=existing_feedback,
             admin=usermanagement.check_perms('admin'),
             loggedinuser=current_user)
     else:
         flash('No organisation supplied', 'danger')
         return redirect(url_for('get_organisations'))
+
+
+def delete_org_feedback(organisation_code, feedback_id):
+    organisation = models.Organisation.where(organisation_code=organisation_code).first()
+    if organisation is None:
+        flash('Organisation not found', 'danger')
+        return redirect(url_for('get_organisations'))
+    feedback = models.OrganisationConditionFeedback.query.filter_by(
+        id=feedback_id, organisation_id=organisation.id
+    ).first()
+    if feedback is None:
+        flash('Condition not found', 'danger')
+    else:
+        dqorganisations.deleteFeedback(feedback_id)
+        flash('Condition deleted.', 'success')
+    return redirect(url_for('organisation_feedback', organisation_code=organisation_code))
