@@ -1,4 +1,4 @@
-from os.path import exists, join, isdir
+from os.path import dirname, exists, join, isdir
 from os import listdir, makedirs
 from sqlite3 import dbapi2 as sample_work_sqlite
 import shutil
@@ -233,6 +233,29 @@ def migrate_sampling_rounds():
             ''')
 
     click.echo('sampling_failure table migrated for sampling rounds.')
+
+
+@app.cli.command("update_publishers")
+def update_publishers():
+    """Update tests/publishers.json from the IATI Dashboard API."""
+    import json
+    import urllib.request
+
+    url = 'https://dashboard.iatistandard.org/api/reporting-orgs/'
+    results = []
+    while url:
+        click.echo(f'Fetching {url} ...')
+        with urllib.request.urlopen(url) as resp:
+            data = json.loads(resp.read())
+        results.extend(data['results'])
+        url = data.get('next')
+
+    test_data_path = join(dirname(app.root_path), 'tests')
+    output_path = join(test_data_path, 'publishers.json')
+    with open(output_path, 'w') as f:
+        json.dump(results, f, indent=2, ensure_ascii=False)
+        f.write('\n')
+    click.echo(f'Written {len(results)} publishers to {output_path}')
 
 
 @app.cli.command("download_data")
