@@ -146,7 +146,7 @@ def test_organisation_publication_page(
               <td>Publication format points</td><td>33.33</td>
               <td></td>
           </tr>
-          <tr class="success">
+          <tr class="table-success">
               <td><strong>Total points for this indicator</strong></td>
               <td>64.33</td><td></td>
           </tr>

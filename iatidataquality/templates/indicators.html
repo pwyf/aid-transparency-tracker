@@ -15,9 +15,9 @@ pre {
 
 <table class="table x-template" id="tests">
 <thead>
-<th width="10%">No</th>
-<th>Category</th>
-<th colspan="2" width="90%">
+<th width="5%">No</th>
+<th width="20%">Category</th>
+<th colspan="2" width="75%">
   Description
 </th>
 </thead>
@@ -35,15 +35,15 @@ pre {
         </td>
         <td><a href="#" class="showTests"
                id="showindicator-{{ i.id }}">
-            <i class="glyphicon glyphicon-chevron-down align-right"></i></a>
+            <i class="bi bi-chevron-down align-right"></i></a>
         </td>
     </tr>
-    <tr class="group-{{ i.id }} hidden">
+    <tr class="group-{{ i.id }} d-none">
         <td></td>
         <td colspan="2">{{ i.longdescription|replace('\n', '<br>')|safe }}</td>
     </tr>
         {% for test in i.test %}
-        <tr id="tr{{ test.test_id }}" class="group-{{ i.id }} hidden">
+        <tr id="tr{{ test.test_id }}" class="group-{{ i.id }} d-none">
             <td></td>
             <td><i>{{ test.description }}</i></td>
             <td><pre>{{ test.name }}</pre></td>

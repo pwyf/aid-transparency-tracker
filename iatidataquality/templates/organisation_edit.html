@@ -23,33 +23,33 @@
     </script>
 
     <ul class="breadcrumb">
-      <li>
+      <li class="breadcrumb-item">
 		<a href="{{url_for('get_organisations')}}">Organisations</a>
 		<span class="divider"></span></li>
-      <li>
+      <li class="breadcrumb-item">
 		<a href="{{url_for('get_organisations',
 				   organisation_code=organisation.organisation_code)}}">
 		  {{organisation.organisation_name}}</a>
 		<span class="divider"></span>
 	  </li>
-      <li class="active">Manage</li>
+      <li class="breadcrumb-item" class="active">Manage</li>
     </ul>
 
     <h1>Organisation {{organisation.organisation_name}}</h1>
 
-    <div class="pull-right">
+    <div class="float-end">
       <p>
 		<a class="btn btn-success" href="#addPackages" role="button"
-		   data-toggle="modal">
-		  <i class="glyphicon glyphicon-plus"></i>
+		   data-bs-toggle="modal" data-bs-target="#addPackages">
+		  <i class="bi bi-plus-lg"></i>
 		  <strong>Add Package to Organisation</strong>
 	    </a>
 	  </p>
 
       <p>
 		<a class="btn btn-success" href="#addPackageGroup" role="button"
-		   data-toggle="modal">
-		  <i class="glyphicon glyphicon-plus"></i>
+		   data-bs-toggle="modal" data-bs-target="#addPackageGroup">
+		  <i class="bi bi-plus-lg"></i>
 		  <strong>Add Package Group to Organisation</strong>
 	    </a>
 	  </p>
@@ -83,7 +83,7 @@
     <tr>
         <td>Organisation responded:</td>
         <td>
-            <select class="form-control" name="organisation_responded">
+            <select class="form-select" name="organisation_responded">
             {% for dr in donorresponses.items() %}
             <option value="{{dr[0]}}"
 					{% if dr[1].id == organisation.organisation_responded %}
@@ -116,7 +116,7 @@
     <tr>
         <td>Frequency:</td>
         <td>
-            <select class="form-control" name="frequency">
+            <select class="form-select" name="frequency">
             {% for fr in frequencies %}
             <option value="{{fr}}"
           {% if fr == organisation.frequency %}
@@ -131,7 +131,7 @@
     <tr>
         <td>Timeliness:</td>
         <td>
-            <select class="form-control" name="timelag">
+            <select class="form-select" name="timelag">
             {% for fr in timeliness %}
             <option value="{{fr}}"
           {% if fr == organisation.timelag %}
@@ -145,7 +145,7 @@
     </tr>
     <tr>
     <td colspan="2">
-	  <input type="submit" value="Update" class="btn btn-default"
+	  <input type="submit" value="Update" class="btn btn-outline-secondary btn-sm"
 			 name="updateorganisation"/>
 	</td>
     </tr>
@@ -160,9 +160,8 @@
         <div class="modal-content">
             <form method="post" action="">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-    					aria-hidden="true">×</button>
-                <h3 id="addPackagesModalLabel">Add Packages</h3>
+                    <h3 class="modal-title" id="addPackagesModalLabel">Add Packages</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
@@ -178,7 +177,7 @@
             <div class="modal-footer">
                 Condition (optional, must be unicode):
     			<input class="form-control" type="text" name="condition" /><br />
-                <button class="btn btn-default" data-dismiss="modal"
+                <button class="btn btn-secondary" data-bs-dismiss="modal"
     					aria-hidden="true">Close</button>
                 <input type="submit"
     				   value="Add packages to this organisation"
@@ -196,12 +195,10 @@
 
         <form method="post" action="">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">×</button>
-
-              <h3 id="addPackageGroupModalLabel">
+                    <h3 class="modal-title" id="addPackageGroupModalLabel">
 				Add packages based on package group
 			  </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
         <table class="table">
@@ -215,7 +212,7 @@
         <tr>
             <td>Package Group:</td>
             <td>
-            <select class="form-control" name="packagegroup">
+            <select class="form-select" name="packagegroup">
             <option value="" selected></option>
             {% for packagegroup in packagegroups %}
                 <option value="{{packagegroup.id}}">
@@ -240,7 +237,7 @@
         </table>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-default" data-dismiss="modal"
+            <button class="btn btn-secondary" data-bs-dismiss="modal"
 					aria-hidden="true">Close</button>
             <input type="submit"
 				   value="Add all packages in this package group to this organisation" name="addpackagegroup"
@@ -269,7 +266,7 @@
         {% if pp.Package.man_auto=='man' %}
 		<a href="{{url_for('packages_edit',
 				 package_name=pp.Package.package_name)}}">
-		  <i class="glyphicon glyphicon-pencil"></i></a>
+		  <i class="bi bi-pencil"></i></a>
 		{% endif %}
     </td>
     <td>
@@ -281,7 +278,7 @@
 						 Package {{pp.Package.package_name}} from
 						 {{organisation.organisation_code}}?
 						 This action will not delete the package itself.">
-		  <i class="glyphicon glyphicon-trash"></i></a>
+		  <i class="bi bi-trash"></i></a>
     </td>
     </tr>
     {% endfor %}

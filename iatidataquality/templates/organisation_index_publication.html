@@ -9,9 +9,9 @@
 
 {% raw %}
 <script type="text/template" id="template-source">
-    <div class="pull-right">
+    <div class="float-end">
         <a class="btn btn-success" href="{{ links.login }}">
-		  <i class="glyphicon glyphicon-lock"></i>
+		  <i class="bi bi-lock"></i>
 		  <strong>Login &raquo; {{ organisation.organisation_name }}</strong>
 		</a>
     </div>
@@ -52,7 +52,7 @@
 
               <td>
 				<a href="#indicator{{indicator.id}}"
-				   role="button" data-toggle="modal">
+				   role="button" data-bs-toggle="modal" data-bs-target="#indicator{{indicator.id}}">
 				  {{indicator.indicator_order}}.
 				  {{indicator.description}}
 				</a>
@@ -63,17 +63,16 @@
                 <div class="modal-content">
 
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">×</button>
-                    <h3 id="indicatorHeader">
+                    <h3 class="modal-title" id="indicatorHeader">
 					  Indicator: {{indicator.description}}
 					</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                     {{indicator.longdescription}}
                   </div>
                   <div class="modal-footer">
-                    <button class="btn btn-default" data-dismiss="modal"
+                    <button class="btn btn-secondary" data-bs-dismiss="modal"
 							aria-hidden="true">Close</button>
                   </div>
                 </div>
@@ -84,18 +83,18 @@
 				{{lastyearsdata.survey_ordinal_value}}%
 				<a href="#" class="showTests"
 				   id="showindicator-{{indicator.id}}">
-				  <i class="glyphicon glyphicon-chevron-down align-right"></i></a>
+				  <i class="bi bi-chevron-down align-right"></i></a>
 			  </td>
 
               <td>
-				<span class="label label-default">No survey data
+				<span class="badge bg-secondary">No survey data
 				  yet.</span>
 			  </td>
 
             </tr>
 
             <tr id="tr-{{indicator.id}}-details"
-				class="group-{{indicator.id}} hidden">
+				class="group-{{indicator.id}} d-none">
 
               <td colspan="3">
                 <h5>Evidence</h5>
@@ -127,7 +126,7 @@
             <td>{{indicator.indicator_subcategory_name_text}}</td>
             <td>
 			  <a href="#indicator{{indicator.id}}"
-				 role="button" data-toggle="modal">
+				 role="button" data-bs-toggle="modal" data-bs-target="#indicator{{indicator.id}}">
                 {{indicator.indicator_order}}.
 				{{indicator.description}}
 			  </a>
@@ -138,11 +137,10 @@
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal"
-						  aria-hidden="true">×</button>
-				  <h3 id="indicatorHeader">
+                    <h3 class="modal-title" id="indicatorHeader">
 					Indicator: {{indicator.description}}
 				  </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body">
@@ -150,7 +148,7 @@
                 </div>
 
                 <div class="modal-footer">
-                  <button class="btn btn-default" data-dismiss="modal"
+                  <button class="btn btn-secondary" data-bs-dismiss="modal"
 						  aria-hidden="true">Close</button>
                 </div>
               </div></div>
@@ -162,24 +160,24 @@
                     {{^lastyearsdata_iati}}
                     <a href="#" class="showTests"
 					   id="showindicator-{{indicator.id}}"><!-- FIXME: this line could be wrong -->
-					  <i class="glyphicon glyphicon-chevron-down align-right"></i>
+					  <i class="bi bi-chevron-down align-right"></i>
 					</a>
                     {{/lastyearsdata_iati}}
             </td>
 
 	        <td>
 			{{#uses_iati}}
-			  <span class="label label-success">IATI</span>
+			  <span class="badge bg-success">IATI</span>
 			{{/uses_iati}}
 			{{^uses_iati}}
-			  <span class="label label-default">No survey data yet.</span>
+			  <span class="badge bg-secondary">No survey data yet.</span>
 			{{/uses_iati}}
 			</td>
           </tr>
             {{#lastyearsdata_manual}}
 
             <tr id="tr-{{indicator.id}}-details"
-				class="group-{{indicator.id}} hidden">
+				class="group-{{indicator.id}} d-none">
               <td colspan="4">
 				<h5>Evidence</h5>
 				<p>
@@ -217,7 +215,7 @@
 
             <td>
 			  <a href="#indicator{{indicator.id}}"
-				 role="button" data-toggle="modal">
+				 role="button" data-bs-toggle="modal" data-bs-target="#indicator{{indicator.id}}">
                 {{indicator.indicator_order}}.
 				{{indicator.description}}
 			  </a>
@@ -228,18 +226,16 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close"
-								data-dismiss="modal"
-								aria-hidden="true">×</button>
-                        <h3 id="indicatorHeader">
+                    <h3 class="modal-title" id="indicatorHeader">
 						  Indicator: {{indicator.description}}
 						</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                       {{indicator.longdescription}}
                     </div>
                     <div class="modal-footer">
-                      <button class="btn btn-default" data-dismiss="modal"
+                      <button class="btn btn-secondary" data-bs-dismiss="modal"
 							  aria-hidden="true">Close</button>
                     </div>
                   </div>
@@ -252,17 +248,17 @@
 			    {{^lastyearsdata_iati}}
                 <a href="#" class="showTests"
 				   id="showindicator-{{indicator.id}}"><!-- FIXME: this line could be wrong -->
-				  <i class="glyphicon glyphicon-chevron-down align-right"></i>
+				  <i class="bi bi-chevron-down align-right"></i>
 				</a>
 				{{/lastyearsdata_iati}}
             </td>
 
 	        <td>
 			{{#uses_iati}}
-			  <span class="label label-success">IATI</span>
+			  <span class="badge bg-success">IATI</span>
 			{{/uses_iati}}
 			{{^uses_iati}}
-			  <span class="label label-default">No survey data yet.</span>
+			  <span class="badge bg-secondary">No survey data yet.</span>
 			{{/uses_iati}}
 			</td>
 
@@ -270,7 +266,7 @@
 		    {{#lastyearsdata_manual}}
 
           <tr id="tr-{{indicator.id}}-details"
-			  class="group-{{indicator.id}} hidden">
+			  class="group-{{indicator.id}} d-none">
             <td colspan="4">
               <h5>Evidence</h5>
               <p>

@@ -15,24 +15,22 @@
     </script>
 
     <ul class="breadcrumb">
-      <li>Summary</li>
+      <li class="breadcrumb-item">Summary</li>
     </ul>
 
-    <div class="row" style="margin-bottom: 20px">
-      <form method="GET">
+    <form method="GET" class="row mb-3">
         <div class="col-lg-4">
-          <select class="form-control sampling-filter" id="round-filter" name="round">
+          <select class="form-select sampling-filter" id="round-filter" name="round">
             {% for round in all_rounds %}
               <option {% if round.id == round_id %}selected="selected"{% endif %} value="{{ round.id }}">{{ round.name }}{% if round.snapshot_date %} ({{ round.snapshot_date }}){% endif %}</option>
             {% endfor %}
           </select>
         </div><!-- /.col-lg-4 -->
-      </form>
-    </div>
+    </form>
 
     <div class="progress">
       <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{ pct_complete }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pct_complete }}%;">
-        <span class="sr-only">{{ pct_complete }}% Complete</span>
+        <span class="visually-hidden">{{ pct_complete }}% Complete</span>
       </div>
     </div>
 
@@ -60,33 +58,25 @@
                 <td>{{ ot.total_fail }}</td>
                 <td>{{ ot.total - ot.total_fail - ot.total_pass }}</td>
                 <td>
-                    <span class="label
-                    {% if ot.pass_status == 'passing' %}
-                        label-success
-                    {% elif ot.pass_status == 'failing' %}
-                        label-danger
-                    {% else %}
-                        label-default
-                    {% endif %}
-                    ">{{ ot.pass_status | title }}
+                    <span class="badge {% if ot.pass_status == 'passing' %} bg-success {% elif ot.pass_status == 'failing' %} bg-danger {% else %} bg-secondary {% endif %}">{{ ot.pass_status | title }}
                     </span>
                 </td>
                 <td>
                     {% if ot.status == 'failed' %}
                     <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, round_id=round_id, status='pass')}}">
-                        <span class="label label-danger">Failed</span>
+                        <span class="badge bg-danger">Failed</span>
                     </a>
                     {% elif ot.status == 'passing' %}
                     <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, round_id=round_id, status='fail')}}">
-                        <span class="label label-success">Passed</span>
+                        <span class="badge bg-success">Passed</span>
                     </a>
                     {% else %}
                     {% if ot.carryforward == 'failed' %}
-                    <span class="label label-danger" title="Not yet reviewed in this round &mdash; carried forward from {{ ot.carryforward_round_name }}">Failing (carried forward)</span>
+                    <span class="badge bg-danger" title="Not yet reviewed in this round &mdash; carried forward from {{ ot.carryforward_round_name }}">Failing (carried forward)</span>
                     {% elif ot.carryforward == 'passing' %}
-                    <span class="label label-success" title="Not yet reviewed in this round &mdash; carried forward from {{ ot.carryforward_round_name }}">Passing (carried forward)</span>
+                    <span class="badge bg-success" title="Not yet reviewed in this round &mdash; carried forward from {{ ot.carryforward_round_name }}">Passing (carried forward)</span>
                     {% else %}
-                    <span class="label label-default">Not yet reviewed</span>
+                    <span class="badge bg-secondary">Not yet reviewed</span>
                     {% endif %}
                     <div>
                         <a href="{{url_for('sampling_change_status', organisation_id=ot.organisation_id, test_id=ot.test_id, round_id=round_id, status='fail')}}">Mark failing</a>
@@ -98,7 +88,7 @@
                 <td>
                     {% set remaining = ot.total - ot.total_fail - ot.total_pass %}
                     {% if remaining > 0 %}
-                    <a href="{{ url_for('sampling_next', org=ot.organisation_id, test=ot.test_id, round=round_id) }}" class="btn btn-xs btn-primary">Sample all</a>
+                    <a href="{{ url_for('sampling_next', org=ot.organisation_id, test=ot.test_id, round=round_id) }}" class="btn btn-sm btn-primary">Sample all</a>
                     {% else %}
                     <span class="text-muted">Sampling completed</span>
                     {% endif %}

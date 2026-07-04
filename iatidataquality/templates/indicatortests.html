@@ -16,14 +16,14 @@
 		<a href="{{url_for('get_indicators', indicatorgroup=indicatorgroup.name)}}">{{indicatorgroup.name}}</a>/{{indicator.name}}</code>
 	</h1>
 
-    <div class="pull-right">
+    <div class="float-end">
 
     <p>
 	  <a class="btn btn-success"
 		 href="{{url_for('indicators_edit',
 			   indicatorgroup=indicatorgroup.name,
 			   indicator=indicator.name)}}">
-		<i class="glyphicon glyphicon-pencil"></i>
+		<i class="bi bi-pencil"></i>
 		<strong>Edit Indicator</strong>
 	  </a>
 
@@ -33,15 +33,15 @@
 			   indicator=indicator.name)}}"
 		 data-confirm="Are you sure you want to delete indicator
 					   {{indicator.name}}? This action cannot be undone.">
-		<i class="glyphicon glyphicon-trash"></i>
+		<i class="bi bi-trash"></i>
 		<strong>Delete Indicator</strong>
 	  </a>
 	</p>
 
     <p>
 	  <a class="btn btn-success" href="#addTests" role="button"
-		 data-toggle="modal">
-		<i class="glyphicon glyphicon-plus"></i>
+		 data-bs-toggle="modal" data-bs-target="#addTests">
+		<i class="bi bi-plus-lg"></i>
 		<strong>Add Test to Indicator</strong>
 	  </a>
 	</p>
@@ -66,7 +66,7 @@
 			   data-confirm="Are you sure you want to remove
 							 Test {{it.Test.name}} from {{indicator.name}}?
 							 This action will not delete the test itself.">
-			  <i class="glyphicon glyphicon-trash"></i>
+			  <i class="bi bi-trash"></i>
 			</a>
         </td>
         </tr>
@@ -80,9 +80,8 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"
-  				aria-hidden="true">×</button>
-          <h3 id="addTestsModalLabel">Add Tests</h3>
+                    <h3 class="modal-title" id="addTestsModalLabel">Add Tests</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <form method="post" action="">
@@ -96,7 +95,7 @@
       </div>
 
       <div class="modal-footer">
-          <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+          <button class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">Close</button>
           <input type="submit" value="Add tests to this indicator"
   			   class="btn btn-success" />
       </div>

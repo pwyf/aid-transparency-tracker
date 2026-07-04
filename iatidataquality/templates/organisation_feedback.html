@@ -31,8 +31,8 @@
 
     <p>
 	  <a class="btn btn-success" href="#addFeedback"
-		 role="button" data-toggle="modal">
-		<i class="glyphicon glyphicon-plus"></i>
+		 role="button" data-bs-toggle="modal" data-bs-target="#addFeedback">
+		<i class="bi bi-plus-lg"></i>
 		<strong>Add conditions</strong></a>
 	</p>
 
@@ -45,7 +45,7 @@
     </tbody>
     </table>
     <input type="submit" value="Submit structure"
-		   class="btn btn-default" name="submitstructure"/>
+		   class="btn btn-outline-secondary btn-sm" name="submitstructure"/>
     </form>
 
     <div id="addFeedback" class="modal fade"
@@ -55,11 +55,10 @@
         <div class="modal-content">
             <form method="post" action="">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-    					aria-hidden="true">×</button>
-                <h3 id="addFeedbackModalLabel">
+                    <h3 class="modal-title" id="addFeedbackModalLabel">
     			  Add conditions for {{organisation.organisation_code}}
     			</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
@@ -74,7 +73,7 @@
                 </tr>
                 <tr>
                 <td class="text-muted"><i>element</i></td>
-                <td><select class="form-control" id="element">
+                <td><select class="form-select" id="element">
                     <option value="title">title</option>
                     <option value="description">description</option>
                     <option value="sector">sector</option>
@@ -102,7 +101,7 @@
                 </tr>
                 <tr>
                 <td class="text-muted"><i>at hierarchy</i></td>
-                <td> <select class="form-control" id="where">
+                <td> <select class="form-select" id="where">
                     <option value="activity hierarchy 1">
     				  activity hierarchy 1</option>
                     <option value="activity hierarchy 2">
@@ -116,7 +115,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal"
+                <button class="btn btn-secondary" data-bs-dismiss="modal"
     					aria-hidden="true">Close</button>
                 <a id="addfeedbackbtn" class="btn btn-success">Add structure</a>
             </div>

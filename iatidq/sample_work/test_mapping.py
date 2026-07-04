@@ -28,7 +28,7 @@ kind_to_status = {
             {
               "text:": "pass",
               "button": "pass",
-              "icon": "ok",
+              "icon": "check-lg",
               "class": "success",
               "value": "1",
             },
@@ -36,7 +36,7 @@ kind_to_status = {
             {
               "text:": "specific to the activity",
               "button": "not specific to activity",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "2",
             },
@@ -44,7 +44,7 @@ kind_to_status = {
             {
               "text:": "satisfies the definition",
               "button": "doesn't satisfy definition",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "3",
             },
@@ -54,7 +54,7 @@ kind_to_status = {
             {
               "text:": "pass",
               "button": "pass",
-              "icon": "ok",
+              "icon": "check-lg",
               "class": "success",
               "value": "1",
             },
@@ -62,7 +62,7 @@ kind_to_status = {
             {
               "text:": "able to access",
               "button": "unable to access",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "2",
             },
@@ -70,7 +70,7 @@ kind_to_status = {
             {
               "text:": "specific to the activity",
               "button": "not specific to activity",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "3",
             },
@@ -78,7 +78,7 @@ kind_to_status = {
             {
               "text:": "satisfies the definition",
               "button": "doesn't satisfy definition",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "4",
             },
@@ -86,7 +86,7 @@ kind_to_status = {
             {
               "text:": "current",
               "button": "document out of date",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "5",
             },
@@ -96,7 +96,7 @@ kind_to_status = {
             {
               "text:": "pass",
               "button": "pass",
-              "icon": "ok",
+              "icon": "check-lg",
               "class": "success",
               "value": "1",
             },
@@ -104,7 +104,7 @@ kind_to_status = {
             {
               "text:": "contains results information",
               "button": "no results information",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "2",
             },
@@ -112,7 +112,7 @@ kind_to_status = {
             {
               "text:": "satisfies the definition",
               "button": "doesn't satisfy definition",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "3",
             },
@@ -122,7 +122,7 @@ kind_to_status = {
             {
               "text:": "pass",
               "button": "pass",
-              "icon": "ok",
+              "icon": "check-lg",
               "class": "success",
               "value": "1",
             },
@@ -130,7 +130,7 @@ kind_to_status = {
             {
               "text:": "contains conditions information",
               "button": "no conditions information",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "2",
             },
@@ -138,7 +138,7 @@ kind_to_status = {
             {
               "text:": "satisfies the definition",
               "button": "doesn't satisfy definition",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "3",
             },
@@ -146,7 +146,7 @@ kind_to_status = {
             {
               "text:": "document is current",
               "button": "document out of date",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "4",
             },
@@ -156,7 +156,7 @@ kind_to_status = {
             {
               "text:": "pass",
               "button": "pass",
-              "icon": "ok",
+              "icon": "check-lg",
               "class": "success",
               "value": "1",
             },
@@ -164,7 +164,7 @@ kind_to_status = {
             {
               "text:": "contains location information",
               "button": "no contain location information",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "2",
             },
@@ -172,7 +172,7 @@ kind_to_status = {
             {
               "text:": "consistent with documentation",
               "button": "not consistent with documentation",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "3",
             },
@@ -182,7 +182,7 @@ kind_to_status = {
             {
               "text:": "pass",
               "button": "pass",
-              "icon": "ok",
+              "icon": "check-lg",
               "class": "success",
               "value": "1",
             },
@@ -190,7 +190,7 @@ kind_to_status = {
             {
               "text:": "references look correct",
               "button": "references look incorrect",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "2",
             },
@@ -200,7 +200,7 @@ kind_to_status = {
             {
               "text:": "pass",
               "button": "pass",
-              "icon": "ok",
+              "icon": "check-lg",
               "class": "success",
               "value": "1",
             },
@@ -208,7 +208,7 @@ kind_to_status = {
             {
               "text:": "references look correct",
               "button": "references look incorrect",
-              "icon": "remove",
+              "icon": "x-lg",
               "class": "danger",
               "value": "2",
             },

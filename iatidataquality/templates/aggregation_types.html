@@ -9,10 +9,10 @@
     });
     </script>
 	<h1>Aggregation Types</h1>
-    <div class="pull-right">
+    <div class="float-end">
     <a class="btn btn-success"
 	   href="{{url_for('aggregationtypes_edit')}}">
-	  <i class="glyphicon glyphicon-plus"></i> <strong>New</strong></a>
+	  <i class="bi bi-plus-lg"></i> <strong>New</strong></a>
     </div>
     <table class="table" id="at">
     <thead>
@@ -33,7 +33,7 @@
     <td>
 	  <a href="{{url_for('aggregationtypes_edit',
 			   aggregationtype_id=aggregationtype.AggregationType.id)}}">
-		<i class="glyphicon glyphicon-pencil"></i></a>
+		<i class="bi bi-pencil"></i></a>
 	</td>
     </tr>
 	{% endfor %}

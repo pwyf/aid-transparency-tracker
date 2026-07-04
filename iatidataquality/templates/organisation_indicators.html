@@ -28,9 +28,9 @@
     <div class="col-md-6">
       <h4>Information published to the IATI Registry</h4>
 
-      <div class="pull-right"><a class="btn btn-default btn-xs scrollto"
+      <div class="float-end"><a class="btn btn-secondary btn-sm scrollto"
       href="#iati"><strong>Jump to
-      indicators</strong> <i class="glyphicon glyphicon-chevron-down"></i></a>
+      indicators</strong> <i class="bi bi-chevron-down"></i></a>
       </div>
 
       <p>Maximum score: 100 points</p>
@@ -45,10 +45,10 @@
     </div>
     <div class="col-md-6">
       <h4>Information published in other formats</h4>
-      <div class="pull-right">
-        <a class="btn btn-default btn-xs scrollto" href="#noniati">
+      <div class="float-end">
+        <a class="btn btn-secondary btn-sm scrollto" href="#noniati">
           <strong>Jump to indicators</strong>
-          <i class="glyphicon glyphicon-chevron-down"></i></a>
+          <i class="bi bi-chevron-down"></i></a>
       </div>
       <p>Maximum score: 50 points</p>
       <h5>Guidelines</h5>
@@ -57,8 +57,7 @@
         found on your website.</li>
         <li>You only need to do this if you are not publishing
           this information to the IATI Registry.</li>
-        <li>You can do this by clicking <a class="btn btn-default
-        btn-xs">Review manually collected data</a>.</li>
+        <li>You can do this by clicking <a class="btn btn-outline-secondary btn-sm btn-sm">Review manually collected data</a>.</li>
       </ul>
     </div>
   </div>
@@ -69,13 +68,13 @@
 <hr />
 <fieldset>
   {% if organisation.accreditation or admin %}
-  <div class="pull-right">
+  <div class="float-end">
     <form action="" method="GET" id="aggregation_type_form"
-          class="form-inline">
+          class="d-flex align-items-center gap-2">
       <a href="{{links.organisation_detail}}"
-         class="btn btn-default">Detail
+         class="btn btn-outline-secondary btn-sm">Detail
       </a>
-      <select class="form-control" name="aggregation_type" id="aggregation_type">
+      <select class="form-select" name="aggregation_type" id="aggregation_type">
         {% for agg in agg_type %}
         <option value="{{agg.id}}"
                 {% if agg.selected %}
@@ -94,7 +93,7 @@
     score up to 100 points based on the quality and timeliness of
     publication. This is determined by running a series of tests
     on the data. You can see more details by clicking on
-    the <i class="glyphicon glyphicon-chevron-down"></i> icon.
+    the <i class="bi bi-chevron-down"></i> icon.
   </p>
 
   {% if timeliness_alert %}
@@ -107,10 +106,10 @@
     <thead>
       <th>Category</th>
       <th>Indicator</th>
-      <th><span class="th_test hidden">Test</span></th>
+      <th><span class="th_test d-none">Test</span></th>
       <th>% Passed</th>
       <th>Points</th>
-      <th><span class="th_test hidden">Total results</span></th>
+      <th><span class="th_test d-none">Total results</span></th>
       <th>Detail</th>
     </thead>
     <tbody>
@@ -119,27 +118,26 @@
         <tr id="indicator-{{row.indicator.id}}">
           <td>{{row.indicator.indicator_subcategory_name}}</td>
           <td><a href="#indicator{{row.indicator.id}}"
-                 role="button" data-toggle="modal">
+                 role="button" data-bs-toggle="modal" data-bs-target="#indicator{{row.indicator.id}}">
               {{row.indicator.indicator_order | optional_decimal}}.
               {{row.indicator.description}}
             </a>
             <div id="indicator{{row.indicator.id}}"
                  class="modal fade" tabindex="-1" role="dialog"
                  aria-labelledby="indicatorHeader" aria-hidden="true">
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">×</button>
-                    <h3 id="indicatorHeader">
+                    <h3 class="modal-title" id="indicatorHeader">
                       Indicator: {{row.indicator.description}}
                     </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                     {{ row.indicator.longdescription|replace('\n', '<br>')|safe }}
                   </div>
                   <div class="modal-footer">
-                    <button class="btn btn-default" data-dismiss="modal"
+                    <button class="btn btn-secondary" data-bs-dismiss="modal"
                             aria-hidden="true">Close</button>
                   </div>
                 </div>
@@ -149,20 +147,18 @@
           <td></td>
           <td class="pct text-muted">{{row.results_pct_rounded}}</td>
           <td><a href="#calculation{{row.indicator.id}}" role="button"
-                 data-toggle="modal">{{row.points}}</a>
+                 data-bs-toggle="modal" data-bs-target="#calculation{{row.indicator.id}}">{{row.points}}</a>
 
             <div id="calculation{{row.indicator.id}}"
                  class="modal fade" tabindex="-1" role="dialog"
                  aria-labelledby="indicatorHeader" aria-hidden="true">
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                      <button type="button" class="close"
-                              data-dismiss="modal"
-                              aria-hidden="true">×</button>
-                      <h3 id="indicatorHeader">
+                    <h3 class="modal-title" id="indicatorHeader">
                         Score calculation for {{row.indicator.description}}
                       </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                       <table class="table">
@@ -210,7 +206,7 @@
                           <td>Publication format points</td><td>33.33</td>
                           <td></td>
                       </tr>
-                      <tr class="success">
+                      <tr class="table-success">
                           <td><strong>Total points for this indicator</strong></td>
                           <td>{{ row.points }}</td><td></td>
                       </tr>
@@ -218,7 +214,7 @@
                       </table>
                   </div>
                   <div class="modal-footer">
-                      <button class="btn btn-default" data-dismiss="modal"
+                      <button class="btn btn-secondary" data-bs-dismiss="modal"
                               aria-hidden="true">Close</button>
                   </div>
                 </div>
@@ -228,32 +224,31 @@
         <td></td>
         <td><a href="#" class="showTests"
                id="showindicator-{{row.indicator.id}}">
-            <i class="glyphicon glyphicon-chevron-down align-right"></i></a>
+            <i class="bi bi-chevron-down align-right"></i></a>
         </td>
         </tr>
 
         {% for test in row.tests %}
         <tr id="tr{{test.id}}"
-            class="group-{{row.indicator.id}} hidden">
-        <td><span class="hidden">
+            class="group-{{row.indicator.id}} d-none">
+        <td><span class="d-none">
             {{row.indicator.indicator_subcategory_name}}
         </span></td>
-        <td><span class="hidden">
+        <td><span class="d-none">
             {{row.indicator.description}}.
         </span></td>
         <td><a href="#test{{test.test.id}}" role="button"
-               data-toggle="modal">{{test.test.description}}</a>
+               data-bs-toggle="modal" data-bs-target="#test{{test.test.id}}">{{test.test.description}}</a>
             <div id="test{{test.test.id}}" class="modal fade"
                  tabindex="-1" role="dialog" aria-labelledby="testHeader"
                  aria-hidden="true">
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal"
-                              aria-hidden="true">×</button>
-                      <h3 id="testHeader">
+                    <h3 class="modal-title" id="testHeader">
                         Test: {{test.test.description}}
                       </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                       <p>One or more tests are automatically run on
@@ -269,14 +264,14 @@
                       <pre>{{test.test.name}}</pre>
                   </div>
                   <div class="modal-footer">
-                      <button class="btn btn-default" data-dismiss="modal"
+                      <button class="btn btn-secondary" data-bs-dismiss="modal"
                               aria-hidden="true">Close</button>
                   </div>
                 </div>
               </div>
             </div>
             {% if test.condition %}
-            <i class="glyphicon glyphicon-info-sign" title="{{ test.condition }}"></i>
+            <i class="bi bi-info-circle" title="{{ test.condition }}"></i>
             {% endif %}
         </td>
         <td class="pct">{{test.results_pct_rounded}}</td>
@@ -298,12 +293,12 @@
 
             <li>66.66 points can additionally be awarded based on data quality and timeliness of publication</li>
         </ul>
-        <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/" class="btn btn-default">More details &raquo;</a>
+        <a href="https://www.publishwhatyoufund.org/download/2024-aid-transparency-index-technical-paper/" class="btn btn-outline-secondary btn-sm">More details &raquo;</a>
         </div>
         <div class="col-md-6">
             <h4>How do you structure your data?</h4>
             <p>If you use multiple hierarchies in your IATI data, please tell us how the data is structured as this could make a difference to your score.</p>
-            <p><a href="{{links.organisation_feedback}}" class="btn btn-default">Provide structure &raquo;</a></p>
+            <p><a href="{{links.organisation_feedback}}" class="btn btn-outline-secondary btn-sm">Provide structure &raquo;</a></p>
         </div>
     </div>
     </fieldset>
@@ -317,7 +312,7 @@
     <hr />
     <fieldset>
     {% if surveydata %}
-    <div class="pull-right">
+    <div class="float-end">
     <a href="{{links.organisation_survey_edit}}"
        class="btn btn-primary">Review manually collected data</a>
     </div>
@@ -330,7 +325,7 @@
     <thead>
     <th>Category</th>
     <th>Indicator</th>
-    <th><span class="th_test hidden">Test</span></th>
+    <th><span class="th_test d-none">Test</span></th>
     <th>IATI data</th>
     <th>Published</th>
     <th>Format</th>
@@ -343,28 +338,26 @@
         <tr id="indicator-{{row.indicator.id}}">
         <td>{{row.indicator.indicator_subcategory_name}}</td>
         <td><a href="#indicator{{row.indicator.id}}"
-               role="button" data-toggle="modal">
+               role="button" data-bs-toggle="modal" data-bs-target="#indicator{{row.indicator.id}}">
             {{row.indicator.indicator_order | optional_decimal}}.
             {{row.indicator.description}}
           </a>
             <div id="indicator{{row.indicator.id}}"
                  class="modal fade" tabindex="-1" role="dialog"
                  aria-labelledby="indicatorHeader" aria-hidden="true">
-              <div class="modal-dialog" role="document">
+              <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                      <button type="button" class="close"
-                              data-dismiss="modal"
-                              aria-hidden="true">×</button>
-                      <h3 id="indicatorHeader">
+                    <h3 class="modal-title" id="indicatorHeader">
                         Indicator: {{row.indicator.description}}
                       </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                       {{ row.indicator.longdescription|replace('\n', '<br>')|safe }}
                   </div>
                   <div class="modal-footer">
-                      <button class="btn btn-default" data-dismiss="modal"
+                      <button class="btn btn-secondary" data-bs-dismiss="modal"
                               aria-hidden="true">Close</button>
                   </div>
                 </div>
@@ -372,7 +365,7 @@
             </div>
         </td>
         <td></td>
-        <td><span class="label label-default">NOT FOUND</span></td>
+        <td><span class="badge bg-secondary">NOT FOUND</span></td>
 
         {% if surveydata %}
         <td>
@@ -395,36 +388,35 @@
 
         <td><a href="#" class="showTests"
                id="showindicator-{{row.indicator.id}}">
-            <i class="glyphicon glyphicon-chevron-down align-right"></i></a></td>
+            <i class="bi bi-chevron-down align-right"></i></a></td>
         </tr>
 
         {% for test in row.tests %}
         <tr id="tr{{ test.test.id }}"
-            class="group-{{ row.indicator.id }} hidden">
+            class="group-{{ row.indicator.id }} d-none">
         <td>
-          <span class="hidden">
+          <span class="d-none">
             {{ row.indicator.indicator_subcategory_name }}
           </span>
         </td>
         <td>
-          <span class="hidden">
+          <span class="d-none">
             {{ row.indicator.description }}.
           </span>
         </td>
         <td><a href="#test{{ test.test.id }}"
-               role="button" data-toggle="modal">
+               role="button" data-bs-toggle="modal" data-bs-target="#test{{ test.test.id }}">
             {{ test.test.description }}
           </a>
           <div id="test{{ test.test.id }}"
                class="modal fade" tabindex="-1"
                role="dialog" aria-labelledby="testHeader"
                aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal"
-                          aria-hidden="true">×</button>
-                  <h3 id="testHeader">Test: {{ test.test.description }}</h3>
+                    <h3 class="modal-title" id="testHeader">Test: {{ test.test.description }}</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <p>Each indicator can be
@@ -440,7 +432,7 @@
                   <pre>{{ test.test.name }}</pre>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-default" data-dismiss="modal"
+                    <button class="btn btn-secondary" data-bs-dismiss="modal"
                             aria-hidden="true">Close</button>
                 </div>
               </div>
@@ -448,7 +440,7 @@
           </div>
 
             {% if row.condition %}
-          <i class="glyphicon glyphicon-info-sign" title="{{ row.condition }}"></i>
+          <i class="bi bi-info-circle" title="{{ row.condition }}"></i>
             {% endif %}
         </td>
         <td class="pct">{{ test.results_pct_rounded }}</td>
@@ -456,14 +448,14 @@
         <td></td>
         </tr>
         {% else %}
-        <tr class="group-{{ row.indicator.id }} hidden">
-        <td><span class="hidden">
+        <tr class="group-{{ row.indicator.id }} d-none">
+        <td><span class="d-none">
             {{ row.indicator.indicator_category_name_text }}
         </span></td>
-        <td><span class="hidden">
+        <td><span class="d-none">
             {{ row.indicator.indicator_subcategory_name }}
         </span></td>
-        <td><span class="hidden">
+        <td><span class="d-none">
             {{ row.indicator.description }}.
         </span></td>
         <td colspan="6"><strong>No data quality results available.</strong>
@@ -477,7 +469,7 @@
         <div class="col-md-6">
             <h4>Scoring criteria</h4>
             <p>For each indicator, points are received if information is
-              <label class="label label-success">Always published</label>.
+              <label class="badge bg-success">Always published</label>.
               Indicators graduated on the basis of format are scored as
               follows:</p>
             <table class="table">
@@ -499,7 +491,7 @@
                 </tbody>
             </table>
         <a href="{{ technical_paper_url }}"
-           class="btn btn-default">More details &raquo;</a>
+           class="btn btn-outline-secondary btn-sm">More details &raquo;</a>
         </div>
         <div class="col-md-6">
             <h4>Why is IATI data scored more highly?</h4>

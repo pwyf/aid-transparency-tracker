@@ -36,11 +36,11 @@
 {% raw %}
 <script id="header-template" type="x-tmpl-mustache">
     <ul class="breadcrumb">
-        <li><a href="{% endraw %}{{url_for('sampling_summary')}}{% raw %}">Summary</a></li>
-        <li><a href="{{ sampling_list_url }}">Samples</a></li>
-        <li>{{ round_name }}</li>
-        <li>{{ organisation_name }}</li>
-        <li>{{ test_description }}</li>
+        <li class="breadcrumb-item"><a href="{% endraw %}{{url_for('sampling_summary')}}{% raw %}">Summary</a></li>
+        <li class="breadcrumb-item"><a href="{{ sampling_list_url }}">Samples</a></li>
+        <li class="breadcrumb-item">{{ round_name }}</li>
+        <li class="breadcrumb-item">{{ organisation_name }}</li>
+        <li class="breadcrumb-item active">{{ test_description }}</li>
     </ul>
     <h1>{{ test_description }} – {{ organisation_name }}</h1>
 
@@ -48,19 +48,18 @@
     <input type="hidden" name="test_id" value="{{ test_id }}"></input>
     <input type="hidden" name="response" value=""></input>
 
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse"
-				   data-parent="#accordion2" href="#collapseDefinition">
-                Definition
-                </a>
-            </div>
-            <div id="collapseDefinition" class="panel-collapse collapse">
-                <div class="panel-body">
+    <div class="accordion mb-3" id="accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDefinition">
+                    Definition
+                </button>
+            </h2>
+            <div id="collapseDefinition" class="accordion-collapse collapse" data-bs-parent="#accordion">
+                <div class="accordion-body">
                 <p>
                     {{ indicator_description }}
-	            </p>
+                </p>
                 <h4>Test</h4>
                 <p>
                     <i>{{ test_description }}</i>
@@ -76,7 +75,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="mb-3">
                 <label for="comment">Comments:</label>
                 <textarea class="form-control" name="comment">{{ sample_comment }}</textarea>
             </div>
@@ -88,21 +87,20 @@
 <script id="buttons-template" type="x-tmpl-mustache">
     <div class="row">
         <div class="col-md-12">
-            <div class="form-group">
+            <div class="mb-3">
                 {{# buttons }}
                 <button class="btn btn-{{ class }} advance" name="decision" value="{{ value }}">
-                    <span class="glyphicon glyphicon-{{ icon }}"></span>
+                    <i class="bi bi-{{ icon }}"></i>
                     <strong>{{ button }}</strong>
                 </button>
                 {{/ buttons }}
                 <button class="btn btn-warning advance" name="decision" value="0">
-                    <span class="glyphicon glyphicon-info-sign"></span>
+                    <i class="bi bi-info-circle"></i>
                     <strong>not yet sampled</strong>
                 </button>
-                <div class="pull-right">
-                    <label class="checkbox">
-                        <input type="checkbox" {{ unsure }} name="unsure"> I’m unsure about this
-                    </label>
+                <div class="float-end form-check">
+                    <input class="form-check-input" type="checkbox" {{ unsure }} name="unsure" id="unsure-check">
+                    <label class="form-check-label" for="unsure-check">I’m unsure about this</label>
                 </div>
             </div>
         </div>
@@ -111,7 +109,7 @@
 
 <script id="result-template" type="x-tmpl-mustache">
 
-    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="bi bi-box-arrow-up-right" aria-hidden="true"></span></a></h3>
 
     {{#activity_other_titles?}}
     <div>
@@ -136,7 +134,7 @@
             <h4><span class="text-muted">Result</span> {{ title }}</h4>
             <p><span class="text-muted">Description</span> {{ description }}
         </div>
-        <div class="col-md-11 col-md-offset-1">
+        <div class="col-md-11 offset-1">
         	{{# indicators }}
             <h5><span class="text-muted">Indicator</span> {{ title }}</h5>
             <p><span class="text-muted">Description</span> {{ description }}
@@ -164,7 +162,7 @@
 
 <script id="conditions-template" type="x-tmpl-mustache">
 
-    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="bi bi-box-arrow-up-right" aria-hidden="true"></span></a></h3>
 
     {{#activity_other_titles?}}
     <div>
@@ -188,7 +186,7 @@
         <div class="col-md-12">
             <h4><span class="text-muted">Attached</span> {{ attached }}</h4>
         </div>
-        <div class="col-md-11 col-md-offset-1">
+        <div class="col-md-11 offset-1">
         	{{# conditions }}
             <h5><span class="text-muted">Text</span></h5>
                 {{# texts }}
@@ -210,7 +208,7 @@
 
 <script id="participating-org-template" type="x-tmpl-mustache">
 
-    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="bi bi-box-arrow-up-right" aria-hidden="true"></span></a></h3>
 
     {{#activity_other_titles?}}
     <div>
@@ -236,7 +234,7 @@
     <hr />
     <div class="row" id="data-content">
 	{{# pos }}
-        <div class="col-md-11 col-md-offset-1">
+        <div class="col-md-11 offset-1">
         	{{# pos }}
             <h5><span class="text-muted">Text</span></h5>
                 {{# texts }}
@@ -262,7 +260,7 @@
 
 <script id="transactions-with-valid-receiver-template" type="x-tmpl-mustache">
 
-    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="bi bi-box-arrow-up-right" aria-hidden="true"></span></a></h3>
 
     {{#activity_other_titles?}}
     <div>
@@ -288,7 +286,7 @@
     <hr />
     <div class="row" id="data-content">
 	{{# receiver_orgs }}
-        <div class="col-md-11 col-md-offset-1">
+        <div class="col-md-11 offset-1">
         	{{# receiver_orgs }}
             <h5><span class="text-muted">Text</span></h5>
                 {{# texts }}
@@ -314,7 +312,7 @@
 
 <script id="document-template" type="x-tmpl-mustache">
 
-    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="bi bi-box-arrow-up-right" aria-hidden="true"></span></a></h3>
 
     {{#activity_other_titles?}}
     <div>
@@ -339,7 +337,7 @@
             <h4>{{ name }}</h4>
             <p><a href="{{ url}}" target="_blank">{{ url }}</a></p>
             {{# categories }}
-			<span class="label label-default">{{ category }} ({{ category_code }})</span>
+			<span class="badge bg-secondary">{{ category }} ({{ category_code }})</span>
 			{{/ categories }}
         </div>
 	{{/ documents }}
@@ -355,7 +353,7 @@
 
 <script id="text-template" type="x-tmpl-mustache">
 
-    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="bi bi-box-arrow-up-right" aria-hidden="true"></span></a></h3>
 
     {{#activity_other_titles?}}
     <div>
@@ -383,7 +381,7 @@
 
 <script id="location-template" type="x-tmpl-mustache">
 
-    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></a></h3>
+    <h3>Title: {{ activity_title }} <a href="https://d-portal.org/q.html?aid={{ iati-identifier }}" target="_blank"><span class="bi bi-box-arrow-up-right" aria-hidden="true"></span></a></h3>
 
     {{#activity_other_titles?}}
     <div>
@@ -426,7 +424,7 @@
             <h4>{{ name }}</h4>
             <p><a href="{{ url}}" target="_blank">{{ url }}</a></p>
             {{# categories }}
-			<span class="label label-default">{{ category }} ({{ category_code }})</span>
+			<span class="badge bg-secondary">{{ category }} ({{ category_code }})</span>
 			{{/ categories }}
         </div>
 	{{/ documents }}
@@ -441,16 +439,15 @@
 </script>
 <script id="xml-template" type="x-tmpl-mustache">
 
-    <div class="panel-group" id="accordion-xml">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse"
-				   data-parent="#accordion-location" href="#collapseXML">
-                XML
-                </a>
-            </div>
-            <div id="collapseXML" class="panel-collapse collapse">
-                <div class="panel-body">
+    <div class="accordion" id="accordion-xml">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseXML">
+                    XML
+                </button>
+            </h2>
+            <div id="collapseXML" class="accordion-collapse collapse" data-bs-parent="#accordion-xml">
+                <div class="accordion-body">
                 <pre class="prettyprint">{{ xml }}</pre>
                 </div>
             </div>

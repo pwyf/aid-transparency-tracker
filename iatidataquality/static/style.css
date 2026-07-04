@@ -60,7 +60,7 @@ footer {
 
 /* Main marketing message and sign up button */
 .pwyf-jumbotron {
-    margin: -20px 0 40px;
+    margin: 0 0 40px;
     text-align: center;
 }
 /*.jumbotron:after {
@@ -127,9 +127,6 @@ h1, .navbar-brand {
     color:#ffffff;
 }
 
-.navbar {
-    margin-bottom:19px;
-}
 th.restrict_text, td.restrict_text {
     max-width:200px;
     word-wrap:break-word;

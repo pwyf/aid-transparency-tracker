@@ -4,37 +4,35 @@
     <script src="{{url_for('static', filename='jquery.tablesorter.min.js')}}"></script>
 
     <ul class="breadcrumb">
-      <li><a href="{{ url_for('sampling_summary') }}">Summary</a></li>
-      <li>Samples</li>
+      <li class="breadcrumb-item"><a href="{{ url_for('sampling_summary') }}">Summary</a></li>
+      <li class="breadcrumb-item">Samples</li>
     </ul>
 
     <h1>Samples</h1>
 
-    <div class="row" style="margin-bottom: 20px">
-      <form method="GET">
+    <form method="GET" class="row mb-3">
         <div class="col-lg-4">
-          <select class="form-control sampling-filter" id="org-filter" name="org">
+          <select class="form-select sampling-filter" id="org-filter" name="org">
             {% for org in all_orgs %}
               <option {% if org.id == org_id %}selected="selected"{% endif %} value="{{ org.id }}">{{ org.organisation_name }}</option>
             {% endfor %}
           </select>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <select class="form-control sampling-filter" id="test-filter" name="test">
+          <select class="form-select sampling-filter" id="test-filter" name="test">
             {% for test in all_tests %}
               <option {% if test.id == test_id %}selected="selected"{% endif %} value="{{ test.id }}">{{ test.description }}</option>
             {% endfor %}
           </select>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <select class="form-control sampling-filter" id="round-filter" name="round">
+          <select class="form-select sampling-filter" id="round-filter" name="round">
             {% for round in all_rounds %}
               <option {% if round.id == round_id %}selected="selected"{% endif %} value="{{ round.id }}">{{ round.name }}{% if round.snapshot_date %} ({{ round.snapshot_date }}){% endif %}</option>
             {% endfor %}
           </select>
         </div><!-- /.col-lg-4 -->
-      </form>
-    </div>
+    </form>
 
     {% if samples %}
     <table class="table" id="samples">
@@ -55,16 +53,16 @@
           <a href="{{url_for('sampling_sample', uuid=s.sample.sampling_id) }}">{{ s.sample.activity_title }}</a>
         </td>
         <td>
-          <span class="label label-{{ s.response.class }}"><i class="glyphicon glyphicon-{{ s.response.icon }}"></i> {{ s.response.button }}</span>
+          <span class="badge bg-{{ s.response.class }}"><i class="bi bi-{{ s.response.icon }}"></i> {{ s.response.button }}</span>
         </td>
         <td>
           {% if s.unsure %}
-          <span class="label label-danger"><i class="glyphicon glyphicon-white glyphicon-info-sign"></i> Unsure</span>
+          <span class="badge bg-danger"><i class="bi bi-info-circle"></i> Unsure</span>
           {% endif %}
         </td>
         <td>
           {% if s.comment %}
-          <a href="#" data-toggle="tooltip" title="{{ s.comment }}"><i class="glyphicon glyphicon-white glyphicon-comment"></i></a>
+          <a href="#" data-bs-toggle="tooltip" title="{{ s.comment }}"><i class="bi bi-chat"></i></a>
           {% endif %}
         </td>
       </tr>
@@ -84,7 +82,7 @@
         $("table#samples").tablesorter({
           sortList: [[0,0]]
         });
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-bs-toggle="tooltip"]').tooltip();
       });
     </script>
 {% endblock %}
