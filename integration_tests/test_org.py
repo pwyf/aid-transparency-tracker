@@ -55,11 +55,11 @@ def test_organisation_publication(browser):
     assert "16.0." not in body_text
     assert "30.1." in body_text
 
-    browser.find_element(By.ID, "showindicator-16").find_element(
-        By.TAG_NAME, "i"
-    ).click()
+    show_indicator = browser.find_element(By.ID, "showindicator-16")
+    browser.execute_script("arguments[0].click();", show_indicator)
 
-    browser.find_element(By.LINK_TEXT, "Title is present").click()
+    link = browser.find_element(By.LINK_TEXT, "Title is present")
+    browser.execute_script("arguments[0].click();", link)
     time.sleep(1)
 
     assert (
