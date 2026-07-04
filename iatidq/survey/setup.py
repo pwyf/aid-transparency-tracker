@@ -53,12 +53,12 @@ def setupSurvey():
         }, {
             'name': 'not-applicable',
             'title': 'Format not applicable to this indicator',
-            'format_class': 'inverse',
+            'format_class': 'secondary',
             'format_value': 1.0
         }, {
             'name': 'not-published',
             'title': 'Not published',
-            'format_class': 'inverse',
+            'format_class': 'secondary',
             'format_value': 1.0
         }
     ]

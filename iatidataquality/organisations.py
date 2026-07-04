@@ -236,15 +236,14 @@ def organisation_publication(organisation_code, aggregation_type):
     publishedformats = dict(list(map(id_tuple, dqsurveys.publishedFormatsAll())))
 
     published_status_by_id[None] = {
-        'title': 'Unknown',
         'title': 'unknown',
-        'publishedstatus_class': 'label-inverse'
+        'publishedstatus_class': 'secondary'
         }
 
     publishedformats[None] = {
         'title': 'Unknown',
         'name': 'unknown',
-        'format_class': 'label-inverse'
+        'format_class': 'secondary'
         }
 
     latest_runtime = 1
