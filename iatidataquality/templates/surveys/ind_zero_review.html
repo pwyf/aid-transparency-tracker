@@ -34,15 +34,15 @@
             <td><span class="text-muted">Researcher</span></td>
             <td>
           {% if indicator.indicator.indicator_ordinal %}
-            <span class="label label-{{year_data[surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
+            <span class="badge text-bg-{{year_data[surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
             {{year_data[surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
           {% else %}
-            <span class="label label-{{surveydata.researcher[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">
+            <span class="badge text-bg-{{surveydata.researcher[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">
             {{surveydata.researcher[indicator.indicator.id].PublishedStatus.title}}
             </span>
           {% endif %}<br />
 
-            <span class="label label-{{surveydata.researcher[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedFormat.title}}</span>
+            <span class="badge text-bg-{{surveydata.researcher[indicator.indicator.id].PublishedFormat.format_class}}" title="Researcher's initial assessment">{{surveydata.researcher[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
             {{surveydata.researcher[indicator.indicator.id].OrganisationSurveyData.published_source}}
@@ -57,14 +57,14 @@
             <td><span class="text-muted">Donor review</span></td>
             <td>
           {% if indicator.indicator.indicator_ordinal %}
-            <span class="label label-{{year_data[surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
+            <span class="badge text-bg-{{year_data[surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
             {{year_data[surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
           {% else %}
-            <span class="label label-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">
+            <span class="badge text-bg-{{surveydata.donorreview[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">
             {{surveydata.donorreview[indicator.indicator.id].PublishedStatus.title}}
             </span>
           {% endif %}<br />
-            <span class="label label-{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.title}}</span>
+            <span class="badge text-bg-{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.format_class}}" title="Donor's response">{{surveydata.donorreview[indicator.indicator.id].PublishedFormat.title}}</span>
             </td>
             <td class="restrict_text">
             {{surveydata.donorreview[indicator.indicator.id].OrganisationSurveyData.published_source}}
