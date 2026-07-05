@@ -132,40 +132,41 @@ Feature: Total disaggregated budget
                        '{year} year{plural} forward'
     fieldnames = ['dataset', 'identifier', 'index', 'result',
                   'hierarchy', 'explanation']
+    org_records = []
+    for dataset in publisher.datasets.where(filetype='organisation'):
+        for idx, organisation in enumerate(dataset.organisations):
+            if condition:
+                activity_condition, org_condition = condition.split('|')
+                if org_condition.strip() and not organisation.etree.xpath(org_condition):
+                    continue
+            org_records.append((dataset.name, organisation.id, idx, organisation.etree))
+
     with open(output_filepath, 'w') as handler:
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
         for country_code in current_country_codes:
             feature = tester._gherkinify_feature(
                 disaggregated_budget_tmpl.format(country_code=country_code))
-            for dataset in publisher.datasets:
-                for idx, organisation in enumerate(dataset.organisations):
-
-                    if condition:
-                        activity_condition, org_condition = condition.split('|')
-
-                        if org_condition.strip() and not organisation.etree.xpath(org_condition):
-                            continue
-
-                    for year, test in enumerate(feature.tests):
-                        result = test(
-                            organisation.etree,
-                            today=snapshot_date,
-                            codelists=codelists)
-                        explanation = explanation_tmpl.format(
-                            country_code=country_code,
-                            found='found' if result else 'not found',
-                            year=year + 1,
-                            plural='s' if year > 0 else '',
-                        )
-                        writer.writerow({
-                            'dataset': dataset.name,
-                            'identifier': organisation.id,
-                            'index': idx,
-                            'result': '1' if result else '0',
-                            'hierarchy': 1,
-                            'explanation': explanation,
-                        })
+            for dataset_name, org_id, idx, etree in org_records:
+                for year, test in enumerate(feature.tests):
+                    result = test(
+                        etree,
+                        today=snapshot_date,
+                        codelists=codelists)
+                    explanation = explanation_tmpl.format(
+                        country_code=country_code,
+                        found='found' if result else 'not found',
+                        year=year + 1,
+                        plural='s' if year > 0 else '',
+                    )
+                    writer.writerow({
+                        'dataset': dataset_name,
+                        'identifier': org_id,
+                        'index': idx,
+                        'result': '1' if result else '0',
+                        'hierarchy': 1,
+                        'explanation': explanation,
+                    })
 
 
 
