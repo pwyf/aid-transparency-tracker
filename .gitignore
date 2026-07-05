@@ -7,6 +7,8 @@ __iatikitcache__/
 dq
 data/
 results/
+!unittests/**/data/
+!unittests/**/data/**
 
 # config file
 /config.py
