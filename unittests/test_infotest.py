@@ -17,6 +17,7 @@ import os
 from dataclasses import dataclass
 from os.path import abspath, dirname, join
 
+import iatikit
 import pytest
 
 from iatidataquality import app as flask_app
@@ -51,9 +52,15 @@ def org():
 
 @pytest.fixture
 def iati_app(tmp_path, monkeypatch):
-    """App context with IATI_DATA_PATH → fixtures, IATI_RESULT_PATH → tmp_path."""
+    """App context with IATI_DATA_PATH → fixtures, IATI_RESULT_PATH → tmp_path.
+
+    iatikit.codelists() is patched to return None because codelists are not
+    downloaded in CI. The disaggregated_budget step definitions receive codelists
+    as a **kwargs argument but the "available N years forward" step doesn't use it.
+    """
     monkeypatch.setitem(flask_app.config, "IATI_DATA_PATH", FIXTURES_DIR)
     monkeypatch.setitem(flask_app.config, "IATI_RESULT_PATH", str(tmp_path))
+    monkeypatch.setattr(iatikit, "codelists", lambda: None)
     os.makedirs(join(str(tmp_path), SNAPSHOT_DATE, ORG_CODE), exist_ok=True)
     with flask_app.app_context():
         yield flask_app, tmp_path
