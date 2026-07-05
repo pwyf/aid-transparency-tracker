@@ -20,8 +20,8 @@ from os.path import abspath, dirname, join
 import iatikit
 import pytest
 
-from iatidataquality import app as flask_app
 from beta import infotest
+from iatidataquality import app as flask_app
 
 SNAPSHOT_DATE = "2024-01-01"
 FIXTURES_DIR = join(dirname(abspath(__file__)), "fixtures", "iati_data")
@@ -84,7 +84,9 @@ class TestCountryStrategyOrMou:
 
     def _run(self, iati_app, org, current_data_results):
         app, tmp_path = iati_app
-        infotest.country_strategy_or_mou(org, SNAPSHOT_DATE, self.TEST_NAME, current_data_results)
+        infotest.country_strategy_or_mou(
+            org, SNAPSHOT_DATE, self.TEST_NAME, current_data_results
+        )
         return _read_csv(_result_path(tmp_path, self.CSV_NAME))
 
     def _by_country(self, rows):
@@ -95,7 +97,9 @@ class TestCountryStrategyOrMou:
         """Activity with A09 doc-link is written as result '1'."""
         monkeypatch.setitem(
             infotest.current_country_codes_by_org_country_strategy_exclusions,
-            ORG_CODE, set(TEST_COUNTRIES))
+            ORG_CODE,
+            set(TEST_COUNTRIES),
+        )
         rows = self._run(iati_app, org, CURRENT_DATA_RESULTS)
         by_country = self._by_country(rows)
         assert by_country["AF"]["result"] == "1"
@@ -105,7 +109,9 @@ class TestCountryStrategyOrMou:
         """Org file with B03 doc-link is written as result '1'."""
         monkeypatch.setitem(
             infotest.current_country_codes_by_org_country_strategy_exclusions,
-            ORG_CODE, set(TEST_COUNTRIES))
+            ORG_CODE,
+            set(TEST_COUNTRIES),
+        )
         rows = self._run(iati_app, org, CURRENT_DATA_RESULTS)
         by_country = self._by_country(rows)
         assert by_country["AO"]["result"] == "1"
@@ -115,17 +121,23 @@ class TestCountryStrategyOrMou:
         """Country with neither A09 nor B03/B13 is written as result '0'."""
         monkeypatch.setitem(
             infotest.current_country_codes_by_org_country_strategy_exclusions,
-            ORG_CODE, set(TEST_COUNTRIES))
+            ORG_CODE,
+            set(TEST_COUNTRIES),
+        )
         rows = self._run(iati_app, org, CURRENT_DATA_RESULTS)
         by_country = self._by_country(rows)
         assert by_country["DZ"]["result"] == "0"
         assert "No country strategy" in by_country["DZ"]["explanation"]
 
-    def test_activity_skipped_when_not_in_current_data(self, iati_app, org, monkeypatch):
+    def test_activity_skipped_when_not_in_current_data(
+        self, iati_app, org, monkeypatch
+    ):
         """Activity-level A09 is not counted when current_data_results excludes it."""
         monkeypatch.setitem(
             infotest.current_country_codes_by_org_country_strategy_exclusions,
-            ORG_CODE, {"AF"})
+            ORG_CODE,
+            {"AF"},
+        )
         # empty current_data_results: no activity passes the filter
         rows = self._run(iati_app, org, {})
         assert len(rows) == 1
@@ -134,7 +146,9 @@ class TestCountryStrategyOrMou:
     def test_output_has_one_row_per_country(self, iati_app, org, monkeypatch):
         monkeypatch.setitem(
             infotest.current_country_codes_by_org_country_strategy_exclusions,
-            ORG_CODE, set(TEST_COUNTRIES))
+            ORG_CODE,
+            set(TEST_COUNTRIES),
+        )
         rows = self._run(iati_app, org, CURRENT_DATA_RESULTS)
         assert len(rows) == len(TEST_COUNTRIES)
 
@@ -148,7 +162,9 @@ class TestDisaggregatedBudget:
 
     def _run(self, iati_app, org):
         app, tmp_path = iati_app
-        infotest.disaggregated_budget(org, SNAPSHOT_DATE, self.TEST_NAME, {}, org.condition)
+        infotest.disaggregated_budget(
+            org, SNAPSHOT_DATE, self.TEST_NAME, {}, org.condition
+        )
         return _read_csv(_result_path(tmp_path, self.CSV_NAME))
 
     def _by_country_year(self, rows):
@@ -165,7 +181,9 @@ class TestDisaggregatedBudget:
 
     def test_af_budget_all_three_years(self, iati_app, org, monkeypatch):
         """AF has budgets covering years 1, 2, 3 forward → all '1'."""
-        monkeypatch.setitem(infotest.current_country_codes_by_org, ORG_CODE, set(TEST_COUNTRIES))
+        monkeypatch.setitem(
+            infotest.current_country_codes_by_org, ORG_CODE, set(TEST_COUNTRIES)
+        )
         by = self._by_country_year(self._run(iati_app, org))
         assert by[("AF", 1)]["result"] == "1"
         assert by[("AF", 2)]["result"] == "1"
@@ -173,7 +191,9 @@ class TestDisaggregatedBudget:
 
     def test_dz_budget_only_year_one(self, iati_app, org, monkeypatch):
         """DZ has budget only for year 1 → '1', years 2 and 3 → '0'."""
-        monkeypatch.setitem(infotest.current_country_codes_by_org, ORG_CODE, set(TEST_COUNTRIES))
+        monkeypatch.setitem(
+            infotest.current_country_codes_by_org, ORG_CODE, set(TEST_COUNTRIES)
+        )
         by = self._by_country_year(self._run(iati_app, org))
         assert by[("DZ", 1)]["result"] == "1"
         assert by[("DZ", 2)]["result"] == "0"
@@ -181,7 +201,9 @@ class TestDisaggregatedBudget:
 
     def test_ao_no_budget(self, iati_app, org, monkeypatch):
         """AO has no budget → all three years '0'."""
-        monkeypatch.setitem(infotest.current_country_codes_by_org, ORG_CODE, set(TEST_COUNTRIES))
+        monkeypatch.setitem(
+            infotest.current_country_codes_by_org, ORG_CODE, set(TEST_COUNTRIES)
+        )
         by = self._by_country_year(self._run(iati_app, org))
         assert by[("AO", 1)]["result"] == "0"
         assert by[("AO", 2)]["result"] == "0"
@@ -189,7 +211,9 @@ class TestDisaggregatedBudget:
 
     def test_output_has_three_rows_per_country(self, iati_app, org, monkeypatch):
         """Three rows (years 1-3) are written for each country."""
-        monkeypatch.setitem(infotest.current_country_codes_by_org, ORG_CODE, set(TEST_COUNTRIES))
+        monkeypatch.setitem(
+            infotest.current_country_codes_by_org, ORG_CODE, set(TEST_COUNTRIES)
+        )
         rows = self._run(iati_app, org)
         assert len(rows) == len(TEST_COUNTRIES) * 3
 
@@ -205,7 +229,8 @@ class TestDisaggregatedBudget:
         )
         app, tmp_path = iati_app
         infotest.disaggregated_budget(
-            filtered_org, SNAPSHOT_DATE, self.TEST_NAME, {}, filtered_org.condition)
+            filtered_org, SNAPSHOT_DATE, self.TEST_NAME, {}, filtered_org.condition
+        )
         rows = _read_csv(_result_path(tmp_path, self.CSV_NAME))
         assert rows == []
 
@@ -220,7 +245,12 @@ class TestNetworkedDataPart2:
     def _run(self, iati_app, org):
         app, tmp_path = iati_app
         infotest.networked_data_part_2(
-            org, SNAPSHOT_DATE, self.TEST_NAME, CURRENT_DATA_RESULTS, condition=org.condition)
+            org,
+            SNAPSHOT_DATE,
+            self.TEST_NAME,
+            CURRENT_DATA_RESULTS,
+            condition=org.condition,
+        )
         return _read_csv(_result_path(tmp_path, self.CSV_NAME))
 
     def test_mixed_refs_score(self, iati_app, org):
@@ -239,13 +269,21 @@ class TestNetworkedDataPart2:
         """Activities absent from current_data_results are not written to output."""
         app, tmp_path = iati_app
         infotest.networked_data_part_2(
-            org, SNAPSHOT_DATE, self.TEST_NAME, {}, condition=org.condition)
+            org, SNAPSHOT_DATE, self.TEST_NAME, {}, condition=org.condition
+        )
         rows = _read_csv(_result_path(tmp_path, self.CSV_NAME))
         assert rows == []
 
     def test_output_fieldnames(self, iati_app, org):
         rows = self._run(iati_app, org)
-        expected = {"dataset", "identifier", "index", "result", "hierarchy", "explanation"}
+        expected = {
+            "dataset",
+            "identifier",
+            "index",
+            "result",
+            "hierarchy",
+            "explanation",
+        }
         assert set(rows[0].keys()) == expected
 
 
@@ -258,7 +296,9 @@ class TestNetworkedDataPart3:
 
     def _run(self, iati_app, org):
         app, tmp_path = iati_app
-        infotest.networked_data_part_3(org, SNAPSHOT_DATE, self.TEST_NAME, CURRENT_DATA_RESULTS)
+        infotest.networked_data_part_3(
+            org, SNAPSHOT_DATE, self.TEST_NAME, CURRENT_DATA_RESULTS
+        )
         return _read_csv(_result_path(tmp_path, self.CSV_NAME))
 
     def test_mixed_transactions_score(self, iati_app, org):
