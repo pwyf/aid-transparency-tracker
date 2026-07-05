@@ -379,7 +379,7 @@ def test_data(date, refresh, part_count, part, delete, orgs, force):
     publishers = iatikit.data(path=snapshot_xml_path).publishers
     name_to_publisher = dict((publisher.name, publisher) for publisher in publishers)
 
-    for org in db.session.query(Organisation).all():
+    for org in db.session.query(Organisation).order_by(Organisation.organisation_name).all():
         if org.id % part_count != (part -1):
             continue
 
@@ -488,8 +488,8 @@ def aggregate_results(date, force):
 
     click.echo('Summarizing results from IATI data snapshot ' +
                '({}) ...'.format(result_date))
-    publishers = [x for x in listdir(snapshot_result_path)
-                  if isdir(join(snapshot_result_path, x))]
+    publishers = sorted(x for x in listdir(snapshot_result_path)
+                       if isdir(join(snapshot_result_path, x)))
     with click.progressbar(publishers) as publishers:
         for organisation_code in publishers:
             org = Organisation.where(
