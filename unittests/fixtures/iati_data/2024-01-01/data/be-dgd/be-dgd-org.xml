@@ -1,0 +1,48 @@
+<iati-organisations version="2.03">
+  <iati-organisation>
+    <organisation-identifier>XM-DAC-2-10</organisation-identifier>
+    <!--
+      B03 document-link covering AO: org-level country strategy.
+      Used by country_strategy_or_mou to find AO strategy independently of
+      activity-level current_data_results filtering.
+    -->
+    <document-link url="http://example.com/country-plan-ao">
+      <category code="B03"/>
+      <recipient-country code="AO"/>
+    </document-link>
+    <!--
+      Disaggregated budgets for AF: period-ends in 2024, 2025, 2026 cover
+      years 1, 2, 3 forward from snapshot_date 2024-01-01.
+    -->
+    <recipient-country-budget>
+      <recipient-country code="AF"/>
+      <period-start iso-date="2024-01-01"/>
+      <period-end iso-date="2024-12-31"/>
+      <value>1000000</value>
+    </recipient-country-budget>
+    <recipient-country-budget>
+      <recipient-country code="AF"/>
+      <period-start iso-date="2025-01-01"/>
+      <period-end iso-date="2025-12-31"/>
+      <value>1000000</value>
+    </recipient-country-budget>
+    <recipient-country-budget>
+      <recipient-country code="AF"/>
+      <period-start iso-date="2026-01-01"/>
+      <period-end iso-date="2026-12-31"/>
+      <value>1000000</value>
+    </recipient-country-budget>
+    <!--
+      Disaggregated budget for DZ: period-end 2024-06-30 satisfies only year 1 forward
+      (year 1 window: [2024-01-01, 2024-12-31]; year 2 window starts at 2024-12-31).
+      Years 2 and 3 forward will be "not found".
+    -->
+    <recipient-country-budget>
+      <recipient-country code="DZ"/>
+      <period-start iso-date="2024-01-01"/>
+      <period-end iso-date="2024-06-30"/>
+      <value>500000</value>
+    </recipient-country-budget>
+    <!-- No budget for AO: all 3 years will be "not found". -->
+  </iati-organisation>
+</iati-organisations>
