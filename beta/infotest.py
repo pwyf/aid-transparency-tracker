@@ -220,7 +220,9 @@ def process_orgid():
     return orgid_by_code
 
 
-def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
+def test_participating_org_refs(publisher_prefix, activity_tree, self_refs,
+                               publishers_by_prefix, publishers_by_ident,
+                               sector_by_code, orgid_by_code):
 
     aid_types = activity_tree.xpath('default-aid-type/@code')
     if 'A01' in aid_types or 'A02' in aid_types:
@@ -228,10 +230,6 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
 
     if not self_refs:
         return 'Organisation excluded from networked data test', None
-
-    publishers_by_prefix, publishers_by_ident = process_publishers()
-    sector_by_code = process_sector()
-    orgid_by_code = process_orgid()
 
     publisher_registry_id = publishers_by_prefix[publisher_prefix]['ident']
     organisation_ident = None
@@ -361,7 +359,7 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
 
-        for dataset in publisher.datasets:
+        for dataset in publisher.datasets.where(filetype='activity'):
             for idx, activity in enumerate(dataset.activities):
                 # Look for the activity index (idx) as a key in current_data_results,
                 # to determine whether a condition was applied to it or not.
@@ -373,7 +371,10 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
                         idx not in current_data_results[dataset.name]:
                     continue
 
-                explanation, score = test_participating_org_refs(org.registry_slug, activity.etree, self_refs)
+                explanation, score = test_participating_org_refs(
+                    org.registry_slug, activity.etree, self_refs,
+                    publishers_by_prefix, publishers_by_ident,
+                    sector_by_code, orgid_by_code)
 
                 if score is None:
                     score = 'not relevant'
@@ -432,7 +433,7 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
 
-        for dataset in publisher.datasets:
+        for dataset in publisher.datasets.where(filetype='activity'):
             for idx, activity in enumerate(dataset.activities):
                 # Look for the activity index (idx) as a key in current_data_results,
                 # to determine whether a condition was applied to it or not.
