@@ -1,0 +1,38 @@
+<iati-activities version="2.03">
+  <!--
+    Activity 0: recipient-country AF with A09 doc-link (country strategy found).
+    Also exercises networked-data tests: self-ref (XM-DAC-2-10), known publisher
+    (XI-IATI-EC_INTPA), and unknown ref (XX-UNKNOWN-FAKE) as participating-orgs,
+    and two disbursement transactions with those same receiver refs.
+  -->
+  <iati-activity>
+    <iati-identifier>BE-DGD-ACT-1</iati-identifier>
+    <activity-status code="2"/>
+    <recipient-country code="AF"/>
+    <document-link url="http://example.com/strategy-af">
+      <category code="A09"/>
+    </document-link>
+    <participating-org ref="XM-DAC-2-10" role="1"/>
+    <participating-org ref="XI-IATI-EC_INTPA" role="2"/>
+    <participating-org ref="XX-UNKNOWN-FAKE" role="3"/>
+    <transaction>
+      <transaction-type code="2"/>
+      <receiver-org ref="XI-IATI-EC_INTPA"/>
+    </transaction>
+    <transaction>
+      <transaction-type code="2"/>
+      <receiver-org ref="XX-UNKNOWN-FAKE"/>
+    </transaction>
+  </iati-activity>
+  <!--
+    Activity 1: recipient-country AO with no A09 doc-link.
+    Only the self-ref participating-org is listed, so networked-data part 2
+    returns "All self refs". No transactions, so part 3 returns "not relevant".
+  -->
+  <iati-activity>
+    <iati-identifier>BE-DGD-ACT-2</iati-identifier>
+    <activity-status code="2"/>
+    <recipient-country code="AO"/>
+    <participating-org ref="XM-DAC-2-10" role="1"/>
+  </iati-activity>
+</iati-activities>

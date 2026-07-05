@@ -40,7 +40,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
     current_country_codes = list(current_country_codes_by_org_country_strategy_exclusions[remove_organisation_code_suffix(org.organisation_code)])
 
     country_strategies = {}
-    for dataset in publisher.datasets:
+    for dataset in publisher.datasets.where(filetype='activity'):
         for idx, activity in enumerate(dataset.activities):
             if dataset.name not in current_data_results or idx not in current_data_results[dataset.name] or current_data_results[dataset.name][idx] is False:
                 continue
@@ -57,6 +57,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
                     'explanation': 'A09 found for {}',
                 }
 
+    for dataset in publisher.datasets.where(filetype='organisation'):
         for idx, organisation in enumerate(dataset.organisations):
             org_level_docs = organisation.etree.xpath(
                 'document-link[category/@code="B03"]/recipient-country/@code')
@@ -131,40 +132,41 @@ Feature: Total disaggregated budget
                        '{year} year{plural} forward'
     fieldnames = ['dataset', 'identifier', 'index', 'result',
                   'hierarchy', 'explanation']
+    org_records = []
+    for dataset in publisher.datasets.where(filetype='organisation'):
+        for idx, organisation in enumerate(dataset.organisations):
+            if condition:
+                activity_condition, org_condition = condition.split('|')
+                if org_condition.strip() and not organisation.etree.xpath(org_condition):
+                    continue
+            org_records.append((dataset.name, organisation.id, idx, organisation.etree))
+
     with open(output_filepath, 'w') as handler:
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
         for country_code in current_country_codes:
             feature = tester._gherkinify_feature(
                 disaggregated_budget_tmpl.format(country_code=country_code))
-            for dataset in publisher.datasets:
-                for idx, organisation in enumerate(dataset.organisations):
-
-                    if condition:
-                        activity_condition, org_condition = condition.split('|')
-
-                        if org_condition.strip() and not organisation.etree.xpath(org_condition):
-                            continue
-
-                    for year, test in enumerate(feature.tests):
-                        result = test(
-                            organisation.etree,
-                            today=snapshot_date,
-                            codelists=codelists)
-                        explanation = explanation_tmpl.format(
-                            country_code=country_code,
-                            found='found' if result else 'not found',
-                            year=year + 1,
-                            plural='s' if year > 0 else '',
-                        )
-                        writer.writerow({
-                            'dataset': dataset.name,
-                            'identifier': organisation.id,
-                            'index': idx,
-                            'result': '1' if result else '0',
-                            'hierarchy': 1,
-                            'explanation': explanation,
-                        })
+            for dataset_name, org_id, idx, etree in org_records:
+                for year, test in enumerate(feature.tests):
+                    result = test(
+                        etree,
+                        today=snapshot_date,
+                        codelists=codelists)
+                    explanation = explanation_tmpl.format(
+                        country_code=country_code,
+                        found='found' if result else 'not found',
+                        year=year + 1,
+                        plural='s' if year > 0 else '',
+                    )
+                    writer.writerow({
+                        'dataset': dataset_name,
+                        'identifier': org_id,
+                        'index': idx,
+                        'result': '1' if result else '0',
+                        'hierarchy': 1,
+                        'explanation': explanation,
+                    })
 
 
 
@@ -218,7 +220,9 @@ def process_orgid():
     return orgid_by_code
 
 
-def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
+def test_participating_org_refs(publisher_prefix, activity_tree, self_refs,
+                               publishers_by_prefix, publishers_by_ident,
+                               sector_by_code, orgid_by_code):
 
     aid_types = activity_tree.xpath('default-aid-type/@code')
     if 'A01' in aid_types or 'A02' in aid_types:
@@ -226,10 +230,6 @@ def test_participating_org_refs(publisher_prefix, activity_tree, self_refs):
 
     if not self_refs:
         return 'Organisation excluded from networked data test', None
-
-    publishers_by_prefix, publishers_by_ident = process_publishers()
-    sector_by_code = process_sector()
-    orgid_by_code = process_orgid()
 
     publisher_registry_id = publishers_by_prefix[publisher_prefix]['ident']
     organisation_ident = None
@@ -359,7 +359,7 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
 
-        for dataset in publisher.datasets:
+        for dataset in publisher.datasets.where(filetype='activity'):
             for idx, activity in enumerate(dataset.activities):
                 # Look for the activity index (idx) as a key in current_data_results,
                 # to determine whether a condition was applied to it or not.
@@ -371,7 +371,10 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
                         idx not in current_data_results[dataset.name]:
                     continue
 
-                explanation, score = test_participating_org_refs(org.registry_slug, activity.etree, self_refs)
+                explanation, score = test_participating_org_refs(
+                    org.registry_slug, activity.etree, self_refs,
+                    publishers_by_prefix, publishers_by_ident,
+                    sector_by_code, orgid_by_code)
 
                 if score is None:
                     score = 'not relevant'
@@ -430,7 +433,7 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
 
-        for dataset in publisher.datasets:
+        for dataset in publisher.datasets.where(filetype='activity'):
             for idx, activity in enumerate(dataset.activities):
                 # Look for the activity index (idx) as a key in current_data_results,
                 # to determine whether a condition was applied to it or not.
