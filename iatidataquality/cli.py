@@ -2,6 +2,7 @@ from os.path import dirname, exists, join, isdir
 from os import listdir, makedirs
 from sqlite3 import dbapi2 as sample_work_sqlite
 import shutil
+import traceback
 
 import click
 import iatikit
@@ -414,26 +415,46 @@ def test_data(date, refresh, part_count, part, delete, orgs, force):
         # run country strategy / MoU test
         test_name = 'Strategy (country/sector) or Memorandum of Understanding'
         click.echo(test_name)
-        infotest.country_strategy_or_mou(
-            org, snapshot_date, test_name, current_data_results)
+        try:
+            infotest.country_strategy_or_mou(
+                org, snapshot_date, test_name, current_data_results)
+        except Exception:
+            click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
+                        fg='red', err=True)
+            click.echo(traceback.format_exc(), err=True)
 
         # run disaggregated budget test
         test_name = 'Disaggregated budget'
         click.echo(test_name)
-        infotest.disaggregated_budget(
-            org, snapshot_date, test_name, current_data_results, org.condition)
+        try:
+            infotest.disaggregated_budget(
+                org, snapshot_date, test_name, current_data_results, org.condition)
+        except Exception:
+            click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
+                        fg='red', err=True)
+            click.echo(traceback.format_exc(), err=True)
 
         # run Networked Data Part 2: use of standardised refs for participating orgs
         test_name = 'Participating Orgs'
         click.echo(test_name)
-        infotest.networked_data_part_2(
-            org, snapshot_date, test_name, current_data_results, org.condition)
-        
+        try:
+            infotest.networked_data_part_2(
+                org, snapshot_date, test_name, current_data_results, org.condition)
+        except Exception:
+            click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
+                        fg='red', err=True)
+            click.echo(traceback.format_exc(), err=True)
+
         # run Networked Data Part 3: proportion transactions with receiver name/ref
         test_name = 'Transactions with valid receiver'
         click.echo(test_name)
-        infotest.networked_data_part_3(
-            org, snapshot_date, test_name, current_data_results)
+        try:
+            infotest.networked_data_part_3(
+                org, snapshot_date, test_name, current_data_results)
+        except Exception:
+            click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
+                        fg='red', err=True)
+            click.echo(traceback.format_exc(), err=True)
 
 
 
