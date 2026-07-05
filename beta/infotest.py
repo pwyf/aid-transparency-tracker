@@ -40,7 +40,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
     current_country_codes = list(current_country_codes_by_org_country_strategy_exclusions[remove_organisation_code_suffix(org.organisation_code)])
 
     country_strategies = {}
-    for dataset in publisher.datasets:
+    for dataset in publisher.datasets.where(filetype='activity'):
         for idx, activity in enumerate(dataset.activities):
             if dataset.name not in current_data_results or idx not in current_data_results[dataset.name] or current_data_results[dataset.name][idx] is False:
                 continue
@@ -57,6 +57,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
                     'explanation': 'A09 found for {}',
                 }
 
+    for dataset in publisher.datasets.where(filetype='organisation'):
         for idx, organisation in enumerate(dataset.organisations):
             org_level_docs = organisation.etree.xpath(
                 'document-link[category/@code="B03"]/recipient-country/@code')
