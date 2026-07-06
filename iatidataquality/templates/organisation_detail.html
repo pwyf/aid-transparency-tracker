@@ -13,43 +13,12 @@
     });
 
     </script>
-    <div class="float-end">
-        <button type="button" class="btn btn-outline-secondary btn-sm"
-				data-bs-toggle="collapse" data-bs-target="#packages_div">
-        <i class="bi bi-file-text"></i> <strong>Packages</strong>
-        </button>
-    </div>
 	<h1>
 	  <a href="{{url_for('get_organisations',
 			   organisation_code=organisation.organisation_code)}}">
 		{{organisation.organisation_name}}
 	  </a> &raquo; Detailed view
 	</h1>
-
-    <div id="packages_div" class="collapse">
-    <h2>Packages</h2>
-    <table class="table" id="packages">
-    <thead>
-    <th>Registry ID</th><th>Name</th><th>Country</th><th>License</th>
-    </thead>
-    <tbody>
-	{% for pk in packages %}
-    <tr>
-	  <td>
-		<a href="{{url_for('get_packages',
-				 package_name=pk.Package.package_name)}}">
-		  {{ pk.Package.package_name }}
-	    </a>
-	  </td>
-	  <td>{{ pk.Package.package_title }}</td>
-	  <td>{{ pk.Package.package_country }}</td>
-	  <td>{{ pk.Package.package_license }}</td>
-	  <!--<td></td>-->
-    </tr>
-	{% endfor %}
-    </tbody>
-    </table>
-    </div>
 
     {% if results %}
     <div class="float-end testruns">
