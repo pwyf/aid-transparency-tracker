@@ -9,6 +9,7 @@ from bdd_tester import BDDTester
 
 from . import utils
 from .excluded_xm_dac import excluded_xm_dac
+from .iati_iter import iter_datasets
 
 
 current_country_codes_by_org = defaultdict(set)
@@ -33,14 +34,13 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
                            utils.slugify(test_name) + '.csv')
 
     iati_data_path = current_app.config.get('IATI_DATA_PATH')
-    snapshot_xml_path = join(iati_data_path, snapshot_date)
-    publisher = iatikit.data(snapshot_xml_path).publishers.get(
-        org.registry_slug)
+    publisher_dir = join(iati_data_path, snapshot_date, 'data', org.registry_slug)
 
     current_country_codes = list(current_country_codes_by_org_country_strategy_exclusions[remove_organisation_code_suffix(org.organisation_code)])
 
     country_strategies = {}
-    for dataset in publisher.datasets.where(filetype='activity'):
+    for dataset in iter_datasets(publisher_dir, filetype='activity'):
+        mous = None
         for idx, activity in enumerate(dataset.activities):
             if dataset.name not in current_data_results or idx not in current_data_results[dataset.name] or current_data_results[dataset.name][idx] is False:
                 continue
@@ -48,7 +48,7 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
             if mous == []:
                 continue
             for c in activity.etree.xpath('recipient-country/@code'):
-                country_strategies[c] = {
+                country_strategies[str(c)] = {
                     'dataset': dataset.name,
                     'identifier': activity.id,
                     'index': idx,
@@ -56,13 +56,15 @@ def country_strategy_or_mou(org, snapshot_date, test_name,
                     'hierarchy': activity.etree.get('hierarchy', '1'),
                     'explanation': 'A09 found for {}',
                 }
+        activity = None  # release lxml element ref so tree is freed before next file
+        mous = None  # release any lxml element refs from the last xpath result
 
-    for dataset in publisher.datasets.where(filetype='organisation'):
+    for dataset in iter_datasets(publisher_dir, filetype='organisation'):
         for idx, organisation in enumerate(dataset.organisations):
-            org_level_docs = organisation.etree.xpath(
-                'document-link[category/@code="B03"]/recipient-country/@code')
-            org_level_docs += organisation.etree.xpath(
-                'document-link[category/@code="B13"]/recipient-country/@code')
+            org_level_docs = [str(c) for c in organisation.etree.xpath(
+                'document-link[category/@code="B03"]/recipient-country/@code')]
+            org_level_docs += [str(c) for c in organisation.etree.xpath(
+                'document-link[category/@code="B13"]/recipient-country/@code')]
             org_level_docs = list(set(org_level_docs))
             for c in org_level_docs:
                 country_strategies[c] = {
@@ -340,8 +342,7 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
                            utils.slugify(test_name) + '.csv')
 
     iati_data_path = current_app.config.get('IATI_DATA_PATH')
-    snapshot_xml_path = join(iati_data_path, snapshot_date)
-    publisher = iatikit.data(snapshot_xml_path).publishers.get(org.registry_slug)
+    publisher_dir = join(iati_data_path, snapshot_date, 'data', org.registry_slug)
 
     fieldnames = ['dataset', 'identifier', 'index', 'result',
                   'hierarchy', 'explanation']
@@ -359,7 +360,7 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
 
-        for dataset in publisher.datasets.where(filetype='activity'):
+        for dataset in iter_datasets(publisher_dir, filetype='activity'):
             for idx, activity in enumerate(dataset.activities):
                 # Look for the activity index (idx) as a key in current_data_results,
                 # to determine whether a condition was applied to it or not.
@@ -387,6 +388,7 @@ def networked_data_part_2(org, snapshot_date, test_name, current_data_results, c
                     'hierarchy': activity.etree.get('hierarchy', '1'),
                     'explanation': explanation,
                 })
+            activity = None  # release lxml element ref so tree is freed before next file
 
 
 def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
@@ -412,14 +414,11 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
                            org.organisation_code,
                            utils.slugify(test_name) + '.csv')
 
-    snapshot_xml_path = join(current_app.config.get('IATI_DATA_PATH'), snapshot_date)
-
-    # get an IATIKIT Publisher object for the organisation being processed
-    publisher = iatikit.data(snapshot_xml_path).publishers.get(org.registry_slug)
+    publisher_dir = join(current_app.config.get('IATI_DATA_PATH'),
+                         snapshot_date, 'data', org.registry_slug)
 
     fieldnames = ['dataset', 'identifier', 'index',
                   'result', 'hierarchy', 'explanation']
-
 
     # we create three lists of publishers, or publisher prefixes, which are used to
     # check the validity of the receiver-org refs; do that here so it's just done once
@@ -428,12 +427,11 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
     publisher_ids = set(publishers_by_ident)  # list of publishers on Registry
     xm_dac_codes = set(process_sector())  # list of acceptable XM-DAC codes
 
-
     with open(output_filepath, 'w') as handler:
         writer = csv.DictWriter(handler, fieldnames=fieldnames)
         writer.writeheader()
 
-        for dataset in publisher.datasets.where(filetype='activity'):
+        for dataset in iter_datasets(publisher_dir, filetype='activity'):
             for idx, activity in enumerate(dataset.activities):
                 # Look for the activity index (idx) as a key in current_data_results,
                 # to determine whether a condition was applied to it or not.
@@ -474,6 +472,7 @@ def networked_data_part_3(org, snapshot_date, test_name, current_data_results):
                     'hierarchy': activity.etree.get('hierarchy', '1'),
                     'explanation': explanation,
                 })
+            activity = None  # release lxml element ref so tree is freed before next file
 
 
 def calc_networked_data_3_activity_score(org, transactions, org_id_prefixes,
