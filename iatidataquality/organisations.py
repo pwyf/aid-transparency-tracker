@@ -421,6 +421,7 @@ def organisation_publication(organisation_code, aggregation_type):
 
 def _organisation_publication_detail(organisation_code, aggregation_type,
                                      is_admin):
+    import os
 
     organisation = Organisation.query.filter_by(
         organisation_code=organisation_code).first_or_404()
@@ -433,12 +434,18 @@ def _organisation_publication_detail(organisation_code, aggregation_type,
     aggregate_results = dqorganisations.make_publisher_summary(
         organisation, aggregation_type)
 
+    iati_result_path = app.config.get('IATI_RESULT_PATH')
+    result_dirs = [d for d in os.listdir(iati_result_path)
+                   if os.path.isdir(os.path.join(iati_result_path, d))]
+    snapshot_date = max(result_dirs) if result_dirs else None
+
     return render_template("organisation_detail.html",
                            organisation=organisation, packages=packages,
                            results=aggregate_results,
                            all_aggregation_types=all_aggregation_types,
                            aggregation_type=aggregation_type,
                            admin=is_admin,
+                           snapshot_date=snapshot_date,
                            loggedinuser=current_user)
 
 

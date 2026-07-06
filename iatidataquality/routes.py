@@ -466,3 +466,12 @@ def import_tests():
 @app.route("/data/<path:path>")
 def raw_data(path):
     return send_from_directory(app.config.get('IATI_DATA_PATH'), path)
+
+
+@app.route("/organisations/<organisation_code>/results/<snapshot_date>/<filename>")
+@usermanagement.perms_required()
+def result_csv(organisation_code, snapshot_date, filename):
+    from os.path import join
+    result_path = app.config.get('IATI_RESULT_PATH')
+    return send_from_directory(
+        join(result_path, snapshot_date, organisation_code), filename)

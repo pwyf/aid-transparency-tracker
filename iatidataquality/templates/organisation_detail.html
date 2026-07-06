@@ -84,7 +84,7 @@
         <fieldset><legend>Hierarchy <small>{{h}}</small></legend>
         <table class="table" id="results">
         <thead>
-        <th>Test</th><th>% Passed</th><th>Total results</th>
+        <th>Test</th><th>% Passed</th><th>Total results</th><th></th>
         </thead>
         <tbody>
         {% for test, result in values.items() %}
@@ -150,6 +150,7 @@
 			</td>
         <td class="pct">{{result.results_pct|round(2)}}</td>
         <td>{{result.results_num}}</td>
+        <td>{% if admin and snapshot_date %}<a href="{{ url_for('result_csv', organisation_code=organisation.organisation_code, snapshot_date=snapshot_date, filename=(result.test.description|slugify) + '.csv') }}" class="btn btn-outline-secondary btn-sm">CSV <i class="bi bi-download"></i></a>{% endif %}</td>
         </tr>
         {% endif %}
         {% endfor %}
