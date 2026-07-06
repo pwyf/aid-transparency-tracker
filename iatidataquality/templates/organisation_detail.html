@@ -21,11 +21,19 @@
 	</h1>
 
     {% if results %}
+    {% set ns = namespace(has_conditions=false) %}
+    {% for h, values in results.items() %}
+      {% for test, result in values.items() %}
+        {% if result and result.condition %}{% set ns.has_conditions = true %}{% endif %}
+      {% endfor %}
+    {% endfor %}
     <div class="float-end testruns">
         <form action="" method="GET"
 			  id="aggregation_type_form" class="d-flex align-items-center gap-2">
 
-            <a id="showAllTests" class="btn btn-outline-secondary btn-sm" href="#">Show all tests</a>
+            {% if ns.has_conditions %}
+            <a id="showAllTests" class="btn btn-outline-secondary btn-sm text-nowrap" href="#">Show all tests</a>
+            {% endif %}
 
             <select class="form-select" name="aggregation_type" id="aggregation_type">
 
