@@ -36,6 +36,12 @@ def hyperlink(value):
     return result
 
 
+@app.template_filter('slugify')
+def slugify_filter(value):
+    from beta.utils import slugify
+    return slugify(value)
+
+
 @app.template_filter('optional_decimal')
 def optional_decimal(number):
     if floor(number) == number:
