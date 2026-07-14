@@ -35,8 +35,9 @@
             <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
             {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge text-bg-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Researcher's initial assessment">
-                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+                {% set ordinal_val = data[indicator.indicator.id].OrganisationSurveyData.ordinal_value if data[indicator.indicator.id].OrganisationSurveyData.ordinal_value is not none else -1 %}
+                <span class="badge text-bg-{{year_data[ordinal_val].class}}" title="Researcher's initial assessment">
+                {{year_data[ordinal_val].text}}</span>
             {% else %}
                 <span class="badge text-bg-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Researcher's initial assessment">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
             {% endif %}<br />
@@ -56,8 +57,9 @@
             <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
             {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge text-bg-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
-                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+                {% set ordinal_val = data[indicator.indicator.id].OrganisationSurveyData.ordinal_value if data[indicator.indicator.id].OrganisationSurveyData.ordinal_value is not none else -1 %}
+                <span class="badge text-bg-{{year_data[ordinal_val].class}}" title="Donor's response">
+                {{year_data[ordinal_val].text}}</span>
             {% else %}
                 <span class="badge text-bg-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="Donor's response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
             {% endif %}<br />
@@ -78,8 +80,9 @@
             <td><span class="text-muted">{{data[indicator.indicator.id].Workflow.title}}</span></td>
             <td>
             {% if indicator.indicator.indicator_ordinal %}
-                <span class="badge text-bg-{{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].class}}" title="Donor's response">
-                {{year_data[data[indicator.indicator.id].OrganisationSurveyData.ordinal_value].text}}</span>
+                {% set ordinal_val = data[indicator.indicator.id].OrganisationSurveyData.ordinal_value if data[indicator.indicator.id].OrganisationSurveyData.ordinal_value is not none else -1 %}
+                <span class="badge text-bg-{{year_data[ordinal_val].class}}" title="PWYF response">
+                {{year_data[ordinal_val].text}}</span>
             {% else %}
                 <span class="badge text-bg-{{data[indicator.indicator.id].PublishedStatus.publishedstatus_class}}" title="PWYF response">{{data[indicator.indicator.id].PublishedStatus.title}}</span>
             {% endif %}<br />
