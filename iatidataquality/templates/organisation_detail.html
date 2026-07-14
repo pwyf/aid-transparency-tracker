@@ -10,6 +10,9 @@
     $(function() {
     $("table#packages").tablesorter({ sortList: [[0,0]] });
     $("table#results").tablesorter({ sortList: [[0,0]] });
+    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(el) {
+        new bootstrap.Tooltip(el);
+    });
     });
 
     </script>
@@ -67,7 +70,7 @@
         {% for test, result in values.items() %}
           {% if result and result.test %}
           <tr id="tr{{result.test.id}}h{{h}}"
-			  class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{% endif %}{% if result.condition %} condition-hidden alert alert-warning{% endif %}">
+			  class="group-{% if result.test.test_group %}{{result.test.test_group}}{% else %}unknown{% endif %}{% if result.condition %} condition-hidden table-warning{% endif %}">
 
 			<td><a href="#test{{result.test.id}}" role="button"
 				   data-bs-toggle="modal" data-bs-target="#test{{result.test.id}}">{{result.test.description}}</a>
@@ -122,7 +125,7 @@
                   </div>
                 </div>
 				{% if result.condition %}
-				<i class="bi bi-info-circle" title="{{result.condition[1]}}"></i>
+				<i class="bi bi-info-circle" data-bs-toggle="tooltip" title="{{result.condition[1]}}"></i>
 				{% endif %}
 			</td>
         <td class="pct">{{result.results_pct|round(2)}}</td>
