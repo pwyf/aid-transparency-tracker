@@ -1,5 +1,5 @@
 bdd-tester==0.0.8
-Flask<3
+Flask<4
 Flask-Login
 Flask-Principal==0.4.0
 Flask-SQLAlchemy<3
