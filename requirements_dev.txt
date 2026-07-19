@@ -122,7 +122,7 @@ pluggy==1.6.0
     # via pytest
 psycopg2-binary==2.9.11
     # via -r requirements.txt
-pygments==2.19.2
+pygments==2.20.0
     # via
     #   pdbpp
     #   pytest
