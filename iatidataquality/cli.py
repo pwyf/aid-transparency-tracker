@@ -11,7 +11,7 @@ import csv
 from . import app, db
 from iatidq import dqcodelists, dqimporttests, dqindicators, dqorganisations, dqusers
 from iatidq import setup as dqsetup
-from iatidq.models import Organisation, Test, OrganisationCondition
+from iatidq.models import AggregateResult, Organisation, Test, OrganisationCondition
 from iatidq.sample_work import sample_work, db as sample_work_db
 from beta import utils, infotest
 
@@ -326,9 +326,14 @@ def import_data(force):
               help='delete output path if it exists already')
 @click.option('--orgs', default='',
               help='Comman delimeted list of orgs to check, defaults to all orgs')
+@click.option('--tests', default='',
+              help='Comma delimited list of test names (or their slugs) to ' +
+                   'run, defaults to all tests. Implies --no-delete: the ' +
+                   'selected tests are rewritten in place and results for ' +
+                   'every other test are left untouched.')
 @click.option('--force', is_flag=True, default=False,
               help='Skip the confirmation prompt if data already exists in schema and codelist directory')
-def test_data(date, refresh, part_count, part, delete, orgs, force):
+def test_data(date, refresh, part_count, part, delete, orgs, tests, force):
     """Test a set of imported IATI data."""
 
     iati_data_path = app.config.get('IATI_DATA_PATH')
@@ -358,6 +363,19 @@ def test_data(date, refresh, part_count, part, delete, orgs, force):
     click.echo('Testing: {}'.format(snapshot_xml_path))
     click.echo('Output path: {}'.format(root_output_path))
 
+    tests_filter = set(t.strip().lower() for t in tests.split(',') if t.strip())
+
+    def test_selected(test_name):
+        if not tests_filter:
+            return True
+        return (test_name.lower() in tests_filter or
+                utils.slugify(test_name) in tests_filter)
+
+    if tests_filter:
+        delete = False
+        click.echo('Only running selected tests; results for every other ' +
+                   'test will be left in place.')
+
     if exists(root_output_path) and delete:
         if force:
             click.secho('Warning: Output path exists. Skipping prompt because --force set', fg='yellow')
@@ -374,6 +392,30 @@ def test_data(date, refresh, part_count, part, delete, orgs, force):
     click.echo('Loading tests ...')
     all_tests = utils.load_tests()
     all_tests.append(utils.load_current_data_test())
+
+    # These are not run by the BDD runner; their feature files exist only so
+    # that the test is registered and can be aggregated under this name.
+    infotest_names = [
+        'Strategy (country/sector) or Memorandum of Understanding',
+        'Disaggregated budget',
+        'Participating Orgs',
+        'Transactions with valid receiver',
+    ]
+
+    if tests_filter:
+        known_tests = set()
+        for test_name in [t.name for t in all_tests] + infotest_names:
+            known_tests.add(test_name.lower())
+            known_tests.add(utils.slugify(test_name))
+        unknown_tests = sorted(tests_filter - known_tests)
+        if unknown_tests:
+            click.secho('Error: Unknown test(s): {}'.format(
+                ', '.join(unknown_tests)), fg='red', err=True)
+            click.echo('Tests are matched on their name or slug, eg:',
+                       err=True)
+            click.echo('\n    --tests "Disaggregated budget"', err=True)
+            click.echo('    --tests disaggregated_budget\n', err=True)
+            raise click.Abort()
 
     click.echo('Testing IATI data snapshot ' +
                '({}) ...'.format(snapshot_date))
@@ -398,10 +440,15 @@ def test_data(date, refresh, part_count, part, delete, orgs, force):
         ))
         output_path = join(root_output_path, org.organisation_code)
 
-        shutil.rmtree(output_path, ignore_errors=True)
-        makedirs(output_path)
+        if tests_filter:
+            makedirs(output_path, exist_ok=True)
+        else:
+            shutil.rmtree(output_path, ignore_errors=True)
+            makedirs(output_path)
 
         for test in all_tests:
+            if not test_selected(test.name):
+                continue
             output_filepath = join(output_path,
                                    utils.slugify(test.name) + '.csv')
             click.echo(test)
@@ -409,52 +456,43 @@ def test_data(date, refresh, part_count, part, delete, orgs, force):
                            org.condition, codelists=codelists,
                            today=snapshot_date)
 
-        current_data_results = utils.load_current_data_results(
-            org, root_output_path)
+        if not any(test_selected(name) for name in infotest_names):
+            continue
 
-        # run country strategy / MoU test
-        test_name = 'Strategy (country/sector) or Memorandum of Understanding'
-        click.echo(test_name)
         try:
-            infotest.country_strategy_or_mou(
-                org, snapshot_date, test_name, current_data_results)
-        except Exception:
-            click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
-                        fg='red', err=True)
-            click.echo(traceback.format_exc(), err=True)
+            current_data_results = utils.load_current_data_results(
+                org, root_output_path)
+        except IOError:
+            click.secho('  ERROR: no current data results for ' +
+                        '{}. '.format(org.organisation_code) +
+                        'Run the "Current data" test for this ' +
+                        'organisation first.', fg='red', err=True)
+            continue
 
-        # run disaggregated budget test
-        test_name = 'Disaggregated budget'
-        click.echo(test_name)
-        try:
-            infotest.disaggregated_budget(
-                org, snapshot_date, test_name, current_data_results, org.condition)
-        except Exception:
-            click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
-                        fg='red', err=True)
-            click.echo(traceback.format_exc(), err=True)
+        def run_infotest(test_name, infotest_f, *args):
+            if not test_selected(test_name):
+                return
+            click.echo(test_name)
+            try:
+                infotest_f(org, snapshot_date, test_name,
+                           current_data_results, *args)
+            except Exception:
+                click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
+                            fg='red', err=True)
+                click.echo(traceback.format_exc(), err=True)
 
-        # run Networked Data Part 2: use of standardised refs for participating orgs
-        test_name = 'Participating Orgs'
-        click.echo(test_name)
-        try:
-            infotest.networked_data_part_2(
-                org, snapshot_date, test_name, current_data_results, org.condition)
-        except Exception:
-            click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
-                        fg='red', err=True)
-            click.echo(traceback.format_exc(), err=True)
-
-        # run Networked Data Part 3: proportion transactions with receiver name/ref
-        test_name = 'Transactions with valid receiver'
-        click.echo(test_name)
-        try:
-            infotest.networked_data_part_3(
-                org, snapshot_date, test_name, current_data_results)
-        except Exception:
-            click.secho(f'  ERROR in {test_name} for {org.organisation_code}:',
-                        fg='red', err=True)
-            click.echo(traceback.format_exc(), err=True)
+        # country strategy / MoU test
+        run_infotest('Strategy (country/sector) or Memorandum of Understanding',
+                     infotest.country_strategy_or_mou)
+        # disaggregated budget test
+        run_infotest('Disaggregated budget',
+                     infotest.disaggregated_budget, org.condition)
+        # Networked Data Part 2: standardised refs for participating orgs
+        run_infotest('Participating Orgs',
+                     infotest.networked_data_part_2, org.condition)
+        # Networked Data Part 3: proportion transactions with receiver name/ref
+        run_infotest('Transactions with valid receiver',
+                     infotest.networked_data_part_3)
 
 
 
@@ -463,9 +501,13 @@ def test_data(date, refresh, part_count, part, delete, orgs, force):
 @click.option('--date', default='latest',
               help='Date of the data to summarize, in YYYY-MM-DD. ' +
                    'Defaults to most recent.')
+@click.option('--orgs', default='',
+              help='Comma delimited list of orgs to re-aggregate, defaults ' +
+                   'to all orgs. Only the listed organisations have their ' +
+                   'existing aggregate results deleted and rebuilt.')
 @click.option('--force', is_flag=True, default=False,
               help='Skip the "This is potentially destructive" confirmation prompt')
-def aggregate_results(date, force):
+def aggregate_results(date, orgs, force):
     """Summarize results of IATI data tests."""
 
     iati_result_path = app.config.get('IATI_RESULT_PATH')
@@ -489,18 +531,49 @@ def aggregate_results(date, force):
                    '--date {}\n'.format(date), err=True)
         raise click.Abort()
 
+    orgs_list = [o.strip() for o in orgs.split(',') if o.strip()]
+
+    # Resolve the requested orgs up front, so that a bad organisation code
+    # aborts before any aggregate results are deleted.
+    target_org_ids = []
+    for organisation_code in orgs_list:
+        org = Organisation.where(organisation_code=organisation_code).first()
+        if not org:
+            click.secho('Error: Publisher "{}" '.format(organisation_code) +
+                        'not found in database.', fg='red', err=True)
+            raise click.Abort()
+        if not exists(join(iati_result_path, result_date, organisation_code)):
+            click.secho('Error: No results for "{}" '.format(organisation_code) +
+                        'in snapshot {}.'.format(result_date),
+                        fg='red', err=True)
+            click.echo('Perhaps you need to run tests, using:', err=True)
+            click.echo('\n    $ flask test_data --date {} '.format(result_date) +
+                       '--orgs {}\n'.format(organisation_code), err=True)
+            raise click.Abort()
+        target_org_ids.append(org.id)
+
     if force:
         click.echo('\nSkipping confirmation as --force is set')
     else:
         click.secho('\nWarning! This is a destructive operation!', fg='red')
-        click.echo('\nAny existing aggregate data will be deleted ' +
-                   'from the database.')
+        if orgs_list:
+            click.echo('\nExisting aggregate data for {} '.format(
+                ', '.join(orgs_list)) + 'will be deleted from the database. ' +
+                'Aggregate data for all other organisations is left alone.')
+        else:
+            click.echo('\nAny existing aggregate data will be deleted ' +
+                       'from the database.')
         click.echo('(If you still have the raw results, you can regenerate ' +
                    'old aggregate data by specifying a date.)')
         click.confirm('\nAre you really really sure?', abort=True)
 
     with db.session.begin():
-        db.session.execute('''truncate aggregateresult''')
+        if orgs_list:
+            db.session.query(AggregateResult).filter(
+                AggregateResult.organisation_id.in_(target_org_ids)
+            ).delete(synchronize_session=False)
+        else:
+            db.session.execute('''truncate aggregateresult''')
 
     click.echo('Loading tests ...')
     all_tests = utils.load_tests()
@@ -511,6 +584,8 @@ def aggregate_results(date, force):
                '({}) ...'.format(result_date))
     publishers = sorted(x for x in listdir(snapshot_result_path)
                        if isdir(join(snapshot_result_path, x)))
+    if orgs_list:
+        publishers = [x for x in publishers if x in orgs_list]
     with click.progressbar(publishers) as publishers:
         for organisation_code in publishers:
             org = Organisation.where(
