@@ -86,6 +86,24 @@ This will prompt you to create a new admin user (this will be the username & pas
     ```
    This step will destructively populate the `aggregateresult` table of your database.
 
+### Re-running a single test for a single organisation
+
+Both steps can be narrowed, which is useful when only one organisation's inputs
+have changed (for example, after editing that organisation's rows in
+`tests/current_country_code_lookup.csv`):
+
+``` bash
+flask test_data --date 2026-07-04 --orgs XM-DAC-41114 \
+    --tests "Disaggregated budget" --no-refresh
+flask aggregate_results --date 2026-07-04 --orgs XM-DAC-41114
+```
+
+`--tests` implies `--no-delete`: only the named tests are rewritten, and results
+for every other test are left in place. `--orgs` on `aggregate_results` deletes
+and rebuilds the aggregate results for just those organisations, instead of
+truncating the whole table. Neither command touches the sampling database or the
+`sampling_failure` verdicts.
+
 ## Running
 
 You can run a development server with:
